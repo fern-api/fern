@@ -14,5 +14,8 @@ func do() () {
             ClientId: "client_id",
             ClientSecret: "client_secret",
             RefreshToken: "refresh_token",
+            Scope: fern.String(
+                "scope",
+            ),
         },
     )}

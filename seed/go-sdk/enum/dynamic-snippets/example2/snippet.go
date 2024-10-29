@@ -11,10 +11,6 @@ func do() () {
     client.PathParam.Send(
         context.TODO(),
         fern.OperandGreaterThan,
-        fern.OperandLessThan.Ptr(),
-        &fern.ColorOrOperand{
-            Color: fern.ColorRed,
-        },
         &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },

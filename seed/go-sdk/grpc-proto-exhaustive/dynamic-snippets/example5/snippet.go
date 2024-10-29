@@ -10,5 +10,13 @@ func do() () {
     client := client.NewClient()
     client.Dataservice.Describe(
         context.TODO(),
-        &fern.DescribeRequest{},
+        &fern.DescribeRequest{
+            Filter: &fern.Metadata{
+                StringMetadataValueMap: map[string]*fern.MetadataValue{
+                    "filter": &fern.MetadataValue{
+                        Double: 1.1,
+                    },
+                },
+            },
+        },
     )}

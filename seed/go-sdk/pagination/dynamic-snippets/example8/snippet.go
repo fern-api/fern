@@ -15,5 +15,9 @@ func do() () {
     )
     client.Users.ListWithCursorPagination(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{},
+        &fern.ListUsersCursorPaginationRequest{
+            StartingAfter: fern.String(
+                "starting_after",
+            ),
+        },
     )}

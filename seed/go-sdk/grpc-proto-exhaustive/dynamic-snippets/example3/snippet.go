@@ -10,5 +10,23 @@ func do() () {
     client := client.NewClient()
     client.Dataservice.Delete(
         context.TODO(),
-        &fern.DeleteRequest{},
+        &fern.DeleteRequest{
+            Ids: []string{
+                "ids",
+                "ids",
+            },
+            DeleteAll: fern.Bool(
+                true,
+            ),
+            Namespace: fern.String(
+                "namespace",
+            ),
+            Filter: &fern.Metadata{
+                StringMetadataValueMap: map[string]*fern.MetadataValue{
+                    "filter": &fern.MetadataValue{
+                        Double: 1.1,
+                    },
+                },
+            },
+        },
     )}

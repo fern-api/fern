@@ -12,7 +12,11 @@ func do() () {
         context.TODO(),
         &fern.SendEnumInlinedRequest{
             Operand: fern.OperandGreaterThan,
+            MaybeOperand: fern.OperandGreaterThan.Ptr(),
             OperandOrColor: &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+            MaybeOperandOrColor: &fern.ColorOrOperand{
                 Color: fern.ColorRed,
             },
         },

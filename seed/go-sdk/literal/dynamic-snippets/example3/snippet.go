@@ -12,6 +12,9 @@ func do() () {
         context.TODO(),
         &fern.SendLiteralsInlinedRequest{
             Query: "query",
+            Temperature: fern.Float64(
+                1.1,
+            ),
             ObjectWithLiteral: &fern.ATopLevelLiteral{
                 NestedLiteral: &fern.ANestedLiteral{},
             },

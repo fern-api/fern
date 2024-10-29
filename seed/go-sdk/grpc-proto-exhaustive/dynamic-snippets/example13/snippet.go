@@ -12,5 +12,29 @@ func do() () {
         context.TODO(),
         &fern.UpdateRequest{
             Id: "id",
+            Values: []float64{
+                1.1,
+                1.1,
+            },
+            SetMetadata: &fern.Metadata{
+                StringMetadataValueMap: map[string]*fern.MetadataValue{
+                    "setMetadata": &fern.MetadataValue{
+                        Double: 1.1,
+                    },
+                },
+            },
+            Namespace: fern.String(
+                "namespace",
+            ),
+            IndexedData: &fern.IndexedData{
+                Indices: []int{
+                    1,
+                    1,
+                },
+                Values: []float64{
+                    1.1,
+                    1.1,
+                },
+            },
         },
     )}

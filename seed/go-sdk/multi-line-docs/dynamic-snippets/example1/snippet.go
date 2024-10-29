@@ -12,5 +12,8 @@ func do() () {
         context.TODO(),
         &fern.CreateUserRequest{
             Name: "name",
+            Age: fern.Int(
+                1,
+            ),
         },
     )}

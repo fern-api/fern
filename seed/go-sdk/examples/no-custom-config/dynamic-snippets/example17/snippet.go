@@ -16,6 +16,14 @@ func do() () {
     client.Service.GetMetadata(
         context.TODO(),
         &fern.GetMetadataRequest{
+            Shallow: fern.Bool(
+                true,
+            ),
+            Tag: []*string{
+                fern.String(
+                    "tag",
+                ),
+            },
             XApiVersion: "X-API-Version",
         },
     )}

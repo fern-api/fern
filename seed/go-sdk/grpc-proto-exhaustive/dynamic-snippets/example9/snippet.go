@@ -10,5 +10,18 @@ func do() () {
     client := client.NewClient()
     client.Dataservice.List(
         context.TODO(),
-        &fern.ListRequest{},
+        &fern.ListRequest{
+            Prefix: fern.String(
+                "prefix",
+            ),
+            Limit: fern.Int(
+                1,
+            ),
+            PaginationToken: fern.String(
+                "paginationToken",
+            ),
+            Namespace: fern.String(
+                "namespace",
+            ),
+        },
     )}

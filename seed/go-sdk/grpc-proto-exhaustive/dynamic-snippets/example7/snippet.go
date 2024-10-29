@@ -10,5 +10,14 @@ func do() () {
     client := client.NewClient()
     client.Dataservice.Fetch(
         context.TODO(),
-        &fern.FetchRequest{},
+        &fern.FetchRequest{
+            Ids: []*string{
+                fern.String(
+                    "ids",
+                ),
+            },
+            Namespace: fern.String(
+                "namespace",
+            ),
+        },
     )}

@@ -18,6 +18,23 @@ func do() () {
                         1.1,
                         1.1,
                     },
+                    Metadata: &fern.Metadata{
+                        StringMetadataValueMap: map[string]*fern.MetadataValue{
+                            "metadata": &fern.MetadataValue{
+                                Double: 1.1,
+                            },
+                        },
+                    },
+                    IndexedData: &fern.IndexedData{
+                        Indices: []int{
+                            1,
+                            1,
+                        },
+                        Values: []float64{
+                            1.1,
+                            1.1,
+                        },
+                    },
                 },
                 &fern.Column{
                     Id: "id",
@@ -25,7 +42,27 @@ func do() () {
                         1.1,
                         1.1,
                     },
+                    Metadata: &fern.Metadata{
+                        StringMetadataValueMap: map[string]*fern.MetadataValue{
+                            "metadata": &fern.MetadataValue{
+                                Double: 1.1,
+                            },
+                        },
+                    },
+                    IndexedData: &fern.IndexedData{
+                        Indices: []int{
+                            1,
+                            1,
+                        },
+                        Values: []float64{
+                            1.1,
+                            1.1,
+                        },
+                    },
                 },
             },
+            Namespace: fern.String(
+                "namespace",
+            ),
         },
     )}

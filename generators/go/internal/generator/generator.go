@@ -157,6 +157,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 					if err := writer.WriteRequestType(
 						typeToGenerate.FernFilepath,
 						typeToGenerate.Endpoint,
+						typeToGenerate.Service.Headers,
 						ir.IdempotencyHeaders,
 						g.config.EnableExplicitNull,
 					); err != nil {
@@ -654,6 +655,7 @@ func (g *Generator) generateService(
 		ir.Auth,
 		irService.Endpoints,
 		ir.Headers,
+		irService.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
@@ -697,6 +699,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Auth,
 		nil,
 		ir.Headers,
+		nil,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -734,6 +737,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Auth,
 		nil,
 		ir.Headers,
+		nil,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -1271,6 +1275,7 @@ type typeToGenerate struct {
 	// Exactly one of these will be non-nil.
 	TypeDeclaration *fernir.TypeDeclaration
 	Endpoint        *fernir.HttpEndpoint
+	Service         *fernir.HttpService
 }
 
 // fileInfoToTypes consolidates all of the given types based on the file they will be generated into.
@@ -1287,7 +1292,7 @@ func fileInfoToTypes(
 				continue
 			}
 			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint})
+			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint, Service: irService})
 		}
 	}
 	if irServiceTypeReferenceInfo == nil {

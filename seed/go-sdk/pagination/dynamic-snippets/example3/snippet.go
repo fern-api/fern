@@ -13,7 +13,13 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithBodyCursorPagination(
+    client.Users.ListWithBodyOffsetPagination(
         context.TODO(),
-        &fern.ListUsersBodyCursorPaginationRequest{},
+        &fern.ListUsersBodyOffsetPaginationRequest{
+            Pagination: &fern.WithPage{
+                Page: fern.Int(
+                    1,
+                ),
+            },
+        },
     )}

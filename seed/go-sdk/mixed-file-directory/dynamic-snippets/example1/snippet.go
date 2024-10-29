@@ -10,5 +10,9 @@ func do() () {
     client := client.NewClient()
     client.User.List(
         context.TODO(),
-        &fern.ListUsersRequest{},
+        &fern.ListUsersRequest{
+            Limit: fern.Int(
+                1,
+            ),
+        },
     )}

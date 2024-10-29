@@ -13,7 +13,11 @@ func do() () {
             "<token>",
         ),
     )
-    client.Users.ListWithCursorPagination(
+    client.Users.ListWithGlobalConfig(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{},
+        &fern.ListWithGlobalConfigRequest{
+            Offset: fern.Int(
+                1,
+            ),
+        },
     )}

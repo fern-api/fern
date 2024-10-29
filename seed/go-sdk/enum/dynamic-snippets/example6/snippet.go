@@ -14,10 +14,14 @@ func do() () {
             Operand: []fern.Operand{
                 fern.OperandGreaterThan,
             },
+            MaybeOperand: []*fern.Operand{
+                fern.OperandGreaterThan.Ptr(),
+            },
             OperandOrColor: []*fern.ColorOrOperand{
                 &fern.ColorOrOperand{
                     Color: fern.ColorRed,
                 },
             },
+            MaybeOperandOrColor: []*fern.ColorOrOperand{},
         },
     )}

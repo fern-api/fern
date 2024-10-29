@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.List(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.List(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n\tuser \"github.com/mixed-file-directory/fern/user\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.ListEvents(\n\tcontext.TODO(),\n\t\u0026user.ListUserEventsRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n\tuser \"github.com/mixed-file-directory/fern/user\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.ListEvents(\n\tcontext.TODO(),\n\t\u0026user.ListUserEventsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         },
         {

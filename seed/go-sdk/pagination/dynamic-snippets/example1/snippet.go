@@ -15,5 +15,11 @@ func do() () {
     )
     client.Users.ListWithBodyCursorPagination(
         context.TODO(),
-        &fern.ListUsersBodyCursorPaginationRequest{},
+        &fern.ListUsersBodyCursorPaginationRequest{
+            Pagination: &fern.WithCursor{
+                Cursor: fern.String(
+                    "cursor",
+                ),
+            },
+        },
     )}

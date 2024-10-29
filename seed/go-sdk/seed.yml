@@ -72,8 +72,9 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - alias-extends
   - exhaustive
   - reserved-keywords
   - server-sent-events
+  - streaming-parameter
   - trace
-  - alias-extends

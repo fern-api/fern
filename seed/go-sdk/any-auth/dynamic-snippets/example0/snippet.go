@@ -18,5 +18,8 @@ func do() () {
         &fern.GetTokenRequest{
             ClientId: "client_id",
             ClientSecret: "client_secret",
+            Scope: fern.String(
+                "scope",
+            ),
         },
     )}

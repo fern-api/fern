@@ -17,10 +17,16 @@ func do() () {
         context.TODO(),
         &fern.Movie{
             Id: "id",
+            Prequel: fern.String(
+                "prequel",
+            ),
             Title: "title",
             From: "from",
             Rating: 1.1,
             Tag: "tag",
+            Book: fern.String(
+                "book",
+            ),
             Metadata: map[string]interface{}{
                 "metadata": map[string]interface{}{
                     "key": "value",

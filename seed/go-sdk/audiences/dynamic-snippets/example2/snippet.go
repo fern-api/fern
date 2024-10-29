@@ -10,5 +10,15 @@ func do() () {
     client := client.NewClient()
     client.Foo.Find(
         context.TODO(),
-        &fern.FindRequest{},
+        &fern.FindRequest{
+            OptionalString: fern.String(
+                "optionalString",
+            ),
+            PublicProperty: fern.String(
+                "publicProperty",
+            ),
+            PrivateProperty: fern.Int(
+                1,
+            ),
+        },
     )}
