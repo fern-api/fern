@@ -33,6 +33,7 @@ import {
 } from "./EndpointRequest";
 import { CodeBlock } from "@fern-api/generator-commons";
 import { assertNever } from "@fern-api/core-utils";
+import { FileUploadBodyProperty } from "@fern-fern/ir-sdk/serialization";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -141,8 +142,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
         property
     }: {
         writer: php.Writer;
-        property: InlinedRequestBodyProperty;
+        property: FileUploadRequestProperty;
     }): void {
+        if (property.type !== "bodyProperty") {
+            return;
+        }
         const propertyName = this.context.getPropertyName(property.name.name);
         let paramRef = `${this.getRequestParameterName()}->${propertyName}`;
         let propType = property.valueType;
@@ -160,20 +164,30 @@ export class WrappedEndpointRequest extends EndpointRequest {
             propType = this.context.dereferenceCollection(propType);
         }
 
+        const arguments_ = [
+            {
+                name: "name",
+                assignment: php.codeblock(`'${property.name.wireValue}'`)
+            },
+            {
+                name: "value",
+                assignment: this.getMultipartBodyParameterValueAssignment(paramRef, propType)
+            }
+        ];
+
+        if (property.contentType != null) {
+            arguments_.push({
+                name: "contentType",
+                assignment: php.codeblock(`'${property.contentType}'`)
+            });
+        }
+
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
-                arguments_: [
-                    {
-                        name: "name",
-                        assignment: php.codeblock(`'${property.name.wireValue}'`)
-                    },
-                    {
-                        name: "value",
-                        assignment: this.getMultipartBodyParameterValueAssignment(paramRef, propType)
-                    }
-                ],
-                on: this.getRequestBodyArgument()
+                arguments_,
+                on: this.getRequestBodyArgument(),
+                multiline: arguments_.length > 2
             })
         );
 

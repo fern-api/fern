@@ -202,7 +202,11 @@ class ServiceClient
             ),
         );
         $body->add(name: 'foo', value: $request->foo);
-        $body->add(name: 'bar', value: $request->bar->toJson());
+        $body->add(
+            name: 'bar',
+            value: $request->bar->toJson(),
+            contentType: 'application/json',
+        );
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
