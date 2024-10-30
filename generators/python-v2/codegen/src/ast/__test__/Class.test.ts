@@ -71,7 +71,7 @@ describe("class", () => {
             name: "MyDataClass",
             decorators: [
                 python.decorator({
-                    reference: python.reference({ name: "dataclass", modulePath: ["dataclasses"] })
+                    callable: python.reference({ name: "dataclass", modulePath: ["dataclasses"] })
                 })
             ]
         });
