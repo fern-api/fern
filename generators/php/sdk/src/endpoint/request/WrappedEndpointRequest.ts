@@ -134,7 +134,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
-    private writeBodyParameter(writer: php.Writer, valueAssignment: php.AstNode, propertyName: string): void {
+    private writeMultipartBodyParameter(writer: php.Writer, valueAssignment: php.AstNode, propertyName: string): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
@@ -324,7 +324,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         }
 
                         if (this.context.isJsonEncodable(propType)) {
-                            this.writeBodyParameter(
+                            this.writeMultipartBodyParameter(
                                 writer,
                                 php.invokeMethod({
                                     method: "encode",
@@ -335,7 +335,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else if (this.context.hasToJsonMethod(propType)) {
-                            this.writeBodyParameter(
+                            this.writeMultipartBodyParameter(
                                 writer,
                                 php.invokeMethod({
                                     method: "toJson",
@@ -345,7 +345,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 this.context.getPropertyName(bodyProperty.name.name)
                             );
                         } else {
-                            this.writeBodyParameter(
+                            this.writeMultipartBodyParameter(
                                 writer,
                                 php.codeblock(ref),
                                 this.context.getPropertyName(bodyProperty.name.name)
