@@ -297,7 +297,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         break;
                     }
                     case "bodyProperty": {
-                        this.writeInlineArg(writer, property);
+                        this.writeInlineProperty(writer, property);
                         break;
                     }
                     default: {
@@ -346,7 +346,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private writeInlineArg(writer: php.Writer, property: InlinedRequestBodyProperty) {
+    private writeInlineProperty(writer: php.Writer, property: InlinedRequestBodyProperty) {
         const propertyName = this.context.getPropertyName(property.name.name);
         let ref = `${this.getRequestParameterName()}->${propertyName}`;
         let propType = property.valueType;
