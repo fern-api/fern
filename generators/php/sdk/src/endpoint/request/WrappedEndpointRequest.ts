@@ -343,7 +343,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         break;
                     }
                     default: {
-                        // TODO: Assert never
+                        assertNever(property);
                     }
                 }
             }
@@ -361,7 +361,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 break;
             }
             default: {
-                // TODO: Assert never
+                assertNever(file);
             }
         }
     }
