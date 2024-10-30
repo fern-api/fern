@@ -233,13 +233,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         const bodyArgument = this.getRequestBodyArgument();
-        if (bodyArgument == null) {
+        if (this.endpoint.requestBody == null || bodyArgument == null) {
             return undefined;
         }
 
+        const requestBodyReference =
+            this.endpoint.requestBody.type === "fileUpload"
+                ? bodyArgument
+                : this.serializeJsonRequest({ bodyArgument });
+
         return {
             code: this.getRequestBodyCode(),
-            requestBodyReference: this.serializeJsonRequest({ bodyArgument })
+            requestBodyReference
         };
     }
 
