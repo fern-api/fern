@@ -333,7 +333,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public getToStringMethod(): csharp.Method {
         return csharp.method({
             name: "ToString",
-            access: "public",
+            access: csharp.Access.Public,
             isAsync: false,
             override: true,
             parameters: [],

@@ -31,7 +31,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     private clientField: csharp.Field;
 
     private static readonly BUFFER_IN_MINUTES_FIELD = csharp.field({
-        access: "private",
+        access: csharp.Access.Private,
         const_: true,
         name: "BufferInMinutes",
         type: csharp.Type.double(),
@@ -39,25 +39,25 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     });
 
     private static readonly ACCESS_TOKEN_FIELD = csharp.field({
-        access: "private",
+        access: csharp.Access.Private,
         name: "_accessToken",
         type: csharp.Type.optional(csharp.Type.string())
     });
 
     private static readonly EXPIRES_AT_FIELD = csharp.field({
-        access: "private",
+        access: csharp.Access.Private,
         name: "_expiresAt",
         type: csharp.Type.optional(csharp.Type.dateTime())
     });
 
     private static readonly CLIENT_ID_FIELD = csharp.field({
-        access: "private",
+        access: csharp.Access.Private,
         name: "_clientId",
         type: csharp.Type.string()
     });
 
     private static readonly CLIENT_SECRET_FIELD = csharp.field({
-        access: "private",
+        access: csharp.Access.Private,
         name: "_clientSecret",
         type: csharp.Type.string()
     });
@@ -74,7 +74,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         );
         this.tokenEndpoint = httpEndpoint;
         this.clientField = csharp.field({
-            access: "private",
+            access: csharp.Access.Private,
             name: "_client",
             type: csharp.Type.reference(
                 this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
@@ -86,7 +86,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         class_.addField(OauthTokenProviderGenerator.BUFFER_IN_MINUTES_FIELD);
@@ -104,7 +104,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod(this.getAccessTokenMethod());
 
         class_.addConstructor({
-            access: "public",
+            access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "clientId",
@@ -144,7 +144,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
     private getAccessTokenMethod(): csharp.Method {
         return csharp.method({
-            access: "public",
+            access: csharp.Access.Public,
             isAsync: true,
             name: OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME,
             parameters: [],

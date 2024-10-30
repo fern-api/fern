@@ -40,13 +40,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 })
             ],
             annotations: [serializerAnnotation],
-            access: "public",
-            type: "record struct",
+            access: csharp.Access.Public,
+            type: csharp.Class.ClassType.RecordStruct,
             readonly: true
         });
 
         stringEnum.addConstructor({
-            access: "public",
+            access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "value",
@@ -63,16 +63,16 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             csharp.field({
                 name: "Value",
                 type: csharp.Type.string(),
-                access: "public",
-                get: "public",
+                access: csharp.Access.Public,
+                get: csharp.Access.Public,
                 summary: "The string value of the enum."
             })
         );
 
         const valuesClass = csharp.class_({
-            access: "public",
+            access: csharp.Access.Public,
             name: "Values",
-            type: "class",
+            type: csharp.Class.ClassType.Class,
             static_: true,
             namespace: this.context.getNamespace(),
             isNestedClass: true,
@@ -88,7 +88,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 csharp.field({
                     name: fieldName,
                     type: csharp.Type.string(),
-                    access: "public",
+                    access: csharp.Access.Public,
                     summary: member.docs,
                     const_: true,
                     initializer: csharp.codeblock(`"${member.name.wireValue}"`)
@@ -98,7 +98,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: member.name }),
                     type: csharp.Type.reference(this.classReference),
-                    access: "public",
+                    access: csharp.Access.Public,
                     summary: member.docs,
                     useRequired: false,
                     static_: true,
@@ -117,7 +117,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
         stringEnum.addMethod(
             csharp.method({
-                access: "public",
+                access: csharp.Access.Public,
                 name: "Custom",
                 parameters: [
                     csharp.parameter({
@@ -144,7 +144,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
         stringEnum.addMethod(
             csharp.method({
-                access: "public",
+                access: csharp.Access.Public,
                 name: "ToString",
                 return_: csharp.Type.string(),
                 parameters: [],
@@ -159,7 +159,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
 
         stringEnum.addMethod(
             csharp.method({
-                access: "public",
+                access: csharp.Access.Public,
                 name: "Equals",
                 parameters: [
                     csharp.parameter({

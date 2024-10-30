@@ -34,7 +34,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
         const enum_ = csharp.enum_({
             ...this.classReference,
-            access: "public",
+            access: csharp.Access.Public,
             annotations: [serializerAnnotation]
         });
 

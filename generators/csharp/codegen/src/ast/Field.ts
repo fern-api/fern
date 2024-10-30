@@ -165,19 +165,19 @@ export class Field extends AstNode {
         if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");
             if (this.get) {
-                if (this.get !== true && this.access !== this.get) {
+                if (!this.hasSameAccess(this.get)) {
                     writer.write(`${this.get} `);
                 }
                 writer.write("get; ");
             }
             if (this.init) {
-                if (this.init !== true && this.access !== this.init) {
+                if (!this.hasSameAccess(this.init)) {
                     writer.write(`${this.init} `);
                 }
                 writer.write("init; ");
             }
             if (this.set) {
-                if (this.set !== true && this.access !== this.set) {
+                if (!this.hasSameAccess(this.set)) {
                     writer.write(`${this.set} `);
                 }
                 writer.write("set; ");
@@ -198,5 +198,9 @@ export class Field extends AstNode {
         } else if (!this.get && !this.init) {
             writer.writeLine(";");
         }
+    }
+
+    private hasSameAccess(access: Access | boolean): boolean {
+        return access === true || access === this.access;
     }
 }

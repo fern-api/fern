@@ -1,5 +1,6 @@
 export { And } from "./And";
 export { Annotation } from "./Annotation";
+export { Access } from "./Access";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";

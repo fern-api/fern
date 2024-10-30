@@ -15,7 +15,7 @@ export class TestFileGenerator extends FileGenerator<
         const testClass = csharp.class_({
             name: "TestClient",
             namespace: this.context.getTestNamespace(),
-            access: "public",
+            access: csharp.Access.Public,
             annotations: [
                 csharp.annotation({
                     reference: dependencies.nunit.TestFixture

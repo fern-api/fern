@@ -8,7 +8,7 @@ export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
 export const REQUEST_OPTIONS_PARAMETER_NAME = "options";
 
 const BASE_URL_FIELD = csharp.field({
-    access: "public",
+    access: csharp.Access.Public,
     name: BASE_URL_FIELD_NAME,
     get: true,
     init: true,
@@ -29,7 +29,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         const class_ = csharp.class_({
             ...this.context.getRequestOptionsClassReference(),
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
         const optionArgs: OptionArgs = {
             optional: true,

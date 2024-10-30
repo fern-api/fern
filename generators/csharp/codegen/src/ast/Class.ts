@@ -1,4 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -15,6 +14,7 @@ import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 
 export declare namespace Class {
+    type ClassType = typeof Class.ClassType[keyof typeof Class.ClassType];
     interface Args {
         /* The name of the C# class */
         name: string;
@@ -33,7 +33,7 @@ export declare namespace Class {
         /* Defaults to false */
         readonly?: boolean;
         /* Defaults to class */
-        type?: "class" | "record" | "struct" | "record struct";
+        type?: Class.ClassType;
         /* Summary for the method */
         summary?: string;
         /* The class to inherit from if any */
@@ -66,19 +66,30 @@ export declare namespace Class {
         superClassArguments: (CodeBlock | ClassInstantiation)[];
     }
 
-    interface Operator {
-        /* The type of the method */
-        type: "implicit" | "explicit" | "==" | "!=";
-        /* The parameters of the method */
-        parameters: Parameter[];
-        /* The body of the operator */
+    interface CastOperator {
+        parameter: Parameter;
+        type: "implicit" | "explicit";
         body: CodeBlock;
-        return?: Type;
         useExpressionBody?: boolean;
     }
+    interface NormalOperator {
+        type: "==" | "!=";
+        parameters: Parameter[];
+        return: Type;
+        body: CodeBlock;
+        useExpressionBody?: boolean;
+    }
+    type Operator = CastOperator | NormalOperator;
 }
 
 export class Class extends AstNode {
+    public static readonly ClassType = {
+        Class: "class",
+        Record: "record",
+        Struct: "struct",
+        RecordStruct: "record struct"
+    } as const;
+    public static readonly Access = Access;
     public readonly name: string;
     public readonly namespace: string;
     public readonly access: Access;
@@ -91,7 +102,7 @@ export class Class extends AstNode {
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
-    public readonly type: "class" | "record" | "struct" | "record struct";
+    public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
@@ -130,7 +141,7 @@ export class Class extends AstNode {
         this.readonly = readonly ?? false;
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
-        this.type = type ?? "class";
+        this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
 
         this.parentClassReference = parentClassReference;
@@ -373,32 +384,22 @@ export class Class extends AstNode {
     private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
         writer.write("public static ");
         if (operator.type === "explicit" || operator.type === "implicit") {
-            switch (operator.type) {
-                case "implicit":
-                    writer.write("implicit ");
-                    break;
-                case "explicit":
-                    writer.write("explicit ");
-                    break;
-                default:
-                    assertNever(operator.type);
-            }
+            writer.write(`${operator.type} `);
             writer.write("operator ");
             writer.write(`${this.name}(`);
+            operator.parameter.write(writer);
         } else {
-            if (!operator.return) {
-                throw new Error("Operator must have a return type, unless it's implicit or explicit");
-            }
-            operator.return.write(writer);
+            const normalOperator = operator as Class.NormalOperator;
+            normalOperator.return.write(writer);
             writer.write(" operator ");
             writer.write(`${operator.type}(`);
+            normalOperator.parameters.forEach((parameter, idx) => {
+                parameter.write(writer);
+                if (idx < normalOperator.parameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
         }
-        operator.parameters.forEach((parameter, idx) => {
-            parameter.write(writer);
-            if (idx < operator.parameters.length - 1) {
-                writer.write(", ");
-            }
-        });
         if (operator.useExpressionBody) {
             writer.write(") => ");
             writer.writeNodeStatement(operator.body);
