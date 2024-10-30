@@ -138,13 +138,28 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeMultipartBodyParameter({
         writer,
-        valueAssignment,
         property
     }: {
         writer: php.Writer;
-        valueAssignment: php.AstNode;
         property: InlinedRequestBodyProperty;
     }): void {
+        const propertyName = this.context.getPropertyName(property.name.name);
+        let paramRef = `${this.getRequestParameterName()}->${propertyName}`;
+        let propType = property.valueType;
+        const isOptional = this.context.isOptional(propType);
+
+        if (isOptional) {
+            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            propType = this.context.dereferenceOptional(propType);
+        }
+
+        const isCollection = this.context.isCollection(propType);
+        if (isCollection) {
+            writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
+            paramRef = "$element";
+            propType = this.context.dereferenceCollection(propType);
+        }
+
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
@@ -155,12 +170,39 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     },
                     {
                         name: "value",
-                        assignment: valueAssignment
+                        assignment: this.getMultipartBodyParameterValueAssignment(paramRef, propType)
                     }
                 ],
                 on: this.getRequestBodyArgument()
             })
         );
+
+        if (isCollection) {
+            writer.endControlFlow();
+        }
+
+        if (isOptional) {
+            writer.endControlFlow();
+        }
+    }
+
+    private getMultipartBodyParameterValueAssignment(paramRef: string, typeReference: TypeReference): php.AstNode {
+        if (this.context.isJsonEncodable(typeReference)) {
+            return php.invokeMethod({
+                method: "encode",
+                arguments_: [php.codeblock(paramRef)],
+                on: this.context.getJsonEncoderClassReference(),
+                static_: true
+            });
+        } else if (this.context.hasToJsonMethod(typeReference)) {
+            return php.invokeMethod({
+                method: "toJson",
+                arguments_: [],
+                on: php.codeblock(paramRef)
+            });
+        } else {
+            return php.codeblock(paramRef);
+        }
     }
 
     private writeMultipartPart({
@@ -297,7 +339,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         break;
                     }
                     case "bodyProperty": {
-                        this.writeInlineProperty(writer, property);
+                        this.writeMultipartBodyParameter({ writer, property });
                         break;
                     }
                     default: {
@@ -343,58 +385,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
             writer.endControlFlow();
         } else {
             this.writeMultipartPartFileArray({ writer, property: fileArray });
-        }
-    }
-
-    private writeInlineProperty(writer: php.Writer, property: InlinedRequestBodyProperty) {
-        const propertyName = this.context.getPropertyName(property.name.name);
-        let paramRef = `${this.getRequestParameterName()}->${propertyName}`;
-        let propType = property.valueType;
-        const isOptional = this.context.isOptional(propType);
-
-        if (isOptional) {
-            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
-            propType = this.context.dereferenceOptional(propType);
-        }
-
-        const isCollection = this.context.isCollection(propType);
-        if (isCollection) {
-            writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
-            paramRef = "$element";
-            propType = this.context.dereferenceCollection(propType);
-        }
-
-        this.writeMultipartBodyParameter({
-            writer,
-            valueAssignment: this.getInlineValueAssignment(paramRef, propType),
-            property
-        });
-
-        if (isCollection) {
-            writer.endControlFlow();
-        }
-
-        if (isOptional) {
-            writer.endControlFlow();
-        }
-    }
-
-    private getInlineValueAssignment(paramRef: string, typeReference: TypeReference): php.AstNode {
-        if (this.context.isJsonEncodable(typeReference)) {
-            return php.invokeMethod({
-                method: "encode",
-                arguments_: [php.codeblock(paramRef)],
-                on: this.context.getJsonEncoderClassReference(),
-                static_: true
-            });
-        } else if (this.context.hasToJsonMethod(typeReference)) {
-            return php.invokeMethod({
-                method: "toJson",
-                arguments_: [],
-                on: php.codeblock(paramRef)
-            });
-        } else {
-            return php.codeblock(paramRef);
         }
     }
 }
