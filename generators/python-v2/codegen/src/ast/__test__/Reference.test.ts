@@ -13,18 +13,21 @@ describe("Reference", () => {
             const reference = python.reference({ name: "MyClass", modulePath: ["module", "submodule"] });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles single-level module path", async () => {
             const reference = python.reference({ name: "SimpleClass", modulePath: ["simple"] });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles class without module path", async () => {
             const reference = python.reference({ name: "StandaloneClass", modulePath: [] });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles deeply nested module path", async () => {
@@ -34,6 +37,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles class with one generic type", async () => {
@@ -44,6 +48,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles class with two generic types", async () => {
@@ -54,6 +59,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles class with generic type referencing another class", async () => {
@@ -75,6 +81,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(2);
         });
 
         it("handles class with alias", async () => {
@@ -85,6 +92,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles list with reference as inner type", async () => {
@@ -95,6 +103,7 @@ describe("Reference", () => {
             const listType = python.Type.list(python.Type.reference(innerReference));
             listType.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(listType.getReferences().length).toBe(2);
         });
 
         it("handles tuple with reference as inner type", async () => {
@@ -105,6 +114,7 @@ describe("Reference", () => {
             const tupleType = python.Type.tuple([python.Type.reference(innerReference), python.Type.str()]);
             tupleType.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(tupleType.getReferences().length).toBe(2);
         });
 
         it("handles set with reference as inner type", async () => {
@@ -115,6 +125,7 @@ describe("Reference", () => {
             const setType = python.Type.set(python.Type.reference(innerReference));
             setType.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(setType.getReferences().length).toBe(2);
         });
 
         it("handles union with reference as inner type", async () => {
@@ -125,6 +136,7 @@ describe("Reference", () => {
             const unionType = python.Type.union([python.Type.reference(innerReference), python.Type.str()]);
             unionType.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(unionType.getReferences().length).toBe(2);
         });
 
         it("handles dict with reference as inner type", async () => {
@@ -140,6 +152,7 @@ describe("Reference", () => {
             });
             reference.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(reference.getReferences().length).toBe(3);
         });
 
         it("handles reference with attr path", async () => {
