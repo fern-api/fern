@@ -29,18 +29,18 @@ class MultipartFormDataPart
 
     /**
      * @param string $name
-     * @param string|bool|float|int|StreamInterface $contents
+     * @param string|bool|float|int|StreamInterface $value
      * @param ?string $filename
      * @param ?array<string, string> $headers
      */
     public function __construct(
         string $name,
-        string|bool|float|int|StreamInterface $contents,
+        string|bool|float|int|StreamInterface $value,
         ?string $filename = null,
         ?array $headers = null
     ) {
         $this->name = $name;
-        $this->contents = Utils::streamFor($contents);
+        $this->contents = Utils::streamFor($value);
         $this->filename = $filename;
         $this->headers = $headers;
     }

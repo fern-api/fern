@@ -101,7 +101,7 @@ class File
 
         return new MultipartFormDataPart(
             name: $name,
-            contents: $this->stream,
+            value: $this->stream,
             filename: $this->filename,
             headers: $headers,
         );
