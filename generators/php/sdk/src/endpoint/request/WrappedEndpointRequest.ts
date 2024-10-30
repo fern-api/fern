@@ -158,14 +158,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
-    private writeMultipartPart(writer: php.Writer, paramRef: string, propertyName: string): void {
+    private writeMultipartPart(writer: php.Writer, paramRef: string, property: FileProperty): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "addPart",
                 arguments_: [
                     php.invokeMethod({
                         method: "toMultipartFormDataPart",
-                        arguments_: [php.codeblock(`'${propertyName}'`)],
+                        arguments_: [php.codeblock(`'${property.key.wireValue}'`)],
                         on: php.codeblock(paramRef)
                     })
                 ],
@@ -177,7 +177,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private writeMultipartPartFileArray(writer: php.Writer, property: FilePropertyArray): void {
         const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
-        this.writeMultipartPart(writer, "$file", property.key.wireValue);
+        this.writeMultipartPart(writer, "$file", FileProperty.fileArray(property));
         writer.endControlFlow();
     }
 
@@ -279,18 +279,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 )}`;
                                 if (file.isOptional) {
                                     writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                                    this.writeMultipartPart(
-                                        writer,
-                                        ref,
-                                        `${this.context.getPropertyName(file.key.name)}`
-                                    );
+                                    this.writeMultipartPart(writer, ref, file);
                                     writer.endControlFlow();
                                 } else {
-                                    this.writeMultipartPart(
-                                        writer,
-                                        ref,
-                                        `${this.context.getPropertyName(file.key.name)}`
-                                    );
+                                    this.writeMultipartPart(writer, ref, file);
                                 }
                                 break;
                             }
