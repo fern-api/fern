@@ -88,6 +88,11 @@ export async function runRemoteGenerationForGenerator({
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
     if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+        if (!response.ok) {
+            interactiveTaskContext.failAndThrow(
+                `Failed to register API definition: ${JSON.stringify(response.error.content)}`
+            );
+        }
         // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
         // files are required for successful code generation.
         interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
