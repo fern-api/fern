@@ -336,21 +336,21 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isCollection(typeReference: TypeReference) {
+    public isCollection(typeReference: TypeReference): boolean {
         return (
             typeReference.type === "container" &&
             (typeReference.container.type === "list" || typeReference.container.type === "set")
         );
     }
 
-    public isJsonEncodable(typeReference: TypeReference) {
+    public isJsonEncodable(typeReference: TypeReference): boolean {
         return (
             typeReference.type === "unknown" ||
             (typeReference.type === "container" && typeReference.container.type === "map")
         );
     }
 
-    public hasToJsonMethod(typeReference: TypeReference) {
+    public hasToJsonMethod(typeReference: TypeReference): boolean {
         return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
     }
 
