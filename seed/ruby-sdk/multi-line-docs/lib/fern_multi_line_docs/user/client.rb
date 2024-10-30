@@ -54,7 +54,7 @@ module SeedMultiLineDocsClient
     # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.create_user(name: "name")
+    #  multi_line_docs.user.create_user(name: "name", age: 1)
     def create_user(name:, age: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -124,7 +124,7 @@ module SeedMultiLineDocsClient
     # @return [SeedMultiLineDocsClient::User::User]
     # @example
     #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
-    #  multi_line_docs.user.create_user(name: "name")
+    #  multi_line_docs.user.create_user(name: "name", age: 1)
     def create_user(name:, age: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

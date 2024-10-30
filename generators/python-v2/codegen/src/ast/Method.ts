@@ -65,13 +65,13 @@ export class Method extends AstNode {
         if (this.type === ClassMethodType.CLASS) {
             python
                 .decorator({
-                    reference: "classmethod"
+                    callable: new CodeBlock("classmethod")
                 })
                 .write(writer);
         } else if (this.type === ClassMethodType.STATIC) {
             python
                 .decorator({
-                    reference: "staticmethod"
+                    callable: new CodeBlock("staticmethod")
                 })
                 .write(writer);
         }

@@ -13,10 +13,16 @@ from seed.submission import TestCaseResult
 from seed.commons import VariableValue_IntegerValue
 from seed.submission import ActualResult_Value
 from seed.submission import TraceResponse
+from seed.commons import DebugVariableValue_IntegerValue
+from seed.submission import ExpressionLocation
 from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
 from seed.submission import TraceResponseV2
 from seed.submission import TracedFile
 from seed.submission import WorkspaceRunDetails
+from seed.submission import ExceptionV2_Generic
+from seed.submission import ExceptionInfo
 
 
 async def test_update_test_submission_status(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -113,12 +119,38 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -141,12 +173,38 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -165,13 +223,39 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -187,13 +271,39 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -206,17 +316,55 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
     assert (
         client.admin.store_traced_workspace(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            workspace_run_details=WorkspaceRunDetails(stdout="stdout"),
+            workspace_run_details=WorkspaceRunDetails(
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                exception=ExceptionInfo(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                stdout="stdout",
+            ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -226,17 +374,55 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
     assert (
         await async_client.admin.store_traced_workspace(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            workspace_run_details=WorkspaceRunDetails(stdout="stdout"),
+            workspace_run_details=WorkspaceRunDetails(
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                exception=ExceptionInfo(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                stdout="stdout",
+            ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -254,13 +440,39 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]
@@ -275,13 +487,39 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     file=TracedFile(filename="filename", directory="directory"),
-                    stack=StackInformation(num_stack_frames=1),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                                Scope(variables={"variables": DebugVariableValue_IntegerValue(value=1)}),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
                 ),
             ],
         )  # type: ignore[func-returns-value]

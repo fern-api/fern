@@ -9,21 +9,11 @@ from seed import Color
 async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.path_param.send(
-            operand=Operand.GREATER_THAN,
-            maybe_operand=Operand.LESS_THAN,
-            operand_or_color=Color.RED,
-            maybe_operand_or_color=Color.RED,
-        )  # type: ignore[func-returns-value]
+        client.path_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.path_param.send(
-            operand=Operand.GREATER_THAN,
-            maybe_operand=Operand.LESS_THAN,
-            operand_or_color=Color.RED,
-            maybe_operand_or_color=Color.RED,
-        )  # type: ignore[func-returns-value]
+        await async_client.path_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )

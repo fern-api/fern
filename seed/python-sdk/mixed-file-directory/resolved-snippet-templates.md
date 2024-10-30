@@ -13,7 +13,9 @@ client.organization.create(
 
 
 client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.user.list(
+	limit=1
+)
  
 ```                        
 
@@ -22,7 +24,9 @@ undefined
 
 
 client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.user.events.list_events(
+	limit=1
+)
  
 ```                        
 

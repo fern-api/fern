@@ -24,8 +24,9 @@ import { SeedAudiencesEnvironment, SeedAudiencesClient, SeedAudiences } from "@f
 
 const client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });
 await client.foo.find({
-    publicProperty: undefined,
-    privateProperty: undefined,
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1,
 });
 ```
 

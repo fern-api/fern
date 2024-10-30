@@ -21,7 +21,8 @@ public class RefreshTokenTest : BaseMockServerTest
               "client_secret": "client_secret",
               "refresh_token": "refresh_token",
               "audience": "https://api.example.com",
-              "grant_type": "refresh_token"
+              "grant_type": "refresh_token",
+              "scope": "scope"
             }
             """;
 
@@ -56,7 +57,7 @@ public class RefreshTokenTest : BaseMockServerTest
                 RefreshToken = "refresh_token",
                 Audience = "https://api.example.com",
                 GrantType = "refresh_token",
-                Scope = null,
+                Scope = "scope",
             },
             RequestOptions
         );

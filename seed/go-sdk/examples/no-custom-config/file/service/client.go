@@ -7,6 +7,7 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
+	fmt "fmt"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	file "github.com/examples/fern/file"
@@ -55,6 +56,7 @@ func (c *Client) GetFile(
 	endpointURL := core.EncodeURL(baseURL+"/file/%v", filename)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Add("X-File-API-Version", fmt.Sprintf("%v", request.XFileApiVersion))
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

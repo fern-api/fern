@@ -21,6 +21,7 @@ public class SendTest : BaseMockServerTest
               "query": "query",
               "stream": false,
               "context": "You're super wise",
+              "maybeContext": "You're super wise",
               "containerObject": {
                 "nestedObjects": [
                   {
@@ -68,7 +69,7 @@ public class SendTest : BaseMockServerTest
                 Query = "query",
                 Stream = false,
                 Context = "You're super wise",
-                MaybeContext = null,
+                MaybeContext = "You're super wise",
                 ContainerObject = new ContainerObject
                 {
                     NestedObjects = new List<NestedObjectWithLiterals>()

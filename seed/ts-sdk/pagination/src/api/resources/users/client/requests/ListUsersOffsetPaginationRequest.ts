@@ -6,7 +6,12 @@ import * as SeedPagination from "../../../../index";
 
 /**
  * @example
- *     {}
+ *     {
+ *         page: 1,
+ *         perPage: 1,
+ *         order: "asc",
+ *         startingAfter: "starting_after"
+ *     }
  */
 export interface ListUsersOffsetPaginationRequest {
     /**

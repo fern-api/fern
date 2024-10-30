@@ -16,7 +16,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.GetMetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		&acme.GetMetadataRequest{
 			Shallow: acme.Bool(
@@ -53,7 +53,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.GetMetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		&acme.GetMetadataRequest{
 			Shallow: acme.Bool(
@@ -87,7 +87,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.CreateBigEntity(
+	client.Service.CreateBigEntity(
 		context.TODO(),
 		&acme.BigEntity{
 			CastMember: &acme.CastMember{
@@ -118,7 +118,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.CreateMovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		&acme.Movie{
 			ID: "movie-c06a4ad7",

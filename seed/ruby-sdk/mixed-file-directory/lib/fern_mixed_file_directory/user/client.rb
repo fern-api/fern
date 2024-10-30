@@ -23,7 +23,7 @@ module SeedMixedFileDirectoryClient
     # @return [Array<SeedMixedFileDirectoryClient::User::User>]
     # @example
     #  mixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_file_directory.user.list
+    #  mixed_file_directory.user.list(limit: 1)
     def list(limit: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -63,7 +63,7 @@ module SeedMixedFileDirectoryClient
     # @return [Array<SeedMixedFileDirectoryClient::User::User>]
     # @example
     #  mixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_file_directory.user.list
+    #  mixed_file_directory.user.list(limit: 1)
     def list(limit: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

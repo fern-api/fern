@@ -82,7 +82,7 @@ List all users.
 <dd>
 
 ```csharp
-await client.User.ListAsync(new ListUsersRequest());
+await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>
@@ -137,7 +137,7 @@ List all user events.
 <dd>
 
 ```csharp
-await client.User.Events.ListEventsAsync(new ListUserEventsRequest());
+await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
 ```
 </dd>
 </dl>

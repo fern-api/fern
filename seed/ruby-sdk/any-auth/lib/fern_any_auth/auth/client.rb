@@ -26,7 +26,11 @@ module SeedAnyAuthClient
     #    token: "YOUR_AUTH_TOKEN",
     #    api_key: "YOUR_API_KEY"
     #  )
-    #  any_auth.auth.get_token(client_id: "client_id", client_secret: "client_secret")
+    #  any_auth.auth.get_token(
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
+    #  )
     def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -76,7 +80,11 @@ module SeedAnyAuthClient
     #    token: "YOUR_AUTH_TOKEN",
     #    api_key: "YOUR_API_KEY"
     #  )
-    #  any_auth.auth.get_token(client_id: "client_id", client_secret: "client_secret")
+    #  any_auth.auth.get_token(
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
+    #  )
     def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

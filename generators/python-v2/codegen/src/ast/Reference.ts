@@ -26,7 +26,7 @@ export declare namespace Reference {
 export class Reference extends AstNode {
     public readonly name: string;
     public readonly modulePath: ModulePath;
-    private readonly genericTypes: Type[];
+    private readonly genericTypes: AstNode[];
     public readonly alias: string | undefined;
     private readonly attribute: AttrPath;
 
@@ -38,6 +38,10 @@ export class Reference extends AstNode {
         this.alias = alias;
         this.attribute = attribute ?? [];
         this.references.push(this);
+
+        this.genericTypes.forEach((genericType) => {
+            this.inheritReferences(genericType);
+        });
     }
 
     public write(writer: Writer): void {

@@ -27,7 +27,7 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs && cp -R ../../test-definitions/fern dist",
+    "dist:cli": "pnpm compile && node build.cjs && cp -R ../../test-definitions/fern dist",
     "generate": "fern generate --local"
   },
   "dependencies": {},

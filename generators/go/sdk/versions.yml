@@ -1,3 +1,15 @@
+- version: 0.28.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where optional, allow-multiple query parameter snippets were not rendered.
+    - type: fix
+      summary: >-
+        Fix an issue where service headers were not included in the generated in-lined request.
+    - type: fix
+      summary: >-
+        Fix an issue where literal types were included as path parameter arguments.
+  irVersion: 40
 - version: 0.28.0
   changelogEntry:
     - type: feat

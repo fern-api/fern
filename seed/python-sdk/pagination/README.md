@@ -21,12 +21,17 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
+from seed.users import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_body_cursor_pagination()
+response = client.users.list_with_body_cursor_pagination(
+    pagination=WithCursor(
+        cursor="cursor",
+    ),
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -42,6 +47,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
+from seed.users import WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -50,7 +56,11 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_body_cursor_pagination()
+    response = await client.users.list_with_body_cursor_pagination(
+        pagination=WithCursor(
+            cursor="cursor",
+        ),
+    )
     async for item in response:
         yield item
     # alternatively, you can paginate page-by-page
@@ -87,7 +97,12 @@ client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_cursor_pagination()
+response = client.users.list_with_cursor_pagination(
+    page=1,
+    per_page=1,
+    order="asc",
+    starting_after="starting_after",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page

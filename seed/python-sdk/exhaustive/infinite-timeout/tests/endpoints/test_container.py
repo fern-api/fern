@@ -86,8 +86,10 @@ async def test_get_and_return_map_of_prim_to_object(client: SeedExhaustive, asyn
 async def test_get_and_return_optional(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response: typing.Any = {"string": "string"}
     expected_types: typing.Any = {"string": None}
-    response = client.endpoints.container.get_and_return_optional()
+    response = client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string="string"))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.endpoints.container.get_and_return_optional()
+    async_response = await async_client.endpoints.container.get_and_return_optional(
+        request=ObjectWithRequiredField(string="string")
+    )
     validate_response(async_response, expected_response, expected_types)

@@ -31,7 +31,6 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "^53.15.0",
-    "@wasm-fmt/gofmt": "^0.4.9",
     "zod": "^3.22.3"
   },
   "devDependencies": {

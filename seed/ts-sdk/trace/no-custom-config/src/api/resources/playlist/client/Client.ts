@@ -42,6 +42,7 @@ export class Playlist {
      * @example
      *     await client.playlist.createPlaylist(1, {
      *         datetime: "2024-01-15T09:30:00Z",
+     *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
      *             name: "name",
      *             problems: ["problems", "problems"]
@@ -127,8 +128,10 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
+     *         limit: 1,
      *         otherField: "otherField",
      *         multiLineDocs: "multiLineDocs",
+     *         optionalMultipleField: "optionalMultipleField",
      *         multipleField: "multipleField"
      *     })
      */
@@ -317,7 +320,10 @@ export class Playlist {
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
-     *     await client.playlist.updatePlaylist(1, "playlistId", undefined)
+     *     await client.playlist.updatePlaylist(1, "playlistId", {
+     *         name: "name",
+     *         problems: ["problems", "problems"]
+     *     })
      */
     public async updatePlaylist(
         serviceParam: number,

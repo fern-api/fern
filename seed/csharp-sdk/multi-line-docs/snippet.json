@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(new CreateUserRequest { Name = \"name\", Age = null });\n"
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(new CreateUserRequest { Name = \"name\", Age = 1 });\n"
             }
         }
     ]

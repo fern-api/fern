@@ -8,7 +8,9 @@ import * as SeedEnum from "../../../../index";
  * @example
  *     {
  *         operand: ">",
- *         operandOrColor: "red"
+ *         maybeOperand: ">",
+ *         operandOrColor: "red",
+ *         maybeOperandOrColor: undefined
  *     }
  */
 export interface SendEnumListAsQueryParamRequest {

@@ -16,7 +16,11 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {}
+            {
+              "pagination": {
+                "page": 1
+              }
+            }
             """;
 
         const string mockResponse = """
@@ -61,7 +65,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithBodyOffsetPaginationAsync(
-            new ListUsersBodyOffsetPaginationRequest { Pagination = null },
+            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } },
             RequestOptions
         );
         JToken

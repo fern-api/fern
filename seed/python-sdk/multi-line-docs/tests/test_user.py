@@ -22,8 +22,8 @@ async def test_get_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiL
 async def test_create_user(client: SeedMultiLineDocs, async_client: AsyncSeedMultiLineDocs) -> None:
     expected_response: typing.Any = {"id": "id", "name": "name", "age": 1}
     expected_types: typing.Any = {"id": None, "name": None, "age": "integer"}
-    response = client.user.create_user(name="name")
+    response = client.user.create_user(name="name", age=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.create_user(name="name")
+    async_response = await async_client.user.create_user(name="name", age=1)
     validate_response(async_response, expected_response, expected_types)

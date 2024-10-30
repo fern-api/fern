@@ -104,7 +104,9 @@ export class QueryParam {
      * @example
      *     await client.queryParam.sendList({
      *         operand: ">",
-     *         operandOrColor: "red"
+     *         maybeOperand: ">",
+     *         operandOrColor: "red",
+     *         maybeOperandOrColor: undefined
      *     })
      */
     public async sendList(

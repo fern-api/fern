@@ -6,7 +6,7 @@
  * @example
  *     {
  *         name: "name",
- *         age: undefined
+ *         age: 1
  *     }
  */
 export interface CreateUserRequest {
