@@ -399,15 +399,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isDate(typeReference: TypeReference): boolean {
-        return this.isAliasOfPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
-    }
-
-    public isDateTime(typeReference: TypeReference): boolean {
-        return this.isAliasOfPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
-    }
-
-    public isAliasOfPrimitive({
+    public isEquivalentToPrimitive({
         typeReference,
         primitive
     }: {
@@ -437,6 +429,14 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             }
         }
+    }
+
+    public isDate(typeReference: TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    }
+
+    public isDateTime(typeReference: TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
     }
 
     public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
