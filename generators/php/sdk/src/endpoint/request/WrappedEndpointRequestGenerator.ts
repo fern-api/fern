@@ -12,6 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
@@ -87,10 +88,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    clazz.addField(this.toField({ property }));
+                    clazz.addField(this.inlinePropertyToField({ property }));
                 }
                 for (const property of request.extendedProperties ?? []) {
-                    clazz.addField(this.toField({ property, inherited: true }));
+                    clazz.addField(this.inlinePropertyToField({ property, inherited: true }));
                 }
                 for (const declaredTypeName of request.extends) {
                     clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
@@ -100,41 +101,15 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 for (const property of fileUpload.properties) {
                     switch (property.type) {
                         case "file": {
-                            // TODO: Clean this up.
-                            const fileProperty = property.value;
-                            switch (fileProperty.type) {
-                                case "file": {
-                                    // TODO: Clean this up.
-                                    const file = fileProperty;
-                                    const type = php.Type.reference(this.context.getFileClassReference());
-                                    clazz.addField(
-                                        php.field({
-                                            name: this.context.getPropertyName(file.key.name),
-                                            type: file.isOptional ? php.Type.optional(type) : type,
-                                            access: "public"
-                                        })
-                                    );
-                                    break;
-                                }
-                                case "fileArray": {
-                                    // TODO: Clean this up.
-                                    const fileArray = fileProperty;
-                                    const type = php.Type.array(
-                                        php.Type.reference(this.context.getFileClassReference())
-                                    );
-                                    clazz.addField(
-                                        php.field({
-                                            name: this.context.getPropertyName(fileArray.key.name),
-                                            type: fileArray.isOptional ? php.Type.optional(type) : type,
-                                            access: "public"
-                                        })
-                                    );
-                                }
-                            }
+                            clazz.addField(this.filePropertyToField(property.value));
                             break;
                         }
                         case "bodyProperty": {
-                            clazz.addField(this.toField({ property }));
+                            clazz.addField(this.inlinePropertyToField({ property }));
+                            break;
+                        }
+                        default: {
+                            assertNever(property);
                         }
                     }
                 }
@@ -151,7 +126,35 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
     }
 
-    private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited?: boolean }): php.Field {
+    private filePropertyToField(fileProperty: FileProperty): php.Field {
+        let type;
+        switch (fileProperty.type) {
+            case "file": {
+                type = php.Type.reference(this.context.getFileClassReference());
+                break;
+            }
+            case "fileArray": {
+                type = php.Type.array(php.Type.reference(this.context.getFileClassReference()));
+                break;
+            }
+            default: {
+                assertNever(fileProperty);
+            }
+        }
+        return php.field({
+            name: this.context.getPropertyName(fileProperty.key.name),
+            type: fileProperty.isOptional ? php.Type.optional(type) : type,
+            access: "public"
+        });
+    }
+
+    private inlinePropertyToField({
+        property,
+        inherited
+    }: {
+        property: InlinedRequestBodyProperty;
+        inherited?: boolean;
+    }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,
