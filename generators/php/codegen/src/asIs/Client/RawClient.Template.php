@@ -77,7 +77,6 @@ class RawClient
                 $request->headers
             ),
             MultipartApiRequest::class => array_merge(
-                ["Content-Type" => "multipart/form-data"],
                 $this->headers,
                 $request->headers
             ),

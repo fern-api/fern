@@ -612,8 +612,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: ^53.15.0
+        version: 53.15.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -661,8 +661,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: ^53.15.0
+        version: 53.15.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -721,8 +721,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
+        specifier: ^53.15.0
+        version: 53.15.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
