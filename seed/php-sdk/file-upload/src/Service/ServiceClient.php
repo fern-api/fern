@@ -195,7 +195,12 @@ class ServiceClient
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
         $body = new MultipartFormData();
-        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        $body->addPart(
+            $request->file->toMultipartFormDataPart(
+                name: 'file',
+                contentType: 'application/octet-stream',
+            ),
+        );
         $body->add(name: 'foo', value: $request->foo);
         $body->add(name: 'bar', value: $request->bar->toJson());
         try {
