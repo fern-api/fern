@@ -20,7 +20,7 @@ export declare namespace RawClient {
         /** The reference to the request body */
         bodyReference?: php.CodeBlock;
         /** The reference to the request body class */
-        classReference: php.ClassReference;
+        requestTypeClassReference: php.ClassReference;
     }
 }
 
@@ -110,7 +110,7 @@ export class RawClient {
                     method: RawClient.SEND_REQUEST_METHOD_NAME,
                     arguments_: [
                         php.instantiateClass({
-                            classReference: args.classReference,
+                            classReference: args.requestTypeClassReference,
                             arguments_,
                             multiline: true
                         })
