@@ -29,13 +29,7 @@ public class ListEventsTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users/events/")
-                    .WithParam("limit", "1")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/events/").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -44,7 +38,7 @@ public class ListEventsTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.ListEventsAsync(
-            new ListUserEventsRequest { Limit = 1 },
+            new ListUserEventsRequest(),
             RequestOptions
         );
         JToken

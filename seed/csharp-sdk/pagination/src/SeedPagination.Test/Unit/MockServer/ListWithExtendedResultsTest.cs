@@ -22,13 +22,7 @@ public class ListWithExtendedResultsTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithParam("cursor", "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -37,7 +31,7 @@ public class ListWithExtendedResultsTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithExtendedResultsAsync(
-            new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
+            new ListUsersExtendedRequest(),
             RequestOptions
         );
         JToken

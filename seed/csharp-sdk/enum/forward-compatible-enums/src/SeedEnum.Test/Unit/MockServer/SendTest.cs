@@ -17,7 +17,6 @@ public class SendTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/query")
                     .WithParam("operand", ">")
-                    .WithParam("maybeOperand", ">")
                     .WithParam("operandOrColor", "red")
                     .UsingPost()
             )
@@ -29,9 +28,7 @@ public class SendTest : BaseMockServerTest
                     new SendEnumAsQueryParamRequest
                     {
                         Operand = Operand.GreaterThan,
-                        MaybeOperand = Operand.GreaterThan,
                         OperandOrColor = Color.Red,
-                        MaybeOperandOrColor = null,
                     },
                     RequestOptions
                 )

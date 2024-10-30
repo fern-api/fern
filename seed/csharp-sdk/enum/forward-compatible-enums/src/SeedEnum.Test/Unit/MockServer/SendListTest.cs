@@ -17,7 +17,6 @@ public class SendListTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/query-list")
                     .WithParam("operand", ">")
-                    .WithParam("maybeOperand", ">")
                     .WithParam("operandOrColor", "red")
                     .UsingPost()
             )
@@ -29,9 +28,7 @@ public class SendListTest : BaseMockServerTest
                     new SendEnumListAsQueryParamRequest
                     {
                         Operand = [Operand.GreaterThan],
-                        MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [null],
                     },
                     RequestOptions
                 )

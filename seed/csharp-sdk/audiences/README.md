@@ -19,14 +19,7 @@ Instantiate and use the client with the following:
 using SeedAudiences;
 
 var client = new SeedAudiencesClient();
-await client.Foo.FindAsync(
-    new FindRequest
-    {
-        OptionalString = "optionalString",
-        PublicProperty = "publicProperty",
-        PrivateProperty = 1,
-    }
-);
+await client.Foo.FindAsync(new FindRequest { PublicProperty = null, PrivateProperty = null });
 ```
 
 ## Exception Handling

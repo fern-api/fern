@@ -275,9 +275,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 <dd>
 
 ```csharp
-await client.Endpoints.Container.GetAndReturnOptionalAsync(
-    new ObjectWithRequiredField { String = "string" }
-);
+await client.Endpoints.Container.GetAndReturnOptionalAsync(null);
 ```
 </dd>
 </dl>
@@ -494,19 +492,19 @@ await client.Endpoints.HttpMethods.TestPatchAsync(
     "id",
     new ObjectWithOptionalField
     {
-        String = "string",
-        Integer = 1,
-        Long = 1000000,
-        Double = 1.1,
-        Bool = true,
-        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Date = new DateOnly(2023, 1, 15),
-        Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        Base64 = "SGVsbG8gd29ybGQh",
-        List = new List<string>() { "list", "list" },
-        Set = new HashSet<string>() { "set" },
-        Map = new Dictionary<int, string>() { { 1, "map" } },
-        Bigint = "1000000",
+        String = null,
+        Integer = null,
+        Long = null,
+        Double = null,
+        Bool = null,
+        Datetime = null,
+        Date = null,
+        Uuid = null,
+        Base64 = null,
+        List = null,
+        Set = null,
+        Map = null,
+        Bigint = null,
     }
 );
 ```
@@ -600,19 +598,19 @@ await client.Endpoints.HttpMethods.TestDeleteAsync("id");
 await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     new ObjectWithOptionalField
     {
-        String = "string",
-        Integer = 1,
-        Long = 1000000,
-        Double = 1.1,
-        Bool = true,
-        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Date = new DateOnly(2023, 1, 15),
-        Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        Base64 = "SGVsbG8gd29ybGQh",
-        List = new List<string>() { "list", "list" },
-        Set = new HashSet<string>() { "set" },
-        Map = new Dictionary<int, string>() { { 1, "map" } },
-        Bigint = "1000000",
+        String = null,
+        Integer = null,
+        Long = null,
+        Double = null,
+        Bool = null,
+        Datetime = null,
+        Date = null,
+        Uuid = null,
+        Base64 = null,
+        List = null,
+        Set = null,
+        Map = null,
+        Bigint = null,
     }
 );
 ```
@@ -748,26 +746,7 @@ await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
 
 ```csharp
 await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
-    new NestedObjectWithOptionalField
-    {
-        String = "string",
-        NestedObject = new ObjectWithOptionalField
-        {
-            String = "string",
-            Integer = 1,
-            Long = 1000000,
-            Double = 1.1,
-            Bool = true,
-            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-            Date = new DateOnly(2023, 1, 15),
-            Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            Base64 = "SGVsbG8gd29ybGQh",
-            List = new List<string>() { "list", "list" },
-            Set = new HashSet<string>() { "set" },
-            Map = new Dictionary<int, string>() { { 1, "map" } },
-            Bigint = "1000000",
-        },
-    }
+    new NestedObjectWithOptionalField { String = null, NestedObject = null }
 );
 ```
 </dd>
@@ -815,19 +794,19 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
         String = "string",
         NestedObject = new ObjectWithOptionalField
         {
-            String = "string",
-            Integer = 1,
-            Long = 1000000,
-            Double = 1.1,
-            Bool = true,
-            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-            Date = new DateOnly(2023, 1, 15),
-            Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            Base64 = "SGVsbG8gd29ybGQh",
-            List = new List<string>() { "list", "list" },
-            Set = new HashSet<string>() { "set" },
-            Map = new Dictionary<int, string>() { { 1, "map" } },
-            Bigint = "1000000",
+            String = null,
+            Integer = null,
+            Long = null,
+            Double = null,
+            Bool = null,
+            Datetime = null,
+            Date = null,
+            Uuid = null,
+            Base64 = null,
+            List = null,
+            Set = null,
+            Map = null,
+            Bigint = null,
         },
     }
 );
@@ -886,19 +865,19 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
             String = "string",
             NestedObject = new ObjectWithOptionalField
             {
-                String = "string",
-                Integer = 1,
-                Long = 1000000,
-                Double = 1.1,
-                Bool = true,
-                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-                Date = new DateOnly(2023, 1, 15),
-                Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                Base64 = "SGVsbG8gd29ybGQh",
-                List = new List<string>() { "list", "list" },
-                Set = new HashSet<string>() { "set" },
-                Map = new Dictionary<int, string>() { { 1, "map" } },
-                Bigint = "1000000",
+                String = null,
+                Integer = null,
+                Long = null,
+                Double = null,
+                Bool = null,
+                Datetime = null,
+                Date = null,
+                Uuid = null,
+                Base64 = null,
+                List = null,
+                Set = null,
+                Map = null,
+                Bigint = null,
             },
         },
         new NestedObjectWithRequiredField
@@ -906,19 +885,19 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
             String = "string",
             NestedObject = new ObjectWithOptionalField
             {
-                String = "string",
-                Integer = 1,
-                Long = 1000000,
-                Double = 1.1,
-                Bool = true,
-                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-                Date = new DateOnly(2023, 1, 15),
-                Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                Base64 = "SGVsbG8gd29ybGQh",
-                List = new List<string>() { "list", "list" },
-                Set = new HashSet<string>() { "set" },
-                Map = new Dictionary<int, string>() { { 1, "map" } },
-                Bigint = "1000000",
+                String = null,
+                Integer = null,
+                Long = null,
+                Double = null,
+                Bool = null,
+                Datetime = null,
+                Date = null,
+                Uuid = null,
+                Base64 = null,
+                List = null,
+                Set = null,
+                Map = null,
+                Bigint = null,
             },
         },
     }
@@ -1680,19 +1659,19 @@ await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
         Integer = 1,
         NestedObject = new ObjectWithOptionalField
         {
-            String = "string",
-            Integer = 1,
-            Long = 1000000,
-            Double = 1.1,
-            Bool = true,
-            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-            Date = new DateOnly(2023, 1, 15),
-            Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            Base64 = "SGVsbG8gd29ybGQh",
-            List = new List<string>() { "list", "list" },
-            Set = new HashSet<string>() { "set" },
-            Map = new Dictionary<int, string>() { { 1, "map" } },
-            Bigint = "1000000",
+            String = null,
+            Integer = null,
+            Long = null,
+            Double = null,
+            Bool = null,
+            Datetime = null,
+            Date = null,
+            Uuid = null,
+            Base64 = null,
+            List = null,
+            Set = null,
+            Map = null,
+            Bigint = null,
         },
     }
 );

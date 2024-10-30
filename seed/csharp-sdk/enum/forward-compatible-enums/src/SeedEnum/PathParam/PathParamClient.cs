@@ -19,12 +19,14 @@ public partial class PathParamClient
 
     /// <example>
     /// <code>
-    /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
+    /// await client.PathParam.SendAsync(Operand.GreaterThan, Operand.LessThan, Color.Red, Color.Red);
     /// </code>
     /// </example>
     public async Task SendAsync(
         Operand operand,
+        Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
+        OneOf<Color, Operand>? maybeOperandOrColor,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -34,7 +36,7 @@ public partial class PathParamClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = $"path/{operand}/{operandOrColor}",
+                Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
                 Options = options,
             },
             cancellationToken

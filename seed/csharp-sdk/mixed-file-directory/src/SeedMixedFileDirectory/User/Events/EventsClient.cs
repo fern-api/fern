@@ -26,7 +26,7 @@ public partial class EventsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
+    /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest());
     /// </code>
     /// </example>
     public async Task<IEnumerable<Event>> ListEventsAsync(
