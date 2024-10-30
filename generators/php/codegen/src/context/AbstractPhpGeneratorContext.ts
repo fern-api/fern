@@ -27,6 +27,7 @@ import { php } from "..";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
 import { Type } from "../ast";
+import { assertNever } from "@fern-api/core-utils";
 
 export interface FileLocation {
     namespace: string;
@@ -260,83 +261,67 @@ export abstract class AbstractPhpGeneratorContext<
                 return typeReference;
             }
             case "unknown":
-                return typeReference;
             case "primitive":
                 return typeReference;
         }
     }
 
     public dereferenceCollection(typeReference: TypeReference): TypeReference {
-        if (!this.isCollection(typeReference)) {
-            return typeReference;
-        }
-
-        typeReference = typeReference as TypeReference.Container;
-        switch (typeReference.container.type) {
-            case "list": {
-                return typeReference.container.list._visit({
-                    container: (container) => {
-                        if (this.isCollection(TypeReference.container(container))) {
-                            return this.dereferenceCollection(TypeReference.container(container));
-                        } else {
-                            return TypeReference.container(container) as TypeReference;
-                        }
-                    },
-                    named: (named) => {
-                        return TypeReference.named(named) as TypeReference;
-                    },
-                    primitive: (primitive) => {
-                        return TypeReference.primitive(primitive) as TypeReference;
-                    },
-                    unknown: () => {
-                        return TypeReference.unknown() as TypeReference;
-                    },
-                    _other: () => {
-                        return TypeReference.unknown() as TypeReference;
-                    }
-                });
-            }
-            case "set": {
-                return typeReference.container.set._visit({
-                    container: (container) => {
-                        if (this.isCollection(TypeReference.container(container))) {
-                            return this.dereferenceCollection(TypeReference.container(container));
-                        } else {
-                            return TypeReference.container(container) as TypeReference;
-                        }
-                    },
-                    named: (named) => {
-                        return TypeReference.named(named) as TypeReference;
-                    },
-                    primitive: (primitive) => {
-                        return TypeReference.primitive(primitive) as TypeReference;
-                    },
-                    unknown: () => {
-                        return TypeReference.unknown() as TypeReference;
-                    },
-                    _other: () => {
-                        return TypeReference.unknown() as TypeReference;
-                    }
-                });
-            }
-            default: {
+        switch (typeReference.type) {
+            case "container": {
+                if (typeReference.container.type === "list") {
+                    return this.dereferenceCollection(typeReference.container.list);
+                } else if (typeReference.container.type === "set") {
+                    return this.dereferenceCollection(typeReference.container.set);
+                }
                 return typeReference;
             }
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.dereferenceCollection(typeDeclaration.shape.aliasOf);
+                }
+                return typeReference;
+            }
+            case "primitive":
+            case "unknown":
+                return typeReference;
         }
     }
 
     public isCollection(typeReference: TypeReference): boolean {
-        return (
-            typeReference.type === "container" &&
-            (typeReference.container.type === "list" || typeReference.container.type === "set")
-        );
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "list" || typeReference.container.type === "set";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isCollection(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+            case "unknown":
+                return false;
+        }
     }
 
     public isJsonEncodable(typeReference: TypeReference): boolean {
-        return (
-            typeReference.type === "unknown" ||
-            (typeReference.type === "container" && typeReference.container.type === "map")
-        );
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "map";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isJsonEncodable(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+                return false;
+            case "unknown":
+                return true;
+        }
     }
 
     public hasToJsonMethod(typeReference: TypeReference): boolean {
