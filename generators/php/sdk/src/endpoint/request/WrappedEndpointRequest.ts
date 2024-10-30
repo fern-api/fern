@@ -135,11 +135,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
-    private writeMultipartBodyParameter(
-        writer: php.Writer,
-        valueAssignment: php.AstNode,
-        property: InlinedRequestBodyProperty
-    ): void {
+    private writeMultipartBodyParameter({
+        writer,
+        valueAssignment,
+        property
+    }: {
+        writer: php.Writer;
+        valueAssignment: php.AstNode;
+        property: InlinedRequestBodyProperty;
+    }): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "add",
@@ -158,7 +162,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
-    private writeMultipartPart(writer: php.Writer, paramRef: string, property: FileProperty): void {
+    private writeMultipartPart({
+        writer,
+        paramRef,
+        property
+    }: {
+        writer: php.Writer;
+        paramRef: string;
+        property: FileProperty;
+    }): void {
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "addPart",
@@ -174,10 +186,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
-    private writeMultipartPartFileArray(writer: php.Writer, property: FilePropertyArray): void {
+    private writeMultipartPartFileArray({
+        writer,
+        property
+    }: {
+        writer: php.Writer;
+        property: FilePropertyArray;
+    }): void {
         const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
-        this.writeMultipartPart(writer, "$file", FileProperty.fileArray(property));
+        this.writeMultipartPart({ writer, paramRef: "$file", property: FileProperty.fileArray(property) });
         writer.endControlFlow();
     }
 
@@ -274,15 +292,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             case "file": {
                                 // TODO(ajgateno): Clean this up.
                                 const file = fileProperty;
-                                const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
+                                const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(
                                     file.key.name
                                 )}`;
                                 if (file.isOptional) {
-                                    writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                                    this.writeMultipartPart(writer, ref, file);
+                                    writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+                                    this.writeMultipartPart({ writer, paramRef, property: file });
                                     writer.endControlFlow();
                                 } else {
-                                    this.writeMultipartPart(writer, ref, file);
+                                    this.writeMultipartPart({ writer, paramRef, property: file });
                                 }
                                 break;
                             }
@@ -294,10 +312,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                         fileArray.key.name
                                     )}`;
                                     writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                                    this.writeMultipartPartFileArray(writer, fileArray);
+                                    this.writeMultipartPartFileArray({ writer, property: fileArray });
                                     writer.endControlFlow();
                                 } else {
-                                    this.writeMultipartPartFileArray(writer, fileArray);
+                                    this.writeMultipartPartFileArray({ writer, property: fileArray });
                                 }
                             }
                         }
@@ -324,28 +342,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         }
 
                         if (this.context.isJsonEncodable(propType)) {
-                            this.writeMultipartBodyParameter(
+                            this.writeMultipartBodyParameter({
                                 writer,
-                                php.invokeMethod({
+                                valueAssignment: php.invokeMethod({
                                     method: "encode",
                                     arguments_: [php.codeblock(ref)],
                                     on: this.context.getJsonEncoderClassReference(),
                                     static_: true
                                 }),
-                                bodyProperty
-                            );
+                                property: bodyProperty
+                            });
                         } else if (this.context.hasToJsonMethod(propType)) {
-                            this.writeMultipartBodyParameter(
+                            this.writeMultipartBodyParameter({
                                 writer,
-                                php.invokeMethod({
+                                valueAssignment: php.invokeMethod({
                                     method: "toJson",
                                     arguments_: [],
                                     on: php.codeblock(ref)
                                 }),
-                                bodyProperty
-                            );
+                                property: bodyProperty
+                            });
                         } else {
-                            this.writeMultipartBodyParameter(writer, php.codeblock(ref), bodyProperty);
+                            this.writeMultipartBodyParameter({
+                                writer,
+                                valueAssignment: php.codeblock(ref),
+                                property: bodyProperty
+                            });
                         }
 
                         if (isCollection) {
