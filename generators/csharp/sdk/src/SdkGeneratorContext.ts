@@ -139,7 +139,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
-        if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.StringEnumSerializer);
@@ -151,7 +151,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [AsIsFiles.RawClientTests];
-        if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.EnumSerializerTests);

@@ -38,7 +38,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer
         ];
-        if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.StringEnumSerializer);
@@ -50,7 +50,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [];
-        if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.EnumSerializerTests);

@@ -4,7 +4,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     namespace: z.string().optional(),
     "simplify-object-dictionaries": z.boolean().optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
-    "enable-forward-compatible-enums": z.boolean().optional(),
+    "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "package-id": z.string().optional()
 });
 

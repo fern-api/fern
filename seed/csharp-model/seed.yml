@@ -39,10 +39,10 @@ fixtures:
       outputFolder: read-only-memory
   enum:
     - customConfig:
-        enable-forward-compatible-enums: true
+        experimental-enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
-        enable-forward-compatible-enums: false
+        experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
 scripts:
   - docker: bitnami/dotnet-sdk:8
