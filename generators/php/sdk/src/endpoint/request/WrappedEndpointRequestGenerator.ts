@@ -106,14 +106,11 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                                 case "file": {
                                     // TODO: Clean this up.
                                     const file = fileProperty;
-                                    let type = php.Type.reference(this.context.getFileClassReference());
-                                    if (file.isOptional) {
-                                        type = php.Type.optional(type);
-                                    }
+                                    const type = php.Type.reference(this.context.getFileClassReference());
                                     clazz.addField(
                                         php.field({
                                             name: this.context.getPropertyName(file.key.name),
-                                            type,
+                                            type: file.isOptional ? php.Type.optional(type) : type,
                                             access: "public"
                                         })
                                     );
@@ -122,14 +119,13 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                                 case "fileArray": {
                                     // TODO: Clean this up.
                                     const fileArray = fileProperty;
-                                    let type = php.Type.array(php.Type.reference(this.context.getFileClassReference()));
-                                    if (fileArray.isOptional) {
-                                        type = php.Type.optional(type);
-                                    }
+                                    const type = php.Type.array(
+                                        php.Type.reference(this.context.getFileClassReference())
+                                    );
                                     clazz.addField(
                                         php.field({
                                             name: this.context.getPropertyName(fileArray.key.name),
-                                            type,
+                                            type: fileArray.isOptional ? php.Type.optional(type) : type,
                                             access: "public"
                                         })
                                     );
