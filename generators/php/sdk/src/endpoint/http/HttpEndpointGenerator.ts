@@ -113,7 +113,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
             reference: () => this.context.getJsonApiRequestClassReference(),
             fileUpload: () => this.context.getMultipartApiRequestClassReference(),
-            bytes: () => this.context.getJsonApiRequestClassReference(),
+            bytes: () => this.context.getJsonApiRequestClassReference(), // TODO: Add support for BytesApiRequest
             _other: () => this.context.getJsonApiRequestClassReference()
         });
     }
