@@ -92,31 +92,31 @@ class BigEntity extends JsonSerializableType
      *   castMember?: Actor|Actress|StuntDouble|null,
      *   extendedMovie?: ?ExtendedMovie,
      *   entity?: ?Entity,
-     *   metadata: mixed,
+     *   metadata?: mixed,
      *   commonMetadata?: ?Metadata,
-     *   eventInfo: mixed,
-     *   data: mixed,
+     *   eventInfo?: mixed,
+     *   data?: mixed,
      *   migration?: ?Migration,
-     *   exception: mixed,
-     *   test: mixed,
+     *   exception?: mixed,
+     *   test?: mixed,
      *   node?: ?Node,
      *   directory?: ?Directory,
      *   moment?: ?Moment,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->castMember = $values['castMember'] ?? null;
         $this->extendedMovie = $values['extendedMovie'] ?? null;
         $this->entity = $values['entity'] ?? null;
-        $this->metadata = $values['metadata'];
+        $this->metadata = $values['metadata'] ?? null;
         $this->commonMetadata = $values['commonMetadata'] ?? null;
-        $this->eventInfo = $values['eventInfo'];
-        $this->data = $values['data'];
+        $this->eventInfo = $values['eventInfo'] ?? null;
+        $this->data = $values['data'] ?? null;
         $this->migration = $values['migration'] ?? null;
-        $this->exception = $values['exception'];
-        $this->test = $values['test'];
+        $this->exception = $values['exception'] ?? null;
+        $this->test = $values['test'] ?? null;
         $this->node = $values['node'] ?? null;
         $this->directory = $values['directory'] ?? null;
         $this->moment = $values['moment'] ?? null;

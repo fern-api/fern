@@ -54,7 +54,7 @@ class TraceResponseV2 extends JsonSerializableType
      *   submissionId: string,
      *   lineNumber: int,
      *   file: TracedFile,
-     *   returnValue: mixed,
+     *   returnValue?: mixed,
      *   expressionLocation?: ?ExpressionLocation,
      *   stack: StackInformation,
      *   stdout?: ?string,
@@ -66,7 +66,7 @@ class TraceResponseV2 extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->lineNumber = $values['lineNumber'];
         $this->file = $values['file'];
-        $this->returnValue = $values['returnValue'];
+        $this->returnValue = $values['returnValue'] ?? null;
         $this->expressionLocation = $values['expressionLocation'] ?? null;
         $this->stack = $values['stack'];
         $this->stdout = $values['stdout'] ?? null;

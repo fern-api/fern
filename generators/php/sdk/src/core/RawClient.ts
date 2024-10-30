@@ -19,6 +19,8 @@ export declare namespace RawClient {
         queryBagReference?: string;
         /** The reference to the request body */
         bodyReference?: php.CodeBlock;
+        /** The reference to the request body class */
+        requestTypeClassReference: php.ClassReference;
     }
 }
 
@@ -108,7 +110,7 @@ export class RawClient {
                     method: RawClient.SEND_REQUEST_METHOD_NAME,
                     arguments_: [
                         php.instantiateClass({
-                            classReference: this.context.getJsonApiRequestClassReference(),
+                            classReference: args.requestTypeClassReference,
                             arguments_,
                             multiline: true
                         })

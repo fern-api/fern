@@ -11,6 +11,7 @@ import { PhpFile } from "./PhpFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "Core";
+const UTILS_DIRECTORY_NAME = "Utils";
 const SRC_DIRECTORY_NAME = "src";
 const TESTS_DIRECTORY_NAME = "tests";
 
@@ -25,6 +26,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     private testFiles: PhpFile[] = [];
     private coreFiles: File[] = [];
     private coreTestFiles: File[] = [];
+    private utilsFiles: File[] = [];
     public readonly filepaths: PhpProjectFilepaths;
 
     public constructor({
@@ -57,6 +59,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.createTestsDirectory();
         await this.createCoreDirectory();
         await this.createCoreTestsDirectory();
+        await this.createUtilsDirectory();
         await this.createGitHubWorkflowsDirectory();
         await this.createComposerJson();
     }
@@ -160,10 +163,25 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         });
     }
 
+    private async createUtilsDirectory(): Promise<AbsoluteFilePath> {
+        for (const filename of this.context.getUtilsAsIsFiles()) {
+            this.utilsFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getUtilsTypesNamespace()
+                })
+            );
+        }
+        return await this.createPhpDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getUtilsDirectory()),
+            files: this.utilsFiles
+        });
+    }
+
     private getNestedNamespace({ namespace, filename }: { namespace: string; filename: string }): string {
         const parts = filename.split("/");
         if (parts.length <= 1) {
-            return filename;
+            return namespace;
         }
         return [namespace, ...parts.slice(0, -1)].join("\\");
     }
@@ -220,6 +238,10 @@ class PhpProjectFilepaths {
 
     public getCoreTestsDirectory(): RelativeFilePath {
         return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
+    }
+
+    public getUtilsDirectory(): RelativeFilePath {
+        return join(this.getSourceDirectory(), RelativeFilePath.of(UTILS_DIRECTORY_NAME));
     }
 }
 
