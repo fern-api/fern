@@ -2,6 +2,7 @@
 name: publish-and-register-python-v2-codegen
 
 on:
+  pull_request:
   push:
     branches:
       - main
