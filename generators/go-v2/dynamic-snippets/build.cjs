@@ -7,7 +7,7 @@ main();
 
 async function main() {
     await tsup.build({
-        entry: ['src/**/*.ts', '!src/**/__test__/**/*.ts'],
+        entry: ['src/**/*.ts', '!src/__test__'],
         format: ['cjs'],
         clean: true,
         minify: true,
