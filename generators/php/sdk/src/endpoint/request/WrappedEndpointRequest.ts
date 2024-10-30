@@ -32,6 +32,7 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest";
 import { CodeBlock } from "@fern-api/generator-commons";
+import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -292,100 +293,112 @@ export class WrappedEndpointRequest extends EndpointRequest {
             for (const property of fileUpload.properties) {
                 switch (property.type) {
                     case "file": {
-                        const fileProperty = property.value;
-                        switch (fileProperty.type) {
-                            case "file": {
-                                // TODO(ajgateno): Clean this up.
-                                const file = fileProperty;
-                                const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                                    file.key.name
-                                )}`;
-                                if (file.isOptional) {
-                                    writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
-                                    this.writeMultipartPart({ writer, paramRef, property: file });
-                                    writer.endControlFlow();
-                                } else {
-                                    this.writeMultipartPart({ writer, paramRef, property: file });
-                                }
-                                break;
-                            }
-                            case "fileArray": {
-                                // TODO(ajgateno): Clean this up.
-                                const fileArray = fileProperty;
-                                if (fileArray.isOptional) {
-                                    const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                                        fileArray.key.name
-                                    )}`;
-                                    writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                                    this.writeMultipartPartFileArray({ writer, property: fileArray });
-                                    writer.endControlFlow();
-                                } else {
-                                    this.writeMultipartPartFileArray({ writer, property: fileArray });
-                                }
-                            }
-                        }
+                        this.writeFile(writer, property.value);
                         break;
                     }
                     case "bodyProperty": {
-                        // TODO(ajgateno): Clean this up.
-                        const bodyProperty = property;
-                        const propertyName = this.context.getPropertyName(bodyProperty.name.name);
-                        let ref = `${this.getRequestParameterName()}->${propertyName}`;
-                        let propType = bodyProperty.valueType;
-                        const isOptional = this.context.isOptional(propType);
-
-                        if (isOptional) {
-                            writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                            propType = this.context.dereferenceOptional(propType);
-                        }
-
-                        const isCollection = this.context.isCollection(propType);
-                        if (isCollection) {
-                            writer.controlFlow("foreach", php.codeblock(`${ref} as $element`));
-                            ref = "$element";
-                            propType = this.context.dereferenceCollection(propType);
-                        }
-
-                        if (this.context.isJsonEncodable(propType)) {
-                            this.writeMultipartBodyParameter({
-                                writer,
-                                valueAssignment: php.invokeMethod({
-                                    method: "encode",
-                                    arguments_: [php.codeblock(ref)],
-                                    on: this.context.getJsonEncoderClassReference(),
-                                    static_: true
-                                }),
-                                property: bodyProperty
-                            });
-                        } else if (this.context.hasToJsonMethod(propType)) {
-                            this.writeMultipartBodyParameter({
-                                writer,
-                                valueAssignment: php.invokeMethod({
-                                    method: "toJson",
-                                    arguments_: [],
-                                    on: php.codeblock(ref)
-                                }),
-                                property: bodyProperty
-                            });
-                        } else {
-                            this.writeMultipartBodyParameter({
-                                writer,
-                                valueAssignment: php.codeblock(ref),
-                                property: bodyProperty
-                            });
-                        }
-
-                        if (isCollection) {
-                            writer.endControlFlow();
-                        }
-
-                        if (isOptional) {
-                            writer.endControlFlow();
-                        }
+                        this.writeInlineArg(writer, property);
                         break;
+                    }
+                    default: {
+                        // TODO: Assert never
                     }
                 }
             }
         });
+    }
+
+    private writeFile(writer: php.Writer, file: FileProperty): void {
+        switch (file.type) {
+            case "file": {
+                this.writeSingleFile(writer, file);
+                break;
+            }
+            case "fileArray": {
+                this.writeFileArray(writer, file);
+                break;
+            }
+            default: {
+                // TODO: Assert never
+            }
+        }
+    }
+
+    private writeSingleFile(writer: php.Writer, file: FilePropertySingle): void {
+        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(file.key.name)}`;
+        if (file.isOptional) {
+            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
+            this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) });
+            writer.endControlFlow();
+        } else {
+            this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) });
+        }
+    }
+
+    private writeFileArray(writer: php.Writer, fileArray: FilePropertyArray): void {
+        if (fileArray.isOptional) {
+            const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(fileArray.key.name)}`;
+            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            this.writeMultipartPartFileArray({ writer, property: fileArray });
+            writer.endControlFlow();
+        } else {
+            this.writeMultipartPartFileArray({ writer, property: fileArray });
+        }
+    }
+
+    private writeInlineArg(writer: php.Writer, property: InlinedRequestBodyProperty) {
+        const propertyName = this.context.getPropertyName(property.name.name);
+        let ref = `${this.getRequestParameterName()}->${propertyName}`;
+        let propType = property.valueType;
+        const isOptional = this.context.isOptional(propType);
+
+        if (isOptional) {
+            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            propType = this.context.dereferenceOptional(propType);
+        }
+
+        const isCollection = this.context.isCollection(propType);
+        if (isCollection) {
+            writer.controlFlow("foreach", php.codeblock(`${ref} as $element`));
+            ref = "$element";
+            propType = this.context.dereferenceCollection(propType);
+        }
+
+        if (this.context.isJsonEncodable(propType)) {
+            this.writeMultipartBodyParameter({
+                writer,
+                valueAssignment: php.invokeMethod({
+                    method: "encode",
+                    arguments_: [php.codeblock(ref)],
+                    on: this.context.getJsonEncoderClassReference(),
+                    static_: true
+                }),
+                property
+            });
+        } else if (this.context.hasToJsonMethod(propType)) {
+            this.writeMultipartBodyParameter({
+                writer,
+                valueAssignment: php.invokeMethod({
+                    method: "toJson",
+                    arguments_: [],
+                    on: php.codeblock(ref)
+                }),
+                property
+            });
+        } else {
+            this.writeMultipartBodyParameter({
+                writer,
+                valueAssignment: php.codeblock(ref),
+                property
+            });
+        }
+
+        if (isCollection) {
+            writer.endControlFlow();
+        }
+
+        if (isOptional) {
+            writer.endControlFlow();
+        }
     }
 }
