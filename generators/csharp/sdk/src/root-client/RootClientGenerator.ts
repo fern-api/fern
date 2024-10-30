@@ -69,12 +69,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const class_ = csharp.class_({
             ...this.context.getRootClientClassReference(),
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         class_.addField(
             csharp.field({
-                access: "private",
+                access: csharp.Access.Private,
                 name: CLIENT_MEMBER_NAME,
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
@@ -83,7 +83,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (this.grpcClientInfo != null) {
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
                 })
@@ -91,7 +91,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
                     type: csharp.Type.reference(this.grpcClientInfo.classReference)
                 })
@@ -103,7 +103,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const subpackage of this.getSubpackages()) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     init: true,
                     name: subpackage.name.pascalCase.safeName,
@@ -223,7 +223,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             }
         });
         return {
-            access: "public",
+            access: csharp.Access.Public,
             parameters,
             body: csharp.codeblock((writer) => {
                 for (const param of optionalParameters) {
@@ -537,7 +537,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     private getFromEnvironmentOrThrowMethod(): csharp.Method {
         return csharp.method({
-            access: "private",
+            access: csharp.Access.Private,
             name: GetFromEnvironmentOrThrow,
             return_: csharp.Types.string(),
             parameters: [

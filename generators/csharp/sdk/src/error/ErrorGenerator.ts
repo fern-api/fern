@@ -19,7 +19,7 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                 : csharp.Type.object();
         const class_ = csharp.class_({
             ...this.classReference,
-            access: "public",
+            access: csharp.Access.Public,
             parentClassReference: this.context.getBaseApiExceptionClassReference(),
             primaryConstructor: {
                 parameters: [csharp.parameter({ name: "body", type: bodyType })],
@@ -36,7 +36,7 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                 csharp.field({
                     name: "Body",
                     type: bodyType,
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     initializer: csharp.codeblock("body"),
                     summary: "The body of the response that triggered the exception.",

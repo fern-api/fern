@@ -45,7 +45,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
         const class_ = csharp.class_({
             name: this.classReference.name,
             namespace: this.classReference.namespace,
-            access: "public",
+            access: csharp.Access.Public,
             sealed: true,
             parentClassReference: csharp.Type.oneOfBase(oneOfTypes),
             summary: this.typeDeclaration.docs,
@@ -81,7 +81,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     private getToProtoMethod(): csharp.Method {
         return csharp.method({
             name: "ToProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             isAsync: false,
             parameters: [],
             return_: csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE),
@@ -134,7 +134,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     private getFromProtoMethod(): csharp.Method {
         return csharp.method({
             name: "FromProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             type: csharp.MethodType.STATIC,
             isAsync: false,
             parameters: [
@@ -280,13 +280,12 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
         ];
         return operatorSpecs.map((operatorSpec) => ({
             type: "implicit",
-            parameters: [
-                csharp.parameter({
-                    name: "value",
-                    type: operatorSpec.parameterType
-                })
-            ],
-            body: operatorSpec.body
+            parameter: csharp.parameter({
+                name: "value",
+                type: operatorSpec.parameterType
+            }),
+            body: operatorSpec.body,
+            useExpressionBody: true
         }));
     }
 

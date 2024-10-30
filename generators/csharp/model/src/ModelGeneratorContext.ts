@@ -31,18 +31,31 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.CollectionItemSerializer,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
             AsIsFiles.JsonConfiguration,
-            AsIsFiles.OneOfSerializer,
-            AsIsFiles.StringEnumSerializer
+            AsIsFiles.OneOfSerializer
         ];
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+            files.push(AsIsFiles.StringEnum);
+            files.push(AsIsFiles.StringEnumExtensions);
+            files.push(AsIsFiles.StringEnumSerializer);
+        } else {
+            files.push(AsIsFiles.EnumSerializer);
+        }
+        return files;
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [];
+        const files = [];
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+            files.push(AsIsFiles.StringEnumSerializerTests);
+        } else {
+            files.push(AsIsFiles.EnumSerializerTests);
+        }
+        return files;
     }
 
     public getPublicCoreAsIsFiles(): string[] {

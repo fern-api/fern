@@ -1,3 +1,4 @@
+export const ENUM_SERIALIZER_CLASS_NAME = "EnumSerializer";
 export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
 export const ONE_OF_SERIALIZER_CLASS_NAME = "OneOfSerializer";
 export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
@@ -21,8 +22,12 @@ export enum AsIsFiles {
     RawClient = "RawClient.Template.cs",
     RawClientTests = "RawClientTests.Template.cs",
     RawGrpcClient = "RawGrpcClient.Template.cs",
+    EnumSerializer = "EnumSerializer.Template.cs",
+    EnumSerializerTests = "EnumSerializerTests.Template.cs",
     StringEnum = "StringEnum.Template.cs",
-    StringEnumSerializer = "StringEnumSerializer.cs",
+    StringEnumExtensions = "StringEnumExtensions.Template.cs",
+    StringEnumSerializer = "StringEnumSerializer.Template.cs",
+    StringEnumSerializerTests = "StringEnumSerializerTests.Template.cs",
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",

@@ -6,7 +6,7 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
-[JsonConverter(typeof(StringEnumSerializer<ResourceStatus>))]
+[JsonConverter(typeof(EnumSerializer<ResourceStatus>))]
 public enum ResourceStatus
 {
     [EnumMember(Value = "ACTIVE")]

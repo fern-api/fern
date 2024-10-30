@@ -6,7 +6,7 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-[JsonConverter(typeof(StringEnumSerializer<KeyType>))]
+[JsonConverter(typeof(EnumSerializer<KeyType>))]
 public enum KeyType
 {
     [EnumMember(Value = "name")]

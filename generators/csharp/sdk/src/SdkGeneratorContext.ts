@@ -134,17 +134,29 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer,
-            AsIsFiles.RawClient,
-            AsIsFiles.StringEnumSerializer
+            AsIsFiles.RawClient
         ];
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
+        }
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+            files.push(AsIsFiles.StringEnum);
+            files.push(AsIsFiles.StringEnumExtensions);
+            files.push(AsIsFiles.StringEnumSerializer);
+        } else {
+            files.push(AsIsFiles.EnumSerializer);
         }
         return files;
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [AsIsFiles.RawClientTests];
+        const files = [AsIsFiles.RawClientTests];
+        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+            files.push(AsIsFiles.StringEnumSerializerTests);
+        } else {
+            files.push(AsIsFiles.EnumSerializerTests);
+        }
+        return files;
     }
 
     public getPublicCoreAsIsFiles(): string[] {

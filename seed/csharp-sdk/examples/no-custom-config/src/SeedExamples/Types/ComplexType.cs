@@ -6,7 +6,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<ComplexType>))]
+[JsonConverter(typeof(EnumSerializer<ComplexType>))]
 public enum ComplexType
 {
     [EnumMember(Value = "object")]

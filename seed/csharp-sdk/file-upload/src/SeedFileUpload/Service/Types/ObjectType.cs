@@ -6,7 +6,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-[JsonConverter(typeof(StringEnumSerializer<ObjectType>))]
+[JsonConverter(typeof(EnumSerializer<ObjectType>))]
 public enum ObjectType
 {
     [EnumMember(Value = "FOO")]

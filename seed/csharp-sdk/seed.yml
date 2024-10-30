@@ -98,6 +98,13 @@ fixtures:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+  enum:
+    - customConfig:
+        experimental-enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        experimental-enable-forward-compatible-enums: false
+      outputFolder: plain-enums
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends

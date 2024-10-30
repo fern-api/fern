@@ -42,15 +42,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithParam("page", "1")
-                    .WithParam("limit", "1")
-                    .WithParam("order", "asc")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -59,12 +51,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithOffsetPaginationHasNextPageAsync(
-            new ListWithOffsetPaginationHasNextPageRequest
-            {
-                Page = 1,
-                Limit = 1,
-                Order = Order.Asc,
-            },
+            new ListWithOffsetPaginationHasNextPageRequest(),
             RequestOptions
         );
         JToken

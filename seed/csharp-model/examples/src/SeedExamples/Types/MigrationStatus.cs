@@ -6,7 +6,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
+[JsonConverter(typeof(EnumSerializer<MigrationStatus>))]
 public enum MigrationStatus
 {
     [EnumMember(Value = "RUNNING")]

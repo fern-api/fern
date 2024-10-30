@@ -6,7 +6,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-[JsonConverter(typeof(StringEnumSerializer<Order>))]
+[JsonConverter(typeof(EnumSerializer<Order>))]
 public enum Order
 {
     [EnumMember(Value = "asc")]

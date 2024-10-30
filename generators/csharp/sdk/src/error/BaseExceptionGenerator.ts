@@ -7,7 +7,7 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseExceptionClassReference(),
-            access: "public",
+            access: csharp.Access.Public,
             parentClassReference: csharp.classReference({ name: "Exception", namespace: "System" }),
             primaryConstructor: {
                 parameters: [
