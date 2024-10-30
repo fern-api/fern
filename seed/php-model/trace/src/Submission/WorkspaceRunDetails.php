@@ -27,7 +27,7 @@ class WorkspaceRunDetails extends JsonSerializableType
 
     /**
      * @param array{
-     *   exceptionV2: mixed,
+     *   exceptionV2?: mixed,
      *   exception?: ?ExceptionInfo,
      *   stdout: string,
      * } $values
@@ -35,7 +35,7 @@ class WorkspaceRunDetails extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->exceptionV2 = $values['exceptionV2'];
+        $this->exceptionV2 = $values['exceptionV2'] ?? null;
         $this->exception = $values['exception'] ?? null;
         $this->stdout = $values['stdout'];
     }

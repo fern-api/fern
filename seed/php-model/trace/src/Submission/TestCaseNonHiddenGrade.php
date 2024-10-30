@@ -34,8 +34,8 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
     /**
      * @param array{
      *   passed: bool,
-     *   actualResult: mixed,
-     *   exception: mixed,
+     *   actualResult?: mixed,
+     *   exception?: mixed,
      *   stdout: string,
      * } $values
      */
@@ -43,8 +43,8 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
         array $values,
     ) {
         $this->passed = $values['passed'];
-        $this->actualResult = $values['actualResult'];
-        $this->exception = $values['exception'];
+        $this->actualResult = $values['actualResult'] ?? null;
+        $this->exception = $values['exception'] ?? null;
         $this->stdout = $values['stdout'];
     }
 }
