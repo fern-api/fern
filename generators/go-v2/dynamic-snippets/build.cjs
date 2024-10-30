@@ -7,10 +7,12 @@ main();
 
 async function main() {
     await tsup.build({
-        entry: ['src/index.ts'],
+        entry: ['src/**/*.ts', '!src/**/__test__/**/*.ts'],
         format: ['cjs'],
+        clean: true,
         minify: true,
-        dts: true,
+        // TODO: Can we emit the .d.ts files too?
+        // dts: true,
         outDir: 'dist',
         external: [
             // Test dependencies should not be included in the published package.
@@ -29,7 +31,11 @@ async function main() {
                 name: packageJson.name,
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
-                files: ["index.cjs"],
+                main: "index.cjs",
+                // TODO: Can we emit the .d.ts files too?
+                // types: "index.d.ts",
+                // files: ["index.cjs", "index.d.ts"]
+                files: ["index.cjs"]
             },
             undefined,
             2
