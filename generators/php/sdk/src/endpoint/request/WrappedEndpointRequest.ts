@@ -348,50 +348,27 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeInlineProperty(writer: php.Writer, property: InlinedRequestBodyProperty) {
         const propertyName = this.context.getPropertyName(property.name.name);
-        let ref = `${this.getRequestParameterName()}->${propertyName}`;
+        let paramRef = `${this.getRequestParameterName()}->${propertyName}`;
         let propType = property.valueType;
         const isOptional = this.context.isOptional(propType);
 
         if (isOptional) {
-            writer.controlFlow("if", php.codeblock(`${ref} != null`));
+            writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
             propType = this.context.dereferenceOptional(propType);
         }
 
         const isCollection = this.context.isCollection(propType);
         if (isCollection) {
-            writer.controlFlow("foreach", php.codeblock(`${ref} as $element`));
-            ref = "$element";
+            writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`));
+            paramRef = "$element";
             propType = this.context.dereferenceCollection(propType);
         }
 
-        if (this.context.isJsonEncodable(propType)) {
-            this.writeMultipartBodyParameter({
-                writer,
-                valueAssignment: php.invokeMethod({
-                    method: "encode",
-                    arguments_: [php.codeblock(ref)],
-                    on: this.context.getJsonEncoderClassReference(),
-                    static_: true
-                }),
-                property
-            });
-        } else if (this.context.hasToJsonMethod(propType)) {
-            this.writeMultipartBodyParameter({
-                writer,
-                valueAssignment: php.invokeMethod({
-                    method: "toJson",
-                    arguments_: [],
-                    on: php.codeblock(ref)
-                }),
-                property
-            });
-        } else {
-            this.writeMultipartBodyParameter({
-                writer,
-                valueAssignment: php.codeblock(ref),
-                property
-            });
-        }
+        this.writeMultipartBodyParameter({
+            writer,
+            valueAssignment: this.getInlineValueAssignment(paramRef, propType),
+            property
+        });
 
         if (isCollection) {
             writer.endControlFlow();
@@ -399,6 +376,25 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         if (isOptional) {
             writer.endControlFlow();
+        }
+    }
+
+    private getInlineValueAssignment(paramRef: string, typeReference: TypeReference): php.AstNode {
+        if (this.context.isJsonEncodable(typeReference)) {
+            return php.invokeMethod({
+                method: "encode",
+                arguments_: [php.codeblock(paramRef)],
+                on: this.context.getJsonEncoderClassReference(),
+                static_: true
+            });
+        } else if (this.context.hasToJsonMethod(typeReference)) {
+            return php.invokeMethod({
+                method: "toJson",
+                arguments_: [],
+                on: php.codeblock(paramRef)
+            });
+        } else {
+            return php.codeblock(paramRef);
         }
     }
 }
