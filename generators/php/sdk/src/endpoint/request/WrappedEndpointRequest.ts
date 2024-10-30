@@ -169,7 +169,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
-    private writeMultipartPartArray(writer: php.Writer, propertyName: string): void {
+    private writeMultipartPartFileArray(writer: php.Writer, propertyName: string): void {
         const paramRef = `${this.getRequestParameterName()}->${propertyName}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
         this.writeMultipartPart(writer, "$file", propertyName);
@@ -297,13 +297,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                         fileArray.key.name
                                     )}`;
                                     writer.controlFlow("if", php.codeblock(`${ref} != null`));
-                                    this.writeMultipartPartArray(
+                                    this.writeMultipartPartFileArray(
                                         writer,
                                         `${this.context.getPropertyName(fileArray.key.name)}`
                                     );
                                     writer.endControlFlow();
                                 } else {
-                                    this.writeMultipartPartArray(
+                                    this.writeMultipartPartFileArray(
                                         writer,
                                         `${this.context.getPropertyName(fileArray.key.name)}`
                                     );
