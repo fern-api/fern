@@ -226,13 +226,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                           assignment: php.codeblock(`'${property.contentType}'`)
                       }
                   ]
-                : [
-                      php.invokeMethod({
-                          method: "toMultipartFormDataPart",
-                          arguments_: [php.codeblock(`'${property.key.wireValue}'`)],
-                          on: php.codeblock(paramRef)
-                      })
-                  ];
+                : [php.codeblock(`'${property.key.wireValue}'`)];
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "addPart",
@@ -241,11 +235,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         method: "toMultipartFormDataPart",
                         arguments_,
                         on: php.codeblock(paramRef),
-                        multiline: arguments.length > 1
+                        multiline: arguments_.length > 1
                     })
                 ],
                 on: this.getRequestBodyArgument(),
-                multiline: arguments.length > 1
+                multiline: arguments_.length > 1
             })
         );
     }
