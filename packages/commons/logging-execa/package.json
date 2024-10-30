@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/logger": "workspace:*",
-    "execa": "^5.1.1",
+    "execa": "^9.5.1",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
