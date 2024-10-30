@@ -246,35 +246,24 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public dereferenceOptional(typeReference: TypeReference): TypeReference {
-        if (typeReference.type === "container" && typeReference.container.type === "optional") {
-            return typeReference.container.optional._visit({
-                container: (container) => {
-                    return this.dereferenceOptional(TypeReference.container(container));
-                },
-                named: (named) => {
-                    return this.dereferenceOptional(TypeReference.named(named));
-                },
-                primitive: (primitive) => {
-                    return TypeReference.primitive(primitive) as TypeReference;
-                },
-                unknown: () => {
-                    return TypeReference.unknown() as TypeReference;
-                },
-                _other: () => {
-                    return TypeReference.unknown() as TypeReference;
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return typeReference.container.optional;
                 }
-            });
-        }
-
-        if (typeReference.type === "named") {
-            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-            if (typeDeclaration.shape.type === "alias") {
-                return typeDeclaration.shape.aliasOf;
+                return typeReference;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.dereferenceOptional(typeDeclaration.shape.aliasOf);
+                }
+                return typeReference;
             }
+            case "unknown":
+                return typeReference;
+            case "primitive":
+                return typeReference;
         }
-
-        // Original type was not optional
-        return typeReference;
     }
 
     public dereferenceCollection(typeReference: TypeReference): TypeReference {
