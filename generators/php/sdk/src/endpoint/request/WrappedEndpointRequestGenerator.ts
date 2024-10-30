@@ -98,10 +98,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             fileUpload: (fileUpload) => {
                 for (const property of fileUpload.properties) {
-                    property._visit({
-                        file: (fileProperty) => {
-                            fileProperty._visit({
-                                file: (file) => {
+                    switch (property.type) {
+                        case "file": {
+                            // TODO: Clean this up.
+                            const fileProperty = property.value;
+                            switch (fileProperty.type) {
+                                case "file": {
+                                    // TODO: Clean this up.
+                                    const file = fileProperty;
                                     let type = php.Type.reference(this.context.getFileClassReference());
                                     if (file.isOptional) {
                                         type = php.Type.optional(type);
@@ -113,8 +117,11 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                                             access: "public"
                                         })
                                     );
-                                },
-                                fileArray: (fileArray) => {
+                                    break;
+                                }
+                                case "fileArray": {
+                                    // TODO: Clean this up.
+                                    const fileArray = fileProperty;
                                     let type = php.Type.array(php.Type.reference(this.context.getFileClassReference()));
                                     if (fileArray.isOptional) {
                                         type = php.Type.optional(type);
@@ -126,15 +133,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                                             access: "public"
                                         })
                                     );
-                                },
-                                _other: () => undefined
-                            });
-                        },
-                        bodyProperty: (bodyProperty) => {
-                            clazz.addField(this.toField({ property: bodyProperty }));
-                        },
-                        _other: () => undefined
-                    });
+                                }
+                            }
+                            break;
+                        }
+                        case "bodyProperty": {
+                            clazz.addField(this.toField({ property }));
+                        }
+                    }
                 }
             },
             bytes: () => undefined,
