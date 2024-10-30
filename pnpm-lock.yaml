@@ -117,12 +117,18 @@ importers:
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
+      path-to-regexp:
+        specifier: ^3.3.0
+        version: 3.3.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      rollup:
+        specifier: ^4.22.4
+        version: 4.24.0
       stylelint:
         specifier: ^14.11.0
         version: 14.14.0
@@ -11718,6 +11724,9 @@ packages:
   path-to-regexp@2.4.0:
     resolution: {integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==}
 
+  path-to-regexp@3.3.0:
+    resolution: {integrity: sha512-qyCH421YQPS2WFDxDjftfc1ZR5WKQzVzqsp4n9M2kQhVOo/ByahFoUNJfl58kOcEGfQ//7weFTDhm+ss8Ecxgw==}
+
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
@@ -15121,7 +15130,7 @@ snapshots:
 
   '@mdx-js/mdx@3.0.1':
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       '@types/estree-jsx': 1.0.0
       '@types/hast': 3.0.4
       '@types/mdx': 2.0.7
@@ -19294,7 +19303,7 @@ snapshots:
 
   micromark-extension-mdx-expression@3.0.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       devlop: 1.1.0
       micromark-factory-mdx-expression: 2.0.1
       micromark-factory-space: 2.0.0
@@ -19306,7 +19315,7 @@ snapshots:
   micromark-extension-mdx-jsx@3.0.0:
     dependencies:
       '@types/acorn': 4.0.6
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       micromark-factory-mdx-expression: 2.0.1
@@ -19907,6 +19916,8 @@ snapshots:
   path-to-regexp@0.1.10: {}
 
   path-to-regexp@2.4.0: {}
+
+  path-to-regexp@3.3.0: {}
 
   path-type@4.0.0: {}
 
