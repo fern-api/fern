@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - vargas/publish-python2
     paths:
       - "generators/pythonv2/codegen/versions.yml"
   workflow_dispatch:
