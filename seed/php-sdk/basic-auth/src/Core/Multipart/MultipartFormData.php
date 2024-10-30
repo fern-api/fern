@@ -27,7 +27,7 @@ class MultipartFormData
         self::addPart(
             new MultipartFormDataPart(
                 name: $name,
-                contents: $value,
+                value: $value,
                 headers: $headers,
             )
         );
