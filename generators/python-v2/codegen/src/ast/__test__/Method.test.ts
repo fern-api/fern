@@ -126,7 +126,10 @@ describe("Method", () => {
                 parameters: [],
                 decorators: [
                     python.decorator({
-                        reference: python.reference({ name: "decorator_with_reference", modulePath: ["decorators"] })
+                        callable: python.reference({
+                            name: "decorator_with_reference",
+                            modulePath: ["decorators"]
+                        })
                     })
                 ]
             });
