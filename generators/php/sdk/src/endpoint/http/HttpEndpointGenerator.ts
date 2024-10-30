@@ -71,7 +71,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 const classReference =
                     endpoint.requestBody != null
-                        ? this.getClassReference(endpoint.requestBody)
+                        ? this.getRequestTypeClassReference(endpoint.requestBody)
                         : this.context.getJsonApiRequestClassReference();
                 writer.writeNodeStatement(
                     this.context.rawClient.sendRequest({
@@ -108,7 +108,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getClassReference(requestBody: HttpRequestBody): php.ClassReference {
+    private getRequestTypeClassReference(requestBody: HttpRequestBody): php.ClassReference {
         return requestBody._visit({
             inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
             reference: () => this.context.getJsonApiRequestClassReference(),
