@@ -262,10 +262,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
             );
 
             for (const property of fileUpload.properties) {
-                property._visit({
-                    file: (file) =>
-                        file._visit({
-                            file: (file) => {
+                switch (property.type) {
+                    case "file": {
+                        const fileProperty = property.value;
+                        switch (fileProperty.type) {
+                            case "file": {
+                                // TODO(ajgateno): Clean this up.
+                                const file = fileProperty;
                                 const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
                                     file.key.name
                                 )}`;
@@ -284,28 +287,34 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                         `${this.context.getPropertyName(file.key.name)}`
                                     );
                                 }
-                            },
-                            fileArray: (fileArray) => {
+                                break;
+                            }
+                            case "fileArray": {
+                                // TODO(ajgateno): Clean this up.
+                                const fileArray = fileProperty;
                                 if (fileArray.isOptional) {
                                     const ref = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                                        file.key.name
+                                        fileArray.key.name
                                     )}`;
                                     writer.controlFlow("if", php.codeblock(`${ref} != null`));
                                     this.writeMultipartPartArray(
                                         writer,
-                                        `${this.context.getPropertyName(file.key.name)}`
+                                        `${this.context.getPropertyName(fileArray.key.name)}`
                                     );
                                     writer.endControlFlow();
                                 } else {
                                     this.writeMultipartPartArray(
                                         writer,
-                                        `${this.context.getPropertyName(file.key.name)}`
+                                        `${this.context.getPropertyName(fileArray.key.name)}`
                                     );
                                 }
-                            },
-                            _other: () => undefined
-                        }),
-                    bodyProperty: (bodyProperty) => {
+                            }
+                        }
+                        break;
+                    }
+                    case "bodyProperty": {
+                        // TODO(ajgateno): Clean this up.
+                        const bodyProperty = property;
                         const propertyName = this.context.getPropertyName(bodyProperty.name.name);
                         let ref = `${this.getRequestParameterName()}->${propertyName}`;
                         let propType = bodyProperty.valueType;
@@ -359,9 +368,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         if (isOptional) {
                             writer.endControlFlow();
                         }
-                    },
-                    _other: () => undefined
-                });
+                        break;
+                    }
+                }
             }
         });
     }
