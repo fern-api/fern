@@ -214,46 +214,40 @@ export class WrappedEndpointRequest extends EndpointRequest {
         paramRef: string;
         property: FileProperty;
     }): void {
-        if (property.contentType != null) {
-            writer.writeNodeStatement(
-                php.invokeMethod({
-                    method: "addPart",
-                    arguments_: [
-                        php.invokeMethod({
-                            method: "toMultipartFormDataPart",
-                            arguments_: [
-                                {
-                                    name: "name",
-                                    assignment: php.codeblock(`'${property.key.wireValue}'`)
-                                },
-                                {
-                                    name: "contentType",
-                                    assignment: php.codeblock(`'${property.contentType}'`)
-                                }
-                            ],
-                            on: php.codeblock(paramRef),
-                            multiline: true
-                        })
-                    ],
-                    on: this.getRequestBodyArgument(),
-                    multiline: true
-                })
-            );
-        } else {
-            writer.writeNodeStatement(
-                php.invokeMethod({
-                    method: "addPart",
-                    arguments_: [
-                        php.invokeMethod({
-                            method: "toMultipartFormDataPart",
-                            arguments_: [php.codeblock(`'${property.key.wireValue}'`)],
-                            on: php.codeblock(paramRef)
-                        })
-                    ],
-                    on: this.getRequestBodyArgument()
-                })
-            );
-        }
+        const arguments_ =
+            property.contentType != null
+                ? [
+                      {
+                          name: "name",
+                          assignment: php.codeblock(`'${property.key.wireValue}'`)
+                      },
+                      {
+                          name: "contentType",
+                          assignment: php.codeblock(`'${property.contentType}'`)
+                      }
+                  ]
+                : [
+                      php.invokeMethod({
+                          method: "toMultipartFormDataPart",
+                          arguments_: [php.codeblock(`'${property.key.wireValue}'`)],
+                          on: php.codeblock(paramRef)
+                      })
+                  ];
+        writer.writeNodeStatement(
+            php.invokeMethod({
+                method: "addPart",
+                arguments_: [
+                    php.invokeMethod({
+                        method: "toMultipartFormDataPart",
+                        arguments_,
+                        on: php.codeblock(paramRef),
+                        multiline: arguments.length > 1
+                    })
+                ],
+                on: this.getRequestBodyArgument(),
+                multiline: arguments.length > 1
+            })
+        );
     }
 
     private writeMultipartPartFileArray({
