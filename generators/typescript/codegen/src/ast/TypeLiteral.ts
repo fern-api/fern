@@ -7,7 +7,7 @@ type InternalTypeLiteral = Array_ | Boolean_ | Number_ | Object_ | String_ | Tup
 interface Array_ {
     type: "array";
     valueType: Type;
-    fields: ArrayField[];
+    values: TypeLiteral[];
 }
 
 interface Boolean_ {
@@ -25,6 +25,12 @@ interface Object_ {
     fields: ObjectField[];
 }
 
+interface ObjectField {
+    name: string;
+    valueType: Type;
+    value: TypeLiteral;
+}
+
 interface String_ {
     type: "string";
     value: string;
@@ -32,29 +38,13 @@ interface String_ {
 
 interface Tuple {
     type: "tuple";
-    fields: TupleField[];
+    // TODO: In theory this should be a tuple type, not an array of types
+    valueTypes: Type[];
+    values: TypeLiteral[];
 }
 
-type IterableLiteral = Array_ | Object_ | Tuple;
-
-type IterableLiteralField = ArrayField | ObjectField | TupleField;
-
-interface ArrayField {
-    type: "arrayField";
-    value: TypeLiteral;
-}
-
-interface ObjectField {
-    type: "objectField";
-    name: string;
-    valueType: Type;
-    value: TypeLiteral;
-}
-
-interface TupleField {
-    type: "tupleField";
-    valueType: Type;
-    value: TypeLiteral;
+interface IterableLiteral {
+    values: TypeLiteral[];
 }
 
 export class TypeLiteral extends AstNode {
@@ -65,7 +55,7 @@ export class TypeLiteral extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "array": {
-                this.writeArray({ writer, value: this.internalType });
+                this.writeArray({ writer, array: this.internalType });
                 break;
             }
             case "boolean": {
@@ -78,7 +68,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "object": {
-                this.writeObject({ writer, value: this.internalType });
+                this.writeObject({ writer, object: this.internalType });
                 break;
             }
             case "string": {
@@ -90,7 +80,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "tuple": {
-                this.writeTuple({ writer, value: this.internalType });
+                this.writeTuple({ writer, tuple: this.internalType });
                 break;
             }
             default: {
@@ -109,52 +99,76 @@ export class TypeLiteral extends AstNode {
         writer.write("`");
     }
 
-    private writeArray({ writer, value }: { writer: Writer; value: Array_ }): void {
+    private writeArray({ writer, array }: { writer: Writer; array: Array_ }): void {
         this.writeIterable({
             writer,
-            value,
+            iterable: array,
             leftBrace: "[",
-            rightBrace: "]"
+            rightBrace: "]",
+            writeField: (value: TypeLiteral) => value.write(writer)
         });
     }
 
-    private writeObject({ writer, value }: { writer: Writer; value: Object_ }): void {
+    private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
+        const values: TypeLiteral[] = [];
+        const valuesToNames = new Map<TypeLiteral, string>();
+        for (const field of object.fields) {
+            values.push(field.value);
+            valuesToNames.set(field.value, field.name);
+        }
+        const iterable = { values };
         this.writeIterable({
             writer,
-            value,
+            iterable,
             leftBrace: "{",
-            rightBrace: "}"
+            rightBrace: "}",
+            writeField: (value: TypeLiteral) => {
+                const name = valuesToNames.get(value);
+                if (name != null) {
+                    writer.write(`${name}: `);
+                    value.write(writer);
+                } else {
+                    throw Error(
+                        `BUG: Could not find name for field value ${JSON.stringify(value)} in ${JSON.stringify(
+                            object
+                        )}.`
+                    );
+                }
+            }
         });
     }
 
-    private writeTuple({ writer, value }: { writer: Writer; value: Tuple }): void {
+    private writeTuple({ writer, tuple }: { writer: Writer; tuple: Tuple }): void {
         this.writeIterable({
             writer,
-            value,
+            iterable: tuple,
             leftBrace: "[",
-            rightBrace: "]"
+            rightBrace: "]",
+            writeField: (value: TypeLiteral) => value.write(writer)
         });
     }
 
     private writeIterable({
         writer,
-        value,
+        iterable,
         leftBrace,
-        rightBrace
+        rightBrace,
+        writeField
     }: {
         writer: Writer;
-        value: IterableLiteral;
+        iterable: IterableLiteral;
         leftBrace: string;
         rightBrace: string;
+        writeField: (value: TypeLiteral) => void;
     }): void {
-        if (value.fields.length === 0) {
+        if (iterable.values.length === 0) {
             // Don't allow "multiline" empty collections.
             writer.write(`${leftBrace}${rightBrace}`);
         } else {
             writer.writeLine(`${leftBrace}`);
             writer.indent();
-            for (const elem of value.fields) {
-                this.writeIterableField(writer, elem);
+            for (const value of iterable.values) {
+                writeField(value);
                 writer.writeLine(",");
             }
             writer.dedent();
@@ -162,46 +176,13 @@ export class TypeLiteral extends AstNode {
         }
     }
 
-    private writeIterableField(writer: Writer, value: IterableLiteralField): void {
-        switch (value.type) {
-            case "objectField": {
-                writer.write(`${value.name}: `);
-                value.value.write(writer);
-                break;
-            }
-            case "arrayField":
-            case "tupleField": {
-                value.value.write(writer);
-                break;
-            }
-            default: {
-                assertNever(value);
-            }
-        }
-    }
-
     /* Static factory methods for creating a TypeLiteral */
-    public static array({
-        valueType,
-        fields,
-        multiline
-    }: {
-        valueType: Type;
-        fields: ArrayField[];
-        multiline?: boolean;
-    }): TypeLiteral {
+    public static array({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "array",
             valueType,
-            fields
+            values
         });
-    }
-
-    public static arrayField(value: TypeLiteral): ArrayField {
-        return {
-            type: "arrayField",
-            value
-        };
     }
 
     public static boolean(value: boolean): TypeLiteral {
@@ -212,28 +193,11 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "number", value });
     }
 
-    public static object({ fields, multiline }: { fields: ObjectField[]; multiline?: boolean }): TypeLiteral {
+    public static object(fields: ObjectField[]): TypeLiteral {
         return new this({
             type: "object",
             fields
         });
-    }
-
-    public static objectField({
-        name,
-        valueType,
-        value
-    }: {
-        name: string;
-        valueType: Type;
-        value: TypeLiteral;
-    }): ObjectField {
-        return {
-            type: "objectField",
-            name,
-            valueType,
-            value
-        };
     }
 
     public static string(value: string): TypeLiteral {
@@ -243,18 +207,11 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static tuple({ fields, multiline }: { fields: TupleField[]; multiline?: boolean }): TypeLiteral {
+    public static tuple({ valueTypes, values }: { valueTypes: Type[]; values: TypeLiteral[] }): TypeLiteral {
         return new this({
             type: "tuple",
-            fields
+            valueTypes,
+            values
         });
-    }
-
-    public static tupleField({ valueType, value }: { valueType: Type; value: TypeLiteral }): TupleField {
-        return {
-            type: "tupleField",
-            valueType,
-            value
-        };
     }
 }

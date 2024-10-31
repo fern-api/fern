@@ -5,7 +5,7 @@ describe("TypeLiteral", () => {
         it("Should generate an empty array", () => {
             const literal = ts.TypeLiteral.array({
                 valueType: ts.Type.string(),
-                fields: []
+                values: []
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
         });
@@ -15,10 +15,7 @@ describe("TypeLiteral", () => {
         it("Should generate an array of strings", () => {
             const literal = ts.TypeLiteral.array({
                 valueType: ts.Type.string(),
-                fields: [
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!"))
-                ]
+                values: [ts.TypeLiteral.string("Hello, World!"), ts.TypeLiteral.string("Goodbye, World!")]
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
         });
@@ -29,15 +26,15 @@ describe("TypeLiteral", () => {
         it("Should generate a multiline array of strings", () => {
             const literal = ts.TypeLiteral.array({
                 valueType: ts.Type.string(),
-                fields: [
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
-                    ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!"))
+                values: [
+                    ts.TypeLiteral.string("Hello, World!"),
+                    ts.TypeLiteral.string("Goodbye, World!"),
+                    ts.TypeLiteral.string("Hello, World!"),
+                    ts.TypeLiteral.string("Goodbye, World!"),
+                    ts.TypeLiteral.string("Hello, World!"),
+                    ts.TypeLiteral.string("Goodbye, World!"),
+                    ts.TypeLiteral.string("Hello, World!"),
+                    ts.TypeLiteral.string("Goodbye, World!")
                 ]
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
@@ -100,20 +97,18 @@ World!\``);
             const actual = ts.codeblock((writer) => {
                 writer.write("let myObj = ");
                 writer.writeNode(
-                    ts.TypeLiteral.object({
-                        fields: [
-                            ts.TypeLiteral.objectField({
-                                name: "name",
-                                valueType: ts.Type.string(),
-                                value: ts.TypeLiteral.string("John Smith")
-                            }),
-                            ts.TypeLiteral.objectField({
-                                name: "hometown",
-                                valueType: ts.Type.string(),
-                                value: ts.TypeLiteral.string("New York, New York")
-                            })
-                        ]
-                    })
+                    ts.TypeLiteral.object([
+                        {
+                            name: "name",
+                            valueType: ts.Type.string(),
+                            value: ts.TypeLiteral.string("John Smith")
+                        },
+                        {
+                            name: "hometown",
+                            valueType: ts.Type.string(),
+                            value: ts.TypeLiteral.string("New York, New York")
+                        }
+                    ])
                 );
             });
             expect(actual.toStringFormatted()).toMatchSnapshot();
