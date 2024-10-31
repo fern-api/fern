@@ -12,7 +12,7 @@ async function main() {
         clean: true,
         minify: true,
         // TODO: Can we emit the .d.ts files too?
-        // dts: true,
+        dts: true,
         outDir: 'dist',
         external: [
             // Test dependencies should not be included in the published package.
