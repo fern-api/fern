@@ -1,12 +1,33 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./types",
+      "./node_modules"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/commons/logging-execa" },
-    { "path": "../../commons" },
-    { "path": "../cli" },
-    { "path": "../codegen" }
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/logging-execa"
+    },
+    {
+      "path": "../../commons"
+    },
+    {
+      "path": "../cli"
+    },
+    {
+      "path": "../codegen"
+    }
   ]
 }
