@@ -1035,6 +1035,10 @@ importers:
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.80.5)(terser@5.36.0)
 
   generators/ruby/model:
+    dependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
     devDependencies:
       '@fern-api/fs-utils':
         specifier: workspace:*
@@ -1060,9 +1064,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.15(esbuild@0.24.0)
