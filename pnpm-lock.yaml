@@ -53,8 +53,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.14
       '@types/lodash-es':
-        specifier: 4.17.6
-        version: 4.17.6
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -8052,9 +8052,6 @@ packages:
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
 
-  '@types/lodash-es@4.17.6':
-    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
-
   '@types/lodash@4.17.13':
     resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
 
@@ -15081,10 +15078,6 @@ snapshots:
       latest-version: 9.0.0
 
   '@types/lodash-es@4.17.12':
-    dependencies:
-      '@types/lodash': 4.17.13
-
-  '@types/lodash-es@4.17.6':
     dependencies:
       '@types/lodash': 4.17.13
 
