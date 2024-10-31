@@ -2,19 +2,18 @@
 name: publish-and-register-python-v2-codegen
 
 on:
-  pull_request:
   push:
     branches:
-      - main
+      # - main
       - vargas/publish-python2
-    paths:
-      - "generators/pythonv2/codegen/versions.yml"
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "The version of the generator to publish."
-        required: true
-        type: string
+    # paths:
+    #   - "generators/pythonv2/codegen/versions.yml"
+  # workflow_dispatch:
+  #   inputs:
+  #     version:
+  #       description: "The version of the generator to publish."
+  #       required: true
+  #       type: string
 
 env:
   DOCKER_BUILDKIT: 1
