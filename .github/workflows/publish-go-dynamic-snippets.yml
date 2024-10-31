@@ -28,6 +28,17 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+
       - name: 🧪 Build
         run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
 
@@ -54,6 +65,17 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: 🧪 Build
         run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
