@@ -52,7 +52,7 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "tsup": "^8.0.2",
-    "typescript": "^5.6.3",
+    "typescript": "^5.0.4",
     "vitest": "^2.0.5"
   }
 }
