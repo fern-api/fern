@@ -65,6 +65,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          cd generators/go-v2/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
