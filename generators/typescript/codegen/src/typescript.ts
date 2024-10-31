@@ -9,5 +9,5 @@ export function variable(arg: AST.Variable.Args): AST.Variable {
 }
 
 export * from "./ast";
-export { Type as Types } from "./ast";
+export { Type as Types, TypeLiteral } from "./ast";
 export * from "./ast/core";
