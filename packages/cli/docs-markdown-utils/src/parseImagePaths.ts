@@ -72,7 +72,9 @@ export function parseImagePaths(
 
         if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
             if (node.name && MEDIA_NODE_NAMES.includes(node.name)) {
-                const srcAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "src");
+                const srcAttr = node.attributes.find(
+                    (attr: any) => attr.type === "mdxJsxAttribute" && attr.name === "src"
+                );
 
                 if (srcAttr?.value) {
                     let srcValue = srcAttr.value;
@@ -87,7 +89,7 @@ export function parseImagePaths(
                     const resolvedPath = resolvePath(pathToImage, metadata);
                     if (pathToImage != null && resolvedPath != null) {
                         filepaths.add(resolvedPath);
-                        node.attributes = node.attributes.map((attr) => {
+                        node.attributes = node.attributes.map((attr: any) => {
                             if (attr.type === "mdxJsxAttribute" && attr.name === "src") {
                                 return { ...attr, value: resolvedPath };
                             }
@@ -97,7 +99,7 @@ export function parseImagePaths(
                     }
                 }
             } else {
-                node.attributes.forEach((attr) => {
+                node.attributes.forEach((attr: any) => {
                     if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
                         const match = SRC_REGEX.exec(attr.value.value);
                         if (match?.[1]) {
