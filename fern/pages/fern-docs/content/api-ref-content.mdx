@@ -1,6 +1,6 @@
 ---
 title: Write Markdown content in your API Reference
-description: Add Markdown content to your API Reference including summary pages, asides, and content between endpoints.
+description: Add Markdown content to your API Reference including summary pages and content between endpoints.
 ---
 
 Fern Docs allows you to write Markdown content in your API Reference documentation. This feature is useful for providing additional context, examples, or explanations for your API endpoints. There are a few ways to accomplish this:
@@ -79,34 +79,3 @@ navigation:
           - findPetsByType
           - findPetsByBreed
 ```
-
-### Aside component
-
-When writing Markdown content for your API Reference, the `<Aside>` component can be useful for providing additional information or context. For example, you can use the `<Aside>` component to explain how to authenticate with your API or provide examples of request and response payloads.
-
-````mdx title="pages/pet-crud.mdx"
----
-title: Pet CRUD operations
----
-
-Welcome to the Pet CRUD operations section. This section provides an overview of the CRUD operations for managing pets in the system.
-
-<Aside>
-### Authentication
-```json
-{
-  "username": "admin",
-  "password": "password"
-}
-```
-
-### Request payload
-```json
-{
-  "name": "Fido",
-  "breed": "Golden Retriever",
-  "age": 5
-}
-```
-</Aside>
-````
