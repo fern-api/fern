@@ -30,13 +30,16 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-api/go-dynamic-snippets": "file:../dynamic-snippets/dist/fern-api-go-dynamic-snippets-0.0.0.tgz",
     "@fern-fern/ir-sdk": "^53.15.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-fern/ir-sdk": "^53.15.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
