@@ -30,7 +30,6 @@ export declare namespace Method {
         decorators?: Decorator[];
     }
 }
-[];
 
 export class Method extends AstNode {
     public readonly name: string;

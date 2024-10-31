@@ -13,3 +13,4 @@ export { MethodArgument } from "./MethodArgument";
 export { PythonFile } from "./PythonFile";
 export { Decorator } from "./Decorator";
 export { TypeInstantiation } from "./TypeInstantiation";
+export { Operator } from "./Operator";
