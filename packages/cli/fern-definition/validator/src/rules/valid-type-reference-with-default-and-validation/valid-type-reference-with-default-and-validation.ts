@@ -155,7 +155,7 @@ function validateEnumDefault({
     const violations: RuleViolation[] = [];
     if (!enumValues.has(_default as string)) {
         violations.push({
-            message: `Default value '${_default}' is not a valid enum value`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid enum value`,
             severity: "error"
         });
     }
@@ -174,7 +174,7 @@ function validateStringDefaultAndValidation({
 
     if (_default != null && typeof _default !== "string") {
         violations.push({
-            message: `Default value '${_default}' is not a valid string`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid string`,
             severity: "error"
         });
     }
@@ -200,7 +200,7 @@ function validateDoubleDefaultAndValidation({
 
     if (_default != null && typeof _default !== "number") {
         violations.push({
-            message: `Default value '${_default}' is not a valid double`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid double`,
             severity: "error"
         });
     }
@@ -226,7 +226,7 @@ function validateIntegerDefaultAndValidation({
 
     if (_default != null && !Number.isInteger(_default)) {
         violations.push({
-            message: `Default value '${_default}' is not a valid integer`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid integer`,
             severity: "error"
         });
     }
@@ -260,7 +260,7 @@ function validateBooleanDefaultAndValidation({
 
     if (_default != null && typeof _default !== "boolean") {
         violations.push({
-            message: `Default value '${_default}' is not a valid boolean`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid boolean`,
             severity: "error"
         });
     }
@@ -286,7 +286,7 @@ function validateLongDefaultAndValidation({
 
     if (_default != null && typeof _default !== "number") {
         violations.push({
-            message: `Default value '${_default}' is not a valid long`,
+            message: `Default value '${JSON.stringify(_default)}' is not a valid long`,
             severity: "error"
         });
     }
@@ -313,7 +313,7 @@ function validateBigIntegerDefaultAndValidation({
     if (_default != null) {
         if (typeof _default !== "string") {
             violations.push({
-                message: `Default value '${_default}' is not a valid bigint`,
+                message: `Default value '${JSON.stringify(_default)}' is not a valid bigint`,
                 severity: "error"
             });
         } else {
