@@ -26,7 +26,7 @@ jobs:
           version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group node --version $version
 
-  dynamic-ir-sdk:
+  dynamic-ir:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -41,7 +41,7 @@ jobs:
         run: |
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
-          fern generate --api ir-types-latest --group dynamic-ir-sdk --version $version
+          fern generate --api ir-types-latest --group dynamic-ir --version $version
   
   python:
     runs-on: ubuntu-latest

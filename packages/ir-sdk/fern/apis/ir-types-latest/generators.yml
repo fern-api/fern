@@ -11,7 +11,7 @@ groups:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
-  node-dynamic:
+  dynamic-ir:
     audiences:
       - dynamic
     generators:
@@ -21,8 +21,8 @@ groups:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
         config:
-          includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: true
   node:
     generators:
       - name: fernapi/fern-typescript-node-sdk
