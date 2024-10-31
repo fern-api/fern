@@ -1,0 +1,224 @@
+types:
+  GeneratorConfig:
+    audiences:
+      - dynamic
+    properties:
+      dryRun: boolean
+      irFilepath: string
+      originalReadmeFilepath: optional<string>
+      license: optional<LicenseConfig>
+      output: GeneratorOutputConfig
+      publish:
+        type: optional<GeneratorPublishConfig>
+        docs: Deprecated. Use output.mode instead.
+      workspaceName: string
+      organization: string
+      customConfig: unknown
+      environment: GeneratorEnvironment
+      whitelabel: boolean
+      writeUnitTests: boolean
+      generatePaginatedClients: optional<boolean>
+      generateOauthClients: boolean
+  LicenseConfig:
+    union:
+      basic: BasicLicense
+      custom: CustomLicense
+  BasicLicense:
+    properties:
+      id: LicenseId
+  LicenseId:
+    enum:
+      - MIT
+      - name: apache2
+        value: Apache-2.0
+  CustomLicense:
+    properties:
+      filename: string
+  GeneratorOutputConfig:
+    properties:
+      path: string
+      snippetFilepath: optional<string>
+      snippetTemplateFilepath: optional<string>
+      publishingMetadata: optional<PublishingMetadata>
+      mode: OutputMode
+  OutputMode:
+    union:
+      publish: GeneratorPublishConfig
+      downloadFiles: {}
+      github: GithubOutputMode
+  GeneratorPublishConfig:
+    properties:
+      registries:
+        type: GeneratorRegistriesConfig
+        docs: Deprecated, use publishTargets instead.
+      registriesV2:
+        type: GeneratorRegistriesConfigV2
+        docs: Deprecated, use publishTargets instead.
+      publishTarget: optional<GeneratorPublishTarget>
+      version: string
+  GithubOutputMode:
+    properties:
+      version: string
+      repoUrl:
+        type: string
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+      installationToken:
+        type: optional<string>
+        docs: |
+          The token scoped to installing the repository. If not specified, the generator
+          should NOT attempt to clone the repository.
+      publishInfo: optional<GithubPublishInfo>
+  OutputMetadataAuthor:
+    properties:
+      name: string
+      email: string
+  OutputMetadata:
+    properties:
+      description: optional<string>
+      authors: optional<list<OutputMetadataAuthor>>
+  PublishingMetadata:
+    docs: This should effectively be deprecated in favor of a more specific configuration per-output mode (pypi, maven, etc.).
+    properties:
+      package_description: optional<string>
+      publisher_email: optional<string>
+      reference_url: optional<string>
+      publisher_name: optional<string>
+  GithubPublishInfo:
+    union:
+      npm: NpmGithubPublishInfo
+      maven: MavenGithubPublishInfo
+      postman: PostmanGithubPublishInfo
+      pypi: PypiGithubPublishInfo
+      rubygems: RubyGemsGithubPublishInfo
+      nuget: NugetGithubPublishInfo
+  EnvironmentVariable: string
+  NpmGithubPublishInfo:
+    properties:
+      registryUrl: string
+      packageName: string
+      tokenEnvironmentVariable: EnvironmentVariable
+      shouldGeneratePublishWorkflow: optional<boolean>
+  MavenCentralSignatureGithubInfo:
+    properties:
+      keyIdEnvironmentVariable: EnvironmentVariable
+      passwordEnvironmentVariable: EnvironmentVariable
+      secretKeyEnvironmentVariable: EnvironmentVariable
+  MavenGithubPublishInfo:
+    properties:
+      registryUrl: string
+      coordinate: string
+      usernameEnvironmentVariable: EnvironmentVariable
+      passwordEnvironmentVariable: EnvironmentVariable
+      signature: optional<MavenCentralSignatureGithubInfo>
+      shouldGeneratePublishWorkflow: optional<boolean>
+  PostmanGithubPublishInfo:
+    properties:
+      apiKeyEnvironmentVariable: EnvironmentVariable
+      workspaceIdEnvironmentVariable: EnvironmentVariable
+  PypiMetadata:
+    extends: OutputMetadata
+    properties:
+      keywords: optional<list<string>>
+      documentationLink: optional<string>
+      homepageLink: optional<string>
+  PypiGithubPublishInfo:
+    properties:
+      registryUrl: string
+      packageName: string
+      usernameEnvironmentVariable: EnvironmentVariable
+      passwordEnvironmentVariable: EnvironmentVariable
+      pypiMetadata: optional<PypiMetadata>
+      shouldGeneratePublishWorkflow: optional<boolean>
+  RubyGemsGithubPublishInfo:
+    properties:
+      registryUrl: string
+      packageName: string
+      apiKeyEnvironmentVariable: EnvironmentVariable
+      shouldGeneratePublishWorkflow: optional<boolean>
+  NugetGithubPublishInfo:
+    properties:
+      registryUrl: string
+      packageName: string
+      apiKeyEnvironmentVariable: EnvironmentVariable
+      shouldGeneratePublishWorkflow: optional<boolean>
+  GeneratorRegistriesConfig:
+    properties:
+      maven: MavenRegistryConfig
+      npm: NpmRegistryConfig
+  MavenCentralSignature:
+    properties:
+      keyId: string
+      password: string
+      secretKey: string
+  MavenRegistryConfig:
+    properties:
+      registryUrl: string
+      username: string
+      password: string
+      group: string
+      signature: optional<MavenCentralSignature>
+  NpmRegistryConfig:
+    properties:
+      registryUrl: string
+      token: string
+      scope: string
+  GeneratorRegistriesConfigV2:
+    properties:
+      maven: MavenRegistryConfigV2
+      npm: NpmRegistryConfigV2
+      pypi: PypiRegistryConfig
+      rubygems: RubyGemsRegistryConfig
+      nuget: NugetRegistryConfig
+  GeneratorPublishTarget:
+    union:
+      maven: MavenRegistryConfigV2
+      npm: NpmRegistryConfigV2
+      pypi: PypiRegistryConfig
+      postman: PostmanConfig
+      rubygems: RubyGemsRegistryConfig
+      nuget: NugetRegistryConfig
+  MavenRegistryConfigV2:
+    properties:
+      registryUrl: string
+      username: string
+      password: string
+      coordinate: string
+      signature: optional<MavenCentralSignature>
+  NpmRegistryConfigV2:
+    properties:
+      registryUrl: string
+      token: string
+      packageName: string
+  PypiRegistryConfig:
+    properties:
+      registryUrl: string
+      username: string
+      password: string
+      packageName: string
+      pypiMetadata: optional<PypiMetadata>
+  RubyGemsRegistryConfig:
+    properties:
+      registryUrl: string
+      apiKey: string
+      packageName: string
+  NugetRegistryConfig:
+    properties:
+      registryUrl: string
+      apiKey: string
+      packageName: string
+  PostmanConfig:
+    properties:
+      apiKey: string
+      workspaceId: string
+  GeneratorEnvironment:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      local: {}
+      remote: RemoteGeneratorEnvironment
+  RemoteGeneratorEnvironment:
+    properties:
+      coordinatorUrl: string
+      coordinatorUrlV2: string
+      id: string
