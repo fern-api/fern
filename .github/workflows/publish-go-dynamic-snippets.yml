@@ -48,7 +48,7 @@ jobs:
       - name: Publish @fern-api/go-dynamic-snippets
         run: |
           cd generators/go-v2/dynamic-snippets
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.2
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public

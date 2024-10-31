@@ -1,6 +1,6 @@
 const packageJson = require("./package.json");
 const tsup = require('tsup');
-const { writeFile } = require("fs/promises");
+const { writeFile, rename } = require("fs/promises");
 const path = require("path");
 
 main();
@@ -24,6 +24,9 @@ async function main() {
 
     process.chdir(path.join(__dirname, "dist"));
 
+    // The module expects the imports defined in the index.d.ts file.
+    await rename("index.d.cts", "index.d.ts");
+
     await writeFile(
         "package.json",
         JSON.stringify(
@@ -32,8 +35,8 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 main: "index.cjs",
-                types: "index.d.cts",
-                files: ["index.cjs", "index.d.cts"]
+                types: "index.d.ts",
+                files: ["index.cjs", "index.d.ts"]
             },
             undefined,
             2
