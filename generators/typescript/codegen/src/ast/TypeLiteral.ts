@@ -83,13 +83,7 @@ export class TypeLiteral extends AstNode {
             }
             case "string": {
                 if (this.internalType.value.includes("\n")) {
-                    writer.write("`");
-                    const parts = this.internalType.value.split("\n");
-                    const head = parts[0] + "\n";
-                    const tail = parts.slice(1).join("\n");
-                    writer.write(head.replaceAll("`", "\\`"));
-                    writer.writeNoIndent(tail.replaceAll("`", "\\`"));
-                    writer.write("`");
+                    this.writeStringWithBackticks({ writer, value: this.internalType.value });
                 } else {
                     writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
                 }
@@ -105,7 +99,17 @@ export class TypeLiteral extends AstNode {
         }
     }
 
-    private writeArray({ writer, value }: { writer: Writer; value: Array_ }) {
+    private writeStringWithBackticks({ writer, value }: { writer: Writer; value: string }): void {
+        writer.write("`");
+        const parts = value.split("\n");
+        const head = parts[0] + "\n";
+        const tail = parts.slice(1).join("\n");
+        writer.write(head.replaceAll("`", "\\`"));
+        writer.writeNoIndent(tail.replaceAll("`", "\\`"));
+        writer.write("`");
+    }
+
+    private writeArray({ writer, value }: { writer: Writer; value: Array_ }): void {
         this.writeIterable({
             writer,
             value,
@@ -114,7 +118,7 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    private writeObject({ writer, value }: { writer: Writer; value: Object_ }) {
+    private writeObject({ writer, value }: { writer: Writer; value: Object_ }): void {
         this.writeIterable({
             writer,
             value,
@@ -123,7 +127,7 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    private writeTuple({ writer, value }: { writer: Writer; value: Tuple }) {
+    private writeTuple({ writer, value }: { writer: Writer; value: Tuple }): void {
         this.writeIterable({
             writer,
             value,
@@ -142,7 +146,7 @@ export class TypeLiteral extends AstNode {
         value: IterableLiteral;
         leftBrace: string;
         rightBrace: string;
-    }) {
+    }): void {
         if (value.fields.length === 0) {
             // Don't allow "multiline" empty collections.
             writer.write(`${leftBrace}${rightBrace}`);
@@ -158,7 +162,7 @@ export class TypeLiteral extends AstNode {
         }
     }
 
-    private writeIterableField(writer: Writer, value: IterableLiteralField) {
+    private writeIterableField(writer: Writer, value: IterableLiteralField): void {
         switch (value.type) {
             case "objectField": {
                 writer.write(`${value.name}: `);
