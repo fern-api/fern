@@ -12,7 +12,7 @@ export async function mergeWithOverrides<T>({ data, overrides }: { data: T; over
             : undefined
     ) as T;
     // Remove any nullified values
-    const filtered = omitDeepBy(merged, isNull);
+    const filtered = omitDeepBy(merged, isNull) as any;
     return filtered as any;
 }
 
