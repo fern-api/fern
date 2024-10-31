@@ -1,10 +1,9 @@
 import { fromMarkdown } from "mdast-util-from-markdown";
-import { Root } from "mdast-util-from-markdown/lib";
+// import { Root } from "mdast-util-from-markdown/lib";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 
-export { Root };
-export function parseMarkdownToTree(content: string): Root {
+export function parseMarkdownToTree(content: string): any {
     return fromMarkdown(content, {
         extensions: [mdx()],
         mdastExtensions: [mdxFromMarkdown()]
