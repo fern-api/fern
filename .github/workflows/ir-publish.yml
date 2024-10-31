@@ -38,6 +38,7 @@ jobs:
       - name: Release SDKs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
