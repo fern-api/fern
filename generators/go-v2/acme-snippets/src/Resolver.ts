@@ -33,7 +33,6 @@ export class Resolver {
         switch (language) {
             case "go": {
                 const config = this.getGeneratorConfigForLanguage(language);
-                console.log("Configuration", JSON.stringify(config, null, 2));
                 return new Go({ ir, config });
             }
             default:

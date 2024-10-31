@@ -402,8 +402,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-api/go-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../dynamic-snippets
+        specifier: 0.0.2
+        version: 0.0.2
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
@@ -7641,6 +7641,9 @@ packages:
     peerDependencies:
       lodash-es: '>=4'
 
+  '@fern-api/go-dynamic-snippets@0.0.2':
+    resolution: {integrity: sha512-RJ+d00P9+WdONyn9Rm5o56RiD4GD796LcD/pGa5XYk5QQI894FskpeKjOq0iv9OTak2Ap11eTxCyFO+mHp4ReA==}
+
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
 
@@ -14791,6 +14794,8 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - typescript
+
+  '@fern-api/go-dynamic-snippets@0.0.2': {}
 
   '@fern-api/sdk@0.12.3':
     dependencies:
