@@ -2,7 +2,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { assertNever } from "@fern-api/core-utils";
 
-type OperatorType = "or" | "and";
+type OperatorType = "or" | "and" | "bitwiseLeftShift" | "bitwiseRightShift";
 
 export declare namespace Operator {
     interface Args {
@@ -32,6 +32,10 @@ export class Operator extends AstNode {
                 return "or";
             case "and":
                 return "and";
+            case "bitwiseLeftShift":
+                return "<<";
+            case "bitwiseRightShift":
+                return ">>";
             default:
                 assertNever(this.operator);
         }
