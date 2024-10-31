@@ -24,12 +24,6 @@ async function main() {
 
     process.chdir(path.join(__dirname, "dist"));
 
-    // TODO: Should we just write this file directly?
-    //
-    // declare module '@fern-api/go-dynamic-snippets' {
-    //     export { DynamicSnippetsGenerator } from './DynamicSnippetsGenerator.cjs';
-    // }
-
     await writeFile(
         "package.json",
         JSON.stringify(
@@ -38,7 +32,8 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 main: "index.cjs",
-                files: ["index.cjs"]
+                types: "index.d.cts",
+                files: ["index.cjs", "index.d.cts"]
             },
             undefined,
             2
