@@ -11,7 +11,6 @@ async function main() {
         format: ['cjs'],
         clean: true,
         minify: true,
-        // TODO: Can we emit the .d.ts files too?
         dts: true,
         outDir: 'dist',
         external: [
@@ -19,7 +18,8 @@ async function main() {
             '@fern-api/go-formatter',
             '@fern-api/project-loader',
             '@fern-api/workspace-loader'
-        ]
+        ],
+        tsconfig: "./build.tsconfig.json"
     });
 
     process.chdir(path.join(__dirname, "dist"));
