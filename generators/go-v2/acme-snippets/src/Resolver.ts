@@ -4,6 +4,7 @@ import path from "path";
 import { AbstractDynamicSnippetsGenerator, AbstractDynamicSnippetsGeneratorContext } from "@fern-api/dynamic-snippets";
 import { DynamicSnippetsGenerator as Go } from "@fern-api/go-dynamic-snippets";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { dynamic } from "@fern-fern/ir-sdk/serialization";
 import { Language } from "./Language";
 import { CONFIG_DIR } from "./constants";
 
@@ -32,6 +33,7 @@ export class Resolver {
         switch (language) {
             case "go": {
                 const config = this.getGeneratorConfigForLanguage(language);
+                console.log("Configuration", JSON.stringify(config, null, 2));
                 return new Go({ ir, config });
             }
             default:
@@ -52,7 +54,7 @@ export class Resolver {
 
     private loadIR(): DynamicSnippets.DynamicIntermediateRepresentation {
         const content = this.readConfigFileAsString("ir/ir.json");
-        return JSON.parse(content) as DynamicSnippets.DynamicIntermediateRepresentation;
+        return dynamic.DynamicIntermediateRepresentation.parseOrThrow(JSON.parse(content));
     }
 
     private readConfigFileAsString(filepath: string): string {

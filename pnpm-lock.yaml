@@ -7642,7 +7642,7 @@ packages:
       lodash-es: '>=4'
 
   '@fern-api/go-dynamic-snippets@file:generators/go-v2/dynamic-snippets/dist/fern-api-go-dynamic-snippets-0.0.0.tgz':
-    resolution: {integrity: sha512-dGs6jmbC+Hy5gSfJ8PEWvNuH/u43ypy11MTG8lfLHdUqXkAPEfbYPAGwGuWFbBLPJ1B94lBLkHWgUmK7wLhYfw==, tarball: file:generators/go-v2/dynamic-snippets/dist/fern-api-go-dynamic-snippets-0.0.0.tgz}
+    resolution: {integrity: sha512-MwdhfygvNGK0D/Y/8ZJyTh9lFqfgsbrh+OlWE8zTWCMyscsS/dgg7wo9vlUCOnrwZlQqb4bVuUYZsQzMSM4W3g==, tarball: file:generators/go-v2/dynamic-snippets/dist/fern-api-go-dynamic-snippets-0.0.0.tgz}
     version: 0.0.0
 
   '@fern-api/sdk@0.12.3':
