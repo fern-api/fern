@@ -34,6 +34,14 @@ export class AbstractWriter {
     }
 
     /**
+     * Writes arbitrary text without indentation
+     * @param text
+     */
+    public writeNoIndent(text: string): void {
+        this.writeInternal(text);
+    }
+
+    /**
      * Writes a node
      * @param node
      */
