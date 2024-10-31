@@ -1,9 +1,6 @@
-name: Publish @fern-api/go-dynamic-snippets 
+name: Publish @fern-api/go-dynamic-snippets
 
 on:
-  push:
-    branches:
-      - amckinney/go/npm
   workflow_dispatch:
     inputs:
       version:
@@ -18,42 +15,6 @@ env:
 
 jobs:
   publish:
-    if: ${{ github.event_name == 'push' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-tags: true
-
-      - name: 📥 Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
-        with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
-
-      - name: 🧪 Build
-        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
-
-      - name: 🧪 Test
-        run: pnpm --filter=${{ env.PACKAGE_NAME }} test
-
-      - name: Publish @fern-api/go-dynamic-snippets
-        run: |
-          cd generators/go-v2/dynamic-snippets
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.2
-          cd dist
-          echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
-          npm publish --access public
-
-  publish-manually:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     steps:
