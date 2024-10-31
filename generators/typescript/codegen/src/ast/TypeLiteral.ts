@@ -35,9 +35,7 @@ interface Tuple {
     fields: TupleField[];
 }
 
-interface IterableLiteral<T extends IterableLiteralField> {
-    fields: T[];
-}
+type IterableLiteral = Array_ | Object_ | Tuple;
 
 type IterableLiteralField = ArrayField | ObjectField | TupleField;
 
@@ -141,7 +139,7 @@ export class TypeLiteral extends AstNode {
         rightBrace
     }: {
         writer: Writer;
-        value: IterableLiteral<IterableLiteralField>;
+        value: IterableLiteral;
         leftBrace: string;
         rightBrace: string;
     }) {
