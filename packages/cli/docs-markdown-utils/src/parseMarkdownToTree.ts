@@ -1,6 +1,5 @@
 import { fromMarkdown } from "mdast-util-from-markdown";
-import { Root } from "mdast-util-from-markdown/lib";
-export { Root } from "mdast-util-from-markdown/lib";
+import * as Root from "mdast-util-from-markdown/lib";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 
