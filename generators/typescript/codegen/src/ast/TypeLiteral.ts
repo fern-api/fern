@@ -34,7 +34,6 @@ interface Object_ {
 interface String_ {
     type: "string";
     value: string;
-    multiline?: boolean;
 }
 
 interface Tuple {
@@ -62,6 +61,7 @@ interface ArrayField {
 interface ObjectField {
     type: "objectField";
     name: string;
+    valueType: Type;
     value: TypeLiteral;
 }
 
@@ -96,17 +96,13 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "string": {
-                if (this.internalType.multiline ?? false) {
+                if (this.internalType.value.includes("\n")) {
                     writer.write("`");
-                    if (this.internalType.value.includes("\n")) {
-                        const parts = this.internalType.value.split("\n");
-                        const head = parts[0] + "\n";
-                        const tail = parts.slice(1, -1).join("\n");
-                        writer.write(head);
-                        writer.writeNoIndent(tail);
-                    } else {
-                        writer.write(this.internalType.value);
-                    }
+                    const parts = this.internalType.value.split("\n");
+                    const head = parts[0] + "\n";
+                    const tail = parts.slice(1).join("\n");
+                    writer.write(head.replaceAll("`", "\\`"));
+                    writer.writeNoIndent(tail.replaceAll("`", "\\`"));
                     writer.write("`");
                 } else {
                     writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
@@ -126,7 +122,7 @@ export class TypeLiteral extends AstNode {
     private writeIterable(writer: Writer, value: IterableLiteral<IterableLiteralField>) {
         if (value.fields.length === 0) {
             // Don't allow "multiline" empty collections.
-            writer.writeTextStatement(`${value.leftBrace}${value.rightBrace}`);
+            writer.write(`${value.leftBrace}${value.rightBrace}`);
         } else if (value.multiline ?? false) {
             writer.writeLine(`${value.leftBrace}`);
             writer.indent();
@@ -135,9 +131,9 @@ export class TypeLiteral extends AstNode {
                 writer.writeLine(",");
             }
             writer.dedent();
-            writer.writeTextStatement("]");
+            writer.write(`${value.rightBrace}`);
         } else {
-            writer.write("[");
+            writer.write(`${value.leftBrace}`);
             const init = value.fields.slice(0, -1);
             const last = value.fields[value.fields.length - 1];
             for (const elem of init) {
@@ -146,9 +142,9 @@ export class TypeLiteral extends AstNode {
             }
             // Need for eslint; last cannot be null because of the first if
             if (last != null) {
-                last.value.write(writer);
+                this.writeIterableField(writer, last);
             }
-            writer.writeTextStatement("]");
+            writer.write(`${value.rightBrace}`);
         }
     }
 
@@ -190,6 +186,13 @@ export class TypeLiteral extends AstNode {
         });
     }
 
+    public static arrayField(value: TypeLiteral): ArrayField {
+        return {
+            type: "arrayField",
+            value
+        };
+    }
+
     public static boolean(value: boolean): TypeLiteral {
         return new this({ type: "boolean", value });
     }
@@ -208,11 +211,27 @@ export class TypeLiteral extends AstNode {
         });
     }
 
-    public static string({ value, multiline }: { value: string; multiline?: boolean }): TypeLiteral {
+    public static objectField({
+        name,
+        valueType,
+        value
+    }: {
+        name: string;
+        valueType: Type;
+        value: TypeLiteral;
+    }): ObjectField {
+        return {
+            type: "objectField",
+            name,
+            valueType,
+            value
+        };
+    }
+
+    public static string(value: string): TypeLiteral {
         return new this({
             type: "string",
-            value,
-            multiline
+            value
         });
     }
 
@@ -224,5 +243,13 @@ export class TypeLiteral extends AstNode {
             leftBrace: "[",
             rightBrace: "]"
         });
+    }
+
+    public static tupleField({ valueType, value }: { valueType: Type; value: TypeLiteral }): TupleField {
+        return {
+            type: "tupleField",
+            valueType,
+            value
+        };
     }
 }
