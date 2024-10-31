@@ -431,7 +431,7 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/go-v2/dynamic-snippets:
-    dependencies:
+    devDependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -471,7 +471,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^53.15.0
         version: 53.15.0
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -490,6 +489,9 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4

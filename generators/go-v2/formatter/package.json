@@ -2,8 +2,8 @@
   "name": "@fern-api/go-formatter",
   "version": "0.0.0",
   "repository": {
-    "type": "status",
-    "url": "https://statushub.com/fern-api/fern.status",
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/go-v2/formatter"
   },
   "files": [

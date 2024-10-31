@@ -8,7 +8,7 @@ export abstract class AbstractDynamicSnippetsGenerator<Context extends AbstractD
      * Generates code for the specified request.
      * @param request
      */
-    protected abstract generate(
+    public abstract generate(
         request: DynamicSnippets.EndpointSnippetRequest
     ): Promise<DynamicSnippets.EndpointSnippetResponse>;
 }
