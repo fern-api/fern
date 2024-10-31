@@ -25,8 +25,8 @@ describe("TypeLiteral", () => {
     });
 
     // N.B. If the array is too short prettier is going to print it on a single line
-    describe("multilineArrayOfStringsToString", () => {
-        it("Should generate an array of strings", () => {
+    describe("longArrayOfStringsToString", () => {
+        it("Should generate a multiline array of strings", () => {
             const literal = ts.TypeLiteral.array({
                 valueType: ts.Type.string(),
                 fields: [
@@ -38,8 +38,7 @@ describe("TypeLiteral", () => {
                     ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!")),
                     ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Hello, World!")),
                     ts.TypeLiteral.arrayField(ts.TypeLiteral.string("Goodbye, World!"))
-                ],
-                multiline: true
+                ]
             });
             expect(literal.toStringFormatted()).toMatchSnapshot();
         });
@@ -114,32 +113,6 @@ World!\``);
                                 value: ts.TypeLiteral.string("New York, New York")
                             })
                         ]
-                    })
-                );
-            });
-            expect(actual.toStringFormatted()).toMatchSnapshot();
-        });
-    });
-
-    describe("multilineObjectToString", () => {
-        it("Should generate a multiline object", () => {
-            const actual = ts.codeblock((writer) => {
-                writer.write("let myObj = ");
-                writer.writeNode(
-                    ts.TypeLiteral.object({
-                        fields: [
-                            ts.TypeLiteral.objectField({
-                                name: "name",
-                                valueType: ts.Type.string(),
-                                value: ts.TypeLiteral.string("John Smith")
-                            }),
-                            ts.TypeLiteral.objectField({
-                                name: "hometown",
-                                valueType: ts.Type.string(),
-                                value: ts.TypeLiteral.string("New York, New York")
-                            })
-                        ],
-                        multiline: true
                     })
                 );
             });

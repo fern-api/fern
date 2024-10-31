@@ -8,9 +8,6 @@ interface Array_ {
     type: "array";
     valueType: Type;
     fields: ArrayField[];
-    multiline: boolean;
-    leftBrace: "[";
-    rightBrace: "]";
 }
 
 interface Boolean_ {
@@ -26,9 +23,6 @@ interface Number_ {
 interface Object_ {
     type: "object";
     fields: ObjectField[];
-    multiline: boolean;
-    leftBrace: "{";
-    rightBrace: "}";
 }
 
 interface String_ {
@@ -39,16 +33,10 @@ interface String_ {
 interface Tuple {
     type: "tuple";
     fields: TupleField[];
-    multiline: boolean;
-    leftBrace: "[";
-    rightBrace: "]";
 }
 
 interface IterableLiteral<T extends IterableLiteralField> {
     fields: T[];
-    multiline?: boolean;
-    leftBrace: string;
-    rightBrace: string;
 }
 
 type IterableLiteralField = ArrayField | ObjectField | TupleField;
@@ -79,7 +67,7 @@ export class TypeLiteral extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "array": {
-                this.writeIterable(writer, this.internalType);
+                this.writeArray({ writer, value: this.internalType });
                 break;
             }
             case "boolean": {
@@ -92,7 +80,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "object": {
-                this.writeIterable(writer, this.internalType);
+                this.writeObject({ writer, value: this.internalType });
                 break;
             }
             case "string": {
@@ -110,7 +98,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "tuple": {
-                this.writeIterable(writer, this.internalType);
+                this.writeTuple({ writer, value: this.internalType });
                 break;
             }
             default: {
@@ -119,32 +107,56 @@ export class TypeLiteral extends AstNode {
         }
     }
 
-    private writeIterable(writer: Writer, value: IterableLiteral<IterableLiteralField>) {
+    private writeArray({ writer, value }: { writer: Writer; value: Array_ }) {
+        this.writeIterable({
+            writer,
+            value,
+            leftBrace: "[",
+            rightBrace: "]"
+        });
+    }
+
+    private writeObject({ writer, value }: { writer: Writer; value: Object_ }) {
+        this.writeIterable({
+            writer,
+            value,
+            leftBrace: "{",
+            rightBrace: "}"
+        });
+    }
+
+    private writeTuple({ writer, value }: { writer: Writer; value: Tuple }) {
+        this.writeIterable({
+            writer,
+            value,
+            leftBrace: "[",
+            rightBrace: "]"
+        });
+    }
+
+    private writeIterable({
+        writer,
+        value,
+        leftBrace,
+        rightBrace
+    }: {
+        writer: Writer;
+        value: IterableLiteral<IterableLiteralField>;
+        leftBrace: string;
+        rightBrace: string;
+    }) {
         if (value.fields.length === 0) {
             // Don't allow "multiline" empty collections.
-            writer.write(`${value.leftBrace}${value.rightBrace}`);
-        } else if (value.multiline ?? false) {
-            writer.writeLine(`${value.leftBrace}`);
+            writer.write(`${leftBrace}${rightBrace}`);
+        } else {
+            writer.writeLine(`${leftBrace}`);
             writer.indent();
             for (const elem of value.fields) {
                 this.writeIterableField(writer, elem);
                 writer.writeLine(",");
             }
             writer.dedent();
-            writer.write(`${value.rightBrace}`);
-        } else {
-            writer.write(`${value.leftBrace}`);
-            const init = value.fields.slice(0, -1);
-            const last = value.fields[value.fields.length - 1];
-            for (const elem of init) {
-                this.writeIterableField(writer, elem);
-                writer.write(", ");
-            }
-            // Need for eslint; last cannot be null because of the first if
-            if (last != null) {
-                this.writeIterableField(writer, last);
-            }
-            writer.write(`${value.rightBrace}`);
+            writer.write(`${rightBrace}`);
         }
     }
 
@@ -179,10 +191,7 @@ export class TypeLiteral extends AstNode {
         return new this({
             type: "array",
             valueType,
-            fields,
-            multiline: multiline ?? false,
-            leftBrace: "[",
-            rightBrace: "]"
+            fields
         });
     }
 
@@ -204,10 +213,7 @@ export class TypeLiteral extends AstNode {
     public static object({ fields, multiline }: { fields: ObjectField[]; multiline?: boolean }): TypeLiteral {
         return new this({
             type: "object",
-            fields,
-            multiline: multiline ?? false,
-            leftBrace: "{",
-            rightBrace: "}"
+            fields
         });
     }
 
@@ -238,10 +244,7 @@ export class TypeLiteral extends AstNode {
     public static tuple({ fields, multiline }: { fields: TupleField[]; multiline?: boolean }): TypeLiteral {
         return new this({
             type: "tuple",
-            fields,
-            multiline: multiline ?? false,
-            leftBrace: "[",
-            rightBrace: "]"
+            fields
         });
     }
 

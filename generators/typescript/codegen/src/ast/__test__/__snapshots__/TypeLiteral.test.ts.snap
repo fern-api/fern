@@ -15,19 +15,7 @@ exports[`TypeLiteral > falseBooleanToString > Should generate a true boolean 1`]
 "
 `;
 
-exports[`TypeLiteral > manyLinesMultilineStringToString > Should generate a multiline string with backticks 1`] = `
-"\`Hello, 
-World!\`;
-"
-`;
-
-exports[`TypeLiteral > manyLinesMultilineStringWithBackticksToString > Should generate a multiline string with escaped backticks 1`] = `
-"\`\\\`Hello, 
-World!\\\`\`;
-"
-`;
-
-exports[`TypeLiteral > multilineArrayOfStringsToString > Should generate an array of strings 1`] = `
+exports[`TypeLiteral > longArrayOfStringsToString > Should generate a multiline array of strings 1`] = `
 "[
     "Hello, World!",
     "Goodbye, World!",
@@ -41,11 +29,15 @@ exports[`TypeLiteral > multilineArrayOfStringsToString > Should generate an arra
 "
 `;
 
-exports[`TypeLiteral > multilineObjectToString > Should generate a multiline object 1`] = `
-"let myObj = {
-    name: "John Smith",
-    hometown: "New York, New York",
-};
+exports[`TypeLiteral > manyLinesMultilineStringToString > Should generate a multiline string with backticks 1`] = `
+"\`Hello, 
+World!\`;
+"
+`;
+
+exports[`TypeLiteral > manyLinesMultilineStringWithBackticksToString > Should generate a multiline string with escaped backticks 1`] = `
+"\`\\\`Hello, 
+World!\\\`\`;
 "
 `;
 
@@ -55,7 +47,10 @@ exports[`TypeLiteral > numberToString > Should generate a simple number 1`] = `
 `;
 
 exports[`TypeLiteral > simpleObjectToString > Should generate a simple object 1`] = `
-"let myObj = { name: "John Smith", hometown: "New York, New York" };
+"let myObj = {
+    name: "John Smith",
+    hometown: "New York, New York",
+};
 "
 `;
 
