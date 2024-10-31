@@ -43,10 +43,6 @@ interface Tuple {
     values: TypeLiteral[];
 }
 
-interface IterableLiteral {
-    values: TypeLiteral[];
-}
-
 export class TypeLiteral extends AstNode {
     private constructor(public readonly internalType: InternalTypeLiteral) {
         super();
@@ -55,7 +51,7 @@ export class TypeLiteral extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "array": {
-                this.writeArray({ writer, array: this.internalType });
+                this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
             case "boolean": {
@@ -80,7 +76,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "tuple": {
-                this.writeTuple({ writer, tuple: this.internalType });
+                this.writeIterable({ writer, iterable: this.internalType });
                 break;
             }
             default: {
@@ -99,80 +95,36 @@ export class TypeLiteral extends AstNode {
         writer.write("`");
     }
 
-    private writeArray({ writer, array }: { writer: Writer; array: Array_ }): void {
-        this.writeIterable({
-            writer,
-            iterable: array,
-            leftBrace: "[",
-            rightBrace: "]",
-            writeField: (value: TypeLiteral) => value.write(writer)
-        });
-    }
-
-    private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
-        const values: TypeLiteral[] = [];
-        const valuesToNames = new Map<TypeLiteral, string>();
-        for (const field of object.fields) {
-            values.push(field.value);
-            valuesToNames.set(field.value, field.name);
-        }
-        const iterable = { values };
-        this.writeIterable({
-            writer,
-            iterable,
-            leftBrace: "{",
-            rightBrace: "}",
-            writeField: (value: TypeLiteral) => {
-                const name = valuesToNames.get(value);
-                if (name != null) {
-                    writer.write(`${name}: `);
-                    value.write(writer);
-                } else {
-                    throw Error(
-                        `BUG: Could not find name for field value ${JSON.stringify(value)} in ${JSON.stringify(
-                            object
-                        )}.`
-                    );
-                }
-            }
-        });
-    }
-
-    private writeTuple({ writer, tuple }: { writer: Writer; tuple: Tuple }): void {
-        this.writeIterable({
-            writer,
-            iterable: tuple,
-            leftBrace: "[",
-            rightBrace: "]",
-            writeField: (value: TypeLiteral) => value.write(writer)
-        });
-    }
-
-    private writeIterable({
-        writer,
-        iterable,
-        leftBrace,
-        rightBrace,
-        writeField
-    }: {
-        writer: Writer;
-        iterable: IterableLiteral;
-        leftBrace: string;
-        rightBrace: string;
-        writeField: (value: TypeLiteral) => void;
-    }): void {
+    private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple }): void {
         if (iterable.values.length === 0) {
-            // Don't allow "multiline" empty collections.
-            writer.write(`${leftBrace}${rightBrace}`);
+            // Don't allow "multiline" empty iterables.
+            writer.write("[]");
         } else {
-            writer.writeLine(`${leftBrace}`);
+            writer.writeLine("[");
             writer.indent();
             for (const value of iterable.values) {
-                writeField(value);
+                value.write(writer);
                 writer.writeLine(",");
             }
             writer.dedent();
-            writer.write(`${rightBrace}`);
+            writer.write("]");
+        }
+    }
+
+    private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
+        if (object.fields.length === 0) {
+            // Don't allow "multiline" empty objects.
+            writer.write("{}");
+        } else {
+            writer.writeLine("{");
+            writer.indent();
+            for (const field of object.fields) {
+                writer.write(`${field.name}: `);
+                field.value.write(writer);
+                writer.writeLine(",");
+            }
+            writer.dedent();
+            writer.write("}");
         }
     }
 
