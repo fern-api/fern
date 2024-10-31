@@ -4,6 +4,8 @@ imports:
   types: ./types.yml
 types:
   DynamicIntermediateRepresentation:
+    audiences:
+      - dynamic
     docs: |
       This represents the IR required to generate dynamic snippets.
       
