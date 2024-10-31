@@ -9,7 +9,7 @@ export interface ConvertedGeneratorsConfiguration {
     docsURLs: DocsURL[];
 }
 
-export type PathModificationStrategy = typeof PathModificationStrategy[keyof typeof PathModificationStrategy];
+export type PathModificationStrategy = (typeof PathModificationStrategy)[keyof typeof PathModificationStrategy];
 export const PathModificationStrategy = {
     Nest: "Nest",
     MoveUp: "MoveUp"
