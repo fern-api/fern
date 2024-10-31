@@ -98,10 +98,7 @@ export class PythonFile extends AstNode {
                 const levelsUp = this.path.length - commonPrefixLength;
 
                 // Build the relative import path
-                let relativePath = ".".repeat(levelsUp);
-                if (levelsUp > 0) {
-                    relativePath += ".";
-                }
+                let relativePath = levelsUp > 0 ? ".".repeat(levelsUp) : ".";
                 relativePath += refModulePath.slice(commonPrefixLength).join(".");
 
                 // Write the relative import statement
