@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@types/lodash': 4.17.5
   '@babel/traverse': 7.23.2
   json5: 2.2.2
   micromatch: 4.0.8
@@ -793,8 +794,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.14
       '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.13
+        specifier: 4.17.5
+        version: 4.17.5
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -6006,8 +6007,8 @@ importers:
         specifier: ^7.0.15
         version: 7.0.15
       '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.13
+        specifier: 4.17.5
+        version: 4.17.5
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -8052,8 +8053,8 @@ packages:
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
 
-  '@types/lodash@4.17.13':
-    resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
+  '@types/lodash@4.17.5':
+    resolution: {integrity: sha512-MBIOHVZqVqgfro1euRDWX7OO0fBVUUMrN6Pwm8LQsz8cWhEpihlvR70ENj3f40j58TNxZaWv2ndSkInykNBBJw==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -15079,9 +15080,9 @@ snapshots:
 
   '@types/lodash-es@4.17.12':
     dependencies:
-      '@types/lodash': 4.17.13
+      '@types/lodash': 4.17.5
 
-  '@types/lodash@4.17.13': {}
+  '@types/lodash@4.17.5': {}
 
   '@types/mdast@4.0.4':
     dependencies:
