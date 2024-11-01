@@ -44079,10 +44079,11 @@ service:
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "request": {
-                    "displayName": "displayName",
-                    "hostedLocation": "hostedLocation",
-                    "integrityHash": "integrityHash",
-                    "version": "version",
+                    "canCopy": true,
+                    "displayName": "CMS Slider",
+                    "hostedLocation": "https://cdn.jsdelivr.net/.../cmsslider.js",
+                    "integrityHash": "sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+",
+                    "version": "1.0.0",
                   },
                   "response": {
                     "body": {
@@ -44604,10 +44605,12 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
           request:
-            hostedLocation: hostedLocation
-            integrityHash: integrityHash
-            version: version
-            displayName: displayName
+            hostedLocation: https://cdn.jsdelivr.net/.../cmsslider.js
+            integrityHash: >-
+              sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+
+            canCopy: true
+            version: 1.0.0
+            displayName: CMS Slider
           response:
             body:
               id: cms_slider
