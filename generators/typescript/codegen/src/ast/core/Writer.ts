@@ -74,7 +74,11 @@ export class Writer extends AbstractWriter {
         const duplicates = [];
         for (const references of Object.values(this.imports)) {
             for (const ref of references) {
-                if (ref.importFrom?.type === "named" && ref.name === reference.name) {
+                if (
+                    ref.importFrom?.type === "named" &&
+                    ref.importFrom.moduleName !== reference.importFrom.moduleName &&
+                    ref.name === reference.name
+                ) {
                     duplicates.push(ref);
                 }
             }
