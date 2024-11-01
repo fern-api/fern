@@ -74,7 +74,7 @@ class PyProjectToml:
             if dep.name not in dev_dependency_names:
                 dev_dependencies.add(dep)
 
-        is_already_mypy_configured = self._user_defined_toml is not None and "[tool.mypy]" in self._user_defined_toml
+        is_mypy_already_configured = self._user_defined_toml is not None and "[tool.mypy]" in self._user_defined_toml
         blocks: List[PyProjectToml.Block] = [
             self._poetry_block,
             PyProjectToml.DependenciesBlock(
@@ -83,7 +83,7 @@ class PyProjectToml:
                 python_version=self._python_version,
             ),
             PyProjectToml.PluginConfigurationBlock(
-                is_already_mypy_configured=is_already_mypy_configured,
+                is_mypy_already_configured=is_mypy_already_configured,
             ),
             PyProjectToml.BuildSystemBlock(),
         ]
@@ -247,11 +247,11 @@ python = "{self.python_version}"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
-        is_already_mypy_configured: bool
+        is_mypy_already_configured: bool
 
         def to_string(self) -> str:
             mypy_section = ""
-            if not self.is_already_mypy_configured:
+            if not self.is_mypy_already_configured:
                 mypy_section = f"""\
 [tool.mypy]
 plugins = ["pydantic.mypy"]
