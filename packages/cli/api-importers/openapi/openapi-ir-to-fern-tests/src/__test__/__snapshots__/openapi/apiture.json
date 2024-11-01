@@ -6481,6 +6481,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                   "path-parameters": {
                     "institutionId": "TIBURON",
                   },
+                  "query-parameters": {
+                    "timeZoneId": "America/New_York",
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -6804,7 +6807,7 @@ This information provides hints to clients, allowing bank customers to select tr
               "examples": [
                 {
                   "query-parameters": {
-                    "countryCode": "countryCode",
+                    "countryCode": "US",
                     "locator": "locator",
                     "locatorType": "abaRoutingNumber",
                   },
@@ -6819,7 +6822,7 @@ This information provides hints to clients, allowing bank customers to select tr
                           "locality": "Andalasia",
                           "postalCode": "28407",
                           "regionCode": "NC",
-                          "regionName": "regionName",
+                          "regionName": "NC",
                         },
                         "locator": "503000196",
                         "locatorType": "abaRoutingNumber",
@@ -6834,6 +6837,7 @@ This information provides hints to clients, allowing bank customers to select tr
                             "locality": "Andalasia",
                             "postalCode": "28407",
                             "regionCode": "NC",
+                            "regionName": "NC",
                           },
                           "locator": "503000196",
                           "locatorType": "abaRoutingNumber",
@@ -6935,7 +6939,7 @@ service:
         - query-parameters:
             locator: locator
             locatorType: abaRoutingNumber
-            countryCode: countryCode
+            countryCode: US
           response:
             body:
               found: true
@@ -6946,7 +6950,7 @@ service:
                   address2: Building 14, Suite 1500
                   locality: Andalasia
                   countryCode: US
-                  regionName: regionName
+                  regionName: NC
                   regionCode: NC
                   postalCode: '28407'
                 locator: '503000196'
@@ -6958,6 +6962,7 @@ service:
                     address2: Building 14, Suite 1500
                     locality: Andalasia
                     countryCode: US
+                    regionName: NC
                     regionCode: NC
                     postalCode: '28407'
                   locator: '503000196'
@@ -7090,6 +7095,8 @@ service:
       examples:
         - path-parameters:
             institutionId: TIBURON
+          query-parameters:
+            timeZoneId: America/New_York
           response:
             body:
               timeZoneId: America/New_York
@@ -7880,6 +7887,13 @@ The default response lists only recent transactions. Normally, this is transacti
                   "path-parameters": {
                     "accountId": "accountId",
                   },
+                  "query-parameters": {
+                    "amount": "[1000.00,1200.00)",
+                    "checkNumber": "[1000,1200)",
+                    "createdOn": "2022-05-19",
+                    "occurredOn": "2023-05-19",
+                    "postedOn": "2022-05-19",
+                  },
                   "response": {
                     "body": {
                       "count": 2381,
@@ -8183,6 +8197,12 @@ service:
       examples:
         - path-parameters:
             accountId: accountId
+          query-parameters:
+            occurredOn: '2023-05-19'
+            createdOn: '2022-05-19'
+            postedOn: '2022-05-19'
+            amount: '[1000.00,1200.00)'
+            checkNumber: '[1000,1200)'
           response:
             body:
               limit: 10
@@ -8451,6 +8471,11 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "creditsOn": "2022-05-19",
+                    "debitsOn": "2022-05-19",
+                    "scheduledOn": "2022-05-19",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -8746,7 +8771,11 @@ service:
         - root.ForbiddenError
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            scheduledOn: '2022-05-19'
+            debitsOn: '2022-05-19'
+            creditsOn: '2022-05-19'
+          response:
             body:
               limit: 10
               nextPage_url: >-

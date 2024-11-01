@@ -534,6 +534,10 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "65a17e3f43bec88e2792d0eb",
+                    "limit": 8,
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -677,7 +681,10 @@ service:
         - root.GetEndUsersRequestTooManyRequestsError
         - root.GetEndUsersRequestInternalServerError
       examples:
-        - response:
+        - query-parameters:
+            cursor: 65a17e3f43bec88e2792d0eb
+            limit: 8
+          response:
             body:
               key: value
   source:

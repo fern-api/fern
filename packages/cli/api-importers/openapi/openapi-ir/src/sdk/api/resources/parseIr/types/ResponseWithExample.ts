@@ -59,7 +59,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "file",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.File_,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -72,7 +72,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "json",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.Json,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -85,7 +85,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "text",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.Text,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -98,7 +98,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "streamingSse",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingSse,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -111,7 +111,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "streamingText",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingText,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
@@ -124,7 +124,7 @@ export const ResponseWithExample = {
         return {
             ...value,
             type: "streamingJson",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.ResponseWithExample.StreamingJson,
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {

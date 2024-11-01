@@ -1,5 +1,7 @@
 import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../getExtension";
+import { getExamples } from "../../openapi/v3/extensions/getExamples";
 
 export function getExampleAsNumber({
     schema,
@@ -13,12 +15,15 @@ export function getExampleAsNumber({
     if (schema.example != null && typeof schema.example === "number") {
         return schema.example;
     }
+    const examples = getExamples(schema);
+    for (const example of examples ?? []) {
+        if (typeof example === "number") {
+            return example;
+        }
+    }
     if (fallback && typeof fallback === "number") {
         return fallback;
-    } else if (fallback) {
-        logger.warn(`Expected fallback to be a number, but got ${typeof fallback}`);
     }
-
     return undefined;
 }
 
@@ -34,10 +39,14 @@ export function getExampleAsBoolean({
     if (schema.example != null && typeof schema.example === "boolean") {
         return schema.example;
     }
+    const examples = getExamples(schema);
+    for (const example of examples ?? []) {
+        if (typeof example === "boolean") {
+            return example;
+        }
+    }
     if (fallback && typeof fallback === "boolean") {
         return fallback;
-    } else if (fallback) {
-        logger.warn(`Expected fallback to be a boolean, but got ${typeof fallback}`);
     }
     return undefined;
 }
@@ -54,10 +63,14 @@ export function getExamplesString({
     if (schema.example != null && typeof schema.example === "string") {
         return schema.example;
     }
+    const examples = getExamples(schema);
+    for (const example of examples ?? []) {
+        if (typeof example === "string") {
+            return example;
+        }
+    }
     if (fallback && typeof fallback === "string") {
         return fallback;
-    } else if (fallback) {
-        logger.warn(`Expected fallback to be a string, but got ${typeof fallback}`);
     }
     return undefined;
 }
@@ -74,10 +87,14 @@ export function getExampleAsArray({
     if (schema.example != null && Array.isArray(schema.example)) {
         return schema.example;
     }
+    const examples = getExamples(schema);
+    for (const example of examples ?? []) {
+        if (Array.isArray(example)) {
+            return example;
+        }
+    }
     if (fallback && Array.isArray(fallback)) {
         return fallback;
-    } else if (fallback) {
-        logger.warn(`Expected fallback to be a array, but got ${typeof fallback}`);
     }
     return undefined;
 }

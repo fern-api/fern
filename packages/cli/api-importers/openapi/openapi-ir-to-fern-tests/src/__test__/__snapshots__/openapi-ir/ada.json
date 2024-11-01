@@ -903,6 +903,7 @@
             "generatedName": "GetEndUsersRequestCursor",
             "value": {
               "schema": {
+                "example": "65a17e3f43bec88e2792d0eb",
                 "type": "string"
               },
               "generatedName": "GetEndUsersRequestCursor",
@@ -926,6 +927,7 @@
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
+                "example": 8,
                 "type": "int"
               },
               "generatedName": "GetEndUsersRequestLimit",
@@ -1247,7 +1249,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "65a17e3f43bec88e2792d0eb",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 8,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
