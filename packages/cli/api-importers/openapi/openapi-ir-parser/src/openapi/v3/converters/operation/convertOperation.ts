@@ -1,4 +1,4 @@
-import { EndpointSdkName, EndpointWithExample, HttpMethod, SdkGroupName, Webhook } from "@fern-api/openapi-ir";
+import { EndpointSdkName, EndpointWithExample, HttpMethod, SdkGroupName, WebhookWithExample } from "@fern-api/openapi-ir";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
@@ -32,7 +32,7 @@ export interface ConvertedHttpOperation {
 
 export interface ConvertedWebhookOperation {
     type: "webhook";
-    value: Webhook;
+    value: WebhookWithExample;
 }
 
 export interface ConvertedStreamingOperation {

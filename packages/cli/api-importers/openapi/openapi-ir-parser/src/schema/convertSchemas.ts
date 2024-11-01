@@ -15,6 +15,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { getExamples } from "../openapi/v3/extensions/getExamples";
 import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
@@ -184,7 +185,7 @@ export function convertSchemaObject(
         );
     }
 
-    const examples = getExtension<unknown[]>(schema, "examples");
+    const examples = getExamples(schema);
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...examples.map((value) => {
