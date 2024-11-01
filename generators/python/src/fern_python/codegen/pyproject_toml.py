@@ -69,11 +69,12 @@ class PyProjectToml:
         ]
 
         # Support overriding default dev dependencies
-        dev_dependency_names = {dep.name for dep in default_dev_dependencies}
+        dev_dependency_names = {dep.name for dep in dev_dependencies}
         for dep in default_dev_dependencies:
             if dep.name not in dev_dependency_names:
                 dev_dependencies.add(dep)
 
+        is_already_mypy_configured = self._user_defined_toml is not None and "[tool.mypy]" in self._user_defined_toml
         blocks: List[PyProjectToml.Block] = [
             self._poetry_block,
             PyProjectToml.DependenciesBlock(
@@ -81,7 +82,9 @@ class PyProjectToml:
                 dev_dependencies=dev_dependencies,
                 python_version=self._python_version,
             ),
-            PyProjectToml.PluginConfigurationBlock(),
+            PyProjectToml.PluginConfigurationBlock(
+                is_already_mypy_configured=is_already_mypy_configured,
+            ),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = ""
@@ -244,15 +247,22 @@ python = "{self.python_version}"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
+        is_already_mypy_configured: bool
+
         def to_string(self) -> str:
-            return """
+            mypy_section = ""
+            if not self.is_already_mypy_configured:
+                mypy_section = f"""\
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+"""
+
+            return f"""
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
 
-[tool.mypy]
-plugins = ["pydantic.mypy"]
-
+{mypy_section}
 [tool.ruff]
 line-length = 120
 
