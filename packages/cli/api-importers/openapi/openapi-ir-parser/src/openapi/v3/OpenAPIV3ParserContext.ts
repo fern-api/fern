@@ -11,16 +11,16 @@ import {
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+    private nonRequestReferencedSchemas: Set<SchemaId> = new Set<SchemaId>();
 
-    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
-    private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
+    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set<SchemaId>();
+    private singleRequestReferencedSchemas: Set<SchemaId> = new Set<SchemaId>();
 
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
 
     private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
 
-    private schemasToExclude: Set<SchemaId> = new Set();
+    private schemasToExclude: Set<SchemaId> = new Set<SchemaId>();
 
     constructor({
         document,

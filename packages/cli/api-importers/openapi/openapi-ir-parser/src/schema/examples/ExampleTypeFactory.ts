@@ -619,7 +619,7 @@ export class ExampleTypeFactory {
     private hasExample(
         schema: SchemaWithExample,
         depth: number,
-        visitedSchemaIds: Set<SchemaId> = new Set(),
+        visitedSchemaIds: Set<SchemaId> = new Set<SchemaId>(),
         options: ExampleTypeFactory.Options
     ): boolean {
         if (this.exceedsMaxCheckerDepth(depth, options)) {

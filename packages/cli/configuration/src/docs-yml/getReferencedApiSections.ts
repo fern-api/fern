@@ -94,7 +94,7 @@ export function visitDocsNavigationItem({
 }
 
 class ApiSectionCollector {
-    private namedApis: Set<string> = new Set();
+    private namedApis: Set<string> = new Set<string>();
     private defaultApi = false;
 
     collect(section: DocsNavigationItem.ApiSection): void {

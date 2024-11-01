@@ -3,8 +3,8 @@ import { EndpointId } from "@fern-fern/ir-sdk/api";
 
 // Note we currently only register the sync endpoint and sync client for the below, for simplicity.
 export class ArtifactRegistry {
-    endpointRegistry: Map<EndpointId, Function_> = new Map();
-    endpointPackageRegistry: Map<EndpointId, ClassReference> = new Map();
+    endpointRegistry: Map<EndpointId, Function_> = new Map<EndpointId, Function_>();
+    endpointPackageRegistry: Map<EndpointId, ClassReference> = new Map<EndpointId, ClassReference>();
 
     public registerEndpoint(endpointId: EndpointId, endpoint: Function_, endpointPackage: ClassReference): void {
         this.endpointRegistry.set(endpointId, endpoint);

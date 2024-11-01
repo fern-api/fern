@@ -458,8 +458,8 @@ export function generateSubpackage(
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     locationGenerator: LocationGenerator,
-    subpackages: Map<Name, Class_> = new Map(),
-    asyncSubpackages: Map<Name, Class_> = new Map()
+    subpackages: Map<Name, Class_> = new Map<Name, Class_>(),
+    asyncSubpackages: Map<Name, Class_> = new Map<Name, Class_>()
 ): ClientClassPair {
     const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client");
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath, clientName);

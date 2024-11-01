@@ -78,7 +78,7 @@ export class DocsDefinitionResolver {
         return this._parsedDocsConfig;
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
-    private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map<AbsoluteFilePath, string>();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,

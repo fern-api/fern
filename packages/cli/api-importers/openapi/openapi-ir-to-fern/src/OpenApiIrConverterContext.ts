@@ -39,7 +39,7 @@ export class OpenApiIrConverterContext {
     public detectGlobalHeaders: boolean;
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
-    private unknownSchema: Set<number> = new Set();
+    private unknownSchema: Set<number> = new Set<number>();
 
     constructor({
         taskContext,

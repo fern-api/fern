@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
 
 export class JsonSchemaConverterContext {
-    private readonly buildingTypeIds: Set<TypeId> = new Set();
+    private readonly buildingTypeIds: Set<TypeId> = new Set<TypeId>();
     private readonly definitions: Record<string, JSONSchema4> = {};
 
     constructor(private readonly context: TaskContext, private readonly ir: IntermediateRepresentation) {}

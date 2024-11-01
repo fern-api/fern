@@ -53,12 +53,12 @@ export class IrGraph {
     private webhooks: Record<WebhookId, WebhookNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
-    private environmentsNeededForAudience: Set<EnvironmentId> = new Set();
-    private typesNeededForAudience: Set<TypeId> = new Set();
-    private servicesNeededForAudience: Set<ServiceId> = new Set();
-    private endpointsNeededForAudience: Set<EndpointId> = new Set();
-    private webhooksNeededForAudience: Set<WebhookId> = new Set();
-    private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private environmentsNeededForAudience: Set<EnvironmentId> = new Set<EnvironmentId>();
+    private typesNeededForAudience: Set<TypeId> = new Set<TypeId>();
+    private servicesNeededForAudience: Set<ServiceId> = new Set<ServiceId>();
+    private endpointsNeededForAudience: Set<EndpointId> = new Set<EndpointId>();
+    private webhooksNeededForAudience: Set<WebhookId> = new Set<WebhookId>();
+    private subpackagesNeededForAudience: Set<SubpackageId> = new Set<SubpackageId>();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);

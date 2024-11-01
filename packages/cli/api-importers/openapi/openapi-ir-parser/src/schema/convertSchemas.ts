@@ -52,7 +52,7 @@ export function convertSchema(
     source: Source,
     namespace: string | undefined,
     referencedAsRequest = false,
-    propertiesToExclude: Set<string> = new Set(),
+    propertiesToExclude: Set<string> = new Set<string>(),
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     const encoding = getEncoding({ schema, logger: context.logger });
@@ -153,7 +153,7 @@ export function convertSchemaObject(
     encoding: Encoding | undefined,
     source: Source,
     namespace: string | undefined,
-    propertiesToExclude: Set<string> = new Set(),
+    propertiesToExclude: Set<string> = new Set<string>(),
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {

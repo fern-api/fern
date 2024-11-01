@@ -4,7 +4,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 
-export function parseMarkdownToTree(content: string): any {
+export function parseMarkdownToTree(content: string) {
     return fromMarkdown(content, {
         extensions: [mdx()],
         mdastExtensions: [mdxFromMarkdown()]

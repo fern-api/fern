@@ -29,8 +29,8 @@ import { parseCustomConfig, RubySdkCustomConfigConsumed } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfigConsumed> {
     generatedFiles: GeneratedFile[] = [];
-    generatedClasses: Map<TypeId, Class_> = new Map();
-    flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
+    generatedClasses: Map<TypeId, Class_> = new Map<TypeId, Class_>();
+    flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map<TypeId, ObjectProperty[]>();
     classReferenceFactory: ClassReferenceFactory | undefined;
     locationGenerator: LocationGenerator | undefined;
 

@@ -20,17 +20,17 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
-    private environments: Set<EnvironmentId> = new Set();
-    private types: Set<TypeId> = new Set();
+    private environments: Set<EnvironmentId> = new Set<EnvironmentId>();
+    private types: Set<TypeId> = new Set<TypeId>();
     private properties: Record<TypeId, Set<string> | undefined>;
-    private errors: Set<ErrorId> = new Set();
-    private services: Set<ServiceId> = new Set();
-    private endpoints: Set<EndpointId> = new Set();
+    private errors: Set<ErrorId> = new Set<ErrorId>();
+    private services: Set<ServiceId> = new Set<ServiceId>();
+    private endpoints: Set<EndpointId> = new Set<EndpointId>();
     private requestProperties: Record<EndpointId, Set<string> | undefined>;
     private queryParameters: Record<EndpointId, Set<string> | undefined>;
-    private webhooks: Set<WebhookId> = new Set();
+    private webhooks: Set<WebhookId> = new Set<WebhookId>();
     private webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
-    private subpackages: Set<SubpackageId> = new Set();
+    private subpackages: Set<SubpackageId> = new Set<SubpackageId>();
 
     public constructor({
         types,
