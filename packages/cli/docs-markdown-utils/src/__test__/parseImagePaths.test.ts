@@ -12,7 +12,7 @@ const MDX_PATH = AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/file.mdx")
 const DOCS_PATH = AbsoluteFilePath.of("/Volume/git/fern");
 
 const PATHS = {
-    absolutePathToMdx: MDX_PATH,
+    absolutePathToMarkdownFile: MDX_PATH,
     absolutePathToFernFolder: DOCS_PATH
 };
 

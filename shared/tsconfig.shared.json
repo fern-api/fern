@@ -23,5 +23,6 @@
     "noImplicitReturns": true,
     "types": ["node", "vitest/globals"],
 		"typeRoots": ["node_modules/@types"],
-  }
+  },
+  "exclude": ["node_modules", "lib"]
 }

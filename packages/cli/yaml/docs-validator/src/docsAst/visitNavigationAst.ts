@@ -148,7 +148,7 @@ async function visitNavigationItem({
             try {
                 const { filepaths } = parseImagePaths(content, {
                     absolutePathToFernFolder,
-                    absolutePathToMdx: absoluteFilepath
+                    absolutePathToMarkdownFile: absoluteFilepath
                 });
 
                 // visit each media filepath in each markdown file

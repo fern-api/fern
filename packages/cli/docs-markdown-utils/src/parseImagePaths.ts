@@ -6,10 +6,11 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
+import { getMarkdownFormat } from "./getMarkdownFormat";
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
 
 interface AbsolutePathMetadata {
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }
 
@@ -49,7 +50,7 @@ export function parseImagePaths(
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content, getMarkdownFormat(metadata.absolutePathToMarkdownFile));
 
     let offset = 0;
 
@@ -143,14 +144,14 @@ export function parseImagePaths(
 
 function resolvePath(
     pathToImage: string | undefined,
-    { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
+    { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
@@ -239,7 +240,7 @@ export function replaceImagePathsAndUrls(
                                 absoluteFilePath
                             )} has no slug defined but is referenced by ${relative(
                                 metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMdx
+                                metadata.absolutePathToMarkdownFile
                             )}`
                         );
                     }

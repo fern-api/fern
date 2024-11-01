@@ -105,7 +105,7 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
         }
@@ -115,7 +115,7 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
         }
@@ -125,7 +125,7 @@ export class DocsDefinitionResolver {
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                absolutePathToMdx: this.resolveFilepath(relativePath),
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
             });
 
@@ -164,7 +164,7 @@ export class DocsDefinitionResolver {
                     })
                 ),
                 {
-                    absolutePathToMdx: this.resolveFilepath(relativePath),
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                     absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
                 },
                 this.taskContext
