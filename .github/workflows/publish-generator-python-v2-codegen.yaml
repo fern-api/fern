@@ -7,7 +7,7 @@ on:
       # - main
       - vargas/publish-python2
     # paths:
-    #   - "generators/pythonv2/codegen/versions.yml"
+    #   - "generators/python-v2/codegen/versions.yml"
   # workflow_dispatch:
   #   inputs:
   #     version:
@@ -41,7 +41,7 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          VERSIONS_FILE="generators/pythonv2/codegen/versions.yml"
+          VERSIONS_FILE="generators/python-v2/codegen/versions.yml"
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
