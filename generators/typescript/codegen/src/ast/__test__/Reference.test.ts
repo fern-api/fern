@@ -5,9 +5,9 @@ describe("Reference", () => {
         it("Should generate a simple reference with a default-exported reference", () => {
             const reference = ts.reference({
                 name: "defaultReference",
-                module: {
+                importFrom: {
                     moduleName: "Module",
-                    importType: "default"
+                    type: "default"
                 }
             });
             expect(reference.toStringFormatted()).toMatchSnapshot();
@@ -20,36 +20,36 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "defaultReference",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "default"
+                            type: "default"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "defaultReference",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "default"
+                            type: "default"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "nonDefaultReference",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "nonDefaultReference",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
@@ -72,7 +72,8 @@ describe("Reference", () => {
         it("Should generate a simple reference with a single named reference", () => {
             const reference = ts.reference({
                 name: "Reference",
-                module: {
+                importFrom: {
+                    type: "named",
                     moduleName: "module"
                 }
             });
@@ -86,27 +87,27 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference1",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference2",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference3",
-                        module: {
+                        importFrom: {
                             moduleName: "module",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
@@ -121,45 +122,45 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA1",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "default"
+                            type: "default"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA2",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA3",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceB1",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleB",
-                            importType: "default"
+                            type: "default"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceC1",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleC",
-                            importType: "named"
+                            type: "named"
                         }
                     })
                 );
@@ -174,18 +175,18 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA1",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "default"
+                            type: "default"
                         }
                     })
                 );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA2",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "star",
+                            type: "star",
                             starImportAlias: "alias"
                         }
                     })
@@ -193,9 +194,9 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA3",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleA",
-                            importType: "star",
+                            type: "star",
                             starImportAlias: "alias"
                         }
                     })
@@ -203,19 +204,9 @@ describe("Reference", () => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceB1",
-                        module: {
+                        importFrom: {
                             moduleName: "moduleB",
-                            importType: "default"
-                        }
-                    })
-                );
-                writer.writeNodeStatement(
-                    ts.reference({
-                        name: "ReferenceC1",
-                        module: {
-                            moduleName: "moduleC",
-                            importType: "star",
-                            starImportAlias: "alias"
+                            type: "default"
                         }
                     })
                 );

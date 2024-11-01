@@ -1,12 +1,21 @@
 import { AstNode, Writer } from "./core";
 
-interface ModuleReference {
-    /* The name of the module the reference is imported from */
+type ModuleImport = DefaultImport | NamedImport | StarImport;
+
+interface DefaultImport {
+    type: "default";
     moduleName: string;
-    /* Whether the reference is the default export of the module */
-    importType?: "default" | "named" | "star";
-    /* The alias to be used as the base of the star import */
-    starImportAlias?: string;
+}
+
+interface NamedImport {
+    type: "named";
+    moduleName: string;
+}
+
+interface StarImport {
+    type: "star";
+    moduleName: string;
+    starImportAlias: string;
 }
 
 export declare namespace Reference {
@@ -14,28 +23,25 @@ export declare namespace Reference {
         /* The name of the reference */
         name: string;
         /* The module it's from, if it's imported */
-        module?: ModuleReference;
+        importFrom?: ModuleImport;
     }
 }
 
 export class Reference extends AstNode {
     public readonly name: string;
-    public readonly module?: ModuleReference;
+    public readonly importFrom?: ModuleImport;
 
-    constructor({ name, module }: Reference.Args) {
-        if (module?.importType === "star" && module.starImportAlias == null) {
-            throw new Error("Star import alias must be present for non-named import references.");
-        }
+    constructor({ name, importFrom }: Reference.Args) {
         super();
         this.name = name;
-        this.module = module;
+        this.importFrom = importFrom;
     }
 
     public write(writer: Writer): void {
-        if (this.module != null) {
+        if (this.importFrom != null) {
             writer.addImport(this);
         }
-        const prefix = this.module?.starImportAlias != null ? `${this.module.starImportAlias}.` : "";
+        const prefix = this.importFrom?.type === "star" ? `${this.importFrom.starImportAlias}.` : "";
         writer.write(`${prefix}${this.name}`);
     }
 }

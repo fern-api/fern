@@ -15,29 +15,30 @@ export class Writer extends AbstractWriter {
     protected imports: Record<ModuleName, Reference[]> = {};
     protected defaultImports: Record<ModuleName, Reference> = {};
     protected starImportAliases: Record<ModuleName, Alias> = {};
+    protected starImportAliasesInverse: Record<Alias, ModuleName> = {};
 
     /**
      * Adds the given import under its module name.
      */
     public addImport(reference: Reference): void {
-        if (reference.module != null) {
-            switch (reference.module.importType) {
+        if (reference.importFrom != null) {
+            switch (reference.importFrom.type) {
                 case "default": {
-                    const existing = this.defaultImports[reference.module.moduleName];
+                    const existing = this.defaultImports[reference.importFrom.moduleName];
                     if (existing == null) {
-                        this.defaultImports[reference.module.moduleName] = reference;
+                        this.defaultImports[reference.importFrom.moduleName] = reference;
                     } else if (existing.name !== reference.name) {
                         throw new Error(
-                            `Cannot have multiple default imports for module ${reference.module.moduleName}: ` +
+                            `Cannot have multiple default imports for module ${reference.importFrom.moduleName}: ` +
                                 `got ${reference.name} but already had ${existing.name}`
                         );
                     }
                     break;
                 }
                 case "named": {
-                    const existing = this.imports[reference.module.moduleName];
+                    const existing = this.imports[reference.importFrom.moduleName];
                     if (existing != null) {
-                        const existingStar = existing.filter((e) => e.module?.importType === "star");
+                        const existingStar = existing.filter((e) => e.importFrom?.type === "star");
                         if (existingStar.length > 0) {
                             throw new Error(
                                 `Cannot add named import ${reference.name} because non-named` +
@@ -48,30 +49,40 @@ export class Writer extends AbstractWriter {
                     break;
                 }
                 case "star": {
-                    const existing = this.imports[reference.module.moduleName];
+                    const existing = this.imports[reference.importFrom.moduleName];
                     if (existing != null) {
-                        const existingNamed = existing.filter((e) => e.module?.importType === "named");
+                        const existingNamed = existing.filter((e) => e.importFrom?.type === "named");
                         if (existingNamed.length > 0) {
                             throw new Error(
                                 `Cannot add non-named import ${reference.name} because named` +
                                     ` imports ${existingNamed.map((e) => e.name)} already exist`
                             );
                         }
-                        const existingAlias = this.starImportAliases[reference.module.moduleName];
-                        if (existingAlias == null && reference.module.starImportAlias != null) {
-                            this.starImportAliases[reference.module.moduleName] = reference.module.starImportAlias;
-                        } else if (existingAlias != null && existingAlias !== reference.module.starImportAlias) {
+                        const moduleForAlias = this.starImportAliasesInverse[reference.importFrom.starImportAlias];
+                        if (moduleForAlias != null && moduleForAlias !== reference.importFrom.moduleName) {
+                            throw new Error(
+                                `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
+                                    "module in the same file"
+                            );
+                        }
+                        const existingAlias = this.starImportAliases[reference.importFrom.moduleName];
+                        if (existingAlias == null) {
+                            this.starImportAliases[reference.importFrom.moduleName] =
+                                reference.importFrom.starImportAlias;
+                            this.starImportAliasesInverse[reference.importFrom.starImportAlias] =
+                                reference.importFrom.moduleName;
+                        } else if (existingAlias != null && existingAlias !== reference.importFrom.starImportAlias) {
                             throw new Error(
                                 "Cannot have more than one alias for non-named imports from a module: " +
-                                    `got ${reference.module.starImportAlias} but already have ${existingAlias}.`
+                                    `got ${reference.importFrom.starImportAlias} but already have ${existingAlias}.`
                             );
                         }
                     }
                     break;
                 }
             }
-            this.imports[reference.module.moduleName] ??= [];
-            const moduleImports = this.imports[reference.module.moduleName];
+            this.imports[reference.importFrom.moduleName] ??= [];
+            const moduleImports = this.imports[reference.importFrom.moduleName];
             if (moduleImports != null) {
                 const names = moduleImports.map((import_) => import_.name);
                 if (!names.includes(reference.name)) {
@@ -90,9 +101,9 @@ export class Writer extends AbstractWriter {
         for (const [module, references] of Object.entries(this.imports)) {
             const defaultImport = this.defaultImports[module];
             let stringifiedNonDefault = "";
-            const named = references.filter((r) => r.module?.importType === "named");
-            const starImports = references.filter((r) => r.module?.importType === "star");
-            if (named.length > 0 || defaultImport != null || starImports.length > 0) {
+            const named = references.filter((r) => r.importFrom?.type === "named");
+            const starImportAlias = this.starImportAliases[module];
+            if (named.length > 0 || defaultImport != null || starImportAlias != null) {
                 result += "import";
                 if (defaultImport != null) {
                     result += ` ${defaultImport.name}`;
@@ -111,14 +122,11 @@ export class Writer extends AbstractWriter {
                     }
                     result += ` { ${stringifiedNonDefault} }`;
                 }
-                if (starImports.length > 0) {
-                    const alias = starImports[0]?.module?.starImportAlias;
-                    if (alias != null) {
-                        if (defaultImport != null || named.length > 0) {
-                            result += ", ";
-                        }
-                        result += ` * as ${alias}`;
+                if (starImportAlias != null) {
+                    if (defaultImport != null || named.length > 0) {
+                        result += ", ";
                     }
+                    result += ` * as ${starImportAlias}`;
                 }
                 result += ` from "${module}";\n`;
             }
