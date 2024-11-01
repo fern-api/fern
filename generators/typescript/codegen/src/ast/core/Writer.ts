@@ -24,60 +24,15 @@ export class Writer extends AbstractWriter {
         if (reference.importFrom != null) {
             switch (reference.importFrom.type) {
                 case "default": {
-                    const existing = this.defaultImports[reference.importFrom.moduleName];
-                    if (existing == null) {
-                        this.defaultImports[reference.importFrom.moduleName] = reference;
-                    } else if (existing.name !== reference.name) {
-                        throw new Error(
-                            `Cannot have multiple default imports for module ${reference.importFrom.moduleName}: ` +
-                                `got ${reference.name} but already had ${existing.name}`
-                        );
-                    }
+                    this.addDefaultImport(reference);
                     break;
                 }
                 case "named": {
-                    const existing = this.imports[reference.importFrom.moduleName];
-                    if (existing != null) {
-                        const existingStar = existing.filter((e) => e.importFrom?.type === "star");
-                        if (existingStar.length > 0) {
-                            throw new Error(
-                                `Cannot add named import ${reference.name} because non-named` +
-                                    ` imports ${existingStar.map((e) => e.name)} already exist`
-                            );
-                        }
-                    }
+                    this.addNamedImport(reference);
                     break;
                 }
                 case "star": {
-                    const existing = this.imports[reference.importFrom.moduleName];
-                    if (existing != null) {
-                        const existingNamed = existing.filter((e) => e.importFrom?.type === "named");
-                        if (existingNamed.length > 0) {
-                            throw new Error(
-                                `Cannot add non-named import ${reference.name} because named` +
-                                    ` imports ${existingNamed.map((e) => e.name)} already exist`
-                            );
-                        }
-                        const moduleForAlias = this.starImportAliasesInverse[reference.importFrom.starImportAlias];
-                        if (moduleForAlias != null && moduleForAlias !== reference.importFrom.moduleName) {
-                            throw new Error(
-                                `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
-                                    "module in the same file"
-                            );
-                        }
-                        const existingAlias = this.starImportAliases[reference.importFrom.moduleName];
-                        if (existingAlias == null) {
-                            this.starImportAliases[reference.importFrom.moduleName] =
-                                reference.importFrom.starImportAlias;
-                            this.starImportAliasesInverse[reference.importFrom.starImportAlias] =
-                                reference.importFrom.moduleName;
-                        } else if (existingAlias != null && existingAlias !== reference.importFrom.starImportAlias) {
-                            throw new Error(
-                                "Cannot have more than one alias for non-named imports from a module: " +
-                                    `got ${reference.importFrom.starImportAlias} but already have ${existingAlias}.`
-                            );
-                        }
-                    }
+                    this.addStarImport(reference);
                     break;
                 }
             }
@@ -85,6 +40,68 @@ export class Writer extends AbstractWriter {
             const names = moduleImports.map((import_) => import_.name);
             if (!names.includes(reference.name)) {
                 moduleImports.push(reference);
+            }
+        }
+    }
+
+    private addDefaultImport(reference: Reference): void {
+        if (reference.importFrom?.type === "default") {
+            const existing = this.defaultImports[reference.importFrom.moduleName];
+            if (existing == null) {
+                this.defaultImports[reference.importFrom.moduleName] = reference;
+            } else if (existing.name !== reference.name) {
+                throw new Error(
+                    `Cannot have multiple default imports for module ${reference.importFrom.moduleName}: ` +
+                        `got ${reference.name} but already had ${existing.name}`
+                );
+            }
+        }
+    }
+
+    private addNamedImport(reference: Reference): void {
+        if (reference.importFrom?.type === "named") {
+            const existing = this.imports[reference.importFrom.moduleName];
+            if (existing != null) {
+                const existingStar = existing.filter((e) => e.importFrom?.type === "star");
+                if (existingStar.length > 0) {
+                    throw new Error(
+                        `Cannot add named import ${reference.name} because non-named` +
+                            ` imports ${existingStar.map((e) => e.name)} already exist`
+                    );
+                }
+            }
+        }
+    }
+
+    private addStarImport(reference: Reference): void {
+        if (reference.importFrom?.type === "star") {
+            const existing = this.imports[reference.importFrom.moduleName];
+            if (existing != null) {
+                const existingNamed = existing.filter((e) => e.importFrom?.type === "named");
+                if (existingNamed.length > 0) {
+                    throw new Error(
+                        `Cannot add non-named import ${reference.name} because named` +
+                            ` imports ${existingNamed.map((e) => e.name)} already exist`
+                    );
+                }
+                const moduleForAlias = this.starImportAliasesInverse[reference.importFrom.starImportAlias];
+                if (moduleForAlias != null && moduleForAlias !== reference.importFrom.moduleName) {
+                    throw new Error(
+                        `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
+                            "module in the same file"
+                    );
+                }
+                const existingAlias = this.starImportAliases[reference.importFrom.moduleName];
+                if (existingAlias == null) {
+                    this.starImportAliases[reference.importFrom.moduleName] = reference.importFrom.starImportAlias;
+                    this.starImportAliasesInverse[reference.importFrom.starImportAlias] =
+                        reference.importFrom.moduleName;
+                } else if (existingAlias != null && existingAlias !== reference.importFrom.starImportAlias) {
+                    throw new Error(
+                        "Cannot have more than one alias for non-named imports from a module: " +
+                            `got ${reference.importFrom.starImportAlias} but already have ${existingAlias}.`
+                    );
+                }
             }
         }
     }
