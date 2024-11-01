@@ -68,20 +68,21 @@ export const ValidMarkdownLinks: Rule = {
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);
 
-        const slugsToAbsoluteFilePaths = new Map<string, AbsoluteFilePath>();
+        const pageSlugs = new Set<string>();
+        const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
         collector.slugMap.forEach((node, slug) => {
             if (node == null || !FernNavigation.isPage(node)) {
                 return;
             }
+
+            pageSlugs.add(slug);
+
             const pageId = FernNavigation.getPageId(node);
             if (pageId == null) {
                 return;
             }
-            slugsToAbsoluteFilePaths.set(slug, join(workspace.absoluteFilePath, RelativeFilePath.of(pageId)));
-        });
 
-        const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
-        slugsToAbsoluteFilePaths.forEach((absoluteFilePath, slug) => {
+            const absoluteFilePath = join(workspace.absoluteFilePath, RelativeFilePath.of(pageId));
             const slugs = absoluteFilePathsToSlugs.get(absoluteFilePath) ?? [];
             slugs.push(slug);
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
@@ -174,7 +175,7 @@ export const ValidMarkdownLinks: Rule = {
                             markdown: pathnameToCheck.markdown,
                             absoluteFilepath,
                             workspaceAbsoluteFilePath: workspace.absoluteFilePath,
-                            slugsToAbsoluteFilePaths,
+                            pageSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
                             baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
@@ -183,15 +184,6 @@ export const ValidMarkdownLinks: Rule = {
                         if (exists) {
                             return null;
                         }
-
-                        // console.warn({
-                        //     severity: "warning" as const,
-                        //     message: createLinkViolationMessage(
-                        //         pathnameToCheck,
-                        //         absoluteFilepath,
-                        //         addLeadingSlash(absoluteFilePathsToSlugs.get(absoluteFilepath)?.[0] ?? "")
-                        //     )
-                        // });
 
                         return {
                             severity: "warning" as const,
@@ -243,7 +235,7 @@ async function checkIfPathnameExists(
         markdown,
         absoluteFilepath,
         workspaceAbsoluteFilePath,
-        slugsToAbsoluteFilePaths,
+        pageSlugs,
         absoluteFilePathsToSlugs,
         redirects = [],
         baseUrl
@@ -251,7 +243,7 @@ async function checkIfPathnameExists(
         markdown: boolean;
         absoluteFilepath: AbsoluteFilePath;
         workspaceAbsoluteFilePath: AbsoluteFilePath;
-        slugsToAbsoluteFilePaths: Map<string, AbsoluteFilePath>;
+        pageSlugs: Set<string>;
         absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
         redirects?: {
             source: string;
@@ -272,7 +264,7 @@ async function checkIfPathnameExists(
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
-        if (markdown && slugsToAbsoluteFilePaths.has(removeLeadingSlash(withRedirects(pathname, baseUrl, redirects)))) {
+        if (markdown && pageSlugs.has(removeLeadingSlash(withRedirects(pathname, baseUrl, redirects)))) {
             return true;
         }
 
@@ -307,14 +299,10 @@ async function checkIfPathnameExists(
 
     let found = true;
     for (const slug of slugs) {
-        // we're emulating URL resolution here using node.js path resolution semantics:
-        const targetSlug = withRedirects(
-            join(RelativeFilePath.of(slug), RelativeFilePath.of(pathname)),
-            baseUrl,
-            redirects
-        );
+        const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
+        const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
 
-        if (!slugsToAbsoluteFilePaths.has(targetSlug)) {
+        if (!pageSlugs.has(targetSlug)) {
             found = false;
             break;
         }
