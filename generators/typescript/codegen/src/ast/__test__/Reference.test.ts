@@ -7,7 +7,7 @@ describe("Reference", () => {
                 name: "defaultReference",
                 module: {
                     moduleName: "Module",
-                    defaultExport: true
+                    importType: "default"
                 }
             });
             expect(reference.toStringFormatted()).toMatchSnapshot();
@@ -22,7 +22,7 @@ describe("Reference", () => {
                         name: "defaultReference",
                         module: {
                             moduleName: "module",
-                            defaultExport: true
+                            importType: "default"
                         }
                     })
                 );
@@ -31,7 +31,7 @@ describe("Reference", () => {
                         name: "defaultReference",
                         module: {
                             moduleName: "module",
-                            defaultExport: true
+                            importType: "default"
                         }
                     })
                 );
@@ -39,7 +39,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "nonDefaultReference",
                         module: {
-                            moduleName: "module"
+                            moduleName: "module",
+                            importType: "named"
                         }
                     })
                 );
@@ -47,7 +48,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "nonDefaultReference",
                         module: {
-                            moduleName: "module"
+                            moduleName: "module",
+                            importType: "named"
                         }
                     })
                 );
@@ -67,7 +69,7 @@ describe("Reference", () => {
     });
 
     describe("toStringWithSingleNonDefaultImport", () => {
-        it("Should generate a simple reference with a single non-default reference", () => {
+        it("Should generate a simple reference with a single named reference", () => {
             const reference = ts.reference({
                 name: "Reference",
                 module: {
@@ -79,13 +81,14 @@ describe("Reference", () => {
     });
 
     describe("toStringWithMultipleNonDefaultImport", () => {
-        it("Should generate a simple reference with multiple non-default references", () => {
+        it("Should generate a simple reference with multiple named references", () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference1",
                         module: {
-                            moduleName: "module"
+                            moduleName: "module",
+                            importType: "named"
                         }
                     })
                 );
@@ -93,7 +96,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "Reference2",
                         module: {
-                            moduleName: "module"
+                            moduleName: "module",
+                            importType: "named"
                         }
                     })
                 );
@@ -101,7 +105,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "Reference3",
                         module: {
-                            moduleName: "module"
+                            moduleName: "module",
+                            importType: "named"
                         }
                     })
                 );
@@ -110,15 +115,15 @@ describe("Reference", () => {
         });
     });
 
-    describe("toStringWithDefaultAndNondefault", () => {
-        it("Should generate a simple reference with multiple default and non-default references", () => {
+    describe("toStringWithDefaultAndNamed", () => {
+        it("Should generate a simple reference with multiple default, starred, and named references", () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA1",
                         module: {
                             moduleName: "moduleA",
-                            defaultExport: true
+                            importType: "default"
                         }
                     })
                 );
@@ -126,7 +131,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "ReferenceA2",
                         module: {
-                            moduleName: "moduleA"
+                            moduleName: "moduleA",
+                            importType: "named"
                         }
                     })
                 );
@@ -134,7 +140,8 @@ describe("Reference", () => {
                     ts.reference({
                         name: "ReferenceA3",
                         module: {
-                            moduleName: "moduleA"
+                            moduleName: "moduleA",
+                            importType: "named"
                         }
                     })
                 );
@@ -143,7 +150,7 @@ describe("Reference", () => {
                         name: "ReferenceB1",
                         module: {
                             moduleName: "moduleB",
-                            defaultExport: true
+                            importType: "default"
                         }
                     })
                 );
@@ -151,7 +158,64 @@ describe("Reference", () => {
                     ts.reference({
                         name: "ReferenceC1",
                         module: {
-                            moduleName: "moduleC"
+                            moduleName: "moduleC",
+                            importType: "named"
+                        }
+                    })
+                );
+            });
+            expect(references.toStringFormatted()).toMatchSnapshot();
+        });
+    });
+
+    describe("toStringWithDefaultAndStar", () => {
+        it("Should generate a simple reference with multiple default, starred, and star references", () => {
+            const references = ts.codeblock((writer) => {
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceA1",
+                        module: {
+                            moduleName: "moduleA",
+                            importType: "default"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceA2",
+                        module: {
+                            moduleName: "moduleA",
+                            importType: "star",
+                            starImportAlias: "alias"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceA3",
+                        module: {
+                            moduleName: "moduleA",
+                            importType: "star",
+                            starImportAlias: "alias"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceB1",
+                        module: {
+                            moduleName: "moduleB",
+                            importType: "default"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceC1",
+                        module: {
+                            moduleName: "moduleC",
+                            importType: "star",
+                            starImportAlias: "alias"
                         }
                     })
                 );

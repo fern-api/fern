@@ -1,11 +1,12 @@
-import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
 
 interface ModuleReference {
     /* The name of the module the reference is imported from */
     moduleName: string;
     /* Whether the reference is the default export of the module */
-    defaultExport?: boolean;
+    importType?: "default" | "named" | "star";
+    /* The alias to be used as the base of the star import */
+    starImportAlias?: string;
 }
 
 export declare namespace Reference {
@@ -22,6 +23,9 @@ export class Reference extends AstNode {
     public readonly module?: ModuleReference;
 
     constructor({ name, module }: Reference.Args) {
+        if (module?.importType === "star" && module.starImportAlias == null) {
+            throw new Error("Star import alias must be present for non-named import references.");
+        }
         super();
         this.name = name;
         this.module = module;
@@ -31,6 +35,7 @@ export class Reference extends AstNode {
         if (this.module != null) {
             writer.addImport(this);
         }
-        writer.write(this.name);
+        const prefix = this.module?.starImportAlias != null ? `${this.module.starImportAlias}.` : "";
+        writer.write(`${prefix}${this.name}`);
     }
 }
