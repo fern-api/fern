@@ -32,25 +32,11 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Run publish
         env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          DOCKER_USERNAME: fernapi
-          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
-          VERSIONS_FILE="generators/python-v2/codegen/versions.yml"
-          git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
-
-          if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator python-v2-codegen --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
-          else
-            echo "No previous versions found, skipping publish."
-          fi
-
-          pnpm seed:local register generator --generators python-v2-codegen
+          echo "TODO"
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
@@ -77,5 +63,4 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator python-v2-codegen --version ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators python-v2-codegen
+          echo "TODO"

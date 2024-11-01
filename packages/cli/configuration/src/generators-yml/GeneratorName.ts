@@ -11,7 +11,6 @@ export const GeneratorName = {
     PYTHON_FASTAPI: "fernapi/fern-fastapi-server",
     PYTHON_PYDANTIC: "fernapi/fern-pydantic-model",
     PYTHON_SDK: "fernapi/fern-python-sdk",
-    PYTHON_V2_CODEGEN: "fernapi/fern-python-v2-codegen",
     GO_MODEL: "fernapi/fern-go-model",
     GO_SDK: "fernapi/fern-go-sdk",
     GO_FIBER: "fernapi/fern-go-fiber",
