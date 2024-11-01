@@ -5969,6 +5969,9 @@ importers:
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.2.57)(react@18.2.0)
+      path-to-regexp:
+        specifier: 6.3.0
+        version: 6.3.0
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
@@ -5985,6 +5988,9 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
       unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+      url-join:
         specifier: ^5.0.0
         version: 5.0.0
       zod:
@@ -11835,6 +11841,9 @@ packages:
 
   path-to-regexp@2.4.0:
     resolution: {integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==}
+
+  path-to-regexp@6.3.0:
+    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -20108,6 +20117,8 @@ snapshots:
   path-to-regexp@0.1.10: {}
 
   path-to-regexp@2.4.0: {}
+
+  path-to-regexp@6.3.0: {}
 
   path-type@4.0.0: {}
 

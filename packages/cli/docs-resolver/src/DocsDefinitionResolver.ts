@@ -6,12 +6,12 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
@@ -24,6 +24,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 dayjs.extend(utc);
@@ -62,7 +63,7 @@ export class DocsDefinitionResolver {
     constructor(
         private domain: string,
         private docsWorkspace: DocsWorkspace,
-        private fernWorkspaces: FernWorkspace[],
+        private loadAPIWorkspace: (id?: string) => AbstractAPIWorkspace<unknown> | undefined,
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
@@ -88,12 +89,22 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        this.fernWorkspaces.forEach((workspace) => {
-            workspace.changelog?.files.forEach((file) => {
-                const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
-                this.parsedDocsConfig.pages[relativePath] = file.contents;
+        if (this.docsWorkspace.config.navigation != null) {
+            await visitNavigationAst({
+                navigation: this.docsWorkspace.config.navigation,
+                visitor: {
+                    apiSection: async ({ workspace }) => {
+                        const fernWorkspace = await workspace.toFernWorkspace({ context: this.taskContext });
+                        fernWorkspace.changelog?.files.forEach((file) => {
+                            const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
+                            this.parsedDocsConfig.pages[relativePath] = file.contents;
+                        });
+                    }
+                },
+                loadAPIWorkspace: this.loadAPIWorkspace,
+                context: this.taskContext
             });
-        });
+        }
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
@@ -327,18 +338,17 @@ export class DocsDefinitionResolver {
         return config;
     }
 
-    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): FernWorkspace {
-        if (this.fernWorkspaces.length === 1 && this.fernWorkspaces[0] != null) {
-            return this.fernWorkspaces[0];
-        } else if (apiSection.apiName != null) {
-            const fernWorkspace = this.fernWorkspaces.find((workspace) => {
-                return workspace.workspaceName === apiSection.apiName;
-            });
-            if (fernWorkspace != null) {
-                return fernWorkspace;
-            }
+    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): Promise<FernWorkspace> {
+        const workspace = this.loadAPIWorkspace(apiSection.apiName);
+        if (workspace == null) {
+            this.taskContext.failAndThrow(`Failed to find API workspace for ${apiSection.apiName}`);
         }
-        throw new Error("Failed to load API Definition referenced in docs");
+        return workspace.toFernWorkspace({ context: this.taskContext });
+    }
+
+    private _apiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
+    public get apiDefinitions(): Record<string, APIV1Read.ApiDefinition> {
+        return this._apiDefinitions;
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
@@ -421,7 +431,7 @@ export class DocsDefinitionResolver {
                 };
             }
             case "apiSection": {
-                const workspace = this.getFernWorkspaceForApiSection(item);
+                const workspace = await this.getFernWorkspaceForApiSection(item);
                 const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
                 const ir = await generateIntermediateRepresentation({
                     workspace,
@@ -443,6 +453,7 @@ export class DocsDefinitionResolver {
                     apiName: item.apiName
                 });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+                this._apiDefinitions[api.id] = api;
                 const node = new ApiReferenceNodeConverter(
                     item,
                     api,

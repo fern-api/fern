@@ -45,12 +45,14 @@
     "js-yaml": "^4.1.0",
     "mdast-util-to-hast": "^13.2.0",
     "next-mdx-remote": "^5.0.0",
+    "path-to-regexp": "6.3.0",
     "rehype-katex": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "strip-ansi": "^7.1.0",
     "tinycolor2": "^1.6.0",
     "unist-util-visit": "^5.0.0",
+    "url-join": "^5.0.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {

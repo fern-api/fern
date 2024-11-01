@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { DocsConfigFileAstNodeTypes } from "./docsAst/DocsConfigFileAstVisitor";
 
 export interface Rule {
@@ -13,6 +13,7 @@ export type RuleVisitor<AstNodeTypes> = {
 
 export interface RuleContext {
     workspace: DocsWorkspace;
+    loadApiWorkspace: (id?: string) => AbstractAPIWorkspace<unknown> | undefined;
     logger: Logger;
 }
 

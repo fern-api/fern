@@ -10,6 +10,8 @@ import { toHast } from "mdast-util-to-hast";
 import type { Root as HastRoot } from "hast";
 import type { Position } from "unist";
 import { isNonNullish } from "@fern-api/core-utils";
+import { stripAnchorsAndSearchParams, addLeadingSlash, removeLeadingSlash } from "./url-utils";
+import { getRedirectForPath } from "./redirect-for-path";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
@@ -22,12 +24,17 @@ interface PathnameToCheck {
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace }) => {
+    create: async ({ workspace, loadApiWorkspace }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(url, workspace, [], createMockTaskContext());
+        const docsDefinitionResolver = new DocsDefinitionResolver(
+            url,
+            workspace,
+            loadApiWorkspace,
+            createMockTaskContext()
+        );
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
@@ -38,17 +45,19 @@ export const ValidMarkdownLinks: Rule = {
 
         const readShape = convertDbDocsConfigToRead({ dbShape: db.config });
 
+        const baseUrl = toBaseUrl(url);
+
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
         // from the docs definition resolver, once there's a light way to retrieve it.
         const root = FernNavigation.utils.toRootNode({
-            baseUrl: toBaseUrl(url),
+            baseUrl,
             definition: {
                 algoliaSearchIndex: undefined,
-                pages: {},
-                apis: {},
+                pages: resolvedDocsDefinition.pages,
+                apis: docsDefinitionResolver.apiDefinitions,
                 files: {},
                 filesV2: {},
-                jsFiles: undefined,
+                jsFiles: resolvedDocsDefinition.jsFiles,
                 id: undefined,
                 search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
                 config: readShape
@@ -60,8 +69,7 @@ export const ValidMarkdownLinks: Rule = {
         const collector = FernNavigation.NodeCollector.collect(root);
 
         const slugsToAbsoluteFilePaths = new Map<string, AbsoluteFilePath>();
-        collector.pageSlugs.forEach((pageSlug) => {
-            const node = collector.slugMap.get(pageSlug);
+        collector.slugMap.forEach((node, slug) => {
             if (node == null || !FernNavigation.isPage(node)) {
                 return;
             }
@@ -69,7 +77,7 @@ export const ValidMarkdownLinks: Rule = {
             if (pageId == null) {
                 return;
             }
-            slugsToAbsoluteFilePaths.set(pageSlug, join(workspace.absoluteFilePath, RelativeFilePath.of(pageId)));
+            slugsToAbsoluteFilePaths.set(slug, join(workspace.absoluteFilePath, RelativeFilePath.of(pageId)));
         });
 
         const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
@@ -81,6 +89,12 @@ export const ValidMarkdownLinks: Rule = {
 
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
+                // if this happens, this probably means that the current file is omitted from the docs navigation
+                // most likely due to a slug collision. This should be handled in a different rule.
+                if (!absoluteFilePathsToSlugs.has(absoluteFilepath)) {
+                    return [];
+                }
+
                 // Find all matches in the Markdown text
                 const violations: RuleViolation[] = [];
 
@@ -89,8 +103,8 @@ export const ValidMarkdownLinks: Rule = {
                 const pathnamesToCheck: PathnameToCheck[] = [];
 
                 links.forEach((link) => {
-                    if (link.href.match(EXTERNAL_LINK_PATTERN)) {
-                        if (!link.href.startsWith("http")) {
+                    if (link.href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
+                        if (!link.href.trimStart().startsWith("http")) {
                             // we don't need to check if it exists if it's not an http link
                             return;
                         }
@@ -115,8 +129,8 @@ export const ValidMarkdownLinks: Rule = {
                                 severity: "warning",
                                 message: `Invalid URL: ${link.href}`
                             });
-                            return;
                         }
+                        return;
                     }
 
                     const pathname = stripAnchorsAndSearchParams(link.href);
@@ -161,16 +175,31 @@ export const ValidMarkdownLinks: Rule = {
                             absoluteFilepath,
                             workspaceAbsoluteFilePath: workspace.absoluteFilePath,
                             slugsToAbsoluteFilePaths,
-                            absoluteFilePathsToSlugs
+                            absoluteFilePathsToSlugs,
+                            redirects: workspace.config.redirects,
+                            baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
                         });
 
                         if (exists) {
                             return null;
                         }
 
+                        // console.warn({
+                        //     severity: "warning" as const,
+                        //     message: createLinkViolationMessage(
+                        //         pathnameToCheck,
+                        //         absoluteFilepath,
+                        //         addLeadingSlash(absoluteFilePathsToSlugs.get(absoluteFilepath)?.[0] ?? "")
+                        //     )
+                        // });
+
                         return {
                             severity: "warning" as const,
-                            message: createLinkViolationMessage(pathnameToCheck, absoluteFilepath)
+                            message: createLinkViolationMessage(
+                                pathnameToCheck,
+                                absoluteFilepath,
+                                addLeadingSlash(absoluteFilePathsToSlugs.get(absoluteFilepath)?.[0] ?? "")
+                            )
                         };
                     })
                 );
@@ -181,10 +210,14 @@ export const ValidMarkdownLinks: Rule = {
     }
 };
 
-function createLinkViolationMessage(pathnameToCheck: PathnameToCheck, absoluteFilepath: AbsoluteFilePath): string {
+function createLinkViolationMessage(
+    pathnameToCheck: PathnameToCheck,
+    absoluteFilepath: AbsoluteFilePath,
+    targetPathname: string
+): string {
     return `${absoluteFilepath}\n\t${getPositionMessage(pathnameToCheck.position)}Link does not exist: ${
         pathnameToCheck.pathname
-    }`;
+    } -> (link will be broken on ${targetPathname})`;
 }
 
 function getPositionMessage(position: Position | undefined): string {
@@ -192,14 +225,6 @@ function getPositionMessage(position: Position | undefined): string {
         return "";
     }
     return `[${position.start.line}:${position.start.column}-${position.end.line}:${position.end.column}] `;
-}
-
-function stripAnchorsAndSearchParams(pathnameWithAnchorsOrSearchParams: string): string {
-    return pathnameWithAnchorsOrSearchParams.split(/[?#]/)[0] ?? "";
-}
-
-function removeLeadingSlash(pathname: string): string {
-    return pathname.startsWith("/") ? pathname.slice(1) : pathname;
 }
 
 /**
@@ -219,13 +244,24 @@ async function checkIfPathnameExists(
         absoluteFilepath,
         workspaceAbsoluteFilePath,
         slugsToAbsoluteFilePaths,
-        absoluteFilePathsToSlugs
+        absoluteFilePathsToSlugs,
+        redirects = [],
+        baseUrl
     }: {
         markdown: boolean;
         absoluteFilepath: AbsoluteFilePath;
         workspaceAbsoluteFilePath: AbsoluteFilePath;
         slugsToAbsoluteFilePaths: Map<string, AbsoluteFilePath>;
         absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
+        redirects?: {
+            source: string;
+            destination: string;
+            permanent?: boolean;
+        }[];
+        baseUrl: {
+            domain: string;
+            basePath?: string;
+        };
     }
 ): Promise<boolean> {
     // base case: empty pathname is valid
@@ -236,7 +272,7 @@ async function checkIfPathnameExists(
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
     if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
-        if (markdown && slugsToAbsoluteFilePaths.has(removeLeadingSlash(pathname))) {
+        if (markdown && slugsToAbsoluteFilePaths.has(removeLeadingSlash(withRedirects(pathname, baseUrl, redirects)))) {
             return true;
         }
 
@@ -267,24 +303,36 @@ async function checkIfPathnameExists(
 
     // if that fails, we need to check if the path exists against all of the slugs for the current file
 
-    const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);
+    const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [];
 
-    // if this happens, this probably means that the current file is omitted from the docs navigation
-    // most likely due to a slug collision. This should be handled in a different rule.
-    if (slugs == null) {
-        return true;
-    }
-
+    let found = true;
     for (const slug of slugs) {
         // we're emulating URL resolution here using node.js path resolution semantics:
-        const targetSlug = join(RelativeFilePath.of(slug), RelativeFilePath.of(pathname));
+        const targetSlug = withRedirects(
+            join(RelativeFilePath.of(slug), RelativeFilePath.of(pathname)),
+            baseUrl,
+            redirects
+        );
 
-        if (slugsToAbsoluteFilePaths.has(targetSlug)) {
-            return true;
+        if (!slugsToAbsoluteFilePaths.has(targetSlug)) {
+            found = false;
+            break;
         }
     }
 
-    return false;
+    return found;
+}
+
+function withRedirects(
+    pathname: string,
+    baseUrl: { domain: string; basePath?: string },
+    redirects: { source: string; destination: string; permanent?: boolean }[]
+) {
+    const result = getRedirectForPath(pathname, baseUrl, redirects);
+    if (result == null) {
+        return pathname;
+    }
+    return result.redirect.destination;
 }
 
 export interface MarkdownLink {

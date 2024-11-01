@@ -7,7 +7,7 @@ import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils"
 import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import axios from "axios";
 import chalk from "chalk";
@@ -32,7 +32,7 @@ export async function publishDocs({
     docsWorkspace,
     domain,
     customDomains,
-    fernWorkspaces,
+    loadAPIWorkspace,
     context,
     preview,
     editThisPage,
@@ -43,7 +43,7 @@ export async function publishDocs({
     docsWorkspace: DocsWorkspace;
     domain: string;
     customDomains: string[];
-    fernWorkspaces: FernWorkspace[];
+    loadAPIWorkspace: (name: string | undefined) => AbstractAPIWorkspace<unknown> | undefined;
     context: TaskContext;
     preview: boolean;
     // TODO: implement audience support in generateIR
@@ -62,7 +62,7 @@ export async function publishDocs({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
-        fernWorkspaces,
+        loadAPIWorkspace,
         context,
         editThisPage,
         async (files) => {

@@ -31,7 +31,9 @@ export async function runRulesOnDocsWorkspace({
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger: context.logger })));
+    const allRuleVisitors = await Promise.all(
+        rules.map((rule) => rule.create({ workspace, loadApiWorkspace, logger: context.logger }))
+    );
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
