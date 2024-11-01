@@ -1,5 +1,5 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-python-v2-codegen
+name: Publish @fern-api/python-v2-codegen
 
 on:
   push:
@@ -16,7 +16,6 @@ on:
   #       type: string
 
 env:
-  DOCKER_BUILDKIT: 1
   PACKAGE_NAME: "@fern-api/python-v2-codegen"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -38,7 +37,9 @@ jobs:
       - name: Run publish
         run: |
           cd generators/python-v2/codegen
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          # TODO: The filter didn't work here, so we're just running the command directly
+          # pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm dist 0.0.1
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public
