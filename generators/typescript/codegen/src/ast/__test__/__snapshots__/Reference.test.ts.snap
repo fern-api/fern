@@ -30,6 +30,7 @@ ReferenceA1;
 alias.ReferenceA2;
 alias.ReferenceA3;
 ReferenceB1;
+alias2.ReferenceB1;
 "
 `;
 

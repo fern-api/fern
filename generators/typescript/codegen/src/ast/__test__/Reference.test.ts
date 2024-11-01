@@ -210,6 +210,16 @@ describe("Reference", () => {
                         }
                     })
                 );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceB1",
+                        importFrom: {
+                            moduleName: "moduleC",
+                            type: "star",
+                            starImportAlias: "alias2"
+                        }
+                    })
+                );
             });
             expect(references.toStringFormatted()).toMatchSnapshot();
         });

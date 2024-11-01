@@ -81,13 +81,10 @@ export class Writer extends AbstractWriter {
                     break;
                 }
             }
-            this.imports[reference.importFrom.moduleName] ??= [];
-            const moduleImports = this.imports[reference.importFrom.moduleName];
-            if (moduleImports != null) {
-                const names = moduleImports.map((import_) => import_.name);
-                if (!names.includes(reference.name)) {
-                    moduleImports.push(reference);
-                }
+            const moduleImports = (this.imports[reference.importFrom.moduleName] ??= []);
+            const names = moduleImports.map((import_) => import_.name);
+            if (!names.includes(reference.name)) {
+                moduleImports.push(reference);
             }
         }
     }
