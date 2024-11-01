@@ -17,9 +17,12 @@ on:
 
 env:
   DOCKER_BUILDKIT: 1
+  PACKAGE_NAME: "@fern-api/python-v2-codegen"
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
-  publish-changed-generators:
+  publish:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
@@ -33,34 +36,11 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Run publish
-        env:
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
-          echo "TODO"
+          cd generators/python-v2/codegen
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          cd dist
+          echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
+          npm publish --access public
 
-  # Manually publish and register generators
-  # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
-  publish-manually:
-    runs-on: ubuntu-latest
-    # Only run this job if this has been triggered manually
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 2
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Run publish
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          DOCKER_USERNAME: fernapi
-          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-        run: |
-          echo "TODO"
+  
