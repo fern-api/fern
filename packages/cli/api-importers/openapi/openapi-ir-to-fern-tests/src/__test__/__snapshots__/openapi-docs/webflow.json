@@ -16079,7 +16079,51 @@ service:
           "form_submission": {
             "display-name": "Form Submission",
             "docs": "Information about a form that was subitted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "data": {
+                      "First Name": "Zaphod",
+                      "Last Name": "Beeblebrox",
+                      "Phone Number": 15550000000,
+                      "email": "zaphod@heartofgold.ai",
+                    },
+                    "formElementId": "4e038d2c-6a1e-4953-7be9-a59a2b453177",
+                    "formId": "65429eadebe8a9f3a30f62d0",
+                    "id": "6321ca84df3949bfc6752327",
+                    "name": "Contact Us",
+                    "schema": [
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c4",
+                        "fieldName": "First Name",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c5",
+                        "fieldName": "Last Name",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c6",
+                        "fieldName": "email",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c7",
+                        "fieldName": "Phone Number",
+                        "fieldType": "FormTextInput",
+                      },
+                    ],
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "submittedAt": "2022-09-14T12:35:16.117Z",
+                  },
+                  "triggerType": "form_submission",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -16706,7 +16750,34 @@ webhooks:
     payload:
       type: FormSubmissionPayload
       docs: The Webhook payload for when a form is submitted
-    examples: []
+    examples:
+      - payload:
+          triggerType: form_submission
+          payload:
+            name: Contact Us
+            siteId: 65427cf400e02b306eaa049c
+            data:
+              First Name: Zaphod
+              Last Name: Beeblebrox
+              email: zaphod@heartofgold.ai
+              Phone Number: 15550000000
+            schema:
+              - fieldName: First Name
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c4
+              - fieldName: Last Name
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c5
+              - fieldName: email
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c6
+              - fieldName: Phone Number
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c7
+            submittedAt: '2022-09-14T12:35:16.117Z'
+            id: 6321ca84df3949bfc6752327
+            formId: 65429eadebe8a9f3a30f62d0
+            formElementId: 4e038d2c-6a1e-4953-7be9-a59a2b453177
     docs: Information about a form that was subitted
 ",
     },
@@ -16954,7 +17025,16 @@ Required scope | `ecommerce:write`
         "webhooks": {
           "ecomm_inventory_changed": {
             "display-name": "Updated eComm Inventory",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -17151,7 +17231,10 @@ webhooks:
     payload:
       type: EcommInventoryChangedPayload
       docs: The availabile inventory for an item
-    examples: []
+    examples:
+      - payload:
+          id: 5bfedb42bab0ad90fa7dad39
+          quantity: 100
 ",
     },
     "items.yml": {
@@ -17356,7 +17439,25 @@ webhooks:
         "webhooks": {
           "collection_item_changed": {
             "display-name": "Item Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "createdOn": "2022-11-17T17:11:57.148Z",
+                  "fieldData": {
+                    "name": "Pan Galactic Gargle Blaster Recipe",
+                    "slug": "pan-galactic-gargle-blaster",
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -17367,7 +17468,25 @@ webhooks:
           },
           "collection_item_created": {
             "display-name": "Item Created",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "createdOn": "2022-11-17T17:11:57.148Z",
+                  "fieldData": {
+                    "name": "Pan Galactic Gargle Blaster Recipe",
+                    "slug": "pan-galactic-gargle-blaster",
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -17378,14 +17497,42 @@ webhooks:
           },
           "collection_item_deleted": {
             "display-name": "Item Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "collectionId": "664243617fcc8b464b23c4ee",
+                    "id": "66424365e972c886137a1cf1",
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "workspaceId": "625860a7a6c16d624927122f",
+                  },
+                  "triggerType": "collection_item_deleted,",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "CollectionItemDeletedPayload",
           },
           "collection_item_unpublished": {
             "display-name": "Item Unpublished",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "collectionId": "664243617fcc8b464b23c4ee",
+                    "id": "66424365e972c886137a1cf1",
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "workspaceId": "625860a7a6c16d624927122f",
+                  },
+                  "triggerType": "collection_item_deleted,",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "CollectionItemUnpublishedPayload",
@@ -17551,7 +17698,18 @@ webhooks:
         Collection that Item belongs to. Beyond the user defined fields, there
         are a handful of additional fields that are automatically created for
         all items
-    examples: []
+    examples:
+      - payload:
+          id: 42b720ef280c7a7a3be8cabe
+          cmsLocaleId: 653ad57de882f528b32e810e
+          lastPublished: '2022-11-29T16:22:43.159Z'
+          lastUpdated: '2022-11-17T17:19:43.282Z'
+          createdOn: '2022-11-17T17:11:57.148Z'
+          isArchived: false
+          isDraft: false
+          fieldData:
+            name: Pan Galactic Gargle Blaster Recipe
+            slug: pan-galactic-gargle-blaster
   collection_item_changed:
     method: POST
     display-name: Item Updated
@@ -17563,19 +17721,44 @@ webhooks:
         Collection that Item belongs to. Beyond the user defined fields, there
         are a handful of additional fields that are automatically created for
         all items
-    examples: []
+    examples:
+      - payload:
+          id: 42b720ef280c7a7a3be8cabe
+          cmsLocaleId: 653ad57de882f528b32e810e
+          lastPublished: '2022-11-29T16:22:43.159Z'
+          lastUpdated: '2022-11-17T17:19:43.282Z'
+          createdOn: '2022-11-17T17:11:57.148Z'
+          isArchived: false
+          isDraft: false
+          fieldData:
+            name: Pan Galactic Gargle Blaster Recipe
+            slug: pan-galactic-gargle-blaster
   collection_item_deleted:
     method: POST
     display-name: Item Deleted
     headers: {}
     payload: CollectionItemDeletedPayload
-    examples: []
+    examples:
+      - payload:
+          triggerType: collection_item_deleted,
+          payload:
+            id: 66424365e972c886137a1cf1
+            siteId: 65427cf400e02b306eaa049c
+            workspaceId: 625860a7a6c16d624927122f
+            collectionId: 664243617fcc8b464b23c4ee
   collection_item_unpublished:
     method: POST
     display-name: Item Unpublished
     headers: {}
     payload: CollectionItemUnpublishedPayload
-    examples: []
+    examples:
+      - payload:
+          triggerType: collection_item_deleted,
+          payload:
+            id: 66424365e972c886137a1cf1
+            siteId: 65427cf400e02b306eaa049c
+            workspaceId: 625860a7a6c16d624927122f
+            collectionId: 664243617fcc8b464b23c4ee
 ",
     },
     "orders.yml": {
@@ -27080,14 +27263,452 @@ Required scope | `ecommerce:write`
         "webhooks": {
           "ecomm_new_order": {
             "display-name": "New eComm Order",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "acceptedOn": "2024-03-29T21:29:21Z",
+                  "allAddresses": [
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "billing",
+                    },
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "shipping",
+                    },
+                  ],
+                  "applicationFee": {
+                    "string": " 2.37 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "billingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "billing",
+                  },
+                  "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                  "customData": [
+                    {
+                      "key": "value",
+                    },
+                  ],
+                  "customerInfo": {
+                    "email": "arthur.dent@example.com",
+                    "fullName": "Arthur Dent",
+                  },
+                  "customerPaid": {
+                    "string": " 118.73 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "disputeLastStatus": "charge_refunded",
+                  "disputeUpdatedOn": "2024-03-29T21:29:21Z",
+                  "disputedOn": "2024-03-29T21:29:21Z",
+                  "downloadFiles": [
+                    {
+                      "id": "5e9a5eba75e0ac242e1b6f64",
+                      "name": "New product guide",
+                      "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
+                    },
+                  ],
+                  "fulfilledOn": "2024-03-29T21:29:21Z",
+                  "hasDownloads": false,
+                  "isCustomerDeleted": false,
+                  "isShippingRequired": true,
+                  "metadata": {
+                    "isBuyNow": false,
+                  },
+                  "netAmount": {
+                    "string": " 112.62 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
+                  "orderId": "fc7-128",
+                  "paymentProcessor": "stripe",
+                  "purchasedItems": [
+                    {
+                      "count": 1,
+                      "height": 70,
+                      "length": 9,
+                      "productId": "66072fb61b89448912e26791",
+                      "productName": "Luxurious Fresh Ball",
+                      "productSlug": "luxurious-fresh-ball",
+                      "rowTotal": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb71b89448912e2683f",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      },
+                      "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                      "variantPrice": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "weight": 11,
+                      "width": 82,
+                    },
+                    {
+                      "count": 1,
+                      "height": 85,
+                      "length": 40,
+                      "productId": "66072fb61b89448912e26799",
+                      "productName": "Recycled Steel Gloves",
+                      "productSlug": "recycled-steel-gloves",
+                      "rowTotal": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb91b89448912e26ab9",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      },
+                      "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                      "variantPrice": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "weight": 38,
+                      "width": 76,
+                    },
+                  ],
+                  "purchasedItemsCount": 2,
+                  "refundedOn": "2024-04-08T18:25:04Z",
+                  "shippingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "japanType": "kanji",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "shipping",
+                  },
+                  "shippingProvider": "Shipping Company, Co.",
+                  "shippingTracking": "tr00000000001",
+                  "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                  "status": "refunded",
+                  "stripeCard": {
+                    "brand": "Visa",
+                    "expires": {
+                      "month": 4,
+                      "year": 2024,
+                    },
+                    "last4": "4242",
+                    "ownerName": "Arthur Dent",
+                  },
+                  "stripeDetails": {
+                    "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                    "customerId": "cus_PpRsNHwWdUoRKR",
+                    "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                    "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                    "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                    "refundReason": "fraudulent",
+                  },
+                  "totals": {
+                    "extras": [
+                      {
+                        "description": "NY Taxes (4.00%)",
+                        "name": "State Taxes",
+                        "price": {
+                          "string": " 4.36 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "NEW YORK Taxes (4.88%)",
+                        "name": "City Taxes",
+                        "price": {
+                          "string": " 5.32 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "",
+                        "name": "Flat",
+                        "price": {
+                          "string": " 0.00 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "shipping",
+                      },
+                    ],
+                    "subtotal": {
+                      "string": " 109.05 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                    "total": {
+                      "string": " 118.73 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "EcommNewOrderPayload",
           },
           "ecomm_order_changed": {
             "display-name": "Updated eComm Order",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "acceptedOn": "2024-03-29T21:29:21Z",
+                  "allAddresses": [
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "billing",
+                    },
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "shipping",
+                    },
+                  ],
+                  "applicationFee": {
+                    "string": " 2.37 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "billingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "billing",
+                  },
+                  "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                  "customData": [
+                    {
+                      "key": "value",
+                    },
+                  ],
+                  "customerInfo": {
+                    "email": "arthur.dent@example.com",
+                    "fullName": "Arthur Dent",
+                  },
+                  "customerPaid": {
+                    "string": " 118.73 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "disputeLastStatus": "charge_refunded",
+                  "disputeUpdatedOn": "2024-03-29T21:29:21Z",
+                  "disputedOn": "2024-03-29T21:29:21Z",
+                  "downloadFiles": [
+                    {
+                      "id": "5e9a5eba75e0ac242e1b6f64",
+                      "name": "New product guide",
+                      "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
+                    },
+                  ],
+                  "fulfilledOn": "2024-03-29T21:29:21Z",
+                  "hasDownloads": false,
+                  "isCustomerDeleted": false,
+                  "isShippingRequired": true,
+                  "metadata": {
+                    "isBuyNow": false,
+                  },
+                  "netAmount": {
+                    "string": " 112.62 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
+                  "orderId": "fc7-128",
+                  "paymentProcessor": "stripe",
+                  "purchasedItems": [
+                    {
+                      "count": 1,
+                      "height": 70,
+                      "length": 9,
+                      "productId": "66072fb61b89448912e26791",
+                      "productName": "Luxurious Fresh Ball",
+                      "productSlug": "luxurious-fresh-ball",
+                      "rowTotal": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb71b89448912e2683f",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      },
+                      "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                      "variantPrice": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "weight": 11,
+                      "width": 82,
+                    },
+                    {
+                      "count": 1,
+                      "height": 85,
+                      "length": 40,
+                      "productId": "66072fb61b89448912e26799",
+                      "productName": "Recycled Steel Gloves",
+                      "productSlug": "recycled-steel-gloves",
+                      "rowTotal": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb91b89448912e26ab9",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      },
+                      "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                      "variantPrice": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "weight": 38,
+                      "width": 76,
+                    },
+                  ],
+                  "purchasedItemsCount": 2,
+                  "refundedOn": "2024-04-08T18:25:04Z",
+                  "shippingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "japanType": "kanji",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "shipping",
+                  },
+                  "shippingProvider": "Shipping Company, Co.",
+                  "shippingTracking": "tr00000000001",
+                  "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                  "status": "refunded",
+                  "stripeCard": {
+                    "brand": "Visa",
+                    "expires": {
+                      "month": 4,
+                      "year": 2024,
+                    },
+                    "last4": "4242",
+                    "ownerName": "Arthur Dent",
+                  },
+                  "stripeDetails": {
+                    "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                    "customerId": "cus_PpRsNHwWdUoRKR",
+                    "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                    "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                    "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                    "refundReason": "fraudulent",
+                  },
+                  "totals": {
+                    "extras": [
+                      {
+                        "description": "NY Taxes (4.00%)",
+                        "name": "State Taxes",
+                        "price": {
+                          "string": " 4.36 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "NEW YORK Taxes (4.88%)",
+                        "name": "City Taxes",
+                        "price": {
+                          "string": " 5.32 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "",
+                        "name": "Flat",
+                        "price": {
+                          "string": " 0.00 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "shipping",
+                      },
+                    ],
+                    "subtotal": {
+                      "string": " 109.05 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                    "total": {
+                      "string": " 118.73 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "EcommOrderChangedPayload",
@@ -34286,13 +34907,365 @@ webhooks:
     display-name: New eComm Order
     headers: {}
     payload: EcommNewOrderPayload
-    examples: []
+    examples:
+      - payload:
+          orderId: fc7-128
+          status: refunded
+          comment: >-
+            Customer requested gift wrapping and a personalized note saying:
+            Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra
+            bubble wrap for safe transit.
+          orderComment: >-
+            Please gift wrap with a personal note saying "Happy Birthday, Ford!
+            🎉
+          acceptedOn: '2024-03-29T21:29:21Z'
+          fulfilledOn: '2024-03-29T21:29:21Z'
+          refundedOn: '2024-04-08T18:25:04Z'
+          disputedOn: '2024-03-29T21:29:21Z'
+          disputeUpdatedOn: '2024-03-29T21:29:21Z'
+          disputeLastStatus: charge_refunded
+          customerPaid:
+            unit: USD
+            value: '5892'
+            string: ' 118.73 USD'
+          netAmount:
+            unit: USD
+            value: '5892'
+            string: ' 112.62 USD'
+          applicationFee:
+            unit: USD
+            value: '5892'
+            string: ' 2.37 USD'
+          allAddresses:
+            - type: billing
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+            - type: shipping
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+          shippingAddress:
+            type: shipping
+            japanType: kanji
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          billingAddress:
+            type: billing
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          shippingProvider: Shipping Company, Co.
+          shippingTracking: tr00000000001
+          shippingTrackingURL: https://www.shippingcompany.com/tracking/tr00000000001
+          customerInfo:
+            fullName: Arthur Dent
+            email: arthur.dent@example.com
+          purchasedItems:
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              productId: 66072fb61b89448912e26791
+              productName: Luxurious Fresh Ball
+              productSlug: luxurious-fresh-ball
+              variantId: 66072fb71b89448912e2683f
+              variantName: 'Luxurious Fresh Ball Generic: Bronze, Practical: Plastic'
+              variantSlug: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantSKU: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              weight: 11
+              width: 82
+              height: 70
+              length: 9
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              productId: 66072fb61b89448912e26799
+              productName: Recycled Steel Gloves
+              productSlug: recycled-steel-gloves
+              variantId: 66072fb91b89448912e26ab9
+              variantName: 'Recycled Steel Gloves Electronic: Granite, Handcrafted: grey'
+              variantSlug: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantSKU: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              weight: 38
+              width: 76
+              height: 85
+              length: 40
+          purchasedItemsCount: 2
+          stripeDetails:
+            paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
+            paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
+            customerId: cus_PpRsNHwWdUoRKR
+            chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+            refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
+            refundReason: fraudulent
+          stripeCard:
+            last4: '4242'
+            brand: Visa
+            ownerName: Arthur Dent
+            expires:
+              year: 2024
+              month: 4
+          customData:
+            - key: value
+          metadata:
+            isBuyNow: false
+          isCustomerDeleted: false
+          isShippingRequired: true
+          hasDownloads: false
+          paymentProcessor: stripe
+          totals:
+            subtotal:
+              unit: USD
+              value: '5892'
+              string: ' 109.05 USD'
+            extras:
+              - type: tax
+                name: State Taxes
+                description: NY Taxes (4.00%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 4.36 USD'
+              - type: tax
+                name: City Taxes
+                description: NEW YORK Taxes (4.88%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 5.32 USD'
+              - type: shipping
+                name: Flat
+                description: ''
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 0.00 USD'
+            total:
+              unit: USD
+              value: '5892'
+              string: ' 118.73 USD'
+          downloadFiles:
+            - id: 5e9a5eba75e0ac242e1b6f64
+              name: New product guide
+              url: >-
+                https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
   ecomm_order_changed:
     method: POST
     display-name: Updated eComm Order
     headers: {}
     payload: EcommOrderChangedPayload
-    examples: []
+    examples:
+      - payload:
+          orderId: fc7-128
+          status: refunded
+          comment: >-
+            Customer requested gift wrapping and a personalized note saying:
+            Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra
+            bubble wrap for safe transit.
+          orderComment: >-
+            Please gift wrap with a personal note saying "Happy Birthday, Ford!
+            🎉
+          acceptedOn: '2024-03-29T21:29:21Z'
+          fulfilledOn: '2024-03-29T21:29:21Z'
+          refundedOn: '2024-04-08T18:25:04Z'
+          disputedOn: '2024-03-29T21:29:21Z'
+          disputeUpdatedOn: '2024-03-29T21:29:21Z'
+          disputeLastStatus: charge_refunded
+          customerPaid:
+            unit: USD
+            value: '5892'
+            string: ' 118.73 USD'
+          netAmount:
+            unit: USD
+            value: '5892'
+            string: ' 112.62 USD'
+          applicationFee:
+            unit: USD
+            value: '5892'
+            string: ' 2.37 USD'
+          allAddresses:
+            - type: billing
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+            - type: shipping
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+          shippingAddress:
+            type: shipping
+            japanType: kanji
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          billingAddress:
+            type: billing
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          shippingProvider: Shipping Company, Co.
+          shippingTracking: tr00000000001
+          shippingTrackingURL: https://www.shippingcompany.com/tracking/tr00000000001
+          customerInfo:
+            fullName: Arthur Dent
+            email: arthur.dent@example.com
+          purchasedItems:
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              productId: 66072fb61b89448912e26791
+              productName: Luxurious Fresh Ball
+              productSlug: luxurious-fresh-ball
+              variantId: 66072fb71b89448912e2683f
+              variantName: 'Luxurious Fresh Ball Generic: Bronze, Practical: Plastic'
+              variantSlug: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantSKU: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              weight: 11
+              width: 82
+              height: 70
+              length: 9
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              productId: 66072fb61b89448912e26799
+              productName: Recycled Steel Gloves
+              productSlug: recycled-steel-gloves
+              variantId: 66072fb91b89448912e26ab9
+              variantName: 'Recycled Steel Gloves Electronic: Granite, Handcrafted: grey'
+              variantSlug: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantSKU: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              weight: 38
+              width: 76
+              height: 85
+              length: 40
+          purchasedItemsCount: 2
+          stripeDetails:
+            paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
+            paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
+            customerId: cus_PpRsNHwWdUoRKR
+            chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+            refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
+            refundReason: fraudulent
+          stripeCard:
+            last4: '4242'
+            brand: Visa
+            ownerName: Arthur Dent
+            expires:
+              year: 2024
+              month: 4
+          customData:
+            - key: value
+          metadata:
+            isBuyNow: false
+          isCustomerDeleted: false
+          isShippingRequired: true
+          hasDownloads: false
+          paymentProcessor: stripe
+          totals:
+            subtotal:
+              unit: USD
+              value: '5892'
+              string: ' 109.05 USD'
+            extras:
+              - type: tax
+                name: State Taxes
+                description: NY Taxes (4.00%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 4.36 USD'
+              - type: tax
+                name: City Taxes
+                description: NEW YORK Taxes (4.88%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 5.32 USD'
+              - type: shipping
+                name: Flat
+                description: ''
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 0.00 USD'
+            total:
+              unit: USD
+              value: '5892'
+              string: ' 118.73 USD'
+          downloadFiles:
+            - id: 5e9a5eba75e0ac242e1b6f64
+              name: New product guide
+              url: >-
+                https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
 ",
     },
     "pages.yml": {
@@ -35425,7 +36398,21 @@ Required scope | `pages:write`
         "webhooks": {
           "page_created": {
             "display-name": "Page Created",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "createdOn": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_created",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -35435,7 +36422,21 @@ Required scope | `pages:write`
           },
           "page_deleted": {
             "display-name": "Page Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "deletedOn": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_deleted",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -35445,7 +36446,21 @@ Required scope | `pages:write`
           },
           "page_metadata_updated": {
             "display-name": "Page Metadata Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "lastUpdated": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_metadata_updated",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -36373,7 +37388,14 @@ webhooks:
     payload:
       type: PageCreatedPayload
       docs: The Webhook payload for when a Page is created
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_created
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            createdOn: '2024-07-26T16:32:50Z'
   page_metadata_updated:
     method: POST
     display-name: Page Metadata Updated
@@ -36381,7 +37403,14 @@ webhooks:
     payload:
       type: PageMetadataUpdatedPayload
       docs: The Webhook payload for when a Page's metadata is updated
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_metadata_updated
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            lastUpdated: '2024-07-26T16:32:50Z'
   page_deleted:
     method: POST
     display-name: Page Deleted
@@ -36389,7 +37418,14 @@ webhooks:
     payload:
       type: PageDeletedPayload
       docs: The Webhook payload for when a Page is deleted
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_deleted
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            deletedOn: '2024-07-26T16:32:50Z'
 ",
     },
     "pages/scripts.yml": {
@@ -45509,7 +46545,25 @@ service:
         "webhooks": {
           "site_publish": {
             "display-name": "Site Publish",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "domains": [
+                      "my-website.webflow.io",
+                    ],
+                    "publishedBy": {
+                      "displayName": "Zaphod BeebleBrox",
+                    },
+                    "publishedOn": "2024-07-26T16:43:20Z",
+                    "siteId": "62749158efef318abc8d5a0f",
+                  },
+                  "triggerType": "site_publish",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -46099,7 +47153,16 @@ webhooks:
     payload:
       type: SitePublishPayload
       docs: The Webhook payload for when a Site is published
-    examples: []
+    examples:
+      - payload:
+          triggerType: site_publish
+          payload:
+            siteId: 62749158efef318abc8d5a0f
+            publishedOn: '2024-07-26T16:43:20Z'
+            domains:
+              - my-website.webflow.io
+            publishedBy:
+              displayName: Zaphod BeebleBrox
 ",
     },
     "sites/activityLogs.yml": {
@@ -49217,21 +50280,87 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
         "webhooks": {
           "user_account_added": {
             "display-name": "New User Added",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountAddedPayload",
           },
           "user_account_deleted": {
             "display-name": "Account Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountDeletedPayload",
           },
           "user_account_updated": {
             "display-name": "Account Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountUpdatedPayload",
@@ -50376,19 +51505,55 @@ webhooks:
     display-name: New User Added
     headers: {}
     payload: UserAccountAddedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
   user_account_updated:
     method: POST
     display-name: Account Updated
     headers: {}
     payload: UserAccountUpdatedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
   user_account_deleted:
     method: POST
     display-name: Account Deleted
     headers: {}
     payload: UserAccountDeletedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
 ",
     },
     "webhooks.yml": {

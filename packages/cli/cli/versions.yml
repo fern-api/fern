@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI importer now parses webhook examples and generates examples for webhooks when none are provided.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc31
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now parses the `examples` field for primitive schema types like `string`, `number`, `array` and `boolean`.
       type: fix
   irVersion: 53
