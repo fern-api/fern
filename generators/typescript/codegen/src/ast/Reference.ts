@@ -28,7 +28,7 @@ export class Reference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.module?.defaultExport ?? false) {
+        if (this.module != null) {
             writer.addImport(this);
         }
         writer.write(this.name);

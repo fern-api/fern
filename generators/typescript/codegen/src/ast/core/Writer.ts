@@ -30,10 +30,10 @@ export class Writer extends AbstractWriter {
                     );
                 }
             }
-            let moduleImports = this.imports[reference.name];
+            let moduleImports = this.imports[reference.module.moduleName];
             if (moduleImports == null) {
-                this.imports[reference.name] = [];
-                moduleImports = this.imports[reference.name];
+                this.imports[reference.module.moduleName] = [];
+                moduleImports = this.imports[reference.module.moduleName];
             }
             if (moduleImports != null && !moduleImports.includes(reference)) {
                 moduleImports.push(reference);
@@ -68,7 +68,7 @@ export class Writer extends AbstractWriter {
                     if (defaultImport != null) {
                         result += ",";
                     }
-                    result += ` ${stringifiedNonDefault}`;
+                    result += ` { ${stringifiedNonDefault} }`;
                 }
                 result += ` from "${module}";\n`;
             }

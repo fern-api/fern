@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reference > toStringWithDefaultAndNondefault > Should generate a simple reference with multiple default and non-default references 1`] = `
+"import FieldA1, { FieldA2, FieldA3 } from "moduleA";
+import FieldB1 from "moduleB";
+import { FieldC1 } from "moduleC";
+FieldA1;
+FieldA2;
+FieldA3;
+FieldB1;
+FieldC1;
+"
+`;
+
+exports[`Reference > toStringWithDefaultImport > Should generate a simple reference with a default-exported reference 1`] = `
+"import fs from "fs";
+fs;
+"
+`;
+
+exports[`Reference > toStringWithMultipleNonDefaultImport > Should generate a simple reference with multiple non-default references 1`] = `
+"import { Field1, Field2, Field3 } from "module";
+Field1;
+Field2;
+Field3;
+"
+`;
+
+exports[`Reference > toStringWithSingleNonDefaultImport > Should generate a simple reference with a single non-default reference 1`] = `
+"import { Field } from "module";
+Field;
+"
+`;
