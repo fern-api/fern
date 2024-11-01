@@ -4,9 +4,9 @@ describe("Reference", () => {
     describe("toStringWithDefaultImport", () => {
         it("Should generate a simple reference with a default-exported reference", () => {
             const reference = ts.reference({
-                name: "fs",
+                name: "defaultReference",
                 module: {
-                    moduleName: "fs",
+                    moduleName: "Module",
                     defaultExport: true
                 }
             });
@@ -14,10 +14,62 @@ describe("Reference", () => {
         });
     });
 
+    describe("toStringSameReferenceTwice", () => {
+        it("Should generate a simple snippet using duplicate references", () => {
+            const references = ts.codeblock((writer) => {
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "defaultReference",
+                        module: {
+                            moduleName: "module",
+                            defaultExport: true
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "defaultReference",
+                        module: {
+                            moduleName: "module",
+                            defaultExport: true
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "nonDefaultReference",
+                        module: {
+                            moduleName: "module"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "nonDefaultReference",
+                        module: {
+                            moduleName: "module"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "localReference"
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "localReference"
+                    })
+                );
+            });
+            expect(references.toStringFormatted()).toMatchSnapshot();
+        });
+    });
+
     describe("toStringWithSingleNonDefaultImport", () => {
         it("Should generate a simple reference with a single non-default reference", () => {
             const reference = ts.reference({
-                name: "Field",
+                name: "Reference",
                 module: {
                     moduleName: "module"
                 }
@@ -31,7 +83,7 @@ describe("Reference", () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "Field1",
+                        name: "Reference1",
                         module: {
                             moduleName: "module"
                         }
@@ -39,7 +91,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "Field2",
+                        name: "Reference2",
                         module: {
                             moduleName: "module"
                         }
@@ -47,7 +99,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "Field3",
+                        name: "Reference3",
                         module: {
                             moduleName: "module"
                         }
@@ -63,7 +115,7 @@ describe("Reference", () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "FieldA1",
+                        name: "ReferenceA1",
                         module: {
                             moduleName: "moduleA",
                             defaultExport: true
@@ -72,7 +124,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "FieldA2",
+                        name: "ReferenceA2",
                         module: {
                             moduleName: "moduleA"
                         }
@@ -80,7 +132,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "FieldA3",
+                        name: "ReferenceA3",
                         module: {
                             moduleName: "moduleA"
                         }
@@ -88,7 +140,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "FieldB1",
+                        name: "ReferenceB1",
                         module: {
                             moduleName: "moduleB",
                             defaultExport: true
@@ -97,7 +149,7 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "FieldC1",
+                        name: "ReferenceC1",
                         module: {
                             moduleName: "moduleC"
                         }

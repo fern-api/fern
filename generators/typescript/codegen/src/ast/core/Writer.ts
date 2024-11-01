@@ -23,7 +23,7 @@ export class Writer extends AbstractWriter {
                 const existing = this.defaultImports[reference.module.moduleName];
                 if (existing == null) {
                     this.defaultImports[reference.module.moduleName] = reference;
-                } else {
+                } else if (existing.name !== reference.name) {
                     throw new Error(
                         `Cannot have multiple default imports for module ${reference.module.moduleName}: ` +
                             `got ${reference.name} but already had ${existing.name}`
@@ -35,8 +35,11 @@ export class Writer extends AbstractWriter {
                 this.imports[reference.module.moduleName] = [];
                 moduleImports = this.imports[reference.module.moduleName];
             }
-            if (moduleImports != null && !moduleImports.includes(reference)) {
-                moduleImports.push(reference);
+            if (moduleImports != null) {
+                const names = moduleImports.map((import_) => import_.name);
+                if (!names.includes(reference.name)) {
+                    moduleImports.push(reference);
+                }
             }
         }
     }
