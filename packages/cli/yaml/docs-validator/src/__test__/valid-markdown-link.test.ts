@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { getReferencedMarkdownFiles } from "../rules/valid-markdown-link/valid-markdown-link";
+import { collectLinksAndSources } from "../rules/valid-markdown-link/valid-markdown-link";
 
 describe("getReferencedMarkdownFiles", () => {
     it("should match on .md and .mdx", () => {
@@ -8,15 +8,14 @@ describe("getReferencedMarkdownFiles", () => {
         [Link to an mdx file](./file2.mdx)
         `;
 
-        const links = getReferencedMarkdownFiles({
+        const { links } = collectLinksAndSources({
             content,
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.md")
         });
 
-        expect(links).toEqual([
-            { path: "./file1.md", absolutePath: AbsoluteFilePath.of("/path/to/fern/file1.md") },
-            { path: "./file2.mdx", absolutePath: AbsoluteFilePath.of("/path/to/fern/file2.mdx") }
-        ]);
+        expect(links.length).toEqual(2);
+        expect(links[0]?.href).toEqual("./file1.md");
+        expect(links[1]?.href).toEqual("./file2.mdx");
     });
 
     it("should not match on non-markdown files", () => {
@@ -25,7 +24,7 @@ describe("getReferencedMarkdownFiles", () => {
         [Link to a non-markdown file](./file2.js)
         `;
 
-        const links = getReferencedMarkdownFiles({
+        const { links } = collectLinksAndSources({
             content,
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.md")
         });
@@ -39,7 +38,7 @@ describe("getReferencedMarkdownFiles", () => {
         [Link to a https file](https://example.com/file2.md)
         `;
 
-        const links = getReferencedMarkdownFiles({
+        const { links } = collectLinksAndSources({
             content,
             absoluteFilepath: AbsoluteFilePath.of("/path/to/fern/file0.md")
         });

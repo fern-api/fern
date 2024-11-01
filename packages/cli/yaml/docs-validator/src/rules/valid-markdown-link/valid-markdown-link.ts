@@ -3,11 +3,11 @@ import { Rule, RuleViolation } from "../../Rule";
 import { DocsDefinitionResolver, wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import * as FdrSDK from "@fern-api/fdr-sdk";
+import { convertDbDocsConfigToRead, convertDocsDefinitionToDb, FernNavigation } from "@fern-api/fdr-sdk";
 import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { visit } from "unist-util-visit";
 import { toHast } from "mdast-util-to-hast";
-import type { Root as HastRoot, Node as HastNode } from "hast";
+import type { Root as HastRoot } from "hast";
 import type { Position } from "unist";
 import { isNonNullish } from "@fern-api/core-utils";
 
@@ -31,16 +31,16 @@ export const ValidMarkdownLinks: Rule = {
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
-        const db = FdrSDK.convertDocsDefinitionToDb({
+        const db = convertDocsDefinitionToDb({
             writeShape: resolvedDocsDefinition,
             files: {}
         });
 
-        const readShape = FdrSDK.convertDbDocsConfigToRead({ dbShape: db.config });
+        const readShape = convertDbDocsConfigToRead({ dbShape: db.config });
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
         // from the docs definition resolver, once there's a light way to retrieve it.
-        const root = FdrSDK.FernNavigation.utils.toRootNode({
+        const root = FernNavigation.utils.toRootNode({
             baseUrl: toBaseUrl(url),
             definition: {
                 algoliaSearchIndex: undefined,
@@ -57,15 +57,15 @@ export const ValidMarkdownLinks: Rule = {
         });
 
         // all the page slugs in the docs:
-        const collector = FdrSDK.FernNavigation.NodeCollector.collect(root);
+        const collector = FernNavigation.NodeCollector.collect(root);
 
         const slugsToAbsoluteFilePaths = new Map<string, AbsoluteFilePath>();
         collector.pageSlugs.forEach((pageSlug) => {
             const node = collector.slugMap.get(pageSlug);
-            if (node == null || !FdrSDK.FernNavigation.isPage(node)) {
+            if (node == null || !FernNavigation.isPage(node)) {
                 return;
             }
-            const pageId = FdrSDK.FernNavigation.getPageId(node);
+            const pageId = FernNavigation.getPageId(node);
             if (pageId == null) {
                 return;
             }
