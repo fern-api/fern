@@ -30,11 +30,8 @@ export class Writer extends AbstractWriter {
                     );
                 }
             }
-            let moduleImports = this.imports[reference.module.moduleName];
-            if (moduleImports == null) {
-                this.imports[reference.module.moduleName] = [];
-                moduleImports = this.imports[reference.module.moduleName];
-            }
+            this.imports[reference.module.moduleName] ??= [];
+            const moduleImports = this.imports[reference.module.moduleName];
             if (moduleImports != null) {
                 const names = moduleImports.map((import_) => import_.name);
                 if (!names.includes(reference.name)) {
