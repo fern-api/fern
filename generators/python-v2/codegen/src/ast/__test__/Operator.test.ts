@@ -1,6 +1,8 @@
 import { python } from "../..";
 import { Writer } from "../core/Writer";
 
+import { OperatorType } from "../OperatorType";
+
 describe("Operator", () => {
     let writer: Writer;
 
@@ -10,7 +12,7 @@ describe("Operator", () => {
 
     it("writes or operators correctly", async () => {
         const operator = python.operator({
-            operator: "or",
+            operator: OperatorType.Or,
             lhs: python.TypeInstantiation.bool(true),
             rhs: python.TypeInstantiation.bool(false)
         });
@@ -20,7 +22,7 @@ describe("Operator", () => {
 
     it("writes and operators correctly", async () => {
         const operator = python.operator({
-            operator: "and",
+            operator: OperatorType.And,
             lhs: python.TypeInstantiation.bool(true),
             rhs: python.TypeInstantiation.bool(false)
         });
@@ -30,7 +32,7 @@ describe("Operator", () => {
 
     it("writes bitwise left shift operators correctly", async () => {
         const operator = python.operator({
-            operator: "bitwiseLeftShift",
+            operator: OperatorType.LeftShift,
             lhs: python.TypeInstantiation.int(1),
             rhs: python.TypeInstantiation.int(2)
         });
@@ -40,7 +42,7 @@ describe("Operator", () => {
 
     it("writes bitwise right shift operators correctly", async () => {
         const operator = python.operator({
-            operator: "bitwiseRightShift",
+            operator: OperatorType.RightShift,
             lhs: python.TypeInstantiation.int(8),
             rhs: python.TypeInstantiation.int(1)
         });

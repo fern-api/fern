@@ -75,5 +75,6 @@ export {
     PythonFile,
     MethodInvocation,
     ClassInstantiation,
-    Operator
+    Operator,
+    OperatorType
 } from "./ast";
