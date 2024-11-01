@@ -188,7 +188,7 @@ export function convertSchemaObject(
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...examples.map((value) => {
-                return { name: undefined, value: value, description: undefined };
+                return { name: undefined, value, description: undefined };
             })
         );
     }
