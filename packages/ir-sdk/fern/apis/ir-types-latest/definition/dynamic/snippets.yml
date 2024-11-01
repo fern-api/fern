@@ -4,6 +4,8 @@ imports:
 
 types:
   Values:
+    audiences:
+      - dynamic
     docs: |
       Snippet values are represented as arbitrary key, value
       pairs (i.e. JSON objects). The keys are expected to be
@@ -12,6 +14,8 @@ types:
     type: map<string, unknown>
 
   EndpointSnippetRequest:
+    audiences:
+      - dynamic
     docs: |
       The user-facing request type used to generate a dynamic snippet.
     properties:
@@ -23,6 +27,8 @@ types:
       requestBody: optional<unknown>
 
   EndpointSnippetResponse:
+    audiences:
+      - dynamic
     docs: |
       The user-facing response type containing the generated snippet.
     properties:
