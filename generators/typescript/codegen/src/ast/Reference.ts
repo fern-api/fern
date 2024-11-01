@@ -1,24 +1,24 @@
 import { AstNode, Writer } from "./core";
 
-type ModuleImport = DefaultImport | NamedImport | StarImport;
-
-interface DefaultImport {
-    type: "default";
-    moduleName: string;
-}
-
-interface NamedImport {
-    type: "named";
-    moduleName: string;
-}
-
-interface StarImport {
-    type: "star";
-    moduleName: string;
-    starImportAlias: string;
-}
-
 export declare namespace Reference {
+    type ModuleImport = DefaultImport | NamedImport | StarImport;
+
+    interface DefaultImport {
+        type: "default";
+        moduleName: string;
+    }
+
+    interface NamedImport {
+        type: "named";
+        moduleName: string;
+    }
+
+    interface StarImport {
+        type: "star";
+        moduleName: string;
+        starImportAlias: string;
+    }
+
     interface Args {
         /* The name of the reference */
         name: string;
@@ -29,7 +29,7 @@ export declare namespace Reference {
 
 export class Reference extends AstNode {
     public readonly name: string;
-    public readonly importFrom?: ModuleImport;
+    public readonly importFrom?: Reference.ModuleImport;
 
     constructor({ name, importFrom }: Reference.Args) {
         super();
