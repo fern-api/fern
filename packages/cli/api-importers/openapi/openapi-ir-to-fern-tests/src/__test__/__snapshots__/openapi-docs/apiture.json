@@ -13265,27 +13265,27 @@ docs: Account Joint Owners
                   "response": {
                     "body": {
                       "allows": {
-                        "billPay": true,
-                        "manageCards": true,
+                        "billPay": false,
+                        "manageCards": false,
                         "manageJointOwners": true,
                         "manageOverdraftAccounts": true,
                         "mobileCheckDeposit": true,
-                        "transferFrom": true,
+                        "transferFrom": false,
                         "transferTo": true,
                         "view": true,
                         "viewCards": true,
                       },
                       "electronicStatements": true,
-                      "id": "id",
-                      "label": "Checking *1008",
+                      "id": "bf23bc970b78d27691e8",
+                      "label": "Payroll Checking *1008",
                       "location": "internal",
-                      "maskedNumber": "maskedNumber",
+                      "maskedNumber": "*1008",
                       "nickname": "Payroll Checking",
                       "product": {
-                        "code": "180D_CDA",
-                        "description": "Certificate of Deposit with a 180 day term",
-                        "label": "180 Day CD",
-                        "type": "cd",
+                        "code": "DDA",
+                        "description": "Business checking account",
+                        "label": "Business Checking",
+                        "type": "checking",
                       },
                     },
                   },
@@ -13380,33 +13380,55 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                 {
                   "response": {
                     "body": {
-                      "count": 1,
+                      "count": 6,
                       "items": [
                         {
                           "allows": {
-                            "billPay": true,
-                            "manageCards": true,
+                            "billPay": false,
+                            "manageCards": false,
                             "mobileCheckDeposit": true,
-                            "transferFrom": true,
+                            "transferFrom": false,
                             "transferTo": true,
                             "view": true,
                             "viewCards": true,
                           },
-                          "id": "id",
-                          "label": "Checking *1008",
+                          "id": "bf23bc970b78d27691e8",
+                          "label": "Payroll Checking *1008",
                           "location": "internal",
-                          "maskedNumber": "maskedNumber",
+                          "maskedNumber": "*1008",
                           "nickname": "Payroll Checking",
                           "product": {
-                            "code": "180D_CDA",
-                            "description": "Certificate of Deposit with a 180 day term",
-                            "label": "180 Day CD",
+                            "code": "DDA",
+                            "description": "Basic business checking accounts",
+                            "label": "Business Checking",
+                            "type": "checking",
+                          },
+                        },
+                        {
+                          "allows": {
+                            "billPay": false,
+                            "manageCards": false,
+                            "mobileCheckDeposit": false,
+                            "transferFrom": false,
+                            "transferTo": false,
+                            "view": true,
+                            "viewCards": true,
+                          },
+                          "id": "b78d27691e8bf23bc970",
+                          "label": "College CD *2017",
+                          "location": "internal",
+                          "maskedNumber": "*2017",
+                          "nickname": "College CD",
+                          "product": {
+                            "code": "CDA",
+                            "description": "24 Month certificate of deposit",
+                            "label": "24 Month CD",
                             "type": "cd",
                           },
                         },
                       ],
                       "limit": 1,
-                      "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                      "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
                       "primaryAccountId": "primaryAccountId",
                       "start": "start",
                     },
@@ -13586,28 +13608,46 @@ service:
             body:
               limit: 1
               nextPage_url: >-
-                https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8
+                https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view
               start: start
               items:
-                - id: id
-                  label: Checking *1008
+                - id: bf23bc970b78d27691e8
+                  label: Payroll Checking *1008
                   nickname: Payroll Checking
-                  maskedNumber: maskedNumber
+                  maskedNumber: '*1008'
                   product:
-                    type: cd
-                    code: 180D_CDA
-                    label: 180 Day CD
-                    description: Certificate of Deposit with a 180 day term
+                    type: checking
+                    code: DDA
+                    label: Business Checking
+                    description: Basic business checking accounts
                   location: internal
                   allows:
-                    billPay: true
+                    billPay: false
                     mobileCheckDeposit: true
-                    transferFrom: true
+                    transferFrom: false
                     transferTo: true
                     view: true
                     viewCards: true
-                    manageCards: true
-              count: 1
+                    manageCards: false
+                - id: b78d27691e8bf23bc970
+                  label: College CD *2017
+                  nickname: College CD
+                  maskedNumber: '*2017'
+                  product:
+                    type: cd
+                    code: CDA
+                    label: 24 Month CD
+                    description: 24 Month certificate of deposit
+                  location: internal
+                  allows:
+                    billPay: false
+                    mobileCheckDeposit: false
+                    transferFrom: false
+                    transferTo: false
+                    view: true
+                    viewCards: true
+                    manageCards: false
+              count: 6
               primaryAccountId: primaryAccountId
     getAccount:
       path: /accounts/{accountId}
@@ -13633,24 +13673,24 @@ service:
             accountId: accountId
           response:
             body:
-              id: id
-              label: Checking *1008
+              id: bf23bc970b78d27691e8
+              label: Payroll Checking *1008
               nickname: Payroll Checking
-              maskedNumber: maskedNumber
+              maskedNumber: '*1008'
               product:
-                type: cd
-                code: 180D_CDA
-                label: 180 Day CD
-                description: Certificate of Deposit with a 180 day term
+                type: checking
+                code: DDA
+                label: Business Checking
+                description: Business checking account
               location: internal
               allows:
-                billPay: true
+                billPay: false
                 mobileCheckDeposit: true
-                transferFrom: true
+                transferFrom: false
                 transferTo: true
                 view: true
                 viewCards: true
-                manageCards: true
+                manageCards: false
                 manageJointOwners: true
                 manageOverdraftAccounts: true
               electronicStatements: true

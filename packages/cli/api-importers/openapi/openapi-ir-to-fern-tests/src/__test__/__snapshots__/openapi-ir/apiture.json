@@ -784,7 +784,7 @@
                 },
                 "nextPage_url": {
                   "value": {
-                    "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                    "value": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -802,14 +802,14 @@
                       "properties": {
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "bf23bc970b78d27691e8",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "label": {
                           "value": {
-                            "value": "Checking *1008",
+                            "value": "Payroll Checking *1008",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -823,7 +823,7 @@
                         },
                         "maskedNumber": {
                           "value": {
-                            "value": "maskedNumber",
+                            "value": "*1008",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -831,26 +831,26 @@
                         "product": {
                           "properties": {
                             "type": {
-                              "value": "cd",
+                              "value": "checking",
                               "type": "enum"
                             },
                             "code": {
                               "value": {
-                                "value": "180D_CDA",
+                                "value": "DDA",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "label": {
                               "value": {
-                                "value": "180 Day CD",
+                                "value": "Business Checking",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "description": {
                               "value": {
-                                "value": "Certificate of Deposit with a 180 day term",
+                                "value": "Basic business checking accounts",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -866,7 +866,7 @@
                           "properties": {
                             "billPay": {
                               "value": {
-                                "value": true,
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -880,7 +880,7 @@
                             },
                             "transferFrom": {
                               "value": {
-                                "value": true,
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -908,7 +908,128 @@
                             },
                             "manageCards": {
                               "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "b78d27691e8bf23bc970",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "label": {
+                          "value": {
+                            "value": "College CD *2017",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "nickname": {
+                          "value": {
+                            "value": "College CD",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "maskedNumber": {
+                          "value": {
+                            "value": "*2017",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "product": {
+                          "properties": {
+                            "type": {
+                              "value": "cd",
+                              "type": "enum"
+                            },
+                            "code": {
+                              "value": {
+                                "value": "CDA",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "24 Month CD",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "description": {
+                              "value": {
+                                "value": "24 Month certificate of deposit",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "location": {
+                          "value": "internal",
+                          "type": "enum"
+                        },
+                        "allows": {
+                          "properties": {
+                            "billPay": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "mobileCheckDeposit": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferFrom": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferTo": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "view": {
+                              "value": {
                                 "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "viewCards": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "manageCards": {
+                              "value": {
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -924,7 +1045,7 @@
                 },
                 "count": {
                   "value": {
-                    "value": 1,
+                    "value": 6,
                     "type": "int"
                   },
                   "type": "primitive"
@@ -1432,14 +1553,14 @@
               "properties": {
                 "id": {
                   "value": {
-                    "value": "id",
+                    "value": "bf23bc970b78d27691e8",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "label": {
                   "value": {
-                    "value": "Checking *1008",
+                    "value": "Payroll Checking *1008",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -1453,7 +1574,7 @@
                 },
                 "maskedNumber": {
                   "value": {
-                    "value": "maskedNumber",
+                    "value": "*1008",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -1461,26 +1582,26 @@
                 "product": {
                   "properties": {
                     "type": {
-                      "value": "cd",
+                      "value": "checking",
                       "type": "enum"
                     },
                     "code": {
                       "value": {
-                        "value": "180D_CDA",
+                        "value": "DDA",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "label": {
                       "value": {
-                        "value": "180 Day CD",
+                        "value": "Business Checking",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "description": {
                       "value": {
-                        "value": "Certificate of Deposit with a 180 day term",
+                        "value": "Business checking account",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -1496,7 +1617,7 @@
                   "properties": {
                     "billPay": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
@@ -1510,7 +1631,7 @@
                     },
                     "transferFrom": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
@@ -1538,7 +1659,7 @@
                     },
                     "manageCards": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
