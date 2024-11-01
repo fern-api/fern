@@ -212,7 +212,17 @@ describe("Reference", () => {
                 );
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: "ReferenceB1",
+                        name: "ReferenceC1",
+                        importFrom: {
+                            moduleName: "moduleC",
+                            type: "star",
+                            starImportAlias: "alias2"
+                        }
+                    })
+                );
+                writer.writeNodeStatement(
+                    ts.reference({
+                        name: "ReferenceC2",
                         importFrom: {
                             moduleName: "moduleC",
                             type: "star",

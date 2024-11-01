@@ -84,24 +84,23 @@ export class Writer extends AbstractWriter {
                             ` imports ${existingNamed.map((e) => e.name)} already exist`
                     );
                 }
-                const moduleForAlias = this.starImportAliasesInverse[reference.importFrom.starImportAlias];
-                if (moduleForAlias != null && moduleForAlias !== reference.importFrom.moduleName) {
-                    throw new Error(
-                        `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
-                            "module in the same file"
-                    );
-                }
-                const existingAlias = this.starImportAliases[reference.importFrom.moduleName];
-                if (existingAlias == null) {
-                    this.starImportAliases[reference.importFrom.moduleName] = reference.importFrom.starImportAlias;
-                    this.starImportAliasesInverse[reference.importFrom.starImportAlias] =
-                        reference.importFrom.moduleName;
-                } else if (existingAlias != null && existingAlias !== reference.importFrom.starImportAlias) {
-                    throw new Error(
-                        "Cannot have more than one alias for non-named imports from a module: " +
-                            `got ${reference.importFrom.starImportAlias} but already have ${existingAlias}.`
-                    );
-                }
+            }
+            const moduleForAlias = this.starImportAliasesInverse[reference.importFrom.starImportAlias];
+            if (moduleForAlias != null && moduleForAlias !== reference.importFrom.moduleName) {
+                throw new Error(
+                    `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
+                        "module in the same file"
+                );
+            }
+            const existingAlias = this.starImportAliases[reference.importFrom.moduleName];
+            if (existingAlias == null) {
+                this.starImportAliases[reference.importFrom.moduleName] = reference.importFrom.starImportAlias;
+                this.starImportAliasesInverse[reference.importFrom.starImportAlias] = reference.importFrom.moduleName;
+            } else if (existingAlias != null && existingAlias !== reference.importFrom.starImportAlias) {
+                throw new Error(
+                    "Cannot have more than one alias for non-named imports from a module: " +
+                        `got ${reference.importFrom.starImportAlias} but already have ${existingAlias}.`
+                );
             }
         }
     }

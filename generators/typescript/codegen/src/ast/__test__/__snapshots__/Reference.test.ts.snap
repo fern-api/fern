@@ -26,11 +26,13 @@ ReferenceC1;
 exports[`Reference > toStringWithDefaultAndStar > Should generate a simple reference with multiple default, starred, and star references 1`] = `
 "import ReferenceA1, * as alias from "moduleA";
 import ReferenceB1 from "moduleB";
+import * as alias2 from "moduleC";
 ReferenceA1;
 alias.ReferenceA2;
 alias.ReferenceA3;
 ReferenceB1;
-alias2.ReferenceB1;
+alias2.ReferenceC1;
+alias2.ReferenceC2;
 "
 `;
 
