@@ -12,6 +12,5 @@ export interface HttpService {
     endpoints: FernIr.HttpEndpoint[];
     headers: FernIr.HttpHeader[];
     pathParameters: FernIr.PathParameter[];
-    encoding: FernIr.Encoding | undefined;
     transport: FernIr.Transport | undefined;
 }

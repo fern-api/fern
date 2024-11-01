@@ -32,7 +32,7 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { convertTransport } from "./convertTransport";
+import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
 
 export async function convertHttpService({
     rootDefaultUrl,
@@ -68,7 +68,7 @@ export async function convertHttpService({
         variableResolver
     });
 
-    const transport = await convertTransport({
+    const transport = await getTransportForService({
         file,
         serviceDeclaration: serviceDefinition,
         sourceResolver
@@ -89,7 +89,6 @@ export async function convertHttpService({
                   )
                 : [],
         pathParameters: servicePathParameters,
-        encoding: convertTransportToEncoding(transport),
         transport,
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
@@ -183,6 +182,13 @@ export async function convertHttpService({
                         file,
                         endpointName: endpointKey,
                         endpointSchema: endpoint
+                    }),
+                    encoding: convertEndpointSourceToEncoding(endpoint.source),
+                    transport: await getTransportForEndpoint({
+                        file,
+                        serviceTransport: transport,
+                        endpointDeclaration: endpoint,
+                        sourceResolver
                     })
                 };
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
@@ -371,19 +377,24 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
     };
 }
 
-function convertTransportToEncoding(transport: Transport): Encoding {
-    switch (transport.type) {
-        case "http":
-            return {
-                json: {},
-                proto: undefined
-            };
-        case "grpc":
-            return {
-                json: undefined,
-                proto: {}
-            };
-        default:
-            assertNever(transport);
+function convertEndpointSourceToEncoding(source: RawSchemas.SourceSchema | undefined): Encoding {
+    if (!source) {
+        return {
+            json: {},
+            proto: undefined
+        };
     }
+    if ("openapi" in source) {
+        return {
+            json: {},
+            proto: undefined
+        };
+    }
+    if ("proto" in source) {
+        return {
+            json: undefined,
+            proto: {}
+        };
+    }
+    assertNever(source);
 }

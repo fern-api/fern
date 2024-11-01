@@ -1245,10 +1245,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -3088,6 +3084,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": "Create a new organization."
                 }
@@ -3147,10 +3148,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -4337,6 +4334,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": "List all users."
                 }
@@ -4435,10 +4437,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -5735,6 +5733,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": "List all user events."
                 }
@@ -5871,10 +5874,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -6846,6 +6845,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": "Get event metadata."
                 }

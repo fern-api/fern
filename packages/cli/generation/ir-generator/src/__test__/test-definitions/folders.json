@@ -372,10 +372,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -452,6 +448,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -551,10 +552,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -631,6 +628,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -730,10 +732,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -810,6 +808,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -871,10 +874,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -951,6 +950,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1049,10 +1053,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
             "transport": {
                 "type": "http"
             },
@@ -1129,6 +1129,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1362,6 +1367,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }

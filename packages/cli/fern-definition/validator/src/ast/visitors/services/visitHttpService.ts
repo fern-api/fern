@@ -297,7 +297,8 @@ async function visitEndpoint({
                 });
             }
         },
-        pagination: noop
+        pagination: noop,
+        source: noop
     });
 }
 

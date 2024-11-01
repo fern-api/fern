@@ -20,7 +20,7 @@
             "safeName": "API"
         }
     },
-    "apiDisplayName": "\"\"",
+    "apiDisplayName": "Test API",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -3574,10 +3574,6 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": {
-                "json": null,
-                "proto": {}
-            },
             "transport": {
                 "type": "grpc",
                 "service": {
@@ -3612,6 +3608,238 @@
                 }
             },
             "endpoints": [
+                {
+                    "id": "endpoint_dataservice.foo",
+                    "name": {
+                        "originalName": "foo",
+                        "camelCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOO",
+                            "safeName": "FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Foo",
+                            "safeName": "Foo"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/foo",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "foo",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "map",
+                                        "keyType": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        },
+                                        "valueType": {
+                                            "_type": "unknown"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "3da1df2e522ba96c14c10c68b745bdfb3bff9e3de4ae562c45addca35de12df9",
+                                "name": null,
+                                "url": "/foo",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "key"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "key"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": "value"
+                                                                },
+                                                                "jsonExample": "value"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "key": "value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "a6ed54576c86109c3acea4e10911bd296a87ae7e",
+                                "url": "/foo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "map",
+                                                    "map": [
+                                                        {
+                                                            "key": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "string"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "string"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "unknown",
+                                                                    "unknown": {
+                                                                        "key": "value"
+                                                                    }
+                                                                },
+                                                                "jsonExample": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "unknown"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "string": {
+                                                    "key": "value"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "encoding": {
+                        "json": {},
+                        "proto": null
+                    },
+                    "transport": {
+                        "type": "http"
+                    },
+                    "availability": null,
+                    "docs": null
+                },
                 {
                     "id": "endpoint_dataservice.upload",
                     "name": {
@@ -5351,6 +5579,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -6051,6 +6284,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -7561,6 +7799,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -10516,6 +10759,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -12668,6 +12916,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -22570,6 +22823,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -23424,6 +23682,11 @@
                         }
                     ],
                     "pagination": null,
+                    "encoding": {
+                        "json": null,
+                        "proto": {}
+                    },
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -23454,7 +23717,38 @@
             "wireValue": "errorInstanceId"
         }
     },
-    "environments": null,
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://localhost",
+                    "docs": null
+                }
+            ]
+        }
+    },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
