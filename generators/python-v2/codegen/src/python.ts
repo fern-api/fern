@@ -9,7 +9,8 @@ import {
     PythonFile,
     Decorator,
     MethodInvocation,
-    ClassInstantiation
+    ClassInstantiation,
+    Operator
 } from "./ast";
 
 export function file(args: PythonFile.Args): PythonFile {
@@ -56,6 +57,10 @@ export function methodArgument(args: MethodArgument.Args): MethodArgument {
     return new MethodArgument(args);
 }
 
+export function operator(args: Operator.Args): Operator {
+    return new Operator(args);
+}
+
 export {
     AstNode,
     Class,
@@ -69,5 +74,7 @@ export {
     TypeInstantiation,
     PythonFile,
     MethodInvocation,
-    ClassInstantiation
+    ClassInstantiation,
+    Operator,
+    OperatorType
 } from "./ast";
