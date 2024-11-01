@@ -59,11 +59,26 @@ class PyProjectToml:
         self._user_defined_toml = user_defined_toml
 
     def write(self) -> None:
+        dev_dependencies = self._dependency_manager.get_dev_dependencies()
+        default_dev_dependencies = [
+            Dependency(name="mypy", version="1.0.1"),
+            Dependency(name="pytest", version="^7.4.0"),
+            Dependency(name="pytest-asyncio", version="^0.23.5"),
+            Dependency(name="python-dateutil", version="^2.9.0"),
+            Dependency(name="types-python-dateutil", version="^2.9.0.20240316"),
+        ]
+
+        # Support overriding default dev dependencies
+        dev_dependency_names = {dep.name for dep in default_dev_dependencies}
+        for dep in default_dev_dependencies:
+            if dep.name not in dev_dependency_names:
+                dev_dependencies.add(dep)
+
         blocks: List[PyProjectToml.Block] = [
             self._poetry_block,
             PyProjectToml.DependenciesBlock(
                 dependencies=self._dependency_manager.get_dependencies(),
-                dev_dependencies=self._dependency_manager.get_dev_dependencies(),
+                dev_dependencies=dev_dependencies,
                 python_version=self._python_version,
             ),
             PyProjectToml.PluginConfigurationBlock(),
@@ -225,11 +240,6 @@ packages = [
 python = "{self.python_version}"
 {deps}
 [tool.poetry.dev-dependencies]
-mypy = "1.0.1"
-pytest = "^7.4.0"
-pytest-asyncio = "^0.23.5"
-python-dateutil = "^2.9.0"
-types-python-dateutil = "^2.9.0.20240316"
 {dev_deps}"""
 
     @dataclass(frozen=True)
