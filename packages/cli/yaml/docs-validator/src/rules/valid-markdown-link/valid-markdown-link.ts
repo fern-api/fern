@@ -373,12 +373,12 @@ export function collectLinksAndSources({
 
     visit(hast, (node) => {
         if (node.type === "element") {
-            const href = node.properties["href"];
+            const href = node.properties.href;
             if (typeof href === "string") {
                 links.push({ href, position: node.position });
             }
 
-            const src = node.properties["src"];
+            const src = node.properties.src;
             if (typeof src === "string") {
                 sources.push({ src, position: node.position });
             }
