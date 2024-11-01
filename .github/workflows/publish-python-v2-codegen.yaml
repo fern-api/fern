@@ -34,11 +34,18 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: 🧪 Build
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} test
+
       - name: Run publish
         run: |
           cd generators/python-v2/codegen
           # TODO: The filter didn't work here, so we're just running the command directly
           # pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm -v
           pnpm dist 0.0.1
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
