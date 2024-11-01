@@ -61,12 +61,29 @@ export class Writer extends AbstractWriter {
         if (reference.importFrom?.type !== "named") {
             return;
         }
+
         const existing = this.imports[reference.importFrom.moduleName] ?? [];
         const existingStar = existing.filter((e) => e.importFrom?.type === "star");
         if (existingStar.length > 0) {
             throw new Error(
                 `Cannot add named import ${reference.name} because non-named` +
                     ` imports ${existingStar.map((e) => e.name)} already exist`
+            );
+        }
+
+        const duplicates = [];
+        for (const references of Object.values(this.imports)) {
+            for (const ref of references) {
+                if (ref.importFrom?.type === "named" && ref.name === reference.name) {
+                    duplicates.push(ref);
+                }
+            }
+        }
+        // TODO: Need to be able to resolve conflicts instead of throwing
+        if (duplicates.length > 0) {
+            throw new Error(
+                `Cannot add named import from module ${reference.importFrom.moduleName} ` +
+                    `because it is already imported from ${duplicates[0]?.importFrom?.moduleName}`
             );
         }
     }
@@ -87,6 +104,7 @@ export class Writer extends AbstractWriter {
 
         const aliasModule = (this.starImportAliasesInverse[reference.importFrom.starImportAlias] ??=
             reference.importFrom.moduleName);
+        // TODO: Need to be able to resolve conflicts instead of throwing
         if (aliasModule !== reference.importFrom.moduleName) {
             throw new Error(
                 `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
