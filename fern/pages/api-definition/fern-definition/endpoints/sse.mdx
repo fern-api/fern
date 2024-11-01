@@ -1,0 +1,99 @@
+---
+title: Server Sent Events and Streaming APIs
+subtitle: Use the `response-stream` key to model streaming endpoints
+---
+
+<Note>
+  Specifying `response-stream` on an endpoints allows you to represent endpoint responses that are streaming. 
+</Note>
+
+
+## JSON streaming
+
+If you're API returns a series of `JSON` chunks as seen below
+
+```json
+{ "text": "Hi, I am a" }
+{ "text": "chatbot. Do you have any"}
+{ "text": "questions for me"}
+```
+
+then simply add the `x-fern-streaming: true` to your OpenAPI operation. 
+
+```yaml title="openapi.yml" {4}
+types:
+  Chat:
+    properties:
+      text: string
+
+service:
+  base-path: /logs
+  endpoints:
+    stream:
+      method: POST
+      path: /
+      response-stream: Chat
+```
+
+## Server sent events 
+
+If your API returns server-sent-events, with the `data` and `event` keys as seen below
+
+```json
+data: { "text": "Hi, I am a" }
+data: { "text": "chatbot. Do you have any"}
+data: { "text": "questions for me"}
+```
+
+then make sure to include `format: sse`. 
+
+```yaml title="openapi.yml" {4-5}
+types:
+  Chat:
+    properties:
+      text: string
+
+service:
+  base-path: /logs
+  endpoints:
+    stream:
+      method: POST
+      path: /
+      response-stream:
+        type: Chat
+        format: sse
+```
+
+## `Stream` parameter
+
+It has become common practice for endpoints to have a `stream` parameter that 
+controls whether the response is streamed or not. Fern supports this pattern in a first 
+class way. 
+
+Simply specify the `stream-condition` as well as the ordinary response and the streaming response: 
+
+```yaml title="openapi.yml" {4-10}
+types:
+  Chat:
+    properties:
+      text: string
+      tokens: integer
+  ChatChunk:
+    properties:
+      text: string
+
+service:
+  base-path: /logs
+  endpoints:
+    stream:
+      method: POST
+      path: /
+      request:
+        query-parameters:
+          stream: boolean
+      response: Chat
+      response-stream:
+        type: ChatChunk
+        format: sse
+        stream-condition: request.stream
+```

@@ -147,6 +147,10 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/fern-definition/endpoints/multipart.mdx
                 slug: multipart
+              - page: Server Sent Events
+                icon: fa-regular fa-signal-stream
+                path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
+                slug: sse
           - page: Webhooks
             icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
