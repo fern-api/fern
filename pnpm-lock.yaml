@@ -5954,6 +5954,9 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       chardet:
         specifier: ^2.0.0
         version: 2.0.0

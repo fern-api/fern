@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, cwd, relativize } from "@fern-api/fs-utils";
 import { Rule, RuleViolation } from "../../Rule";
 import { DocsDefinitionResolver, wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -9,9 +9,9 @@ import { visit } from "unist-util-visit";
 import { toHast } from "mdast-util-to-hast";
 import type { Root as HastRoot } from "hast";
 import type { Position } from "unist";
-import { isNonNullish } from "@fern-api/core-utils";
 import { stripAnchorsAndSearchParams, addLeadingSlash, removeLeadingSlash } from "./url-utils";
 import { getRedirectForPath } from "./redirect-for-path";
+import chalk from "chalk";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
@@ -181,22 +181,26 @@ export const ValidMarkdownLinks: Rule = {
                             baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
                         });
 
-                        if (exists) {
-                            return null;
+                        if (exists === true) {
+                            return [];
                         }
 
-                        return {
-                            severity: "warning" as const,
-                            message: createLinkViolationMessage(
+                        return exists.map((brokenPathname) => {
+                            const message = createLinkViolationMessage(
                                 pathnameToCheck,
                                 absoluteFilepath,
-                                addLeadingSlash(absoluteFilePathsToSlugs.get(absoluteFilepath)?.[0] ?? "")
-                            )
-                        };
+                                brokenPathname
+                            );
+                            // console.warn(message);
+                            return {
+                                severity: "warning" as const,
+                                message
+                            };
+                        });
                     })
                 );
 
-                return [...violations, ...pathToCheckViolations.filter(isNonNullish)];
+                return [...violations, ...pathToCheckViolations.flat()];
             }
         };
     }
@@ -207,9 +211,11 @@ function createLinkViolationMessage(
     absoluteFilepath: AbsoluteFilePath,
     targetPathname: string
 ): string {
-    return `${absoluteFilepath}\n\t${getPositionMessage(pathnameToCheck.position)}Link does not exist: ${
-        pathnameToCheck.pathname
-    } -> (link will be broken on ${targetPathname})`;
+    return `${relativize(cwd(), absoluteFilepath)}\n\t${getPositionMessage(
+        pathnameToCheck.position
+    )}Link does not exist: ${chalk.bold(pathnameToCheck.pathname)} ${chalk.gray(
+        `(link will be broken on ${targetPathname})`
+    )}`;
 }
 
 function getPositionMessage(position: Position | undefined): string {
@@ -255,7 +261,9 @@ async function checkIfPathnameExists(
             basePath?: string;
         };
     }
-): Promise<boolean> {
+): Promise<true | string[]> {
+    const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [];
+
     // base case: empty pathname is valid
     if (pathname.trim() === "") {
         return true;
@@ -277,7 +285,7 @@ async function checkIfPathnameExists(
             return true;
         }
 
-        return false;
+        return slugs.map((slug) => addLeadingSlash(slug));
     }
 
     // if the pathname does not start with a `/`, it is a relative path.
@@ -290,25 +298,22 @@ async function checkIfPathnameExists(
 
     // if this file isn't expected to be a markdown file, we don't have to check the slugs
     if (!markdown) {
-        return false;
+        return slugs.map((slug) => addLeadingSlash(slug));
     }
 
     // if that fails, we need to check if the path exists against all of the slugs for the current file
 
-    const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [];
-
-    let found = true;
+    const brokenSlugs: string[] = [];
     for (const slug of slugs) {
         const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
         const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
 
         if (!pageSlugs.has(targetSlug)) {
-            found = false;
-            break;
+            brokenSlugs.push(slug);
         }
     }
 
-    return found;
+    return brokenSlugs.length > 0 ? brokenSlugs : true;
 }
 
 function withRedirects(
