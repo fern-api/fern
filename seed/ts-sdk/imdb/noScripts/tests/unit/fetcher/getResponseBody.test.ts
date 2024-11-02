@@ -2,10 +2,6 @@ import { RUNTIME } from "../../../src/core/runtime";
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 
-if (RUNTIME.type === "browser") {
-    require("jest-fetch-mock").enableMocks();
-}
-
 describe("Test getResponseBody", () => {
     it("should handle blob response type", async () => {
         const mockBlob = new Blob(["test"], { type: "text/plain" });
@@ -61,8 +57,8 @@ describe("Test getResponseBody", () => {
             error: {
                 reason: "non-json",
                 statusCode: 200,
-                rawBody: "invalid json"
-            }
+                rawBody: "invalid json",
+            },
         });
     });
 });

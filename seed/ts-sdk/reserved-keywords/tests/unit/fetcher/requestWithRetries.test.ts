@@ -1,10 +1,6 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
-if (RUNTIME.type === "browser") {
-    require("jest-fetch-mock").enableMocks();
-}
-
 describe("requestWithRetries", () => {
     let mockFetch: jest.Mock;
     let originalMathRandom: typeof Math.random;
