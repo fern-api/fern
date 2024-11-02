@@ -30,11 +30,10 @@
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "dockerode": "^4.0.2",
+    "@fern-api/logging-execa": "workspace:*",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
-    "@types/dockerode": "^3.3.9",
     "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
