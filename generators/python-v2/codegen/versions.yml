@@ -1,3 +1,9 @@
+- version: 0.0.6
+  createdAt: '2024-11-02'
+  changelogEntry:
+    - type: internal
+      summary: Handle both ESM and CJS.
+  irVersion: 33
 - version: 0.0.5
   createdAt: '2024-11-02'
   changelogEntry:
