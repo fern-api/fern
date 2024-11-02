@@ -94,7 +94,10 @@ export class DocsDefinitionResolver {
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
                     apiSection: async ({ workspace }) => {
-                        const fernWorkspace = await workspace.toFernWorkspace({ context: this.taskContext });
+                        const fernWorkspace = await workspace.toFernWorkspace(
+                            { context: this.taskContext },
+                            { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                        );
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;

@@ -38,7 +38,6 @@
     "publish:cli:prod": "cd dist/prod && npm publish"
   },
   "devDependencies": {
-    "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
@@ -46,6 +45,7 @@
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-preview": "workspace:*",
+    "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/docs-validator": "workspace:*",
     "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",

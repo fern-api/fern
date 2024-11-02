@@ -1,9 +1,15 @@
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, cwd, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Rule, RuleViolation } from "../../Rule";
-import { DocsDefinitionResolver, wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, wrapWithHttps, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { convertDbDocsConfigToRead, convertDocsDefinitionToDb, FernNavigation } from "@fern-api/fdr-sdk";
+import {
+    APIV1Read,
+    convertDbDocsConfigToRead,
+    convertDocsDefinitionToDb,
+    FernNavigation,
+    ApiDefinition
+} from "@fern-api/fdr-sdk";
 import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { visit } from "unist-util-visit";
 import { toHast } from "mdast-util-to-hast";
@@ -12,6 +18,11 @@ import type { Position } from "unist";
 import { stripAnchorsAndSearchParams, addLeadingSlash, removeLeadingSlash } from "./url-utils";
 import { getRedirectForPath } from "./redirect-for-path";
 import chalk from "chalk";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+
+import { randomUUID } from "crypto";
+import { noop } from "@fern-api/core-utils";
+import { createLogger } from "@fern-api/logger";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
@@ -22,6 +33,8 @@ interface PathnameToCheck {
     position?: Position;
 }
 
+const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
+
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
     create: async ({ workspace, loadApiWorkspace }) => {
@@ -29,12 +42,7 @@ export const ValidMarkdownLinks: Rule = {
 
         const url = instanceUrls[0] ?? "http://localhost";
 
-        const docsDefinitionResolver = new DocsDefinitionResolver(
-            url,
-            workspace,
-            loadApiWorkspace,
-            createMockTaskContext()
-        );
+        const docsDefinitionResolver = new DocsDefinitionResolver(url, workspace, loadApiWorkspace, NOOP_CONTEXT);
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
@@ -70,12 +78,17 @@ export const ValidMarkdownLinks: Rule = {
 
         const pageSlugs = new Set<string>();
         const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
+        const endpoints: FernNavigation.NavigationNodeApiLeaf[] = [];
         collector.slugMap.forEach((node, slug) => {
             if (node == null || !FernNavigation.isPage(node)) {
                 return;
             }
 
             pageSlugs.add(slug);
+
+            if (FernNavigation.isApiLeaf(node)) {
+                endpoints.push(node);
+            }
 
             const pageId = FernNavigation.getPageId(node);
             if (pageId == null) {
@@ -97,76 +110,9 @@ export const ValidMarkdownLinks: Rule = {
                 }
 
                 // Find all matches in the Markdown text
-                const violations: RuleViolation[] = [];
-
-                const { links, sources } = collectLinksAndSources({ content, absoluteFilepath });
-
-                const pathnamesToCheck: PathnameToCheck[] = [];
-
-                links.forEach((link) => {
-                    if (link.href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
-                        if (!link.href.trimStart().startsWith("http")) {
-                            // we don't need to check if it exists if it's not an http link
-                            return;
-                        }
-
-                        try {
-                            // test if the link is a valid WHATWG URL (otherwise `new URL(link.href)` will throw)
-                            const url = new URL(link.href);
-
-                            // if the link does not point to an instance URL, we don't need to check if it exists internally
-                            if (!instanceUrls.some((url) => link.href.includes(url))) {
-                                // TODO: potentially do a `fetch` check here to see if the external link is valid?
-                                return;
-                            }
-
-                            pathnamesToCheck.push({
-                                pathname: url.pathname,
-                                position: link.position,
-                                markdown: true
-                            });
-                        } catch (error) {
-                            violations.push({
-                                severity: "warning",
-                                message: `Invalid URL: ${link.href}`
-                            });
-                        }
-                        return;
-                    }
-
-                    const pathname = stripAnchorsAndSearchParams(link.href);
-
-                    // empty "" is actually a valid path, so we don't need to check it
-                    if (pathname.trim() === "") {
-                        return;
-                    }
-
-                    pathnamesToCheck.push({
-                        pathname,
-                        position: link.position,
-                        markdown: true
-                    });
-                });
-
-                sources.forEach((source) => {
-                    if (source.src.match(EXTERNAL_LINK_PATTERN)) {
-                        try {
-                            // test if the link is a valid WHATWG URL (otherwise `new URL(source.src)` will throw)
-                            new URL(source.src);
-                        } catch (error) {
-                            violations.push({
-                                severity: "warning" as const,
-                                message: `Invalid URL: ${source.src}`
-                            });
-                            return;
-                        }
-                    } else {
-                        pathnamesToCheck.push({
-                            pathname: source.src,
-                            position: source.position,
-                            markdown: false
-                        });
-                    }
+                const { pathnamesToCheck, violations } = collectPathnamesToCheck(content, {
+                    absoluteFilepath,
+                    instanceUrls
                 });
 
                 const pathToCheckViolations = await Promise.all(
@@ -186,12 +132,7 @@ export const ValidMarkdownLinks: Rule = {
                         }
 
                         return exists.map((brokenPathname) => {
-                            const message = createLinkViolationMessage(
-                                pathnameToCheck,
-                                absoluteFilepath,
-                                brokenPathname
-                            );
-                            // console.warn(message);
+                            const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
                             return {
                                 severity: "warning" as const,
                                 message
@@ -201,21 +142,180 @@ export const ValidMarkdownLinks: Rule = {
                 );
 
                 return [...violations, ...pathToCheckViolations.flat()];
+            },
+            apiSection: async ({ workspace: apiWorkspace, config }) => {
+                // TODO: this is duplicating work from above, but there's no clean way to associate this visitor with the docs resolver
+                const fernWorkspace = await apiWorkspace.toFernWorkspace(
+                    { context: NOOP_CONTEXT },
+                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                );
+                const ir = await generateIntermediateRepresentation({
+                    workspace: fernWorkspace,
+                    audiences: config.audiences ? { type: "select", audiences: config.audiences } : { type: "all" },
+                    generationLanguage: undefined,
+                    keywords: undefined,
+                    smartCasing: false,
+                    disableExamples: false,
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined,
+                    context: NOOP_CONTEXT
+                });
+                const api = toLatest(convertIrToApiDefinition(ir, randomUUID()));
+
+                const violations: RuleViolation[] = [];
+
+                for (const endpoint of endpoints) {
+                    const endpointDefinition =
+                        endpoint.type === "endpoint"
+                            ? api.endpoints[endpoint.endpointId]
+                            : endpoint.type === "webhook"
+                            ? api.webhooks[endpoint.webhookId]
+                            : api.websockets[endpoint.webSocketId];
+                    if (endpointDefinition == null) {
+                        continue;
+                    }
+
+                    const descriptions = await collectDescriptions(ApiDefinition.prune(api, endpoint));
+
+                    for (const description of descriptions) {
+                        const { pathnamesToCheck, violations: descriptionViolations } = collectPathnamesToCheck(
+                            description,
+                            { instanceUrls }
+                        );
+
+                        violations.push(...descriptionViolations);
+
+                        const pathToCheckViolations = await Promise.all(
+                            pathnamesToCheck.map(async (pathnameToCheck) => {
+                                // TODO: we don't know where the endpoint is defined (which file it's in) so this doesn't always work
+                                const exists = await checkIfPathnameExists(pathnameToCheck.pathname, {
+                                    markdown: pathnameToCheck.markdown,
+                                    workspaceAbsoluteFilePath: workspace.absoluteFilePath,
+                                    pageSlugs,
+                                    absoluteFilePathsToSlugs,
+                                    redirects: workspace.config.redirects,
+                                    baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
+                                });
+
+                                if (exists === true) {
+                                    return [];
+                                }
+
+                                return exists.map((brokenPathname) => {
+                                    const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
+                                    return {
+                                        severity: "warning" as const,
+                                        message
+                                    };
+                                });
+                            })
+                        );
+
+                        violations.push(...pathToCheckViolations.flat());
+                    }
+                }
+
+                return violations;
             }
         };
     }
 };
 
-function createLinkViolationMessage(
-    pathnameToCheck: PathnameToCheck,
-    absoluteFilepath: AbsoluteFilePath,
-    targetPathname: string
-): string {
-    return `${relativize(cwd(), absoluteFilepath)}\n\t${getPositionMessage(
-        pathnameToCheck.position
-    )}Link does not exist: ${chalk.bold(pathnameToCheck.pathname)} ${chalk.gray(
-        `(link will be broken on ${targetPathname})`
-    )}`;
+function collectPathnamesToCheck(
+    content: string,
+    {
+        absoluteFilepath,
+        instanceUrls
+    }: {
+        absoluteFilepath?: AbsoluteFilePath;
+        instanceUrls: string[];
+    }
+): {
+    pathnamesToCheck: PathnameToCheck[];
+    violations: RuleViolation[];
+} {
+    const violations: RuleViolation[] = [];
+    const pathnamesToCheck: PathnameToCheck[] = [];
+
+    const { links, sources } = safeCollectLinksAndSources({ content, absoluteFilepath });
+
+    links.forEach((link) => {
+        if (link.href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
+            if (!link.href.trimStart().startsWith("http")) {
+                // we don't need to check if it exists if it's not an http link
+                return;
+            }
+
+            try {
+                // test if the link is a valid WHATWG URL (otherwise `new URL(link.href)` will throw)
+                const url = new URL(link.href);
+
+                // if the link does not point to an instance URL, we don't need to check if it exists internally
+                if (!instanceUrls.some((url) => link.href.includes(url))) {
+                    // TODO: potentially do a `fetch` check here to see if the external link is valid?
+                    return;
+                }
+
+                pathnamesToCheck.push({
+                    pathname: url.pathname,
+                    position: link.position,
+                    markdown: true
+                });
+            } catch (error) {
+                violations.push({
+                    severity: "warning",
+                    message: `Invalid URL: ${link.href}`
+                });
+            }
+            return;
+        }
+
+        const pathname = stripAnchorsAndSearchParams(link.href);
+
+        // empty "" is actually a valid path, so we don't need to check it
+        if (pathname.trim() === "") {
+            return;
+        }
+
+        pathnamesToCheck.push({
+            pathname,
+            position: link.position,
+            markdown: true
+        });
+    });
+
+    sources.forEach((source) => {
+        if (source.src.match(EXTERNAL_LINK_PATTERN)) {
+            try {
+                // test if the link is a valid WHATWG URL (otherwise `new URL(source.src)` will throw)
+                new URL(source.src);
+            } catch (error) {
+                violations.push({
+                    severity: "warning" as const,
+                    message: `Invalid URL: ${source.src}`
+                });
+                return;
+            }
+        } else {
+            pathnamesToCheck.push({
+                pathname: source.src,
+                position: source.position,
+                markdown: false
+            });
+        }
+    });
+
+    return {
+        pathnamesToCheck,
+        violations
+    };
+}
+
+function createLinkViolationMessage(pathnameToCheck: PathnameToCheck, targetPathname: string): string {
+    return `${getPositionMessage(pathnameToCheck.position)}Page (${targetPathname}) contains a link to ${chalk.bold(
+        pathnameToCheck.pathname
+    )} that does not exist.`;
 }
 
 function getPositionMessage(position: Position | undefined): string {
@@ -247,7 +347,7 @@ async function checkIfPathnameExists(
         baseUrl
     }: {
         markdown: boolean;
-        absoluteFilepath: AbsoluteFilePath;
+        absoluteFilepath?: AbsoluteFilePath;
         workspaceAbsoluteFilePath: AbsoluteFilePath;
         pageSlugs: Set<string>;
         absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
@@ -262,7 +362,7 @@ async function checkIfPathnameExists(
         };
     }
 ): Promise<true | string[]> {
-    const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [];
+    const slugs = absoluteFilepath != null ? absoluteFilePathsToSlugs.get(absoluteFilepath) ?? [] : [];
 
     // base case: empty pathname is valid
     if (pathname.trim() === "") {
@@ -288,12 +388,14 @@ async function checkIfPathnameExists(
         return slugs.map((slug) => addLeadingSlash(slug));
     }
 
-    // if the pathname does not start with a `/`, it is a relative path.
-    // first, we'll check if the pathname is a relativized path
-    const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
+    if (absoluteFilepath != null) {
+        // if the pathname does not start with a `/`, it is a relative path.
+        // first, we'll check if the pathname is a relativized path
+        const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
 
-    if (await doesPathExist(relativizedPathname, "file")) {
-        return true;
+        if (await doesPathExist(relativizedPathname, "file")) {
+            return true;
+        }
     }
 
     // if this file isn't expected to be a markdown file, we don't have to check the slugs
@@ -351,17 +453,35 @@ interface HastSource {
     position?: Position;
 }
 
+function safeCollectLinksAndSources({
+    content,
+    absoluteFilepath
+}: {
+    content: string;
+    absoluteFilepath?: AbsoluteFilePath;
+}): {
+    links: HastLink[];
+    sources: HastSource[];
+} {
+    try {
+        return collectLinksAndSources({ content, absoluteFilepath });
+    } catch (error) {
+        return { links: [], sources: [] };
+    }
+}
+
+// TODO: this currently doesn't handle markdown snippets, but it should.
 export function collectLinksAndSources({
     content,
     absoluteFilepath
 }: {
     content: string;
-    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepath?: AbsoluteFilePath;
 }): {
     links: HastLink[];
     sources: HastSource[];
 } {
-    const mdast = parseMarkdownToTree(content, getMarkdownFormat(absoluteFilepath));
+    const mdast = parseMarkdownToTree(content, absoluteFilepath ? getMarkdownFormat(absoluteFilepath) : "mdx");
 
     const hast = toHast(mdast, {
         allowDangerousHtml: true,
@@ -429,4 +549,26 @@ function toBaseUrl(domain: string): { domain: string; basePath: string | undefin
         domain: url.host,
         basePath: url.pathname === "/" || url.pathname === "" ? undefined : url.pathname
     };
+}
+
+function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
+    const latest = ApiDefinition.ApiDefinitionV1ToLatest.from(apiDefinition, {
+        useJavaScriptAsTypeScript: false,
+        alwaysEnableJavaScriptFetch: false,
+        usesApplicationJsonInFormDataValue: false
+    }).migrate();
+
+    return latest;
+}
+
+async function collectDescriptions(apiDefinition: ApiDefinition.ApiDefinition): Promise<string[]> {
+    const descriptions: string[] = [];
+    await ApiDefinition.Transformer.descriptions((description) => {
+        if (typeof description === "string") {
+            descriptions.push(description);
+        }
+
+        return description;
+    }).apiDefinition(apiDefinition);
+    return descriptions;
 }
