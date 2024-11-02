@@ -3029,9 +3029,6 @@ importers:
       formdata-node:
         specifier: ^6.0.3
         version: 6.0.3
-      jest-fetch-mock:
-        specifier: ^3.0.3
-        version: 3.0.3
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -3072,9 +3069,6 @@ importers:
       express:
         specifier: ^4.20.0
         version: 4.21.1
-      fetch-mock-jest:
-        specifier: ^1.5.1
-        version: 1.5.1(node-fetch@2.7.0)
       form-data:
         specifier: 4.0.0
         version: 4.0.0
@@ -9262,9 +9256,6 @@ packages:
   core-js-compat@3.38.1:
     resolution: {integrity: sha512-JRH6gfXxGmrzF3tZ57lFx97YARxCXPaMzPo6jELZhv88pBH5VXpQ+y0znKGlFnzuaihqhLbefxSJxWJMPtfDzw==}
 
-  core-js@3.38.0:
-    resolution: {integrity: sha512-XPpwqEodRljce9KswjZShh95qJ1URisBeKCjUdq27YdenkslVe7OO0ZJhlYXAChW7OhXaRLl8AAba7IBfoIHug==}
-
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -9292,9 +9283,6 @@ packages:
 
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
-
-  cross-fetch@3.1.8:
-    resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
 
   cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
@@ -9939,24 +9927,6 @@ packages:
     resolution: {integrity: sha512-4ghX8cA/hNycZFPgU+Zgu1xPkVyrvIS2KGWMmH8WX7/U8QLyKa0Drm6FTTngnf+SIYkgPDbh52dN0/o7wCWPRg==}
     hasBin: true
 
-  fetch-mock-jest@1.5.1:
-    resolution: {integrity: sha512-+utwzP8C+Pax1GSka3nFXILWMY3Er2L+s090FOgqVNrNCPp0fDqgXnAHAJf12PLHi0z4PhcTaZNTz8e7K3fjqQ==}
-    engines: {node: '>=8.0.0'}
-    peerDependencies:
-      node-fetch: '*'
-    peerDependenciesMeta:
-      node-fetch:
-        optional: true
-
-  fetch-mock@9.11.0:
-    resolution: {integrity: sha512-PG1XUv+x7iag5p/iNHD4/jdpxL9FtVSqRMUQhPab4hVDt80T1MH5ehzVrL2IdXO9Q2iBggArFvPqjUbHFuI58Q==}
-    engines: {node: '>=4.0.0'}
-    peerDependencies:
-      node-fetch: '*'
-    peerDependenciesMeta:
-      node-fetch:
-        optional: true
-
   file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -10575,9 +10545,6 @@ packages:
     resolution: {integrity: sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==}
     engines: {node: '>= 0.4'}
 
-  is-subset@0.1.1:
-    resolution: {integrity: sha512-6Ybun0IkarhmEqxXCNw/C0bna6Zb/TkfUX9UbwJtK6ObwAVCxmAP308WWTHviM/zAqXk05cdhYsUsZeGQh99iw==}
-
   is-symbol@1.0.4:
     resolution: {integrity: sha512-C/CPBqKWnvdcxqIARxyOh4v1UUEOCHpgDa0WYgpKDFMszcrPcffg5uhwSgPCLD2WWxmq6isisz87tzT01tuGhg==}
     engines: {node: '>= 0.4'}
@@ -10716,9 +10683,6 @@ packages:
   jest-environment-node@29.7.0:
     resolution: {integrity: sha512-DOSwCRqXirTOyheM+4d5YZOrWcdu0LNZ87ewUoywbcb2XR4wKgqiG8vNeYwhjFMbEkfju7wx2GYH0P2gevGvFw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  jest-fetch-mock@3.0.3:
-    resolution: {integrity: sha512-Ux1nWprtLrdrH4XwE7O7InRY6psIi3GOsqNESJgMJ+M5cv4A8Lh7SN9d2V2kKRZ8ebAfcd1LNyZguAOb6JiDqw==}
 
   jest-get-type@29.6.3:
     resolution: {integrity: sha512-zrteXnqYxfQh7l5FHyL38jL39di8H8rHoecLH3JNxH3BwOrBsNeabdap5e0I23lD4HHI8W5VFBZqG4Eaq5LNcw==}
@@ -11715,9 +11679,6 @@ packages:
   path-to-regexp@0.1.10:
     resolution: {integrity: sha512-7lf7qcQidTku0Gu3YDPc8DJ1q7OOucfa/BSsIwjuh56VU7katFvuM8hULfkwB3Fns/rsVF7PwPKVw1sl5KQS9w==}
 
-  path-to-regexp@2.4.0:
-    resolution: {integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==}
-
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
@@ -11898,9 +11859,6 @@ packages:
   promise-make-naked@2.1.2:
     resolution: {integrity: sha512-y7s8ZuHIG56JYspB24be9GFkXA1zXL85Ur9u1DKrW/tvyUoPxWgBjnalK6Nc6l7wHBcAW0c3PO07+XOsWTRuhg==}
 
-  promise-polyfill@8.3.0:
-    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
-
   prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
@@ -11949,11 +11907,6 @@ packages:
   qs@6.13.0:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
     engines: {node: '>=0.6'}
-
-  querystring@0.2.1:
-    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
-    engines: {node: '>=0.4.x'}
-    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
 
   querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
@@ -13279,9 +13232,6 @@ packages:
 
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
-
-  whatwg-url@6.5.0:
-    resolution: {integrity: sha512-rhRZRqx/TLJQWUpQ6bmrt2UV4f0HCQ463yQuONJqC6fO2VoEb1pTYddbe59SkYq87aoM5A3bdhMZiUiVws+fzQ==}
 
   whatwg-url@7.1.0:
     resolution: {integrity: sha512-WUu7Rg1DroM7oQvGWfOiAK21n74Gg+T4elXEQYkOhtyLeWiJFoOGLXPKI/9gzIie9CtwVLm8wtw6YJdKyxSjeg==}
@@ -16652,8 +16602,6 @@ snapshots:
     dependencies:
       browserslist: 4.24.0
 
-  core-js@3.38.0: {}
-
   core-util-is@1.0.3: {}
 
   cors@2.8.5:
@@ -16694,12 +16642,6 @@ snapshots:
       - ts-node
 
   create-require@1.1.1: {}
-
-  cross-fetch@3.1.8:
-    dependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
 
   cross-spawn@5.1.0:
     dependencies:
@@ -17559,31 +17501,6 @@ snapshots:
 
   fern-api@0.45.0-rc12: {}
 
-  fetch-mock-jest@1.5.1(node-fetch@2.7.0):
-    dependencies:
-      fetch-mock: 9.11.0(node-fetch@2.7.0)
-    optionalDependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - supports-color
-
-  fetch-mock@9.11.0(node-fetch@2.7.0):
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/runtime': 7.25.0
-      core-js: 3.38.0
-      debug: 4.3.6
-      glob-to-regexp: 0.4.1
-      is-subset: 0.1.1
-      lodash.isequal: 4.5.0
-      path-to-regexp: 2.4.0
-      querystring: 0.2.1
-      whatwg-url: 6.5.0
-    optionalDependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - supports-color
-
   file-entry-cache@6.0.1:
     dependencies:
       flat-cache: 3.0.4
@@ -18230,8 +18147,6 @@ snapshots:
     dependencies:
       has-tostringtag: 1.0.2
 
-  is-subset@0.1.1: {}
-
   is-symbol@1.0.4:
     dependencies:
       has-symbols: 1.0.3
@@ -18457,13 +18372,6 @@ snapshots:
       '@types/node': 18.7.18
       jest-mock: 29.7.0
       jest-util: 29.7.0
-
-  jest-fetch-mock@3.0.3:
-    dependencies:
-      cross-fetch: 3.1.8
-      promise-polyfill: 8.3.0
-    transitivePeerDependencies:
-      - encoding
 
   jest-get-type@29.6.3: {}
 
@@ -19906,8 +19814,6 @@ snapshots:
 
   path-to-regexp@0.1.10: {}
 
-  path-to-regexp@2.4.0: {}
-
   path-type@4.0.0: {}
 
   pathe@1.1.2: {}
@@ -20055,8 +19961,6 @@ snapshots:
 
   promise-make-naked@2.1.2: {}
 
-  promise-polyfill@8.3.0: {}
-
   prompts@2.4.2:
     dependencies:
       kleur: 3.0.3
@@ -20102,8 +20006,6 @@ snapshots:
   qs@6.13.0:
     dependencies:
       side-channel: 1.0.6
-
-  querystring@0.2.1: {}
 
   querystringify@2.2.0: {}
 
@@ -21757,12 +21659,6 @@ snapshots:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-
-  whatwg-url@6.5.0:
-    dependencies:
-      lodash.sortby: 4.7.0
-      tr46: 1.0.1
-      webidl-conversions: 4.0.2
 
   whatwg-url@7.1.0:
     dependencies:
