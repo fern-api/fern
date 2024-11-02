@@ -41,7 +41,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.7.18",
+    "@types/node": "22.8.6",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",
