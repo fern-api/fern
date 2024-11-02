@@ -55,7 +55,7 @@
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
-    "vitest": "^2.0.5",
+    "vitest": "^2.1.4",
     "memfs": "^3.4.1",
     "organize-imports-cli": "^0.10.0",
     "package-json-type": "^1.0.3",
