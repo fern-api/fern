@@ -57,8 +57,8 @@ describe("Test getResponseBody", () => {
             error: {
                 reason: "non-json",
                 statusCode: 200,
-                rawBody: "invalid json",
-            },
+                rawBody: "invalid json"
+            }
         });
     });
 });
