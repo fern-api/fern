@@ -13,6 +13,7 @@ async function main() {
         minify: true,
         dts: true,
         outDir: "dist",
+        bundle: true,
         external: [
             // "@fern-api/core-utils",
             // "@fern-api/generator-commons",

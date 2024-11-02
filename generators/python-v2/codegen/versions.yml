@@ -1,3 +1,9 @@
+- version: 0.0.4
+  createdAt: '2024-11-02'
+  changelogEntry:
+    - type: internal
+      summary: Set bundle flag.
+  irVersion: 33
 - version: 0.0.3
   createdAt: '2024-11-02'
   changelogEntry:
