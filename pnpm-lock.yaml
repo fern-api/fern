@@ -193,9 +193,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -861,6 +858,75 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/python-v2/fastapi:
+    devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.24.0)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/python-v2/pydantic-model:
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.24.0)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2315,9 +2381,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       jest-specific-snapshot:
         specifier: ^8.0.0
         version: 8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))
@@ -3173,9 +3236,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3243,9 +3303,6 @@ importers:
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3280,9 +3337,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3380,9 +3434,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3441,9 +3492,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3481,9 +3529,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3968,9 +4013,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4020,9 +4062,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4078,9 +4117,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4184,9 +4220,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4260,9 +4293,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4318,9 +4348,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4385,9 +4412,6 @@ importers:
       form-data:
         specifier: 4.0.0
         version: 4.0.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
@@ -4440,9 +4464,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4535,9 +4556,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4620,9 +4638,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4699,9 +4714,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4916,9 +4928,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4956,9 +4965,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5174,9 +5180,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5371,9 +5374,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5530,9 +5530,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5689,9 +5686,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5803,9 +5797,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5876,9 +5867,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5970,9 +5958,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -6040,9 +6025,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -6154,9 +6136,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -6326,9 +6305,6 @@ importers:
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0

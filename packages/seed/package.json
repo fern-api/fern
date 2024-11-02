@@ -67,7 +67,6 @@
     "depcheck": "^1.4.6",
     "esbuild": "^0.24.0",
     "eslint": "^8.56.0",
-    "globals": "link:@types/vitest/globals",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "tsup": "^8.0.2",
