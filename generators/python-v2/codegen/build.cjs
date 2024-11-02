@@ -14,10 +14,8 @@ async function main() {
         dts: true,
         outDir: "dist",
         bundle: true,
+        noExternal: [/@fern-api\/.*/],
         external: [
-            // "@fern-api/core-utils",
-            // "@fern-api/generator-commons",
-            // "@fern-fern/ir-sdk",
             "@wasm-fmt/ruff_fmt"
         ],
         tsconfig: "./build.tsconfig.json"
