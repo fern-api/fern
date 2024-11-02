@@ -4947,9 +4947,6 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
     devDependencies:
-      '@types/dockerode':
-        specifier: ^3.3.9
-        version: 3.3.9
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -8213,12 +8210,6 @@ packages:
   '@types/diff@5.2.1':
     resolution: {integrity: sha512-uxpcuwWJGhe2AR1g8hD9F5OYGCqjqWnBUQFD8gMZsDbv8oPHzxJF6iMO6n8Tk0AdzlxoaaoQhOYlIg/PukVU8g==}
 
-  '@types/docker-modem@3.0.2':
-    resolution: {integrity: sha512-qC7prjoEYR2QEe6SmCVfB1x3rfcQtUr1n4x89+3e0wSTMQ/KYCyf+/RAA9n2tllkkNc6//JMUZePdFRiGIWfaQ==}
-
-  '@types/dockerode@3.3.9':
-    resolution: {integrity: sha512-SYRN5FF/qmwpxUT6snJP5D8k0wgoUKOGVs625XvpRJOOUi6s//UYI4F0tbyE3OmzpI70Fo1+aqpzX27zCrInww==}
-
   '@types/estree-jsx@1.0.0':
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
 
@@ -8387,9 +8378,6 @@ packages:
 
   '@types/serve-static@1.15.0':
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
-
-  '@types/ssh2@1.11.4':
-    resolution: {integrity: sha512-anmIRj5ciVsjLYx4lwMRvQcUw6FqGhVkPNmWVBfNsmb9LMO0wLF40BVazyBKry8gViRvLAldDfQvpKunFSZ9pA==}
 
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -15431,16 +15419,6 @@ snapshots:
 
   '@types/diff@5.2.1': {}
 
-  '@types/docker-modem@3.0.2':
-    dependencies:
-      '@types/node': 18.7.18
-      '@types/ssh2': 1.11.4
-
-  '@types/dockerode@3.3.9':
-    dependencies:
-      '@types/docker-modem': 3.0.2
-      '@types/node': 18.7.18
-
   '@types/estree-jsx@1.0.0':
     dependencies:
       '@types/estree': 1.0.6
@@ -15622,10 +15600,6 @@ snapshots:
   '@types/serve-static@1.15.0':
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 18.7.18
-
-  '@types/ssh2@1.11.4':
-    dependencies:
       '@types/node': 18.7.18
 
   '@types/stack-utils@2.0.1': {}
