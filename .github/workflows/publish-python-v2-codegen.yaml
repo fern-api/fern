@@ -25,11 +25,8 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo at current ref
+      - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 2
 
       - name: Install
         uses: ./.github/actions/install
@@ -40,16 +37,10 @@ jobs:
       - name: 🧪 Test
         run: pnpm --filter=${{ env.PACKAGE_NAME }} test
 
-      # TODO: The filter didn't work here, so we're just running the command directly
-      # pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
-      # Commend "dist" not found ???
-      # pnpm dist 0.0.1
       - name: Run publish
         working-directory: generators/python-v2/codegen
         run: |
-          echo "Running publish in $(pwd)"
-          cat package.json
-          npm run dist
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access public
