@@ -28,7 +28,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
         }
     }
 
-    public flush(): void {
-        this.posthog.flush();
+    public async flush(): Promise<void> {
+        await this.posthog.flush();
     }
 }
