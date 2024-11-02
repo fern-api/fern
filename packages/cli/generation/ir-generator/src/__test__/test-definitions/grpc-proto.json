@@ -763,6 +763,10 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": null,
+                "proto": {}
+            },
             "transport": {
                 "type": "grpc",
                 "service": {
@@ -3004,10 +3008,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null

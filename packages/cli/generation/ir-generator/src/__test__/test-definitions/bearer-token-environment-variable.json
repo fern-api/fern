@@ -111,6 +111,10 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "transport": {
                 "type": "http"
             },
@@ -215,10 +219,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": {},
-                        "proto": null
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": "GET request with custom api key"

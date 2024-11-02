@@ -3574,6 +3574,10 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": {}
+            },
             "transport": {
                 "type": "grpc",
                 "service": {
@@ -3830,10 +3834,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": {},
-                        "proto": null
-                    },
                     "transport": {
                         "type": "http"
                     },
@@ -5579,10 +5579,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -6284,10 +6280,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -7799,10 +7791,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -10759,10 +10747,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -12916,10 +12900,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -22823,10 +22803,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null
@@ -23682,10 +23658,6 @@
                         }
                     ],
                     "pagination": null,
-                    "encoding": {
-                        "json": null,
-                        "proto": {}
-                    },
                     "transport": null,
                     "availability": null,
                     "docs": null

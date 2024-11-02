@@ -89,6 +89,7 @@ export async function convertHttpService({
                   )
                 : [],
         pathParameters: servicePathParameters,
+        encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
@@ -183,7 +184,6 @@ export async function convertHttpService({
                         endpointName: endpointKey,
                         endpointSchema: endpoint
                     }),
-                    encoding: convertEndpointSourceToEncoding(endpoint.source),
                     transport: await getTransportForEndpoint({
                         file,
                         serviceTransport: transport,
@@ -377,24 +377,34 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
     };
 }
 
-function convertEndpointSourceToEncoding(source: RawSchemas.SourceSchema | undefined): Encoding {
-    if (!source) {
-        return {
-            json: {},
-            proto: undefined
-        };
+function convertTransportToEncoding(transport: Transport, service: RawSchemas.HttpServiceSchema): Encoding {
+    switch (transport.type) {
+        case "http":
+            return {
+                json: {},
+                proto: undefined
+            };
+        case "grpc":
+            return {
+                json: serviceHasHttpEndpoints(service) ? {} : undefined,
+                proto: {}
+            };
+        default:
+            assertNever(transport);
     }
-    if ("openapi" in source) {
-        return {
-            json: {},
-            proto: undefined
-        };
-    }
-    if ("proto" in source) {
-        return {
-            json: undefined,
-            proto: {}
-        };
-    }
-    assertNever(source);
+}
+
+function serviceHasHttpEndpoints(service: RawSchemas.HttpServiceSchema): boolean {
+    return Object.values(service.endpoints).some((endpoint) => {
+        if (endpoint.source == null) {
+            return true;
+        }
+        if ("openapi" in endpoint.source) {
+            return true;
+        }
+        if ("proto" in endpoint.source) {
+            return false;
+        }
+        assertNever(endpoint.source);
+    });
 }
