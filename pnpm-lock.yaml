@@ -3548,8 +3548,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.0.38
-        version: 0.0.38
+        specifier: 0.10.2
+        version: 0.10.2
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -3690,8 +3690,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.0.38
-        version: 0.0.38
+        specifier: 0.10.2
+        version: 0.10.2
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
@@ -5546,8 +5546,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       posthog-node:
-        specifier: ^3.1.2
-        version: 3.1.2
+        specifier: ^4.2.1
+        version: 4.2.1
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -6143,8 +6143,8 @@ importers:
   packages/core:
     dependencies:
       '@fern-api/venus-api-sdk':
-        specifier: 0.0.38
-        version: 0.0.38
+        specifier: 0.10.2
+        version: 0.10.2
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.0.5833
         version: 0.0.5833
@@ -7562,8 +7562,8 @@ packages:
   '@fern-api/ui-core-utils@0.115.0-3cf21db72':
     resolution: {integrity: sha512-H5NkeB/ZxTY6UD5xBpk68SYG1fPT48lhg6+lpO3n6txo5JlerSA2HZCbFGt8PdoDk5aT3GmtrBgIELIAXM9XbA==}
 
-  '@fern-api/venus-api-sdk@0.0.38':
-    resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
+  '@fern-api/venus-api-sdk@0.10.2':
+    resolution: {integrity: sha512-BD18ZNJeWYvztRXSUWY2lfZ8jFUbNAfHWctvIsWyXgI7C8EL3N0+CWUGD5cZ1QqRnq42nm6XJdWRKhny3yrz4g==}
 
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
@@ -8859,9 +8859,6 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
-
-  axios@0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
@@ -11823,8 +11820,8 @@ packages:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-node@3.1.2:
-    resolution: {integrity: sha512-atPGYjiK+QvtseKKsrUxMrzN84sIVs9jTa7nx5hl999gJly1S3J5r0DApwZ69NKfJkVIeLTCJyT0kyS+7WqDSw==}
+  posthog-node@4.2.1:
+    resolution: {integrity: sha512-l+fsjYEkTik3m/G0pE7gMr4qBJP84LhK779oQm6MBzhBGpd4By4qieTW+4FUAlNCyzQTynn3Nhsa50c0IELSxQ==}
     engines: {node: '>=15.0.0'}
 
   prelude-ls@1.2.1:
@@ -14620,14 +14617,17 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.37
 
-  '@fern-api/venus-api-sdk@0.0.38':
+  '@fern-api/venus-api-sdk@0.10.2':
     dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/docs-config@0.0.80': {}
 
@@ -16162,13 +16162,6 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.0.0
-
-  axios@0.27.2:
-    dependencies:
-      follow-redirects: 1.15.6
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
 
   axios@1.7.7:
     dependencies:
@@ -19932,9 +19925,9 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-node@3.1.2:
+  posthog-node@4.2.1:
     dependencies:
-      axios: 0.27.2
+      axios: 1.7.7
       rusha: 0.8.14
     transitivePeerDependencies:
       - debug
