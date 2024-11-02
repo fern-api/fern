@@ -16,7 +16,7 @@ async function main() {
         external: [
             // "@fern-api/core-utils",
             // "@fern-api/generator-commons",
-            "@fern-fern/ir-sdk",
+            // "@fern-fern/ir-sdk",
             "@wasm-fmt/ruff_fmt"
         ],
         tsconfig: "./build.tsconfig.json"
@@ -41,7 +41,7 @@ async function main() {
                     // These are just workspace deps so I think we need to bundle them
                     // "@fern-api/core-utils": "workspace:*",
                     // "@fern-api/generator-commons": "workspace:*",
-                    "@fern-fern/ir-sdk": "53.7.0",
+                    // "@fern-fern/ir-sdk": "53.7.0",
                     "@wasm-fmt/ruff_fmt": "^0.6.1"
                 }
             },
