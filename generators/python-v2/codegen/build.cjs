@@ -14,9 +14,8 @@ async function main() {
         dts: true,
         outDir: "dist",
         external: [
-            // Test dependencies should not be included in the published package.
-            "@fern-api/core-utils",
-            "@fern-api/generator-commons",
+            // "@fern-api/core-utils",
+            // "@fern-api/generator-commons",
             "@fern-fern/ir-sdk",
             "@wasm-fmt/ruff_fmt"
         ],
@@ -37,7 +36,14 @@ async function main() {
                 repository: packageJson.repository,
                 main: "index.cjs",
                 types: "index.d.ts",
-                files: ["index.cjs", "index.d.ts"]
+                files: ["index.cjs", "index.d.ts"],
+                dependencies: {
+                    // These are just workspace deps so I think we need to bundle them
+                    // "@fern-api/core-utils": "workspace:*",
+                    // "@fern-api/generator-commons": "workspace:*",
+                    "@fern-fern/ir-sdk": "53.7.0",
+                    "@wasm-fmt/ruff_fmt": "^0.6.1"
+                }
             },
             undefined,
             2

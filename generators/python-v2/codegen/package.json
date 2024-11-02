@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/python-v2-codegen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
@@ -26,7 +26,6 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
     "depcheck": "depcheck",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-python-v2-codegen:latest ../../..",
     "dist": "pnpm compile && node build.cjs"
   },
   "dependencies": {
