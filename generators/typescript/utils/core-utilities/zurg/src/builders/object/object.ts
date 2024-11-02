@@ -282,7 +282,7 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
     transformExtension: (value: unknown) => MaybeValid<TransformedExtension>;
 }): MaybeValid<TransformedBase & TransformedExtension> {
     const extensionPropertiesSet = new Set(extensionKeys);
-    const [extensionProperties, baseProperties] = partition(keys(value), (key) =>
+    const [extensionProperties, baseProperties] = partition(keys(value as object), (key) =>
         extensionPropertiesSet.has(key as keyof PreTransformedExtension)
     );
 
