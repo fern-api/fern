@@ -123,7 +123,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 downloadFiles: async () => {
-                    if (this.outputSourceFiles(customConfig)) {
+                    if (this.outputProjectFiles(customConfig)) {
+                        await typescriptProject.copyProjectAsZipTo({
+                            logger,
+                            destinationZip
+                        });
+                    } else if (this.outputSourceFiles(customConfig)) {
                         await typescriptProject.copySrcAsZipTo({
                             destinationZip,
                             logger
@@ -174,6 +179,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
+    protected abstract outputProjectFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
 }
 

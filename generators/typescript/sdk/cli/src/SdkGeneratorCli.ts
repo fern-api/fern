@@ -29,6 +29,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputProjectFiles: parsed?.outputProjectFiles ?? false,
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
@@ -154,6 +155,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected outputSourceFiles(customConfig: SdkCustomConfig): boolean {
         return customConfig.outputSourceFiles;
+    }
+
+    protected outputProjectFiles(customConfig: SdkCustomConfig): boolean {
+        return customConfig.outputProjectFiles;
     }
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
