@@ -1,3 +1,9 @@
+- version: 0.0.7
+  createdAt: '2024-11-03'
+  changelogEntry:
+    - type: internal
+      summary: Publish more files.
+  irVersion: 33
 - version: 0.0.6
   createdAt: '2024-11-02'
   changelogEntry:

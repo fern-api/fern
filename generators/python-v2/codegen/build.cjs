@@ -15,9 +15,7 @@ async function main() {
         outDir: "dist",
         bundle: true,
         noExternal: [/@fern-api\/.*/],
-        external: [
-            "@wasm-fmt/ruff_fmt"
-        ],
+        external: ["@wasm-fmt/ruff_fmt"],
         tsconfig: "./build.tsconfig.json"
     });
 
@@ -35,7 +33,8 @@ async function main() {
                 repository: packageJson.repository,
                 main: "index.cjs",
                 types: "index.d.ts",
-                files: ["index.cjs", "index.d.ts"],
+                type: "module",
+                files: ["index.cjs", "index.d.ts", "ast/", "python.cjs", "python.d.cts", "Reference-CuzLAXpJ.d.cts"],
                 dependencies: {
                     // These are just workspace deps so I think we need to bundle them
                     // "@fern-api/core-utils": "workspace:*",
