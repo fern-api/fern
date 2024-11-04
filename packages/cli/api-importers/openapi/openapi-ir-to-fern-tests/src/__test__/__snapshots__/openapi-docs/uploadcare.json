@@ -3492,6 +3492,9 @@ processing operations.
                 "docs": "The group was created successfully.",
                 "type": "root.GroupInfo",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "filesGroupInfo": {
               "auth": false,
@@ -3681,6 +3684,9 @@ Log.d("TAG", group.toString())
                 "docs": "File group information was retrieved successfully.",
                 "type": "root.GroupInfo",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -3716,6 +3722,8 @@ service:
         a group
 
         is to create a new one.
+      source:
+        openapi: ../openapi.json
       display-name: Create a file group
       request:
         name: CreateFilesGroupRequest
@@ -3904,6 +3912,8 @@ service:
         group was created,
 
         number of the files in the group, etc).
+      source:
+        openapi: ../openapi.json
       display-name: Get information about a file group
       request:
         name: FilesGroupInfoRequest
@@ -4237,6 +4247,9 @@ Log.d("TAG", file.toString())
                 "docs": "The file was uploaded successfully.",
                 "type": "BaseUploadResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "fileUploadInfo": {
               "auth": false,
@@ -4454,6 +4467,9 @@ Log.d("TAG", file.toString())
               "response": {
                 "docs": "File information was retrieved successfully.",
                 "type": "root.FileUploadInfo",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "fromURLUpload": {
@@ -4869,6 +4885,9 @@ to the value of the `check_URL_duplicates` parameter.
               "response": {
                 "docs": "Status Token or File Info of an already downloaded file.",
                 "type": "FromUrlUploadResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "fromURLUploadStatus": {
@@ -5465,6 +5484,9 @@ Log.d("TAG", status.toString())
 ",
                 "type": "FromUrlUploadStatusResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "multipartFileUploadComplete": {
               "auth": false,
@@ -5716,6 +5738,9 @@ Log.d("TAG", file.toString())
                 "docs": "The file was uploaded successfully.",
                 "type": "root.FileUploadInfo",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "multipartFileUploadPart": {
               "auth": false,
@@ -5840,6 +5865,9 @@ Log.d("TAG", file.toString())
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "multipartFileUploadStart": {
@@ -6047,6 +6075,9 @@ to us as a value of the `part_size` parameter (in bytes).
               "response": {
                 "docs": "Multipart upload started successfully.",
                 "type": "MultipartFileUploadStartResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -6265,6 +6296,8 @@ service:
         "my_file.jpg=@my_file.jpg" "https://upload.uploadcare.com/base/"
 
         ```
+      source:
+        openapi: ../openapi.json
       display-name: Direct uploads
       request:
         name: BaseUploadRequest
@@ -6425,6 +6458,8 @@ service:
 
 
         **Note**: Multipart uploads support files larger than 10 megabytes only.
+      source:
+        openapi: ../openapi.json
       display-name: Start multipart upload
       request:
         name: MultipartFileUploadStartRequest
@@ -6641,6 +6676,8 @@ service:
 
 
         **Note**: You MUST define `Content-Type` header for your data.
+      source:
+        openapi: ../openapi.json
       display-name: Upload individual file parts
       request:
         body: bytes
@@ -6774,6 +6811,8 @@ service:
 
         upload session to assemble all the file parts into a single resulting
         file.
+      source:
+        openapi: ../openapi.json
       display-name: Complete multipart upload
       request:
         name: MultipartFileUploadCompleteRequest
@@ -7039,6 +7078,8 @@ service:
 
         uploads, pass the `save_URL_duplicates` and `check_URL_duplicates`
         parameters described below.
+      source:
+        openapi: ../openapi.json
       display-name: Upload files from URLs
       request:
         name: FromUrlUploadRequest
@@ -7415,6 +7456,8 @@ service:
             and the endpoint returns a JSON object holding information about the uploaded file
           * if the system fails to fetch/upload the file, the `status` field is set to `error` and
             the `error` field is set to the cause of the error.
+      source:
+        openapi: ../openapi.json
       display-name: Check the status of a task to fetch/upload a file from a URL
       request:
         name: FromUrlUploadStatusRequest
@@ -7945,6 +7988,8 @@ service:
       docs: >
         Returns a JSON object with information about an uploaded file (file
         size, MIME type, metadata, etc).
+      source:
+        openapi: ../openapi.json
       display-name: Get information about an uploaded file
       request:
         name: FileUploadInfoRequest

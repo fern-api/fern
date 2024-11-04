@@ -193,5 +193,7 @@ service:
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml

@@ -6117,6 +6117,9 @@ deployed to the default Environment will be used.
                 "docs": "Successful Response",
                 "type": "root.DatasetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create": {
               "auth": true,
@@ -6242,6 +6245,9 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
                 "docs": "Successful Response",
                 "type": "root.DatasetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -6265,6 +6271,9 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
                   "docs": "Unique identifier for Dataset.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deploy": {
@@ -6354,6 +6363,9 @@ Set the deployed Version for the specified Environment.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -6450,6 +6462,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
                 "docs": "Successful Response",
                 "type": "root.DatasetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -6535,6 +6550,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
                 "docs": "Successful Response",
                 "type": "root.PaginatedDataDatasetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listdatapoints": {
               "auth": true,
@@ -6606,6 +6624,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedDataDatapointResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listversions": {
@@ -6682,6 +6703,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ListDatasets",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -6768,6 +6792,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
                 "docs": "Successful Response",
                 "type": "root.DatasetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6786,6 +6813,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of Datasets.
+      source:
+        openapi: ../openapi.yml
       display-name: 'List '
       request:
         name: DatasetsListRequest
@@ -6886,6 +6915,8 @@ service:
         that already
 
         exists, it will be ignored.
+      source:
+        openapi: ../openapi.yml
       display-name: Create Dataset
       request:
         name: DatasetRequest
@@ -6989,6 +7020,8 @@ service:
 
         `version_id` or `environment` to target a specific version of the
         Dataset.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7050,6 +7083,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the Dataset with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7065,6 +7100,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the Dataset with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7120,6 +7157,8 @@ service:
       method: GET
       auth: true
       docs: List all Datapoints for the Dataset with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7166,6 +7205,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of the versions for a Dataset.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7220,6 +7261,8 @@ service:
       method: POST
       auth: true
       docs: Commit the Dataset Version with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7279,6 +7322,8 @@ service:
         Deploy Dataset to Environment.
 
         Set the deployed Version for the specified Environment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -7536,6 +7581,9 @@ and check its status.",
                 "docs": "Successful Response",
                 "type": "root.EvaluationResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -7562,6 +7610,9 @@ will not be deleted.",
                   "docs": "Unique identifier for Evaluation.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -7684,6 +7735,9 @@ Retrieve the Evaluation with the given ID.",
                 "docs": "Successful Response",
                 "type": "root.EvaluationResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getstats": {
               "auth": true,
@@ -7748,6 +7802,9 @@ This includes the number of generated Logs for every evaluatee and Evaluator met
               "response": {
                 "docs": "Successful Response",
                 "type": "root.EvaluationStats",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -7866,6 +7923,9 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedDataEvaluationResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -8009,6 +8069,9 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                 "docs": "Successful Response",
                 "type": "root.EvaluationResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updatestatus": {
               "auth": true,
@@ -8147,6 +8210,9 @@ as completed.",
                 "docs": "Successful Response",
                 "type": "root.EvaluationResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8170,6 +8236,8 @@ service:
 
         Retrieve a list of Evaluations that evaluate versions of the specified
         File.
+      source:
+        openapi: ../openapi.yml
       display-name: List Evaluations for File
       request:
         name: EvaluationsListRequest
@@ -8267,6 +8335,8 @@ service:
         Evaluation
 
         and check its status.
+      source:
+        openapi: ../openapi.yml
       display-name: Create Evaluation
       request:
         body:
@@ -8358,6 +8428,8 @@ service:
         Get an Evaluation.
 
         Retrieve the Evaluation with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -8448,6 +8520,8 @@ service:
         Evaluation
 
         will not be deleted.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -8468,6 +8542,8 @@ service:
 
         Update the setup of an Evaluation by specifying the Dataset, Evaluatees,
         and Evaluators.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -8569,6 +8645,8 @@ service:
         uses external or human evaluators
 
         as completed.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -8671,6 +8749,8 @@ service:
 
         (such as the mean and percentiles for numeric Evaluators for every
         evaluatee).
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -8825,6 +8905,9 @@ docs: >+
                 "docs": "Successful Response",
                 "type": "root.EvaluatorResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create": {
               "auth": true,
@@ -8922,6 +9005,9 @@ an exception will be raised.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.EvaluatorResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "debug": {
@@ -9182,6 +9268,9 @@ an exception will be raised.",
                 "docs": "Successful Response",
                 "type": "list<root.EvaluationDebugResultResponse>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -9205,6 +9294,9 @@ an exception will be raised.",
                   "docs": "Unique identifier for Evaluator.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deploy": {
@@ -9292,6 +9384,9 @@ will be used for calls made to the Evaluator in this Environment.",
                 "docs": "Successful Response",
                 "type": "root.EvaluatorResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -9373,6 +9468,9 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "response": {
                 "docs": "Successful Response",
                 "type": "root.EvaluatorResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -9463,6 +9561,9 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 "docs": "Successful Response",
                 "type": "root.ListEvaluators",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listdefault": {
               "auth": true,
@@ -9521,6 +9622,9 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.EvaluatorResponse>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listversions": {
@@ -9604,6 +9708,9 @@ By default the deployed version of the Evaluator is returned. Use the query para
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ListEvaluators",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -9690,6 +9797,9 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 "docs": "Successful Response",
                 "type": "root.EvaluatorResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9752,6 +9862,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of Evaluators.
+      source:
+        openapi: ../openapi.yml
       display-name: 'List '
       request:
         name: EvaluatorsListRequest
@@ -9831,6 +9943,8 @@ service:
         committed version,
 
         an exception will be raised.
+      source:
+        openapi: ../openapi.yml
       display-name: Create Evaluator
       request:
         name: EvaluatorRequest
@@ -9901,6 +10015,8 @@ service:
 
         `version_id` or `environment` to target a specific version of the
         Evaluator.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -9956,6 +10072,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the Evaluator with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -9971,6 +10089,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the Evaluator with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -10029,6 +10149,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of all the versions of an Evaluator.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -10096,6 +10218,8 @@ service:
         Version
 
         will be used for calls made to the Evaluator in this Environment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -10154,6 +10278,8 @@ service:
       method: POST
       auth: true
       docs: Commit the Evaluator Version with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -10210,6 +10336,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of default evaluators for the organization.
+      source:
+        openapi: ../openapi.yml
       display-name: List Default Evaluators
       response:
         docs: Successful Response
@@ -10250,6 +10378,8 @@ service:
       method: POST
       auth: true
       docs: Run a synchronous evaluator execution on a collection of datapoints.
+      source:
+        openapi: ../openapi.yml
       display-name: Debug
       request:
         name: RunSyncEvaluationRequest
@@ -10514,6 +10644,9 @@ You can manually create Logs through the API.
                   },
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -10674,6 +10807,9 @@ You can manually create Logs through the API.
                 "docs": "Successful Response",
                 "type": "root.PromptLogResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listLogsForFile": {
               "auth": true,
@@ -10807,6 +10943,9 @@ You can manually create Logs through the API.
                 "docs": "Successful Response",
                 "type": "root.PaginatedDataPromptLogResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -10825,6 +10964,8 @@ service:
       method: GET
       auth: true
       docs: List Logs.
+      source:
+        openapi: ../openapi.yml
       display-name: List
       request:
         name: ListLogsForFileLogsGetRequest
@@ -10933,6 +11074,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete Logs with the given IDs.
+      source:
+        openapi: ../openapi.yml
       display-name: Delete
       request:
         name: LogsDeleteRequest
@@ -10948,6 +11091,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve the Log with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -11373,6 +11518,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "docs": "Successful Response",
                 "type": "PromptsCallResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "commit": {
               "auth": true,
@@ -11484,6 +11632,9 @@ in the case where you are storing or deriving your Prompt details in code.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create": {
@@ -11671,6 +11822,9 @@ an exception will be raised.",
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -11694,6 +11848,9 @@ an exception will be raised.",
                   "docs": "Unique identifier for Prompt.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deploy": {
@@ -11813,6 +11970,9 @@ will be used for calls made to the Prompt in this Environment.",
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -11926,6 +12086,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -12042,6 +12205,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                 "docs": "Successful Response",
                 "type": "root.ListPrompts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listversions": {
               "auth": true,
@@ -12150,6 +12316,9 @@ By default the deployed version of the Prompt is returned. Use the query paramet
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ListPrompts",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "log": {
@@ -12325,6 +12494,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "docs": "Successful Response",
                 "type": "root.CreatePromptLogResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -12442,6 +12614,9 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateEvaluators": {
               "auth": true,
@@ -12547,6 +12722,9 @@ within the Prompt for monitoring purposes.",
                 "docs": "Successful Response",
                 "type": "root.PromptResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -12647,6 +12825,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of Prompts.
+      source:
+        openapi: ../openapi.yml
       display-name: 'List '
       request:
         name: PromptsListRequest
@@ -12744,6 +12924,8 @@ service:
         committed version,
 
         an exception will be raised.
+      source:
+        openapi: ../openapi.yml
       display-name: Create Prompt
       request:
         name: PromptRequest
@@ -12911,6 +13093,8 @@ service:
 
         `version_id` or `environment` to target a specific version of the
         Prompt.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -12989,6 +13173,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the Prompt with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13004,6 +13190,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the Prompt with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13085,6 +13273,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of all the versions of a Prompt.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13171,6 +13361,8 @@ service:
         Version
 
         will be used for calls made to the Prompt in this Environment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13252,6 +13444,8 @@ service:
       method: POST
       auth: true
       docs: Commit the Prompt Version with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13351,6 +13545,8 @@ service:
 
         in the case where you are storing or deriving your Prompt details in
         code.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13530,6 +13726,8 @@ service:
 
         in the case where you are storing or deriving your Prompt details in
         code.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -13761,6 +13959,8 @@ service:
 
         An activated Evaluator will automatically be run on all new Logs
         within the Prompt for monitoring purposes.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update Evaluators
@@ -13994,6 +14194,9 @@ Log is in, nested within the evaluated Log.
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -14092,6 +14295,9 @@ Log is in, nested within the evaluated Log.
                 "docs": "Successful Response",
                 "type": "root.SessionResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -14168,6 +14374,9 @@ Log is in, nested within the evaluated Log.
                 "docs": "Successful Response",
                 "type": "root.PaginatedDataSessionResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -14186,6 +14395,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve the Session with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -14256,6 +14467,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the Session with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -14271,6 +14484,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of Sessions.
+      source:
+        openapi: ../openapi.yml
       display-name: 'List '
       request:
         name: SessionsListRequest
@@ -14444,6 +14659,9 @@ docs: >+
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create": {
               "auth": true,
@@ -14556,6 +14774,9 @@ an exception will be raised.",
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -14579,6 +14800,9 @@ an exception will be raised.",
                   "docs": "Unique identifier for Tool.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deploy": {
@@ -14674,6 +14898,9 @@ will be used for calls made to the Tool in this Environment.",
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -14763,6 +14990,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -14858,6 +15088,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
                 "docs": "Successful Response",
                 "type": "root.ListTools",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listTemplates": {
               "auth": true,
@@ -14900,6 +15133,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ToolTemplateResponse>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listversions": {
@@ -14988,6 +15224,9 @@ By default the deployed version of the Tool is returned. Use the query parameter
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ListTools",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "log": {
@@ -15127,6 +15366,9 @@ in the case where you are storing or deriving your Tool details in code.",
                 "docs": "Successful Response",
                 "type": "root.CreateToolLogResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -15220,6 +15462,9 @@ in the case where you are storing or deriving your Tool details in code.",
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateEvaluators": {
               "auth": true,
@@ -15301,6 +15546,9 @@ within the Tool for monitoring purposes.",
                 "docs": "Successful Response",
                 "type": "root.ToolResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -15319,6 +15567,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of Tools.
+      source:
+        openapi: ../openapi.yml
       display-name: 'List '
       request:
         name: ToolsListRequest
@@ -15402,6 +15652,8 @@ service:
         committed version,
 
         an exception will be raised.
+      source:
+        openapi: ../openapi.yml
       display-name: Create Tool
       request:
         name: ToolRequest
@@ -15486,6 +15738,8 @@ service:
         parameters
 
         `version_id` or `environment` to target a specific version of the Tool.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15547,6 +15801,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the Tool with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15562,6 +15818,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the Tool with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15626,6 +15884,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of all the versions of a Tool.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15697,6 +15957,8 @@ service:
         Version
 
         will be used for calls made to the Tool in this Environment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15761,6 +16023,8 @@ service:
       method: POST
       auth: true
       docs: Commit the Tool Version with the given ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15842,6 +16106,8 @@ service:
         This is helpful
 
         in the case where you are storing or deriving your Tool details in code.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15960,6 +16226,8 @@ service:
 
         An activated Evaluator will automatically be run on all new Logs
         within the Tool for monitoring purposes.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update Evaluators
@@ -16014,6 +16282,8 @@ service:
       path: /tools/templates
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: List Templates
       request:
         name: ListTemplatesToolsTemplatesGetRequest
