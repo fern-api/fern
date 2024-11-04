@@ -1,10 +1,10 @@
 {
   "name": "@fern-api/python-ast",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/pythonv2/codegen"
+    "directory": "generators/python-v2/ast"
   },
   "files": [
     "lib"
@@ -24,7 +24,8 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dist": "pnpm compile && node build.cjs"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
@@ -37,6 +38,7 @@
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
+    "tsup": "^8.3.5",
     "typescript": "4.6.4",
     "vitest": "^2.0.5"
   }
