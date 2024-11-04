@@ -37,8 +37,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         analyticsConfig: undefined,
         integrations: undefined,
         css: undefined,
-        js: undefined,
-        playground: undefined
+        js: undefined
     },
     search: {
         type: "legacyMultiAlgoliaIndex",

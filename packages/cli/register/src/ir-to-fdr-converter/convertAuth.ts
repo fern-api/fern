@@ -1,7 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { PlaygroundConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/commons";
+
+export interface PlaygroundConfig {
+    oauth?: boolean;
+}
 
 export function convertAuth(
     auth: Ir.auth.ApiAuth,

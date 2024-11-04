@@ -35,7 +35,7 @@
     "@fern-fern/fiddle-sdk": "0.0.584"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.12", 
     "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

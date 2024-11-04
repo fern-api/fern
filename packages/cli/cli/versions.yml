@@ -1,4 +1,12 @@
 - changelogEntry:
+  - summary: |
+      - enables `limit-websocket-messages-per-connection` in playground settings for websockets.
+        this allows for the limiting of received messages per websocket connection in the playground for a demo.
+    type: feat
+  irVersion: 53
+  version: 0.45.0-rc33
+
+- changelogEntry:
     - summary: |
         - fixes how `write-docs-definition` handles urls containing `https://` prefix
         - fixes how the docs definition resolver handles changelogs under api reference nodes
