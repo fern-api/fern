@@ -43,7 +43,7 @@
     "express": "^4.20.0",
     "readable-stream": "^4.5.2",
     "tmp-promise": "^3.0.3",
-    "uuid": "^9.0.1",
+    "uuid": "^11.0.2",
     "watcher": "^2.3.1",
     "ws": "^8.17.1",
     "xml2js": "^0.6.2"
