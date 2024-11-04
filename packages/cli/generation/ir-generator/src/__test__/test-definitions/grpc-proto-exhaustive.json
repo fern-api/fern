@@ -24,7 +24,47 @@
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": [],
+        "schemes": [
+            {
+                "_type": "header",
+                "name": {
+                    "name": {
+                        "originalName": "apiKey",
+                        "camelCase": {
+                            "unsafeName": "apiKey",
+                            "safeName": "apiKey"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api_key",
+                            "safeName": "api_key"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API_KEY",
+                            "safeName": "API_KEY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "APIKey",
+                            "safeName": "APIKey"
+                        }
+                    },
+                    "wireValue": "X-API-Key"
+                },
+                "valueType": {
+                    "_type": "primitive",
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
+                },
+                "prefix": null,
+                "headerEnvVar": null,
+                "docs": null
+            }
+        ],
         "docs": null
     },
     "headers": [],

@@ -1816,6 +1816,11 @@
       "subpackage_dataservice"
     ]
   },
+  "auth": {
+    "type": "header",
+    "headerWireValue": "X-API-Key",
+    "nameOverride": "apiKey"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

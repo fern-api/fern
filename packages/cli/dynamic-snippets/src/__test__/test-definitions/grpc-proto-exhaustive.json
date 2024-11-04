@@ -1795,7 +1795,37 @@
     "headers": [],
     "endpoints": {
         "endpoint_dataservice.foo": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "foo",
@@ -1874,7 +1904,37 @@
             }
         },
         "endpoint_dataservice.upload": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "upload",
@@ -2085,7 +2145,37 @@
             }
         },
         "endpoint_dataservice.delete": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "delete",
@@ -2361,7 +2451,37 @@
             }
         },
         "endpoint_dataservice.describe": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "describe",
@@ -2541,7 +2661,37 @@
             }
         },
         "endpoint_dataservice.fetch": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "fetch",
@@ -2752,7 +2902,37 @@
             }
         },
         "endpoint_dataservice.list": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "list",
@@ -3022,7 +3202,37 @@
             }
         },
         "endpoint_dataservice.query": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "query",
@@ -3453,7 +3663,37 @@
             }
         },
         "endpoint_dataservice.update": {
-            "auth": null,
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "apiKey",
+                            "camelCase": {
+                                "unsafeName": "apiKey",
+                                "safeName": "apiKey"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api_key",
+                                "safeName": "api_key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API_KEY",
+                                "safeName": "API_KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "APIKey",
+                                "safeName": "APIKey"
+                            }
+                        },
+                        "wireValue": "X-API-Key"
+                    },
+                    "typeReference": {
+                        "_type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
             "declaration": {
                 "name": {
                     "originalName": "update",

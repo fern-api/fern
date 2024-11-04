@@ -2891,10 +2891,15 @@ exports[`test definitions > grpc-proto-exhaustive 1`] = `
 import (
 	context "context"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Foo(
 		context.TODO(),
 	)
@@ -2907,10 +2912,15 @@ package example
 import (
 	context "context"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Foo(
 		context.TODO(),
 	)
@@ -2924,10 +2934,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Upload(
 		context.TODO(),
 		&acme.UploadRequest{
@@ -2951,10 +2966,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Upload(
 		context.TODO(),
 		&acme.UploadRequest{
@@ -3023,10 +3043,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Delete(
 		context.TODO(),
 		&acme.DeleteRequest{},
@@ -3041,10 +3066,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Delete(
 		context.TODO(),
 		&acme.DeleteRequest{
@@ -3077,10 +3107,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Describe(
 		context.TODO(),
 		&acme.DescribeRequest{},
@@ -3095,10 +3130,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Describe(
 		context.TODO(),
 		&acme.DescribeRequest{
@@ -3121,10 +3161,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Fetch(
 		context.TODO(),
 		&acme.FetchRequest{},
@@ -3139,10 +3184,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Fetch(
 		context.TODO(),
 		&acme.FetchRequest{
@@ -3166,10 +3216,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.List(
 		context.TODO(),
 		&acme.ListRequest{},
@@ -3184,10 +3239,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.List(
 		context.TODO(),
 		&acme.ListRequest{
@@ -3215,10 +3275,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Query(
 		context.TODO(),
 		&acme.QueryRequest{
@@ -3235,10 +3300,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Query(
 		context.TODO(),
 		&acme.QueryRequest{
@@ -3348,10 +3418,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Update(
 		context.TODO(),
 		&acme.UpdateRequest{
@@ -3368,10 +3443,15 @@ import (
 	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
 )
 
 func do() {
-	client := client.NewClient()
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+	)
 	client.Dataservice.Update(
 		context.TODO(),
 		&acme.UpdateRequest{

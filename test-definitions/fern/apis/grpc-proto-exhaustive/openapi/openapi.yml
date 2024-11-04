@@ -13,6 +13,8 @@ paths:
       x-fern-sdk-group-name:
         - dataservice
       x-fern-sdk-method-name: foo
+      security:
+        - ApiKeyAuth: []
       operationId: foo
       responses:
         "200":
@@ -23,3 +25,9 @@ paths:
 
 security:
   - ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
