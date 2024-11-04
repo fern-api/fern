@@ -1,6 +1,7 @@
+import { ModelGeneratorCLI } from "./ModelGeneratorCli";
+
 void runCli();
 
 export async function runCli(): Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log("Noop...");
+    await new ModelGeneratorCLI().run();
 }

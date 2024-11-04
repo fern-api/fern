@@ -451,13 +451,6 @@ navigation:
           - page: SDK Snippets
             icon: fa-regular fa-message-code
             path: ./pages/fern-docs/config/sdk-snippets.mdx
-          - section: API Playground
-            path: ./pages/fern-docs/content/api-playground.mdx
-            icon: fa-regular fa-square-terminal
-            contents:
-              - page: Advanced Configuration
-                icon: fa-regular fa-wrench
-                path: ./pages/fern-docs/content/customize-api-playground.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/fern-docs/config/endpoint-errors.mdx
@@ -467,6 +460,9 @@ navigation:
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
             path: ./pages/fern-docs/content/api-ref-content.mdx
+          - page: Customize API Playground
+            icon: fa-regular fa-square-terminal
+            path: ./pages/fern-docs/content/customize-api-playground.mdx
 
       - section: Integrations
         slug: integrations
