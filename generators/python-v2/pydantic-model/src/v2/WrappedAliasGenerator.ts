@@ -54,7 +54,7 @@ export class WrappedAliasGenerator {
         return new WriteablePythonFile({
             contents: file,
             directory: RelativeFilePath.of(module.join("/")),
-            filename: filename
+            filename
         });
     }
 

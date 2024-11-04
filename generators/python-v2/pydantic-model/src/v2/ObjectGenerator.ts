@@ -62,7 +62,7 @@ export class ObjectGenerator {
                         arguments_.push(
                             python.methodArgument({
                                 name: "default",
-                                value: value
+                                value
                             })
                         );
                     }
@@ -99,7 +99,7 @@ export class ObjectGenerator {
         return new WriteablePythonFile({
             contents: file,
             directory: RelativeFilePath.of(module.join("/")),
-            filename: filename
+            filename
         });
     }
 
