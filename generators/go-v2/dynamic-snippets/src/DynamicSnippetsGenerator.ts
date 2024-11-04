@@ -3,13 +3,23 @@ import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
-import { ErrorReporter, Severity } from "./context/ErrorReporter";
+import { Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
+
+// TODO(amckinney): Use the latest DynamicSnippets.EndpointSnippetResponse type directly when available.
+interface EndpointSnippetResponse extends DynamicSnippets.EndpointSnippetResponse {
+    errors:
+        | {
+              severity: "CRITICAL" | "WARNING";
+              message: string;
+          }[]
+        | undefined;
+}
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
     private formatter: AbstractFormatter | undefined;
@@ -27,18 +37,16 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         this.formatter = formatter;
     }
 
-    public async generate(
-        request: DynamicSnippets.EndpointSnippetRequest
-    ): Promise<DynamicSnippets.EndpointSnippetResponse> {
+    public async generate(request: DynamicSnippets.EndpointSnippetRequest): Promise<EndpointSnippetResponse> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
-            throw new Error(`No endpoints found for ${JSON.stringify(request.endpoint)}`);
+            throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
 
         let bestReporter = this.context.errors.clone();
         let bestSnippet: string | undefined;
         let err: Error | undefined;
-        for (const [index, endpoint] of endpoints.entries()) {
+        for (const endpoint of endpoints) {
             this.context.errors.reset();
             try {
                 const code = this.buildCodeBlock({ endpoint, snippet: request });
@@ -51,7 +59,8 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                 });
                 if (this.context.errors.empty()) {
                     return {
-                        snippet
+                        snippet,
+                        errors: undefined
                     };
                 }
                 if (bestReporter.size() > this.context.errors.size()) {
@@ -66,11 +75,14 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         }
         if (bestSnippet != null) {
             return {
-                snippet: bestSnippet
-                // TODO: Add errors from the reporter, if any.
+                snippet: bestSnippet,
+                errors: bestReporter.toDynamicSnippetErrors()
             };
         }
-        throw err ?? new Error(`Failed to generate snippet for ${JSON.stringify(request.endpoint)}`);
+        throw (
+            err ??
+            new Error(`Failed to generate snippet for endpoint "${request.endpoint.method} ${request.endpoint.path}"`)
+        );
     }
 
     private buildCodeBlock({

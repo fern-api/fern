@@ -21,6 +21,11 @@ export declare namespace ErrorReporter {
     }
 }
 
+interface Error_ {
+    severity: "CRITICAL" | "WARNING";
+    message: string;
+}
+
 export class ErrorReporter {
     private errors: ErrorReporter.Error[];
     private path: ErrorReporter.PathItem[];
@@ -74,5 +79,12 @@ export class ErrorReporter {
             return err.message;
         }
         return `${err.path.join(".")}: ${err.message}`;
+    }
+
+    public toDynamicSnippetErrors(): Error_[] {
+        return this.errors.map((err) => ({
+            severity: err.severity,
+            message: err.message
+        }));
     }
 }
