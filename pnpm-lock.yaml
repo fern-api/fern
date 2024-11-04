@@ -882,13 +882,16 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 53.7.0
         version: 53.7.0
-      '@wasm-fmt/ruff_fmt':
-        specifier: ^0.6.1
-        version: 0.6.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       zod:
         specifier: ^3.22.4
         version: 3.23.8
     devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
