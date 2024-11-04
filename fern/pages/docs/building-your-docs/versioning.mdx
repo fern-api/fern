@@ -9,8 +9,7 @@ subtitle: Allow users to navigate between different versions of your docs.
 
 Each version of your docs can contain its own distinct tabs, sections, pages, and API references. Versions can share content, as well. 
 
-## Add versioning
-To add versions to your docs:
+**To add versions to your docs:**
 
 <Steps>
 ### Define your versions
@@ -102,52 +101,3 @@ versions:
 ### Remove extra `navigation` from `docs.yml`
 If your `docs.yml` file includes a `navigation` field or a `tabs` field, be sure to remove. Those fields should now belong in the version-specific `.yml` files. 
 </Steps>
-
-
-## Version your APIs
-To configure versioning for your API reference, first set up each API version as its own API (configured as [multiple APIs](/learn/api-definition/introduction/what-is-the-fern-folder#multiple-apis)). Then, reference the API using the `api-name` in its relevant version navigation. 
-
-```bash
-fern/
-  ├─ fern.config.json
-  ├─ generators.yml
-  ├─ apis/
-    ├─ ...
-  ├─ docs.yml
-  ├─ pages/
-    ├─ ...
-  └─ versions/
-    ├─ v2-1/pages/...
-    ├─ v2-1.yml
-    ├─ v2-2/pages/...
-    └─ v2-2.yml
-```
-
-<CodeBlocks>
-<CodeBlock title="versions/v2-1.yml">
-```yaml {9}
-navigation: 
-  - section: Introduction
-    contents: 
-      - page: My Page
-        path: ./v2-1/pages/my-page.mdx
-      - page: Shared Resource
-        path: ../shared-pages/shared-resource.mdx
-  - api: API Reference
-    api-name: v2-1
-```
-</CodeBlock>
-<CodeBlock title="versions/v2-2.yml">
-```yaml {9}
-navigation: 
-  - section: Introduction
-    contents: 
-      - page: My Page
-        path: ./v2-2/pages/my-page.mdx
-      - page: Shared Resource
-        path: ../shared-pages/shared-resource.mdx
-  - api: API Reference
-    api-name: v2-2
-```
-</CodeBlock>
-</CodeBlocks>
