@@ -84,7 +84,7 @@ export class ObjectGenerator {
             );
         }
 
-        class_.addStatement(this.getConfigClass())
+        class_.addStatement(this.getConfigClass());
 
         const module = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
@@ -147,53 +147,5 @@ export class ObjectGenerator {
         );
 
         return configClass;
-    }
-
-    private getJsonMethod(): python.Method {
-        const method = python.method({
-            name: "json",
-            parameters: [
-                python.parameter({ name: "self" }),
-                python.parameter({ 
-                    name: "kwargs",
-                    type: python.TypeHint.kwargs(python.TypeHint.reference("typing.Any")),
-                })
-            ],
-            returnType: python.TypeHint.str()
-        });
-
-        const kwargsWithDefaults = python.variable({
-            name: "kwargs_with_defaults",
-            type: python.TypeHint.reference("typing.Any"),
-            initializer: python.TypeInstantiation.dict([
-                {
-                    key: python.TypeInstantiation.str("by_alias"),
-                    value: python.TypeInstantiation.bool(true)
-                },
-                {
-                    key: python.TypeInstantiation.str("exclude_unset"), 
-                    value: python.TypeInstantiation.bool(true)
-                }
-            ])
-        });
-
-        method.addStatement(
-            python.BinOp.add(kwargsWithDefaults, python.reference("kwargs"))
-        );
-
-        method.addStatement(
-            python.Return(
-                python.Call(
-                    python.MemberAccess(
-                        python.Call(python.reference("super")),
-                        "json"
-                    ),
-                    undefined,
-                    [python.Spread(python.reference("kwargs_with_defaults"))]
-                )
-            )
-        );
-
-        return method;
     }
 }

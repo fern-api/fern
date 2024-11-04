@@ -10,3 +10,9 @@ export const Field = python.reference({
     modulePath: ["pydantic"]
 });
 
+export const RootModel = (type: python.Type) =>
+    python.reference({
+        name: "RootModel",
+        modulePath: ["pydantic"],
+        genericTypes: [type]
+    });

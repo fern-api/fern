@@ -42,7 +42,6 @@ export class Class extends AstNode {
             writer.write('"""');
             writer.write(this.docs);
             writer.write('"""');
-            writer.newLine();
         }
 
         this.decorators.forEach((decorator) => {

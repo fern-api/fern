@@ -1,5 +1,4 @@
 import { WriteablePythonFile } from "@fern-api/base-python-generator";
-import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "./ObjectGenerator";
 
