@@ -33,5 +33,9 @@ export abstract class AbstractPythonGeneratorContext<
         return name.pascalCase.safeName;
     }
 
+    public getSnakeCaseSafeName(name: Name): string {
+        return name.snakeCase.safeName;
+    }
+
     public abstract getModulePathForId(typeId: TypeId): string[];
 }

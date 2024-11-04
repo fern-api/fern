@@ -910,6 +910,12 @@ importers:
 
   generators/python-v2/fastapi:
     devDependencies:
+      '@fern-api/base-python-generator':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/python-ast':
+        specifier: workspace:*
+        version: link:../ast
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -943,6 +949,21 @@ importers:
 
   generators/python-v2/pydantic-model:
     devDependencies:
+      '@fern-api/base-python-generator':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../commons
+      '@fern-api/python-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-fern/ir-sdk':
+        specifier: 53.7.0
+        version: 53.7.0
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -973,6 +994,9 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.4
+        version: 3.23.8
 
   generators/ruby/cli:
     dependencies:
