@@ -56,7 +56,7 @@ export abstract class FernDocsBuilder {
 
     public abstract build({ outputDirectory }: { outputDirectory: AbsoluteFilePath }): void;
 
-    public abstract setInstance({ companyName }: { companyName: string }): void;
+    public abstract setInstance({ companyName }: { companyName: string }): string;
 }
 
 export abstract class FernDocsNavigationBuilder {

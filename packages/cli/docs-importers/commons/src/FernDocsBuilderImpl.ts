@@ -152,7 +152,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         );
     }
 
-    public setInstance({ companyName }: { companyName: string }): void {
+    public setInstance({ companyName }: { companyName: string }): string {
         // We may append a suffix to the company name string to make it harder for
         // other companies to build migrators for our docs. For now, we're not doing
         // so but we can add that easily in the future.
@@ -163,6 +163,8 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         this.docsYml.instances.push({
             url: fernDocsUrl
         });
+
+        return fernDocsUrl;
     }
 }
 
