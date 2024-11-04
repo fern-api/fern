@@ -1,0 +1,48 @@
+imports:
+  root: __package__.yml
+
+types:
+  SendRequest:
+    properties:
+      prompt: literal<"You are a helpful assistant">
+      query: string
+      stream: literal<false>
+      context: SomeLiteral
+      maybeContext: optional<SomeLiteral>
+      containerObject: ContainerObject
+  ContainerObject:
+    properties:
+      nestedObjects: list<NestedObjectWithLiterals>
+  NestedObjectWithLiterals:
+    properties:
+      literal1: literal<"literal1">
+      literal2: literal<"literal2">
+      strProp: string
+  SomeLiteral:
+    type: literal<"You're super wise">
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /reference
+      method: POST
+      request: SendRequest
+      response: root.SendResponse
+      examples:
+        - request:
+            prompt: "You are a helpful assistant"
+            stream: false
+            context: "You're super wise"
+            query: "What is the weather today"
+            containerObject:
+              nestedObjects:
+                - literal1: "literal1"
+                  literal2: "literal2"
+                  strProp: "strProp"
+          response:
+            body:
+              message: "The weather is sunny"
+              status: 200
+              success: true
