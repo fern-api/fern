@@ -17,7 +17,8 @@ public class CreateUserTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "name": "name"
+              "name": "name",
+              "age": 1
             }
             """;
 
@@ -45,7 +46,7 @@ public class CreateUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.CreateUserAsync(
-            new CreateUserRequest { Name = "name", Age = null },
+            new CreateUserRequest { Name = "name", Age = 1 },
             RequestOptions
         );
         JToken

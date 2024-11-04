@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Upload(\n\tcontext.TODO(),\n\t\u0026fern.UploadRequest{\n\t\tColumns: []*fern.Column{\n\t\t\t\u0026fern.Column{\n\t\t\t\tId: \"id\",\n\t\t\t\tValues: []float64{\n\t\t\t\t\t1.1,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Upload(\n\tcontext.TODO(),\n\t\u0026fern.UploadRequest{\n\t\tColumns: []*fern.Column{\n\t\t\t\u0026fern.Column{\n\t\t\t\tId: \"id\",\n\t\t\t\tValues: []float64{\n\t\t\t\t\t1.1,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Delete(\n\tcontext.TODO(),\n\t\u0026fern.DeleteRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Delete(\n\tcontext.TODO(),\n\t\u0026fern.DeleteRequest{},\n)\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Describe(\n\tcontext.TODO(),\n\t\u0026fern.DescribeRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Describe(\n\tcontext.TODO(),\n\t\u0026fern.DescribeRequest{},\n)\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Fetch(\n\tcontext.TODO(),\n\t\u0026fern.FetchRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Fetch(\n\tcontext.TODO(),\n\t\u0026fern.FetchRequest{},\n)\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.List(\n\tcontext.TODO(),\n\t\u0026fern.ListRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.List(\n\tcontext.TODO(),\n\t\u0026fern.ListRequest{},\n)\n"
             }
         },
         {
@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Query(\n\tcontext.TODO(),\n\t\u0026fern.QueryRequest{\n\t\tTopK: 1,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Query(\n\tcontext.TODO(),\n\t\u0026fern.QueryRequest{\n\t\tTopK: 1,\n\t},\n)\n"
             }
         },
         {
@@ -74,7 +74,18 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dataservice.Update(\n\tcontext.TODO(),\n\t\u0026fern.UpdateRequest{\n\t\tId: \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto-exhaustive/fern\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Update(\n\tcontext.TODO(),\n\t\u0026fern.UpdateRequest{\n\t\tId: \"id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo",
+                "method": "POST",
+                "identifier_override": "endpoint_dataservice.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/grpc-proto-exhaustive/fern/client\"\n\toption \"github.com/grpc-proto-exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Dataservice.Foo(\n\tcontext.TODO(),\n)\n"
             }
         }
     ]

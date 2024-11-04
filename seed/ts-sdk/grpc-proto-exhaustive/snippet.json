@@ -2,13 +2,24 @@
     "endpoints": [
         {
             "id": {
+                "path": "/foo",
+                "method": "POST",
+                "identifier_override": "endpoint_dataservice.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.foo();\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/data",
                 "method": "POST",
                 "identifier_override": "endpoint_dataservice.upload"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.upload({\n    columns: [{\n            id: \"id\",\n            values: [1.1]\n        }]\n});\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.upload({\n    columns: [{\n            id: \"id\",\n            values: [1.1]\n        }]\n});\n"
             }
         },
         {
@@ -19,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.delete();\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.delete();\n"
             }
         },
         {
@@ -30,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.describe();\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.describe();\n"
             }
         },
         {
@@ -41,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.fetch();\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.fetch();\n"
             }
         },
         {
@@ -52,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.list();\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.list();\n"
             }
         },
         {
@@ -63,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.query({\n    topK: 1\n});\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.query({\n    topK: 1\n});\n"
             }
         },
         {
@@ -74,7 +85,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dataservice.update({\n    id: \"id\"\n});\n"
+                "client": "import { SeedApiClient, SeedApi } from \"@fern/grpc-proto-exhaustive\";\n\nconst client = new SeedApiClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.dataservice.update({\n    id: \"id\"\n});\n"
             }
         }
     ],
