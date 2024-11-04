@@ -20265,6 +20265,9 @@ errors:
                 "docs": "Successful operation.",
                 "type": "root.PaymentBreakDownContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getBillingInvoiceDownloadLink": {
               "audiences": [
@@ -20311,6 +20314,9 @@ errors:
                 "docs": "Successful operation.",
                 "type": "root.InvoiceDownloadContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getInvoiceDownloadLink": {
               "audiences": [
@@ -20356,6 +20362,9 @@ errors:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.InvoiceDownloadContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getInvoiceList": {
@@ -20428,6 +20437,9 @@ errors:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.InvoiceListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getPaymentList": {
@@ -20509,6 +20521,9 @@ errors:
                 "docs": "Successful operation.",
                 "type": "root.PaymentListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20527,6 +20542,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of paid invoices for your workforce.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve invoices
       request:
         name: GetInvoiceListRequest
@@ -20578,6 +20595,8 @@ service:
       method: GET
       auth: true
       docs: Get link to download the invoice PDF.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         invoice_id:
           type: long
@@ -20610,6 +20629,8 @@ service:
       method: GET
       auth: true
       docs: Get a link to download the Deel billing invoice PDF.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         invoice_id:
           type: long
@@ -20642,6 +20663,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of payments made to Deel.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve payment reciepts
       request:
         name: GetPaymentListRequest
@@ -20703,6 +20726,8 @@ service:
       docs: >-
         Get a full breakdown of a payment made to Deel. Breakdown will include
         individual invoices and Deel fee as line items.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         payment_id: string
       display-name: Retrieve a payment breakdown
@@ -20816,6 +20841,9 @@ docs: End-points to retrieve paid invoices and reciepts.
                 "docs": "Successful operation.",
                 "type": "root.OutputToCreateFileRefContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20853,6 +20881,8 @@ service:
       docs: >-
         Upload file to Deel storage to use the file attachment feature for other
         endpoints.
+      source:
+        openapi: ../openapi.yml
       display-name: Upload file to Deel
       request:
         name: InputToCreateFileRef
@@ -20939,6 +20969,9 @@ service:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.PeopleMeContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getPeopleList": {
@@ -21042,6 +21075,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.PeopleContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -21059,6 +21095,8 @@ service:
       path: /people
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get people list
       request:
         name: GetPeopleListRequest
@@ -21134,6 +21172,8 @@ service:
       path: /people/me
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get my current profile
       response:
         docs: Successful operation.
@@ -21253,6 +21293,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.PremiumResultAddedContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "amendContractDetails": {
               "audiences": [
@@ -21310,6 +21353,9 @@ service:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createContract": {
@@ -21478,6 +21524,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.ContractContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createContractFixedRate": {
               "auth": true,
@@ -21642,6 +21691,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.ContractContainerOngoingTimeBased",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createContractMilestoneBased": {
               "auth": true,
@@ -21804,6 +21856,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.ContractContainerPaygMilestones",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createContractTaskBased": {
               "auth": true,
@@ -21965,6 +22020,9 @@ service:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.ContractContainerPaygTasks",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createContractTimeBased": {
@@ -22130,6 +22188,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.ContractContainerPayAsYouGoTimeBased",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getContractPreview": {
               "audiences": [
@@ -22171,6 +22232,9 @@ service:
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "removePremiumFromContract": {
@@ -22224,6 +22288,9 @@ service:
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "terminateContract": {
@@ -22284,6 +22351,9 @@ service:
                 "docs": "Successful operation.",
                 "type": "root.ContractTerminationResultContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -22301,6 +22371,8 @@ service:
       path: /contracts/time-based
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contract (time-based)
       request:
         name: ContractToCreateContainerPayAsYouGoTimeBased
@@ -22426,6 +22498,8 @@ service:
       path: /contracts/task-based
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contract (task-based)
       request:
         name: ContractToCreateContainerPaygTasks
@@ -22549,6 +22623,8 @@ service:
       path: /contracts/milestone-based
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contract (milestone-based)
       request:
         name: ContractToCreateContainerPaygMilestones
@@ -22672,6 +22748,8 @@ service:
       path: /contracts/fixed-rate
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contract (fixed-rate)
       request:
         name: ContractToCreateContainerOngoingTimeBased
@@ -22798,6 +22876,8 @@ service:
       method: POST
       auth: true
       docs: Create a new Deel contract.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contract
       request:
         name: ContractToCreateContainer
@@ -22929,6 +23009,8 @@ service:
         Retrieve an IC contract agreement content in HTML. If no template is
         specified, the default or currently assigned template will be used. This
         endpoint does not support EOR and Global Payroll contract types.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -22958,6 +23040,8 @@ service:
       method: POST
       auth: true
       docs: Amend payment details of a contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -22996,6 +23080,8 @@ service:
       method: POST
       auth: true
       docs: Terminate an active contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -23037,6 +23123,8 @@ service:
       docs: >-
         Add additional protection against misclassification by upgrading to Deel
         Premium.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -23084,6 +23172,8 @@ service:
       method: DELETE
       auth: true
       docs: Remove Deel Premium from an existing contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -23190,6 +23280,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.ContractDocumentContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "archiveContract": {
               "audiences": [
@@ -23231,6 +23324,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultUpdated",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "attachExternalId": {
@@ -23291,6 +23387,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "calculateFinalPayment": {
@@ -23361,6 +23460,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.FinalPaymentCalculatedContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "editContractDocument": {
               "audiences": [
@@ -23419,6 +23521,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.ContractDocumentContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getAlternateEmailsByContractId": {
               "audiences": [
@@ -23461,6 +23566,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.AlternateEmailList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getContractById": {
@@ -23599,6 +23707,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.ContractContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getContractList": {
               "audiences": [
@@ -23714,6 +23825,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.ContractListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getContractTemplates": {
               "auth": true,
@@ -23747,6 +23861,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.ContractTemplateListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "inviteToSignContract": {
@@ -23808,6 +23925,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "postContractEstimate": {
@@ -23875,6 +23995,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.ResponseEstimateFirstPaymentContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "signContract": {
               "audiences": [
@@ -23935,6 +24058,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "uninviteToSignContract": {
               "audiences": [
@@ -23979,6 +24105,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -24010,6 +24139,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of contracts.
+      source:
+        openapi: ../openapi.yml
       display-name: List of contracts
       request:
         name: GetContractListRequest
@@ -24104,6 +24235,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a single contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24214,6 +24347,8 @@ service:
         Add an external Id to a Deel contract. You can use this to add a Deel
         contract's refernece Id in your platform. External Id can be passed as a
         query parameter in List contract endpoint to find this conract later.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24255,6 +24390,8 @@ service:
       docs: >-
         Attach document to a contract. You can only add one document at a time.
         If you need to attach more documents please attach a Zip file.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24294,6 +24431,8 @@ service:
       method: PUT
       auth: true
       docs: Overwrite the file currently attached to contract document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24333,6 +24472,8 @@ service:
       method: GET
       auth: true
       docs: Returns an array of alternate email objects
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24361,6 +24502,8 @@ service:
       method: POST
       auth: true
       docs: Sign a contract as a client.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24400,6 +24543,8 @@ service:
       method: PATCH
       auth: true
       docs: Archive a terminated, cancelled or completed contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24428,6 +24573,8 @@ service:
       method: POST
       auth: true
       docs: Invite a worker to sign the contract. Worker will be notified via email.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24468,6 +24615,8 @@ service:
       method: DELETE
       auth: true
       docs: Remove invite in order to re-invite a worker to sign the contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24500,6 +24649,8 @@ service:
       docs: >-
         Calculate the final payment due to the contractor when ending the
         contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -24551,6 +24702,8 @@ service:
       docs: >-
         First payment is calculated from the number of working/calendar days
         between their start date and the start of the payment cycle.
+      source:
+        openapi: ../openapi.yml
       display-name: Calculate first payment amount
       request:
         name: EstimateFirstPaymentContainer
@@ -24595,6 +24748,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of contract templates in your organization.
+      source:
+        openapi: ../openapi.yml
       display-name: Get contract templates
       response:
         docs: Successful operation.
@@ -24725,6 +24880,9 @@ types:
                 "docs": "Successful operation.",
                 "type": "root.EorContractCreatedContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getEorCountryValidations": {
               "audiences": [
@@ -24817,6 +24975,9 @@ types:
                 "docs": "Successful operation.",
                 "type": "root.EorCountryValidationsContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -24837,6 +24998,8 @@ service:
       docs: >-
         Retrieve the hiring guide data for a country. This data can be used to
         create Employee of Record (EOR) contract quotes.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         country_code:
           type: root.CountryCode
@@ -24906,6 +25069,8 @@ service:
         Create an Employee of Record (EOR) contract quote. The endpoints creates
         a contract quote request. Deel will process the information and get back
         with a quote for this contract.
+      source:
+        openapi: ../openapi.yml
       display-name: Create an EOR contract
       request:
         name: EorContractToCreateContainer
@@ -25083,6 +25248,9 @@ docs: Employee of Record (EOR).
                 "docs": "Hris direct employee object that was created or edited",
                 "type": "root.HrisDirectEmployeeContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -25100,6 +25268,8 @@ service:
       path: /hris/direct-employees
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new Hris direct employee
       request:
         body: root.HrisDirectEmployee
@@ -25243,6 +25413,9 @@ docs: API end-points related to HRIS data.
                 "docs": "Successful operation.",
                 "type": "root.InvoiceAdjustmentCreatedContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createInvoiceAdjustmentReview": {
               "audiences": [
@@ -25303,6 +25476,9 @@ docs: API end-points related to HRIS data.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createInvoiceAdjustmentReviews": {
               "audiences": [
@@ -25357,6 +25533,9 @@ docs: API end-points related to HRIS data.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteInvoiceAdjustmentById": {
               "audiences": [
@@ -25409,6 +25588,9 @@ docs: API end-points related to HRIS data.
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getInvoiceAdjustments": {
@@ -25539,6 +25721,9 @@ docs: API end-points related to HRIS data.
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.InvoiceAdjustmentListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getInvoiceAdjustmentsByContractId": {
@@ -25675,6 +25860,9 @@ docs: API end-points related to HRIS data.
                 "docs": "Successful operation.",
                 "type": "root.InvoiceAdjustmentListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateInvoiceAdjustmentById": {
               "audiences": [
@@ -25735,6 +25923,9 @@ docs: API end-points related to HRIS data.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultUpdated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -25753,6 +25944,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of invoice details for the given contract id.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -25868,6 +26061,8 @@ service:
       docs: >-
         Retrieve a list of invoice details. You can filter the list by providing
         additional paramters e.g. contract_id, contract_type etc.
+      source:
+        openapi: ../openapi.yml
       display-name: List of invoice details
       request:
         name: GetInvoiceAdjustmentsRequest
@@ -25980,6 +26175,8 @@ service:
       docs: >-
         Create an invoice adjustment using this endpoint. For example, you can
         add a bonus, commission, VAT %, deduction etc. to an invoice.
+      source:
+        openapi: ../openapi.yml
       display-name: Create an invoice adjustment
       request:
         name: InvoiceAdjustmentToCreateContainer
@@ -26020,6 +26217,8 @@ service:
       method: DELETE
       auth: true
       docs: Update an existing invoice adjustment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         invoice_adjustment_id:
           type: double
@@ -26059,6 +26258,8 @@ service:
         Update an existing invoice adjustment. It is not possible to update VAT
         adjustments, we recommend you to delete the existing VAT adjust and
         create a new one.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         invoice_adjustment_id:
           type: double
@@ -26098,6 +26299,8 @@ service:
       method: POST
       auth: true
       docs: Review an invoice adjustment to approve or decline it.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         invoice_adjustment_id:
           type: double
@@ -26137,6 +26340,8 @@ service:
       method: POST
       auth: true
       docs: Review multiple invoice adjustments to approve or decline a batch.
+      source:
+        openapi: ../openapi.yml
       display-name: Bulk review invoice adjustments
       request:
         name: InvoiceAdjustmentReviewsToCreateContainer
@@ -26233,6 +26438,9 @@ docs: >-
                 "docs": "Successful operation.",
                 "type": "root.CountryListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getCurrencies": {
               "audiences": [
@@ -26270,6 +26478,9 @@ docs: >-
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.CurrencyListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getJobTitleList": {
@@ -26325,6 +26536,9 @@ docs: >-
                 "docs": "Successful operation.",
                 "type": "root.JobTitleListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getSeniorityList": {
               "audiences": [
@@ -26373,6 +26587,9 @@ docs: >-
                 "docs": "Successful operation.",
                 "type": "root.SeniorityListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTimeoffTypeList": {
               "audiences": [
@@ -26410,6 +26627,9 @@ docs: >-
                 "docs": "Successful operation.",
                 "type": "root.TimeoffTypeListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -26428,6 +26648,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of countries supported by Deel.
+      source:
+        openapi: ../openapi.yml
       display-name: Country list
       response:
         docs: Successful operation.
@@ -26459,6 +26681,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve the list of currencies used by Deel.
+      source:
+        openapi: ../openapi.yml
       display-name: Currency list
       response:
         docs: Successful operation.
@@ -26484,6 +26708,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of pre-defined job titles in Deel platform.
+      source:
+        openapi: ../openapi.yml
       display-name: Job titles list
       request:
         name: GetJobTitleListRequest
@@ -26524,6 +26750,8 @@ service:
       docs: >-
         Retrieve a list of pre-defined seniority level for roles in Deel
         platform.
+      source:
+        openapi: ../openapi.yml
       display-name: Seniority levels
       request:
         name: GetSeniorityListRequest
@@ -26560,6 +26788,8 @@ service:
       docs: >-
         Retrieve a list of pre-defined time off types to register in Deel
         platform.
+      source:
+        openapi: ../openapi.yml
       display-name: Time-off types
       response:
         docs: Successful operation.
@@ -26660,6 +26890,9 @@ docs: Helper end-points for choosing options for other operations
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createMilestoneReview": {
               "audiences": [
@@ -26725,6 +26958,9 @@ docs: Helper end-points for choosing options for other operations
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createMilestoneReviews": {
               "audiences": [
@@ -26788,6 +27024,9 @@ docs: Helper end-points for choosing options for other operations
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteMilestoneById": {
               "audiences": [
@@ -26836,6 +27075,9 @@ docs: Helper end-points for choosing options for other operations
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getMilestonesByContract": {
@@ -26896,6 +27138,9 @@ docs: Helper end-points for choosing options for other operations
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.MilestoneListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getMilestonesByContractAndId": {
@@ -26960,6 +27205,9 @@ docs: Helper end-points for choosing options for other operations
                 "docs": "Successful operation.",
                 "type": "root.MilestoneContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -26978,6 +27226,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of milestones found for a contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27020,6 +27270,8 @@ service:
       method: POST
       auth: true
       docs: Add a new milestone to contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27061,6 +27313,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a single milestone.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27107,6 +27361,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a single milestone from a contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27141,6 +27397,8 @@ service:
       method: POST
       auth: true
       docs: Review a milestone to approve or decline submitted work.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27184,6 +27442,8 @@ service:
       method: POST
       auth: true
       docs: Review a batch of milestones to approve or reject submitted work.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27298,6 +27558,9 @@ docs: Helper end-points for managing milestones of Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getOffCyclePaymentByContractAndId": {
               "audiences": [
@@ -27364,6 +27627,9 @@ docs: Helper end-points for managing milestones of Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.OffCyclePaymentContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getOffCyclePaymentsByContract": {
               "audiences": [
@@ -27427,6 +27693,9 @@ docs: Helper end-points for managing milestones of Deel contracts
                 "docs": "Successful operation.",
                 "type": "root.OffCyclePaymentListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -27445,6 +27714,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of off-cycle payments for the given contract id.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27492,6 +27763,8 @@ service:
       docs: >-
         Add a new invoice line-item for the purpose of off-cycle payment for a
         given contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27532,6 +27805,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a single off-cycle payment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -27663,6 +27938,9 @@ docs: End-points to manage off-cycle payments for a given contract
                 "docs": "Successful operation.",
                 "type": "root.AgreementListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getLegalEntityList": {
               "audiences": [
@@ -27703,6 +27981,9 @@ docs: End-points to manage off-cycle payments for a given contract
                 "docs": "Successful operation.",
                 "type": "root.LegalEntityListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getOrganizations": {
               "audiences": [
@@ -27740,6 +28021,9 @@ docs: End-points to manage off-cycle payments for a given contract
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.OrganizationListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTeams": {
@@ -27779,6 +28063,9 @@ docs: End-points to manage off-cycle payments for a given contract
                 "docs": "Successful operation.",
                 "type": "root.TeamListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -27797,6 +28084,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of legal entities in your account.
+      source:
+        openapi: ../openapi.yml
       display-name: List of legal entities
       response:
         docs: Successful operation.
@@ -27826,6 +28115,8 @@ service:
       docs: >-
         Retrieve the current organization details. Organization is automatically
         detected from the auth token.
+      source:
+        openapi: ../openapi.yml
       display-name: Get current organization
       response:
         docs: Successful operation.
@@ -27851,6 +28142,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of teams in your organization.
+      source:
+        openapi: ../openapi.yml
       display-name: Get team list
       response:
         docs: Successful operation.
@@ -27876,6 +28169,8 @@ service:
       method: GET
       auth: true
       docs: This end-point returns a list of your agreements with Deel.
+      source:
+        openapi: ../openapi.yml
       display-name: Get agreements with Deel.
       request:
         name: GetAgreementsRequest
@@ -27997,6 +28292,9 @@ docs: Helper end-points for additional information about your organizations
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createTaskManyReview": {
               "audiences": [
@@ -28070,6 +28368,9 @@ docs: Helper end-points for additional information about your organizations
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.TaskListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createTaskReviewById": {
@@ -28146,6 +28447,9 @@ docs: Helper end-points for additional information about your organizations
                 "docs": "Successful operation.",
                 "type": "root.TaskListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteContractPgoTak": {
               "audiences": [
@@ -28204,6 +28508,9 @@ docs: Helper end-points for additional information about your organizations
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTasksByContract": {
               "audiences": [
@@ -28258,6 +28565,9 @@ docs: Helper end-points for additional information about your organizations
                 "docs": "Successful operation.",
                 "type": "root.TaskListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -28276,6 +28586,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of tasks for a given contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -28313,6 +28625,8 @@ service:
       method: POST
       auth: true
       docs: Create a new task for the contractor.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -28353,6 +28667,8 @@ service:
       method: POST
       auth: true
       docs: Review multiple tasks to approve or decline the submitted work.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -28402,6 +28718,8 @@ service:
       method: POST
       auth: true
       docs: Review a single task to approve or decline the submitted work.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -28452,6 +28770,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete task from the contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -28634,6 +28954,9 @@ docs: End-points to manage tasks for a given contract
                 "docs": "Successful operation.",
                 "type": "root.EorTimeoffsItemContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteEorTimeOffs": {
               "audiences": [
@@ -28679,6 +29002,9 @@ docs: End-points to manage tasks for a given contract
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "editEorTimeOffs": {
@@ -28815,6 +29141,9 @@ docs: End-points to manage tasks for a given contract
                 "docs": "Successful operation.",
                 "type": "root.EorTimeoffsItemContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getEorClientTimeOffs": {
               "audiences": [
@@ -28910,6 +29239,9 @@ docs: End-points to manage tasks for a given contract
                 "docs": "successful operation",
                 "type": "root.EorClientTimeoffsContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getEorEntitlements": {
               "audiences": [
@@ -28969,6 +29301,9 @@ docs: End-points to manage tasks for a given contract
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.EorEntitlementsContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getEorTimeOffs": {
@@ -29066,6 +29401,9 @@ docs: End-points to manage tasks for a given contract
                 "docs": "Successful operation.",
                 "type": "root.EorTimeoffsContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "reviewTimeoff": {
               "audiences": [
@@ -29126,6 +29464,9 @@ docs: End-points to manage tasks for a given contract
                 "docs": "Successful operation.",
                 "type": "root.GenericResultUpdated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -29144,6 +29485,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve the list of time off requests by an employee.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -29217,6 +29560,8 @@ service:
       method: POST
       auth: true
       docs: Add a time off request for a full-time employee.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -29320,6 +29665,8 @@ service:
       method: PUT
       auth: true
       docs: Edit a time off request for a full-time employee.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -29427,6 +29774,8 @@ service:
       method: DELETE
       auth: true
       docs: Cancel a time off request for an employee.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -29458,6 +29807,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of time off entitlements for a full-time employee.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -29501,6 +29852,8 @@ service:
       method: GET
       auth: false
       docs: List of time offs for all employees in your organization.
+      source:
+        openapi: ../openapi.yml
       display-name: List of time offs
       response:
         docs: successful operation
@@ -29564,6 +29917,8 @@ service:
       method: PATCH
       auth: true
       docs: Approve or decline an employee's time off request.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         timeoff_id:
           type: string
@@ -29673,6 +30028,9 @@ docs: Manage time off requests.
                 "docs": "Successful operation.",
                 "type": "root.InvoiceAdjustmentCreatedContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createTimesheetReview": {
               "audiences": [
@@ -29733,6 +30091,9 @@ docs: Manage time off requests.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createTimesheetReviews": {
               "audiences": [
@@ -29787,6 +30148,9 @@ docs: Manage time off requests.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultCreated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteTimesheetById": {
               "audiences": [
@@ -29839,6 +30203,9 @@ docs: Manage time off requests.
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.GenericResultDeleted",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTimesheetById": {
@@ -29930,6 +30297,9 @@ docs: Manage time off requests.
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.TimesheetContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTimesheets": {
@@ -30045,6 +30415,9 @@ docs: Manage time off requests.
               "response": {
                 "docs": "Successful operation.",
                 "type": "root.TimesheetListContainer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTimesheetsByContract": {
@@ -30166,6 +30539,9 @@ docs: Manage time off requests.
                 "docs": "Successful operation.",
                 "type": "root.TimesheetListContainer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateTimesheetById": {
               "audiences": [
@@ -30227,6 +30603,9 @@ docs: Manage time off requests.
                 "docs": "Successful operation.",
                 "type": "root.GenericResultUpdated",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -30245,6 +30624,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of timesheets found for a contract.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         contract_id:
           type: string
@@ -30345,6 +30726,8 @@ service:
         Retrieve a list of timesheets in your Deel account. You can filter the
         list by providing additional paramters e.g. contract_id, contract_type
         etc.
+      source:
+        openapi: ../openapi.yml
       display-name: List of timesheets
       request:
         name: GetTimesheetsRequest
@@ -30439,6 +30822,8 @@ service:
       method: POST
       auth: true
       docs: Submit work for a contractor.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a timesheet entry
       request:
         name: TimesheetToCreateContainer
@@ -30479,6 +30864,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a single timesheet entry by Id.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         timesheet_id:
           type: long
@@ -30547,6 +30934,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a single timesheet entry.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         timesheet_id:
           type: long
@@ -30583,6 +30972,8 @@ service:
       method: PATCH
       auth: true
       docs: Update a single timesheet entry.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         timesheet_id:
           type: long
@@ -30623,6 +31014,8 @@ service:
       method: POST
       auth: true
       docs: Review a timesheet to approve or decline submitted work.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         timesheet_id:
           type: long
@@ -30662,6 +31055,8 @@ service:
       method: POST
       auth: true
       docs: Review a batch of timesheets to approve or reject submitted work.
+      source:
+        openapi: ../openapi.yml
       display-name: Review multiple timesheets
       request:
         name: TimesheetReviewsToCreateContainer
@@ -30738,6 +31133,9 @@ docs: >-
               "path": "/webhooks/{id}",
               "path-parameters": {
                 "id": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "WebhookController_editById": {
@@ -30833,6 +31231,9 @@ docs: >-
                 "docs": "successful operation",
                 "type": "root.WebhookItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "WebhookController_getById": {
               "audiences": [
@@ -30885,6 +31286,9 @@ docs: >-
               "response": {
                 "docs": "successful operation",
                 "type": "root.WebhookItemResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createWebhook": {
@@ -30979,6 +31383,9 @@ docs: >-
                 "docs": "successful operation",
                 "type": "root.WebhookItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getAllWebhooks": {
               "audiences": [
@@ -31028,6 +31435,9 @@ docs: >-
                 "docs": "successful operation",
                 "type": "root.WebhookListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -31068,6 +31478,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of webhook subscriptions.
+      source:
+        openapi: ../openapi.yml
       display-name: List of webhooks
       response:
         docs: successful operation
@@ -31103,6 +31515,8 @@ service:
       method: POST
       auth: true
       docs: Create a new webhooks subscription.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a webhook
       request:
         name: CreateWebhookRequest
@@ -31170,6 +31584,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a single webhook subscription.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Retrieve a single webhook
@@ -31209,6 +31625,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a webhook subscription.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Delete a webhook
@@ -31230,6 +31648,8 @@ service:
       method: PATCH
       auth: true
       docs: Edit a webhook subscription.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Edit a webhook

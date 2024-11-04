@@ -38,6 +38,9 @@
                 "name": "PostV1UsersRequest",
                 "query-parameters": undefined,
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -75,6 +78,8 @@
       path: /v1/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostV1UsersRequest
         body:

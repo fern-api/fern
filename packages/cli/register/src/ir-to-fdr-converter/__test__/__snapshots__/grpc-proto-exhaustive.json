@@ -737,8 +737,80 @@
       "name": "dataservice",
       "endpoints": [
         {
+          "auth": true,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "foo",
+          "originalEndpointId": "endpoint_dataservice.foo",
+          "name": "Foo",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/foo"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/foo",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "key": "value"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              }
+            }
+          ]
+        },
+        {
           "auth": false,
           "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "upload",
           "originalEndpointId": "endpoint_dataservice.upload",
           "name": "Upload",
@@ -847,6 +919,13 @@
         {
           "auth": false,
           "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "delete",
           "originalEndpointId": "endpoint_dataservice.delete",
           "name": "Delete",
@@ -961,6 +1040,13 @@
         {
           "auth": false,
           "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "describe",
           "originalEndpointId": "endpoint_dataservice.describe",
           "name": "Describe",
@@ -1053,6 +1139,13 @@
         {
           "auth": false,
           "method": "GET",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "fetch",
           "originalEndpointId": "endpoint_dataservice.fetch",
           "name": "Fetch",
@@ -1173,6 +1266,13 @@
         {
           "auth": false,
           "method": "GET",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "list",
           "originalEndpointId": "endpoint_dataservice.list",
           "name": "List",
@@ -1295,6 +1395,13 @@
         {
           "auth": false,
           "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "query",
           "originalEndpointId": "endpoint_dataservice.query",
           "name": "Query",
@@ -1543,6 +1650,13 @@
         {
           "auth": false,
           "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
           "id": "update",
           "originalEndpointId": "endpoint_dataservice.update",
           "name": "Update",

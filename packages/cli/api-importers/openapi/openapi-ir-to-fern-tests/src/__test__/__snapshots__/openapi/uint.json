@@ -42,6 +42,9 @@
                 "docs": "A simple API response.",
                 "type": "Response",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -70,6 +73,8 @@
       path: /get
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: Request
         body:

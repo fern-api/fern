@@ -33,6 +33,9 @@
                 "docs": "Successful response",
                 "type": "ExampleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -85,6 +88,8 @@
       path: /example
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Get Example
       response:
         docs: Successful response

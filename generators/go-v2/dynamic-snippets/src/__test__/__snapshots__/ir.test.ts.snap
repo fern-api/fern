@@ -2890,6 +2890,38 @@ exports[`test definitions > grpc-proto-exhaustive 1`] = `
 
 import (
 	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )

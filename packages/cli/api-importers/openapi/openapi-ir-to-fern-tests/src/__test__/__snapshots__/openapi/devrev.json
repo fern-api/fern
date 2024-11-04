@@ -5013,6 +5013,9 @@ types:
                 "docs": "Success.",
                 "type": "root.ArtifactsLocateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "prepare": {
               "auth": true,
@@ -5066,6 +5069,9 @@ types:
                 "docs": "Success.",
                 "type": "root.ArtifactsPrepareResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -5084,6 +5090,8 @@ service:
       method: GET
       auth: true
       docs: Gets the download URL for the artifact.
+      source:
+        openapi: ../openapi.yml
       request:
         name: ArtifactsLocateRequest
         query-parameters:
@@ -5114,6 +5122,8 @@ service:
       auth: true
       docs: |
         Creates an artifact and generates an upload URL for its data.
+      source:
+        openapi: ../openapi.yml
       request:
         name: ArtifactsPrepareRequest
         body:
@@ -5210,6 +5220,9 @@ enterprise connections can be created by an organization.
                 "docs": "Success.",
                 "type": "root.DevOrgAuthConnectionsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "dev-org-auth-connections-delete": {
               "auth": true,
@@ -5249,6 +5262,9 @@ connections can not be deleted using this method.
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsDeleteRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "dev-org-auth-connections-get": {
@@ -5299,6 +5315,9 @@ connections can not be deleted using this method.
                 "docs": "Success.",
                 "type": "root.DevOrgAuthConnectionsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "dev-org-auth-connections-list": {
               "auth": true,
@@ -5340,6 +5359,9 @@ created by the user.
               "response": {
                 "docs": "Success.",
                 "type": "root.DevOrgAuthConnectionsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "dev-org-auth-connections-toggle": {
@@ -5385,6 +5407,9 @@ disabled.
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsToggleRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "dev-org-auth-connections-update": {
@@ -5433,6 +5458,9 @@ disabled.
                 "docs": "Success.",
                 "type": "root.DevOrgAuthConnectionsUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -5457,6 +5485,8 @@ service:
         enable this. Keep in mind that at a time, only one authentication
         connection can be enabled for a Dev organization. At present, only 5
         enterprise connections can be created by an organization.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.DevOrgAuthConnectionsCreateRequest
@@ -5492,6 +5522,8 @@ service:
         Deletes an authentication connection. Only enterprise connections which
         are explicitly set up for a Dev organization can be deleted. Default
         connections can not be deleted using this method.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DevOrgAuthConnectionsDeleteRequest
         body:
@@ -5516,6 +5548,8 @@ service:
       method: GET
       auth: true
       docs: Retrieves the details for an authentication connection.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DevOrgAuthConnectionsGetRequest
         query-parameters:
@@ -5555,6 +5589,8 @@ service:
         organization. This list will include both social and enterprise
         connections which are either available by default or are explicitly
         created by the user.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success.
         type: root.DevOrgAuthConnectionsListResponse
@@ -5586,6 +5622,8 @@ service:
         When a new authentication connection is enabled, the connection which
         is currently enabled for the Dev organization is automatically
         disabled.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DevOrgAuthConnectionsToggleRequest
         body:
@@ -5612,6 +5650,8 @@ service:
       method: POST
       auth: true
       docs: Updates an authentication connection.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.DevOrgAuthConnectionsUpdateRequest
@@ -5750,6 +5790,9 @@ requesting an application access token (AAT).
                 "docs": "Success.",
                 "type": "root.AuthTokensCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -5789,6 +5832,9 @@ JTI claim of the token in the authorization header.
                 "headers": undefined,
                 "name": "AuthTokensDeleteRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -5873,6 +5919,9 @@ given Dev organization.
                 "docs": "Success.",
                 "type": "root.AuthTokensGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -5953,6 +6002,9 @@ subject.
                 "docs": "Success.",
                 "type": "root.AuthTokensListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "selfDelete": {
               "auth": true,
@@ -5988,6 +6040,9 @@ authenticated user.
                 "headers": undefined,
                 "name": "AuthTokensSelfDeleteRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -6082,6 +6137,9 @@ organization.
                 "docs": "Success.",
                 "type": "root.AuthTokensUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6102,6 +6160,8 @@ service:
       docs: |
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensCreateRequest
         body:
@@ -6176,6 +6236,8 @@ service:
       docs: |
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensDeleteRequest
         body:
@@ -6208,6 +6270,8 @@ service:
       docs: |
         Gets the token metadata corresponding to the given token ID under the
         given Dev organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensGetRequest
         query-parameters:
@@ -6272,6 +6336,8 @@ service:
       docs: |
         Gets the token metadata for all the tokens corresponding to the given
         token type issued for a given subject.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensListRequest
         query-parameters:
@@ -6332,6 +6398,8 @@ service:
       docs: |
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensSelfDeleteRequest
         body:
@@ -6356,6 +6424,8 @@ service:
       docs: |
         Updates token metadata of a token issued under a given Dev
         organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: AuthTokensUpdateRequest
         body:
@@ -6535,6 +6605,9 @@ used.
                 "docs": "Success.",
                 "type": "root.DevUsersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "self": {
               "auth": true,
@@ -6608,6 +6681,9 @@ used.
                 "docs": "Success.",
                 "type": "root.DevUsersSelfResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6626,6 +6702,8 @@ service:
       method: GET
       auth: true
       docs: Lists users within your organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DevUsersListRequest
         query-parameters:
@@ -6699,6 +6777,8 @@ service:
       method: GET
       auth: true
       docs: Gets the authenticated user's information.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success.
         type: root.DevUsersSelfResponse
@@ -6860,6 +6940,9 @@ docs: Dev user interactions.
                 "docs": "Success.",
                 "type": "root.PartsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -6905,6 +6988,9 @@ docs: Dev user interactions.
               "response": {
                 "docs": "Success.",
                 "type": "root.PartsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -6998,6 +7084,9 @@ docs: Dev user interactions.
               "response": {
                 "docs": "Success.",
                 "type": "root.PartsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -7109,6 +7198,9 @@ used.
                 "docs": "Success.",
                 "type": "root.PartsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -7200,6 +7292,9 @@ used.
                 "docs": "Success.",
                 "type": "root.PartsUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7218,6 +7313,8 @@ service:
       method: POST
       auth: true
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.PartsCreateRequest
@@ -7284,6 +7381,8 @@ service:
       method: POST
       auth: true
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
+      source:
+        openapi: ../openapi.yml
       request:
         name: PartsDeleteRequest
         body:
@@ -7315,6 +7414,8 @@ service:
       auth: true
       docs: |
         Gets a [part's](https://devrev.ai/docs/product/parts) information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: PartsGetRequest
         query-parameters:
@@ -7380,6 +7481,8 @@ service:
       auth: true
       docs: |
         Lists a collection of [parts](https://devrev.ai/docs/product/parts).
+      source:
+        openapi: ../openapi.yml
       request:
         name: PartsListRequest
         query-parameters:
@@ -7459,6 +7562,8 @@ service:
       auth: true
       docs: |
         Updates a [part's](https://devrev.ai/docs/product/parts) information.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.PartsUpdateRequest
@@ -7636,6 +7741,9 @@ records.
                 "docs": "Success.",
                 "type": "root.RevOrgsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -7681,6 +7789,9 @@ records.
               "response": {
                 "docs": "Success.",
                 "type": "root.RevOrgsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -7755,6 +7866,9 @@ records.
               "response": {
                 "docs": "Success.",
                 "type": "root.RevOrgsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -7870,6 +7984,9 @@ them.
                 "docs": "Success.",
                 "type": "root.RevOrgsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -7975,6 +8092,9 @@ records.
                 "docs": "Success.",
                 "type": "root.RevOrgsUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7995,6 +8115,8 @@ service:
       docs: |
         Creates a Rev organization in the authenticated user's Dev
         organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RevOrgsCreateRequest
         body:
@@ -8072,6 +8194,8 @@ service:
       method: POST
       auth: true
       docs: Deletes the Rev organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RevOrgsDeleteRequest
         body:
@@ -8102,6 +8226,8 @@ service:
       method: GET
       auth: true
       docs: Retrieves the Rev organization's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RevOrgsGetRequest
         query-parameters:
@@ -8161,6 +8287,8 @@ service:
         Gets the list of Rev organizations' information belonging to the
         authenticated user's Dev Organization which the user is also authorized
         to access.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RevOrgsListRequest
         query-parameters:
@@ -8250,6 +8378,8 @@ service:
       method: POST
       auth: true
       docs: Updates the Rev organization's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RevOrgsUpdateRequest
         body:
@@ -8435,6 +8565,9 @@ permitted.
                 "docs": "Success.",
                 "type": "root.TagsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -8480,6 +8613,9 @@ permitted.
               "response": {
                 "docs": "Success.",
                 "type": "root.TagsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -8556,6 +8692,9 @@ permitted.
                 "docs": "Success.",
                 "type": "root.TagsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -8626,6 +8765,9 @@ used.
               "response": {
                 "docs": "Success.",
                 "type": "root.TagsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -8720,6 +8862,9 @@ tags.
                 "docs": "Success.",
                 "type": "root.TagsUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8740,6 +8885,8 @@ service:
       docs: |
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TagsCreateRequest
         body:
@@ -8806,6 +8953,8 @@ service:
       method: POST
       auth: true
       docs: Deletes a tag.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TagsDeleteRequest
         body:
@@ -8836,6 +8985,8 @@ service:
       method: GET
       auth: true
       docs: Gets a tag's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TagsGetRequest
         query-parameters:
@@ -8892,6 +9043,8 @@ service:
       method: GET
       auth: true
       docs: Lists the available tags.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TagsListRequest
         query-parameters:
@@ -8945,6 +9098,8 @@ service:
       method: POST
       auth: true
       docs: Updates a tag's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TagsUpdateRequest
         body:
@@ -9103,6 +9258,9 @@ docs: DevRev tag interactions.
                 "docs": "Success.",
                 "type": "root.TimelineEntriesCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -9183,6 +9341,9 @@ docs: DevRev tag interactions.
               "response": {
                 "docs": "Success.",
                 "type": "root.TimelineEntriesGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -9271,6 +9432,9 @@ used.
                 "docs": "Success.",
                 "type": "root.TimelineEntriesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -9349,6 +9513,9 @@ used.
                 "docs": "Success.",
                 "type": "root.TimelineEntriesUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9367,6 +9534,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new entry on an object's timeline.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.TimelineEntriesCreateRequest
@@ -9424,6 +9593,8 @@ service:
       method: GET
       auth: true
       docs: Gets an entry on an object's timeline.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TimelineEntriesGetRequest
         query-parameters:
@@ -9483,6 +9654,8 @@ service:
       method: GET
       auth: true
       docs: Lists the timeline entries for an object.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TimelineEntriesListRequest
         query-parameters:
@@ -9547,6 +9720,8 @@ service:
       method: POST
       auth: true
       docs: Updates an entry on an object's timeline.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.TimelineEntriesUpdateRequest
@@ -9714,6 +9889,9 @@ response.
                 "docs": "Success.",
                 "type": "root.WebhooksCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -9759,6 +9937,9 @@ response.
               "response": {
                 "docs": "Success.",
                 "type": "root.WebhooksDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -9836,6 +10017,9 @@ response.
                 "docs": "Success.",
                 "type": "root.WebhooksGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -9884,6 +10068,9 @@ response.
               "response": {
                 "docs": "Success.",
                 "type": "root.WebhooksListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -9994,6 +10181,9 @@ won't receive any object events until successfully verified.
                 "docs": "Success.",
                 "type": "root.WebhooksUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -10012,6 +10202,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new webhook target.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WebhooksCreateRequest
         body:
@@ -10086,6 +10278,8 @@ service:
       method: POST
       auth: true
       docs: Deletes the requested webhook.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WebhooksDeleteRequest
         body:
@@ -10116,6 +10310,8 @@ service:
       method: GET
       auth: true
       docs: Gets the requested webhook's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WebhooksGetRequest
         query-parameters:
@@ -10173,6 +10369,8 @@ service:
       method: GET
       auth: true
       docs: Lists the webhooks.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success.
         type: root.WebhooksListResponse
@@ -10207,6 +10405,8 @@ service:
       method: POST
       auth: true
       docs: Updates the requested webhook.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WebhooksUpdateRequest
         body:
@@ -10436,6 +10636,9 @@ docs: Webhook event APIs.
                 "docs": "Success.",
                 "type": "root.WorksCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -10481,6 +10684,9 @@ docs: Webhook event APIs.
               "response": {
                 "docs": "Success.",
                 "type": "root.WorksDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "export": {
@@ -10629,6 +10835,9 @@ organizations.
                 "docs": "Success.",
                 "type": "root.WorksExportResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -10747,6 +10956,9 @@ organizations.
               "response": {
                 "docs": "Success.",
                 "type": "root.WorksGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -10908,6 +11120,9 @@ organizations.
                 "docs": "Success.",
                 "type": "root.WorksListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -11026,6 +11241,9 @@ organizations.
                 "docs": "Success.",
                 "type": "root.WorksUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -11046,6 +11264,8 @@ service:
       docs: |
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.WorksCreateRequest
@@ -11134,6 +11354,8 @@ service:
       method: POST
       auth: true
       docs: Deletes a work item.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WorksDeleteRequest
         body:
@@ -11164,6 +11386,8 @@ service:
       method: GET
       auth: true
       docs: Exports a collection of work items.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WorksExportRequest
         query-parameters:
@@ -11272,6 +11496,8 @@ service:
       method: GET
       auth: true
       docs: Gets a work item's information.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WorksGetRequest
         query-parameters:
@@ -11356,6 +11582,8 @@ service:
       method: GET
       auth: true
       docs: Lists a collection of work items.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WorksListRequest
         query-parameters:
@@ -11475,6 +11703,8 @@ service:
       method: POST
       auth: true
       docs: Updates a work item's information.
+      source:
+        openapi: ../openapi.yml
       request:
         body:
           type: root.WorksUpdateRequest
