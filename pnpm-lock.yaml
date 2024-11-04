@@ -913,12 +913,6 @@ importers:
 
   generators/python-v2/fastapi:
     devDependencies:
-      '@fern-api/base-python-generator':
-        specifier: workspace:*
-        version: link:../base
-      '@fern-api/python-ast':
-        specifier: workspace:*
-        version: link:../ast
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -967,6 +961,9 @@ importers:
       '@fern-api/python-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.898
+        version: 0.0.898
       '@fern-fern/ir-sdk':
         specifier: 53.7.0
         version: 53.7.0
