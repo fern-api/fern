@@ -115,6 +115,9 @@
                 "docs": "",
                 "type": "root.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_stream": {
               "auth": false,
@@ -159,6 +162,9 @@
                 "format": "json",
                 "type": "root.StreamUser",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -176,6 +182,8 @@ service:
       path: /user/{userId}
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       request:
@@ -201,6 +209,8 @@ service:
       path: /user/{userId}
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       request:

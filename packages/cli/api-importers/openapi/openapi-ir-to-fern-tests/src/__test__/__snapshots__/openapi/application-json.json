@@ -29,6 +29,9 @@
                 "docs": "Success",
                 "type": "Data",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getVndFernUserJsonVersion1": {
               "auth": false,
@@ -49,6 +52,9 @@
               "response": {
                 "docs": "Success",
                 "type": "Data",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -77,6 +83,8 @@
       path: /vnd.fern.user+json;version=1
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: Data
@@ -89,6 +97,8 @@
       path: /application-json
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: Data

@@ -22117,6 +22117,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -22729,6 +22730,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -24063,6 +24065,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }
@@ -25086,6 +25089,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "This endpoint returns a file by its name."
                 }
@@ -25531,6 +25535,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "This endpoint checks the health of a resource."
                 },
@@ -25679,6 +25684,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "This endpoint checks the health of the service."
                 }
@@ -29270,6 +29276,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -32626,6 +32633,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -33450,6 +33458,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37079,6 +37088,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }

@@ -675,6 +675,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "GET request with custom auth scheme"
                 },
@@ -959,6 +960,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "POST request with custom auth scheme"
                 }

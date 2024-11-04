@@ -78,6 +78,9 @@
                 "docs": "Success!",
                 "type": "string",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -93,6 +96,8 @@
       path: /completions/chat
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: CreateCompletionRequest
         body:

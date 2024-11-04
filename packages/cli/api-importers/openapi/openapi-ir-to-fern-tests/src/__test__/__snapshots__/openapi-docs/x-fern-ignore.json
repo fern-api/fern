@@ -46,6 +46,9 @@
                 "docs": "Success",
                 "type": "UsersResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -103,6 +106,8 @@
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: List
       request:
         name: ListRequest

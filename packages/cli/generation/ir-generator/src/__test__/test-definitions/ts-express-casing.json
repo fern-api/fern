@@ -1321,6 +1321,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -2297,6 +2298,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }

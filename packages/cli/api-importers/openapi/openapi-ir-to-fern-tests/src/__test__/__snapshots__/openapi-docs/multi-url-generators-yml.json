@@ -61,6 +61,9 @@
                 "docs": "Successful response",
                 "type": "Token",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getUserInformation": {
               "auth": false,
@@ -95,6 +98,9 @@
                 "docs": "Successful response",
                 "type": "User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listUsers": {
               "auth": false,
@@ -122,6 +128,9 @@
               "response": {
                 "docs": "Successful response",
                 "type": "User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -185,6 +194,8 @@ service:
       method: GET
       auth: false
       docs: List information about all users
+      source:
+        openapi: ../openapi.yml
       display-name: List Users
       response:
         docs: Successful response
@@ -204,6 +215,8 @@ service:
       method: GET
       auth: false
       docs: Retrieve detailed information about a specific user
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       display-name: Get user information
@@ -227,6 +240,8 @@ service:
       method: GET
       auth: false
       docs: Retrieve an authentication token for the API
+      source:
+        openapi: ../openapi.yml
       display-name: Get authentication token
       response:
         docs: Successful response

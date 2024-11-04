@@ -9289,6 +9289,9 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
                 "docs": "",
                 "type": "root.AccountDetails",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9307,6 +9310,8 @@ service:
       method: GET
       auth: true
       docs: Get details for a linked account.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: root.AccountDetails
@@ -9378,6 +9383,9 @@ service:
                 "docs": "",
                 "type": "root.AccountToken",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9398,6 +9406,8 @@ service:
       docs: >-
         Returns the account token for the end user with the provided public
         token.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         public_token: string
       response:
@@ -9486,6 +9496,9 @@ service:
                 "docs": "",
                 "type": "root.AvailableActions",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9504,6 +9517,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of models and actions available for an account.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: root.AvailableActions
@@ -9672,6 +9687,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedBankInfoList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -9745,6 +9763,9 @@ service:
                 "docs": "",
                 "type": "root.BankInfo",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -9804,6 +9825,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `BankInfo` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: BankInfoListRequest
         query-parameters:
@@ -9908,6 +9931,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `BankInfo` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -10072,6 +10097,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedBenefitList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -10138,6 +10166,9 @@ service:
                 "docs": "",
                 "type": "root.Benefit",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -10156,6 +10187,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Benefit` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: BenefitsListRequest
         query-parameters:
@@ -10241,6 +10274,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `Benefit` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -10392,6 +10427,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedCompanyList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -10454,6 +10492,9 @@ service:
                 "docs": "",
                 "type": "root.Company",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -10472,6 +10513,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Company` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: CompaniesListRequest
         query-parameters:
@@ -10546,6 +10589,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `Company` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -10606,6 +10651,9 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/delete-account",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -10622,6 +10670,8 @@ service:
       method: POST
       auth: true
       docs: Delete a linked account.
+      source:
+        openapi: ../openapi.yml
       examples:
         - headers: {}
   source:
@@ -10795,6 +10845,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedEmployeePayrollRunList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -10960,6 +11013,9 @@ service:
                 "docs": "",
                 "type": "root.EmployeePayrollRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -11023,6 +11079,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `EmployeePayrollRun` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmployeePayrollRunsListRequest
         query-parameters:
@@ -11158,6 +11216,8 @@ service:
       method: GET
       auth: true
       docs: Returns an `EmployeePayrollRun` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -11408,6 +11468,9 @@ service:
                 "docs": "",
                 "type": "root.EmployeeResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ignoreCreate": {
               "auth": true,
@@ -11448,6 +11511,9 @@ service:
                 "headers": undefined,
                 "name": "IgnoreCommonModelRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -11654,6 +11720,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedEmployeeList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "metaPostRetrieve": {
               "auth": true,
@@ -11685,6 +11754,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.MetaResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrieve": {
@@ -11790,6 +11862,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Employee",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -15191,6 +15266,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Employee` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmployeesListRequest
         query-parameters:
@@ -15373,6 +15450,8 @@ service:
       method: POST
       auth: true
       docs: Creates an `Employee` object with the given values.
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmployeeEndpointRequest
         query-parameters:
@@ -15467,6 +15546,8 @@ service:
       method: GET
       auth: true
       docs: Returns an `Employee` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -15555,6 +15636,8 @@ service:
         will have their properties set to null, and will not be updated in
         future syncs. The "reason" and "message" fields in the request body will
         be stored for audit purposes.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         model_id: string
       request:
@@ -15579,6 +15662,8 @@ service:
       method: GET
       auth: true
       docs: Returns metadata for `Employee` POSTs.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: root.MetaResponse
@@ -15725,6 +15810,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedEmploymentList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -15801,6 +15889,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Employment",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -16228,6 +16319,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Employment` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmploymentsListRequest
         query-parameters:
@@ -16323,6 +16416,8 @@ service:
       method: GET
       auth: true
       docs: Returns an `Employment` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -16418,6 +16513,9 @@ service:
                 "docs": "",
                 "type": "list<root.SyncStatus>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16441,6 +16539,8 @@ service:
         for monthly, quarterly, and highest sync frequency customers on the
         Core, Professional, or Enterprise plans. Doing so will consume a sync
         credit for the relevant linked account.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: list<root.SyncStatus>
@@ -16511,6 +16611,9 @@ service:
                 "docs": "",
                 "type": "root.RemoteKey",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16529,6 +16632,8 @@ service:
       method: POST
       auth: true
       docs: Create a remote key.
+      source:
+        openapi: ../openapi.yml
       request:
         name: GenerateRemoteKeyRequest
         body:
@@ -16663,6 +16768,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedGroupList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -16729,6 +16837,9 @@ service:
                 "docs": "",
                 "type": "root.Group",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16747,6 +16858,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Group` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: GroupsListRequest
         query-parameters:
@@ -16829,6 +16942,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `Group` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -16972,6 +17087,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedIssueList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -17010,6 +17128,9 @@ service:
                 "docs": "",
                 "type": "root.Issue",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -17046,6 +17167,8 @@ service:
       method: GET
       auth: true
       docs: Gets issues.
+      source:
+        openapi: ../openapi.yml
       request:
         name: IssuesListRequest
         query-parameters:
@@ -17123,6 +17246,8 @@ service:
       method: GET
       auth: true
       docs: Get a specific issue.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       response:
@@ -17262,6 +17387,9 @@ service:
                 "docs": "",
                 "type": "root.LinkToken",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -17280,6 +17408,8 @@ service:
       method: POST
       auth: true
       docs: Creates a link token to be used when linking a new end user.
+      source:
+        openapi: ../openapi.yml
       request:
         name: EndUserDetailsRequest
         body:
@@ -17496,6 +17626,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedAccountDetailsAndActionsList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -17542,6 +17675,8 @@ service:
       method: GET
       auth: true
       docs: List linked accounts for your organization.
+      source:
+        openapi: ../openapi.yml
       request:
         name: LinkedAccountsListRequest
         query-parameters:
@@ -17773,6 +17908,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedLocationList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -17845,6 +17983,9 @@ service:
                 "docs": "",
                 "type": "root.Location",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -17863,6 +18004,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Location` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: LocationsListRequest
         query-parameters:
@@ -17946,6 +18089,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `Location` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -18095,6 +18240,9 @@ service:
                 "docs": "",
                 "type": "root.RemoteResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -18113,6 +18261,8 @@ service:
       method: POST
       auth: true
       docs: Pull data from an endpoint not currently supported by Merge.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DataPassthroughRequest
         body:
@@ -18273,6 +18423,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedPayGroupList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -18329,6 +18482,9 @@ service:
                 "docs": "",
                 "type": "root.PayGroup",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -18347,6 +18503,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `PayGroup` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: PayGroupsListRequest
         query-parameters:
@@ -18416,6 +18574,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `PayGroup` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -18588,6 +18748,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedPayrollRunList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -18655,6 +18818,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.PayrollRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -18782,6 +18948,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `PayrollRun` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: PayrollRunsListRequest
         query-parameters:
@@ -18898,6 +19066,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `PayrollRun` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -18997,6 +19167,9 @@ service:
                 "docs": "",
                 "type": "root.RemoteKey",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19015,6 +19188,8 @@ service:
       method: POST
       auth: true
       docs: Exchange remote keys.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RemoteKeyForRegenerationRequest
         body:
@@ -19080,6 +19255,9 @@ service:
                 "docs": "",
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "configurationsUpdate": {
               "auth": true,
@@ -19133,6 +19311,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "list<root.LinkedAccountSelectiveSyncConfiguration>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "metaList": {
@@ -19191,6 +19372,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedConditionSchemaList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19209,6 +19393,8 @@ service:
       method: GET
       auth: true
       docs: Get a linked account's selective syncs.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: list<root.LinkedAccountSelectiveSyncConfiguration>
@@ -19229,6 +19415,8 @@ service:
       method: PUT
       auth: true
       docs: Replace a linked account's selective syncs.
+      source:
+        openapi: ../openapi.yml
       request:
         name: LinkedAccountSelectiveSyncConfigurationListRequest
         body:
@@ -19260,6 +19448,8 @@ service:
       method: GET
       auth: true
       docs: Get metadata for the conditions available to a linked account.
+      source:
+        openapi: ../openapi.yml
       request:
         name: SelectiveSyncMetaListRequest
         query-parameters:
@@ -19351,6 +19541,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedSyncStatusList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19371,6 +19564,8 @@ service:
       docs: >-
         Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`,
         `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`
+      source:
+        openapi: ../openapi.yml
       request:
         name: SyncStatusListRequest
         query-parameters:
@@ -19507,6 +19702,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedTeamList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -19568,6 +19766,9 @@ service:
                 "docs": "",
                 "type": "root.Team",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19586,6 +19787,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `Team` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TeamsListRequest
         query-parameters:
@@ -19664,6 +19867,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `Team` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -19821,6 +20026,9 @@ service:
                 "docs": "",
                 "type": "root.TimeOffResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -19958,6 +20166,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedTimeOffList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "metaPostRetrieve": {
               "auth": true,
@@ -19989,6 +20200,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.MetaResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrieve": {
@@ -20065,6 +20279,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.TimeOff",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -20337,6 +20554,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `TimeOff` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TimeOffListRequest
         query-parameters:
@@ -20466,6 +20685,8 @@ service:
       method: POST
       auth: true
       docs: Creates a `TimeOff` object with the given values.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TimeOffEndpointRequest
         query-parameters:
@@ -20538,6 +20759,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `TimeOff` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -20595,6 +20818,8 @@ service:
       method: GET
       auth: true
       docs: Returns metadata for `TimeOff` POSTs.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: root.MetaResponse
@@ -20742,6 +20967,9 @@ service:
                 "docs": "",
                 "type": "root.PaginatedTimeOffBalanceList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieve": {
               "auth": true,
@@ -20813,6 +21041,9 @@ service:
                 "docs": "",
                 "type": "root.TimeOffBalance",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20857,6 +21088,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `TimeOffBalance` objects.
+      source:
+        openapi: ../openapi.yml
       request:
         name: TimeOffBalancesListRequest
         query-parameters:
@@ -20962,6 +21195,8 @@ service:
       method: GET
       auth: true
       docs: Returns a `TimeOffBalance` object with the given `id`.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:
@@ -21078,6 +21313,9 @@ service:
                 "docs": "",
                 "type": "root.WebhookReceiver",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -21103,6 +21341,9 @@ service:
                 "docs": "",
                 "type": "list<root.WebhookReceiver>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -21121,6 +21362,8 @@ service:
       method: GET
       auth: true
       docs: Returns a list of `WebhookReceiver` objects.
+      source:
+        openapi: ../openapi.yml
       response:
         docs: ''
         type: list<root.WebhookReceiver>
@@ -21136,6 +21379,8 @@ service:
       method: POST
       auth: true
       docs: Creates a `WebhookReceiver` object with the given values.
+      source:
+        openapi: ../openapi.yml
       request:
         name: WebhookReceiverRequest
         body:
