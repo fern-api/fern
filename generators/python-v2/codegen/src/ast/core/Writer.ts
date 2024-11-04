@@ -1,9 +1,5 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
-import { Reference } from "../Reference";
 import init, { format } from "@wasm-fmt/ruff_fmt";
-
-/* A dot-separated string representing the module path */
-type ModulePath = string;
 
 export declare namespace Writer {}
 
