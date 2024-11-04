@@ -1,8 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { AttrPath, ModulePath } from "./core/types";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { Class } from "./Class";
 
 export declare namespace Reference {
     interface Args {
@@ -15,7 +13,7 @@ export declare namespace Reference {
         */
         modulePath?: ModulePath;
         /* The generic types of the reference */
-        genericTypes?: Type[];
+        genericTypes?: AstNode[];
         /* The alias of the reference */
         alias?: string;
         /* The path to the attribute of the reference */
