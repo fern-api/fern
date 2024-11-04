@@ -3,6 +3,20 @@ imports:
   endpoints: ./endpoints.yml
 
 types:
+  ErrorSeverity:
+    audiences:
+      - dynamic
+    enum:
+      - CRITICAL
+      - WARNING
+
+  Error:
+    audiences:
+      - dynamic
+    properties:
+      severity: ErrorSeverity
+      message: string
+
   Values:
     audiences:
       - dynamic
@@ -12,6 +26,71 @@ types:
       in the parameter's wire representation. For path parameters,
       the name will match the parameter name.
     type: map<string, unknown>
+
+  FileValues:
+    audiences:
+      - dynamic
+    docs: |
+      File snippet values are represented as structured key, value
+      pairs (i.e. file values). The keys are expected to be in the
+      parameter's wire representation, whereas the value is expected
+      to contain either non-empty filename or content.
+    discriminated: false
+    union:
+      - map<string, list<FileValue>>
+      - map<string, FileValue>
+
+  FileValue:
+    audiences:
+      - dynamic
+    properties:
+      content:
+        docs: |
+          The content to use in the file upload snippet.
+        type: FileContent
+      contentType:
+        docs: |
+          The MIME type that should be explicitly set for the file, if any.
+        type: optional<string>
+
+  FileContent:
+    audiences:
+      - dynamic
+    union:
+      filename:
+        docs: |
+          The content is contained within the filename, so the snippet should
+          reference the filename to upload its contents.
+        type: string
+      data:
+        docs: |
+          The content is the data field itself, so the snippet should
+          reference the raw data to upload its contents.
+        type: string
+
+  RequestBody:
+    audiences:
+      - dynamic
+    union:
+      bytes:
+        docs: |
+          If set, the endpoint must be a bytes endpoint.
+        type: string
+      multipart:
+        docs: |
+          If set, the endpoint must be a multipart/form-data endpoint.
+        type: MultipartRequestBody
+      json:
+        docs: |
+          If set, the endpoint must be a JSON endpoint.
+        type: unknown
+
+  MultipartRequestBody:
+    audiences:
+      - dynamic
+    properties:
+      files: optional<FileValues>
+      formData: optional<Values>
 
   EndpointSnippetRequest:
     audiences:
@@ -24,12 +103,17 @@ types:
       pathParameters: optional<Values>
       queryParameters: optional<Values>
       headers: optional<Values>
-      requestBody: optional<unknown>
+      requestBody: optional<RequestBody>
 
   EndpointSnippetResponse:
     audiences:
       - dynamic
     docs: |
       The user-facing response type containing the generated snippet.
+
+      If there are any errors, the snippet will still sometimes represent
+      a partial and/or valid result. This is useful for rendering a snippet
+      alongside error messages the user can use to diagnose and fix the problem.
     properties:
       snippet: string
+      errors: optional<list<Error>>
