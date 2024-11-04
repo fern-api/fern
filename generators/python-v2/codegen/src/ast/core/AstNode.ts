@@ -1,6 +1,6 @@
 import { AbstractAstNode } from "@fern-api/generator-commons";
 import { Writer } from "./Writer";
-import init, { format } from "@wasm-fmt/ruff_fmt";
+import init, { Config, format } from "@wasm-fmt/ruff_fmt";
 import type { Reference } from "../Reference";
 
 export abstract class AstNode extends AbstractAstNode {
@@ -38,8 +38,8 @@ export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string and formats it.
      */
-    public async toStringFormatted(): Promise<string> {
+    public async toStringFormatted(config?: Config): Promise<string> {
         await init();
-        return format(this.toString());
+        return format(this.toString(), undefined, config);
     }
 }
