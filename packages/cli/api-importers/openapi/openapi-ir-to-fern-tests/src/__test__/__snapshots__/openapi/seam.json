@@ -7772,6 +7772,9 @@ types:
                 "property": "access_code",
                 "type": "AccessCodesCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create_multiple": {
               "auth": true,
@@ -7875,6 +7878,9 @@ types:
                 "property": "access_codes",
                 "type": "AccessCodesCreateMultipleResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -7941,6 +7947,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "AccessCodesDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "generate_code": {
@@ -8016,6 +8025,9 @@ types:
                 "docs": "OK",
                 "property": "generated_code",
                 "type": "AccessCodesGenerateCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -8100,6 +8112,9 @@ types:
                 "property": "access_code",
                 "type": "AccessCodesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -8177,6 +8192,9 @@ types:
                 "property": "access_codes",
                 "type": "AccessCodesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "pull_backup_access_code": {
               "auth": true,
@@ -8251,6 +8269,9 @@ types:
                 "docs": "OK",
                 "property": "backup_access_code",
                 "type": "AccessCodesPullBackupAccessCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -8347,6 +8368,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "AccessCodesUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -8641,6 +8665,8 @@ service:
       path: /access_codes/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/create
       request:
         name: AccessCodesCreateRequest
@@ -8724,6 +8750,8 @@ service:
       path: /access_codes/create_multiple
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/create_multiple
       request:
         name: AccessCodesCreateMultipleRequest
@@ -8800,6 +8828,8 @@ service:
       path: /access_codes/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/delete
       request:
         name: AccessCodesDeleteRequest
@@ -8839,6 +8869,8 @@ service:
       path: /access_codes/generate_code
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/generate_code
       request:
         name: AccessCodesGenerateCodeRequest
@@ -8890,6 +8922,8 @@ service:
       path: /access_codes/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/get
       request:
         name: AccessCodesGetRequest
@@ -8945,6 +8979,8 @@ service:
       path: /access_codes/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/list
       request:
         name: AccessCodesListRequest
@@ -8997,6 +9033,8 @@ service:
       path: /access_codes/pull_backup_access_code
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/pull_backup_access_code
       request:
         name: AccessCodesPullBackupAccessCodeRequest
@@ -9048,6 +9086,8 @@ service:
       path: /access_codes/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/update
       request:
         name: AccessCodesUpdateRequest
@@ -9198,6 +9238,9 @@ service:
                 "property": "access_code",
                 "type": "SimulateCreateUnmanagedAccessCodeResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -9234,6 +9277,8 @@ service:
       path: /access_codes/simulate/create_unmanaged_access_code
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/simulate/create_unmanaged_access_code
       request:
         name: SimulateCreateUnmanagedAccessCodeRequest
@@ -9348,6 +9393,9 @@ service:
                 "docs": "OK",
                 "type": "UnmanagedConvertToManagedResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -9405,6 +9453,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UnmanagedDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -9480,6 +9531,9 @@ service:
                 "property": "access_code",
                 "type": "UnmanagedGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -9549,6 +9603,9 @@ service:
                 "property": "access_codes",
                 "type": "UnmanagedListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "update": {
               "auth": true,
@@ -9600,6 +9657,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UnmanagedUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -9697,6 +9757,8 @@ service:
       path: /access_codes/unmanaged/convert_to_managed
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/unmanaged/convert_to_managed
       request:
         name: UnmanagedConvertToManagedRequest
@@ -9729,6 +9791,8 @@ service:
       path: /access_codes/unmanaged/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/unmanaged/delete
       request:
         name: UnmanagedDeleteRequest
@@ -9764,6 +9828,8 @@ service:
       path: /access_codes/unmanaged/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/unmanaged/get
       request:
         name: UnmanagedGetRequest
@@ -9810,6 +9876,8 @@ service:
       path: /access_codes/unmanaged/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/unmanaged/list
       request:
         name: UnmanagedListRequest
@@ -9853,6 +9921,8 @@ service:
       path: /access_codes/unmanaged/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /access_codes/unmanaged/update
       request:
         name: UnmanagedUpdateRequest
@@ -9950,6 +10020,9 @@ service:
                 "docs": "OK",
                 "type": "AccessGroupsAddUserResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -10009,6 +10082,9 @@ service:
                 "docs": "OK",
                 "property": "acs_access_group",
                 "type": "AccessGroupsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -10078,6 +10154,9 @@ service:
                 "docs": "OK",
                 "property": "acs_access_groups",
                 "type": "AccessGroupsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_users": {
@@ -10152,6 +10231,9 @@ service:
                 "property": "acs_users",
                 "type": "AccessGroupsListUsersResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "remove_user": {
               "auth": true,
@@ -10208,6 +10290,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "AccessGroupsRemoveUserResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -10305,6 +10390,8 @@ service:
       path: /acs/access_groups/add_user
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/access_groups/add_user
       request:
         name: AccessGroupsAddUserRequest
@@ -10336,6 +10423,8 @@ service:
       path: /acs/access_groups/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/access_groups/get
       request:
         name: AccessGroupsGetRequest
@@ -10374,6 +10463,8 @@ service:
       path: /acs/access_groups/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/access_groups/list
       request:
         name: AccessGroupsListRequest
@@ -10415,6 +10506,8 @@ service:
       path: /acs/access_groups/list_users
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/access_groups/list_users
       request:
         name: AccessGroupsListUsersRequest
@@ -10463,6 +10556,8 @@ service:
       path: /acs/access_groups/remove_user
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/access_groups/remove_user
       request:
         name: AccessGroupsRemoveUserRequest
@@ -10562,6 +10657,9 @@ service:
                 "property": "acs_credential_pools",
                 "type": "CredentialPoolsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -10598,6 +10696,8 @@ service:
       path: /acs/credential_pools/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credential_pools/list
       request:
         name: CredentialPoolsListRequest
@@ -10726,6 +10826,9 @@ service:
                 "property": "acs_credential_provisioning_automation",
                 "type": "CredentialProvisioningAutomationsLaunchResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -10762,6 +10865,8 @@ service:
       path: /acs/credential_provisioning_automations/launch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credential_provisioning_automations/launch
       request:
         name: CredentialProvisioningAutomationsLaunchRequest
@@ -10918,6 +11023,9 @@ service:
                 "docs": "OK",
                 "type": "CredentialsAssignResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create": {
               "auth": true,
@@ -11037,6 +11145,9 @@ service:
                 "property": "acs_credential",
                 "type": "CredentialsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -11083,6 +11194,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "CredentialsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -11175,6 +11289,9 @@ service:
                 "property": "acs_credential",
                 "type": "CredentialsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -11249,6 +11366,9 @@ service:
                 "property": "acs_credentials",
                 "type": "CredentialsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_accessible_entrances": {
               "auth": true,
@@ -11320,6 +11440,9 @@ service:
                 "docs": "OK",
                 "property": "acs_entrances",
                 "type": "CredentialsListAccessibleEntrancesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "unassign": {
@@ -11421,6 +11544,9 @@ service:
                 "docs": "OK",
                 "type": "CredentialsUnassignResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "update": {
               "auth": true,
@@ -11512,6 +11638,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "CredentialsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -11762,6 +11891,8 @@ service:
       path: /acs/credentials/assign
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/assign
       request:
         name: CredentialsAssignRequest
@@ -11825,6 +11956,8 @@ service:
       path: /acs/credentials/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/create
       request:
         name: CredentialsCreateRequest
@@ -11901,6 +12034,8 @@ service:
       path: /acs/credentials/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/delete
       request:
         name: CredentialsDeleteRequest
@@ -11927,6 +12062,8 @@ service:
       path: /acs/credentials/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/get
       request:
         name: CredentialsGetRequest
@@ -11986,6 +12123,8 @@ service:
       path: /acs/credentials/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/list
       request:
         name: CredentialsListRequest
@@ -12035,6 +12174,8 @@ service:
       path: /acs/credentials/list_accessible_entrances
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/list_accessible_entrances
       request:
         name: CredentialsListAccessibleEntrancesRequest
@@ -12078,6 +12219,8 @@ service:
       path: /acs/credentials/unassign
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/unassign
       request:
         name: CredentialsUnassignRequest
@@ -12141,6 +12284,8 @@ service:
       path: /acs/credentials/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/credentials/update
       request:
         name: CredentialsUpdateRequest
@@ -12286,6 +12431,9 @@ service:
                 "property": "acs_entrance",
                 "type": "EntrancesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "grant_access": {
               "auth": true,
@@ -12342,6 +12490,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "EntrancesGrantAccessResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -12421,6 +12572,9 @@ service:
                 "docs": "OK",
                 "property": "acs_entrances",
                 "type": "EntrancesListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_credentials_with_access": {
@@ -12507,6 +12661,9 @@ service:
                 "property": "acs_credentials",
                 "type": "EntrancesListCredentialsWithAccessResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -12589,6 +12746,8 @@ service:
       path: /acs/entrances/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/entrances/get
       request:
         name: EntrancesGetRequest
@@ -12635,6 +12794,8 @@ service:
       path: /acs/entrances/grant_access
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/entrances/grant_access
       request:
         name: EntrancesGrantAccessRequest
@@ -12666,6 +12827,8 @@ service:
       path: /acs/entrances/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/entrances/list
       request:
         name: EntrancesListRequest
@@ -12712,6 +12875,8 @@ service:
       path: /acs/entrances/list_credentials_with_access
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/entrances/list_credentials_with_access
       request:
         name: EntrancesListCredentialsWithAccessRequest
@@ -12852,6 +13017,9 @@ service:
                 "property": "acs_system",
                 "type": "SystemsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -12928,6 +13096,9 @@ service:
                 "docs": "OK",
                 "property": "acs_systems",
                 "type": "SystemsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_compatible_credential_manager_acs_systems": {
@@ -13008,6 +13179,9 @@ service:
                 "property": "acs_systems",
                 "type": "SystemsListCompatibleCredentialManagerAcsSystemsResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -13076,6 +13250,8 @@ service:
       path: /acs/systems/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/systems/get
       request:
         name: SystemsGetRequest
@@ -13126,6 +13302,8 @@ service:
       path: /acs/systems/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/systems/list
       request:
         name: SystemsListRequest
@@ -13175,6 +13353,8 @@ service:
       path: /acs/systems/list_compatible_credential_manager_acs_systems
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/systems/list_compatible_credential_manager_acs_systems
       request:
         name: SystemsListCompatibleCredentialManagerAcsSystemsRequest
@@ -13291,6 +13471,9 @@ service:
                 "docs": "OK",
                 "type": "UsersAddToAccessGroupResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create": {
               "auth": true,
@@ -13398,6 +13581,9 @@ service:
                 "property": "acs_user",
                 "type": "UsersCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -13444,6 +13630,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UsersDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -13515,6 +13704,9 @@ service:
                 "docs": "OK",
                 "property": "acs_user",
                 "type": "UsersGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -13598,6 +13790,9 @@ service:
                 "property": "acs_users",
                 "type": "UsersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_accessible_entrances": {
               "auth": true,
@@ -13670,6 +13865,9 @@ service:
                 "property": "acs_entrances",
                 "type": "UsersListAccessibleEntrancesResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "remove_from_access_group": {
               "auth": true,
@@ -13727,6 +13925,9 @@ service:
                 "docs": "OK",
                 "type": "UsersRemoveFromAccessGroupResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "revoke_access_to_all_entrances": {
               "auth": true,
@@ -13773,6 +13974,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UsersRevokeAccessToAllEntrancesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "suspend": {
@@ -13821,6 +14025,9 @@ service:
                 "docs": "OK",
                 "type": "UsersSuspendResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "unsuspend": {
               "auth": true,
@@ -13867,6 +14074,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UsersUnsuspendResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -13949,6 +14159,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UsersUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -14164,6 +14377,8 @@ service:
       path: /acs/users/add_to_access_group
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/add_to_access_group
       request:
         name: UsersAddToAccessGroupRequest
@@ -14195,6 +14410,8 @@ service:
       path: /acs/users/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/create
       request:
         name: UsersCreateRequest
@@ -14265,6 +14482,8 @@ service:
       path: /acs/users/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/delete
       request:
         name: UsersDeleteRequest
@@ -14291,6 +14510,8 @@ service:
       path: /acs/users/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/get
       request:
         name: UsersGetRequest
@@ -14339,6 +14560,8 @@ service:
       path: /acs/users/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/list
       request:
         name: UsersListRequest
@@ -14392,6 +14615,8 @@ service:
       path: /acs/users/list_accessible_entrances
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/list_accessible_entrances
       request:
         name: UsersListAccessibleEntrancesRequest
@@ -14435,6 +14660,8 @@ service:
       path: /acs/users/remove_from_access_group
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/remove_from_access_group
       request:
         name: UsersRemoveFromAccessGroupRequest
@@ -14466,6 +14693,8 @@ service:
       path: /acs/users/revoke_access_to_all_entrances
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/revoke_access_to_all_entrances
       request:
         name: UsersRevokeAccessToAllEntrancesRequest
@@ -14492,6 +14721,8 @@ service:
       path: /acs/users/suspend
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/suspend
       request:
         name: UsersSuspendRequest
@@ -14518,6 +14749,8 @@ service:
       path: /acs/users/unsuspend
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/unsuspend
       request:
         name: UsersUnsuspendRequest
@@ -14544,6 +14777,8 @@ service:
       path: /acs/users/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /acs/users/update
       request:
         name: UsersUpdateRequest
@@ -14655,6 +14890,9 @@ service:
                 "property": "action_attempt",
                 "type": "ActionAttemptsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -14705,6 +14943,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempts",
                 "type": "ActionAttemptsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -14758,6 +14999,8 @@ service:
       path: /action_attempts/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /action_attempts/get
       request:
         name: ActionAttemptsGetRequest
@@ -14791,6 +15034,8 @@ service:
       path: /action_attempts/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /action_attempts/list
       request:
         name: ActionAttemptsListRequest
@@ -14898,6 +15143,9 @@ service:
                 "property": "client_session",
                 "type": "ClientSessionsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -14944,6 +15192,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ClientSessionsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -15000,6 +15251,9 @@ service:
                 "docs": "OK",
                 "property": "client_session",
                 "type": "ClientSessionsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_or_create": {
@@ -15068,6 +15322,9 @@ service:
                 "property": "client_session",
                 "type": "ClientSessionsGetOrCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "grant_access": {
               "auth": true,
@@ -15125,6 +15382,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ClientSessionsGrantAccessResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -15187,6 +15447,9 @@ service:
                 "property": "client_sessions",
                 "type": "ClientSessionsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "revoke": {
               "auth": true,
@@ -15233,6 +15496,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ClientSessionsRevokeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -15362,6 +15628,8 @@ service:
       path: /client_sessions/create
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/create
       request:
         name: ClientSessionsCreateRequest
@@ -15405,6 +15673,8 @@ service:
       path: /client_sessions/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/delete
       request:
         name: ClientSessionsDeleteRequest
@@ -15431,6 +15701,8 @@ service:
       path: /client_sessions/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/get
       request:
         name: ClientSessionsGetRequest
@@ -15468,6 +15740,8 @@ service:
       path: /client_sessions/get_or_create
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/get_or_create
       request:
         name: ClientSessionsGetOrCreateRequest
@@ -15511,6 +15785,8 @@ service:
       path: /client_sessions/grant_access
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/grant_access
       request:
         name: ClientSessionsGrantAccessRequest
@@ -15550,6 +15826,8 @@ service:
       path: /client_sessions/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/list
       request:
         name: ClientSessionsListRequest
@@ -15590,6 +15868,8 @@ service:
       path: /client_sessions/revoke
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /client_sessions/revoke
       request:
         name: ClientSessionsRevokeRequest
@@ -15703,6 +15983,9 @@ service:
                 "property": "connect_webview",
                 "type": "ConnectWebviewsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -15749,6 +16032,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ConnectWebviewsDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -15825,6 +16111,9 @@ service:
                 "property": "connect_webview",
                 "type": "ConnectWebviewsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -15899,6 +16188,9 @@ service:
                 "docs": "OK",
                 "property": "connect_webviews",
                 "type": "ConnectWebviewsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -16163,6 +16455,8 @@ service:
       path: /connect_webviews/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connect_webviews/create
       request:
         name: ConnectWebviewsCreateRequest
@@ -16222,6 +16516,8 @@ service:
       path: /connect_webviews/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connect_webviews/delete
       request:
         name: ConnectWebviewsDeleteRequest
@@ -16248,6 +16544,8 @@ service:
       path: /connect_webviews/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connect_webviews/get
       request:
         name: ConnectWebviewsGetRequest
@@ -16298,6 +16596,8 @@ service:
       path: /connect_webviews/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connect_webviews/list
       request:
         name: ConnectWebviewsListRequest
@@ -16414,6 +16714,9 @@ service:
                 "docs": "OK",
                 "type": "ConnectedAccountsDeleteResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -16469,6 +16772,9 @@ service:
                 "docs": "OK",
                 "property": "connected_account",
                 "type": "ConnectedAccountsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -16528,6 +16834,9 @@ service:
                 "docs": "OK",
                 "property": "connected_accounts",
                 "type": "ConnectedAccountsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -16601,6 +16910,9 @@ service:
                 "docs": "OK",
                 "property": "connected_account",
                 "type": "ConnectedAccountsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -16803,6 +17115,8 @@ service:
       path: /connected_accounts/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connected_accounts/delete
       request:
         name: ConnectedAccountsDeleteRequest
@@ -16832,6 +17146,8 @@ service:
       path: /connected_accounts/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connected_accounts/get
       request:
         body: ConnectedAccountsGetRequest
@@ -16871,6 +17187,8 @@ service:
       path: /connected_accounts/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connected_accounts/list
       request:
         name: ConnectedAccountsListRequest
@@ -16912,6 +17230,8 @@ service:
       path: /connected_accounts/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /connected_accounts/update
       request:
         name: ConnectedAccountsUpdateRequest
@@ -17016,6 +17336,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "DevicesDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -17317,6 +17640,9 @@ service:
                 "property": "device",
                 "type": "DevicesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -17435,6 +17761,9 @@ service:
                 "property": "devices",
                 "type": "DevicesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_device_providers": {
               "auth": true,
@@ -17482,6 +17811,9 @@ service:
                 "docs": "OK",
                 "property": "device_providers",
                 "type": "DevicesListDeviceProvidersResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -17536,6 +17868,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "DevicesUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -18001,6 +18336,8 @@ service:
       path: /devices/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/delete
       request:
         name: DevicesDeleteRequest
@@ -18027,6 +18364,8 @@ service:
       path: /devices/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/get
       request:
         name: DevicesGetRequest
@@ -18249,6 +18588,8 @@ service:
       path: /devices/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/list
       request:
         name: DevicesListRequest
@@ -18327,6 +18668,8 @@ service:
       path: /devices/list_device_providers
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/list_device_providers
       request:
         name: DevicesListDeviceProvidersRequest
@@ -18356,6 +18699,8 @@ service:
       path: /devices/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/update
       request:
         name: DevicesUpdateRequest
@@ -18446,6 +18791,9 @@ service:
                 "docs": "OK",
                 "type": "SimulateConnectResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "disconnect": {
               "auth": true,
@@ -18493,6 +18841,9 @@ service:
                 "docs": "OK",
                 "type": "SimulateDisconnectResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "remove": {
               "auth": true,
@@ -18539,6 +18890,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "SimulateRemoveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -18602,6 +18956,8 @@ service:
       path: /devices/simulate/connect
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/simulate/connect
       request:
         name: SimulateConnectRequest
@@ -18628,6 +18984,8 @@ service:
       path: /devices/simulate/disconnect
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/simulate/disconnect
       request:
         name: SimulateDisconnectRequest
@@ -18654,6 +19012,8 @@ service:
       path: /devices/simulate/remove
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/simulate/remove
       request:
         name: SimulateRemoveRequest
@@ -18787,6 +19147,9 @@ service:
                 "property": "device",
                 "type": "UnmanagedGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -18897,6 +19260,9 @@ service:
                 "property": "devices",
                 "type": "UnmanagedListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "update": {
               "auth": true,
@@ -18945,6 +19311,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UnmanagedUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -19314,6 +19683,8 @@ service:
       path: /devices/unmanaged/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/unmanaged/get
       request:
         name: UnmanagedGetRequest
@@ -19380,6 +19751,8 @@ service:
       path: /devices/unmanaged/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/unmanaged/list
       request:
         name: UnmanagedListRequest
@@ -19452,6 +19825,8 @@ service:
       path: /devices/unmanaged/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /devices/unmanaged/update
       request:
         name: UnmanagedUpdateRequest
@@ -19560,6 +19935,9 @@ service:
                 "property": "event",
                 "type": "EventsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -19649,6 +20027,9 @@ service:
                 "docs": "OK",
                 "property": "events",
                 "type": "EventsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -20441,6 +20822,8 @@ service:
       path: /events/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /events/get
       request:
         name: EventsGetRequest
@@ -20486,6 +20869,8 @@ service:
       path: /events/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /events/list
       request:
         name: EventsListRequest
@@ -21104,6 +21489,9 @@ service:
                 "property": "device",
                 "type": "LocksGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -21270,6 +21658,9 @@ service:
                 "property": "devices",
                 "type": "LocksListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "lock_door": {
               "auth": true,
@@ -21329,6 +21720,9 @@ service:
                 "property": "action_attempt",
                 "type": "LocksLockDoorResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "unlock_door": {
               "auth": true,
@@ -21387,6 +21781,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "LocksUnlockDoorResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -21778,6 +22175,8 @@ service:
       path: /locks/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /locks/get
       request:
         name: LocksGetRequest
@@ -22195,6 +22594,8 @@ service:
       path: /locks/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /locks/list
       request:
         name: LocksListRequest
@@ -22307,6 +22708,8 @@ service:
       path: /locks/lock_door
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /locks/lock_door
       request:
         name: LocksLockDoorRequest
@@ -22343,6 +22746,8 @@ service:
       path: /locks/unlock_door
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /locks/unlock_door
       request:
         name: LocksUnlockDoorRequest
@@ -22442,6 +22847,9 @@ service:
                 "property": "network",
                 "type": "NetworksGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -22485,6 +22893,9 @@ service:
                 "docs": "OK",
                 "property": "networks",
                 "type": "NetworksListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -22538,6 +22949,8 @@ service:
       path: /networks/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /networks/get
       request:
         name: NetworksGetRequest
@@ -22570,6 +22983,8 @@ service:
       path: /networks/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /networks/list
       request:
         name: NetworksListRequest
@@ -22681,6 +23096,9 @@ service:
                 "property": "noise_threshold",
                 "type": "NoiseThresholdsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -22749,6 +23167,9 @@ service:
                 "docs": "OK",
                 "type": "NoiseThresholdsDeleteResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -22805,6 +23226,9 @@ service:
                 "docs": "OK",
                 "property": "noise_threshold",
                 "type": "NoiseThresholdsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -22865,6 +23289,9 @@ service:
                 "docs": "OK",
                 "property": "noise_thresholds",
                 "type": "NoiseThresholdsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -22938,6 +23365,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "NoiseThresholdsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -23041,6 +23471,8 @@ service:
       path: /noise_sensors/noise_thresholds/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/create
       request:
         name: NoiseThresholdsCreateRequest
@@ -23092,6 +23524,8 @@ service:
       path: /noise_sensors/noise_thresholds/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/delete
       request:
         name: NoiseThresholdsDeleteRequest
@@ -23132,6 +23566,8 @@ service:
       path: /noise_sensors/noise_thresholds/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/get
       request:
         name: NoiseThresholdsGetRequest
@@ -23167,6 +23603,8 @@ service:
       path: /noise_sensors/noise_thresholds/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/list
       request:
         name: NoiseThresholdsListRequest
@@ -23203,6 +23641,8 @@ service:
       path: /noise_sensors/noise_thresholds/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/update
       request:
         name: NoiseThresholdsUpdateRequest
@@ -23304,6 +23744,9 @@ service:
                 "docs": "OK",
                 "type": "SimulateTriggerNoiseThresholdResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -23338,6 +23781,8 @@ service:
       path: /noise_sensors/simulate/trigger_noise_threshold
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /noise_sensors/simulate/trigger_noise_threshold
       request:
         name: SimulateTriggerNoiseThresholdRequest
@@ -23411,6 +23856,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "PhonesDeactivateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -23495,6 +23943,9 @@ service:
                 "property": "phones",
                 "type": "PhonesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -23545,6 +23996,8 @@ service:
       path: /phones/deactivate
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /phones/deactivate
       request:
         name: PhonesDeactivateRequest
@@ -23568,6 +24021,8 @@ service:
       path: /phones/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /phones/list
       request:
         name: PhonesListRequest
@@ -23729,6 +24184,9 @@ service:
                 "property": "phone",
                 "type": "SimulateCreateSandboxPhoneResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -23877,6 +24335,8 @@ service:
       path: /phones/simulate/create_sandbox_phone
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /phones/simulate/create_sandbox_phone
       request:
         name: SimulateCreateSandboxPhoneRequest
@@ -24010,6 +24470,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "ThermostatsCoolResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -24311,6 +24774,9 @@ service:
                 "property": "thermostat",
                 "type": "ThermostatsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "heat": {
               "auth": true,
@@ -24371,6 +24837,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "ThermostatsHeatResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "heat_cool": {
@@ -24434,6 +24903,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "ThermostatsHeatCoolResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -24553,6 +25025,9 @@ service:
                 "property": "thermostats",
                 "type": "ThermostatsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "off": {
               "auth": true,
@@ -24611,6 +25086,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "ThermostatsOffResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "set_fan_mode": {
@@ -24673,6 +25151,9 @@ service:
                 "property": "action_attempt",
                 "type": "ThermostatsSetFanModeResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "update": {
               "auth": true,
@@ -24721,6 +25202,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ThermostatsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -25247,6 +25731,8 @@ service:
       path: /thermostats/cool
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/cool
       request:
         name: ThermostatsCoolRequest
@@ -25285,6 +25771,8 @@ service:
       path: /thermostats/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/get
       request:
         name: ThermostatsGetRequest
@@ -25507,6 +25995,8 @@ service:
       path: /thermostats/heat
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/heat
       request:
         name: ThermostatsHeatRequest
@@ -25545,6 +26035,8 @@ service:
       path: /thermostats/heat_cool
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/heat_cool
       request:
         name: ThermostatsHeatCoolRequest
@@ -25585,6 +26077,8 @@ service:
       path: /thermostats/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/list
       request:
         name: ThermostatsListRequest
@@ -25665,6 +26159,8 @@ service:
       path: /thermostats/off
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/off
       request:
         name: ThermostatsOffRequest
@@ -25701,6 +26197,8 @@ service:
       path: /thermostats/set_fan_mode
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/set_fan_mode
       request:
         name: ThermostatsSetFanModeRequest
@@ -25739,6 +26237,8 @@ service:
       path: /thermostats/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/update
       request:
         name: ThermostatsUpdateRequest
@@ -25850,6 +26350,9 @@ service:
                 "property": "climate_setting_schedule",
                 "type": "ClimateSettingSchedulesCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -25896,6 +26399,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ClimateSettingSchedulesDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -25972,6 +26478,9 @@ service:
                 "property": "climate_setting_schedule",
                 "type": "ClimateSettingSchedulesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -26042,6 +26551,9 @@ service:
                 "docs": "OK",
                 "property": "climate_setting_schedules",
                 "type": "ClimateSettingSchedulesListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -26121,6 +26633,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "ClimateSettingSchedulesUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -26258,6 +26773,8 @@ service:
       path: /thermostats/climate_setting_schedules/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/create
       request:
         name: ClimateSettingSchedulesCreateRequest
@@ -26314,6 +26831,8 @@ service:
       path: /thermostats/climate_setting_schedules/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/delete
       request:
         name: ClimateSettingSchedulesDeleteRequest
@@ -26340,6 +26859,8 @@ service:
       path: /thermostats/climate_setting_schedules/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/get
       request:
         name: ClimateSettingSchedulesGetRequest
@@ -26388,6 +26909,8 @@ service:
       path: /thermostats/climate_setting_schedules/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/list
       request:
         name: ClimateSettingSchedulesListRequest
@@ -26434,6 +26957,8 @@ service:
       path: /thermostats/climate_setting_schedules/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/update
       request:
         name: ClimateSettingSchedulesUpdateRequest
@@ -26556,6 +27081,9 @@ service:
                 "docs": "OK",
                 "type": "UserIdentitiesAddAcsUserResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create": {
               "auth": true,
@@ -26631,6 +27159,9 @@ service:
                 "property": "user_identity",
                 "type": "UserIdentitiesCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -26678,6 +27209,9 @@ service:
                 "docs": "OK",
                 "type": "UserIdentitiesDeleteResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -26720,6 +27254,9 @@ service:
                 "docs": "OK",
                 "property": "user_identity",
                 "type": "UserIdentitiesGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "grant_access_to_device": {
@@ -26778,6 +27315,9 @@ service:
                 "docs": "OK",
                 "type": "UserIdentitiesGrantAccessToDeviceResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -26835,6 +27375,9 @@ service:
                 "docs": "OK",
                 "property": "user_identities",
                 "type": "UserIdentitiesListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_accessible_devices": {
@@ -26980,6 +27523,9 @@ service:
                 "property": "devices",
                 "type": "UserIdentitiesListAccessibleDevicesResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_acs_systems": {
               "auth": true,
@@ -27059,6 +27605,9 @@ service:
                 "property": "acs_systems",
                 "type": "UserIdentitiesListAcsSystemsResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_acs_users": {
               "auth": true,
@@ -27132,6 +27681,9 @@ service:
                 "property": "acs_users",
                 "type": "UserIdentitiesListAcsUsersResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "remove_acs_user": {
               "auth": true,
@@ -27189,6 +27741,9 @@ service:
                 "docs": "OK",
                 "type": "UserIdentitiesRemoveAcsUserResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "revoke_access_to_device": {
               "auth": true,
@@ -27245,6 +27800,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UserIdentitiesRevokeAccessToDeviceResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -27320,6 +27878,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "UserIdentitiesUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -27595,6 +28156,8 @@ service:
       path: /user_identities/add_acs_user
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/add_acs_user
       request:
         name: UserIdentitiesAddAcsUserRequest
@@ -27626,6 +28189,8 @@ service:
       path: /user_identities/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/create
       request:
         name: UserIdentitiesCreateRequest
@@ -27670,6 +28235,8 @@ service:
       path: /user_identities/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/delete
       request:
         name: UserIdentitiesDeleteRequest
@@ -27696,6 +28263,8 @@ service:
       path: /user_identities/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/get
       request:
         body: UserIdentitiesGetRequest
@@ -27726,6 +28295,8 @@ service:
       path: /user_identities/grant_access_to_device
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/grant_access_to_device
       request:
         name: UserIdentitiesGrantAccessToDeviceRequest
@@ -27757,6 +28328,8 @@ service:
       path: /user_identities/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/list
       request:
         name: UserIdentitiesListRequest
@@ -27792,6 +28365,8 @@ service:
       path: /user_identities/list_accessible_devices
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/list_accessible_devices
       request:
         name: UserIdentitiesListAccessibleDevicesRequest
@@ -27887,6 +28462,8 @@ service:
       path: /user_identities/list_acs_systems
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/list_acs_systems
       request:
         name: UserIdentitiesListAcsSystemsRequest
@@ -27937,6 +28514,8 @@ service:
       path: /user_identities/list_acs_users
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/list_acs_users
       request:
         name: UserIdentitiesListAcsUsersRequest
@@ -27985,6 +28564,8 @@ service:
       path: /user_identities/remove_acs_user
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/remove_acs_user
       request:
         name: UserIdentitiesRemoveAcsUserRequest
@@ -28016,6 +28597,8 @@ service:
       path: /user_identities/revoke_access_to_device
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/revoke_access_to_device
       request:
         name: UserIdentitiesRevokeAccessToDeviceRequest
@@ -28047,6 +28630,8 @@ service:
       path: /user_identities/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/update
       request:
         name: UserIdentitiesUpdateRequest
@@ -28142,6 +28727,9 @@ service:
                 "docs": "OK",
                 "type": "EnrollmentAutomationsDeleteResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -28196,6 +28784,9 @@ service:
                 "docs": "OK",
                 "property": "enrollment_automation",
                 "type": "EnrollmentAutomationsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "launch": {
@@ -28282,6 +28873,9 @@ service:
                 "property": "enrollment_automation",
                 "type": "EnrollmentAutomationsLaunchResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -28338,6 +28932,9 @@ service:
                 "docs": "OK",
                 "property": "enrollment_automations",
                 "type": "EnrollmentAutomationsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -28500,6 +29097,8 @@ service:
       path: /user_identities/enrollment_automations/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/delete
       request:
         name: EnrollmentAutomationsDeleteRequest
@@ -28526,6 +29125,8 @@ service:
       path: /user_identities/enrollment_automations/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/get
       request:
         name: EnrollmentAutomationsGetRequest
@@ -28559,6 +29160,8 @@ service:
       path: /user_identities/enrollment_automations/launch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/launch
       request:
         name: EnrollmentAutomationsLaunchRequest
@@ -28607,6 +29210,8 @@ service:
       path: /user_identities/enrollment_automations/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/list
       request:
         name: EnrollmentAutomationsListRequest
@@ -28706,6 +29311,9 @@ service:
                 "property": "webhook",
                 "type": "WebhooksCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete": {
               "auth": true,
@@ -28744,6 +29352,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "WebhooksDeleteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get": {
@@ -28793,6 +29404,9 @@ service:
                 "property": "webhook",
                 "type": "WebhooksGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list": {
               "auth": true,
@@ -28828,6 +29442,9 @@ service:
                 "docs": "OK",
                 "property": "webhooks",
                 "type": "WebhooksListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update": {
@@ -28871,6 +29488,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "WebhooksUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -28968,6 +29588,8 @@ service:
       path: /webhooks/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /webhooks/create
       request:
         name: WebhooksCreateRequest
@@ -29002,6 +29624,8 @@ service:
       path: /webhooks/delete
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /webhooks/delete
       request:
         name: WebhooksDeleteRequest
@@ -29025,6 +29649,8 @@ service:
       path: /webhooks/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /webhooks/get
       request:
         name: WebhooksGetRequest
@@ -29055,6 +29681,8 @@ service:
       path: /webhooks/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /webhooks/list
       response:
         docs: OK
@@ -29077,6 +29705,8 @@ service:
       path: /webhooks/update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /webhooks/update
       request:
         name: WebhooksUpdateRequest
@@ -29174,6 +29804,9 @@ service:
                 "property": "workspace",
                 "type": "WorkspacesCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get": {
               "auth": true,
@@ -29206,6 +29839,9 @@ service:
                 "docs": "OK",
                 "property": "workspace",
                 "type": "WorkspacesGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list": {
@@ -29242,6 +29878,9 @@ service:
                 "property": "workspaces",
                 "type": "WorkspacesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "reset_sandbox": {
               "auth": true,
@@ -29274,6 +29913,9 @@ service:
                 "docs": "OK",
                 "property": "action_attempt",
                 "type": "WorkspacesResetSandboxResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -29374,6 +30016,8 @@ service:
       path: /workspaces/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /workspaces/create
       request:
         name: WorkspacesCreateRequest
@@ -29418,6 +30062,8 @@ service:
       path: /workspaces/get
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /workspaces/get
       response:
         docs: OK
@@ -29440,6 +30086,8 @@ service:
       path: /workspaces/list
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /workspaces/list
       response:
         docs: OK
@@ -29462,6 +30110,8 @@ service:
       path: /workspaces/reset_sandbox
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: /workspaces/reset_sandbox
       response:
         docs: OK

@@ -53,6 +53,9 @@
                 "docs": "",
                 "type": "ChatFullResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "chat_stream": {
               "auth": false,
@@ -98,6 +101,9 @@
                 "docs": "",
                 "format": "json",
                 "type": "ChatStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -151,6 +157,8 @@
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
+      source:
+        openapi: ../openapi.yml
       display-name: Start a chat
       request:
         name: ChatStreamRequest
@@ -181,6 +189,8 @@
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
+      source:
+        openapi: ../openapi.yml
       display-name: Start a chat
       request:
         name: ChatRequest

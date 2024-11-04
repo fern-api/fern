@@ -69,6 +69,8 @@ service:
       response:
         docs: Booking successful
         type: CreateBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
     delete-booking:
       auth: true
       display-name: Delete a booking
@@ -89,6 +91,8 @@ service:
         bookingId:
           docs: The ID of the booking to retrieve.
           type: string
+      source:
+        openapi: openapi/trains/openapi.yml
     get-booking:
       auth: true
       display-name: Get a booking
@@ -122,6 +126,8 @@ service:
       response:
         docs: The booking details
         type: GetBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
     get-bookings:
       auth: true
       display-name: List existing bookings
@@ -155,5 +161,7 @@ service:
       response:
         docs: A list of bookings
         type: GetBookingsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml

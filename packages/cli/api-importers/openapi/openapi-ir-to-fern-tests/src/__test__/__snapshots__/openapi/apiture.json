@@ -5809,6 +5809,9 @@ types:
                 "docs": "OK.",
                 "type": "root.AccountJointOwners",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -5829,6 +5832,8 @@ service:
       docs: >-
         Return a collection of account joint owners. The user must have the
         `account.manageJointOwners` permission to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -5926,6 +5931,9 @@ docs: Account Joint Owners
                 "docs": "OK. The response is a representation of the customer's account.",
                 "type": "root.Account",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listAccountBalances": {
               "auth": true,
@@ -5986,6 +5994,9 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               "response": {
                 "docs": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
                 "type": "root.AccountBalances",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listAccounts": {
@@ -6091,6 +6102,9 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                 "docs": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.Accounts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listEligibleAchAccounts": {
               "auth": true,
@@ -6137,6 +6151,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "docs": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.Accounts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6176,6 +6193,8 @@ service:
         Return a paginated list of the customer's accounts, consisting of
         internal accounts at this financial institution and accounts at other
         financial institutions, if any.
+      source:
+        openapi: ../openapi.yml
       display-name: List Accounts
       request:
         name: AccountsListAccountsRequest
@@ -6276,6 +6295,8 @@ service:
       method: GET
       auth: true
       docs: Return details of the customer's internal account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -6334,6 +6355,8 @@ service:
         the client can retry the operation after a short delay, requesting only
         the accounts which are incomplete; see the 202 Accepted response for
         details.
+      source:
+        openapi: ../openapi.yml
       display-name: List Account Balances
       request:
         name: AccountsListAccountBalancesRequest
@@ -6392,6 +6415,8 @@ service:
         Optionally, an agent can access a business customer's ACH accounts when
         acting on behalf of that business customer via the optional `customerId`
         query parameter.
+      source:
+        openapi: ../openapi.yml
       display-name: List Eligible ACH Accounts
       request:
         name: AccountsListEligibleAchAccountsRequest
@@ -6537,6 +6562,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "response": {
                 "docs": "OK.",
                 "type": "root.CutoffTimes",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransferDateRestrictions": {
@@ -6700,6 +6728,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.TransferDateRestrictions",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listTransferSchedule": {
               "auth": true,
@@ -6793,6 +6824,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.TransferSchedules",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "lookUpInstitutionByLocator": {
               "auth": true,
@@ -6876,6 +6910,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.InstitutionLookupResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6902,6 +6939,8 @@ service:
         code](https://www.swift.com/standards/data-standards/bic-business-identifier-code).
         Optionally, include a list of intermediary institutions that may be
         necessary to complete international wire transfers.
+      source:
+        openapi: ../openapi.yml
       display-name: Look up institution by routing number, IBAN, or SWIFT/BIC code
       request:
         name: InstitutionsLookUpInstitutionByLocatorRequest
@@ -6972,6 +7011,8 @@ service:
       method: GET
       auth: true
       docs: Return a transfer schedule list for this institution.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7058,6 +7099,8 @@ service:
         `getCutoffTimes` response and the `ETag` returned from a previous call
         to this operation, this operation returns a 304 Not Modified when called
         again if the cutoff times have not changed.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7125,6 +7168,8 @@ service:
         restricted dates but the financial institution may shift the date when
         funds are drafted to account for holidays, closures, or to adjust based
         on the risk level of the funding account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7326,6 +7371,9 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
                 "docs": "OK.",
                 "type": "root.JointOwnerInvitation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7352,6 +7400,8 @@ service:
 
         The authenticated user must have the `account.allows.manageJointOwners`
         permission to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7447,6 +7497,9 @@ service:
                 "docs": "OK.",
                 "type": "root.OverdraftProtection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listEligibleOverdraftAccounts": {
               "auth": true,
@@ -7516,6 +7569,9 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                 "docs": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.EligibleOverdraftAccounts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "patchOverdraftAccounts": {
               "auth": true,
@@ -7572,6 +7628,9 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
                 "docs": "OK.",
                 "type": "root.OverdraftProtection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7603,6 +7662,8 @@ service:
 
         To obtain available balances for these accounts, use
         [`listAccountBalances`](#op-listAccountBalances).
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7662,6 +7723,8 @@ service:
       docs: >-
         Return the JSON representation of this account's overdraft protection
         settings.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7698,6 +7761,8 @@ service:
 
         The user must have the `allows.manageOverdraftAccounts` permission on
         the account to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7793,6 +7858,9 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
                 "docs": "OK.",
                 "type": "root.TransactionCategories",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7819,6 +7887,8 @@ service:
         used. If the client has a `transactionCategories` response and the
         `ETag` returned from a previous call, this operation returns a 304 Not
         Modified if called again when the categories collection has not changed.
+      source:
+        openapi: ../openapi.yml
       display-name: Return a collection of transaction categories
       request:
         name: TransactionCategoriesListTransactionCategoriesRequest
@@ -8024,6 +8094,9 @@ The default response lists only recent transactions. Normally, this is transacti
                 "docs": "OK.",
                 "type": "root.Transactions",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8058,6 +8131,8 @@ service:
         The default response lists only recent transactions. Normally, this is
         transactions for the most recent 30 days, although for high-volume
         accounts, it may be a shorter period.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -8367,6 +8442,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "Created.",
                 "type": "root.Transfer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteTransfer": {
               "auth": true,
@@ -8393,6 +8471,9 @@ Note: This operation requires an identity challenge if the financial institution
                   "docs": "The unique identifier of this transfer. This is an opaque string.",
                   "type": "root.ResourceId",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransfer": {
@@ -8457,6 +8538,9 @@ Note: This operation requires an identity challenge if the financial institution
               "response": {
                 "docs": "OK.",
                 "type": "root.Transfer",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listTransfers": {
@@ -8583,6 +8667,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "OK.",
                 "type": "root.Transfers",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "patchTransfer": {
               "auth": true,
@@ -8685,6 +8772,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "OK.",
                 "type": "root.Transfer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8708,6 +8798,8 @@ service:
         collection of transfers. The
         [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links)
         in the response is a pagination link.
+      source:
+        openapi: ../openapi.yml
       display-name: Return a collection of transfers
       request:
         name: TransfersListTransfersRequest
@@ -8847,6 +8939,8 @@ service:
         Note: This operation requires an identity challenge if the financial
         institution requires the user to proove their identity for some types of
         transfers. See the "Challenges API".
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new transfer
       request:
         name: NewTransfer
@@ -8927,6 +9021,8 @@ service:
       method: GET
       auth: true
       docs: Return the JSON representation of this transfer resource.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId
@@ -8978,6 +9074,8 @@ service:
       docs: >-
         Delete this transfer resource and any resources that are owned by it.
         Only transfers that have not been processed may be deleted.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId
@@ -9005,6 +9103,8 @@ service:
         Note: This operation requires an identity challenge if the financial
         institution requires the user to prove their identity for some types of
         transfers. See the "Challenges API".
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId
