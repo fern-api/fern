@@ -4,7 +4,7 @@ from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
 
 from .validator_generators import (
-    PydanticV1CustomRootTypeValidatorGenerator,
+    PydanticCustomRootTypeValidatorGenerator,
     ValidatorGenerator,
 )
 from .validators_generator import ValidatorsGenerator
@@ -14,7 +14,7 @@ class PydanticV1CustomRootTypeValidatorsGenerator(ValidatorsGenerator):
     def __init__(self, root_type: AST.TypeHint, model: PydanticModel):
         super().__init__(model=model)
         self._root_type = root_type
-        self._root_type_generator = PydanticV1CustomRootTypeValidatorGenerator(
+        self._root_type_generator = PydanticCustomRootTypeValidatorGenerator(
             root_type=root_type,
             model=model,
             reference_to_validators_class=self._get_reference_to_validators_class(),
