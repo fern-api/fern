@@ -6,7 +6,7 @@ from core.datetime_utils import serialize_datetime
 
 class Record(BaseModel):
     foo: Dict[str, str]
-    _3_d: int = Field(alias="3d")
+    _3_d: int
 
     class Config:
         frozen = True

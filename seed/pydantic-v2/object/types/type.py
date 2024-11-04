@@ -5,11 +5,8 @@ from typing import List, Set, Dict, Optional, Any
 from .types.name import Name
 from dt import datetime
 from core.datetime_utils import serialize_datetime
-
-"""Exercises all of the built-in types."""
-
-
 class Type(BaseModel):
+"""Exercises all of the built-in types."""
     one: int
     two: float
     three: str
@@ -33,8 +30,8 @@ class Type(BaseModel):
     twentyone: int
     twentytwo: float
     twentythree: str
-
     class Config:
         frozen = True
         smart_union = True
         json_encoders = {datetime: serialize_datetime}
+

@@ -7,7 +7,7 @@ from core.datetime_utils import serialize_datetime
 
 
 class ListUsersPaginationResponse(BaseModel):
-    has_next_page: Optional[bool] = Field(alias="hasNextPage", default=None)
+    has_next_page: Optional[bool]
     page: Optional[Page] = None
     total_count: int
     """

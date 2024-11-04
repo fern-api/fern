@@ -6,18 +6,22 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { assertNever } from "@fern-api/core-utils";
 
 export class WrappedAliasGenerator {
+    private readonly className: string;
+
     constructor(
         private readonly typeId: TypeId,
         private readonly context: PydanticModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly aliasDeclaration: AliasTypeDeclaration
-    ) {}
+    ) {
+        this.className = this.context.getClassName(this.typeDeclaration.name.name);
+    }
 
     public doGenerate(): WriteablePythonFile {
         const valueType = this.context.pythonTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf });
 
         const class_ = python.class_({
-            name: this.context.getPascalCaseSafeName(this.typeDeclaration.name.name),
+            name: this.className,
             docs: this.typeDeclaration.docs,
             extends_: [pydantic.RootModel(valueType)],
             decorators: []
@@ -32,7 +36,11 @@ export class WrappedAliasGenerator {
             })
         );
 
-        class_.addStatement(this.getConfigClass());
+        class_.add(this.getGetterMethod());
+
+        class_.add(this.getBuilderMethod());
+
+        class_.add(this.getConfigClass());
 
         const module = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
@@ -82,6 +90,15 @@ export class WrappedAliasGenerator {
         );
 
         return configClass;
+    }
+
+    private getGetterMethod(): python.Method {
+        const method = python.method({
+            name: this.getGetterName(this.aliasDeclaration.aliasOf),
+            return_: python.Type.uuid()
+        });
+        method.addStatement(python.codeBlock("return self.root"));
+        return method;
     }
 
     private getGetterName(typeReference: TypeReference): string {
@@ -149,6 +166,30 @@ export class WrappedAliasGenerator {
             unknown: () => "get_value",
             _other: () => "get_value"
         });
+    }
+
+    private getBuilderMethod(): python.Method {
+        const method = python.method({
+            name: this.getBuilderName(this.aliasDeclaration.aliasOf),
+            static_: true,
+            parameters: [
+                python.parameter({
+                    name: "value",
+                    type: this.context.pythonTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf })
+                })
+            ],
+            return_: python.Type.reference(
+                new python.Reference({
+                    name: this.className
+                })
+            )
+        });
+        method.addStatement(
+            python.codeBlock((writer) => {
+                writer.write(`${this.className}(root=value)`);
+            })
+        );
+        return method;
     }
 
     private getBuilderName(typeReference: TypeReference): string {

@@ -17,13 +17,15 @@ export declare namespace Method {
         /* The name of the method */
         name: string;
         /* The parameters of the method */
-        parameters: Parameter[];
+        parameters?: Parameter[];
         /* The return type of the method */
         return_?: Type;
         /* The docstring for the method */
         docstring?: string;
         /* The type of the method if defined within the context of a class */
         type?: ClassMethodType;
+        /* Whether the method is a static method */
+        static_?: boolean;
         /* The decorators that should be applied to this method */
         decorators?: Decorator[];
     }
@@ -37,15 +39,17 @@ export class Method extends AstNode {
     private readonly parameters: Parameter[];
     private readonly decorators: Decorator[];
     private readonly statements: AstNode[] = [];
+    private readonly static_: boolean;
 
-    constructor({ name, parameters, return_, docstring, type, decorators }: Method.Args) {
+    constructor({ static_, name, parameters, return_, docstring, type, decorators }: Method.Args) {
         super();
         this.name = name;
-        this.parameters = parameters;
+        this.parameters = parameters ?? [];
         this.return = return_;
         this.docstring = docstring;
         this.type = type;
         this.decorators = decorators ?? [];
+        this.static_ = static_ ?? false;
     }
 
     public addStatement(statement: AstNode): void {
@@ -54,6 +58,14 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
+        if (this.static_) {
+            this.decorators.push(
+                python.decorator({
+                    callable: python.codeBlock("staticmethod")
+                })
+            );
+        }
+
         // Write decorators
         this.decorators.forEach((decorator) => {
             decorator.write(writer);

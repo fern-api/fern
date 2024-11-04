@@ -1,10 +1,15 @@
 from pydantic import BaseModel
 from typing import Set
 from resources.commons.types.variable_type import VariableType
-
-
+from dt import datetime
+from core.datetime_utils import serialize_datetime
 class LightweightProblemInfoV2(BaseModel):
-    problem_id: str = Field(alias="problemId")
-    problem_name: str = Field(alias="problemName")
-    problem_version: int = Field(alias="problemVersion")
-    variable_types: Set[VariableType] = Field(alias="variableTypes")
+    problem_id: str = 
+    problem_name: str = 
+    problem_version: int = 
+    variable_types: Set[VariableType] = 
+    class Config:
+        frozen = True
+        smart_union = True
+        json_encoders = {datetime: serialize_datetime}
+

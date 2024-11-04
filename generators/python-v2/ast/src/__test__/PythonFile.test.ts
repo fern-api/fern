@@ -35,7 +35,7 @@ describe("PythonFile", () => {
             name: "TestClass"
         });
         testClass.addReference(python.reference({ modulePath: ["itertools"], name: "chain" }));
-        testClass.addStatement(python.codeBlock("flat_list = list(itertools.chain([[1, 2], [3, 4]]))"));
+        testClass.add(python.codeBlock("flat_list = list(itertools.chain([[1, 2], [3, 4]]))"));
 
         file.addStatement(testClass);
 

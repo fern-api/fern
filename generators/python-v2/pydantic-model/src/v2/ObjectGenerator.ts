@@ -47,7 +47,8 @@ export class ObjectGenerator {
             if (value != null && wireValue == null) {
                 initializer = value;
             } else if (wireValue != null || value != null) {
-                initializer = python.codeBlock((writer) => {
+                // TODO(dsinghvi): uncomment after redoing imports
+                python.codeBlock((writer) => {
                     const arguments_: python.MethodArgument[] = [];
                     if (wireValue != null) {
                         arguments_.push(
@@ -65,12 +66,12 @@ export class ObjectGenerator {
                             })
                         );
                     }
-                    writer.writeNode(
-                        python.instantiateClass({
-                            classReference: pydantic.Field,
-                            arguments_
-                        })
-                    );
+                    // writer.writeNode(
+                    //     python.instantiateClass({
+                    //         classReference: pydantic.Field,
+                    //         arguments_
+                    //     })
+                    // );
                 });
             }
 
@@ -84,7 +85,7 @@ export class ObjectGenerator {
             );
         }
 
-        class_.addStatement(this.getConfigClass());
+        class_.add(this.getConfigClass());
 
         const module = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);

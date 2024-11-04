@@ -1,7 +1,12 @@
 from pydantic import BaseModel
-
-
+from dt import datetime
+from core.datetime_utils import serialize_datetime
 class ExceptionInfo(BaseModel):
-    exception_type: str = Field(alias="exceptionType")
-    exception_message: str = Field(alias="exceptionMessage")
-    exception_stacktrace: str = Field(alias="exceptionStacktrace")
+    exception_type: str = 
+    exception_message: str = 
+    exception_stacktrace: str = 
+    class Config:
+        frozen = True
+        smart_union = True
+        json_encoders = {datetime: serialize_datetime}
+

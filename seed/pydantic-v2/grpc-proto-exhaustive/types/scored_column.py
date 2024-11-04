@@ -11,7 +11,7 @@ class ScoredColumn(BaseModel):
     score: Optional[float] = None
     values: Optional[List[float]] = None
     metadata: Optional[Metadata] = None
-    indexed_data: Optional[IndexedData] = Field(alias="indexedData", default=None)
+    indexed_data: Optional[IndexedData]
 
     class Config:
         frozen = True

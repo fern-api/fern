@@ -8,10 +8,10 @@ from core.datetime_utils import serialize_datetime
 
 class QueryColumn(BaseModel):
     values: List[float]
-    top_k: Optional[int] = Field(alias="topK", default=None)
+    top_k: Optional[int]
     namespace: Optional[str] = None
     filter: Optional[Metadata] = None
-    indexed_data: Optional[IndexedData] = Field(alias="indexedData", default=None)
+    indexed_data: Optional[IndexedData]
 
     class Config:
         frozen = True

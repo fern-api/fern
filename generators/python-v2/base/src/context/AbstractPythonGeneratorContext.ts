@@ -45,6 +45,10 @@ export abstract class AbstractPythonGeneratorContext<
         return false;
     }
 
+    public getClassName(name: Name): string {
+        return name.pascalCase.safeName;
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }

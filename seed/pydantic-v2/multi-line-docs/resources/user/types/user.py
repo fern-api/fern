@@ -2,14 +2,11 @@ from pydantic import BaseModel
 from typing import Optional
 from dt import datetime
 from core.datetime_utils import serialize_datetime
-
+class User(BaseModel):
 """A user object. This type is used throughout the following APIs:
 
 - createUser
 - getUser"""
-
-
-class User(BaseModel):
     id: str
     name: str
     """
@@ -23,8 +20,8 @@ class User(BaseModel):
     """
     The user's age.
     """
-
     class Config:
         frozen = True
         smart_union = True
         json_encoders = {datetime: serialize_datetime}
+

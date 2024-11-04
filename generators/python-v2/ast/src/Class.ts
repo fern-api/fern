@@ -38,12 +38,6 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.docs != null) {
-            writer.write('"""');
-            writer.write(this.docs);
-            writer.write('"""');
-        }
-
         this.decorators.forEach((decorator) => {
             decorator.write(writer);
         });
@@ -63,6 +57,13 @@ export class Class extends AstNode {
         writer.write(":");
         writer.newLine();
 
+        if (this.docs != null) {
+            writer.write('"""');
+            writer.write(this.docs);
+            writer.write('"""');
+        }
+        writer.writeNewLineIfLastLineNot();
+
         writer.indent();
         this.fields.forEach((field) => {
             field.write(writer);
@@ -79,7 +80,7 @@ export class Class extends AstNode {
         writer.dedent();
     }
 
-    public addStatement(statement: AstNode): void {
+    public add(statement: AstNode): void {
         this.statements.push(statement);
         this.inheritReferences(statement);
     }
@@ -92,6 +93,6 @@ export class Class extends AstNode {
     }
 
     public addField(field: Field): void {
-        this.addStatement(field);
+        this.add(field);
     }
 }

@@ -521,15 +521,15 @@ navigation:
           - page: Commands
             path: ./pages/cli-api/commands.mdx
           - changelog: ./pages/changelogs/cli
-      - api: API Reference
-        api-name: public-api
-        summary: ./pages/cli-api/api-summary.mdx
-        paginated: true
-        audiences:
-          - external
-        layout:
-          - page: Overview
-            path: ./pages/cli-api/api-summary.mdx
+      # - api: API Reference
+      #   api-name: public-api
+      #   summary: ./pages/cli-api/api-summary.mdx
+      #   paginated: true
+      #   audiences:
+      #     - external
+      #   layout:
+      #     - page: Overview
+      #       path: ./pages/cli-api/api-summary.mdx
         # snippets:
         #   python: fern-api
         #   typescript: "@fern-api/node-sdk"

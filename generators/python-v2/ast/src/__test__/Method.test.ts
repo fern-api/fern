@@ -156,7 +156,7 @@ describe("Method", () => {
             });
             childMethod.addStatement(python.codeBlock("self.parent_method()"));
             childMethod.addStatement(python.codeBlock('return "Child method called"'));
-            childClassDef.addStatement(childMethod);
+            childClassDef.add(childMethod);
 
             method.addStatement(childClassDef);
             method.addStatement(python.codeBlock("return ChildClass()"));

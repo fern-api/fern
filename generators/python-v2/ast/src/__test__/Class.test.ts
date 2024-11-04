@@ -20,10 +20,10 @@ describe("class", () => {
         const clazz = python.class_({
             name: "Car"
         });
-        clazz.addStatement(
+        clazz.add(
             python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") })
         );
-        clazz.addStatement(
+        clazz.add(
             python.field({
                 name: "partNameById",
                 type: python.Type.dict(python.Type.int(), python.Type.str()),
@@ -98,9 +98,9 @@ describe("class", () => {
             parameters: [python.parameter({ name: "self", type: python.Type.str() })]
         });
         innerMethod.addStatement(python.codeBlock('return "Inner method called"'));
-        innerClassDef.addStatement(innerMethod);
+        innerClassDef.add(innerMethod);
 
-        clazz.addStatement(innerClassDef);
+        clazz.add(innerClassDef);
 
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();

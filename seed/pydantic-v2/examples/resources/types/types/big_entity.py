@@ -13,15 +13,17 @@ from resources.types.types.test import Test
 from resources.types.types.node import Node
 from resources.types.types.directory import Directory
 from resources.types.types.moment import Moment
+from dt import datetime
+from core.datetime_utils import serialize_datetime
 
 
 class BigEntity(BaseModel):
-    cast_member: Optional[CastMember] = Field(alias="castMember", default=None)
-    extended_movie: Optional[ExtendedMovie] = Field(alias="extendedMovie", default=None)
+    cast_member: Optional[CastMember]
+    extended_movie: Optional[ExtendedMovie]
     entity: Optional[Entity] = None
     metadata: Optional[Metadata] = None
-    common_metadata: Optional[Metadata] = Field(alias="commonMetadata", default=None)
-    event_info: Optional[EventInfo] = Field(alias="eventInfo", default=None)
+    common_metadata: Optional[Metadata]
+    event_info: Optional[EventInfo]
     data: Optional[Data] = None
     migration: Optional[Migration] = None
     exception: Optional[Exception] = None
@@ -29,3 +31,8 @@ class BigEntity(BaseModel):
     node: Optional[Node] = None
     directory: Optional[Directory] = None
     moment: Optional[Moment] = None
+
+    class Config:
+        frozen = True
+        smart_union = True
+        json_encoders = {datetime: serialize_datetime}

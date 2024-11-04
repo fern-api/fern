@@ -5,8 +5,8 @@ from core.datetime_utils import serialize_datetime
 
 
 class NestedUser(BaseModel):
-    name: str = Field(alias="Name")
-    nested_user: User = Field(alias="NestedUser")
+    name: str
+    nested_user: User
 
     class Config:
         frozen = True

@@ -10,7 +10,7 @@ class Column(BaseModel):
     id: str
     values: List[float]
     metadata: Optional[Metadata] = None
-    indexed_data: Optional[IndexedData] = Field(alias="indexedData", default=None)
+    indexed_data: Optional[IndexedData]
 
     class Config:
         frozen = True
