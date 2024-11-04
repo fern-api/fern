@@ -43,7 +43,7 @@ await client.InlinedRequest.SendAsync(
 </details>
 
 ## PathParam
-<details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, maybeOperand, operandOrColor, maybeOperandOrColor)</code></summary>
+<details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, operandOrColor)</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ await client.InlinedRequest.SendAsync(
 <dd>
 
 ```csharp
-await client.PathParam.SendAsync(Operand.GreaterThan, Operand.LessThan, Color.Red, Color.Red);
+await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 ```
 </dd>
 </dl>
@@ -79,23 +79,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Operand.LessThan, Color.Re
 <dl>
 <dd>
 
-**maybeOperand:** `Operand?` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **operandOrColor:** `OneOf<Color, Operand>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybeOperandOrColor:** `OneOf<Color, Operand>?` 
     
 </dd>
 </dl>
@@ -167,7 +151,9 @@ await client.QueryParam.SendListAsync(
     new SendEnumListAsQueryParamRequest
     {
         Operand = [Operand.GreaterThan],
+        MaybeOperand = [Operand.GreaterThan],
         OperandOrColor = [Color.Red],
+        MaybeOperandOrColor = [null],
     }
 );
 ```

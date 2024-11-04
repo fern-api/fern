@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
@@ -18,7 +19,28 @@ public class GetAndReturnNestedWithRequiredFieldTest : BaseMockServerTest
         const string requestJson = """
             {
               "string": "string",
-              "NestedObject": {}
+              "NestedObject": {
+                "string": "string",
+                "integer": 1,
+                "long": 1000000,
+                "double": 1.1,
+                "bool": true,
+                "datetime": "2024-01-15T09:30:00.000Z",
+                "date": "2023-01-15",
+                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "base64": "SGVsbG8gd29ybGQh",
+                "list": [
+                  "list",
+                  "list"
+                ],
+                "set": [
+                  "set"
+                ],
+                "map": {
+                  "1": "map"
+                },
+                "bigint": "1000000"
+              }
             }
             """;
 
@@ -72,19 +94,23 @@ public class GetAndReturnNestedWithRequiredFieldTest : BaseMockServerTest
                 String = "string",
                 NestedObject = new ObjectWithOptionalField
                 {
-                    String = null,
-                    Integer = null,
-                    Long = null,
-                    Double = null,
-                    Bool = null,
-                    Datetime = null,
-                    Date = null,
-                    Uuid = null,
-                    Base64 = null,
-                    List = null,
-                    Set = null,
-                    Map = null,
-                    Bigint = null,
+                    String = "string",
+                    Integer = 1,
+                    Long = 1000000,
+                    Double = 1.1,
+                    Bool = true,
+                    Datetime = DateTime.Parse(
+                        "2024-01-15T09:30:00.000Z",
+                        null,
+                        DateTimeStyles.AdjustToUniversal
+                    ),
+                    Date = new DateOnly(2023, 1, 15),
+                    Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    Base64 = "SGVsbG8gd29ybGQh",
+                    List = new List<string>() { "list", "list" },
+                    Set = new HashSet<string>() { "set" },
+                    Map = new Dictionary<int, string>() { { 1, "map" } },
+                    Bigint = "1000000",
                 },
             },
             RequestOptions

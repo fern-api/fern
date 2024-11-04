@@ -20,7 +20,8 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
               "client_id": "client_id",
               "client_secret": "client_secret",
               "audience": "https://api.example.com",
-              "grant_type": "client_credentials"
+              "grant_type": "client_credentials",
+              "scope": "scope"
             }
             """;
 
@@ -54,7 +55,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 ClientSecret = "client_secret",
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
-                Scope = null,
+                Scope = "scope",
             },
             RequestOptions
         );
