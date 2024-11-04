@@ -1,7 +1,7 @@
 import { AbstractAstNode } from "@fern-api/generator-commons";
 import { Writer } from "./Writer";
 import init, { format } from "@wasm-fmt/ruff_fmt";
-import { Reference } from "../Reference";
+import type { Reference } from "../Reference";
 
 export abstract class AstNode extends AbstractAstNode {
     protected references: Reference[] = [];
