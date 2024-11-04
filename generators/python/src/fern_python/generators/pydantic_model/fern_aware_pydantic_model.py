@@ -262,22 +262,22 @@ class FernAwarePydanticModel:
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
-    def set_root_type_v1_only(
+    def set_root_type(
         self,
         root_type: ir_types.TypeReference,
         annotation: Optional[AST.Expression] = None,
         is_forward_ref: bool = False,
     ) -> None:
-        self.set_root_type_unsafe_v1_only(
+        self.set_root_type_unsafe(
             root_type=self.get_type_hint_for_type_reference(root_type),
             annotation=annotation,
             is_forward_ref=is_forward_ref,
         )
 
-    def set_root_type_unsafe_v1_only(
+    def set_root_type_unsafe(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
     ) -> None:
-        self._pydantic_model.set_root_type_unsafe_v1_only(root_type=root_type, annotation=annotation)
+        self._pydantic_model.set_root_type_unsafe(root_type=root_type, annotation=annotation)
 
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(
@@ -286,10 +286,7 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            if (
-                self._pydantic_model._v1_root_type is None
-                and self._custom_config.version == PydanticVersionCompatibility.V1
-            ):
+            if self._pydantic_model.root_type is None:
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:
@@ -309,11 +306,11 @@ class FernAwarePydanticModel:
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
-        v1_root_type = self._pydantic_model.get_root_type_unsafe_v1_only()
-        if v1_root_type is not None and self._custom_config.version == PydanticVersionCompatibility.V1:
+        root_type = self._pydantic_model.get_root_type_unsafe()
+        if root_type is not None:
             return PydanticV1CustomRootTypeValidatorsGenerator(
                 model=self._pydantic_model,
-                root_type=v1_root_type,
+                root_type=root_type,
             )
         else:
             unique_name = []
