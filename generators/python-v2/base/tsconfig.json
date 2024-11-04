@@ -5,6 +5,8 @@
   "references": [
     { "path": "../../../packages/commons/core-utils" },
     { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../commons" }
+    { "path": "../../../packages/commons/logging-execa" },
+    { "path": "../../commons" },
+    { "path": "../ast" }
   ]
 }
