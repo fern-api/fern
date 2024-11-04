@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from resources.file.types import File
-from resources.file.resources.directory.types import Directory
+from resources.file.types.file import File
+from resources.file.resources.directory.types.directory import Directory
 
 
 class Directory(BaseModel):

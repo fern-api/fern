@@ -1,8 +1,8 @@
 from pydantic import BaseModel
-from resources.v_2.resources.problem.types import (
+from resources.v_2.resources.problem.types.test_case_implementation_description import (
     TestCaseImplementationDescription,
-    TestCaseFunction,
 )
+from resources.v_2.resources.problem.types.test_case_function import TestCaseFunction
 
 
 class TestCaseImplementation(BaseModel):

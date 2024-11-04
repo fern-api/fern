@@ -3,4 +3,4 @@ from typing import Optional
 
 
 class TestCaseExpects(BaseModel):
-    expected_stdout: Optional[str] = None
+    expected_stdout: Optional[str] = Field(alias="expectedStdout", default=None)

@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from .types import Metadata, IndexedData
+from .types.metadata import Metadata
+from .types.indexed_data import IndexedData
 
 
 class ScoredColumn(BaseModel):
@@ -8,4 +9,4 @@ class ScoredColumn(BaseModel):
     score: Optional[float] = None
     values: Optional[List[float]] = None
     metadata: Optional[Metadata] = None
-    indexed_data: Optional[IndexedData] = None
+    indexed_data: Optional[IndexedData] = Field(alias="indexedData", default=None)

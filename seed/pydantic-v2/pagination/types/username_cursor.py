@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from .types import UsernamePage
+from .types.username_page import UsernamePage
 
 
 class UsernameCursor(BaseModel):

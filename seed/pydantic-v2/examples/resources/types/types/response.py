@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Any, List
-from types import Identifier
+from types.identifier import Identifier
 
 
 class Response(BaseModel):

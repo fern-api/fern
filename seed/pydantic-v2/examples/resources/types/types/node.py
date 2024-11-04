@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from resources.types.types import Node, Tree
+from resources.types.types.node import Node
+from resources.types.types.tree import Tree
 
 
 class Node(BaseModel):

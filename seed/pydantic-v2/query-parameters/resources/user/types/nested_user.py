@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from resources.user.types import User
+from resources.user.types.user import User
 
 
 class NestedUser(BaseModel):

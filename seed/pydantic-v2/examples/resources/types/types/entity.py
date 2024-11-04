@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from types import Type
+from types.type import Type
 
 
 class Entity(BaseModel):

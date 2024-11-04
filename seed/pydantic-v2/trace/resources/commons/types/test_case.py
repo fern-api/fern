@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from resources.commons.types import VariableValue
+from resources.commons.types.variable_value import VariableValue
 
 
 class TestCase(BaseModel):

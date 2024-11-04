@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 from typing import Dict
-from resources.commons.types import Language
-from resources.v_2.resources.problem.types import FileInfoV2
+from resources.commons.types.language import Language
+from resources.v_2.resources.problem.types.file_info_v_2 import FileInfoV2
 
 
 class GetBasicSolutionFileResponse(BaseModel):
-    solution_file_by_language: Dict[Language, FileInfoV2]
+    solution_file_by_language: Dict[Language, FileInfoV2] = Field(
+        alias="solutionFileByLanguage"
+    )

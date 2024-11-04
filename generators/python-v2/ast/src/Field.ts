@@ -6,6 +6,8 @@ export declare namespace Field {
     export interface BaseArgs {
         /* The name of the field */
         name: string;
+        /* The documentation for the field */
+        docs?: string;
     }
 
     /* At least one of type or initializer must be defined
@@ -24,12 +26,14 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Type | undefined;
     public readonly initializer: AstNode | undefined;
+    public readonly docs: string | undefined;
 
-    constructor({ name, type, initializer }: Field.Args) {
+    constructor({ name, type, initializer, docs }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
         this.initializer = initializer;
+        this.docs = docs;
 
         this.inheritReferences(this.type);
         this.inheritReferences(this.initializer);
@@ -45,6 +49,15 @@ export class Field extends AstNode {
 
         if (this.initializer !== undefined) {
             writer.write(` = ${this.initializer}`);
+        }
+
+        if (this.docs != null) {
+            writer.newLine();
+            writer.write('"""');
+            writer.newLine();
+            writer.write(this.docs);
+            writer.newLine();
+            writer.write('"""');
         }
     }
 }

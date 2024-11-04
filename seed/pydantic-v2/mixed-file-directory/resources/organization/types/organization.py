@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from resources.user.types import User
+from resources.user.types.user import User
 
 
 class Organization(BaseModel):

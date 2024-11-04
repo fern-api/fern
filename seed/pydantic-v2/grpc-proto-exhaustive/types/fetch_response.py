@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, Dict
-from .types import Column, Usage
+from .types.column import Column
+from .types.usage import Usage
 
 
 class FetchResponse(BaseModel):

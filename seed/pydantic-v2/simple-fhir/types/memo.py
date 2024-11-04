@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from .types import Account
+from .types.account import Account
 
 
 class Memo(BaseModel):

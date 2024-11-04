@@ -46,7 +46,7 @@ export class PythonTypeMapper {
     public convertToClassReference({ typeId, name }: { typeId: TypeId; name: Name }): python.Reference {
         return new python.Reference({
             name: this.context.getPascalCaseSafeName(name),
-            modulePath: this.context.getModulePathForId(typeId)
+            modulePath: [...this.context.getModulePathForId(typeId), this.context.getSnakeCaseSafeName(name)]
         });
     }
 

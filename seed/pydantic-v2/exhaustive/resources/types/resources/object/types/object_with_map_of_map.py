@@ -3,4 +3,4 @@ from typing import Dict
 
 
 class ObjectWithMapOfMap(BaseModel):
-    map_: Dict[str, Dict[str, str]]
+    map_: Dict[str, Dict[str, str]] = Field(alias="map")

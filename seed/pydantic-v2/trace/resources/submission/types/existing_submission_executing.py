@@ -3,4 +3,4 @@ from uuid import UUID
 
 
 class ExistingSubmissionExecuting(BaseModel):
-    submission_id: UUID
+    submission_id: UUID = Field(alias="submissionId")

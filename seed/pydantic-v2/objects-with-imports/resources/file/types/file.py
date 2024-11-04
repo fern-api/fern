@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from resources.file.types import FileInfo
+from resources.file.types.file_info import FileInfo
 
 
 class File(BaseModel):

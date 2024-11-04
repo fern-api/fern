@@ -1,5 +1,6 @@
 from pydantic import BaseModel
+from .types.parent import Parent
 
 
-class Child(BaseModel):
+class Child(BaseModel, Parent):
     child: str

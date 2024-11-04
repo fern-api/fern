@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from .types import QueryResult, ScoredColumn, Usage
+from .types.query_result import QueryResult
+from .types.scored_column import ScoredColumn
+from .types.usage import Usage
 
 
 class QueryResponse(BaseModel):

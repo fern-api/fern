@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, Dict
-from resources.commons.types import BinaryTreeNodeValue
+from resources.commons.types.binary_tree_node_value import BinaryTreeNodeValue
 
 
 class BinaryTreeValue(BaseModel):

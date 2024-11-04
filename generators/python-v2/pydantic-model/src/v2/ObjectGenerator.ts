@@ -1,4 +1,4 @@
-import { WriteablePythonFile } from "@fern-api/base-python-generator";
+import { WriteablePythonFile, pydantic, core, dt } from "@fern-api/base-python-generator";
 import { python } from "@fern-api/python-ast";
 import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
@@ -15,7 +15,16 @@ export class ObjectGenerator {
     public doGenerate(): WriteablePythonFile {
         const class_ = python.class_({
             name: this.context.getPascalCaseSafeName(this.typeDeclaration.name.name),
-            extends_: [python.reference({ name: "BaseModel", modulePath: ["pydantic"] })],
+            docs: this.typeDeclaration.docs,
+            extends_: [
+                pydantic.BaseModel,
+                ...this.objectDeclaration.extends.map((extend) => {
+                    return this.context.pythonTypeMapper.convertToClassReference({
+                        typeId: extend.typeId,
+                        name: extend.name
+                    });
+                })
+            ],
             decorators: []
         });
 
@@ -27,16 +36,55 @@ export class ObjectGenerator {
 
             const propertyType = this.context.pythonTypeMapper.convert({ reference: property.valueType });
 
+            const value = this.context.isTypeReferenceOptional(property.valueType)
+                ? python.codeBlock("None")
+                : undefined;
+
+            const wireValue = propertyName === property.name.wireValue ? undefined : property.name.wireValue;
+
+            let initializer = undefined;
+
+            if (value != null && wireValue == null) {
+                initializer = value;
+            } else if (wireValue != null || value != null) {
+                initializer = python.codeBlock((writer) => {
+                    const arguments_: python.MethodArgument[] = [];
+                    if (wireValue != null) {
+                        arguments_.push(
+                            python.methodArgument({
+                                name: "alias",
+                                value: python.codeBlock(`"${wireValue}"`)
+                            })
+                        );
+                    }
+                    if (value != null) {
+                        arguments_.push(
+                            python.methodArgument({
+                                name: "default",
+                                value: value
+                            })
+                        );
+                    }
+                    writer.writeNode(
+                        python.instantiateClass({
+                            classReference: pydantic.Field,
+                            arguments_
+                        })
+                    );
+                });
+            }
+
             class_.addField(
                 python.field({
                     name: propertyName,
                     type: propertyType,
-                    initializer: this.context.isTypeReferenceOptional(property.valueType)
-                        ? python.codeBlock("None")
-                        : undefined
+                    docs: property.docs,
+                    initializer
                 })
             );
         }
+
+        class_.addStatement(this.getConfigClass())
 
         const module = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
@@ -65,5 +113,87 @@ export class ObjectGenerator {
         objectProperty: NameAndWireValue;
     }): string {
         return this.context.getSnakeCaseSafeName(objectProperty.name);
+    }
+
+    private getConfigClass(): python.Class {
+        const configClass = python.class_({
+            name: "Config"
+        });
+
+        configClass.addField(
+            python.field({
+                name: "frozen",
+                initializer: python.TypeInstantiation.bool(true)
+            })
+        );
+
+        configClass.addField(
+            python.field({
+                name: "smart_union",
+                initializer: python.TypeInstantiation.bool(true)
+            })
+        );
+
+        configClass.addField(
+            python.field({
+                name: "json_encoders",
+                initializer: python.TypeInstantiation.dict([
+                    {
+                        key: dt.datetime,
+                        value: core.serialize_datetime
+                    }
+                ])
+            })
+        );
+
+        return configClass;
+    }
+
+    private getJsonMethod(): python.Method {
+        const method = python.method({
+            name: "json",
+            parameters: [
+                python.parameter({ name: "self" }),
+                python.parameter({ 
+                    name: "kwargs",
+                    type: python.TypeHint.kwargs(python.TypeHint.reference("typing.Any")),
+                })
+            ],
+            returnType: python.TypeHint.str()
+        });
+
+        const kwargsWithDefaults = python.variable({
+            name: "kwargs_with_defaults",
+            type: python.TypeHint.reference("typing.Any"),
+            initializer: python.TypeInstantiation.dict([
+                {
+                    key: python.TypeInstantiation.str("by_alias"),
+                    value: python.TypeInstantiation.bool(true)
+                },
+                {
+                    key: python.TypeInstantiation.str("exclude_unset"), 
+                    value: python.TypeInstantiation.bool(true)
+                }
+            ])
+        });
+
+        method.addStatement(
+            python.BinOp.add(kwargsWithDefaults, python.reference("kwargs"))
+        );
+
+        method.addStatement(
+            python.Return(
+                python.Call(
+                    python.MemberAccess(
+                        python.Call(python.reference("super")),
+                        "json"
+                    ),
+                    undefined,
+                    [python.Spread(python.reference("kwargs_with_defaults"))]
+                )
+            )
+        );
+
+        return method;
     }
 }

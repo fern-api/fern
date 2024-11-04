@@ -8,6 +8,8 @@ export declare namespace Class {
     interface Args {
         /* The name of the Python class */
         name: string;
+        /* Documentation string for the class */
+        docs?: string;
         /* The parent classes that this class inherits from */
         extends_?: Reference[];
         /* The decorators that should be applied to this class */
@@ -20,13 +22,15 @@ export class Class extends AstNode {
     public readonly extends_: Reference[];
     public readonly decorators: Decorator[];
     public readonly fields: Field[] = [];
+    public readonly docs?: string;
     private statements: AstNode[] = [];
 
-    constructor({ name, extends_, decorators }: Class.Args) {
+    constructor({ docs, name, extends_, decorators }: Class.Args) {
         super();
         this.name = name;
         this.extends_ = extends_ ?? [];
         this.decorators = decorators ?? [];
+        this.docs = docs;
 
         this.extends_.forEach((parentClassReference) => {
             this.addReference(parentClassReference);
@@ -34,6 +38,13 @@ export class Class extends AstNode {
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            writer.write('"""');
+            writer.write(this.docs);
+            writer.write('"""');
+            writer.newLine();
+        }
+
         this.decorators.forEach((decorator) => {
             decorator.write(writer);
         });

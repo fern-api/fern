@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional
 
+"""An OAuth token response."""
+
 
 class TokenResponse(BaseModel):
     access_token: str

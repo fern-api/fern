@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from .types import UserModel
+from .types.user_model import UserModel
 
 
 class CreateResponse(BaseModel):

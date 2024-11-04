@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
-from .types import ResourceList, Memo
+from .types.resource_list import ResourceList
+from .types.memo import Memo
 
 
 class BaseResource(BaseModel):

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from resources.users.types import UserOptionalListContainer
+from resources.users.types.user_optional_list_container import UserOptionalListContainer
 from typing import Optional
 from uuid import UUID
 

@@ -2,7 +2,9 @@ from pydantic import BaseModel
 from datetime import datetime
 from uuid import UUID
 from typing import List, Set, Dict, Optional, Any
-from .types import Name
+from .types.name import Name
+
+"""Exercises all of the built-in types."""
 
 
 class Type(BaseModel):

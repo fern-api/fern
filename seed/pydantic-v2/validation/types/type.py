@@ -1,5 +1,7 @@
 from pydantic import BaseModel
-from .types import Shape
+from .types.shape import Shape
+
+"""Defines properties with default values and validation rules."""
 
 
 class Type(BaseModel):

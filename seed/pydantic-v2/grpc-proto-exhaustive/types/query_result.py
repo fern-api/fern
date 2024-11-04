@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from .types import ScoredColumn
+from .types.scored_column import ScoredColumn
 
 
 class QueryResult(BaseModel):

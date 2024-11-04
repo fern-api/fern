@@ -3,4 +3,4 @@ from uuid import UUID
 
 
 class SubmissionIdNotFound(BaseModel):
-    missing_submission_id: UUID
+    missing_submission_id: UUID = Field(alias="missingSubmissionId")

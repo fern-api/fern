@@ -1,10 +1,14 @@
 from pydantic import BaseModel
-from resources.v_2.resources.v_3.resources.problem.types import (
+from resources.v_2.resources.v_3.resources.problem.types.non_void_function_definition import (
     NonVoidFunctionDefinition,
+)
+from resources.v_2.resources.v_3.resources.problem.types.assert_correctness_check import (
     AssertCorrectnessCheck,
 )
 
 
 class TestCaseWithActualResultImplementation(BaseModel):
-    get_actual_result: NonVoidFunctionDefinition
-    assert_correctness_check: AssertCorrectnessCheck
+    get_actual_result: NonVoidFunctionDefinition = Field(alias="getActualResult")
+    assert_correctness_check: AssertCorrectnessCheck = Field(
+        alias="assertCorrectnessCheck"
+    )

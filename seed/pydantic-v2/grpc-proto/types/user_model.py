@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from .types import Metadata
+from .types.metadata import Metadata
 
 
 class UserModel(BaseModel):

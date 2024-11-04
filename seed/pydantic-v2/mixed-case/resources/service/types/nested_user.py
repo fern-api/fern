@@ -1,7 +1,7 @@
 from pydantic import BaseModel
-from resources.service.types import User
+from resources.service.types.user import User
 
 
 class NestedUser(BaseModel):
-    name: str
-    nested_user: User
+    name: str = Field(alias="Name")
+    nested_user: User = Field(alias="NestedUser")
