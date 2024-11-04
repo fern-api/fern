@@ -132,5 +132,7 @@ service:
       response:
         docs: OK
         type: list<string>
+      source:
+        openapi: openapi/cohere-v2.yaml
   source:
     openapi: openapi/cohere-v2.yaml

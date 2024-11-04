@@ -7703,6 +7703,9 @@ types:
                   "variable": "$appName",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteClient": {
               "auth": true,
@@ -7765,6 +7768,9 @@ types:
               "response": {
                 "docs": "Client deleted.",
                 "type": "root.ClientsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteContributor": {
@@ -7830,6 +7836,9 @@ types:
                 "docs": "Contributor removed.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteImage": {
               "auth": true,
@@ -7887,6 +7896,9 @@ types:
               "response": {
                 "docs": "App image removed.",
                 "type": "root.AppDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteLanguage": {
@@ -7951,6 +7963,9 @@ types:
                 "docs": "Language deleted.",
                 "type": "root.AppLanguagesDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteMyself": {
               "auth": true,
@@ -8009,6 +8024,9 @@ types:
               "response": {
                 "docs": "Contributor removed.",
                 "type": "root.ContributorsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteRole": {
@@ -8075,6 +8093,9 @@ types:
               "response": {
                 "docs": "Role deleted.",
                 "type": "root.RolesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteWorkflow": {
@@ -8144,6 +8165,9 @@ types:
                 "docs": "Workflow deleted.",
                 "type": "root.WorkflowsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getApp": {
               "auth": true,
@@ -8201,6 +8225,9 @@ types:
                 "docs": "Apps returned.",
                 "type": "root.AppDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getApps": {
               "auth": true,
@@ -8250,6 +8277,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "docs": "Apps returned.",
                 "type": "list<root.AppDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getAssetScripts": {
               "auth": true,
@@ -8297,6 +8327,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "Asset scripts returned.",
                 "type": "root.AssetScriptsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getClients": {
@@ -8354,6 +8387,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "Clients returned.",
                 "type": "root.ClientsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getContributors": {
@@ -8413,6 +8449,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "docs": "Contributors returned.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getImage": {
               "auth": true,
@@ -8434,6 +8473,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "App image found and content or (resized) image returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getLanguages": {
@@ -8492,6 +8534,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "docs": "Languages returned.",
                 "type": "root.AppLanguagesDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getPermissions": {
               "auth": true,
@@ -8525,6 +8570,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "App permissions returned.",
                 "type": "list<string>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getRoles": {
@@ -8586,6 +8634,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "docs": "Roles returned.",
                 "type": "root.RolesDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getSettings": {
               "auth": true,
@@ -8641,6 +8692,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "App settings returned.",
                 "type": "root.AppSettingsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getTeamApps": {
@@ -8699,6 +8753,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "Apps returned.",
                 "type": "list<root.AppDto>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getWorkflows": {
@@ -8761,6 +8818,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "response": {
                 "docs": "Workflows returned.",
                 "type": "root.WorkflowsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postApp": {
@@ -8838,6 +8898,9 @@ You will be assigned as owner of the new app automatically.",
               "response": {
                 "docs": "App created.",
                 "type": "root.AppDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postClient": {
@@ -8921,6 +8984,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "Client created.",
                 "type": "root.ClientsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "postContributor": {
               "auth": true,
@@ -8986,6 +9052,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Contributor assigned to app.",
                 "type": "root.ContributorsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postLanguage": {
@@ -9067,6 +9136,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Language created.",
                 "type": "root.AppLanguagesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postRole": {
@@ -9151,6 +9223,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Role created.",
                 "type": "root.RolesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postWorkflow": {
@@ -9238,6 +9313,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "Workflow created.",
                 "type": "root.WorkflowsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putApp": {
               "auth": true,
@@ -9315,6 +9393,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "App updated.",
                 "type": "root.AppDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putAppTeam": {
               "auth": true,
@@ -9387,6 +9468,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "App transferred.",
                 "type": "root.AppDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putAssetScripts": {
@@ -9475,6 +9559,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Asset scripts updated.",
                 "type": "root.AssetScriptsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putClient": {
@@ -9576,6 +9663,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "Client updated.",
                 "type": "root.ClientsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putLanguage": {
               "auth": true,
@@ -9661,6 +9751,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Language updated.",
                 "type": "root.AppLanguagesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putRole": {
@@ -9750,6 +9843,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "Role updated.",
                 "type": "root.RolesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putSettings": {
@@ -9847,6 +9943,9 @@ The client secret is auto generated on the server and returned. The client does 
               "response": {
                 "docs": "App updated.",
                 "type": "root.AppSettingsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putWorkflow": {
@@ -9954,6 +10053,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "Workflow updated.",
                 "type": "root.WorkflowsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "uploadImage": {
               "auth": true,
@@ -10024,6 +10126,9 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "App image uploaded.",
                 "type": "root.AppDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -10041,6 +10146,8 @@ service:
       path: /api/apps/{app}/assets/scripts
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10074,6 +10181,8 @@ service:
       path: /api/apps/{app}/assets/scripts
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10136,6 +10245,8 @@ service:
       method: GET
       auth: true
       docs: Gets all configured clients for the app with the specified name.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10178,6 +10289,8 @@ service:
 
         The client secret is auto generated on the server and returned. The
         client does not expire, the access token is valid for 30 days.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10230,6 +10343,8 @@ service:
       method: PUT
       auth: true
       docs: Only the display name can be changed, create a new client if necessary.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10303,6 +10418,8 @@ service:
       docs: >-
         The application that uses this client credentials cannot access the API
         after it has been revoked.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10345,6 +10462,8 @@ service:
       path: /api/apps/{app}/contributors
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10382,6 +10501,8 @@ service:
       path: /api/apps/{app}/contributors
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10425,6 +10546,8 @@ service:
       path: /api/apps/{app}/contributors/me
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10463,6 +10586,8 @@ service:
       path: /api/apps/{app}/contributors/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10505,6 +10630,8 @@ service:
       path: /api/apps/{app}/image
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10520,6 +10647,8 @@ service:
       path: /api/apps/{app}/image
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10568,6 +10697,8 @@ service:
       path: /api/apps/{app}/image
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10609,6 +10740,8 @@ service:
       path: /api/apps/{app}/languages
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10645,6 +10778,8 @@ service:
       path: /api/apps/{app}/languages
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10694,6 +10829,8 @@ service:
       path: /api/apps/{app}/languages/{language}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10750,6 +10887,8 @@ service:
       path: /api/apps/{app}/languages/{language}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10791,6 +10930,8 @@ service:
       path: /api/apps/{app}/roles
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10829,6 +10970,8 @@ service:
       path: /api/apps/{app}/roles
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10880,6 +11023,8 @@ service:
       path: /api/apps/{app}/roles/permissions
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10901,6 +11046,8 @@ service:
       path: /api/apps/{app}/roles/{roleName}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -10958,6 +11105,8 @@ service:
       path: /api/apps/{app}/roles/{roleName}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11006,6 +11155,8 @@ service:
         user (OpenID implicit flow).
 
         You will retrieve all apps, where you are assigned as a contributor.
+      source:
+        openapi: ../openapi.json
       display-name: Get your apps.
       response:
         docs: Apps returned.
@@ -11043,6 +11194,8 @@ service:
         implicit flow).
 
         You will be assigned as owner of the new app automatically.
+      source:
+        openapi: ../openapi.json
       display-name: Create a new app.
       request:
         name: CreateAppDto
@@ -11099,6 +11252,8 @@ service:
         user (OpenID implicit flow).
 
         You will retrieve all apps, where you are assigned as a contributor.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -11137,6 +11292,8 @@ service:
       path: /api/apps/{app}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11177,6 +11334,8 @@ service:
       path: /api/apps/{app}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11230,6 +11389,8 @@ service:
       path: /api/apps/{app}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11246,6 +11407,8 @@ service:
       path: /api/apps/{app}/team
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11296,6 +11459,8 @@ service:
       path: /api/apps/{app}/settings
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11331,6 +11496,8 @@ service:
       path: /api/apps/{app}/settings
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11391,6 +11558,8 @@ service:
       path: /api/apps/{app}/workflows
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11430,6 +11599,8 @@ service:
       path: /api/apps/{app}/workflows
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11482,6 +11653,8 @@ service:
       path: /api/apps/{app}/workflows/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11549,6 +11722,8 @@ service:
       path: /api/apps/{app}/workflows/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -11678,6 +11853,9 @@ service:
                 "docs": "Assets created, update or delete.",
                 "type": "list<root.BulkResultDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteAsset": {
               "auth": true,
@@ -11722,6 +11900,9 @@ service:
                   },
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteAssetFolder": {
               "auth": true,
@@ -11752,6 +11933,9 @@ service:
                   "docs": "The ID of the asset folder to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getAsset": {
@@ -11827,6 +12011,9 @@ service:
               "response": {
                 "docs": "Asset found.",
                 "type": "root.AssetDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getAssetContent": {
@@ -11911,6 +12098,9 @@ service:
               "response": {
                 "docs": "Asset found and content or (resized) image returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getAssetContentBySlug": {
@@ -12003,6 +12193,9 @@ service:
                 "docs": "Asset found and content or (resized) image returned.",
                 "type": "file",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getAssetFolders": {
               "auth": true,
@@ -12084,6 +12277,9 @@ service:
               "response": {
                 "docs": "Asset folders returned.",
                 "type": "root.AssetFoldersDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getAssets": {
@@ -12199,6 +12395,9 @@ service:
                 "docs": "Assets returned.",
                 "type": "root.AssetsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getAssetsPost": {
               "auth": true,
@@ -12286,6 +12485,9 @@ service:
                 "docs": "Assets returned.",
                 "type": "root.AssetsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTags": {
               "auth": true,
@@ -12319,6 +12521,9 @@ service:
               "response": {
                 "docs": "Assets tags returned.",
                 "type": "map<string, integer>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postAsset": {
@@ -12417,6 +12622,9 @@ service:
                 "docs": "Asset created.",
                 "type": "root.AssetDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "postAssetFolder": {
               "auth": true,
@@ -12488,6 +12696,9 @@ service:
               "response": {
                 "docs": "Asset folder created.",
                 "type": "root.AssetFolderDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postUpsertAsset": {
@@ -12586,6 +12797,9 @@ service:
               "response": {
                 "docs": "Asset created or updated.",
                 "type": "root.AssetDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putAsset": {
@@ -12694,6 +12908,9 @@ service:
                 "docs": "Asset updated.",
                 "type": "root.AssetDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putAssetContent": {
               "auth": true,
@@ -12783,6 +13000,9 @@ service:
                 "docs": "Asset updated.",
                 "type": "root.AssetDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putAssetFolder": {
               "auth": true,
@@ -12856,6 +13076,9 @@ service:
                 "docs": "Asset folder updated.",
                 "type": "root.AssetFolderDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putAssetFolderParent": {
               "auth": true,
@@ -12920,6 +13143,9 @@ service:
               "response": {
                 "docs": "Asset folder moved.",
                 "type": "root.AssetFolderDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putAssetParent": {
@@ -13012,6 +13238,9 @@ service:
                 "docs": "Asset moved.",
                 "type": "root.AssetDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putTag": {
               "auth": true,
@@ -13075,6 +13304,9 @@ service:
                 "docs": "Asset tag renamed and new tags returned.",
                 "type": "map<string, integer>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -13092,6 +13324,8 @@ service:
       path: /api/assets/{app}/{idOrSlug}/{more}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13160,6 +13394,8 @@ service:
       path: /api/assets/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -13222,6 +13458,8 @@ service:
       method: GET
       auth: true
       docs: Get all asset folders for the app.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13275,6 +13513,8 @@ service:
       path: /api/apps/{app}/assets/folders
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13320,6 +13560,8 @@ service:
       path: /api/apps/{app}/assets/folders/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13366,6 +13608,8 @@ service:
       path: /api/apps/{app}/assets/folders/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13386,6 +13630,8 @@ service:
       path: /api/apps/{app}/assets/folders/{id}/parent
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13430,6 +13676,8 @@ service:
       method: GET
       auth: true
       docs: Get all tags for assets.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13451,6 +13699,8 @@ service:
       path: /api/apps/{app}/assets/tags/{name}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13490,6 +13740,8 @@ service:
       method: GET
       auth: true
       docs: Get all assets for the app.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13575,6 +13827,8 @@ service:
       docs: >-
         You can only upload one file at a time. The mime type of the file is not
         calculated by Squidex and is required correctly.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13647,6 +13901,8 @@ service:
       method: POST
       auth: true
       docs: Get all assets for the app.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13710,6 +13966,8 @@ service:
       path: /api/apps/{app}/assets/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13769,6 +14027,8 @@ service:
       docs: >-
         You can only upload one file at a time. The mime type of the file is not
         calculated by Squidex and is required correctly.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13841,6 +14101,8 @@ service:
       path: /api/apps/{app}/assets/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13919,6 +14181,8 @@ service:
       path: /api/apps/{app}/assets/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -13948,6 +14212,8 @@ service:
       path: /api/apps/{app}/assets/bulk
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14001,6 +14267,8 @@ service:
       method: PUT
       auth: true
       docs: Use multipart request to upload an asset.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14066,6 +14334,8 @@ service:
       path: /api/apps/{app}/assets/{id}/parent
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14172,6 +14442,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getBackupContent": {
               "auth": true,
@@ -14197,6 +14470,9 @@ service:
               "response": {
                 "docs": "Backup found and content returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getBackupContentV2": {
@@ -14232,6 +14508,9 @@ service:
               "response": {
                 "docs": "Backup found and content returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getBackups": {
@@ -14289,6 +14568,9 @@ service:
                 "docs": "Backups returned.",
                 "type": "root.BackupJobsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getRestoreJob": {
               "auth": true,
@@ -14319,6 +14601,9 @@ service:
                 "docs": "Status returned.",
                 "type": "root.RestoreJobDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "postBackup": {
               "auth": true,
@@ -14344,6 +14629,9 @@ service:
                   "docs": "The name of the app.",
                   "variable": "$appName",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postRestoreJob": {
@@ -14394,6 +14682,9 @@ service:
                 "name": "RestoreRequestDto",
                 "query-parameters": undefined,
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -14411,6 +14702,8 @@ service:
       path: /api/apps/{app}/backups/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14429,6 +14722,8 @@ service:
       path: /api/apps/{app}/backups/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14449,6 +14744,8 @@ service:
       path: /api/apps/backups/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -14473,6 +14770,8 @@ service:
       path: /api/apps/{app}/backups
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14509,6 +14808,8 @@ service:
       path: /api/apps/{app}/backups
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14525,6 +14826,8 @@ service:
       path: /api/apps/restore
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get current restore status.
       response:
         docs: Status returned.
@@ -14544,6 +14847,8 @@ service:
       path: /api/apps/restore
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Restore a backup.
       request:
         name: RestoreRequestDto
@@ -14616,6 +14921,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getComments": {
               "auth": true,
@@ -14685,6 +14993,9 @@ service:
                 "docs": "Comments returned.",
                 "type": "root.CommentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getWatchingUsers": {
               "auth": true,
@@ -14722,6 +15033,9 @@ service:
               "response": {
                 "docs": "Watching users returned.",
                 "type": "list<string>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postComment": {
@@ -14774,6 +15088,9 @@ service:
                 "docs": "Comment created.",
                 "type": "root.CommentDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putComment": {
               "auth": true,
@@ -14817,6 +15134,9 @@ service:
                 "body": "root.UpsertCommentDto",
                 "content-type": "application/json",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -14834,6 +15154,8 @@ service:
       path: /api/apps/{app}/watching/{resource}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14859,6 +15181,8 @@ service:
       method: GET
       auth: true
       docs: When passing in a version you can retrieve all updates since then.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14904,6 +15228,8 @@ service:
       path: /api/apps/{app}/comments/{commentsId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14939,6 +15265,8 @@ service:
       path: /api/apps/{app}/comments/{commentsId}/{commentId}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -14968,6 +15296,8 @@ service:
       path: /api/apps/{app}/comments/{commentsId}/{commentId}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -15099,6 +15429,9 @@ service:
                 "docs": "",
                 "type": "list<root.BulkResultDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "createDraft": {
               "auth": true,
@@ -15220,6 +15553,9 @@ service:
                 "docs": "Content draft created.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteContent": {
               "auth": true,
@@ -15268,6 +15604,9 @@ service:
                     "type": "optional<boolean>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteContentStatus": {
@@ -15390,6 +15729,9 @@ service:
                 "docs": "Content status change cancelled.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteVersion": {
               "auth": true,
@@ -15510,6 +15852,9 @@ service:
               "response": {
                 "docs": "Content draft deleted.",
                 "type": "root.ContentsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getContent": {
@@ -15645,6 +15990,9 @@ service:
                 "docs": "Content returned.",
                 "type": "root.ContentDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getContentValidity": {
               "auth": true,
@@ -15681,6 +16029,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getContentVersion": {
               "auth": true,
@@ -15715,6 +16066,9 @@ service:
               "response": {
                 "docs": "Content version returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getContents": {
@@ -15844,6 +16198,9 @@ service:
                 "docs": "Contents returned.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getContentsPost": {
               "auth": true,
@@ -15964,6 +16321,9 @@ service:
               "response": {
                 "docs": "Contents returned.",
                 "type": "root.ContentsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getReferences": {
@@ -16094,6 +16454,9 @@ service:
                 "docs": "Contents returned.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getReferencing": {
               "auth": true,
@@ -16222,6 +16585,9 @@ service:
               "response": {
                 "docs": "Content returned.",
                 "type": "root.ContentsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "patchContent": {
@@ -16352,6 +16718,9 @@ service:
               "response": {
                 "docs": "Content patched.",
                 "type": "root.ContentsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postContent": {
@@ -16493,6 +16862,9 @@ service:
                 "docs": "Content created.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "postContents": {
               "auth": true,
@@ -16583,6 +16955,9 @@ service:
               "response": {
                 "docs": "Contents created.",
                 "type": "list<root.BulkResultDto>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postUpsertContent": {
@@ -16729,6 +17104,9 @@ service:
                 "docs": "Content created or updated.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putContent": {
               "auth": true,
@@ -16858,6 +17236,9 @@ service:
               "response": {
                 "docs": "Content updated.",
                 "type": "root.ContentsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putContentStatus": {
@@ -17011,6 +17392,9 @@ service:
                 "docs": "Content status changed.",
                 "type": "root.ContentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -17031,6 +17415,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17124,6 +17510,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17226,6 +17614,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17315,6 +17705,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17416,6 +17808,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17522,6 +17916,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17617,6 +18013,8 @@ service:
       docs: >-
         You can create an generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17653,6 +18051,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17748,6 +18148,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17775,6 +18177,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17869,6 +18273,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17963,6 +18369,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -17991,6 +18399,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18055,6 +18465,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18126,6 +18538,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18233,6 +18647,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18322,6 +18738,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18411,6 +18829,8 @@ service:
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -18521,6 +18941,9 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/diagnostics/dump",
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getGCDump": {
               "auth": true,
@@ -18536,6 +18959,9 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/diagnostics/gcdump",
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -18553,6 +18979,8 @@ service:
       path: /api/diagnostics/dump
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Creates a dump and writes it into storage..
       errors:
         - root.InternalServerError
@@ -18563,6 +18991,8 @@ service:
       path: /api/diagnostics/gcdump
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Creates a gc dump and writes it into storage.
       errors:
         - root.InternalServerError
@@ -18628,6 +19058,9 @@ service:
                 "docs": "Event consumers returned.",
                 "type": "root.EventConsumersDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "resetEventConsumer": {
               "auth": true,
@@ -18674,6 +19107,9 @@ service:
               "response": {
                 "docs": "Event consumer resetted asynchronously.",
                 "type": "root.EventConsumerDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "startEventConsumer": {
@@ -18722,6 +19158,9 @@ service:
                 "docs": "Event consumer started asynchronously.",
                 "type": "root.EventConsumerDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "stopEventConsumer": {
               "auth": true,
@@ -18769,6 +19208,9 @@ service:
                 "docs": "Event consumer stopped asynchronously.",
                 "type": "root.EventConsumerDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -18786,6 +19228,8 @@ service:
       path: /api/event-consumers
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get event consumers.
       response:
         docs: Event consumers returned.
@@ -18815,6 +19259,8 @@ service:
       path: /api/event-consumers/{consumerName}/start
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         consumerName:
           type: string
@@ -18847,6 +19293,8 @@ service:
       path: /api/event-consumers/{consumerName}/stop
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         consumerName:
           type: string
@@ -18879,6 +19327,8 @@ service:
       path: /api/event-consumers/{consumerName}/reset
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         consumerName:
           type: string
@@ -18970,6 +19420,9 @@ service:
                 "docs": "Events returned.",
                 "type": "list<root.HistoryEventDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTeamHistory": {
               "auth": true,
@@ -19020,6 +19473,9 @@ service:
                 "docs": "Events returned.",
                 "type": "list<root.HistoryEventDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19037,6 +19493,8 @@ service:
       path: /api/apps/{app}/history
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -19069,6 +19527,8 @@ service:
       path: /api/teams/{team}/history
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -19138,6 +19598,9 @@ service:
                 "docs": "Supported language codes returned.",
                 "type": "list<root.LanguageDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19158,6 +19621,8 @@ service:
       docs: >-
         Provide a list of supported language codes, following the ISO2Code
         standard.
+      source:
+        openapi: ../openapi.json
       display-name: Get supported languages.
       response:
         docs: Supported language codes returned.
@@ -19222,6 +19687,9 @@ service:
                 "docs": "Latest features returned.",
                 "type": "root.FeaturesDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19239,6 +19707,8 @@ service:
       path: /api/news/features
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get features since version.
       request:
         name: NewsGetNewsRequest
@@ -19301,6 +19771,9 @@ service:
                   "docs": "The user id.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getNotifications": {
@@ -19365,6 +19838,9 @@ service:
                 "docs": "All comments returned.",
                 "type": "root.CommentsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19383,6 +19859,8 @@ service:
       method: GET
       auth: true
       docs: When passing in a version you can retrieve all updates since then.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         userId:
           type: string
@@ -19423,6 +19901,8 @@ service:
       path: /api/users/{userId}/notifications/{commentId}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         userId:
           type: string
@@ -19476,6 +19956,9 @@ service:
                   "variable": "$appName",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getInfo": {
               "auth": true,
@@ -19500,6 +19983,9 @@ service:
                 "docs": "Infos returned.",
                 "type": "root.ExposedValues",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getPing": {
               "auth": true,
@@ -19514,6 +20000,9 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/ping",
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19531,6 +20020,8 @@ service:
       path: /api/info
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get API information.
       response:
         docs: Infos returned.
@@ -19546,6 +20037,8 @@ service:
       method: GET
       auth: true
       docs: Can be used to test, if the Squidex API is alive and responding.
+      source:
+        openapi: ../openapi.json
       display-name: Get ping status of the API.
       errors:
         - root.InternalServerError
@@ -19556,6 +20049,8 @@ service:
       method: GET
       auth: true
       docs: Can be used to test, if the Squidex API is alive and responding.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -19636,6 +20131,9 @@ service:
                 "docs": "App plan information returned.",
                 "type": "root.PlansDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTeamPlans": {
               "auth": true,
@@ -19693,6 +20191,9 @@ service:
                 "docs": "Team plan information returned.",
                 "type": "root.PlansDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putPlan": {
               "auth": true,
@@ -19734,6 +20235,9 @@ service:
               "response": {
                 "docs": "Plan changed or redirect url returned.",
                 "type": "root.PlanChangedDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putTeamPlan": {
@@ -19777,6 +20281,9 @@ service:
                 "docs": "Plan changed or redirect url returned.",
                 "type": "root.PlanChangedDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -19794,6 +20301,8 @@ service:
       path: /api/apps/{app}/plans
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -19834,6 +20343,8 @@ service:
       path: /api/apps/{app}/plan
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -19861,6 +20372,8 @@ service:
       path: /api/teams/{team}/plans
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -19901,6 +20414,8 @@ service:
       path: /api/teams/{team}/plan
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -19968,6 +20483,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteEvents": {
               "auth": true,
@@ -19992,6 +20510,9 @@ service:
                   "docs": "The name of the app.",
                   "variable": "$appName",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "deleteRule": {
@@ -20024,6 +20545,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteRuleEvents": {
               "auth": true,
@@ -20054,6 +20578,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteRuleRun": {
               "auth": true,
@@ -20078,6 +20605,9 @@ service:
                   "docs": "The name of the app.",
                   "variable": "$appName",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "disableRule": {
@@ -20150,6 +20680,9 @@ service:
                 "docs": "Rule disabled.",
                 "type": "root.RuleDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "enableRule": {
               "auth": true,
@@ -20221,6 +20754,9 @@ service:
                 "docs": "Rule enabled.",
                 "type": "root.RuleDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getActions": {
               "auth": true,
@@ -20261,6 +20797,9 @@ service:
                 "docs": "Rule actions returned.",
                 "type": "map<string, root.RuleElementDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getEventSchema": {
               "auth": true,
@@ -20295,6 +20834,9 @@ service:
                 "docs": "Rule event type found.",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getEventTypes": {
               "auth": true,
@@ -20318,6 +20860,9 @@ service:
               "response": {
                 "docs": "Rule events returned.",
                 "type": "list<string>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getEvents": {
@@ -20396,6 +20941,9 @@ service:
                 "docs": "Rule events returned.",
                 "type": "root.RuleEventsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getRules": {
               "auth": true,
@@ -20470,6 +21018,9 @@ service:
               "response": {
                 "docs": "Rules returned.",
                 "type": "root.RulesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postRule": {
@@ -20556,6 +21107,9 @@ service:
                 "docs": "Rule created.",
                 "type": "root.RuleDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putEvent": {
               "auth": true,
@@ -20586,6 +21140,9 @@ service:
                   "docs": "The event to enqueue.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putRule": {
@@ -20685,6 +21242,9 @@ service:
                 "docs": "Rule updated.",
                 "type": "root.RuleDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putRuleRun": {
               "auth": true,
@@ -20723,6 +21283,9 @@ service:
                     "type": "optional<boolean>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "simulateGET": {
@@ -20788,6 +21351,9 @@ service:
               "response": {
                 "docs": "Rule simulated.",
                 "type": "root.SimulatedRuleEventsDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "simulatePOST": {
@@ -20869,6 +21435,9 @@ service:
                 "docs": "Rule simulated.",
                 "type": "root.SimulatedRuleEventsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "triggerRule": {
               "auth": true,
@@ -20900,6 +21469,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -20917,6 +21489,8 @@ service:
       path: /api/rules/actions
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get supported rule actions.
       response:
         docs: Rule actions returned.
@@ -20943,6 +21517,8 @@ service:
       path: /api/apps/{app}/rules
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -20996,6 +21572,8 @@ service:
       path: /api/apps/{app}/rules
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21060,6 +21638,8 @@ service:
       path: /api/apps/{app}/rules/run
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21075,6 +21655,8 @@ service:
       path: /api/apps/{app}/rules/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21146,6 +21728,8 @@ service:
       path: /api/apps/{app}/rules/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21166,6 +21750,8 @@ service:
       path: /api/apps/{app}/rules/{id}/enable
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21219,6 +21805,8 @@ service:
       path: /api/apps/{app}/rules/{id}/disable
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21272,6 +21860,8 @@ service:
       path: /api/apps/{app}/rules/{id}/trigger
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21292,6 +21882,8 @@ service:
       path: /api/apps/{app}/rules/{id}/run
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21317,6 +21909,8 @@ service:
       path: /api/apps/{app}/rules/{id}/events
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21336,6 +21930,8 @@ service:
       path: /api/apps/{app}/rules/simulate
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21391,6 +21987,8 @@ service:
       path: /api/apps/{app}/rules/{id}/simulate
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21434,6 +22032,8 @@ service:
       path: /api/apps/{app}/rules/events
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21486,6 +22086,8 @@ service:
       path: /api/apps/{app}/rules/events
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21501,6 +22103,8 @@ service:
       path: /api/apps/{app}/rules/events/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21521,6 +22125,8 @@ service:
       path: /api/apps/{app}/rules/events/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -21541,6 +22147,8 @@ service:
       path: /api/rules/eventtypes
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Provide a list of all event types that are used in rules.
       response:
         docs: Rule events returned.
@@ -21555,6 +22163,8 @@ service:
       path: /api/rules/eventtypes/{type}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         type:
           type: string
@@ -21727,6 +22337,9 @@ service:
                 "docs": "Schema field deleted.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteNestedField": {
               "auth": true,
@@ -21874,6 +22487,9 @@ service:
                 "docs": "Schema field deleted.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteSchema": {
               "auth": true,
@@ -21904,6 +22520,9 @@ service:
                   "docs": "The name of the schema to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "disableField": {
@@ -22046,6 +22665,9 @@ service:
               "response": {
                 "docs": "Schema field disabled.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "disableNestedField": {
@@ -22194,6 +22816,9 @@ service:
                 "docs": "Schema field disabled.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "enableField": {
               "auth": true,
@@ -22335,6 +22960,9 @@ service:
               "response": {
                 "docs": "Schema field enabled.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "enableNestedField": {
@@ -22483,6 +23111,9 @@ service:
                 "docs": "Schema field enabled.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getSchema": {
               "auth": true,
@@ -22619,6 +23250,9 @@ service:
                 "docs": "Schema found.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getSchemas": {
               "auth": true,
@@ -22721,6 +23355,9 @@ service:
               "response": {
                 "docs": "Schemas returned.",
                 "type": "root.SchemasDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "hideField": {
@@ -22863,6 +23500,9 @@ service:
               "response": {
                 "docs": "Schema field hidden.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "hideNestedField": {
@@ -23011,6 +23651,9 @@ service:
                 "docs": "Schema field hidden.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "lockField": {
               "auth": true,
@@ -23152,6 +23795,9 @@ service:
               "response": {
                 "docs": "Schema field shown.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "lockNestedField": {
@@ -23299,6 +23945,9 @@ service:
               "response": {
                 "docs": "Schema field hidden.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postField": {
@@ -23451,6 +24100,9 @@ service:
               "response": {
                 "docs": "Schema field created.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postNestedField": {
@@ -23608,6 +24260,9 @@ service:
               "response": {
                 "docs": "Schema field created.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postSchema": {
@@ -23779,6 +24434,9 @@ service:
                 "docs": "Schema created.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "publishSchema": {
               "auth": true,
@@ -23915,6 +24573,9 @@ service:
               "response": {
                 "docs": "Schema published.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putCategory": {
@@ -24067,6 +24728,9 @@ service:
               "response": {
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putField": {
@@ -24222,6 +24886,9 @@ service:
               "response": {
                 "docs": "Schema field updated.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putNestedField": {
@@ -24383,6 +25050,9 @@ service:
                 "docs": "Schema field updated.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putNestedFieldOrdering": {
               "auth": true,
@@ -24534,6 +25204,9 @@ service:
                 "docs": "Schema fields reordered.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putPreviewUrls": {
               "auth": true,
@@ -24677,6 +25350,9 @@ service:
               "response": {
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putRules": {
@@ -24829,6 +25505,9 @@ service:
               "response": {
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putSchema": {
@@ -25020,6 +25699,9 @@ service:
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putSchemaFieldOrdering": {
               "auth": true,
@@ -25165,6 +25847,9 @@ service:
               "response": {
                 "docs": "Schema fields reordered.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putSchemaSync": {
@@ -25329,6 +26014,9 @@ service:
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putSchemaUIFields": {
               "auth": true,
@@ -25485,6 +26173,9 @@ service:
                 "docs": "Schema UI fields defined.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "putScripts": {
               "auth": true,
@@ -25627,6 +26318,9 @@ service:
                 "docs": "Schema updated.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "showField": {
               "auth": true,
@@ -25768,6 +26462,9 @@ service:
               "response": {
                 "docs": "Schema field shown.",
                 "type": "root.SchemaDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "showNestedField": {
@@ -25916,6 +26613,9 @@ service:
                 "docs": "Schema field shown.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "unpublishSchema": {
               "auth": true,
@@ -26053,6 +26753,9 @@ service:
                 "docs": "Schema unpublished.",
                 "type": "root.SchemaDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -26070,6 +26773,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26182,6 +26887,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26298,6 +27005,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/ui
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26410,6 +27119,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/ordering
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26516,6 +27227,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26626,6 +27339,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26740,6 +27455,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26844,6 +27561,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -26962,6 +27681,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27071,6 +27792,8 @@ service:
       method: PUT
       auth: true
       docs: A locked field cannot be updated or deleted.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27176,6 +27899,8 @@ service:
       method: PUT
       auth: true
       docs: A locked field cannot be edited or deleted.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27287,6 +28012,8 @@ service:
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27394,6 +28121,8 @@ service:
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27505,6 +28234,8 @@ service:
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27612,6 +28343,8 @@ service:
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27723,6 +28456,8 @@ service:
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27830,6 +28565,8 @@ service:
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -27941,6 +28678,8 @@ service:
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28048,6 +28787,8 @@ service:
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28156,6 +28897,8 @@ service:
       path: /api/apps/{app}/schemas
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28226,6 +28969,8 @@ service:
       path: /api/apps/{app}/schemas
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28347,6 +29092,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28446,6 +29193,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28580,6 +29329,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28600,6 +29351,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/sync
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28717,6 +29470,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/category
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28826,6 +29581,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/preview-urls
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -28931,6 +29688,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/scripts
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29035,6 +29794,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/rules
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29144,6 +29905,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/publish
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29244,6 +30007,8 @@ service:
       path: /api/apps/{app}/schemas/{schema}/unpublish
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29406,6 +30171,9 @@ service:
                 "docs": "Search results returned.",
                 "type": "list<root.SearchResultDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -29423,6 +30191,8 @@ service:
       path: /api/apps/{app}/search
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29500,6 +30270,9 @@ service:
                 "docs": "Storage usage returned.",
                 "type": "root.CurrentStorageDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getLog": {
               "auth": true,
@@ -29533,6 +30306,9 @@ service:
               "response": {
                 "docs": "Usage tracking results returned.",
                 "type": "root.LogDownloadDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getStorageSizes": {
@@ -29582,6 +30358,9 @@ service:
                 "docs": "Storage usage returned.",
                 "type": "list<root.StorageUsagePerDateDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getStorageSizesForTeam": {
               "auth": true,
@@ -29630,6 +30409,9 @@ service:
                 "docs": "Storage usage returned.",
                 "type": "list<root.StorageUsagePerDateDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTeamCurrentStorageSizeForTeam": {
               "auth": true,
@@ -29664,6 +30446,9 @@ service:
               "response": {
                 "docs": "Storage usage returned.",
                 "type": "root.CurrentStorageDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getUsages": {
@@ -29726,6 +30511,9 @@ service:
                 "docs": "API call returned.",
                 "type": "root.CallsUsageDtoDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getUsagesForTeam": {
               "auth": true,
@@ -29787,6 +30575,9 @@ service:
                 "docs": "API call returned.",
                 "type": "root.CallsUsageDtoDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -29804,6 +30595,8 @@ service:
       path: /api/apps/{app}/usages/log
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29825,6 +30618,8 @@ service:
       path: /api/apps/{app}/usages/calls/{fromDate}/{toDate}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29867,6 +30662,8 @@ service:
       path: /api/teams/{team}/usages/calls/{fromDate}/{toDate}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -29909,6 +30706,8 @@ service:
       path: /api/apps/{app}/usages/storage/today
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29931,6 +30730,8 @@ service:
       path: /api/teams/{team}/usages/storage/today
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -29953,6 +30754,8 @@ service:
       path: /api/apps/{app}/usages/storage/{fromDate}/{toDate}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -29984,6 +30787,8 @@ service:
       path: /api/teams/{team}/usages/storage/{fromDate}/{toDate}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30088,6 +30893,9 @@ service:
                 "docs": "Contributor removed.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "deleteMyself": {
               "auth": true,
@@ -30147,6 +30955,9 @@ service:
                 "docs": "Contributor removed.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getContributors": {
               "auth": true,
@@ -30205,6 +31016,9 @@ service:
                 "docs": "Contributors returned.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTeam": {
               "auth": true,
@@ -30251,6 +31065,9 @@ service:
                 "docs": "Teams returned.",
                 "type": "root.TeamDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTeams": {
               "auth": true,
@@ -30288,6 +31105,9 @@ You will retrieve all teams, where you are assigned as a contributor.",
               "response": {
                 "docs": "Teams returned.",
                 "type": "list<root.TeamDto>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postContributor": {
@@ -30355,6 +31175,9 @@ You will retrieve all teams, where you are assigned as a contributor.",
                 "docs": "Contributor assigned to team.",
                 "type": "root.ContributorsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "postTeam": {
               "auth": true,
@@ -30416,6 +31239,9 @@ You will be assigned as owner of the new team automatically.",
               "response": {
                 "docs": "Team created.",
                 "type": "root.TeamDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putTeam": {
@@ -30487,6 +31313,9 @@ You will be assigned as owner of the new team automatically.",
                 "docs": "Team updated.",
                 "type": "root.TeamDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -30504,6 +31333,8 @@ service:
       path: /api/teams/{team}/contributors
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30541,6 +31372,8 @@ service:
       path: /api/teams/{team}/contributors
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30584,6 +31417,8 @@ service:
       path: /api/teams/{team}/contributors/me
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30622,6 +31457,8 @@ service:
       path: /api/teams/{team}/contributors/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30669,6 +31506,8 @@ service:
         user (OpenID implicit flow).
 
         You will retrieve all teams, where you are assigned as a contributor.
+      source:
+        openapi: ../openapi.json
       display-name: Get your teams.
       response:
         docs: Teams returned.
@@ -30697,6 +31536,8 @@ service:
         implicit flow).
 
         You will be assigned as owner of the new team automatically.
+      source:
+        openapi: ../openapi.json
       display-name: Create a new team.
       request:
         name: CreateTeamDto
@@ -30735,6 +31576,8 @@ service:
       path: /api/teams/{team}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30766,6 +31609,8 @@ service:
       path: /api/teams/{team}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         team:
           type: string
@@ -30860,6 +31705,9 @@ service:
                 "docs": "Template returned.",
                 "type": "root.TemplateDetailsDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getTemplates": {
               "auth": true,
@@ -30904,6 +31752,9 @@ service:
                 "docs": "Templates returned.",
                 "type": "root.TemplatesDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -30921,6 +31772,8 @@ service:
       path: /api/templates
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get all templates.
       response:
         docs: Templates returned.
@@ -30948,6 +31801,8 @@ service:
       path: /api/templates/{name}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         name:
           type: string
@@ -31056,6 +31911,9 @@ service:
                 "docs": "Text translated.",
                 "type": "root.TranslationDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -31073,6 +31931,8 @@ service:
       path: /api/apps/{app}/translations
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         app:
           variable: $appName
@@ -31152,6 +32012,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getUser": {
               "auth": true,
@@ -31198,6 +32061,9 @@ service:
               "response": {
                 "docs": "User returned.",
                 "type": "root.UserDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getUsers": {
@@ -31264,6 +32130,9 @@ service:
                 "docs": "Users returned.",
                 "type": "root.UsersDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "lockUser": {
               "auth": true,
@@ -31312,6 +32181,9 @@ service:
               "response": {
                 "docs": "User locked.",
                 "type": "root.UserDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "postUser": {
@@ -31402,6 +32274,9 @@ service:
               "response": {
                 "docs": "User created.",
                 "type": "root.UserDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "putUser": {
@@ -31496,6 +32371,9 @@ service:
                 "docs": "User created.",
                 "type": "root.UserDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "unlockUser": {
               "auth": true,
@@ -31545,6 +32423,9 @@ service:
                 "docs": "User unlocked.",
                 "type": "root.UserDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -31562,6 +32443,8 @@ service:
       path: /api/user-management
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get users by query.
       request:
         name: UserManagementGetUsersRequest
@@ -31604,6 +32487,8 @@ service:
       path: /api/user-management
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Create a new user.
       request:
         name: CreateUserDto
@@ -31658,6 +32543,8 @@ service:
       path: /api/user-management/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -31689,6 +32576,8 @@ service:
       path: /api/user-management/{id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -31747,6 +32636,8 @@ service:
       path: /api/user-management/{id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -31764,6 +32655,8 @@ service:
       path: /api/user-management/{id}/lock
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -31797,6 +32690,8 @@ service:
       path: /api/user-management/{id}/unlock
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -31886,6 +32781,9 @@ service:
                 "docs": "User found.",
                 "type": "root.UserDto",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getUserPicture": {
               "auth": true,
@@ -31907,6 +32805,9 @@ service:
               "response": {
                 "docs": "User found and image or fallback returned.",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getUserResources": {
@@ -31937,6 +32838,9 @@ service:
               "response": {
                 "docs": "User resources returned.",
                 "type": "root.ResourcesDto",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "getUsers": {
@@ -31985,6 +32889,9 @@ service:
                 "docs": "Users returned.",
                 "type": "list<root.UserDto>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -32002,6 +32909,8 @@ service:
       path: /api
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       display-name: Get the user resources.
       response:
         docs: User resources returned.
@@ -32023,6 +32932,8 @@ service:
       docs: >-
         Search the user by query that contains the email address or the part of
         the email address.
+      source:
+        openapi: ../openapi.json
       display-name: Get users by query.
       request:
         name: UsersGetUsersRequest
@@ -32052,6 +32963,8 @@ service:
       path: /api/users/{id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string
@@ -32083,6 +32996,8 @@ service:
       path: /api/users/{id}/picture
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         id:
           type: string

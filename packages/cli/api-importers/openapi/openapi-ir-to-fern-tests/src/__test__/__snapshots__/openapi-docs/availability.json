@@ -94,6 +94,9 @@
                 "docs": "OK",
                 "type": "WholeDeprecatedSettings",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "postSuccessInlineBetaBody": {
               "auth": false,
@@ -127,6 +130,9 @@
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "postSuccessInlineObjectDeprecation": {
               "auth": false,
@@ -159,6 +165,9 @@
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "postSuccessInlinePropertyDeprecation": {
@@ -196,6 +205,9 @@
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "postSuccessRef": {
               "auth": false,
@@ -231,6 +243,9 @@
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -270,6 +285,8 @@
         /collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -333,6 +350,8 @@
       path: /success-ref
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: Settings
         body:
@@ -354,6 +373,8 @@
       path: /success-inline-property-deprecation
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlinePropertyDeprecationRequest
         body:
@@ -375,6 +396,8 @@
       path: /success-inline-object-deprecation
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlineObjectDeprecationRequest
         body:
@@ -394,6 +417,8 @@
       path: /success-inline-beta-body
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlineBetaBodyRequest
         body:

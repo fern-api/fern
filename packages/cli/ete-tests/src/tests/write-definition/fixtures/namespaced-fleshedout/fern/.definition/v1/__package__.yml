@@ -430,5 +430,7 @@ service:
       response:
         docs: OK
         type: list<string>
+      source:
+        openapi: openapi/cohere.yaml
   source:
     openapi: openapi/cohere.yaml

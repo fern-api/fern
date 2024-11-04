@@ -7909,6 +7909,9 @@ types:
                 "docs": "A single attempt",
                 "type": "optional<root.EventAttempt>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getAttempts": {
               "auth": true,
@@ -7979,6 +7982,9 @@ types:
                 "docs": "List of attempts",
                 "type": "root.EventAttemptPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8018,6 +8024,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get attempts
       request:
         name: GetAttemptsRequest
@@ -8072,6 +8080,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a single attempt
@@ -8218,6 +8228,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "docs": "A single bookmark",
                 "type": "root.Bookmark",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteBookmark": {
               "auth": true,
@@ -8247,6 +8260,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "response": {
                 "docs": "An object with deleted bookmark's id",
                 "type": "root.DeletedBookmarkResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getBookmark": {
@@ -8293,6 +8309,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "response": {
                 "docs": "A single bookmark",
                 "type": "root.Bookmark",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getBookmarks": {
@@ -8373,6 +8392,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "docs": "List of bookmarks",
                 "type": "root.BookmarkPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "triggerBookmark": {
               "auth": true,
@@ -8446,6 +8468,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
               "response": {
                 "docs": "Array of created events",
                 "type": "root.EventArray",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateBookmark": {
@@ -8546,6 +8571,9 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "docs": "A single bookmark",
                 "type": "root.Bookmark",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8602,6 +8630,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get bookmarks
       request:
         name: GetBookmarksRequest
@@ -8660,6 +8690,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a bookmark
       request:
         name: CreateBookmarkRequest
@@ -8721,6 +8753,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a single bookmark
@@ -8755,6 +8789,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a bookmark
@@ -8818,6 +8854,8 @@ service:
       method: DELETE
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Delete a bookmark
@@ -8837,6 +8875,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Trigger a bookmark
@@ -8949,6 +8989,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                 "docs": "A single events bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createEventBulkRetry": {
               "auth": true,
@@ -9005,6 +9048,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                 "docs": "A single events bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "generateEventBulkRetryPlan": {
               "auth": true,
@@ -9031,6 +9077,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "response": {
                 "docs": "Events bulk retry plan",
                 "type": "root.BatchOperationPlan",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getEventBulkRetries": {
@@ -9104,6 +9153,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                 "docs": "List of events bulk retries",
                 "type": "root.BatchOperationPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getEventBulkRetry": {
               "auth": true,
@@ -9149,6 +9201,9 @@ docs: A bookmark lets you conveniently store and replay a specific request.
               "response": {
                 "docs": "A single events bulk retry",
                 "type": "root.BatchOperation",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -10097,6 +10152,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get events bulk retries
       request:
         name: GetEventBulkRetriesRequest
@@ -10152,6 +10209,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create an events bulk retry
       request:
         name: CreateEventBulkRetryRequest
@@ -10194,6 +10253,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Generate an events bulk retry plan
       response:
         docs: Events bulk retry plan
@@ -10212,6 +10273,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get an events bulk retry
@@ -10246,6 +10309,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Cancel an events bulk retry
@@ -10338,6 +10403,9 @@ docs: ''
                 "docs": "A single ignored events bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createIgnoredEventBulkRetry": {
               "auth": true,
@@ -10394,6 +10462,9 @@ docs: ''
                 "docs": "A single ignored events bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "generateIgnoredEventBulkRetryPlan": {
               "auth": true,
@@ -10420,6 +10491,9 @@ docs: ''
               "response": {
                 "docs": "Ignored events bulk retry plan",
                 "type": "root.BatchOperationPlan",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIgnoredEventBulkRetries": {
@@ -10493,6 +10567,9 @@ docs: ''
                 "docs": "List of ignored events bulk retries",
                 "type": "root.BatchOperationPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getIgnoredEventBulkRetry": {
               "auth": true,
@@ -10538,6 +10615,9 @@ docs: ''
               "response": {
                 "docs": "A single ignored events bulk retry",
                 "type": "root.BatchOperation",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -10682,6 +10762,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get ignored events bulk retries
       request:
         name: GetIgnoredEventBulkRetriesRequest
@@ -10737,6 +10819,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create an ignored events bulk retry
       request:
         name: CreateIgnoredEventBulkRetryRequest
@@ -10777,6 +10861,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Generate an ignored events bulk retry plan
       response:
         docs: Ignored events bulk retry plan
@@ -10795,6 +10881,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get an ignored events bulk retry
@@ -10829,6 +10917,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Cancel an ignored events bulk retry
@@ -10921,6 +11011,9 @@ docs: ''
                 "docs": "A single requests bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createRequestBulkRetry": {
               "auth": true,
@@ -10977,6 +11070,9 @@ docs: ''
                 "docs": "A single requests bulk retry",
                 "type": "root.BatchOperation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "generateRequestBulkRetryPlan": {
               "auth": true,
@@ -11003,6 +11099,9 @@ docs: ''
               "response": {
                 "docs": "Requests bulk retry plan",
                 "type": "root.BatchOperationPlan",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getRequestBulkRetries": {
@@ -11076,6 +11175,9 @@ docs: ''
                 "docs": "List of request bulk retries",
                 "type": "root.BatchOperationPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRequestBulkRetry": {
               "auth": true,
@@ -11121,6 +11223,9 @@ docs: ''
               "response": {
                 "docs": "A single requests bulk retry",
                 "type": "root.BatchOperation",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -11809,6 +11914,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get request bulk retries
       request:
         name: GetRequestBulkRetriesRequest
@@ -11864,6 +11971,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a requests bulk retry
       request:
         name: CreateRequestBulkRetryRequest
@@ -11906,6 +12015,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Generate a requests bulk retry plan
       response:
         docs: Requests bulk retry plan
@@ -11924,6 +12035,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a requests bulk retry
@@ -11958,6 +12071,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Cancel a requests bulk retry
@@ -12097,6 +12212,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createConnection": {
@@ -12256,6 +12374,9 @@ docs: ''
                 "docs": "A single connection",
                 "type": "root.Connection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getConnection": {
               "auth": true,
@@ -12349,6 +12470,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConnections": {
@@ -12461,6 +12585,9 @@ docs: ''
                 "docs": "List of connections",
                 "type": "root.ConnectionPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "pauseConnection": {
               "auth": true,
@@ -12554,6 +12681,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "unarchiveConnection": {
@@ -12649,6 +12779,9 @@ docs: ''
                 "docs": "A single connection",
                 "type": "root.Connection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "unpauseConnection": {
               "auth": true,
@@ -12742,6 +12875,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateConnection": {
@@ -12877,6 +13013,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "upsertConnection": {
@@ -13035,6 +13174,9 @@ docs: ''
               "response": {
                 "docs": "A single connection",
                 "type": "root.Connection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -13403,6 +13545,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get connections
       request:
         name: GetConnectionsRequest
@@ -13484,6 +13628,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a connection
       request:
         name: CreateConnectionRequest
@@ -13592,6 +13738,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Update or create a connection
       request:
         name: UpsertConnectionRequest
@@ -13700,6 +13848,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a single connection
@@ -13769,6 +13919,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a connection
@@ -13865,6 +14017,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Archive a connection
@@ -13934,6 +14088,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Unarchive a connection
@@ -14003,6 +14159,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Pause a connection
@@ -14072,6 +14230,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Unpause a connection
@@ -14195,6 +14355,9 @@ docs: >-
                 "docs": "A single destination",
                 "type": "root.Destination",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createDestination": {
               "auth": true,
@@ -14270,6 +14433,9 @@ docs: >-
                 "docs": "A single destination",
                 "type": "root.Destination",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getDestination": {
               "auth": true,
@@ -14309,6 +14475,9 @@ docs: >-
               "response": {
                 "docs": "A single destination",
                 "type": "root.Destination",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getDestinations": {
@@ -14379,6 +14548,9 @@ docs: >-
                 "docs": "List of destinations",
                 "type": "root.DestinationPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "unarchiveDestination": {
               "auth": true,
@@ -14418,6 +14590,9 @@ docs: >-
               "response": {
                 "docs": "A single destination",
                 "type": "root.Destination",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateDestination": {
@@ -14505,6 +14680,9 @@ docs: >-
                 "docs": "A single destination",
                 "type": "root.Destination",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsertDestination": {
               "auth": true,
@@ -14579,6 +14757,9 @@ docs: >-
               "response": {
                 "docs": "A single destination",
                 "type": "root.Destination",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -14676,6 +14857,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get destinations
       request:
         name: GetDestinationsRequest
@@ -14728,6 +14911,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a destination
       request:
         name: CreateDestinationRequest
@@ -14780,6 +14965,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Update or create a destination
       request:
         name: UpsertDestinationRequest
@@ -14832,6 +15019,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a destination
@@ -14861,6 +15050,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a destination
@@ -14921,6 +15112,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Archive a destination
@@ -14950,6 +15143,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Unarchive a destination
@@ -15045,6 +15240,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "response": {
                 "docs": "A single event",
                 "type": "root.Event",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getEvents": {
@@ -15161,6 +15359,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                 "docs": "List of events",
                 "type": "root.EventPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRequestRawBody": {
               "auth": true,
@@ -15190,6 +15391,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "response": {
                 "docs": "A request raw body data",
                 "type": "root.RawBody",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "muteEvent": {
@@ -15245,6 +15449,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
               "response": {
                 "docs": "A single event",
                 "type": "root.Event",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retryEvent": {
@@ -15325,6 +15532,9 @@ docs: A destination is any endpoint to which your webhooks can be routed.
                 "docs": "Retried event with event attempt",
                 "type": "root.RetriedEvent",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -15368,6 +15578,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get events
       request:
         name: GetEventsRequest
@@ -15458,6 +15670,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get an event
@@ -15501,6 +15715,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a event raw body data
@@ -15520,6 +15736,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Retry an event
@@ -15585,6 +15803,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Mute an event
@@ -15673,6 +15893,9 @@ docs: An event is any request that Hookdeck receives from a source.
                 "docs": "Attach operation success status",
                 "type": "root.AttachedIntegrationToSource",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createIntegration": {
               "auth": true,
@@ -15751,6 +15974,9 @@ docs: An event is any request that Hookdeck receives from a source.
                 "docs": "A single integration",
                 "type": "root.Integration",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteIntegration": {
               "auth": true,
@@ -15780,6 +16006,9 @@ docs: An event is any request that Hookdeck receives from a source.
               "response": {
                 "docs": "An object with deleted integration id",
                 "type": "root.DeletedIntegration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "detachIntegrationToSource": {
@@ -15811,6 +16040,9 @@ docs: An event is any request that Hookdeck receives from a source.
               "response": {
                 "docs": "Detach operation success status",
                 "type": "root.DetachedIntegrationFromSource",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIntegration": {
@@ -15858,6 +16090,9 @@ docs: An event is any request that Hookdeck receives from a source.
               "response": {
                 "docs": "A single integration",
                 "type": "root.Integration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIntegrations": {
@@ -15919,6 +16154,9 @@ docs: An event is any request that Hookdeck receives from a source.
               "response": {
                 "docs": "List of integrations",
                 "type": "root.IntegrationPaginatedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateIntegration": {
@@ -15993,6 +16231,9 @@ docs: An event is any request that Hookdeck receives from a source.
                 "docs": "A single integration",
                 "type": "root.Integration",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16043,6 +16284,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get integrations
       request:
         name: GetIntegrationsRequest
@@ -16086,6 +16329,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create an integration
       request:
         name: CreateIntegrationRequest
@@ -16143,6 +16388,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get an integration
@@ -16176,6 +16423,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update an integration
@@ -16229,6 +16478,8 @@ service:
       method: DELETE
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Delete an integration
@@ -16248,6 +16499,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
         source_id: string
@@ -16270,6 +16523,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
         source_id: string
@@ -16402,6 +16657,9 @@ types:
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteIssueTrigger": {
               "auth": true,
@@ -16431,6 +16689,9 @@ types:
               "response": {
                 "docs": "An object with deleted issue trigger's id",
                 "type": "root.DeletedIssueTriggerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "disableIssueTrigger": {
@@ -16478,6 +16739,9 @@ types:
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "enableIssueTrigger": {
               "auth": true,
@@ -16524,6 +16788,9 @@ types:
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getIssueTrigger": {
               "auth": true,
@@ -16569,6 +16836,9 @@ types:
               "response": {
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIssueTriggers": {
@@ -16630,6 +16900,9 @@ types:
               "response": {
                 "docs": "List of issue triggers",
                 "type": "root.IssueTriggerPaginatedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateIssueTrigger": {
@@ -16708,6 +16981,9 @@ types:
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsertIssueTrigger": {
               "auth": true,
@@ -16778,6 +17054,9 @@ types:
               "response": {
                 "docs": "A single issue trigger",
                 "type": "root.IssueTrigger",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -16886,6 +17165,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get issue triggers
       request:
         name: GetIssueTriggersRequest
@@ -16931,6 +17212,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create an issue trigger
       request:
         name: CreateIssueTriggerRequest
@@ -16977,6 +17260,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create or update an issue trigger
       request:
         name: UpsertIssueTriggerRequest
@@ -17024,6 +17309,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a single issue trigger
@@ -17056,6 +17343,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update an issue trigger
@@ -17107,6 +17396,8 @@ service:
       method: DELETE
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Delete an issue trigger
@@ -17126,6 +17417,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Disable an issue trigger
@@ -17158,6 +17451,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Enable an issue trigger
@@ -17255,6 +17550,9 @@ docs: >-
               "response": {
                 "docs": "Dismissed issue",
                 "type": "root.Issue",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIssue": {
@@ -17356,6 +17654,9 @@ docs: >-
                 "docs": "A single issue",
                 "type": "root.IssueWithData",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getIssueCount": {
               "auth": true,
@@ -17412,6 +17713,9 @@ docs: >-
               "response": {
                 "docs": "Issue count",
                 "type": "root.IssueCount",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getIssues": {
@@ -17523,6 +17827,9 @@ docs: >-
                 "docs": "List of issues",
                 "type": "root.IssueWithDataPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateIssue": {
               "auth": true,
@@ -17592,6 +17899,9 @@ docs: >-
               "response": {
                 "docs": "Updated issue",
                 "type": "root.Issue",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -17739,6 +18049,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get issues
       request:
         name: GetIssuesRequest
@@ -17822,6 +18134,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get the number of issues
       request:
         name: GetIssueCountRequest
@@ -17864,6 +18178,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a single issue
@@ -17942,6 +18258,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update issue
@@ -17991,6 +18309,8 @@ service:
       method: DELETE
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Dismiss an issue
@@ -18091,6 +18411,9 @@ docs: >-
                 "docs": "Toggle operation status response",
                 "type": "root.ToggleWebhookNotifications",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -18109,6 +18432,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Toggle webhook notifications for the workspace
       request:
         name: ToggleWebhookNotificationsRequest
@@ -18204,6 +18529,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "response": {
                 "docs": "A single request",
                 "type": "root.Request",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getRequestEvents": {
@@ -18327,6 +18655,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "docs": "List of events",
                 "type": "root.EventPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRequestIgnoredEvents": {
               "auth": true,
@@ -18392,6 +18723,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "docs": "List of ignored events",
                 "type": "root.IgnoredEventPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRequestRawBody": {
               "auth": true,
@@ -18421,6 +18755,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "response": {
                 "docs": "A request raw body data",
                 "type": "root.RawBody",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getRequests": {
@@ -18510,6 +18847,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
               "response": {
                 "docs": "List of requests",
                 "type": "root.RequestPaginatedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retryRequest": {
@@ -18612,6 +18952,9 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "docs": "Retry request operation result",
                 "type": "root.RetryRequest",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -18708,6 +19051,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get requests
       request:
         name: GetRequestsRequest
@@ -18778,6 +19123,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a request
@@ -18819,6 +19166,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a request raw body data
@@ -18838,6 +19187,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Retry a request
@@ -18916,6 +19267,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get request events
@@ -19011,6 +19364,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get request ignored events
@@ -19112,6 +19467,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createRuleset": {
               "auth": true,
@@ -19177,6 +19535,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRuleset": {
               "auth": true,
@@ -19218,6 +19579,9 @@ docs: A request represent a webhook received by Hookdeck.
               "response": {
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getRulesets": {
@@ -19285,6 +19649,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "docs": "List of rulesets",
                 "type": "root.RulesetPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "unarchiveRuleset": {
               "auth": true,
@@ -19326,6 +19693,9 @@ docs: A request represent a webhook received by Hookdeck.
               "response": {
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateRuleset": {
@@ -19401,6 +19771,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsertRuleset": {
               "auth": true,
@@ -19466,6 +19839,9 @@ docs: A request represent a webhook received by Hookdeck.
                 "docs": "A single ruleset",
                 "type": "optional<root.Ruleset>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19505,6 +19881,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get rulesets
       request:
         name: GetRulesetsRequest
@@ -19552,6 +19930,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a ruleset
       request:
         name: CreateRulesetRequest
@@ -19594,6 +19974,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Update or create a ruleset
       request:
         name: UpsertRulesetRequest
@@ -19636,6 +20018,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a ruleset
@@ -19664,6 +20048,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a ruleset
@@ -19713,6 +20099,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Archive a ruleset
@@ -19741,6 +20129,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Unarchive a ruleset
@@ -19826,6 +20216,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "docs": "A single source",
                 "type": "root.Source",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "createSource": {
               "auth": true,
@@ -19889,6 +20282,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "docs": "A single source",
                 "type": "root.Source",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getSource": {
               "auth": true,
@@ -19933,6 +20329,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "response": {
                 "docs": "A single source",
                 "type": "root.Source",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getSources": {
@@ -20004,6 +20403,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "docs": "List of sources",
                 "type": "root.SourcePaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "unarchiveSource": {
               "auth": true,
@@ -20048,6 +20450,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
               "response": {
                 "docs": "A single source",
                 "type": "root.Source",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateSource": {
@@ -20121,6 +20526,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "docs": "A single source",
                 "type": "root.Source",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsertSource": {
               "auth": true,
@@ -20184,6 +20592,9 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "docs": "A single source",
                 "type": "root.Source",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20223,6 +20634,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get sources
       request:
         name: GetSourcesRequest
@@ -20275,6 +20688,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a source
       request:
         name: CreateSourceRequest
@@ -20317,6 +20732,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Update or create a source
       request:
         name: UpsertSourceRequest
@@ -20359,6 +20776,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a source
@@ -20391,6 +20810,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a source
@@ -20440,6 +20861,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Archive a source
@@ -20472,6 +20895,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Unarchive a source
@@ -20583,6 +21008,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "docs": "A single transformation",
                 "type": "root.Transformation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTransformation": {
               "auth": true,
@@ -20622,6 +21050,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "response": {
                 "docs": "A single transformation",
                 "type": "root.Transformation",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransformationExecution": {
@@ -20685,6 +21116,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "response": {
                 "docs": "A single transformation execution",
                 "type": "root.TransformationExecution",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransformationExecutions": {
@@ -20770,6 +21204,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "docs": "List of transformation executions",
                 "type": "root.TransformationExecutionPaginatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTransformations": {
               "auth": true,
@@ -20828,6 +21265,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "response": {
                 "docs": "List of transformations",
                 "type": "root.TransformationPaginatedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "testTransformation": {
@@ -20901,6 +21341,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "docs": "Transformation run output",
                 "type": "root.TransformationExecutorOutput",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "updateTransformation": {
               "auth": true,
@@ -20972,6 +21415,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "docs": "A single transformation",
                 "type": "root.Transformation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsertTransformation": {
               "auth": true,
@@ -21038,6 +21484,9 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               "response": {
                 "docs": "A single transformation",
                 "type": "root.Transformation",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -21272,6 +21721,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Get transformations
       request:
         name: GetTransformationsRequest
@@ -21315,6 +21766,8 @@ service:
       method: POST
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Create a transformation
       request:
         name: CreateTransformationRequest
@@ -21362,6 +21815,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Update or create a transformation
       request:
         name: UpsertTransformationRequest
@@ -21409,6 +21864,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get a transformation
@@ -21437,6 +21894,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Update a transformation
@@ -21487,6 +21946,8 @@ service:
       method: PUT
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       display-name: Test a transformation code
       request:
         name: TestTransformationRequest
@@ -21538,6 +21999,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       display-name: Get transformation executions
@@ -21598,6 +22061,8 @@ service:
       method: GET
       auth: true
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
         execution_id: string

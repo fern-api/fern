@@ -105,6 +105,9 @@
                 "docs": "Successful token response",
                 "type": "AuthGetTokenResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -170,6 +173,8 @@ service:
       method: POST
       auth: false
       docs: Exchange credentials or refresh token for an access token
+      source:
+        openapi: ../openapi.yml
       display-name: Request an access token
       request:
         name: AuthGetTokenRequest

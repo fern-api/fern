@@ -23,19 +23,19 @@ public partial class ObjectClient
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     ///     new ObjectWithOptionalField
     ///     {
-    ///         String = null,
-    ///         Integer = null,
-    ///         Long = null,
-    ///         Double = null,
-    ///         Bool = null,
-    ///         Datetime = null,
-    ///         Date = null,
-    ///         Uuid = null,
-    ///         Base64 = null,
-    ///         List = null,
-    ///         Set = null,
-    ///         Map = null,
-    ///         Bigint = null,
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List&lt;string&gt;() { "list", "list" },
+    ///         Set = new HashSet&lt;string&gt;() { "set" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///         Bigint = "1000000",
     ///     }
     /// );
     /// </code>
@@ -177,7 +177,26 @@ public partial class ObjectClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
-    ///     new NestedObjectWithOptionalField { String = null, NestedObject = null }
+    ///     new NestedObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List&lt;string&gt;() { "list", "list" },
+    ///             Set = new HashSet&lt;string&gt;() { "set" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///             Bigint = "1000000",
+    ///         },
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -227,19 +246,19 @@ public partial class ObjectClient
     ///         String = "string",
     ///         NestedObject = new ObjectWithOptionalField
     ///         {
-    ///             String = null,
-    ///             Integer = null,
-    ///             Long = null,
-    ///             Double = null,
-    ///             Bool = null,
-    ///             Datetime = null,
-    ///             Date = null,
-    ///             Uuid = null,
-    ///             Base64 = null,
-    ///             List = null,
-    ///             Set = null,
-    ///             Map = null,
-    ///             Bigint = null,
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List&lt;string&gt;() { "list", "list" },
+    ///             Set = new HashSet&lt;string&gt;() { "set" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///             Bigint = "1000000",
     ///         },
     ///     }
     /// );
@@ -293,19 +312,19 @@ public partial class ObjectClient
     ///             String = "string",
     ///             NestedObject = new ObjectWithOptionalField
     ///             {
-    ///                 String = null,
-    ///                 Integer = null,
-    ///                 Long = null,
-    ///                 Double = null,
-    ///                 Bool = null,
-    ///                 Datetime = null,
-    ///                 Date = null,
-    ///                 Uuid = null,
-    ///                 Base64 = null,
-    ///                 List = null,
-    ///                 Set = null,
-    ///                 Map = null,
-    ///                 Bigint = null,
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List&lt;string&gt;() { "list", "list" },
+    ///                 Set = new HashSet&lt;string&gt;() { "set" },
+    ///                 Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///                 Bigint = "1000000",
     ///             },
     ///         },
     ///         new NestedObjectWithRequiredField
@@ -313,19 +332,19 @@ public partial class ObjectClient
     ///             String = "string",
     ///             NestedObject = new ObjectWithOptionalField
     ///             {
-    ///                 String = null,
-    ///                 Integer = null,
-    ///                 Long = null,
-    ///                 Double = null,
-    ///                 Bool = null,
-    ///                 Datetime = null,
-    ///                 Date = null,
-    ///                 Uuid = null,
-    ///                 Base64 = null,
-    ///                 List = null,
-    ///                 Set = null,
-    ///                 Map = null,
-    ///                 Bigint = null,
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List&lt;string&gt;() { "list", "list" },
+    ///                 Set = new HashSet&lt;string&gt;() { "set" },
+    ///                 Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///                 Bigint = "1000000",
     ///             },
     ///         },
     ///     }

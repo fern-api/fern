@@ -632,6 +632,9 @@
                 "docs": "",
                 "type": "ListAccountsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listGames": {
               "auth": false,
@@ -705,6 +708,9 @@
               "response": {
                 "docs": "",
                 "type": "ListGamesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listGroups": {
@@ -789,6 +795,9 @@
                 "docs": "",
                 "type": "ListGroupsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listLocations": {
               "auth": false,
@@ -826,6 +835,9 @@
               "response": {
                 "docs": "",
                 "type": "ListLocationsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listPhotos": {
@@ -869,6 +881,9 @@
               "response": {
                 "docs": "",
                 "type": "ListPhotosResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listPlayers": {
@@ -919,6 +934,9 @@
                 "docs": "",
                 "type": "ListPlayersResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieveAccount": {
               "auth": false,
@@ -949,6 +967,9 @@
               "response": {
                 "docs": "",
                 "type": "root.Room",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrieveGame": {
@@ -1032,6 +1053,9 @@
               "response": {
                 "docs": "",
                 "type": "root.Game",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrieveGroup": {
@@ -1130,6 +1154,9 @@
                 "docs": "",
                 "type": "root.Group",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "retrieveLocation": {
               "auth": false,
@@ -1160,6 +1187,9 @@
               "response": {
                 "docs": "",
                 "type": "root.Room",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrievePhoto": {
@@ -1201,6 +1231,9 @@
               "response": {
                 "docs": "",
                 "type": "root.Photo",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "retrievePlayer": {
@@ -1247,6 +1280,9 @@
               "response": {
                 "docs": "",
                 "type": "root.Player",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1519,6 +1555,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listAccountsRequest
         query-parameters:
@@ -1543,6 +1581,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1563,6 +1603,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listGamesRequest
         query-parameters:
@@ -1612,6 +1654,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1670,6 +1714,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listGroupsRequest
         query-parameters:
@@ -1721,6 +1767,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1787,6 +1835,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listPlayersRequest
         query-parameters:
@@ -1819,6 +1869,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1850,6 +1902,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listLocationsRequest
         query-parameters:
@@ -1874,6 +1928,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1894,6 +1950,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       request:
         name: listPhotosRequest
         query-parameters:
@@ -1920,6 +1978,8 @@ service:
       method: GET
       auth: false
       docs: ''
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         photo_id:
           type: string

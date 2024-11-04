@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "indices": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "indices",
+    "values"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
