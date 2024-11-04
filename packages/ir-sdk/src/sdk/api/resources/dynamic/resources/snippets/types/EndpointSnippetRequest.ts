@@ -13,5 +13,5 @@ export interface EndpointSnippetRequest {
     pathParameters: FernIr.dynamic.Values | undefined;
     queryParameters: FernIr.dynamic.Values | undefined;
     headers: FernIr.dynamic.Values | undefined;
-    requestBody: unknown | undefined;
+    requestBody: FernIr.dynamic.RequestBody | undefined;
 }

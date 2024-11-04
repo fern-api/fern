@@ -8,6 +8,7 @@ import * as core from "../../../../../../core";
 import { EndpointLocation } from "../../endpoints/types/EndpointLocation";
 import { AuthValues } from "../../auth/types/AuthValues";
 import { Values } from "./Values";
+import { RequestBody } from "./RequestBody";
 
 export const EndpointSnippetRequest: core.serialization.ObjectSchema<
     serializers.dynamic.EndpointSnippetRequest.Raw,
@@ -18,7 +19,7 @@ export const EndpointSnippetRequest: core.serialization.ObjectSchema<
     pathParameters: Values.optional(),
     queryParameters: Values.optional(),
     headers: Values.optional(),
-    requestBody: core.serialization.unknown().optional(),
+    requestBody: RequestBody.optional(),
 });
 
 export declare namespace EndpointSnippetRequest {
@@ -28,6 +29,6 @@ export declare namespace EndpointSnippetRequest {
         pathParameters?: Values.Raw | null;
         queryParameters?: Values.Raw | null;
         headers?: Values.Raw | null;
-        requestBody?: unknown | null;
+        requestBody?: RequestBody.Raw | null;
     }
 }
