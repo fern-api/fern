@@ -61,7 +61,7 @@ class PydanticModel:
         )
         self._has_aliases = False
         self._version = version
-        self._v1_root_type: Optional[AST.TypeHint] = None
+        self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._extra_fields = extra_fields
         self._frozen = frozen
@@ -250,15 +250,16 @@ class PydanticModel:
             ),
         )
 
-    def set_root_type_unsafe_v1_only(
+    def set_root_type_unsafe(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
     ) -> None:
-        if self._version != PydanticVersionCompatibility.V1:
-            raise RuntimeError("Overriding root types is only available in Pydantic v1")
-
-        if self._v1_root_type is not None:
+        if self._version == PydanticVersionCompatibility.Both:
+            raise RuntimeError("Overriding root types is only available in Pydantic v1 or v2")
+        
+        if self._root_type is not None:
             raise RuntimeError("__root__ was already added")
-        self._v1_root_type = root_type
+        
+        self.root_type = root_type
 
         root_type_with_annotation = (
             AST.TypeHint.annotated(
@@ -269,12 +270,19 @@ class PydanticModel:
             else root_type
         )
 
-        self._class_declaration.add_statement(
-            AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
-        )
+        if self._version == PydanticVersionCompatibility.V1: 
+            self._class_declaration.add_statement(
+                AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
+            )
+        
+        if self._version == PydanticVersionCompatibility.V2: 
+            self._class_declaration.add_statement(
+                AST.VariableDeclaration(name="root", type_hint=root_type_with_annotation)
+            )
+        
 
-    def get_root_type_unsafe_v1_only(self) -> Optional[AST.TypeHint]:
-        return self._v1_root_type
+    def get_root_type_unsafe(self) -> Optional[AST.TypeHint]:
+        return self.root_type
 
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)
