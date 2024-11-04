@@ -111,7 +111,9 @@ export class DynamicSnippetsGeneratorContext {
         if (typeof value !== "object" || Array.isArray(value)) {
             this.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object with key, value pairs but got: ${JSON.stringify(value)}`
+                message: `Expected object with key, value pairs but got: ${
+                    Array.isArray(value) ? "array" : typeof value
+                }`
             });
             return undefined;
         }
@@ -157,7 +159,7 @@ export class DynamicSnippetsGeneratorContext {
         if (typeof discriminantValue !== "string") {
             this.errors.add({
                 severity: Severity.Critical,
-                message: `Expected discriminant value to be a string but got: ${JSON.stringify(discriminantValue)}`
+                message: `Expected discriminant value to be a string but got: ${typeof discriminantValue}`
             });
             return undefined;
         }
@@ -235,7 +237,7 @@ export class DynamicSnippetsGeneratorContext {
             }
         }
         if (endpoints.length === 0) {
-            throw new Error(`Failed to find endpoint identified by "${JSON.stringify(location)}"`);
+            throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
         return endpoints;
     }

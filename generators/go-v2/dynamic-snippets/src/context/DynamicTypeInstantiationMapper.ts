@@ -67,7 +67,7 @@ export class DynamicTypeInstantiationMapper {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected array but got: ${JSON.stringify(value)}`
+                message: `Expected array but got: ${typeof value}`
             });
             return go.TypeInstantiation.nop();
         }
@@ -88,7 +88,7 @@ export class DynamicTypeInstantiationMapper {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object but got: ${JSON.stringify(value)}`
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
             });
             return go.TypeInstantiation.nop();
         }
@@ -183,19 +183,24 @@ export class DynamicTypeInstantiationMapper {
                 if (record == null) {
                     return go.TypeInstantiation.nop();
                 }
-                return go.TypeInstantiation.structPointer({
-                    typeReference: structTypeReference,
-                    fields: [
-                        {
-                            name: this.context.getTypeName(unionVariant.discriminantValue.name),
-                            value: this.convert({
-                                typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
-                            })
-                        },
-                        ...baseFields
-                    ]
-                });
+                try {
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    return go.TypeInstantiation.structPointer({
+                        typeReference: structTypeReference,
+                        fields: [
+                            {
+                                name: this.context.getTypeName(unionVariant.discriminantValue.name),
+                                value: this.convert({
+                                    typeReference: unionVariant.typeReference,
+                                    value: record[unionVariant.discriminantValue.wireValue]
+                                })
+                            },
+                            ...baseFields
+                        ]
+                    });
+                } finally {
+                    this.context.errors.unscope();
+                }
             }
             case "noProperties":
                 return go.TypeInstantiation.structPointer({
@@ -295,7 +300,7 @@ export class DynamicTypeInstantiationMapper {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected enum value string, got: ${JSON.stringify(value)}`
+                message: `Expected enum value string, got: ${typeof value}`
             });
             return undefined;
         }
@@ -358,7 +363,7 @@ export class DynamicTypeInstantiationMapper {
         }
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undicriminated union matched the given value: ${JSON.stringify(value)}`
+            message: `None of the types in the undicriminated union matched the given "${typeof value}" value`
         });
         return undefined;
     }
@@ -626,6 +631,6 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
-        return new Error(`Expected ${expected}, got: ${JSON.stringify(value)}`);
+        return new Error(`Expected ${expected}, got: ${typeof value}`);
     }
 }
