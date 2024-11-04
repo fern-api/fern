@@ -5,9 +5,6 @@ export class PydanticModelGeneratorContext extends AbstractPythonGeneratorContex
     public getModulePathForId(typeId: string): string[] {
         const typeDeclaration = super.getTypeDeclarationOrThrow(typeId);
         const fernFilepath = typeDeclaration.name.fernFilepath;
-        return [
-            ...fernFilepath.allParts.flatMap((part) => ["resources", super.getSnakeCaseSafeName(part)]),
-            "types"
-        ];
+        return [...fernFilepath.allParts.flatMap((part) => ["resources", super.getSnakeCaseSafeName(part)]), "types"];
     }
 }

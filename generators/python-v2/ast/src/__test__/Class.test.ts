@@ -20,9 +20,7 @@ describe("class", () => {
         const clazz = python.class_({
             name: "Car"
         });
-        clazz.add(
-            python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") })
-        );
+        clazz.add(python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") }));
         clazz.add(
             python.field({
                 name: "partNameById",
