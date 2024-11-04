@@ -6,6 +6,67 @@
             "type": "typescript"
         },
         "endpointId": {
+            "path": "/foo",
+            "method": "POST",
+            "identifierOverride": "endpoint_dataservice.foo"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedApiClient } from \"@fern/grpc-proto-exhaustive\";"
+                ],
+                "templateString": "const client = new SeedApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "apiKey: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.dataservice.foo()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/grpc-proto-exhaustive",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
             "path": "/data",
             "method": "POST",
             "identifierOverride": "endpoint_dataservice.upload"
@@ -28,9 +89,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -422,9 +489,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -726,9 +799,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -971,9 +1050,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -1071,9 +1156,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -1203,9 +1294,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -1947,9 +2044,15 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "templateString": "apiKey: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"

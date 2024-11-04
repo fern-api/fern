@@ -2,6 +2,46 @@
 
 ## DataService
 
+<details><summary><code>client.dataservice.<a href="/src/api/resources/dataservice/client/Client.ts">foo</a>() -> Record<string, unknown></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataservice.foo();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `Dataservice.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.dataservice.<a href="/src/api/resources/dataservice/client/Client.ts">upload</a>({ ...params }) -> SeedApi.UploadResponse</code></summary>
 <dl>
 <dd>

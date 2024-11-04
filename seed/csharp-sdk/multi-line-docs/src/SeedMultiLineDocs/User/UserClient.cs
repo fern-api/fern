@@ -60,7 +60,7 @@ public partial class UserClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = null });
+    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
     /// </code>
     /// </example>
     public async Task<User> CreateUserAsync(
