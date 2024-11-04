@@ -1,6 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-codegen";
-import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
@@ -12,7 +12,7 @@ import path from "path";
 export class DynamicSnippetsGeneratorContext {
     public ir: DynamicSnippets.DynamicIntermediateRepresentation;
     public config: FernGeneratorExec.config.GeneratorConfig;
-    public customConfig: BaseGoCustomConfigSchema;
+    public customConfig: BaseGoCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
     public rootImportPath: string;
@@ -28,7 +28,7 @@ export class DynamicSnippetsGeneratorContext {
     }) {
         this.ir = ir;
         this.config = config;
-        this.customConfig = config.customConfig as BaseGoCustomConfigSchema;
+        this.customConfig = config.customConfig != null ? (config.customConfig as BaseGoCustomConfigSchema) : undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
         this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });

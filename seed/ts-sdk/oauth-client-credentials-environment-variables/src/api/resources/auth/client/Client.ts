@@ -35,7 +35,7 @@ export class Auth {
      *     await client.auth.getTokenWithClientCredentials({
      *         clientId: "client_id",
      *         clientSecret: "client_secret",
-     *         scope: undefined
+     *         scope: "scope"
      *     })
      */
     public async getTokenWithClientCredentials(
@@ -105,7 +105,7 @@ export class Auth {
      *         clientId: "client_id",
      *         clientSecret: "client_secret",
      *         refreshToken: "refresh_token",
-     *         scope: undefined
+     *         scope: "scope"
      *     })
      */
     public async refreshToken(

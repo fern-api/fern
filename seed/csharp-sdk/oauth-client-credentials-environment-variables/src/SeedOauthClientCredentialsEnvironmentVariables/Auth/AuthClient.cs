@@ -25,7 +25,7 @@ public partial class AuthClient
     ///         ClientSecret = "client_secret",
     ///         Audience = "https://api.example.com",
     ///         GrantType = "client_credentials",
-    ///         Scope = null,
+    ///         Scope = "scope",
     ///     }
     /// );
     /// </code>
@@ -80,7 +80,7 @@ public partial class AuthClient
     ///         RefreshToken = "refresh_token",
     ///         Audience = "https://api.example.com",
     ///         GrantType = "refresh_token",
-    ///         Scope = null,
+    ///         Scope = "scope",
     ///     }
     /// );
     /// </code>

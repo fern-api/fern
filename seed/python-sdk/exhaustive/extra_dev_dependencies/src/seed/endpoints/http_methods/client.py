@@ -227,6 +227,9 @@ class HttpMethodsClient:
 
         Examples
         --------
+        import datetime
+        import uuid
+
         from seed import SeedExhaustive
 
         client = SeedExhaustive(
@@ -235,6 +238,25 @@ class HttpMethodsClient:
         )
         client.endpoints.http_methods.test_patch(
             id="id",
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
+            bool_=True,
+            datetime=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
+            uuid_=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_={"set"},
+            map_={1: "map"},
+            bigint=1000000,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -553,6 +575,8 @@ class AsyncHttpMethodsClient:
         Examples
         --------
         import asyncio
+        import datetime
+        import uuid
 
         from seed import AsyncSeedExhaustive
 
@@ -565,6 +589,25 @@ class AsyncHttpMethodsClient:
         async def main() -> None:
             await client.endpoints.http_methods.test_patch(
                 id="id",
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["list", "list"],
+                set_={"set"},
+                map_={1: "map"},
+                bigint=1000000,
             )
 
 

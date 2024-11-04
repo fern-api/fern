@@ -1,4 +1,4 @@
-import { NamedFullExample, Source, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir";
+import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -14,7 +14,7 @@ export function convertWebhookOperation({
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
-}): Webhook | undefined {
+}): WebhookWithExample | undefined {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
 

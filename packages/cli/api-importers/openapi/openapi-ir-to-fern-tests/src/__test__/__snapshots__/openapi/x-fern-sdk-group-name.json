@@ -70,6 +70,9 @@
                 "docs": "Success",
                 "type": "user.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -88,6 +91,8 @@ service:
       method: GET
       auth: false
       docs: This endpoint should be in `auth/user.yml`
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: user.User

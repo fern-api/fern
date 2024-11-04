@@ -233,28 +233,28 @@
                       "properties": {
                         "name": {
                           "value": {
-                            "value": "name",
+                            "value": "counter",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "00000000-0000-0000-0000-000000000000",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "version": {
                           "value": {
-                            "value": 1,
+                            "value": 0,
                             "type": "int"
                           },
                           "type": "primitive"
                         },
                         "code": {
                           "value": {
-                            "value": "code",
+                            "value": "export const count = 1;",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -268,7 +268,7 @@
                         },
                         "createdAt": {
                           "value": {
-                            "value": "2024-01-15T09:30:00Z",
+                            "value": "2024-06-11T22:05:12.585Z",
                             "type": "datetime"
                           },
                           "type": "primitive"
@@ -278,12 +278,12 @@
                           "type": "enum"
                         },
                         "type": {
-                          "value": "interval",
+                          "value": "script",
                           "type": "enum"
                         },
                         "url": {
                           "value": {
-                            "value": "url",
+                            "value": "https://val.town/v/tmcw/counter",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -318,7 +318,14 @@
                           "properties": {
                             "id": {
                               "value": {
-                                "value": "id",
+                                "value": "00000000-0000-0000-0000-000000000000",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "username": {
+                              "value": {
+                                "value": "tmcw",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -444,21 +451,21 @@
               "properties": {
                 "id": {
                   "value": {
-                    "value": "id",
+                    "value": "00000000-0000-0000-0000-000000000000",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "bio": {
                   "value": {
-                    "value": "bio",
+                    "value": "Hello world",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "username": {
                   "value": {
-                    "value": "username",
+                    "value": "tmcw",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -472,7 +479,7 @@
                 },
                 "url": {
                   "value": {
-                    "value": "url",
+                    "value": "https://val.town/u/tmcw",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -1576,28 +1583,28 @@
                       "properties": {
                         "name": {
                           "value": {
-                            "value": "name",
+                            "value": "counter",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "00000000-0000-0000-0000-000000000000",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "version": {
                           "value": {
-                            "value": 1,
+                            "value": 0,
                             "type": "int"
                           },
                           "type": "primitive"
                         },
                         "code": {
                           "value": {
-                            "value": "code",
+                            "value": "export const count = 1;",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1611,7 +1618,7 @@
                         },
                         "createdAt": {
                           "value": {
-                            "value": "2024-01-15T09:30:00Z",
+                            "value": "2024-06-11T22:05:12.585Z",
                             "type": "datetime"
                           },
                           "type": "primitive"
@@ -1621,12 +1628,12 @@
                           "type": "enum"
                         },
                         "type": {
-                          "value": "interval",
+                          "value": "script",
                           "type": "enum"
                         },
                         "url": {
                           "value": {
-                            "value": "url",
+                            "value": "https://val.town/v/tmcw/counter",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -1661,7 +1668,14 @@
                           "properties": {
                             "id": {
                               "value": {
-                                "value": "id",
+                                "value": "00000000-0000-0000-0000-000000000000",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "username": {
+                              "value": {
+                                "value": "tmcw",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -3260,21 +3274,21 @@
               "properties": {
                 "id": {
                   "value": {
-                    "value": "id",
+                    "value": "00000000-0000-0000-0000-000000000000",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "bio": {
                   "value": {
-                    "value": "bio",
+                    "value": "Hello world",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "username": {
                   "value": {
-                    "value": "username",
+                    "value": "tmcw",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -3288,7 +3302,7 @@
                 },
                 "url": {
                   "value": {
-                    "value": "url",
+                    "value": "https://val.town/u/tmcw",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -3496,28 +3510,28 @@
                       "properties": {
                         "name": {
                           "value": {
-                            "value": "name",
+                            "value": "counter",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "00000000-0000-0000-0000-000000000000",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "version": {
                           "value": {
-                            "value": 1,
+                            "value": 0,
                             "type": "int"
                           },
                           "type": "primitive"
                         },
                         "code": {
                           "value": {
-                            "value": "code",
+                            "value": "export const count = 1;",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -3531,7 +3545,7 @@
                         },
                         "createdAt": {
                           "value": {
-                            "value": "2024-01-15T09:30:00Z",
+                            "value": "2024-06-11T22:05:12.585Z",
                             "type": "datetime"
                           },
                           "type": "primitive"
@@ -3541,12 +3555,12 @@
                           "type": "enum"
                         },
                         "type": {
-                          "value": "interval",
+                          "value": "script",
                           "type": "enum"
                         },
                         "url": {
                           "value": {
-                            "value": "url",
+                            "value": "https://val.town/v/tmcw/counter",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -3581,7 +3595,14 @@
                           "properties": {
                             "id": {
                               "value": {
-                                "value": "id",
+                                "value": "00000000-0000-0000-0000-000000000000",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "username": {
+                              "value": {
+                                "value": "tmcw",
                                 "type": "string"
                               },
                               "type": "primitive"

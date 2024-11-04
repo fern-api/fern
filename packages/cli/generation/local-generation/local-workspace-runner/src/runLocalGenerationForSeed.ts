@@ -16,6 +16,7 @@ import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { writeFile } from "fs/promises";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import * as prettier from "prettier";
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
 
 export async function runLocalGenerationForSeed({
     organization,
@@ -25,7 +26,8 @@ export async function runLocalGenerationForSeed({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    shouldGenerateDynamicSnippetTests
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -35,6 +37,7 @@ export async function runLocalGenerationForSeed({
     context: TaskContext;
     irVersionOverride: string;
     outputVersionOverride: string | undefined;
+    shouldGenerateDynamicSnippetTests: boolean | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -62,7 +65,7 @@ export async function runLocalGenerationForSeed({
                               )
                           )
                         : undefined;
-                    const { ir } = await writeFilesToDiskAndRunGenerator({
+                    const { ir, generatorConfig } = await writeFilesToDiskAndRunGenerator({
                         organization,
                         absolutePathToFernConfig,
                         workspace,
@@ -85,7 +88,8 @@ export async function runLocalGenerationForSeed({
                         outputVersionOverride,
                         writeUnitTests: true,
                         generateOauthClients: true,
-                        generatePaginatedClients: true
+                        generatePaginatedClients: true,
+                        includeOptionalRequestPropertyExamples: true
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
@@ -101,6 +105,23 @@ export async function runLocalGenerationForSeed({
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                     );
+
+                    if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
+                        interactiveTaskContext.logger.info(
+                            `Writing dynamic snippet tests to ${generatorInvocation.absolutePathToLocalOutput}`
+                        );
+                        await generateDynamicSnippetTests({
+                            context: interactiveTaskContext,
+                            ir,
+                            config: generatorConfig,
+                            language: generatorInvocation.language,
+                            outputDir: generatorInvocation.absolutePathToLocalOutput
+                        });
+                    } else {
+                        interactiveTaskContext.logger.info(
+                            `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
+                        );
+                    }
                 }
             });
         })

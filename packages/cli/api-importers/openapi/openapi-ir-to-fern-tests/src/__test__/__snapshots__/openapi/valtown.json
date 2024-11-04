@@ -952,14 +952,14 @@ API endpoints",
                   },
                   "response": {
                     "body": {
-                      "bio": "bio",
-                      "id": "id",
+                      "bio": "Hello world",
+                      "id": "00000000-0000-0000-0000-000000000000",
                       "links": {
                         "self": "self",
                       },
                       "profileImageUrl": "profileImageUrl",
-                      "url": "url",
-                      "username": "username",
+                      "url": "https://val.town/u/tmcw",
+                      "username": "tmcw",
                     },
                   },
                 },
@@ -976,6 +976,9 @@ API endpoints",
               "response": {
                 "docs": "Default Response",
                 "type": "root.User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "val": {
@@ -1030,6 +1033,9 @@ API endpoints",
               "response": {
                 "docs": "A Val",
                 "type": "AliasValResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1223,6 +1229,8 @@ service:
       method: GET
       auth: false
       docs: Get basic details about a user, given their username
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         username:
           type: string
@@ -1235,11 +1243,11 @@ service:
             username: username
           response:
             body:
-              id: id
-              bio: bio
-              username: username
+              id: 00000000-0000-0000-0000-000000000000
+              bio: Hello world
+              username: tmcw
               profileImageUrl: profileImageUrl
-              url: url
+              url: https://val.town/u/tmcw
               links:
                 self: self
     val:
@@ -1247,6 +1255,8 @@ service:
       method: GET
       auth: false
       docs: Get a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         username:
           type: string
@@ -1433,6 +1443,9 @@ types:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": false,
@@ -1449,6 +1462,9 @@ types:
               "response": {
                 "docs": "Binary contents of the returned file",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -1483,6 +1499,9 @@ types:
                 "docs": "List of blobs that you’ve stored",
                 "type": "list<BlobListingItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "store": {
               "auth": true,
@@ -1516,6 +1535,9 @@ types:
                   },
                 },
                 "content-type": "application/json",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1564,6 +1586,8 @@ service:
       method: GET
       auth: false
       docs: List blobs in your account
+      source:
+        openapi: ../openapi.yml
       request:
         name: BlobsListRequest
         query-parameters:
@@ -1584,6 +1608,8 @@ service:
       method: GET
       auth: false
       docs: Get a blob’s contents.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1596,6 +1622,8 @@ service:
       method: POST
       auth: true
       docs: Store data in blob storage
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1616,6 +1644,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a blob
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1710,6 +1740,9 @@ docs: Blobs
               "response": {
                 "docs": "Successfully sent email",
                 "type": "EmailsSendResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1873,6 +1906,8 @@ service:
       method: POST
       auth: true
       docs: Send emails
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmailsSendRequest
         body:
@@ -2006,6 +2041,9 @@ give access to details and data from the requesting user.",
                 "docs": "A paginated result set",
                 "type": "MeCommentsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": false,
@@ -2035,6 +2073,9 @@ give access to details and data from the requesting user.",
                 "docs": "Your user information, with tier and email included",
                 "type": "MeGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "likes": {
               "auth": false,
@@ -2050,22 +2091,23 @@ give access to details and data from the requesting user.",
                       "data": [
                         {
                           "author": {
-                            "id": "id",
+                            "id": "00000000-0000-0000-0000-000000000000",
+                            "username": "tmcw",
                           },
-                          "code": "code",
-                          "createdAt": "2024-01-15T09:30:00Z",
-                          "id": "id",
+                          "code": "export const count = 1;",
+                          "createdAt": "2024-06-11T22:05:12Z",
+                          "id": "00000000-0000-0000-0000-000000000000",
                           "links": {
                             "module": "module",
                             "self": "self",
                             "versions": "versions",
                           },
-                          "name": "name",
+                          "name": "counter",
                           "privacy": "public",
                           "public": true,
-                          "type": "interval",
-                          "url": "url",
-                          "version": 1,
+                          "type": "script",
+                          "url": "https://val.town/v/tmcw/counter",
+                          "version": 0,
                         },
                       ],
                       "links": {
@@ -2096,6 +2138,9 @@ give access to details and data from the requesting user.",
               "response": {
                 "docs": "A paginated result set",
                 "type": "MeLikesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "references": {
@@ -2158,6 +2203,9 @@ give access to details and data from the requesting user.",
               "response": {
                 "docs": "A paginated result set",
                 "type": "MeReferencesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -2705,6 +2753,8 @@ service:
       method: GET
       auth: false
       docs: Get profile information for the current user
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Your user information, with tier and email included
         type: MeGetResponse
@@ -2725,6 +2775,8 @@ service:
       method: GET
       auth: false
       docs: Get vals liked by the current user
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeLikesRequest
         query-parameters:
@@ -2744,21 +2796,22 @@ service:
           response:
             body:
               data:
-                - name: name
-                  id: id
-                  version: 1
-                  code: code
+                - name: counter
+                  id: 00000000-0000-0000-0000-000000000000
+                  version: 0
+                  code: export const count = 1;
                   public: true
-                  createdAt: '2024-01-15T09:30:00Z'
+                  createdAt: '2024-06-11T22:05:12Z'
                   privacy: public
-                  type: interval
-                  url: url
+                  type: script
+                  url: https://val.town/v/tmcw/counter
                   links:
                     self: self
                     versions: versions
                     module: module
                   author:
-                    id: id
+                    id: 00000000-0000-0000-0000-000000000000
+                    username: tmcw
               links:
                 self: self
                 prev: prev
@@ -2768,6 +2821,8 @@ service:
       method: GET
       auth: false
       docs: Get comments related to current user, either given or received
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeCommentsRequest
         query-parameters:
@@ -2816,6 +2871,8 @@ service:
       method: GET
       auth: false
       docs: Get vals that depend on any of the user's vals
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeReferencesRequest
         query-parameters:
@@ -2889,22 +2946,23 @@ imports:
                       "data": [
                         {
                           "author": {
-                            "id": "id",
+                            "id": "00000000-0000-0000-0000-000000000000",
+                            "username": "tmcw",
                           },
-                          "code": "code",
-                          "createdAt": "2024-01-15T09:30:00Z",
-                          "id": "id",
+                          "code": "export const count = 1;",
+                          "createdAt": "2024-06-11T22:05:12Z",
+                          "id": "00000000-0000-0000-0000-000000000000",
                           "links": {
                             "module": "module",
                             "self": "self",
                             "versions": "versions",
                           },
-                          "name": "name",
+                          "name": "counter",
                           "privacy": "public",
                           "public": true,
-                          "type": "interval",
-                          "url": "url",
-                          "version": 1,
+                          "type": "script",
+                          "url": "https://val.town/v/tmcw/counter",
+                          "version": 0,
                         },
                       ],
                       "links": {
@@ -2939,6 +2997,9 @@ imports:
               "response": {
                 "docs": "A paginated result set",
                 "type": "SearchValsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -2978,6 +3039,8 @@ service:
       method: GET
       auth: false
       docs: Search for vals across the platform
+      source:
+        openapi: ../openapi.yml
       request:
         name: SearchValsRequest
         query-parameters:
@@ -3001,21 +3064,22 @@ service:
           response:
             body:
               data:
-                - name: name
-                  id: id
-                  version: 1
-                  code: code
+                - name: counter
+                  id: 00000000-0000-0000-0000-000000000000
+                  version: 0
+                  code: export const count = 1;
                   public: true
-                  createdAt: '2024-01-15T09:30:00Z'
+                  createdAt: '2024-06-11T22:05:12Z'
                   privacy: public
-                  type: interval
-                  url: url
+                  type: script
+                  url: https://val.town/v/tmcw/counter
                   links:
                     self: self
                     versions: versions
                     module: module
                   author:
-                    id: id
+                    id: 00000000-0000-0000-0000-000000000000
+                    username: tmcw
               links:
                 self: self
                 prev: prev
@@ -3088,6 +3152,9 @@ docs: Search
               "response": {
                 "docs": "Array of results from the statements executed",
                 "type": "list<root.ResultSet>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "execute": {
@@ -3167,6 +3234,9 @@ docs: Search
               "response": {
                 "docs": "Default Response",
                 "type": "root.ResultSet",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3339,6 +3409,8 @@ service:
       method: POST
       auth: true
       docs: Execute a single SQLite statement and return results
+      source:
+        openapi: ../openapi.yml
       request:
         name: SqliteExecuteRequest
         body:
@@ -3383,6 +3455,8 @@ service:
       method: POST
       auth: true
       docs: Execute a batch of SQLite statements and return results for all of them
+      source:
+        openapi: ../openapi.yml
       request:
         name: SqliteBatchRequest
         body:
@@ -3436,14 +3510,14 @@ docs: SQLite
                   },
                   "response": {
                     "body": {
-                      "bio": "bio",
-                      "id": "id",
+                      "bio": "Hello world",
+                      "id": "00000000-0000-0000-0000-000000000000",
                       "links": {
                         "self": "self",
                       },
                       "profileImageUrl": "profileImageUrl",
-                      "url": "url",
-                      "username": "username",
+                      "url": "https://val.town/u/tmcw",
+                      "username": "tmcw",
                     },
                   },
                 },
@@ -3460,6 +3534,9 @@ docs: SQLite
               "response": {
                 "docs": "Default Response",
                 "type": "root.User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "vals": {
@@ -3479,22 +3556,23 @@ docs: SQLite
                       "data": [
                         {
                           "author": {
-                            "id": "id",
+                            "id": "00000000-0000-0000-0000-000000000000",
+                            "username": "tmcw",
                           },
-                          "code": "code",
-                          "createdAt": "2024-01-15T09:30:00Z",
-                          "id": "id",
+                          "code": "export const count = 1;",
+                          "createdAt": "2024-06-11T22:05:12Z",
+                          "id": "00000000-0000-0000-0000-000000000000",
                           "links": {
                             "module": "module",
                             "self": "self",
                             "versions": "versions",
                           },
-                          "name": "name",
+                          "name": "counter",
                           "privacy": "public",
                           "public": true,
-                          "type": "interval",
-                          "url": "url",
-                          "version": 1,
+                          "type": "script",
+                          "url": "https://val.town/v/tmcw/counter",
+                          "version": 0,
                         },
                       ],
                       "links": {
@@ -3532,6 +3610,9 @@ docs: SQLite
                 "docs": "A paginated result set",
                 "type": "UsersValsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -3562,6 +3643,8 @@ service:
       method: GET
       auth: false
       docs: Get basic information about a user
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         user_id:
           type: string
@@ -3574,11 +3657,11 @@ service:
             user_id: user_id
           response:
             body:
-              id: id
-              bio: bio
-              username: username
+              id: 00000000-0000-0000-0000-000000000000
+              bio: Hello world
+              username: tmcw
               profileImageUrl: profileImageUrl
-              url: url
+              url: https://val.town/u/tmcw
               links:
                 self: self
     vals:
@@ -3586,6 +3669,8 @@ service:
       method: GET
       auth: false
       docs: List a user's vals
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         user_id:
           type: string
@@ -3611,21 +3696,22 @@ service:
           response:
             body:
               data:
-                - name: name
-                  id: id
-                  version: 1
-                  code: code
+                - name: counter
+                  id: 00000000-0000-0000-0000-000000000000
+                  version: 0
+                  code: export const count = 1;
                   public: true
-                  createdAt: '2024-01-15T09:30:00Z'
+                  createdAt: '2024-06-11T22:05:12Z'
                   privacy: public
-                  type: interval
-                  url: url
+                  type: script
+                  url: https://val.town/v/tmcw/counter
                   links:
                     self: self
                     versions: versions
                     module: module
                   author:
-                    id: id
+                    id: 00000000-0000-0000-0000-000000000000
+                    username: tmcw
               links:
                 self: self
                 prev: prev
@@ -3692,6 +3778,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
                 "type": "ValsCancelResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create": {
@@ -3788,6 +3877,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createVersion": {
@@ -3894,6 +3986,9 @@ let you get, create, and run vals.",
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -3916,6 +4011,9 @@ let you get, create, and run vals.",
                   "docs": "Id of a val",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteVersion": {
@@ -3944,6 +4042,9 @@ let you get, create, and run vals.",
                   "docs": "The val version",
                   "type": "integer",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "evalGet": {
@@ -3980,6 +4081,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "type": "optional<EvalGetResponse>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "evalPost": {
@@ -4042,6 +4146,9 @@ let you get, create, and run vals.",
                 "docs": "Default Response",
                 "type": "optional<EvalPostResponse>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": false,
@@ -4090,6 +4197,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getVersion": {
@@ -4162,6 +4272,9 @@ let you get, create, and run vals.",
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": false,
@@ -4219,6 +4332,9 @@ let you get, create, and run vals.",
                 "docs": "A paginated result set",
                 "type": "ValsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "put": {
               "auth": true,
@@ -4264,6 +4380,9 @@ let you get, create, and run vals.",
                 "name": "ValsPutRequest",
                 "query-parameters": undefined,
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "runGet": {
               "auth": false,
@@ -4293,6 +4412,9 @@ let you get, create, and run vals.",
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "runPost": {
@@ -4330,6 +4452,9 @@ let you get, create, and run vals.",
                 "headers": undefined,
                 "name": "RunPostRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -4402,6 +4527,9 @@ let you get, create, and run vals.",
                 "headers": undefined,
                 "name": "ValsUpdateRequest",
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -4688,6 +4816,8 @@ service:
       method: POST
       auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
+      source:
+        openapi: ../openapi.yml
       request:
         name: EvalPostRequest
         body:
@@ -4730,6 +4860,8 @@ service:
       method: GET
       auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         code:
           type: string
@@ -4753,6 +4885,8 @@ service:
       method: GET
       auth: false
       docs: Run a val, specify any parameters in a querystring
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         valname:
           type: string
@@ -4774,6 +4908,8 @@ service:
       method: POST
       auth: false
       docs: Run a val, with arguments in the request body
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         valname:
           type: string
@@ -4796,6 +4932,8 @@ service:
       method: POST
       auth: true
       docs: Create a new val
+      source:
+        openapi: ../openapi.yml
       request:
         name: ValsCreateRequest
         body:
@@ -4866,6 +5004,8 @@ service:
       method: PUT
       auth: true
       docs: Run an existing val or create a new one
+      source:
+        openapi: ../openapi.yml
       request:
         name: ValsPutRequest
         body:
@@ -4892,6 +5032,8 @@ service:
       method: GET
       auth: false
       docs: Get a val by id
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -4928,6 +5070,8 @@ service:
       method: PUT
       auth: true
       docs: Update an existing val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -4976,6 +5120,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -4990,6 +5136,8 @@ service:
       method: GET
       auth: false
       docs: List versions of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5027,6 +5175,8 @@ service:
       method: POST
       auth: true
       docs: Create a new version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5103,6 +5253,8 @@ service:
       method: GET
       auth: false
       docs: Get a specific version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5155,6 +5307,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5173,6 +5327,8 @@ service:
       method: POST
       auth: true
       docs: Cancel a running val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string

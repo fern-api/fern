@@ -3,6 +3,7 @@ import { ClassReference } from "..";
 import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
+import { DocXmlWriter } from "./DocXmlWriter";
 
 type Alias = string;
 type Namespace = string;
@@ -100,7 +101,7 @@ export class Writer extends AbstractWriter {
             if (imports.length > 0) {
                 return `${imports}
     #nullable enable
-    
+
     ${this.buffer}`;
             }
         }

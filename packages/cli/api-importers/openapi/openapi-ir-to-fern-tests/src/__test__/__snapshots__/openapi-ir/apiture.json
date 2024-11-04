@@ -784,7 +784,7 @@
                 },
                 "nextPage_url": {
                   "value": {
-                    "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                    "value": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -802,14 +802,14 @@
                       "properties": {
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "bf23bc970b78d27691e8",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "label": {
                           "value": {
-                            "value": "Checking *1008",
+                            "value": "Payroll Checking *1008",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -823,7 +823,7 @@
                         },
                         "maskedNumber": {
                           "value": {
-                            "value": "maskedNumber",
+                            "value": "*1008",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -831,26 +831,26 @@
                         "product": {
                           "properties": {
                             "type": {
-                              "value": "cd",
+                              "value": "checking",
                               "type": "enum"
                             },
                             "code": {
                               "value": {
-                                "value": "180D_CDA",
+                                "value": "DDA",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "label": {
                               "value": {
-                                "value": "180 Day CD",
+                                "value": "Business Checking",
                                 "type": "string"
                               },
                               "type": "primitive"
                             },
                             "description": {
                               "value": {
-                                "value": "Certificate of Deposit with a 180 day term",
+                                "value": "Basic business checking accounts",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -866,7 +866,7 @@
                           "properties": {
                             "billPay": {
                               "value": {
-                                "value": true,
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -880,7 +880,7 @@
                             },
                             "transferFrom": {
                               "value": {
-                                "value": true,
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -908,7 +908,128 @@
                             },
                             "manageCards": {
                               "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "b78d27691e8bf23bc970",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "label": {
+                          "value": {
+                            "value": "College CD *2017",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "nickname": {
+                          "value": {
+                            "value": "College CD",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "maskedNumber": {
+                          "value": {
+                            "value": "*2017",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "product": {
+                          "properties": {
+                            "type": {
+                              "value": "cd",
+                              "type": "enum"
+                            },
+                            "code": {
+                              "value": {
+                                "value": "CDA",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "24 Month CD",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "description": {
+                              "value": {
+                                "value": "24 Month certificate of deposit",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "location": {
+                          "value": "internal",
+                          "type": "enum"
+                        },
+                        "allows": {
+                          "properties": {
+                            "billPay": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "mobileCheckDeposit": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferFrom": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "transferTo": {
+                              "value": {
+                                "value": false,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "view": {
+                              "value": {
                                 "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "viewCards": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "manageCards": {
+                              "value": {
+                                "value": false,
                                 "type": "boolean"
                               },
                               "type": "primitive"
@@ -924,7 +1045,7 @@
                 },
                 "count": {
                   "value": {
-                    "value": 1,
+                    "value": 6,
                     "type": "int"
                   },
                   "type": "primitive"
@@ -1432,14 +1553,14 @@
               "properties": {
                 "id": {
                   "value": {
-                    "value": "id",
+                    "value": "bf23bc970b78d27691e8",
                     "type": "string"
                   },
                   "type": "primitive"
                 },
                 "label": {
                   "value": {
-                    "value": "Checking *1008",
+                    "value": "Payroll Checking *1008",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -1453,7 +1574,7 @@
                 },
                 "maskedNumber": {
                   "value": {
-                    "value": "maskedNumber",
+                    "value": "*1008",
                     "type": "string"
                   },
                   "type": "primitive"
@@ -1461,26 +1582,26 @@
                 "product": {
                   "properties": {
                     "type": {
-                      "value": "cd",
+                      "value": "checking",
                       "type": "enum"
                     },
                     "code": {
                       "value": {
-                        "value": "180D_CDA",
+                        "value": "DDA",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "label": {
                       "value": {
-                        "value": "180 Day CD",
+                        "value": "Business Checking",
                         "type": "string"
                       },
                       "type": "primitive"
                     },
                     "description": {
                       "value": {
-                        "value": "Certificate of Deposit with a 180 day term",
+                        "value": "Business checking account",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -1496,7 +1617,7 @@
                   "properties": {
                     "billPay": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
@@ -1510,7 +1631,7 @@
                     },
                     "transferFrom": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
@@ -1538,7 +1659,7 @@
                     },
                     "manageCards": {
                       "value": {
-                        "value": true,
+                        "value": false,
                         "type": "boolean"
                       },
                       "type": "primitive"
@@ -6973,6 +7094,7 @@
             "schema": {
               "minLength": 2,
               "maxLength": 2,
+              "example": "US",
               "type": "string"
             },
             "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestCountryCode",
@@ -7594,7 +7716,7 @@
               "name": "countryCode",
               "value": {
                 "value": {
-                  "value": "countryCode",
+                  "value": "US",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -7653,7 +7775,7 @@
                         },
                         "regionName": {
                           "value": {
-                            "value": "regionName",
+                            "value": "NC",
                             "type": "string"
                           },
                           "type": "primitive"
@@ -7726,6 +7848,13 @@
                             "countryCode": {
                               "value": {
                                 "value": "US",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "regionName": {
+                              "value": {
+                                "value": "NC",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -9716,7 +9845,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "timeZoneId",
+              "value": {
+                "value": {
+                  "value": "America/New_York",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -11262,6 +11402,7 @@
             "value": {
               "schema": {
                 "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$",
+                "example": "2023-05-19",
                 "type": "string"
               },
               "generatedName": "TransactionsListTransactionsRequestOccurredOn",
@@ -12467,7 +12608,58 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "occurredOn",
+              "value": {
+                "value": {
+                  "value": "2023-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "createdOn",
+              "value": {
+                "value": {
+                  "value": "2022-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "postedOn",
+              "value": {
+                "value": {
+                  "value": "2022-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "amount",
+              "value": {
+                "value": {
+                  "value": "[1000.00,1200.00)",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "checkNumber",
+              "value": {
+                "value": {
+                  "value": "[1000,1200)",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -14135,7 +14327,38 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "scheduledOn",
+              "value": {
+                "value": {
+                  "value": "2022-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "debitsOn",
+              "value": {
+                "value": {
+                  "value": "2022-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "creditsOn",
+              "value": {
+                "value": {
+                  "value": "2022-05-19",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -18769,6 +18992,7 @@
           "pattern": "^\\*[- _a-zA-Z0-9.]{1,4}$",
           "minLength": 2,
           "maxLength": 5,
+          "example": "*1008",
           "type": "string"
         },
         "generatedName": "MaskedAccountNumber",
@@ -18782,6 +19006,7 @@
           "pattern": "^[- a-zA-Z0-9.]{1,32}$",
           "minLength": 1,
           "maxLength": 32,
+          "example": "123456789",
           "type": "string"
         },
         "generatedName": "FullAccountNumber",
@@ -19687,6 +19912,7 @@
         "schema": {
           "pattern": "^America\\/[a-zA-Z_]+(?:\\/[a-zA-Z_]+)*",
           "maxLength": 36,
+          "example": "America/New_York",
           "type": "string"
         },
         "generatedName": "TimeZoneId",
@@ -22044,6 +22270,7 @@
         "description": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. The value may have the following forms: <ul> <li>`YYYY-MM-DD` match the date exactly; equivalent to matching dates in the range `[YYYY-MM-DD,YYYY-MM-DD]`</li> <li>`[YYYY-MM-DD,YYYY-MM-DD]` between two dates, inclusive of the endpoints</li> <li>`(YYYY-MM-DD,YYYY-MM-DD)` between two dates, exclusive of the endpoints</li> <li>`[YYYY-MM-DD,]` on or after the date</li> <li>`(YYYY-MM-DD,)` after the date</li> <li>`[,YYYY-MM-DD]` before or on the date</li> <li>`(,YYYY-MM-DD)` before the date</li> </ul>",
         "schema": {
           "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$",
+          "example": "2022-05-19",
           "type": "string"
         },
         "generatedName": "DateRange",
@@ -22055,6 +22282,7 @@
         "description": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`[999.99,1200.00]` matches items where `999.99 < amount < 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount >= 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
         "schema": {
           "pattern": "^((\\d+(\\.\\d{0,2})?)|([\\[\\(](((\\d+(\\.\\d{0,2})?),((\\d+(\\.\\d{0,2})?))?)|(,(\\d+(\\.\\d{0,2})?)))[\\]\\)]))$",
+          "example": "[1000.00,1200.00)",
           "type": "string"
         },
         "generatedName": "AmountRange",
@@ -22286,6 +22514,7 @@
                 "schema": {
                   "minLength": 2,
                   "maxLength": 20,
+                  "example": "NC",
                   "type": "string"
                 },
                 "generatedName": "AddressRegionName",
@@ -22308,6 +22537,7 @@
                 "schema": {
                   "minLength": 2,
                   "maxLength": 2,
+                  "example": "NC",
                   "type": "string"
                 },
                 "generatedName": "AddressRegionCode",
@@ -22328,6 +22558,7 @@
               "schema": {
                 "minLength": 5,
                 "maxLength": 10,
+                "example": "20521",
                 "type": "string"
               },
               "generatedName": "AddressPostalCode",
@@ -22375,6 +22606,7 @@
         "description": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>`1200` match the integer 1,200 exactly</li> <li>`[1000,1200)` matches items where `1000 <= number < 1200`</li> <li>`[1000,1199]` matches items where`1000 <= number <= 1199`</li> <li>`[999,1200]` matches items where `999 < number < 1200`</li> <li>`[1200,]`  `number >= 1200`</li> <li>`(1200,)` greater than the value: `number >= 1200`</li> <li>`[,1200]` less than or equal to the value: `number <= 1200`</li> <li>`(,1200)` less than the value: `number < 1200`</li> </ul>",
         "schema": {
           "pattern": "^\\d+|([[(](\\d+,(\\d+)?|,\\d+)[)\\]])$",
+          "example": "[1000,1200)",
           "type": "string"
         },
         "generatedName": "PositiveIntegerRange",
@@ -22980,6 +23212,7 @@
               "description": "The city/town/municipality of the address.",
               "schema": {
                 "maxLength": 20,
+                "example": "Wilmington",
                 "type": "string"
               },
               "generatedName": "AddressFieldsLocality",
@@ -22997,6 +23230,7 @@
               "schema": {
                 "minLength": 2,
                 "maxLength": 2,
+                "example": "US",
                 "type": "string"
               },
               "generatedName": "AddressFieldsCountryCode",

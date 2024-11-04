@@ -41,7 +41,7 @@ export class CsharpProtobufTypeMapper {
         const mapper = new ToProtoPropertyMapper({ context: this.context });
         return csharp.method({
             name: "ToProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             isAsync: false,
             summary: `Maps the ${classReference.name} type into its Protobuf-equivalent representation.`,
             parameters: [],
@@ -91,7 +91,7 @@ export class CsharpProtobufTypeMapper {
         const mapper = new FromProtoPropertyMapper({ context: this.context });
         return csharp.method({
             name: "FromProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             isAsync: false,
             type: MethodType.STATIC,
             summary: `Returns a new ${classReference.name} type from its Protobuf-equivalent representation.`,

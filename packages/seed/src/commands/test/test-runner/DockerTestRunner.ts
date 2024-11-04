@@ -45,7 +45,8 @@ export class DockerTestRunner extends TestRunner {
         outputMode,
         irVersion,
         publishMetadata,
-        readme
+        readme,
+        shouldGenerateDynamicSnippetTests
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -74,7 +75,8 @@ export class DockerTestRunner extends TestRunner {
             keepDocker: keepDocker ?? false,
             context: taskContext,
             irVersionOverride: irVersion,
-            outputVersionOverride: outputVersion
+            outputVersionOverride: outputVersion,
+            shouldGenerateDynamicSnippetTests
         });
     }
 
@@ -83,13 +85,15 @@ export class DockerTestRunner extends TestRunner {
         fernWorkspace,
         taskContext,
         irVersion,
-        group
+        group,
+        shouldGenerateDynamicSnippetTests
     }: {
         absolutePathToFernDefinition: AbsoluteFilePath;
         fernWorkspace: FernWorkspace;
         taskContext: TaskContext;
         irVersion: string;
         group: generatorsYml.GeneratorGroup;
+        shouldGenerateDynamicSnippetTests: boolean | undefined;
     }): Promise<void> {
         await runLocalGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
@@ -99,7 +103,8 @@ export class DockerTestRunner extends TestRunner {
             keepDocker: true,
             context: taskContext,
             irVersionOverride: irVersion,
-            outputVersionOverride: undefined
+            outputVersionOverride: undefined,
+            shouldGenerateDynamicSnippetTests
         });
     }
 }

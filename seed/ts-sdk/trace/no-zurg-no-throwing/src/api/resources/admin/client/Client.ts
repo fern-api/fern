@@ -282,23 +282,71 @@ export class Admin {
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }, {
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
@@ -363,13 +411,37 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }, {
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
@@ -377,13 +449,37 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }])
      */
     public async storeTracedTestCaseV2(
@@ -441,30 +537,87 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         workspaceRunDetails: {
-     *             exceptionV2: undefined,
-     *             exception: undefined,
+     *             exceptionV2: {
+     *                 type: "generic",
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             },
+     *             exception: {
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             },
      *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }, {
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
@@ -525,13 +678,37 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }, {
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
@@ -539,13 +716,37 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }])
      */
     public async storeTracedWorkspaceV2(

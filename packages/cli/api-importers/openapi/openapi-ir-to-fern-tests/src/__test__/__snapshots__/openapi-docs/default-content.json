@@ -60,6 +60,9 @@
                 "docs": "Successful operation",
                 "type": "root.GenerateContentResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -77,6 +80,8 @@ service:
       path: /generateContent
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         model: string
       response:

@@ -27,6 +27,7 @@ client = SeedMultiLineDocs(
 )
 client.user.create_user(
     name="name",
+    age=1,
 )
 ```
 
@@ -47,6 +48,7 @@ client = AsyncSeedMultiLineDocs(
 async def main() -> None:
     await client.user.create_user(
         name="name",
+        age=1,
     )
 
 

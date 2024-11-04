@@ -12,6 +12,7 @@ import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convert
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { ScriptRunner } from "../ScriptRunner";
 import { TaskContextFactory } from "../TaskContextFactory";
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests";
 
 export declare namespace TestRunner {
     interface Args {
@@ -49,6 +50,7 @@ export declare namespace TestRunner {
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
         readme: generatorsYml.ReadmeSchema | undefined;
+        shouldGenerateDynamicSnippetTests: boolean | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -167,8 +169,8 @@ export abstract class TestRunner {
                 await this.runGenerator({
                     id,
                     absolutePathToFernDefinition: absolutePathToAPIDefinition,
-                    fernWorkspace,
                     absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
+                    fernWorkspace,
                     irVersion,
                     outputVersion,
                     language,
@@ -182,7 +184,8 @@ export abstract class TestRunner {
                     outputFolder,
                     keepDocker: this.keepDocker,
                     publishMetadata,
-                    readme
+                    readme,
+                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator)
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
@@ -194,6 +197,7 @@ export abstract class TestRunner {
                 taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
                 taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
+                taskContext.logger.error(`${(error as Error)?.stack}`);
                 return {
                     type: "failure",
                     cause: "generation",

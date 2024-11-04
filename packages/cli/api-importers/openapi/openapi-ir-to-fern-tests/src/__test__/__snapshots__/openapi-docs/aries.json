@@ -77,6 +77,9 @@
                 "docs": "",
                 "type": "TransactionRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6906,6 +6909,8 @@
       path: /transactions/{tran_id}/endorse
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -11360,6 +11365,9 @@ types:
                 "docs": "",
                 "type": "root.ActionMenuModulesResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch_menu_by_conn_id": {
               "auth": true,
@@ -11403,6 +11411,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.ActionMenuFetchResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "perform_action_by_conn_id": {
@@ -11458,6 +11469,9 @@ types:
                 "docs": "",
                 "type": "root.ActionMenuModulesResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "request_menu_by_conn_id": {
               "auth": true,
@@ -11487,6 +11501,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.ActionMenuModulesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_menu_to_conn_id": {
@@ -11539,6 +11556,9 @@ types:
                 "docs": "",
                 "type": "root.ActionMenuModulesResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -11556,6 +11576,8 @@ service:
       path: /action-menu/{conn_id}/close
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11574,6 +11596,8 @@ service:
       path: /action-menu/{conn_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11602,6 +11626,8 @@ service:
       path: /action-menu/{conn_id}/perform
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11635,6 +11661,8 @@ service:
       path: /action-menu/{conn_id}/request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11653,6 +11681,8 @@ service:
       path: /action-menu/{conn_id}/send-menu
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11742,6 +11772,9 @@ docs: Menu interaction over connection
                 "docs": "",
                 "type": "root.BasicMessageModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -11759,6 +11792,8 @@ service:
       path: /connections/{conn_id}/send-message
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -11866,6 +11901,9 @@ docs: Simple messaging
                 "docs": "",
                 "type": "root.ConnRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "accept_connection_request": {
               "auth": true,
@@ -11923,6 +11961,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create_connection_invitation": {
@@ -12031,6 +12072,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.InvitationResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create_static_connection": {
@@ -12149,6 +12193,9 @@ docs: Simple messaging
                 "docs": "",
                 "type": "root.ConnectionStaticResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_connection_record": {
               "auth": true,
@@ -12178,6 +12225,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnectionModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_connection_endpoint": {
@@ -12209,6 +12259,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.EndpointsResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_connection_metadata": {
@@ -12246,6 +12299,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnectionMetadata",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_connection_record": {
@@ -12295,6 +12351,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_connections": {
@@ -12402,6 +12461,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnectionList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "receive_connection_invitation": {
@@ -12516,6 +12578,9 @@ docs: Simple messaging
                 "docs": "",
                 "type": "root.ConnRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_connection_metadata": {
               "auth": true,
@@ -12561,6 +12626,9 @@ docs: Simple messaging
                 "docs": "",
                 "type": "root.ConnectionMetadata",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_inbound_connection": {
               "auth": true,
@@ -12595,6 +12663,9 @@ docs: Simple messaging
               "response": {
                 "docs": "",
                 "type": "root.ConnectionModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -12711,6 +12782,8 @@ service:
       path: /connections
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query agent-to-agent connections
       request:
         name: GetMatchingConnectionsRequest
@@ -12793,6 +12866,8 @@ service:
       path: /connections/create-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new connection invitation
       request:
         name: CreateInvitationRequest
@@ -12870,6 +12945,8 @@ service:
       path: /connections/create-static
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new static connection
       request:
         name: ConnectionStaticRequest
@@ -12954,6 +13031,8 @@ service:
       path: /connections/receive-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Receive a new connection invitation
       request:
         name: ReceiveInvitationRequest
@@ -13037,6 +13116,8 @@ service:
       path: /connections/{conn_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13074,6 +13155,8 @@ service:
       path: /connections/{conn_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13092,6 +13175,8 @@ service:
       path: /connections/{conn_id}/accept-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13141,6 +13226,8 @@ service:
       path: /connections/{conn_id}/accept-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13184,6 +13271,8 @@ service:
       path: /connections/{conn_id}/endpoints
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13203,6 +13292,8 @@ service:
       path: /connections/{conn_id}/establish-inbound/{ref_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13225,6 +13316,8 @@ service:
       path: /connections/{conn_id}/metadata
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13248,6 +13341,8 @@ service:
       path: /connections/{conn_id}/metadata
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -13341,6 +13436,9 @@ docs: Connection management
                 "docs": "",
                 "type": "root.CredentialDefinitionsCreatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_credential_definition": {
               "auth": true,
@@ -13399,6 +13497,9 @@ docs: Connection management
               "response": {
                 "docs": "",
                 "type": "root.CredentialDefinitionGetResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "publish_credential_definition": {
@@ -13510,6 +13611,9 @@ docs: Connection management
                 "docs": "",
                 "type": "root.TxnOrCredentialDefinitionSendResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "write_credential_definition": {
               "auth": true,
@@ -13569,6 +13673,9 @@ docs: Connection management
                 "docs": "",
                 "type": "root.CredentialDefinitionGetResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -13586,6 +13693,8 @@ service:
       path: /credential-definitions
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a credential definition to the ledger
       request:
         name: CredentialDefinitionSendRequest
@@ -13658,6 +13767,8 @@ service:
       path: /credential-definitions/created
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Search for matching credential definitions that agent originated
       request:
         name: GetCreatedCredDefsRequest
@@ -13693,6 +13804,8 @@ service:
       path: /credential-definitions/{cred_def_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_def_id:
           type: string
@@ -13735,6 +13848,8 @@ service:
       path: /credential-definitions/{cred_def_id}/write_record
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_def_id:
           type: string
@@ -13820,6 +13935,9 @@ docs: Credential definition operations
                 "docs": "",
                 "type": "root.HolderModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_w3c_credential": {
               "auth": true,
@@ -13849,6 +13967,9 @@ docs: Credential definition operations
               "response": {
                 "docs": "",
                 "type": "root.HolderModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_credential_mime_types": {
@@ -13881,6 +14002,9 @@ docs: Credential definition operations
               "response": {
                 "docs": "",
                 "type": "root.AttributeMimeTypesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_credential_record": {
@@ -13918,6 +14042,9 @@ docs: Credential definition operations
               "response": {
                 "docs": "",
                 "type": "root.IndyCredInfo",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_credentials": {
@@ -13978,6 +14105,9 @@ docs: Credential definition operations
                 "docs": "",
                 "type": "root.CredInfoList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_revocation_status": {
               "auth": true,
@@ -14020,6 +14150,9 @@ docs: Credential definition operations
               "response": {
                 "docs": "",
                 "type": "root.CredRevokedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_w3c_credential": {
@@ -14075,6 +14208,9 @@ docs: Credential definition operations
               "response": {
                 "docs": "",
                 "type": "root.VCRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_w3c_credentials": {
@@ -14238,6 +14374,9 @@ docs: Credential definition operations
                 "docs": "",
                 "type": "root.VCRecordList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -14255,6 +14394,8 @@ service:
       path: /credential/mime-types/{credential_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14274,6 +14415,8 @@ service:
       path: /credential/revoked/{credential_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14301,6 +14444,8 @@ service:
       path: /credential/w3c/{credential_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14338,6 +14483,8 @@ service:
       path: /credential/w3c/{credential_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14356,6 +14503,8 @@ service:
       path: /credential/{credential_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14381,6 +14530,8 @@ service:
       path: /credential/{credential_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         credential_id:
           type: string
@@ -14399,6 +14550,8 @@ service:
       path: /credentials
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch credentials from wallet
       request:
         name: GetCredentialsRequest
@@ -14439,6 +14592,8 @@ service:
       path: /credentials/w3c
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch W3C credentials from wallet
       request:
         name: W3CCredentialsListRequest
@@ -14626,6 +14781,9 @@ docs: Holder credential management
                 "docs": "",
                 "type": "root.ConnRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "accept_didex_request": {
               "auth": true,
@@ -14687,6 +14845,9 @@ docs: Holder credential management
               "response": {
                 "docs": "",
                 "type": "root.ConnRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create_didex_request": {
@@ -14759,6 +14920,9 @@ docs: Holder credential management
               "response": {
                 "docs": "",
                 "type": "root.ConnRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "receive_didex_request": {
@@ -14873,6 +15037,9 @@ docs: Holder credential management
                 "docs": "",
                 "type": "root.ConnRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -14890,6 +15057,8 @@ service:
       path: /didexchange/create-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create and send a request against public DID's implicit invitation
       request:
         name: CreateDidexRequestRequest
@@ -14944,6 +15113,8 @@ service:
       path: /didexchange/receive-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Receive request against public DID's implicit invitation
       request:
         name: DIDXRequest
@@ -15028,6 +15199,8 @@ service:
       path: /didexchange/{conn_id}/accept-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -15074,6 +15247,8 @@ service:
       path: /didexchange/{conn_id}/accept-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -15210,6 +15385,9 @@ docs: Connection management via DID exchange
                 "docs": "",
                 "type": "root.V10DiscoveryExchangeListResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_v10_features_query": {
               "auth": true,
@@ -15269,6 +15447,9 @@ docs: Connection management via DID exchange
                 "docs": "",
                 "type": "root.V10DiscoveryRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -15286,6 +15467,8 @@ service:
       path: /discover-features/query
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query supported features
       request:
         name: GetV10FeaturesQueryRequest
@@ -15328,6 +15511,8 @@ service:
       path: /discover-features/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Discover Features records
       request:
         name: GetV10FeatureRecordsRequest
@@ -15466,6 +15651,9 @@ docs: Feature discovery
                 "docs": "",
                 "type": "root.V20DiscoveryExchangeListResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_v20_features_queries": {
               "auth": true,
@@ -15531,6 +15719,9 @@ docs: Feature discovery
                 "docs": "",
                 "type": "root.V20DiscoveryExchangeResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -15548,6 +15739,8 @@ service:
       path: /discover-features-2.0/queries
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query supported features
       request:
         name: GetV20FeaturesQueriesRequest
@@ -15592,6 +15785,8 @@ service:
       path: /discover-features-2.0/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Discover Features v2.0 records
       request:
         name: GetV20FeatureRecordsRequest
@@ -15713,6 +15908,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.TransactionRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create_transaction_request": {
               "auth": true,
@@ -15792,6 +15990,9 @@ docs: Feature discovery v2
               "response": {
                 "docs": "",
                 "type": "root.TransactionRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_transaction_list": {
@@ -15881,6 +16082,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.TransactionList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_transaction_record": {
               "auth": true,
@@ -15940,6 +16144,9 @@ docs: Feature discovery v2
               "response": {
                 "docs": "",
                 "type": "root.TransactionRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "publish_endorsed_transaction": {
@@ -16001,6 +16208,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.TransactionRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "refuse_transaction": {
               "auth": true,
@@ -16060,6 +16270,9 @@ docs: Feature discovery v2
               "response": {
                 "docs": "",
                 "type": "root.TransactionRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "resend_transaction_request": {
@@ -16121,6 +16334,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.TransactionRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_endorser_info_for_conn_id": {
               "auth": true,
@@ -16168,6 +16384,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.EndorserInfo",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_endorser_role_for_conn_id": {
               "auth": true,
@@ -16208,6 +16427,9 @@ docs: Feature discovery v2
                 "docs": "",
                 "type": "root.TransactionJobs",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16237,6 +16459,8 @@ service:
       path: /transaction/{tran_id}/resend
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -16277,6 +16501,8 @@ service:
       path: /transactions
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query transactions
       response:
         docs: ''
@@ -16335,6 +16561,8 @@ service:
       path: /transactions/create-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: For author to send a transaction request
       request:
         name: Date
@@ -16388,6 +16616,8 @@ service:
       path: /transactions/{conn_id}/set-endorser-info
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -16418,6 +16648,8 @@ service:
       path: /transactions/{conn_id}/set-endorser-role
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -16443,6 +16675,8 @@ service:
       path: /transactions/{tran_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -16483,6 +16717,8 @@ service:
       path: /transactions/{tran_id}/cancel
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -16523,6 +16759,8 @@ service:
       path: /transactions/{tran_id}/refuse
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -16563,6 +16801,8 @@ service:
       path: /transactions/{tran_id}/write
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tran_id:
           type: string
@@ -16670,6 +16910,9 @@ types:
                 "docs": "",
                 "type": "root.IntroModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -16687,6 +16930,8 @@ service:
       path: /connections/{conn_id}/start-introduction
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -16984,6 +17229,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create_free_credential_offer": {
               "auth": true,
@@ -17195,6 +17443,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_cred_ex_record": {
               "auth": true,
@@ -17224,6 +17475,9 @@ docs: Introduction of known parties
               "response": {
                 "docs": "",
                 "type": "root.IssueCredentialModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_cred_ex_record": {
@@ -17383,6 +17637,9 @@ docs: Introduction of known parties
               "response": {
                 "docs": "",
                 "type": "root.V10CredentialExchange",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_cred_ex_records": {
@@ -17683,6 +17940,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchangeListResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "issue_credential_to_holder": {
               "auth": true,
@@ -17859,6 +18119,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "report_cred_ex_problem": {
               "auth": true,
@@ -17902,6 +18165,9 @@ docs: Introduction of known parties
               "response": {
                 "docs": "",
                 "type": "root.IssueCredentialModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_credential_offer": {
@@ -18076,6 +18342,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_credential_request": {
               "auth": true,
@@ -18234,6 +18503,9 @@ docs: Introduction of known parties
               "response": {
                 "docs": "",
                 "type": "root.V10CredentialExchange",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_credential": {
@@ -18501,6 +18773,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_free_credential_offer": {
               "auth": true,
@@ -18722,6 +18997,9 @@ docs: Introduction of known parties
               "response": {
                 "docs": "",
                 "type": "root.V10CredentialExchange",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_credential_proposal": {
@@ -18989,6 +19267,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "store_received_credential": {
               "auth": true,
@@ -19164,6 +19445,9 @@ docs: Introduction of known parties
                 "docs": "",
                 "type": "root.V10CredentialExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -19210,6 +19494,8 @@ service:
       path: /issue-credential/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: >-
         Create a credential record without sending (generally for use with
         Out-Of-Band)
@@ -19394,6 +19680,8 @@ service:
       path: /issue-credential/create-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a credential offer, independent of any proposal or connection
       request:
         name: V10CredentialConnFreeOfferRequest
@@ -19551,6 +19839,8 @@ service:
       path: /issue-credential/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch all credential exchange records
       request:
         name: GetMatchingCredExRecordsRequest
@@ -19772,6 +20062,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -19891,6 +20183,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -19909,6 +20203,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}/issue
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -20038,6 +20334,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}/problem-report
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -20064,6 +20362,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}/send-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -20191,6 +20491,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -20310,6 +20612,8 @@ service:
       path: /issue-credential/records/{cred_ex_id}/store
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -20438,6 +20742,8 @@ service:
       path: /issue-credential/send
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send holder a credential, automating entire flow
       request:
         name: V10CredentialProposalRequestMand
@@ -20626,6 +20932,8 @@ service:
       path: /issue-credential/send-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send holder a credential offer, independent of any proposal
       request:
         name: V10CredentialFreeOfferRequest
@@ -20789,6 +21097,8 @@ service:
       path: /issue-credential/send-proposal
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send issuer a credential proposal
       request:
         name: V10CredentialProposalRequestOpt
@@ -21268,6 +21578,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create_free_credential_offer": {
               "auth": true,
@@ -21529,6 +21842,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_cred_ex_record": {
               "auth": true,
@@ -21558,6 +21874,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20IssueCredentialModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_cred_ex_record": {
@@ -21796,6 +22115,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20CredExRecordDetail",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_cred_ex_records-v2": {
@@ -22254,6 +22576,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecordListResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "issue_credential_to_holder": {
               "auth": true,
@@ -22509,6 +22834,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecordDetail",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "report_cred_ex_problem": {
               "auth": true,
@@ -22552,6 +22880,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20IssueCredentialModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_credential_offer": {
@@ -22804,6 +23135,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_credential_request": {
               "auth": true,
@@ -23038,6 +23372,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20CredExRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_credential": {
@@ -23276,6 +23613,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20CredExRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_credential_offer": {
@@ -23549,6 +23889,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_free_credential_proposal": {
               "auth": true,
@@ -23786,6 +24129,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20CredExRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_credential_request": {
@@ -24068,6 +24414,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "store_received_credential": {
               "auth": true,
@@ -24322,6 +24671,9 @@ types:
                 "docs": "",
                 "type": "root.V20CredExRecordDetail",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -24395,6 +24747,8 @@ service:
       path: /issue-credential-2.0/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: >-
         Create a credential record without sending (generally for use with
         Out-Of-Band)
@@ -24576,6 +24930,8 @@ service:
       path: /issue-credential-2.0/create-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a credential offer, independent of any proposal or connection
       request:
         name: V20CredOfferConnFreeRequest
@@ -24761,6 +25117,8 @@ service:
       path: /issue-credential-2.0/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch all credential exchange records
       request:
         name: GetMatchingCredExRecordsV2Request
@@ -25086,6 +25444,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25256,6 +25616,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25274,6 +25636,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}/issue
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25454,6 +25818,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}/problem-report
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25480,6 +25846,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}/send-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25651,6 +26019,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25813,6 +26183,8 @@ service:
       path: /issue-credential-2.0/records/{cred_ex_id}/store
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_ex_id:
           type: string
@@ -25992,6 +26364,8 @@ service:
       path: /issue-credential-2.0/send
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send holder a credential, automating entire flow
       request:
         body:
@@ -26158,6 +26532,8 @@ service:
       path: /issue-credential-2.0/send-offer
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send holder a credential offer, independent of any proposal
       request:
         name: V20CredOfferRequest
@@ -26349,6 +26725,8 @@ service:
       path: /issue-credential-2.0/send-proposal
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send issuer a credential proposal
       request:
         body:
@@ -26515,6 +26893,8 @@ service:
       path: /issue-credential-2.0/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: >-
         Send issuer a credential request not bound to an existing thread. Indy
         credentials cannot start at a request
@@ -26802,6 +27182,9 @@ types:
                 "docs": "",
                 "type": "root.SignResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "verify": {
               "auth": true,
@@ -26848,6 +27231,9 @@ types:
                 "docs": "",
                 "type": "root.VerifyResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -26865,6 +27251,8 @@ service:
       path: /jsonld/sign
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sign a JSON-LD structure and return it
       request:
         name: SignRequest
@@ -26894,6 +27282,8 @@ service:
       path: /jsonld/verify
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Verify a JSON-LD structure.
       request:
         name: VerifyRequest
@@ -26980,6 +27370,9 @@ docs: Sign and verify json-ld data
                 "docs": "",
                 "type": "root.LedgerModulesResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_did_nym_role": {
               "auth": true,
@@ -27013,6 +27406,9 @@ docs: Sign and verify json-ld data
                 "docs": "",
                 "type": "root.GetNymRoleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_did_verkey": {
               "auth": true,
@@ -27045,6 +27441,9 @@ docs: Sign and verify json-ld data
               "response": {
                 "docs": "",
                 "type": "root.GetDIDVerkeyResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_multiple_ledger_config": {
@@ -27082,6 +27481,9 @@ docs: Sign and verify json-ld data
                 "docs": "",
                 "type": "root.LedgerConfigList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_published_did_endpoint": {
               "auth": true,
@@ -27118,6 +27520,9 @@ docs: Sign and verify json-ld data
               "response": {
                 "docs": "",
                 "type": "root.GetDIDEndpointResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_taa": {
@@ -27158,6 +27563,9 @@ docs: Sign and verify json-ld data
                 "docs": "",
                 "type": "root.TAAResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_write_ledger": {
               "auth": true,
@@ -27178,6 +27586,9 @@ docs: Sign and verify json-ld data
               "response": {
                 "docs": "",
                 "type": "root.WriteLedgerRequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "register_nym": {
@@ -27266,6 +27677,9 @@ docs: Sign and verify json-ld data
                 "docs": "",
                 "type": "root.TxnOrRegisterLedgerNymResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "rotate_public_did_keypair": {
               "auth": true,
@@ -27286,6 +27700,9 @@ docs: Sign and verify json-ld data
               "response": {
                 "docs": "",
                 "type": "root.LedgerModulesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -27345,6 +27762,8 @@ service:
       path: /ledger/did-endpoint
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get the endpoint for a DID from the ledger.
       request:
         name: GetPublishedDidEndpointRequest
@@ -27368,6 +27787,8 @@ service:
       path: /ledger/did-verkey
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get the verkey for a DID from the ledger.
       request:
         name: GetDidVerkeyRequest
@@ -27388,6 +27809,8 @@ service:
       path: /ledger/get-nym-role
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get the role from the NYM registration of a public DID.
       request:
         name: GetDidNymRoleRequest
@@ -27408,6 +27831,8 @@ service:
       path: /ledger/multiple/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the multiple ledger configuration currently in use
       response:
         docs: ''
@@ -27430,6 +27855,8 @@ service:
       path: /ledger/multiple/get-write-ledger
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the current write ledger
       response:
         docs: ''
@@ -27442,6 +27869,8 @@ service:
       path: /ledger/register-nym
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Send a NYM registration to the ledger.
       request:
         name: RegisterNymRequest
@@ -27502,6 +27931,8 @@ service:
       path: /ledger/rotate-public-did-keypair
       method: PATCH
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Rotate key pair for public DID.
       response:
         docs: ''
@@ -27514,6 +27945,8 @@ service:
       path: /ledger/taa
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the current transaction author agreement, if any
       response:
         docs: ''
@@ -27539,6 +27972,8 @@ service:
       path: /ledger/taa/accept
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Accept the transaction author agreement
       request:
         name: TAAAccept
@@ -27618,6 +28053,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.MediationRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_mediation_record": {
               "auth": true,
@@ -27665,6 +28103,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.MediationRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deny_mediation_request": {
@@ -27733,6 +28174,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.MediationDeny",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_default_mediator": {
               "auth": true,
@@ -27771,6 +28215,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.MediationRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_keylists": {
@@ -27826,6 +28273,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.Keylist",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_mediation_records": {
@@ -27914,6 +28364,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.MediationList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_mediation_record": {
               "auth": true,
@@ -27962,6 +28415,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.MediationRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "grant_mediation_request": {
               "auth": true,
@@ -27997,6 +28453,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.MediationGrant",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "request_mediation_for_connection": {
@@ -28074,6 +28533,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.MediationRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_keylist_query_to_mediator": {
               "auth": true,
@@ -28132,6 +28594,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.KeylistQuery",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_keylist_update_to_mediator": {
@@ -28199,6 +28664,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.KeylistUpdate",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_default_mediator": {
               "auth": true,
@@ -28246,6 +28714,9 @@ docs: Interaction with ledger
               "response": {
                 "docs": "",
                 "type": "root.MediationRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update_keylist_for_conn_id": {
@@ -28311,6 +28782,9 @@ docs: Interaction with ledger
                 "docs": "",
                 "type": "root.KeylistUpdate",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -28357,6 +28831,8 @@ service:
       path: /mediation/default-mediator
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get default mediator
       response:
         docs: ''
@@ -28384,6 +28860,8 @@ service:
       path: /mediation/default-mediator
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Clear default mediator
       response:
         docs: ''
@@ -28411,6 +28889,8 @@ service:
       path: /mediation/keylists
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve keylists by connection or role
       request:
         name: GetKeylistsRequest
@@ -28450,6 +28930,8 @@ service:
       path: /mediation/keylists/{mediation_id}/send-keylist-query
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28488,6 +28970,8 @@ service:
       path: /mediation/keylists/{mediation_id}/send-keylist-update
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28525,6 +29009,8 @@ service:
       path: /mediation/request/{conn_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -28576,6 +29062,8 @@ service:
       path: /mediation/requests
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query mediation requests, returns list of all mediation records
       request:
         name: GetMatchingMediationRecordsRequest
@@ -28637,6 +29125,8 @@ service:
       path: /mediation/requests/{mediation_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28670,6 +29160,8 @@ service:
       path: /mediation/requests/{mediation_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28703,6 +29195,8 @@ service:
       path: /mediation/requests/{mediation_id}/deny
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28746,6 +29240,8 @@ service:
       path: /mediation/requests/{mediation_id}/grant
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28769,6 +29265,8 @@ service:
       path: /mediation/update-keylist/{conn_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -28805,6 +29303,8 @@ service:
       path: /mediation/{mediation_id}/default-mediator
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         mediation_id:
           type: string
@@ -28957,6 +29457,9 @@ types:
                 "docs": "",
                 "type": "root.CreateWalletResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_wallet": {
               "auth": true,
@@ -29004,6 +29507,9 @@ types:
                 "docs": "",
                 "type": "root.MultitenantModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_auth_token": {
               "auth": true,
@@ -29047,6 +29553,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.CreateWalletTokenResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_wallets": {
@@ -29093,6 +29602,9 @@ types:
                 "docs": "",
                 "type": "root.WalletList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_wallet_record": {
               "auth": true,
@@ -29126,6 +29638,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.WalletRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update_wallet": {
@@ -29195,6 +29710,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.WalletRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -29300,6 +29818,8 @@ service:
       path: /multitenancy/wallet
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a subwallet
       request:
         name: CreateWalletRequest
@@ -29372,6 +29892,8 @@ service:
       path: /multitenancy/wallet/{wallet_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         wallet_id:
           type: string
@@ -29394,6 +29916,8 @@ service:
       path: /multitenancy/wallet/{wallet_id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         wallet_id:
           type: string
@@ -29450,6 +29974,8 @@ service:
       path: /multitenancy/wallet/{wallet_id}/remove
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         wallet_id:
           type: string
@@ -29480,6 +30006,8 @@ service:
       path: /multitenancy/wallet/{wallet_id}/token
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         wallet_id: string
       display-name: Get auth token for a subwallet
@@ -29509,6 +30037,8 @@ service:
       path: /multitenancy/wallets
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query subwallets
       request:
         name: GetMatchingWalletsRequest
@@ -29734,6 +30264,9 @@ docs: Multitenant wallet management
                 "docs": "",
                 "type": "root.InvitationRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "receive_oob_invitation": {
               "auth": true,
@@ -29942,6 +30475,9 @@ docs: Multitenant wallet management
                 "docs": "",
                 "type": "root.OobRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -29974,6 +30510,8 @@ service:
       path: /out-of-band/create-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new connection invitation
       request:
         name: InvitationCreateRequest
@@ -30108,6 +30646,8 @@ service:
       path: /out-of-band/receive-invitation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Receive a new connection invitation
       request:
         body:
@@ -30498,6 +31038,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_pres_ex_record": {
               "auth": true,
@@ -30527,6 +31070,9 @@ docs: Out-of-band connections
               "response": {
                 "docs": "",
                 "type": "root.V10PresentProofModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_pres_ex_records": {
@@ -30807,6 +31353,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchangeList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_pres_ex_credentials": {
               "auth": true,
@@ -30876,6 +31425,9 @@ docs: Out-of-band connections
               "response": {
                 "docs": "",
                 "type": "list<root.IndyCredPrecis>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_pres_ex_record": {
@@ -31046,6 +31598,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "report_pres_ex_problem": {
               "auth": true,
@@ -31089,6 +31644,9 @@ docs: Out-of-band connections
               "response": {
                 "docs": "",
                 "type": "root.V10PresentProofModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_presentation_request": {
@@ -31327,6 +31885,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_presentation_proposal": {
               "auth": true,
@@ -31561,6 +32122,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_proof_presentation": {
               "auth": true,
@@ -31754,6 +32318,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_proof_presentation_request": {
               "auth": true,
@@ -31945,6 +32512,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "verify_received_presentation": {
               "auth": true,
@@ -32114,6 +32684,9 @@ docs: Out-of-band connections
                 "docs": "",
                 "type": "root.V10PresentationExchange",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -32158,6 +32731,8 @@ service:
       path: /present-proof/create-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Creates a presentation request not bound to any proposal or connection
       request:
         name: V10PresentationCreateRequestRequest
@@ -32306,6 +32881,8 @@ service:
       path: /present-proof/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch all present-proof exchange records
       request:
         name: GetMatchingPresExRecordsRequest
@@ -32497,6 +33074,8 @@ service:
       path: /present-proof/records/{pres_ex_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32611,6 +33190,8 @@ service:
       path: /present-proof/records/{pres_ex_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32629,6 +33210,8 @@ service:
       path: /present-proof/records/{pres_ex_id}/credentials
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32676,6 +33259,8 @@ service:
       path: /present-proof/records/{pres_ex_id}/problem-report
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32702,6 +33287,8 @@ service:
       path: /present-proof/records/{pres_ex_id}/send-presentation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32832,6 +33419,8 @@ service:
       path: /present-proof/records/{pres_ex_id}/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -32960,6 +33549,8 @@ service:
       path: /present-proof/records/{pres_ex_id}/verify-presentation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -33074,6 +33665,8 @@ service:
       path: /present-proof/send-proposal
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a presentation proposal
       request:
         name: V10PresentationProposalRequest
@@ -33233,6 +33826,8 @@ service:
       path: /present-proof/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a free presentation request not bound to any proposal
       request:
         name: V10PresentationSendRequestRequest
@@ -33622,6 +34217,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_pres_ex_record": {
               "auth": true,
@@ -33651,6 +34249,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20PresentProofModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_matching_pres_ex_records-v2": {
@@ -33919,6 +34520,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecordList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_pres_ex_credentials-v2": {
               "auth": true,
@@ -33988,6 +34592,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "list<root.IndyCredPrecis>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_pres_ex_record": {
@@ -34132,6 +34739,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "report_pres_ex_problem": {
               "auth": true,
@@ -34175,6 +34785,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20PresentProofModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_free_presentation_request": {
@@ -34388,6 +35001,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.V20PresExRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "send_presentation_proposal": {
@@ -34603,6 +35219,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_proof_presentation": {
               "auth": true,
@@ -34787,6 +35406,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "send_proof_presentation_request": {
               "auth": true,
@@ -34952,6 +35574,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "verify_received_presentation": {
               "auth": true,
@@ -35095,6 +35720,9 @@ types:
                 "docs": "",
                 "type": "root.V20PresExRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -35156,6 +35784,8 @@ service:
       path: /present-proof-2.0/create-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Creates a presentation request not bound to any proposal or connection
       request:
         name: V20PresCreateRequestRequest
@@ -35294,6 +35924,8 @@ service:
       path: /present-proof-2.0/records
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch all present-proof exchange records
       request:
         name: GetMatchingPresExRecordsV2Request
@@ -35485,6 +36117,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35588,6 +36222,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35606,6 +36242,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}/credentials
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35653,6 +36291,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}/problem-report
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35679,6 +36319,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}/send-presentation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35808,6 +36450,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -35925,6 +36569,8 @@ service:
       path: /present-proof-2.0/records/{pres_ex_id}/verify-presentation
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         pres_ex_id:
           type: string
@@ -36028,6 +36674,8 @@ service:
       path: /present-proof-2.0/send-proposal
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a presentation proposal
       request:
         name: V20PresProposalRequest
@@ -36175,6 +36823,8 @@ service:
       path: /present-proof-2.0/send-request
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a free presentation request not bound to any proposal
       request:
         name: V20PresSendRequestRequest
@@ -36388,6 +37038,9 @@ types:
                 "docs": "",
                 "type": "root.ResolutionResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -36405,6 +37058,8 @@ service:
       path: /resolver/resolve/{did}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         did:
           type: string
@@ -36484,6 +37139,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.PublishRevocations",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create_revocation_registry": {
@@ -36578,6 +37236,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete_tails_file": {
               "auth": true,
@@ -36612,6 +37273,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.TailsDeleteResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "download_tails_file": {
               "auth": true,
@@ -36630,6 +37294,9 @@ docs: did resolver interface.
                 "docs": "tails file",
                 "type": "file",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "download_tails_file_sparse": {
               "auth": true,
@@ -36647,6 +37314,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "tails file",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_active_registry_for_cred_def_id": {
@@ -36715,6 +37385,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_created_registries": {
               "auth": true,
@@ -36751,6 +37424,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.RevRegsCreated",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_credential_revocation_record": {
@@ -36799,6 +37475,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.CredRevRecordResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_issued_credential_details": {
@@ -36853,6 +37532,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.CredRevRecordDetailsResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_issued_credentials_count": {
               "auth": true,
@@ -36883,6 +37565,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegIssuedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_published_credential_details": {
               "auth": true,
@@ -36910,6 +37595,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.CredRevIndyRecordsResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_revocation_registry": {
@@ -36977,6 +37665,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.RevRegResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "publish_revocation_registry_definition": {
@@ -37083,6 +37774,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.TxnOrRevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish_revocation_registry_entry": {
               "auth": true,
@@ -37163,6 +37857,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish_revocations": {
               "auth": true,
@@ -37237,6 +37934,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.TxnOrPublishRevocationsResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "revoke_issued_credential": {
@@ -37340,6 +38040,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevocationModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_revocation_registry_state": {
               "auth": true,
@@ -37419,6 +38122,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update_revocation_entry_state": {
               "auth": true,
@@ -37458,6 +38164,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.RevRegWalletUpdatedResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update_revocation_registry": {
@@ -37543,6 +38252,9 @@ docs: did resolver interface.
                 "docs": "",
                 "type": "root.RevRegResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upload_tails_file": {
               "auth": true,
@@ -37572,6 +38284,9 @@ docs: did resolver interface.
               "response": {
                 "docs": "",
                 "type": "root.RevocationModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -37626,6 +38341,8 @@ service:
       path: /revocation/active-registry/{cred_def_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         cred_def_id:
           type: string
@@ -37677,6 +38394,8 @@ service:
       path: /revocation/clear-pending-revocations
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Clear pending revocations
       request:
         name: ClearPendingRevocationsRequest
@@ -37708,6 +38427,8 @@ service:
       path: /revocation/create-registry
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Creates a new revocation registry
       request:
         name: RevRegCreateRequest
@@ -37773,6 +38494,8 @@ service:
       path: /revocation/credential-record
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get credential revocation status
       request:
         name: GetCredentialRevocationRecordRequest
@@ -37807,6 +38530,8 @@ service:
       path: /revocation/publish-revocations
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Publish pending revocations to ledger
       request:
         body:
@@ -37856,6 +38581,8 @@ service:
       path: /revocation/registries/created
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Search for matching revocation registries that current agent created
       request:
         name: GetCreatedRegistriesRequest
@@ -37881,6 +38608,8 @@ service:
       path: /revocation/registry/delete-tails-file
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Delete the tail files
       request:
         name: DeleteTailsFileRequest
@@ -37902,6 +38631,8 @@ service:
       path: /revocation/registry/{rev_reg_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -37953,6 +38684,8 @@ service:
       path: /revocation/registry/{rev_reg_id}
       method: PATCH
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38015,6 +38748,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/definition
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38092,6 +38827,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/entry
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38152,6 +38889,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/fix-revocation-entry-state
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38177,6 +38916,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/issued
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38195,6 +38936,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/issued/details
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38233,6 +38976,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/issued/indy_recs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38250,6 +38995,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/set-state
       method: PATCH
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38309,6 +39056,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/tails-file-less-deets
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38321,6 +39070,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38333,6 +39084,8 @@ service:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         rev_reg_id:
           type: string
@@ -38351,6 +39104,8 @@ service:
       path: /revocation/revoke
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Revoke an issued credential
       request:
         name: RevokeRequest
@@ -38509,6 +39264,9 @@ types:
                 "docs": "",
                 "type": "root.SchemasCreatedResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_schema": {
               "auth": true,
@@ -38548,6 +39306,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "root.SchemaGetResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "publish_schema": {
@@ -38661,6 +39422,9 @@ types:
                 "docs": "",
                 "type": "root.TxnOrSchemaSendResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "write_schema_record_to_wallet": {
               "auth": true,
@@ -38701,6 +39465,9 @@ types:
                 "docs": "",
                 "type": "root.SchemaGetResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -38718,6 +39485,8 @@ service:
       path: /schemas
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Sends a schema to the ledger
       request:
         name: SchemaSendRequest
@@ -38793,6 +39562,8 @@ service:
       path: /schemas/created
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Search for matching schema that agent originated
       request:
         name: GetMatchingCreatedSchemasRequest
@@ -38822,6 +39593,8 @@ service:
       path: /schemas/{schema_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         schema_id:
           type: string
@@ -38848,6 +39621,8 @@ service:
       path: /schemas/{schema_id}/write_record
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         schema_id:
           type: string
@@ -38904,6 +39679,9 @@ docs: Schema operations
                 "docs": "",
                 "type": "root.AdminConfig",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_liveliness": {
               "auth": true,
@@ -38924,6 +39702,9 @@ docs: Schema operations
               "response": {
                 "docs": "",
                 "type": "root.AdminStatusLiveliness",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_loaded_plugins": {
@@ -38949,6 +39730,9 @@ docs: Schema operations
                 "docs": "",
                 "type": "root.AdminModules",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_readiness": {
               "auth": true,
@@ -38969,6 +39753,9 @@ docs: Schema operations
               "response": {
                 "docs": "",
                 "type": "root.AdminStatusReadiness",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_status": {
@@ -38992,6 +39779,9 @@ docs: Schema operations
                 "docs": "",
                 "type": "root.AdminStatus",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "reset_statistics": {
               "auth": true,
@@ -39012,6 +39802,9 @@ docs: Schema operations
               "response": {
                 "docs": "",
                 "type": "root.AdminReset",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "shutdown_server": {
@@ -39034,6 +39827,9 @@ docs: Schema operations
                 "docs": "",
                 "type": "root.AdminShutdown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -39051,6 +39847,8 @@ service:
       path: /plugins
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the list of loaded plugins
       response:
         docs: ''
@@ -39065,6 +39863,8 @@ service:
       path: /shutdown
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Shut down server
       response:
         docs: ''
@@ -39077,6 +39877,8 @@ service:
       path: /status
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the server status
       response:
         docs: ''
@@ -39090,6 +39892,8 @@ service:
       path: /status/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the server configuration
       response:
         docs: ''
@@ -39101,6 +39905,8 @@ service:
       path: /status/live
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Liveliness check
       response:
         docs: ''
@@ -39113,6 +39919,8 @@ service:
       path: /status/ready
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Readiness check
       response:
         docs: ''
@@ -39125,6 +39933,8 @@ service:
       path: /status/reset
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Reset statistics
       response:
         docs: ''
@@ -39195,6 +40005,9 @@ service:
                 "docs": "",
                 "type": "root.PingRequestResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -39212,6 +40025,8 @@ service:
       path: /connections/{conn_id}/send-ping
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         conn_id:
           type: string
@@ -39305,6 +40120,9 @@ docs: Trust-ping over connection
                 "docs": "",
                 "type": "root.DIDResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_did_endpoint": {
               "auth": true,
@@ -39338,6 +40156,9 @@ docs: Trust-ping over connection
               "response": {
                 "docs": "",
                 "type": "root.DIDEndpoint",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_dids": {
@@ -39400,6 +40221,9 @@ docs: Trust-ping over connection
                 "docs": "",
                 "type": "root.DIDList",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_public_did": {
               "auth": true,
@@ -39426,6 +40250,9 @@ docs: Trust-ping over connection
               "response": {
                 "docs": "",
                 "type": "root.DIDResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "rotate_keypair": {
@@ -39459,6 +40286,9 @@ docs: Trust-ping over connection
               "response": {
                 "docs": "",
                 "type": "root.WalletModuleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "set_did_endpoint": {
@@ -39529,6 +40359,9 @@ docs: Trust-ping over connection
                 "docs": "",
                 "type": "root.WalletModuleResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "set_public_did": {
               "auth": true,
@@ -39579,6 +40412,9 @@ docs: Trust-ping over connection
               "response": {
                 "docs": "",
                 "type": "root.DIDResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -39668,6 +40504,8 @@ service:
       path: /wallet/did
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: List wallet DIDs
       request:
         name: GetDidsRequest
@@ -39710,6 +40548,8 @@ service:
       path: /wallet/did/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create a local DID
       request:
         name: DIDCreate
@@ -39747,6 +40587,8 @@ service:
       path: /wallet/did/local/rotate-keypair
       method: PATCH
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Rotate keypair for a DID not posted to the ledger
       request:
         name: RotateKeypairRequest
@@ -39767,6 +40609,8 @@ service:
       path: /wallet/did/public
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Fetch the current public DID
       response:
         docs: ''
@@ -39784,6 +40628,8 @@ service:
       path: /wallet/did/public
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Assign the current public DID
       request:
         name: SetPublicDidRequest
@@ -39818,6 +40664,8 @@ service:
       path: /wallet/get-did-endpoint
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Query DID endpoint in wallet
       request:
         name: GetDidEndpointRequest
@@ -39839,6 +40687,8 @@ service:
       path: /wallet/set-did-endpoint
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Update endpoint in wallet and on ledger if posted to it
       request:
         name: DIDEndpointWithType

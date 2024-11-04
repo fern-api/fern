@@ -8,7 +8,7 @@
  *         clientId: "client_id",
  *         clientSecret: "client_secret",
  *         refreshToken: "refresh_token",
- *         scope: undefined
+ *         scope: "scope"
  *     }
  */
 export interface RefreshTokenRequest {

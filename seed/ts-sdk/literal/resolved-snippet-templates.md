@@ -41,6 +41,7 @@ import { SeedLiteralClient } from "@fern/literal";
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.inlined.send({
   query: "query",
+  temperature: 1.1,
   objectWithLiteral: {
     nestedLiteral: {},
   },

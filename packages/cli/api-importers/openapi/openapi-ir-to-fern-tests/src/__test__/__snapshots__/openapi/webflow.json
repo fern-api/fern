@@ -758,6 +758,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "docs": "Request was successful",
                 "type": "AccessGroupsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -911,6 +914,8 @@ service:
       docs: >-
         Get a list of access groups for a site <br><br> Required scope |
         `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -1061,6 +1066,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create-folder": {
               "auth": true,
@@ -1128,6 +1136,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsCreateFolderResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -1155,6 +1166,9 @@ service:
                   "docs": "Unique identifier for an Asset on a site",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -1214,6 +1228,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-folder": {
               "auth": true,
@@ -1259,6 +1276,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsGetFolderResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -1321,6 +1341,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-folders": {
               "auth": true,
@@ -1375,6 +1398,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsListFoldersResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -1450,6 +1476,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -2369,6 +2398,8 @@ service:
       method: GET
       auth: true
       docs: List assets for a given site </br></br> Required scope | `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -2424,6 +2455,8 @@ service:
         request to the `uploadUrl` with the `uploadDetails` object as your
         header information in the request. </br></br>  Required scope |
         `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -2489,6 +2522,8 @@ service:
       method: GET
       auth: true
       docs: Get an Asset </br></br> Required scope | `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -2532,6 +2567,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete an Asset
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -2551,6 +2588,8 @@ service:
       method: PATCH
       auth: true
       docs: Update an Asset </br></br> Required scope | `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -2606,6 +2645,8 @@ service:
       docs: >-
         List Asset Folders within a given site <br><br> Required scope |
         `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -2646,6 +2687,8 @@ service:
       docs: >-
         Create an Asset Folder within a given site <br><br> Required scope |
         `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -2696,6 +2739,8 @@ service:
       docs: >-
         Get details about a specific Asset Folder <br><br> Required scope |
         `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_folder_id:
           type: string
@@ -2819,6 +2864,9 @@ service:
                 "docs": "Request was successful",
                 "type": "CollectionsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -2852,6 +2900,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete-collection": {
               "auth": true,
@@ -2879,6 +2930,9 @@ service:
                   "docs": "Unique identifier for a Collection",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -2932,6 +2986,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "CollectionsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -2994,6 +3051,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "CollectionsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3428,6 +3488,8 @@ service:
       docs: >-
         List of all Collections within a Site. </br></br> Required scope |
         `cms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -3471,6 +3533,8 @@ service:
       method: POST
       auth: true
       docs: Create a Collection for a site. </br></br> Required scope | `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -3529,6 +3593,8 @@ service:
       docs: >-
         Get the full details of a collection from its ID. </br></br> Required
         scope | `cms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -3569,6 +3635,8 @@ service:
       docs: >-
         Delete a collection using its ID. </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -3590,6 +3658,8 @@ service:
       docs: >-
         Delete a custom field in a collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -3698,6 +3768,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FieldsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -3772,6 +3845,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "FieldsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -4046,6 +4122,8 @@ service:
         field types can be created through the API.  This endpoint does not
         currently support bulk creation.  </br></br>  Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -4101,6 +4179,8 @@ service:
       docs: >-
         Update a custom field in a collection.  </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -4243,6 +4323,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create-item-for-multiple-locales": {
               "auth": true,
@@ -4319,6 +4402,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemForMultipleLocalesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create-item-live": {
@@ -4401,6 +4487,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemLiveResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete-item": {
               "auth": true,
@@ -4443,6 +4532,9 @@ service:
                   },
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete-item-live": {
               "auth": true,
@@ -4484,6 +4576,9 @@ service:
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get-item": {
@@ -4546,6 +4641,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsGetItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-item-live": {
               "auth": true,
@@ -4606,6 +4704,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsGetItemLiveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list-items": {
@@ -4709,6 +4810,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsListItemsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-items-live": {
               "auth": true,
@@ -4811,6 +4915,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsListItemsLiveResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish-item": {
               "auth": true,
@@ -4869,6 +4976,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsPublishItemResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-item": {
@@ -4976,6 +5086,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsUpdateItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-item-live": {
               "auth": true,
@@ -5081,6 +5194,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsUpdateItemLiveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -6380,6 +6496,8 @@ service:
       docs: >-
         List of all Items within a Collection. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6465,6 +6583,8 @@ service:
         href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales">
         please use the bulk item endpoint.</a> </br></br> Required scope |
         <code>CMS:write</code>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6525,6 +6645,8 @@ service:
       docs: >-
         List of all live Items within a Collection. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6608,6 +6730,8 @@ service:
         live site. </br></br> To create items across multiple locales, <a
         href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales">
         please use this endpoint.</a> </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6668,6 +6792,8 @@ service:
       docs: >-
         Create single Item in a Collection with multiple corresponding locales.
         </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6727,6 +6853,8 @@ service:
       docs: >-
         Get details of a selected Collection Item. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6777,6 +6905,8 @@ service:
       docs: >-
         Delete an Item from a Collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6812,6 +6942,8 @@ service:
       docs: >-
         Update a selected Item in a Collection. </br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6892,6 +7024,8 @@ service:
       docs: >-
         Get details of a selected Collection live Item. </br></br> Required
         scope | `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6944,6 +7078,8 @@ service:
         unpublish the item from the live site and set it to draft. This endpoint
         does not currently support bulk deletion.</br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -6980,6 +7116,8 @@ service:
         Update a selected live Item in a Collection. The updates for this Item
         will be published to the live site. </br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -7060,6 +7198,8 @@ service:
       docs: >-
         Publish an item or multiple items. </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -7150,6 +7290,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "EcommerceGetSettingsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7208,6 +7351,8 @@ service:
         Retrieve ecommerce settings for a site.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -7313,6 +7458,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-submission": {
               "auth": true,
@@ -7358,6 +7506,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "FormsGetSubmissionResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -7467,6 +7618,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-submissions": {
               "auth": true,
@@ -7546,6 +7700,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsListSubmissionsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-submission": {
               "auth": true,
@@ -7607,6 +7764,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "FormsUpdateSubmissionResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -8072,7 +8232,51 @@ service:
           "form_submission": {
             "display-name": "Form Submission",
             "docs": "Information about a form that was subitted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "data": {
+                      "First Name": "Zaphod",
+                      "Last Name": "Beeblebrox",
+                      "Phone Number": 15550000000,
+                      "email": "zaphod@heartofgold.ai",
+                    },
+                    "formElementId": "4e038d2c-6a1e-4953-7be9-a59a2b453177",
+                    "formId": "65429eadebe8a9f3a30f62d0",
+                    "id": "6321ca84df3949bfc6752327",
+                    "name": "Contact Us",
+                    "schema": [
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c4",
+                        "fieldName": "First Name",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c5",
+                        "fieldName": "Last Name",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c6",
+                        "fieldName": "email",
+                        "fieldType": "FormTextInput",
+                      },
+                      {
+                        "fieldElementId": "285042f7-d554-dc7f-102c-aa10d6a2d2c7",
+                        "fieldName": "Phone Number",
+                        "fieldType": "FormTextInput",
+                      },
+                    ],
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "submittedAt": "2022-09-14T12:35:16.117Z",
+                  },
+                  "triggerType": "form_submission",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -8418,6 +8622,8 @@ service:
       method: GET
       auth: true
       docs: List forms for a given site </br></br> Required scope | `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -8501,6 +8707,8 @@ service:
       docs: >-
         Get information about a given form</br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_id:
           type: string
@@ -8554,6 +8762,8 @@ service:
       docs: >-
         List form submissions for a given form </br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_id:
           type: string
@@ -8613,6 +8823,8 @@ service:
       docs: >-
         Get information about a given form submission</br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_submission_id:
           type: string
@@ -8648,6 +8860,8 @@ service:
       docs: >-
         Update hidden fields on a form submission</br></br> Required scope |
         `forms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_submission_id:
           type: string
@@ -8699,7 +8913,34 @@ webhooks:
     payload:
       type: FormSubmissionPayload
       docs: The Webhook payload for when a form is submitted
-    examples: []
+    examples:
+      - payload:
+          triggerType: form_submission
+          payload:
+            name: Contact Us
+            siteId: 65427cf400e02b306eaa049c
+            data:
+              First Name: Zaphod
+              Last Name: Beeblebrox
+              email: zaphod@heartofgold.ai
+              Phone Number: 15550000000
+            schema:
+              - fieldName: First Name
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c4
+              - fieldName: Last Name
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c5
+              - fieldName: email
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c6
+              - fieldName: Phone Number
+                fieldType: FormTextInput
+                fieldElementId: 285042f7-d554-dc7f-102c-aa10d6a2d2c7
+            submittedAt: '2022-09-14T12:35:16.117Z'
+            id: 6321ca84df3949bfc6752327
+            formId: 65429eadebe8a9f3a30f62d0
+            formElementId: 4e038d2c-6a1e-4953-7be9-a59a2b453177
     docs: Information about a form that was subitted
 ",
     },
@@ -8761,6 +9002,9 @@ Required scope | `ecommerce:read`
               "response": {
                 "docs": "Request was successful",
                 "type": "InventoryListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -8835,6 +9079,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "InventoryUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -8947,7 +9194,16 @@ Required scope | `ecommerce:write`
         "webhooks": {
           "ecomm_inventory_changed": {
             "display-name": "Updated eComm Inventory",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -9048,6 +9304,8 @@ service:
         List the current inventory levels for a particular SKU item.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -9089,6 +9347,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -9144,7 +9404,10 @@ webhooks:
     payload:
       type: EcommInventoryChangedPayload
       docs: The availabile inventory for an item
-    examples: []
+    examples:
+      - payload:
+          id: 5bfedb42bab0ad90fa7dad39
+          quantity: 100
 ",
     },
     "items.yml": {
@@ -9349,7 +9612,25 @@ webhooks:
         "webhooks": {
           "collection_item_changed": {
             "display-name": "Item Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "createdOn": "2022-11-17T17:11:57.148Z",
+                  "fieldData": {
+                    "name": "Pan Galactic Gargle Blaster Recipe",
+                    "slug": "pan-galactic-gargle-blaster",
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -9360,7 +9641,25 @@ webhooks:
           },
           "collection_item_created": {
             "display-name": "Item Created",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "createdOn": "2022-11-17T17:11:57.148Z",
+                  "fieldData": {
+                    "name": "Pan Galactic Gargle Blaster Recipe",
+                    "slug": "pan-galactic-gargle-blaster",
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -9371,14 +9670,42 @@ webhooks:
           },
           "collection_item_deleted": {
             "display-name": "Item Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "collectionId": "664243617fcc8b464b23c4ee",
+                    "id": "66424365e972c886137a1cf1",
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "workspaceId": "625860a7a6c16d624927122f",
+                  },
+                  "triggerType": "collection_item_deleted,",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "CollectionItemDeletedPayload",
           },
           "collection_item_unpublished": {
             "display-name": "Item Unpublished",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "collectionId": "664243617fcc8b464b23c4ee",
+                    "id": "66424365e972c886137a1cf1",
+                    "siteId": "65427cf400e02b306eaa049c",
+                    "workspaceId": "625860a7a6c16d624927122f",
+                  },
+                  "triggerType": "collection_item_deleted,",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "CollectionItemUnpublishedPayload",
@@ -9544,7 +9871,18 @@ webhooks:
         Collection that Item belongs to. Beyond the user defined fields, there
         are a handful of additional fields that are automatically created for
         all items
-    examples: []
+    examples:
+      - payload:
+          id: 42b720ef280c7a7a3be8cabe
+          cmsLocaleId: 653ad57de882f528b32e810e
+          lastPublished: '2022-11-29T16:22:43.159Z'
+          lastUpdated: '2022-11-17T17:19:43.282Z'
+          createdOn: '2022-11-17T17:11:57.148Z'
+          isArchived: false
+          isDraft: false
+          fieldData:
+            name: Pan Galactic Gargle Blaster Recipe
+            slug: pan-galactic-gargle-blaster
   collection_item_changed:
     method: POST
     display-name: Item Updated
@@ -9556,19 +9894,44 @@ webhooks:
         Collection that Item belongs to. Beyond the user defined fields, there
         are a handful of additional fields that are automatically created for
         all items
-    examples: []
+    examples:
+      - payload:
+          id: 42b720ef280c7a7a3be8cabe
+          cmsLocaleId: 653ad57de882f528b32e810e
+          lastPublished: '2022-11-29T16:22:43.159Z'
+          lastUpdated: '2022-11-17T17:19:43.282Z'
+          createdOn: '2022-11-17T17:11:57.148Z'
+          isArchived: false
+          isDraft: false
+          fieldData:
+            name: Pan Galactic Gargle Blaster Recipe
+            slug: pan-galactic-gargle-blaster
   collection_item_deleted:
     method: POST
     display-name: Item Deleted
     headers: {}
     payload: CollectionItemDeletedPayload
-    examples: []
+    examples:
+      - payload:
+          triggerType: collection_item_deleted,
+          payload:
+            id: 66424365e972c886137a1cf1
+            siteId: 65427cf400e02b306eaa049c
+            workspaceId: 625860a7a6c16d624927122f
+            collectionId: 664243617fcc8b464b23c4ee
   collection_item_unpublished:
     method: POST
     display-name: Item Unpublished
     headers: {}
     payload: CollectionItemUnpublishedPayload
-    examples: []
+    examples:
+      - payload:
+          triggerType: collection_item_deleted,
+          payload:
+            id: 66424365e972c886137a1cf1
+            siteId: 65427cf400e02b306eaa049c
+            workspaceId: 625860a7a6c16d624927122f
+            collectionId: 664243617fcc8b464b23c4ee
 ",
     },
     "orders.yml": {
@@ -9851,6 +10214,9 @@ Required scope | `ecommerce:read`
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -10327,6 +10693,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "OrdersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "refund": {
               "auth": true,
@@ -10614,6 +10983,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersRefundResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -10913,6 +11285,9 @@ Required scope | `ecommerce:write`
                 "docs": "Request was successful",
                 "type": "OrdersUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-fulfill": {
               "auth": true,
@@ -11200,6 +11575,9 @@ Required scope | `ecommerce:write`
                 "docs": "Request was successful",
                 "type": "OrdersUpdateFulfillResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-unfulfill": {
               "auth": true,
@@ -11470,6 +11848,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersUpdateUnfulfillResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -19073,14 +19454,452 @@ Required scope | `ecommerce:write`
         "webhooks": {
           "ecomm_new_order": {
             "display-name": "New eComm Order",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "acceptedOn": "2024-03-29T21:29:21Z",
+                  "allAddresses": [
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "billing",
+                    },
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "shipping",
+                    },
+                  ],
+                  "applicationFee": {
+                    "string": " 2.37 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "billingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "billing",
+                  },
+                  "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                  "customData": [
+                    {
+                      "key": "value",
+                    },
+                  ],
+                  "customerInfo": {
+                    "email": "arthur.dent@example.com",
+                    "fullName": "Arthur Dent",
+                  },
+                  "customerPaid": {
+                    "string": " 118.73 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "disputeLastStatus": "charge_refunded",
+                  "disputeUpdatedOn": "2024-03-29T21:29:21Z",
+                  "disputedOn": "2024-03-29T21:29:21Z",
+                  "downloadFiles": [
+                    {
+                      "id": "5e9a5eba75e0ac242e1b6f64",
+                      "name": "New product guide",
+                      "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
+                    },
+                  ],
+                  "fulfilledOn": "2024-03-29T21:29:21Z",
+                  "hasDownloads": false,
+                  "isCustomerDeleted": false,
+                  "isShippingRequired": true,
+                  "metadata": {
+                    "isBuyNow": false,
+                  },
+                  "netAmount": {
+                    "string": " 112.62 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
+                  "orderId": "fc7-128",
+                  "paymentProcessor": "stripe",
+                  "purchasedItems": [
+                    {
+                      "count": 1,
+                      "height": 70,
+                      "length": 9,
+                      "productId": "66072fb61b89448912e26791",
+                      "productName": "Luxurious Fresh Ball",
+                      "productSlug": "luxurious-fresh-ball",
+                      "rowTotal": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb71b89448912e2683f",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      },
+                      "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                      "variantPrice": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "weight": 11,
+                      "width": 82,
+                    },
+                    {
+                      "count": 1,
+                      "height": 85,
+                      "length": 40,
+                      "productId": "66072fb61b89448912e26799",
+                      "productName": "Recycled Steel Gloves",
+                      "productSlug": "recycled-steel-gloves",
+                      "rowTotal": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb91b89448912e26ab9",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      },
+                      "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                      "variantPrice": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "weight": 38,
+                      "width": 76,
+                    },
+                  ],
+                  "purchasedItemsCount": 2,
+                  "refundedOn": "2024-04-08T18:25:04Z",
+                  "shippingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "japanType": "kanji",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "shipping",
+                  },
+                  "shippingProvider": "Shipping Company, Co.",
+                  "shippingTracking": "tr00000000001",
+                  "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                  "status": "refunded",
+                  "stripeCard": {
+                    "brand": "Visa",
+                    "expires": {
+                      "month": 4,
+                      "year": 2024,
+                    },
+                    "last4": "4242",
+                    "ownerName": "Arthur Dent",
+                  },
+                  "stripeDetails": {
+                    "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                    "customerId": "cus_PpRsNHwWdUoRKR",
+                    "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                    "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                    "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                    "refundReason": "fraudulent",
+                  },
+                  "totals": {
+                    "extras": [
+                      {
+                        "description": "NY Taxes (4.00%)",
+                        "name": "State Taxes",
+                        "price": {
+                          "string": " 4.36 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "NEW YORK Taxes (4.88%)",
+                        "name": "City Taxes",
+                        "price": {
+                          "string": " 5.32 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "",
+                        "name": "Flat",
+                        "price": {
+                          "string": " 0.00 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "shipping",
+                      },
+                    ],
+                    "subtotal": {
+                      "string": " 109.05 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                    "total": {
+                      "string": " 118.73 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "EcommNewOrderPayload",
           },
           "ecomm_order_changed": {
             "display-name": "Updated eComm Order",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "acceptedOn": "2024-03-29T21:29:21Z",
+                  "allAddresses": [
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "billing",
+                    },
+                    {
+                      "addressee": "Arthur Dent",
+                      "city": "New York",
+                      "country": "US",
+                      "line1": "20 W 34th St",
+                      "line2": "Empire State Building",
+                      "postalCode": "10118",
+                      "state": "New York",
+                      "type": "shipping",
+                    },
+                  ],
+                  "applicationFee": {
+                    "string": " 2.37 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "billingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "billing",
+                  },
+                  "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                  "customData": [
+                    {
+                      "key": "value",
+                    },
+                  ],
+                  "customerInfo": {
+                    "email": "arthur.dent@example.com",
+                    "fullName": "Arthur Dent",
+                  },
+                  "customerPaid": {
+                    "string": " 118.73 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "disputeLastStatus": "charge_refunded",
+                  "disputeUpdatedOn": "2024-03-29T21:29:21Z",
+                  "disputedOn": "2024-03-29T21:29:21Z",
+                  "downloadFiles": [
+                    {
+                      "id": "5e9a5eba75e0ac242e1b6f64",
+                      "name": "New product guide",
+                      "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
+                    },
+                  ],
+                  "fulfilledOn": "2024-03-29T21:29:21Z",
+                  "hasDownloads": false,
+                  "isCustomerDeleted": false,
+                  "isShippingRequired": true,
+                  "metadata": {
+                    "isBuyNow": false,
+                  },
+                  "netAmount": {
+                    "string": " 112.62 USD",
+                    "unit": "USD",
+                    "value": "5892",
+                  },
+                  "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
+                  "orderId": "fc7-128",
+                  "paymentProcessor": "stripe",
+                  "purchasedItems": [
+                    {
+                      "count": 1,
+                      "height": 70,
+                      "length": 9,
+                      "productId": "66072fb61b89448912e26791",
+                      "productName": "Luxurious Fresh Ball",
+                      "productSlug": "luxurious-fresh-ball",
+                      "rowTotal": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb71b89448912e2683f",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      },
+                      "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                      "variantPrice": {
+                        "string": " 55.61 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                      "weight": 11,
+                      "width": 82,
+                    },
+                    {
+                      "count": 1,
+                      "height": 85,
+                      "length": 40,
+                      "productId": "66072fb61b89448912e26799",
+                      "productName": "Recycled Steel Gloves",
+                      "productSlug": "recycled-steel-gloves",
+                      "rowTotal": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantId": "66072fb91b89448912e26ab9",
+                      "variantImage": {
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      },
+                      "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                      "variantPrice": {
+                        "string": " 53.44 USD",
+                        "unit": "USD",
+                        "value": "5892",
+                      },
+                      "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                      "weight": 38,
+                      "width": 76,
+                    },
+                  ],
+                  "purchasedItemsCount": 2,
+                  "refundedOn": "2024-04-08T18:25:04Z",
+                  "shippingAddress": {
+                    "addressee": "Arthur Dent",
+                    "city": "New York",
+                    "country": "US",
+                    "japanType": "kanji",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "postalCode": "10118",
+                    "state": "New York",
+                    "type": "shipping",
+                  },
+                  "shippingProvider": "Shipping Company, Co.",
+                  "shippingTracking": "tr00000000001",
+                  "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                  "status": "refunded",
+                  "stripeCard": {
+                    "brand": "Visa",
+                    "expires": {
+                      "month": 4,
+                      "year": 2024,
+                    },
+                    "last4": "4242",
+                    "ownerName": "Arthur Dent",
+                  },
+                  "stripeDetails": {
+                    "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                    "customerId": "cus_PpRsNHwWdUoRKR",
+                    "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                    "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                    "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                    "refundReason": "fraudulent",
+                  },
+                  "totals": {
+                    "extras": [
+                      {
+                        "description": "NY Taxes (4.00%)",
+                        "name": "State Taxes",
+                        "price": {
+                          "string": " 4.36 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "NEW YORK Taxes (4.88%)",
+                        "name": "City Taxes",
+                        "price": {
+                          "string": " 5.32 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "tax",
+                      },
+                      {
+                        "description": "",
+                        "name": "Flat",
+                        "price": {
+                          "string": " 0.00 USD",
+                          "unit": "USD",
+                          "value": "5892",
+                        },
+                        "type": "shipping",
+                      },
+                    ],
+                    "subtotal": {
+                      "string": " 109.05 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                    "total": {
+                      "string": " 118.73 USD",
+                      "unit": "USD",
+                      "value": "5892",
+                    },
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "EcommOrderChangedPayload",
@@ -24747,6 +25566,8 @@ service:
         List all orders created for a given site.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -25136,6 +25957,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -25359,6 +26182,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -25597,6 +26422,8 @@ service:
         Updates an order's status to fulfilled
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -25827,6 +26654,8 @@ service:
         Updates an order's status to unfulfilled
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -26049,6 +26878,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -26279,13 +27110,365 @@ webhooks:
     display-name: New eComm Order
     headers: {}
     payload: EcommNewOrderPayload
-    examples: []
+    examples:
+      - payload:
+          orderId: fc7-128
+          status: refunded
+          comment: >-
+            Customer requested gift wrapping and a personalized note saying:
+            Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra
+            bubble wrap for safe transit.
+          orderComment: >-
+            Please gift wrap with a personal note saying "Happy Birthday, Ford!
+            🎉
+          acceptedOn: '2024-03-29T21:29:21Z'
+          fulfilledOn: '2024-03-29T21:29:21Z'
+          refundedOn: '2024-04-08T18:25:04Z'
+          disputedOn: '2024-03-29T21:29:21Z'
+          disputeUpdatedOn: '2024-03-29T21:29:21Z'
+          disputeLastStatus: charge_refunded
+          customerPaid:
+            unit: USD
+            value: '5892'
+            string: ' 118.73 USD'
+          netAmount:
+            unit: USD
+            value: '5892'
+            string: ' 112.62 USD'
+          applicationFee:
+            unit: USD
+            value: '5892'
+            string: ' 2.37 USD'
+          allAddresses:
+            - type: billing
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+            - type: shipping
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+          shippingAddress:
+            type: shipping
+            japanType: kanji
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          billingAddress:
+            type: billing
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          shippingProvider: Shipping Company, Co.
+          shippingTracking: tr00000000001
+          shippingTrackingURL: https://www.shippingcompany.com/tracking/tr00000000001
+          customerInfo:
+            fullName: Arthur Dent
+            email: arthur.dent@example.com
+          purchasedItems:
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              productId: 66072fb61b89448912e26791
+              productName: Luxurious Fresh Ball
+              productSlug: luxurious-fresh-ball
+              variantId: 66072fb71b89448912e2683f
+              variantName: 'Luxurious Fresh Ball Generic: Bronze, Practical: Plastic'
+              variantSlug: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantSKU: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              weight: 11
+              width: 82
+              height: 70
+              length: 9
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              productId: 66072fb61b89448912e26799
+              productName: Recycled Steel Gloves
+              productSlug: recycled-steel-gloves
+              variantId: 66072fb91b89448912e26ab9
+              variantName: 'Recycled Steel Gloves Electronic: Granite, Handcrafted: grey'
+              variantSlug: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantSKU: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              weight: 38
+              width: 76
+              height: 85
+              length: 40
+          purchasedItemsCount: 2
+          stripeDetails:
+            paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
+            paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
+            customerId: cus_PpRsNHwWdUoRKR
+            chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+            refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
+            refundReason: fraudulent
+          stripeCard:
+            last4: '4242'
+            brand: Visa
+            ownerName: Arthur Dent
+            expires:
+              year: 2024
+              month: 4
+          customData:
+            - key: value
+          metadata:
+            isBuyNow: false
+          isCustomerDeleted: false
+          isShippingRequired: true
+          hasDownloads: false
+          paymentProcessor: stripe
+          totals:
+            subtotal:
+              unit: USD
+              value: '5892'
+              string: ' 109.05 USD'
+            extras:
+              - type: tax
+                name: State Taxes
+                description: NY Taxes (4.00%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 4.36 USD'
+              - type: tax
+                name: City Taxes
+                description: NEW YORK Taxes (4.88%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 5.32 USD'
+              - type: shipping
+                name: Flat
+                description: ''
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 0.00 USD'
+            total:
+              unit: USD
+              value: '5892'
+              string: ' 118.73 USD'
+          downloadFiles:
+            - id: 5e9a5eba75e0ac242e1b6f64
+              name: New product guide
+              url: >-
+                https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
   ecomm_order_changed:
     method: POST
     display-name: Updated eComm Order
     headers: {}
     payload: EcommOrderChangedPayload
-    examples: []
+    examples:
+      - payload:
+          orderId: fc7-128
+          status: refunded
+          comment: >-
+            Customer requested gift wrapping and a personalized note saying:
+            Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra
+            bubble wrap for safe transit.
+          orderComment: >-
+            Please gift wrap with a personal note saying "Happy Birthday, Ford!
+            🎉
+          acceptedOn: '2024-03-29T21:29:21Z'
+          fulfilledOn: '2024-03-29T21:29:21Z'
+          refundedOn: '2024-04-08T18:25:04Z'
+          disputedOn: '2024-03-29T21:29:21Z'
+          disputeUpdatedOn: '2024-03-29T21:29:21Z'
+          disputeLastStatus: charge_refunded
+          customerPaid:
+            unit: USD
+            value: '5892'
+            string: ' 118.73 USD'
+          netAmount:
+            unit: USD
+            value: '5892'
+            string: ' 112.62 USD'
+          applicationFee:
+            unit: USD
+            value: '5892'
+            string: ' 2.37 USD'
+          allAddresses:
+            - type: billing
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+            - type: shipping
+              addressee: Arthur Dent
+              line1: 20 W 34th St
+              line2: Empire State Building
+              city: New York
+              state: New York
+              country: US
+              postalCode: '10118'
+          shippingAddress:
+            type: shipping
+            japanType: kanji
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          billingAddress:
+            type: billing
+            addressee: Arthur Dent
+            line1: 20 W 34th St
+            line2: Empire State Building
+            city: New York
+            state: New York
+            country: US
+            postalCode: '10118'
+          shippingProvider: Shipping Company, Co.
+          shippingTracking: tr00000000001
+          shippingTrackingURL: https://www.shippingcompany.com/tracking/tr00000000001
+          customerInfo:
+            fullName: Arthur Dent
+            email: arthur.dent@example.com
+          purchasedItems:
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              productId: 66072fb61b89448912e26791
+              productName: Luxurious Fresh Ball
+              productSlug: luxurious-fresh-ball
+              variantId: 66072fb71b89448912e2683f
+              variantName: 'Luxurious Fresh Ball Generic: Bronze, Practical: Plastic'
+              variantSlug: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantSKU: luxurious-fresh-ball-generic-bronze-practical-plastic
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 55.61 USD'
+              weight: 11
+              width: 82
+              height: 70
+              length: 9
+            - count: 1
+              rowTotal:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              productId: 66072fb61b89448912e26799
+              productName: Recycled Steel Gloves
+              productSlug: recycled-steel-gloves
+              variantId: 66072fb91b89448912e26ab9
+              variantName: 'Recycled Steel Gloves Electronic: Granite, Handcrafted: grey'
+              variantSlug: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantSKU: recycled-steel-gloves-electronic-granite-handcrafted-grey
+              variantImage:
+                url: >-
+                  https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg
+              variantPrice:
+                unit: USD
+                value: '5892'
+                string: ' 53.44 USD'
+              weight: 38
+              width: 76
+              height: 85
+              length: 40
+          purchasedItemsCount: 2
+          stripeDetails:
+            paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
+            paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
+            customerId: cus_PpRsNHwWdUoRKR
+            chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+            refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
+            refundReason: fraudulent
+          stripeCard:
+            last4: '4242'
+            brand: Visa
+            ownerName: Arthur Dent
+            expires:
+              year: 2024
+              month: 4
+          customData:
+            - key: value
+          metadata:
+            isBuyNow: false
+          isCustomerDeleted: false
+          isShippingRequired: true
+          hasDownloads: false
+          paymentProcessor: stripe
+          totals:
+            subtotal:
+              unit: USD
+              value: '5892'
+              string: ' 109.05 USD'
+            extras:
+              - type: tax
+                name: State Taxes
+                description: NY Taxes (4.00%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 4.36 USD'
+              - type: tax
+                name: City Taxes
+                description: NEW YORK Taxes (4.88%)
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 5.32 USD'
+              - type: shipping
+                name: Flat
+                description: ''
+                price:
+                  unit: USD
+                  value: '5892'
+                  string: ' 0.00 USD'
+            total:
+              unit: USD
+              value: '5892'
+              string: ' 118.73 USD'
+          downloadFiles:
+            - id: 5e9a5eba75e0ac242e1b6f64
+              name: New product guide
+              url: >-
+                https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
 ",
     },
     "pages.yml": {
@@ -26395,6 +27578,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "PagesGetContentResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-metadata": {
               "auth": true,
@@ -26466,6 +27652,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "PagesGetMetadataResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -26582,6 +27771,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "PagesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-page-settings": {
               "auth": true,
@@ -26690,6 +27882,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "UpdatePageSettingsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-static-content": {
               "auth": true,
@@ -26768,6 +27963,9 @@ Required scope | `pages:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "UpdateStaticContentResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -27418,7 +28616,21 @@ Required scope | `pages:write`
         "webhooks": {
           "page_created": {
             "display-name": "Page Created",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "createdOn": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_created",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -27428,7 +28640,21 @@ Required scope | `pages:write`
           },
           "page_deleted": {
             "display-name": "Page Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "deletedOn": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_deleted",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -27438,7 +28664,21 @@ Required scope | `pages:write`
           },
           "page_metadata_updated": {
             "display-name": "Page Metadata Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "lastUpdated": "2024-07-26T16:32:50Z",
+                    "pageId": "66a3cfb276641574f5d58311",
+                    "pageTitle": "Heart of Gold Specs",
+                    "siteId": "65427cf400e02b306eaa049c",
+                  },
+                  "triggerType": "page_metadata_updated",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -27969,6 +29209,8 @@ service:
       method: GET
       auth: true
       docs: List of all pages for a site </br></br> Required scope | `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -28072,6 +29314,8 @@ service:
       docs: >-
         Get metadata information for a single page </br></br> Required scope |
         `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28134,6 +29378,8 @@ service:
       docs: >-
         Update Page-level metadata, including SEO and Open Graph fields.
         </br></br> Required scope | `pages:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28228,6 +29474,8 @@ service:
         Locale ID in your request, the response will return any content that can
         be localized from the Primary locale</br></br> Required scope |
         `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28309,6 +29557,8 @@ service:
 
 
         Required scope | `pages:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28366,7 +29616,14 @@ webhooks:
     payload:
       type: PageCreatedPayload
       docs: The Webhook payload for when a Page is created
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_created
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            createdOn: '2024-07-26T16:32:50Z'
   page_metadata_updated:
     method: POST
     display-name: Page Metadata Updated
@@ -28374,7 +29631,14 @@ webhooks:
     payload:
       type: PageMetadataUpdatedPayload
       docs: The Webhook payload for when a Page's metadata is updated
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_metadata_updated
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            lastUpdated: '2024-07-26T16:32:50Z'
   page_deleted:
     method: POST
     display-name: Page Deleted
@@ -28382,7 +29646,14 @@ webhooks:
     payload:
       type: PageDeletedPayload
       docs: The Webhook payload for when a Page is deleted
-    examples: []
+    examples:
+      - payload:
+          triggerType: page_deleted
+          payload:
+            siteId: 65427cf400e02b306eaa049c
+            pageId: 66a3cfb276641574f5d58311
+            pageTitle: Heart of Gold Specs
+            deletedOn: '2024-07-26T16:32:50Z'
 ",
     },
     "pages/scripts.yml": {
@@ -28422,6 +29693,9 @@ webhooks:
                   "docs": "Unique identifier for a Page",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get-custom-code": {
@@ -28471,6 +29745,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsGetCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "upsert-custom-code": {
@@ -28559,6 +29836,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsUpsertCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -28857,6 +30137,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28897,6 +30179,8 @@ service:
         to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -28961,6 +30245,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -29144,6 +30430,9 @@ Required scope | `ecommerce:write`",
                 "docs": "Request was successful",
                 "type": "ProductsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create-sku": {
               "auth": true,
@@ -29236,6 +30525,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsCreateSkuResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -29368,6 +30660,9 @@ Required scope | `ecommerce:read`
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -29515,6 +30810,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "ProductsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -29648,6 +30946,9 @@ Required scope | `ecommerce:write`
                 "docs": "Request was successful",
                 "type": "ProductsUpdateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-sku": {
               "auth": true,
@@ -29751,6 +31052,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsUpdateSkuResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -35397,6 +36701,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35524,6 +36830,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35631,6 +36939,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35727,6 +37037,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35830,6 +37142,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35901,6 +37215,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -36053,6 +37369,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ScriptsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "register-hosted": {
               "auth": true,
@@ -36072,10 +37391,11 @@ service:
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "request": {
-                    "displayName": "displayName",
-                    "hostedLocation": "hostedLocation",
-                    "integrityHash": "integrityHash",
-                    "version": "version",
+                    "canCopy": true,
+                    "displayName": "CMS Slider",
+                    "hostedLocation": "https://cdn.jsdelivr.net/.../cmsslider.js",
+                    "integrityHash": "sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+",
+                    "version": "1.0.0",
                   },
                   "response": {
                     "body": {
@@ -36134,6 +37454,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsRegisterHostedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "register-inline": {
@@ -36215,6 +37538,9 @@ service:
               "response": {
                 "docs": "Created",
                 "type": "ScriptsRegisterInlineResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -36492,6 +37818,8 @@ service:
         theme="📘">Access to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -36552,6 +37880,8 @@ service:
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     </br></br>  Required scope |
         `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -36597,10 +37927,12 @@ service:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
           request:
-            hostedLocation: hostedLocation
-            integrityHash: integrityHash
-            version: version
-            displayName: displayName
+            hostedLocation: https://cdn.jsdelivr.net/.../cmsslider.js
+            integrityHash: >-
+              sha384-J+YlJ8v0gpaRoKH7SbFbEmxOZlAxLiwNjfSsBhDooGa5roXlPPpXbEevck4J7YZ+
+            canCopy: true
+            version: 1.0.0
+            displayName: CMS Slider
           response:
             body:
               id: cms_slider
@@ -36626,6 +37958,8 @@ service:
         theme="📘">Access to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -36780,6 +38114,9 @@ service:
                 "docs": "Request was successful",
                 "type": "SitesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-custom-domain": {
               "auth": true,
@@ -36825,6 +38162,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "SitesGetCustomDomainResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -36982,6 +38322,9 @@ service:
                 "docs": "Request was successful",
                 "type": "SitesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish": {
               "auth": true,
@@ -37044,6 +38387,9 @@ service:
               "response": {
                 "docs": "Request accepted",
                 "type": "SitesPublishResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -37499,7 +38845,25 @@ service:
         "webhooks": {
           "site_publish": {
             "display-name": "Site Publish",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "domains": [
+                      "my-website.webflow.io",
+                    ],
+                    "publishedBy": {
+                      "displayName": "Zaphod BeebleBrox",
+                    },
+                    "publishedOn": "2024-07-26T16:43:20Z",
+                    "siteId": "62749158efef318abc8d5a0f",
+                  },
+                  "triggerType": "site_publish",
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": {
@@ -37830,6 +39194,8 @@ service:
       docs: >-
         List of all sites the provided access token is able to access.
         </br></br> Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       display-name: List Sites
       response:
         docs: Request was successful
@@ -37947,6 +39313,8 @@ service:
       method: GET
       auth: true
       docs: Get a site by site id </br></br>  Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -38007,6 +39375,8 @@ service:
       docs: >-
         Get a list of all custom domains related to site. </br></br>  Required
         scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -38042,6 +39412,8 @@ service:
         class="callout-icon">📘</span><p>Endpoint-specific rate
         limit</p></h2><p>This endpoint has a limit of one successful publish
         queue per minute.</p></blockquote>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -38089,7 +39461,16 @@ webhooks:
     payload:
       type: SitePublishPayload
       docs: The Webhook payload for when a Site is published
-    examples: []
+    examples:
+      - payload:
+          triggerType: site_publish
+          payload:
+            siteId: 62749158efef318abc8d5a0f
+            publishedOn: '2024-07-26T16:43:20Z'
+            domains:
+              - my-website.webflow.io
+            publishedBy:
+              displayName: Zaphod BeebleBrox
 ",
     },
     "sites/activityLogs.yml": {
@@ -38173,6 +39554,9 @@ webhooks:
               "response": {
                 "docs": "A list of site activity logs",
                 "type": "ActivityLogsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -38323,6 +39707,8 @@ service:
       docs: >-
         Retrieve Activity Logs for a specific Site. Requires Site to be on an
         Enterprise plan. </br></br>  Required scope | `site_activity:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -38413,6 +39799,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-custom-code": {
               "auth": true,
@@ -38469,6 +39858,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsGetCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list-custom-code-blocks": {
@@ -38569,6 +39961,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ScriptsListCustomCodeBlocksResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsert-custom-code": {
               "auth": true,
@@ -38656,6 +40051,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsUpsertCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -39148,6 +40546,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -39193,6 +40593,8 @@ service:
         to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -39253,6 +40655,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -39277,6 +40681,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -39380,6 +40786,9 @@ service:
                 "docs": "Request was successful",
                 "type": "TokenAuthorizedByResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "introspect": {
               "auth": true,
@@ -39428,6 +40837,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "TokenIntrospectResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -39611,6 +41023,8 @@ service:
       docs: >-
         Information about the Authorized User <br><br> Required Scope |
         `authorized_user:read`
+      source:
+        openapi: ../openapi.yml
       display-name: Get Authorization User Info
       response:
         docs: Request was successful
@@ -39635,6 +41049,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>    
+      source:
+        openapi: ../openapi.yml
       display-name: Get Authorization Info
       response:
         docs: Request was successful
@@ -39710,6 +41126,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -39773,6 +41192,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "invite": {
@@ -39864,6 +41286,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersInviteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -40005,6 +41430,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "docs": "Request was successful",
                 "type": "UsersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -40098,6 +41526,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -41207,21 +42638,87 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
         "webhooks": {
           "user_account_added": {
             "display-name": "New User Added",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountAddedPayload",
           },
           "user_account_deleted": {
             "display-name": "Account Deleted",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountDeletedPayload",
           },
           "user_account_updated": {
             "display-name": "Account Updated",
-            "examples": [],
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "payload": {
+                    "accessGroups": [
+                      {
+                        "slug": "webflowers",
+                        "type": "admin",
+                      },
+                    ],
+                    "createdOn": "2022-05-20T13:46:12Z",
+                    "id": "6287ec36a841b25637c663df",
+                    "invitedOn": "2022-05-20T13:46:12Z",
+                    "isEmailVerified": true,
+                    "lastLogin": "2022-05-20T13:46:12Z",
+                    "lastUpdated": "2022-05-20T13:46:12Z",
+                    "status": "verified",
+                  },
+                },
+              },
+            ],
             "headers": {},
             "method": "POST",
             "payload": "UserAccountUpdatedPayload",
@@ -42057,6 +43554,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of users for a site <br><br> Required scope | `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -42156,6 +43655,8 @@ service:
       method: GET
       auth: true
       docs: Get a User by ID <br><br> Required scope | `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -42202,6 +43703,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a User by ID <br><br> Required scope | `users:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -42230,6 +43733,8 @@ service:
 
         <aside class="notice">The <code>email</code> and <code>password</code>
         fields cannot be updated using this endpoint</aside>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -42300,6 +43805,8 @@ service:
         Create and invite a user with an email address. The user will be sent
         and invite via email, which they will need to accept in order to join
         paid Access Groups. <br><br> Required scope | `users:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -42366,19 +43873,55 @@ webhooks:
     display-name: New User Added
     headers: {}
     payload: UserAccountAddedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
   user_account_updated:
     method: POST
     display-name: Account Updated
     headers: {}
     payload: UserAccountUpdatedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
   user_account_deleted:
     method: POST
     display-name: Account Deleted
     headers: {}
     payload: UserAccountDeletedPayload
-    examples: []
+    examples:
+      - payload:
+          payload:
+            id: 6287ec36a841b25637c663df
+            isEmailVerified: true
+            lastUpdated: '2022-05-20T13:46:12Z'
+            invitedOn: '2022-05-20T13:46:12Z'
+            createdOn: '2022-05-20T13:46:12Z'
+            lastLogin: '2022-05-20T13:46:12Z'
+            status: verified
+            accessGroups:
+              - slug: webflowers
+                type: admin
 ",
     },
     "webhooks.yml": {
@@ -42479,6 +44022,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "WebhooksCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -42506,6 +44052,9 @@ webhooks:
                   "docs": "Unique identifier for a Webhook",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -42552,6 +44101,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "WebhooksGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -42632,6 +44184,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "WebhooksListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -43569,6 +45124,8 @@ service:
       docs: >
         List all App-created Webhooks registered for a given site </br></br>
         Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -43631,6 +45188,8 @@ service:
         a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `sites:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -43725,6 +45284,8 @@ service:
       method: GET
       auth: true
       docs: Get a specific Webhook instance
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         webhook_id:
           type: string
@@ -43758,6 +45319,8 @@ service:
       method: DELETE
       auth: true
       docs: Remove a Webhook
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         webhook_id:
           type: string

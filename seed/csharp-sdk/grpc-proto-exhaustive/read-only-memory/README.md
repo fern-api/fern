@@ -18,16 +18,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient();
-await client.Dataservice.UploadAsync(
-    new UploadRequest
-    {
-        Columns = new List<Column>()
-        {
-            new Column { Id = "id", Values = new[] { 1.1f } },
-        },
-    }
-);
+var client = new SeedApiClient("API_KEY");
+await client.Dataservice.FooAsync();
 ```
 
 ## Exception Handling
@@ -39,7 +31,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.Dataservice.UploadAsync(...);
+    var response = await client.Dataservice.FooAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -63,7 +55,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.UploadAsync(
+var response = await client.Dataservice.FooAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -76,7 +68,7 @@ var response = await client.Dataservice.UploadAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.UploadAsync(
+var response = await client.Dataservice.FooAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

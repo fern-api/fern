@@ -494,7 +494,8 @@ function convertObject({
                               file: fileContainingType
                           });
                           if (originalTypeDeclaration == null) {
-                              throw new Error("Could not find original type declaration for property: " + wireKey);
+                              // dont fail hard because it may be from `base-properties`
+                              return exampleProperties;
                           }
 
                           const valueExample = convertTypeReferenceExample({

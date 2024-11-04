@@ -21236,6 +21236,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailAccount": {
               "auth": true,
@@ -22199,6 +22202,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "optional<root.Account>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListAccounts": {
               "auth": true,
@@ -22554,6 +22560,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.AccountsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchAccounts": {
@@ -23577,6 +23586,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<optional<root.Account>>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveAccounts": {
               "auth": true,
@@ -24554,6 +24566,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<optional<root.Account>>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -24574,6 +24589,8 @@ service:
       docs: >-
         Get a paginated list of all existing accounts in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all accounts
       request:
         name: ListAccountsRequest
@@ -24951,6 +24968,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve accounts for a link
       request:
         body: root.StandardRequest
@@ -25752,6 +25771,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an accounts request
       request:
         body: root.PatchBody
@@ -26597,6 +26618,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -27366,6 +27389,8 @@ service:
       docs: >-
         Delete a specific account and all associated transactions, as well as
         owners, from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -27779,6 +27804,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailBalance": {
               "auth": true,
@@ -27991,6 +28019,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Balance",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListBalances": {
@@ -28291,6 +28322,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.BalancesPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchBalances": {
               "auth": true,
@@ -28491,6 +28525,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Balance>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveBalances": {
@@ -28753,6 +28790,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Balance>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -28773,6 +28813,8 @@ service:
       docs: >-
         Get a paginated list of all existing balances in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all balances
       request:
         name: ListBalancesRequest
@@ -29057,6 +29099,8 @@ service:
       docs: >-
         Retrieve balances from one or more accounts for a specific link within a
         specified date range.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve balances for a link
       request:
         name: BalancesRequest
@@ -29280,6 +29324,8 @@ service:
       docs: >-
         Used to resume a Balance retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a balances request
       request:
         body: root.PatchBody
@@ -29452,6 +29498,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific balance.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -29630,6 +29678,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific balance from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -30138,6 +30188,9 @@ docs: >-
                 "docs": "OK (Created)",
                 "type": "CreateBankAccountResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailBankAccount": {
               "auth": true,
@@ -30245,6 +30298,9 @@ docs: >-
               "response": {
                 "docs": "OK",
                 "type": "DetailBankAccountResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListBankAccount": {
@@ -30475,6 +30531,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.BankAccountPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -30539,6 +30598,8 @@ service:
       method: GET
       auth: true
       docs: List all bank accounts associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all bank accounts
       request:
         name: ListBankAccountRequest
@@ -30721,6 +30782,8 @@ service:
       method: POST
       auth: true
       docs: Create a new bank account from which to send or request funds.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new bank account
       request:
         body: CreateBankAccountRequest
@@ -30924,6 +30987,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific bank account
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -31158,6 +31223,9 @@ types:
                 "docs": "Ok",
                 "type": "root.Categorization",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -31188,6 +31256,8 @@ service:
         transactions per request.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Categorize transactions
       request:
         name: CategorizationRequest
@@ -31478,6 +31548,9 @@ docs: >-
                 "docs": "OK (Created)",
                 "type": "CreateCustomerResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailCustomer": {
               "auth": true,
@@ -31564,6 +31637,9 @@ docs: >-
               "response": {
                 "docs": "OK",
                 "type": "DetailCustomerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListCustomers": {
@@ -31783,6 +31859,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.CustomerPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -31851,6 +31930,8 @@ service:
       method: GET
       auth: true
       docs: List all customers associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all customers
       request:
         name: ListCustomersRequest
@@ -32038,6 +32119,8 @@ service:
       method: POST
       auth: true
       docs: Create a new customer to send or request funds.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new customer
       request:
         body: CreateCustomerRequest
@@ -32183,6 +32266,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific customer
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -32323,6 +32408,9 @@ At the moment, the employment records resource is available for:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailEmploymentRecord": {
               "auth": true,
@@ -32426,6 +32514,9 @@ At the moment, the employment records resource is available for:
                 "docs": "Ok",
                 "type": "root.EmploymentRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListEmploymentRecords": {
               "auth": true,
@@ -32510,6 +32601,9 @@ At the moment, the employment records resource is available for:
               "response": {
                 "docs": "Ok",
                 "type": "root.EmploymentRecordsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveEmploymentRecordDetails": {
@@ -32632,6 +32726,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok",
                 "type": "list<root.EmploymentRecord>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -32652,6 +32749,8 @@ service:
       docs: >-
         Get a paginated list of all existing employment records in your Belvo
         account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all employment records
       request:
         name: ListEmploymentRecordsRequest
@@ -32725,6 +32824,8 @@ service:
       auth: true
       docs: |
         Retrieve employment record details for an individual.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve employment record details
       request:
         name: EmploymentRecordRequest
@@ -32823,6 +32924,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific employment record.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -32906,6 +33009,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific employment record from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -33093,6 +33198,9 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
                 "docs": "Ok",
                 "type": "list<root.Income>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -33123,6 +33231,8 @@ service:
         transactions per request.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Verify incomes
       request:
         name: EyodIncomeVerificationRequest
@@ -33432,6 +33542,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailIncome": {
               "auth": true,
@@ -33576,6 +33689,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "list<root.Income>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListIncomes": {
@@ -33758,6 +33874,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.IncomesPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchIncomes": {
               "auth": true,
@@ -33919,6 +34038,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Income>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveIncome": {
@@ -34147,6 +34269,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.Income",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -34167,6 +34292,8 @@ service:
       docs: >-
         Get a paginated list of all incomes in your Belvo account. By default,
         we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all incomes
       request:
         name: ListIncomesRequest
@@ -34336,6 +34463,8 @@ service:
         specific link. You can receive insights for a period of up to 365 days,
         depending on the transaction history available for each
         [bank](https://developers.belvo.com/docs/institution).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve incomes for a link
       request:
         name: IncomesRequest
@@ -34540,6 +34669,8 @@ service:
       docs: >-
         Used to resume an Income retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an incomes request
       request:
         body: root.PatchBody
@@ -34681,6 +34812,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific income.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -34803,6 +34936,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific income from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -35174,6 +35309,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.Institution",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListInstitutions": {
               "auth": true,
@@ -35399,6 +35537,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.InstitutionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -35419,6 +35560,8 @@ service:
       docs: >-
         Get a paginated list of all the institutions currently supported by
         Belvo. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all institutions
       request:
         name: ListInstitutionsRequest
@@ -35624,6 +35767,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific institution.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -35932,6 +36077,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailPortfolio": {
               "auth": true,
@@ -36095,6 +36243,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.InvestmentsPortfolio",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListPortfolio": {
@@ -36265,6 +36416,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.InvestmentsPortfoliosPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchPortfolio": {
@@ -36437,6 +36591,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.InvestmentsPortfolio",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrievePortfolio": {
               "auth": true,
@@ -36601,6 +36758,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.InvestmentsPortfolio",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -36622,6 +36782,8 @@ service:
         Get a paginated list of all the existing portfolios (and their
         instruments) in your Belvo account. By default, we return up to 100
         results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all portfolios
       request:
         name: ListPortfolioRequest
@@ -36775,6 +36937,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve all portfolios for an existing link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve portfolios for a link
       request:
         body: root.StandardRequest
@@ -36913,6 +37077,8 @@ service:
       docs: >-
         Used to resume a portfolio retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a portfolios request
       request:
         body: root.PatchBodyWithoutSaveData
@@ -37056,6 +37222,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific portfolio.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -37197,6 +37365,8 @@ service:
       docs: >-
         Delete a specific investment portfolio and all associated instruments,
         transactions, and owners from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -37545,6 +37715,9 @@ client.connect()
                   "docs": "The `invoice.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailInvoice": {
@@ -38517,6 +38690,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailInvoiceResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListInvoices": {
@@ -39762,6 +39938,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.InvoicesResponsePaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchInvoices": {
               "auth": true,
@@ -39992,6 +40171,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<PatchInvoicesResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveInvoices": {
@@ -41110,6 +41292,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveInvoicesResponseItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -41180,6 +41365,8 @@ service:
       docs: >-
         Get a paginated list of all existing invoices in your Belvo account. By
         default, we return 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all invoices
       request:
         name: ListInvoicesRequest
@@ -42290,6 +42477,8 @@ service:
         margin-right: 25px"> <strong>Info: </strong> You can ask for up to
         **one** year (365 days) of invoices per request. If you need invoices
         for more than one year, just make another request. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve invoices for a link
       request:
         name: InvoicesRequest
@@ -43240,6 +43429,8 @@ service:
       docs: >-
         Used to resume an Invoice retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an invoices request
       request:
         body: root.PatchBody
@@ -43443,6 +43634,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific invoice.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -44262,6 +44455,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific invoice from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -44595,6 +44790,9 @@ For single links, you have to perform POST calls to an institution **every time*
                 "docs": "Ok",
                 "type": "root.Link",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DestroyLink": {
               "auth": true,
@@ -44701,6 +44899,9 @@ client.connect()
                   "docs": "The `link.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailLink": {
@@ -44834,6 +45035,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListLinks": {
@@ -45075,6 +45279,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.PaginatedResponseLink",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchLinks": {
               "auth": true,
@@ -45223,6 +45430,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RegisterLink": {
@@ -45518,6 +45728,9 @@ For a list of standards codes, see the table below.
                 "docs": "Created",
                 "type": "root.Link",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "UpdateLink": {
               "auth": true,
@@ -45746,6 +45959,9 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
                 "docs": "Ok",
                 "type": "root.Link",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -45766,6 +45982,8 @@ service:
       docs: >-
         Get a paginated list of all the existing links in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all links
       request:
         name: ListLinksRequest
@@ -46011,6 +46229,8 @@ service:
         status updates.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Register a new link
       request:
         name: LinksRequest
@@ -46352,6 +46572,8 @@ service:
       docs: >-
         Used to resume a Link register session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a links request
       request:
         body: root.PatchBodyWithoutSaveData
@@ -46483,6 +46705,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific link.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -46607,6 +46831,8 @@ service:
         href="https://developers.belvo.com/docs/connect-widget"
         target="_blank">Connect Widget</a> to handle updating
         <code>invalid</code> or <code>token_required</code> links. </div>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -46832,6 +47058,8 @@ service:
           > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
           > 
           > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -46915,6 +47143,8 @@ service:
 
         ℹ️ **Note**: When you change a link from `single`` to `recurrent`, they
         will only be updated the next day at the scheduled interval.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -47197,6 +47427,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailOwner": {
               "auth": true,
@@ -47337,6 +47570,9 @@ Cancun, COL 10447",
               "response": {
                 "docs": "Ok",
                 "type": "root.Owner",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListOwners": {
@@ -47546,6 +47782,9 @@ Cancun, COL 10447",
                 "docs": "Ok",
                 "type": "root.OwnersPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchOwners": {
               "auth": true,
@@ -47706,6 +47945,9 @@ Cancun, COL 10447",
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Owner>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveOwners": {
               "auth": true,
@@ -47857,6 +48099,9 @@ Cancun, COL 10447",
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Owner>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -47877,6 +48122,8 @@ service:
       docs: >-
         Get a paginated list of all existing owners in your Belvo account. We
         return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all owners
       request:
         name: ListOwnersRequest
@@ -48072,6 +48319,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve owner information from a specific link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve owners for a link
       request:
         body: root.StandardRequest
@@ -48205,6 +48454,8 @@ service:
       docs: >-
         Used to resume an Owner retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an owners request
       request:
         body: root.PatchBody
@@ -48345,6 +48596,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific owner.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -48466,6 +48719,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific owner from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -48704,6 +48959,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.PaymentInstitution",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentInstitutions": {
               "auth": true,
@@ -48809,6 +49067,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.PaymentsInstitutionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -48827,6 +49088,8 @@ service:
       method: GET
       auth: true
       docs: List all available payment institutions.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment institutions
       request:
         name: ListPaymentInstitutionsRequest
@@ -48912,6 +49175,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment institution
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -49171,6 +49436,9 @@ A payment intent captures all payment information (such as the amount to be char
                 "docs": "OK (Created)",
                 "type": "root.PaymentIntentPse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailPaymentIntent": {
               "auth": true,
@@ -49303,6 +49571,9 @@ A payment intent captures all payment information (such as the amount to be char
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentIntentPse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListPaymentIntents": {
@@ -49512,6 +49783,9 @@ A payment intent captures all payment information (such as the amount to be char
                 "docs": "OK",
                 "type": "root.PaymentIntentPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchPaymentIntent": {
               "auth": true,
@@ -49669,6 +49943,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "docs": "OK (Created)",
                 "type": "root.PaymentIntentPse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -49712,6 +49989,8 @@ service:
       method: GET
       auth: true
       docs: List all payment intents associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment intents
       request:
         name: ListPaymentIntentsRequest
@@ -49882,6 +50161,8 @@ service:
       method: POST
       auth: true
       docs: Create a payment intent.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new payment intent
       request:
         name: CreatePaymentIntentPse
@@ -50041,6 +50322,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment intent.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -50158,6 +50441,8 @@ service:
         intent, check our <a
         href="https://developers.belvo.com/docs/colombia-pse#payment-intents"
         target="_blank">PSE payment initiation</a> guides for  🇨🇴 Colombia.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -50454,6 +50739,9 @@ types:
                 "docs": "OK (Created)",
                 "type": "CreatePaymentlinkResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailCreatePaymentlink": {
               "auth": true,
@@ -50576,6 +50864,9 @@ types:
                 "docs": "OK (Created)",
                 "type": "DetailCreatePaymentlinkResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentLinks": {
               "auth": true,
@@ -50690,6 +50981,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentLinkPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -50821,6 +51115,8 @@ service:
       docs: >-
         List all payment links associated with your Belvo account. By default,
         we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment links
       request:
         name: ListPaymentLinksRequest
@@ -50926,6 +51222,8 @@ service:
       method: POST
       auth: true
       docs: Create a new payment link to start a hosted-widget payment.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a payment link
       request:
         body: CreatePaymentlinkRequest
@@ -51027,6 +51325,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a payment link.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         access_token:
           type: string
@@ -51188,6 +51488,9 @@ You can use the Payment Transactions resource in order to get useful information
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentTransaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListPaymentTransactions": {
@@ -51354,6 +51657,9 @@ You can use the Payment Transactions resource in order to get useful information
                 "docs": "OK",
                 "type": "root.PaymentsTransactionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -51372,6 +51678,8 @@ service:
       method: GET
       auth: true
       docs: List all payment transactions associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment transactions
       request:
         name: ListPaymentTransactionsRequest
@@ -51514,6 +51822,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -51593,6 +51903,9 @@ docs: >
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailPaymentWebhooks": {
               "auth": true,
@@ -51635,6 +51948,9 @@ docs: >
                 "docs": "OK",
                 "type": "root.PaymentWebhook",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentWebhooks": {
               "auth": true,
@@ -51673,6 +51989,9 @@ docs: >
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentsWebhooksPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RegisterPaymentWebhook": {
@@ -51746,6 +52065,9 @@ docs: >
                 "docs": "Ok",
                 "type": "list<root.PaymentWebhook>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -51764,6 +52086,8 @@ service:
       method: GET
       auth: true
       docs: List all payment webhooks associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment webhooks
       response:
         docs: OK
@@ -51791,6 +52115,8 @@ service:
       auth: true
       docs: |
         Register a new payments webhook for your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: Register a new payment webhook
       request:
         name: PaymentWebhookRequest
@@ -51844,6 +52170,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment webhook.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -51873,6 +52201,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific payment webhook from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -51936,6 +52266,9 @@ docs: >+
                   "docs": "The `transaction.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailReceivableTransaction": {
@@ -52014,6 +52347,9 @@ docs: >+
               "response": {
                 "docs": "Ok",
                 "type": "root.ReceivablesTransaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListReceivableTransactions": {
@@ -52182,6 +52518,9 @@ docs: >+
                 "docs": "Ok",
                 "type": "root.ReceivablesTransactionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveReceivableTransactions": {
               "auth": true,
@@ -52308,6 +52647,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.ReceivablesTransaction",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -52328,6 +52670,8 @@ service:
       docs: >-
         Get a paginated list of all the existing receivable transactions in your
         Belvo account. We return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all receivable transactions
       request:
         name: ListReceivableTransactionsRequest
@@ -52500,6 +52844,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve all receivable transactions for an existing link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve receivable transactions for a link
       request:
         name: ReceivableTransactionRequest
@@ -52605,6 +52951,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific receivable transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -52668,6 +53016,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific receivable transaction from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -52838,6 +53188,9 @@ client.connect()
                   "docs": "The `recurring-expenses.id` that you want to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailRecurringExpense": {
@@ -53021,6 +53374,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "list<root.RecurringExpenses>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListRecurringExpenses": {
@@ -53224,6 +53580,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.RecurringExpensesPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchRecurringExpenses": {
               "auth": true,
@@ -53414,6 +53773,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RecurringExpenses>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveRecurringExpenses": {
@@ -53651,6 +54013,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RecurringExpenses>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -53671,6 +54036,8 @@ service:
       docs: >-
         Get a paginated list of all recurring expenses in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all recurring expenses
       request:
         name: ListRecurringExpensesRequest
@@ -53860,6 +54227,8 @@ service:
         accounts</b> from a specific link. You can receive insights for a period
         of up to 365 days, depending on the transaction history available for
         each [bank](https://developers.belvo.com/docs/institution).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve recurring expenses for a link
       request:
         name: RecurringExpensesRequest
@@ -54065,6 +54434,8 @@ service:
       docs: >-
         Used to resume an Recurring Expenses retrieve session that was paused
         because an MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a recurring expenses request
       request:
         body: root.PatchBody
@@ -54229,6 +54600,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific recurring expense.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54385,6 +54758,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific recurring expense from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54684,6 +55059,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailRiskInsights": {
               "auth": true,
@@ -54885,6 +55263,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "list<root.RiskInsights>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListRiskInsights": {
@@ -55121,6 +55502,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.RiskInsightsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchRiskInsights": {
               "auth": true,
@@ -55340,6 +55724,9 @@ client.connect()
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RiskInsights>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveRiskInsights": {
               "auth": true,
@@ -55552,6 +55939,9 @@ client.connect()
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RiskInsights>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -55572,6 +55962,8 @@ service:
       docs: >-
         Get a paginated list of all risk insight analyses in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all risk insights
       request:
         name: ListRiskInsightsRequest
@@ -55792,6 +56184,8 @@ service:
         If you need to know the currency of the account, just do a GET Details
         to the accounts endpoint (using the ID you receive from the accounts
         response).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve risk insights for a link
       request:
         body: root.StandardRequest
@@ -55979,6 +56373,8 @@ service:
       docs: >-
         Used to resume an Risk insights retrieve session that was paused because
         an MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a risk insights request
       request:
         body: root.PatchBody
@@ -56173,6 +56569,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific risk insight.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -56348,6 +56746,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific risk insight from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -56584,6 +56984,9 @@ For example:
                 "docs": "Ok",
                 "type": "list<root.SecretKeys>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListSecretKeys": {
               "auth": true,
@@ -56621,6 +57024,9 @@ For example:
                 "docs": "OK",
                 "type": "root.SecretKeysPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -56644,6 +57050,8 @@ service:
 
 
           **Note**: We only return the ID of the secret keys.
+      source:
+        openapi: ../openapi.yml
       display-name: List all secret keys
       response:
         docs: OK
@@ -56679,6 +57087,8 @@ service:
           POST https://api.belvo.com/payments/secret-keys/
           Authorization: Basic username:password
           ```
+      source:
+        openapi: ../openapi.yml
       display-name: Request API keys
       response:
         docs: Ok
@@ -56905,6 +57315,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxComplianceStatus": {
               "auth": true,
@@ -57034,6 +57447,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxComplianceStatus",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxComplianceStatus": {
@@ -57223,6 +57639,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.TaxComplianceStatusPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveTaxComplianceStatus": {
               "auth": true,
@@ -57386,6 +57805,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.TaxComplianceStatus",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -57406,6 +57828,8 @@ service:
       docs: >-
         Get a paginated list of all existing Tax compliance statuses in your
         Belvo account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax compliance statuses
       request:
         name: ListTaxComplianceStatusRequest
@@ -57588,6 +58012,8 @@ service:
       docs: >-
         Retrieve the Tax compliance status information for a specific fiscal
         link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax compliance statuses for a link
       request:
         name: TaxComplianceStatusRequest
@@ -57730,6 +58156,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific Tax compliance status.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -57842,6 +58270,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific Tax compliance status from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -58135,6 +58565,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxDeclaration": {
               "auth": true,
@@ -58330,6 +58763,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailTaxDeclarationResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxDeclarations": {
@@ -58617,6 +59053,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "ListTaxDeclarationsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveTaxDeclarations": {
               "auth": true,
@@ -58860,6 +59299,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveTaxDeclarationsResponseItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -58952,6 +59394,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax declarations in your Belvo
         account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax declarations
       request:
         name: ListTaxDeclarationsRequest
@@ -59213,6 +59657,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax declaration information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax declarations for a link
       request:
         name: TaxDeclarationsRequest
@@ -59434,6 +59880,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific Tax declaration.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -59602,6 +60050,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific Tax declaration from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -59787,6 +60237,9 @@ client.tax_retentions.list(params: {
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxRetentions": {
               "auth": true,
@@ -59864,6 +60317,9 @@ client.tax_retentions.list(params: {
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxRetentions",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxRetentions": {
@@ -59989,6 +60445,9 @@ client.tax_retentions.list(params: {
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxRetentionsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxRetentions": {
@@ -60123,6 +60582,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.TaxRetentions>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -60143,6 +60605,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax retentions in your Belvo
         account. We return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax retentions
       request:
         name: ListTaxRetentionsRequest
@@ -60267,6 +60731,8 @@ service:
       docs: >-
         Retrieve tax retention information from a specific link. The maximum
         number of tax retentions that can be returned for a period is 500.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax retentions for a link
       request:
         name: TaxRetentionsRequest
@@ -60380,6 +60846,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax retention.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -60446,6 +60914,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax retention from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -60734,6 +61204,9 @@ client.connect()
                   "docs": "The ID of the tax return you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTaxReturn": {
@@ -62151,6 +62624,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "DetailTaxReturnResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListTaxReturns": {
               "auth": true,
@@ -63413,6 +63889,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "ListTaxReturnsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxReturns": {
@@ -65183,6 +65662,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveTaxReturnsResponseItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -65323,6 +65805,8 @@ service:
         Get a paginated list of all existing tax returns in your Belvo account.
         By default, we return up to 100 results per page. The results will
         include a mix of both monthly and yearly tax returns.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax returns
       request:
         name: ListTaxReturnsRequest
@@ -66385,6 +66869,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax return information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax returns for a link
       request:
         body: RetrieveTaxReturnsRequestBody
@@ -67846,6 +68332,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax return.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -68937,6 +69425,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax return from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -69273,6 +69763,9 @@ client.connect()
                   "docs": "the `tax-status.id` that you want to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTaxStatus": {
@@ -69626,6 +70119,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailTaxStatusResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxStatus": {
@@ -70037,6 +70533,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.TaxStatusPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveTaxStatus": {
               "auth": true,
@@ -70433,6 +70932,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "Ok (when `save_data=false`)",
                 "type": "RetrieveTaxStatusResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -70487,6 +70989,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax status in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax statuses
       request:
         name: ListTaxStatusRequest
@@ -70848,6 +71352,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax status information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax statuses for a link
       request:
         name: TaxStatusRequest
@@ -71186,6 +71692,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax status.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -71482,6 +71990,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax status from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -71829,6 +72339,9 @@ client.connect()
                   "docs": "The `transaction.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTransaction": {
@@ -72460,6 +72973,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Transaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTransactions": {
@@ -73341,6 +73857,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.TransactionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchTransactions": {
               "auth": true,
@@ -73937,6 +74456,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Transaction>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTransactions": {
@@ -74553,6 +75075,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Transaction>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveTransactions_async": {
               "auth": true,
@@ -74711,6 +75236,9 @@ client.connect()
                 "docs": "Accepted (when `X-Belvo-Request-Mode` is `async`)",
                 "type": "root.AsynchronousAccepted202",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -74731,6 +75259,8 @@ service:
       docs: >-
         Get a paginated list of all existing transactions in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all transactions
       request:
         name: ListTransactionsRequest
@@ -75593,6 +76123,8 @@ service:
         you request transactions for the last year and we can only access the
         last six months, we will return the information corresponding to these
         six months of data. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve transactions for a link
       request:
         body: root.TransactionsRequest
@@ -76127,6 +76659,8 @@ service:
         you request transactions for the last year and we can only access the
         last six months, we will return the information corresponding to these
         six months of data. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve transactions for a link
       request:
         body: root.TransactionsRequest
@@ -76263,6 +76797,8 @@ service:
       docs: >-
         Used to resume a Transaction retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a transactions request
       request:
         body: root.PatchBody
@@ -76769,6 +77305,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -77295,6 +77833,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific transaction from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string

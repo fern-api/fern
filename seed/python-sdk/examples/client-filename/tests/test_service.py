@@ -4,6 +4,23 @@ from seed import SeedExhaustive
 from seed import AsyncSeedExhaustive
 import typing
 from .utilities import validate_response
+from seed.types import Actor
+from seed.types import ExtendedMovie
+from seed.types import Entity
+from seed.types import Metadata_Html
+from seed.commons.types import Metadata
+from seed.commons.types import EventInfo_Metadata
+from seed.commons.types import Data_String
+from seed.types import Migration
+from seed.types import Exception_Generic
+from seed.types import Test_And
+from seed.types import Node
+from seed.types import Tree
+from seed.types import Directory
+from seed.types import File
+from seed.types import Moment
+import uuid
+import datetime
 
 
 async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
@@ -106,8 +123,130 @@ async def test_create_big_entity(client: SeedExhaustive, async_client: AsyncSeed
             {0: {"type": None, "value": None, "label": None}, 1: {"type": None, "value": None, "label": None}},
         ),
     }
-    response = client.service.create_big_entity()
+    response = client.service.create_big_entity(
+        cast_member=Actor(name="name", id="id"),
+        extended_movie=ExtendedMovie(cast=["cast", "cast"]),
+        entity=Entity(type="primitive", name="name"),
+        metadata=Metadata_Html(value="metadata"),
+        common_metadata=Metadata(id="id", data={"data": "data"}, json_string="jsonString"),
+        event_info=EventInfo_Metadata(id="id", data={"data": "data"}, json_string="jsonString"),
+        data=Data_String(value="data"),
+        migration=Migration(name="name", status="RUNNING"),
+        exception=Exception_Generic(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
+        test=Test_And(value=True),
+        node=Node(
+            name="name",
+            nodes=[
+                Node(
+                    name="name",
+                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    trees=[Tree(nodes=[]), Tree(nodes=[])],
+                ),
+                Node(
+                    name="name",
+                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    trees=[Tree(nodes=[]), Tree(nodes=[])],
+                ),
+            ],
+            trees=[
+                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+            ],
+        ),
+        directory=Directory(
+            name="name",
+            files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+            directories=[
+                Directory(
+                    name="name",
+                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    directories=[
+                        Directory(name="name", files=[], directories=[]),
+                        Directory(name="name", files=[], directories=[]),
+                    ],
+                ),
+                Directory(
+                    name="name",
+                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    directories=[
+                        Directory(name="name", files=[], directories=[]),
+                        Directory(name="name", files=[], directories=[]),
+                    ],
+                ),
+            ],
+        ),
+        moment=Moment(
+            id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            date=datetime.date.fromisoformat("2023-01-15"),
+            datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        ),
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.service.create_big_entity()
+    async_response = await async_client.service.create_big_entity(
+        cast_member=Actor(name="name", id="id"),
+        extended_movie=ExtendedMovie(cast=["cast", "cast"]),
+        entity=Entity(type="primitive", name="name"),
+        metadata=Metadata_Html(value="metadata"),
+        common_metadata=Metadata(id="id", data={"data": "data"}, json_string="jsonString"),
+        event_info=EventInfo_Metadata(id="id", data={"data": "data"}, json_string="jsonString"),
+        data=Data_String(value="data"),
+        migration=Migration(name="name", status="RUNNING"),
+        exception=Exception_Generic(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
+        test=Test_And(value=True),
+        node=Node(
+            name="name",
+            nodes=[
+                Node(
+                    name="name",
+                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    trees=[Tree(nodes=[]), Tree(nodes=[])],
+                ),
+                Node(
+                    name="name",
+                    nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])],
+                    trees=[Tree(nodes=[]), Tree(nodes=[])],
+                ),
+            ],
+            trees=[
+                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+                Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
+            ],
+        ),
+        directory=Directory(
+            name="name",
+            files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+            directories=[
+                Directory(
+                    name="name",
+                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    directories=[
+                        Directory(name="name", files=[], directories=[]),
+                        Directory(name="name", files=[], directories=[]),
+                    ],
+                ),
+                Directory(
+                    name="name",
+                    files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
+                    directories=[
+                        Directory(name="name", files=[], directories=[]),
+                        Directory(name="name", files=[], directories=[]),
+                    ],
+                ),
+            ],
+        ),
+        moment=Moment(
+            id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            date=datetime.date.fromisoformat("2023-01-15"),
+            datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        ),
+    )
     validate_response(async_response, expected_response, expected_types)

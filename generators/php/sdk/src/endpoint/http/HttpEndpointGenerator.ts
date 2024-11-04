@@ -1,5 +1,13 @@
 import { php } from "@fern-api/php-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    BytesRequest,
+    FileUploadRequest,
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpRequestBodyReference,
+    InlinedRequestBody,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -60,6 +68,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine("try {");
                 writer.indent();
                 writer.write(`${RESPONSE_VARIABLE_NAME} = `);
+
+                const classReference =
+                    endpoint.requestBody != null
+                        ? this.getRequestTypeClassReference(endpoint.requestBody)
+                        : this.context.getJsonApiRequestClassReference();
                 writer.writeNodeStatement(
                     this.context.rawClient.sendRequest({
                         clientReference: `$this->${this.context.rawClient.getFieldName()}`,
@@ -68,7 +81,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
                         pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                         headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
+                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+                        requestTypeClassReference: classReference
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
@@ -91,6 +105,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
+        });
+    }
+
+    private getRequestTypeClassReference(requestBody: HttpRequestBody): php.ClassReference {
+        return requestBody._visit({
+            inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
+            reference: () => this.context.getJsonApiRequestClassReference(),
+            fileUpload: () => this.context.getMultipartApiRequestClassReference(),
+            bytes: () => this.context.getJsonApiRequestClassReference(), // TODO: Add support for BytesApiRequest
+            _other: () => this.context.getJsonApiRequestClassReference()
         });
     }
 

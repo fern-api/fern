@@ -25,7 +25,7 @@ import { SeedMultiLineDocsClient, SeedMultiLineDocs } from "@fern/multi-line-doc
 const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({
     name: "name",
-    age: undefined,
+    age: 1,
 });
 ```
 

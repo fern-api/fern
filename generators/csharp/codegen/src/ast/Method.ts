@@ -3,6 +3,7 @@ import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
@@ -19,7 +20,7 @@ export declare namespace Method {
         /* The access of the method */
         access: Access;
         /* Whether the method is sync or async. Defaults to false. */
-        isAsync: boolean;
+        isAsync?: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
         /* Whether the method overrides a method in it's base class */
@@ -71,7 +72,7 @@ export class Method extends AstNode {
     }: Method.Args) {
         super();
         this.name = name;
-        this.isAsync = isAsync;
+        this.isAsync = isAsync ?? false;
         this.override = override ?? false;
         this.access = access;
         this.return = return_;
@@ -89,24 +90,16 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const docXmlWriter = new DocXmlWriter(writer);
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
-
-            writer.writeLine("/// </summary>");
+            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
         }
         if (this.codeExample != null) {
-            writer.writeLine("/// <example>");
-            writer.writeLine("/// <code>");
-            this.codeExample.split("\n").forEach((line) => {
-                if (line !== "") {
-                    writer.writeLine(`/// ${line}`);
-                }
-            });
-            writer.writeLine("/// </code>");
-            writer.writeLine("/// </example>");
+            docXmlWriter.writeOpenNode("example");
+            docXmlWriter.writeOpenNode("code");
+            docXmlWriter.writeMultilineWithEscaping(this.codeExample);
+            docXmlWriter.writeCloseNode("code");
+            docXmlWriter.writeCloseNode("example");
         }
 
         if (this.annotations.length > 0) {

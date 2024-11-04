@@ -15,7 +15,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         const class_ = csharp.class_({
             ...this.context.getBaseMockServerTestClassReference(),
             partial: false,
-            access: "public",
+            access: csharp.Access.Public,
             annotations: [
                 csharp.annotation({
                     reference: csharp.classReference({ name: "SetUpFixture", namespace: "NUnit.Framework" })
@@ -25,7 +25,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
         class_.addField(
             csharp.field({
-                access: "protected",
+                access: csharp.Access.Protected,
                 name: "Server",
                 static_: true,
                 type: csharp.Type.reference(
@@ -42,7 +42,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
         class_.addField(
             csharp.field({
-                access: "protected",
+                access: csharp.Access.Protected,
                 name: "Client",
                 static_: true,
                 type: csharp.Type.reference(
@@ -59,7 +59,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
         class_.addField(
             csharp.field({
-                access: "protected",
+                access: csharp.Access.Protected,
                 name: "RequestOptions",
                 static_: true,
                 type: csharp.Type.reference(this.context.getRequestOptionsClassReference()),
@@ -72,7 +72,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod(
             csharp.method({
                 name: "GlobalSetup",
-                access: "public",
+                access: csharp.Access.Public,
                 body: csharp.codeblock((writer) => {
                     writer.writeLine("// Start the WireMock server");
                     writer.write("Server = WireMockServer.Start(new ");
@@ -122,7 +122,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod(
             csharp.method({
                 name: "GlobalTeardown",
-                access: "public",
+                access: csharp.Access.Public,
                 body: csharp.codeblock((writer) => {
                     writer.writeLine("Server.Stop();");
                 }),

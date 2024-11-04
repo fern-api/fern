@@ -439,6 +439,9 @@
                 "docs": "",
                 "type": "GetAccountResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -608,6 +611,8 @@ service:
         high-level account information (e.g., name) and any children objects
         (e.g., Policies) associated with the Account. Please note that this
         method will NOT refresh the Account object.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -705,6 +710,9 @@ service:
                 "docs": "",
                 "type": "GetCarrierResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "GetCarriers": {
               "auth": false,
@@ -737,6 +745,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "GetCarriersResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -793,6 +804,8 @@ service:
       docs: >-
         The Get Carrier method returns a Carrier object that include additional
         details about an Axle-supported insurance carrier.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -829,6 +842,8 @@ service:
       method: GET
       auth: false
       docs: The Get Carriers method returns an array of Carrier objects.
+      source:
+        openapi: ../openapi.yml
       display-name: Get Carriers
       response:
         docs: ''
@@ -912,6 +927,9 @@ service:
                 "docs": "",
                 "type": "StartIgnitionResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -981,6 +999,8 @@ service:
       docs: >-
         Start an Ignition session. Returns the ignitionUri to direct the user to
         authenticate.
+      source:
+        openapi: ../openapi.yml
       display-name: Start Ignition
       request:
         name: StartIgnitionRequest
@@ -1137,6 +1157,9 @@ service:
                 "docs": "",
                 "type": "GetPolicyResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1179,6 +1202,8 @@ service:
         policy information (e.g., policy number) and any children objects (e.g.,
         Coverages) associated with the Policy. Please note that this method will
         NOT refresh the Policy object.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1316,6 +1341,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                 "docs": "",
                 "type": "ExchangeTokenResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1402,6 +1430,8 @@ service:
 
         Auth codes are ephemeral and expire after 10 minutes, while accessTokens
         do not expire.
+      source:
+        openapi: ../openapi.yml
       display-name: Exchange Token
       request:
         name: ExchangeTokenRequest

@@ -6,7 +6,9 @@ use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Multipart\MultipartFormData;
+use Seed\Core\Json\JsonEncoder;
+use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\JustFileRequet;
@@ -39,12 +41,50 @@ class ServiceClient
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        if ($request->maybeString != null) {
+            $body->add(name: 'maybeString', value: $request->maybeString);
+        }
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('fileList'));
+        }
+        if ($request->maybeFile != null) {
+            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybeFile'));
+        }
+        if ($request->maybeFileList != null) {
+            foreach ($request->maybeFileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybeFileList'));
+            }
+        }
+        if ($request->maybeInteger != null) {
+            $body->add(name: 'maybeInteger', value: $request->maybeInteger);
+        }
+        if ($request->optionalListOfStrings != null) {
+            foreach ($request->optionalListOfStrings as $element) {
+                $body->add(name: 'optionalListOfStrings', value: $element);
+            }
+        }
+        foreach ($request->listOfObjects as $element) {
+            $body->add(name: 'listOfObjects', value: $element->toJson());
+        }
+        if ($request->optionalMetadata != null) {
+            $body->add(name: 'optionalMetadata', value: JsonEncoder::encode($request->optionalMetadata));
+        }
+        if ($request->optionalObjectType != null) {
+            $body->add(name: 'optionalObjectType', value: $request->optionalObjectType);
+        }
+        if ($request->optionalId != null) {
+            $body->add(name: 'optionalId', value: $request->optionalId);
+        }
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -71,12 +111,15 @@ class ServiceClient
      */
     public function justFile(JustFileRequet $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -115,13 +158,16 @@ class ServiceClient
         if ($request->optionalListOfStrings != null) {
             $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file-with-query-params",
                     method: HttpMethod::POST,
                     query: $query,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -148,12 +194,26 @@ class ServiceClient
      */
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        $body->addPart(
+            $request->file->toMultipartFormDataPart(
+                name: 'file',
+                contentType: 'application/octet-stream',
+            ),
+        );
+        $body->add(name: 'foo', value: $request->foo);
+        $body->add(
+            name: 'bar',
+            value: $request->bar->toJson(),
+            contentType: 'application/json',
+        );
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-content-type",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();

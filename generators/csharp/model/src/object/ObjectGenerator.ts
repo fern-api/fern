@@ -30,8 +30,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: "public",
-            record: true
+            access: csharp.Access.Public,
+            type: csharp.Class.ClassType.Record
         });
         const flattenedProperties = [
             ...this.objectDeclaration.properties,
@@ -42,7 +42,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
                     type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     set: true,
                     summary: property.docs,

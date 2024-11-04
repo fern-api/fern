@@ -7,8 +7,9 @@ import * as SeedAudiences from "../../../../index";
 /**
  * @example
  *     {
- *         publicProperty: undefined,
- *         privateProperty: undefined
+ *         optionalString: "optionalString",
+ *         publicProperty: "publicProperty",
+ *         privateProperty: 1
  *     }
  */
 export interface FindRequest {

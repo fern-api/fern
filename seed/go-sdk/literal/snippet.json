@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tPrompt: \"You are a helpful assistant\",\n\t\tStream: false,\n\t\tQuery:  \"What is the weather today\",\n\t},\n)\n"
             }
         },
         {

@@ -30,7 +30,11 @@ export class Optional {
      * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.optional.sendOptionalBody(undefined)
+     *     await client.optional.sendOptionalBody({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
      */
     public async sendOptionalBody(
         request?: Record<string, unknown>,

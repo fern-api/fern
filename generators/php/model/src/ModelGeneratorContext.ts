@@ -19,4 +19,8 @@ export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCust
     public getCoreTestAsIsFiles(): string[] {
         return [...this.getCoreSerializationTestAsIsFiles()];
     }
+
+    public getUtilsAsIsFiles(): string[] {
+        return [];
+    }
 }

@@ -193,25 +193,63 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = null,
-    ///                 ExpressionLocation = null,
-    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///                 Stdout = null,
+    ///                 ReturnValue = 1,
+    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new StackInformation
+    ///                 {
+    ///                     NumStackFrames = 1,
+    ///                     TopStackFrame = new StackFrame
+    ///                     {
+    ///                         MethodName = "methodName",
+    ///                         LineNumber = 1,
+    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         {
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 Stdout = "stdout",
     ///             },
     ///             new TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = null,
-    ///                 ExpressionLocation = null,
-    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///                 Stdout = null,
+    ///                 ReturnValue = 1,
+    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new StackInformation
+    ///                 {
+    ///                     NumStackFrames = 1,
+    ///                     TopStackFrame = new StackFrame
+    ///                     {
+    ///                         MethodName = "methodName",
+    ///                         LineNumber = 1,
+    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         {
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 Stdout = "stdout",
     ///             },
     ///         },
     ///     }
@@ -254,27 +292,65 @@ public partial class AdminClient
     /// await client.Admin.StoreTracedTestCaseV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     "testCaseId",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = null,
-    ///             ExpressionLocation = null,
-    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///             Stdout = null,
+    ///             ReturnValue = 1,
+    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new StackInformation
+    ///             {
+    ///                 NumStackFrames = 1,
+    ///                 TopStackFrame = new StackFrame
+    ///                 {
+    ///                     MethodName = "methodName",
+    ///                     LineNumber = 1,
+    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     {
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Stdout = "stdout",
     ///         },
     ///         new TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = null,
-    ///             ExpressionLocation = null,
-    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///             Stdout = null,
+    ///             ReturnValue = 1,
+    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new StackInformation
+    ///             {
+    ///                 NumStackFrames = 1,
+    ///                 TopStackFrame = new StackFrame
+    ///                 {
+    ///                     MethodName = "methodName",
+    ///                     LineNumber = 1,
+    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     {
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Stdout = "stdout",
     ///         },
     ///     }
     /// );
@@ -320,29 +396,77 @@ public partial class AdminClient
     ///     {
     ///         WorkspaceRunDetails = new WorkspaceRunDetails
     ///         {
-    ///             ExceptionV2 = null,
-    ///             Exception = null,
+    ///             ExceptionV2 = new ExceptionInfo
+    ///             {
+    ///                 ExceptionType = "exceptionType",
+    ///                 ExceptionMessage = "exceptionMessage",
+    ///                 ExceptionStacktrace = "exceptionStacktrace",
+    ///             },
+    ///             Exception = new ExceptionInfo
+    ///             {
+    ///                 ExceptionType = "exceptionType",
+    ///                 ExceptionMessage = "exceptionMessage",
+    ///                 ExceptionStacktrace = "exceptionStacktrace",
+    ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List<TraceResponse>()
+    ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = null,
-    ///                 ExpressionLocation = null,
-    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///                 Stdout = null,
+    ///                 ReturnValue = 1,
+    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new StackInformation
+    ///                 {
+    ///                     NumStackFrames = 1,
+    ///                     TopStackFrame = new StackFrame
+    ///                     {
+    ///                         MethodName = "methodName",
+    ///                         LineNumber = 1,
+    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         {
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 Stdout = "stdout",
     ///             },
     ///             new TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = null,
-    ///                 ExpressionLocation = null,
-    ///                 Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///                 Stdout = null,
+    ///                 ReturnValue = 1,
+    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new StackInformation
+    ///                 {
+    ///                     NumStackFrames = 1,
+    ///                     TopStackFrame = new StackFrame
+    ///                     {
+    ///                         MethodName = "methodName",
+    ///                         LineNumber = 1,
+    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         {
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                             new Scope
+    ///                             {
+    ///                                 Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                             },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 Stdout = "stdout",
     ///             },
     ///         },
     ///     }
@@ -383,27 +507,65 @@ public partial class AdminClient
     /// <code>
     /// await client.Admin.StoreTracedWorkspaceV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new List<TraceResponseV2>()
+    ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = null,
-    ///             ExpressionLocation = null,
-    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///             Stdout = null,
+    ///             ReturnValue = 1,
+    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new StackInformation
+    ///             {
+    ///                 NumStackFrames = 1,
+    ///                 TopStackFrame = new StackFrame
+    ///                 {
+    ///                     MethodName = "methodName",
+    ///                     LineNumber = 1,
+    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     {
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Stdout = "stdout",
     ///         },
     ///         new TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
     ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = null,
-    ///             ExpressionLocation = null,
-    ///             Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-    ///             Stdout = null,
+    ///             ReturnValue = 1,
+    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new StackInformation
+    ///             {
+    ///                 NumStackFrames = 1,
+    ///                 TopStackFrame = new StackFrame
+    ///                 {
+    ///                     MethodName = "methodName",
+    ///                     LineNumber = 1,
+    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     {
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                         new Scope
+    ///                         {
+    ///                             Variables = new Dictionary&lt;string, object&gt;() { { "variables", 1 } },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Stdout = "stdout",
     ///         },
     ///     }
     /// );

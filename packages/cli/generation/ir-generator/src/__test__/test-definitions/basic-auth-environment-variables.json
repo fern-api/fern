@@ -680,6 +680,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "GET request with basic auth scheme"
                 },
@@ -964,6 +965,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "POST request with basic auth scheme"
                 }

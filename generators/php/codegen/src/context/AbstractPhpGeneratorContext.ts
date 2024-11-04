@@ -10,7 +10,11 @@ import {
     SubpackageId,
     FernFilepath,
     PrimitiveTypeV1,
-    ObjectTypeDeclaration
+    ObjectTypeDeclaration,
+    ContainerType,
+    NamedType,
+    PrimitiveType,
+    MapType
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -22,6 +26,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
+import { Type } from "../ast";
+import { assertNever } from "@fern-api/core-utils";
 
 export interface FileLocation {
     namespace: string;
@@ -102,12 +108,20 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreNamespace()}\\Json`;
     }
 
+    public getCoreMultipartNamespace(): string {
+        return `${this.getCoreNamespace()}\\Multipart`;
+    }
+
     public getCoreTypesNamespace(): string {
         return `${this.getCoreNamespace()}\\Types`;
     }
 
     public getCoreTestsNamespace(): string {
         return `${this.rootNamespace}\\Tests\\Core`;
+    }
+
+    public getUtilsTypesNamespace(): string {
+        return `${this.rootNamespace}\\Utils`;
     }
 
     public getCoreClientTestsNamespace(): string {
@@ -187,6 +201,20 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getCoreMultipartClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreMultipartNamespace()
+        });
+    }
+
+    public getUtilsClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getUtilsTypesNamespace()
+        });
+    }
+
     public getCoreTypesClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
@@ -218,6 +246,88 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
+    public dereferenceOptional(typeReference: TypeReference): TypeReference {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return typeReference.container.optional;
+                }
+                return typeReference;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.dereferenceOptional(typeDeclaration.shape.aliasOf);
+                }
+                return typeReference;
+            }
+            case "unknown":
+            case "primitive":
+                return typeReference;
+        }
+    }
+
+    public dereferenceCollection(typeReference: TypeReference): TypeReference {
+        switch (typeReference.type) {
+            case "container": {
+                if (typeReference.container.type === "list") {
+                    return this.dereferenceCollection(typeReference.container.list);
+                } else if (typeReference.container.type === "set") {
+                    return this.dereferenceCollection(typeReference.container.set);
+                }
+                return typeReference;
+            }
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.dereferenceCollection(typeDeclaration.shape.aliasOf);
+                }
+                return typeReference;
+            }
+            case "primitive":
+            case "unknown":
+                return typeReference;
+        }
+    }
+
+    public isCollection(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "list" || typeReference.container.type === "set";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isCollection(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+            case "unknown":
+                return false;
+        }
+    }
+
+    public isJsonEncodable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "map";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isJsonEncodable(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive":
+                return false;
+            case "unknown":
+                return true;
+        }
+    }
+
+    public hasToJsonMethod(typeReference: TypeReference): boolean {
+        return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
+    }
+
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
@@ -245,15 +355,25 @@ export abstract class AbstractPhpGeneratorContext<
         return declaration.shape.type === "enum";
     }
 
-    public isDate(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "primitive": {
+                return true;
+            }
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isPrimitive(declaration.shape.aliasOf);
+                }
+                return false;
+            }
+            default: {
+                return false;
+            }
+        }
     }
 
-    public isDateTime(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
-    }
-
-    public isPrimitive({
+    public isEquivalentToPrimitive({
         typeReference,
         primitive
     }: {
@@ -283,6 +403,14 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             }
         }
+    }
+
+    public isDate(typeReference: TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    }
+
+    public isDateTime(typeReference: TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
     }
 
     public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
@@ -336,6 +464,7 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getRawAsIsFiles(): string[];
     public abstract getCoreAsIsFiles(): string[];
     public abstract getCoreTestAsIsFiles(): string[];
+    public abstract getUtilsAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
         return [

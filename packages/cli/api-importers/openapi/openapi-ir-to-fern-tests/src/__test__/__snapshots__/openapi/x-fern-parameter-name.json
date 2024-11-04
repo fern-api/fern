@@ -45,6 +45,9 @@
                 "docs": "Success!",
                 "type": "string",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -60,6 +63,8 @@
       path: /user/{id}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id: string
       request:

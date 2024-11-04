@@ -1,10 +1,6 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { getRequestBody } from "../../../src/core/fetcher/getRequestBody";
 
-if (RUNTIME.type === "browser") {
-    require("jest-fetch-mock").enableMocks();
-}
-
 describe("Test getRequestBody", () => {
     it("should return FormData as is in Node environment", async () => {
         if (RUNTIME.type === "node") {

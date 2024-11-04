@@ -15,6 +15,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { getExamples } from "../openapi/v3/extensions/getExamples";
 import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
 import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
@@ -169,16 +170,26 @@ export function convertSchemaObject(
     const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
-    const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
 
     const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
         fullExamples.push({ name: undefined, value: schema.example, description: undefined });
     }
+
+    const xExamples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
+    if (xExamples != null && Object.keys(xExamples).length > 0) {
+        fullExamples.push(
+            ...Object.entries(xExamples).map(([name, value]) => {
+                return { name: value?.summary ?? name, value: value.value, description: value.description };
+            })
+        );
+    }
+
+    const examples = getExamples(schema);
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
-            ...Object.entries(examples).map(([name, value]) => {
-                return { name: value.summary ?? name, value: value.value, description: value.description };
+            ...examples.map((value) => {
+                return { name: undefined, value, description: undefined };
             })
         );
     }

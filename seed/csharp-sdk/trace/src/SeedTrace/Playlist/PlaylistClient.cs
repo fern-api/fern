@@ -27,10 +27,11 @@ public partial class PlaylistClient
     ///     new CreatePlaylistRequest
     ///     {
     ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Body = new PlaylistCreateRequest
     ///         {
     ///             Name = "name",
-    ///             Problems = new List<string>() { "problems", "problems" },
+    ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
     ///         },
     ///     }
     /// );
@@ -92,8 +93,10 @@ public partial class PlaylistClient
     ///     1,
     ///     new GetPlaylistsRequest
     ///     {
+    ///         Limit = 1,
     ///         OtherField = "otherField",
     ///         MultiLineDocs = "multiLineDocs",
+    ///         OptionalMultipleField = ["optionalMultipleField"],
     ///         MultipleField = ["multipleField"],
     ///     }
     /// );
@@ -196,7 +199,15 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.UpdatePlaylistAsync(1, "playlistId", null);
+    /// await client.Playlist.UpdatePlaylistAsync(
+    ///     1,
+    ///     "playlistId",
+    ///     new UpdatePlaylistRequest
+    ///     {
+    ///         Name = "name",
+    ///         Problems = new List&lt;string&gt;() { "problems", "problems" },
+    ///     }
+    /// );
     /// </code>
     /// </example>
     public async Task<Playlist?> UpdatePlaylistAsync(

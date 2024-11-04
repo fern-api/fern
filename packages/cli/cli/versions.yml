@@ -1,8 +1,57 @@
 - changelogEntry:
-  - summary: |
-      - fixes how `write-docs-definition` handles urls containing `https://` prefix
-      - fixes how the docs definition resolver handles changelogs under api reference nodes
-    type: fix
+    - summary: |
+        - fixes how `write-docs-definition` handles urls containing `https://` prefix
+        - fixes how the docs definition resolver handles changelogs under api reference nodes
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc32
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses webhook examples and generates examples for webhooks when none are provided.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc31
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field for primitive schema types like `string`, `number`, `array` and `boolean`.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc30
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field that may be present on OpenAPI 3.1 schemas.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc29
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now skips headers in a case-insensitive way (e.g. both "Content-Type" and "content-type" are skipped).
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc28
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now brings in endpoint level descriptions. 
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc27
+
+- changelogEntry:
+    - summary: |
+        `fern check` handles validating unions that contain base properties. 
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc26
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly). 
+      type: internal
   irVersion: 53
   version: 0.45.0-rc25
 

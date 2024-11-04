@@ -6,7 +6,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-[JsonConverter(typeof(StringEnumSerializer<FileInfo>))]
+[JsonConverter(typeof(EnumSerializer<FileInfo>))]
 public enum FileInfo
 {
     [EnumMember(Value = "REGULAR")]

@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_user.list"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.list",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.list(limit: 1)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_user.list"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.list",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.list(limit: 1)",
                 "type": "ruby"
             }
         },
@@ -51,7 +51,7 @@
                 "identifierOverride": "endpoint_user/events.listEvents"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.list_events",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.list_events(limit: 1)",
                 "type": "ruby"
             }
         },
@@ -62,7 +62,7 @@
                 "identifierOverride": "endpoint_user/events.listEvents"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.list_events",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.list_events(limit: 1)",
                 "type": "ruby"
             }
         },

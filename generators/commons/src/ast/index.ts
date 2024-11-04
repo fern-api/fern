@@ -1,5 +1,6 @@
 export { AbstractAstNode } from "./AbstractAstNode";
 export { AbstractWriter } from "./AbstractWriter";
+export { AbstractFormatter, NopFormatter } from "./AbstractFormatter";
 export { CodeBlock } from "./CodeBlock";
 export {
     type Argument,

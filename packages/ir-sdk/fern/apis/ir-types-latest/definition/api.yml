@@ -1,5 +1,9 @@
 name: ir
-docs: |
- - Add `float` primitive type.
- - Add a `PrimitiveTypeV2` variant for every `PrimitiveTypeV1`.
- - Add gRPC/Protobuf types.
+audiences:
+  - dynamic
+
+# Notes:
+# - Add dynamic IR and generator-exec config.
+# - Add `float` primitive type.
+# - Add a `PrimitiveTypeV2` variant for every `PrimitiveTypeV1`.
+# - Add gRPC/Protobuf types.

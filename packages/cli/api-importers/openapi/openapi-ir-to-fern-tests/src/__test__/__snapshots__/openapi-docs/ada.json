@@ -521,6 +521,9 @@ types:
                 "docs": "OK",
                 "type": "root.EndUser",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "getEndUsers": {
               "auth": true,
@@ -534,6 +537,10 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "65a17e3f43bec88e2792d0eb",
+                    "limit": 8,
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -560,6 +567,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.EndUsers",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "updateEndUserById": {
@@ -591,6 +601,9 @@ types:
                 "docs": "OK",
                 "type": "root.EndUser",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -609,6 +622,8 @@ service:
       method: GET
       auth: true
       docs: Get a specific end user
+      source:
+        openapi: ../openapi.json
       path-parameters:
         end_user_id:
           type: string
@@ -633,6 +648,8 @@ service:
       method: PATCH
       auth: true
       docs: Update an end user. Request data is limited to 4KB in size total.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         end_user_id:
           type: string
@@ -656,6 +673,8 @@ service:
       method: GET
       auth: true
       docs: Get multiple end users
+      source:
+        openapi: ../openapi.json
       display-name: Get multiple end users by ID
       request:
         name: GetEndUsersRequest
@@ -677,7 +696,10 @@ service:
         - root.GetEndUsersRequestTooManyRequestsError
         - root.GetEndUsersRequestInternalServerError
       examples:
-        - response:
+        - query-parameters:
+            cursor: 65a17e3f43bec88e2792d0eb
+            limit: 8
+          response:
             body:
               key: value
   source:

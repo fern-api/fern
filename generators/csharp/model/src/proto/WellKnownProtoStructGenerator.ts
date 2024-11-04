@@ -39,7 +39,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         const class_ = csharp.class_({
             name: this.classReference.name,
             namespace: this.classReference.namespace,
-            access: "public",
+            access: csharp.Access.Public,
             sealed: true,
             parentClassReference: csharp.Type.map(
                 csharp.Type.string(),
@@ -67,14 +67,14 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
 
     private getDefaultConstructor(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: csharp.Access.Public,
             parameters: []
         };
     }
 
     private getKeyValuePairConstructor(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "value",
@@ -106,7 +106,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     private getToProtoMethod(): csharp.Method {
         return csharp.method({
             name: "ToProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             isAsync: false,
             parameters: [],
             return_: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE),
@@ -136,7 +136,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     private getFromProtoMethod(): csharp.Method {
         return csharp.method({
             name: "FromProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             type: csharp.MethodType.STATIC,
             isAsync: false,
             parameters: [

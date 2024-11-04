@@ -6,7 +6,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<ExecutionSessionStatus>))]
+[JsonConverter(typeof(EnumSerializer<ExecutionSessionStatus>))]
 public enum ExecutionSessionStatus
 {
     [EnumMember(Value = "CREATING_CONTAINER")]

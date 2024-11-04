@@ -20,7 +20,7 @@ test:
     runCommand: node model/dist/cli.cjs
 
 language: php
-generatorType: SDK
+generatorType: Model
 defaultOutputMode: github
 fixtures: {}
 scripts:

@@ -867,6 +867,7 @@ func (f *fileWriter) WriteClient(
 	irAuth *ir.ApiAuth,
 	irEndpoints []*ir.HttpEndpoint,
 	headers []*ir.HttpHeader,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
@@ -886,7 +887,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, idempotencyHeaders, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, serviceHeaders, idempotencyHeaders, receiver)
 		if err != nil {
 			return nil, err
 		}
@@ -1819,9 +1820,6 @@ func getEndpointParameters(
 	}
 
 	for _, queryParameter := range example.QueryParameters {
-		if isQueryParameterLiteral(endpoint, queryParameter.Name.WireValue) {
-			continue
-		}
 		exampleValue := f.snippetWriter.GetSnippetForExampleTypeReference(queryParameter.Value)
 		if isQueryParameterAllowMultiple(endpoint, queryParameter.Name.WireValue) {
 			// This query parameter allows multiple elements, so we need to surround the example
@@ -2074,6 +2072,7 @@ func (f *fileWriter) endpointFromIR(
 	fernFilepath *ir.FernFilepath,
 	irEndpoint *ir.HttpEndpoint,
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	receiver string,
 ) (*endpoint, error) {
@@ -2098,6 +2097,12 @@ func (f *fileWriter) endpointFromIR(
 		if !ok {
 			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
 		}
+		if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
+			value := literalToValue(literal)
+			pathParameterNames = append(pathParameterNames, value)
+			pathParameterToScopedName[part.PathParameter] = value
+			continue
+		}
 		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 		pathParameterNames = append(pathParameterNames, pathParameterName)
 		pathParameterToScopedName[part.PathParameter] = pathParameterName
@@ -2111,6 +2116,9 @@ func (f *fileWriter) endpointFromIR(
 			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
 		}
 		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+		if isLiteralType(pathParameter.ValueType, f.types) {
+			continue
+		}
 		signatureParameters = append(
 			signatureParameters,
 			&signatureParameter{
@@ -2160,6 +2168,7 @@ func (f *fileWriter) endpointFromIR(
 		requestValueName          = ""
 		requestIsBytes            = false
 		requestIsOptional         = false
+		headers                   = []*ir.HttpHeader{}
 	)
 	if irEndpoint.SdkRequest != nil {
 		if needsRequestParameter(irEndpoint) {
@@ -2194,6 +2203,7 @@ func (f *fileWriter) endpointFromIR(
 						irEndpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
 					)
 				}
+				headers = append(serviceHeaders, irEndpoint.Headers...)
 			}
 			signatureParameters = append(
 				signatureParameters,
@@ -2396,7 +2406,7 @@ func (f *fileWriter) endpointFromIR(
 		Idempotent:                  irEndpoint.Idempotent,
 		Errors:                      irEndpoint.Errors,
 		QueryParameters:             irEndpoint.QueryParameters,
-		Headers:                     irEndpoint.Headers,
+		Headers:                     headers,
 		IdempotencyHeaders:          idempotencyHeaders,
 		FilePropertyInfo:            filePropertyInfo,
 		FileProperties:              fileProperties,
@@ -2508,6 +2518,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 func (f *fileWriter) WriteRequestType(
 	fernFilepath *ir.FernFilepath,
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	includeGenericOptionals bool,
 ) error {
@@ -2522,7 +2533,7 @@ func (f *fileWriter) WriteRequestType(
 
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
-	for _, header := range endpoint.Headers {
+	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		f.WriteDocs(header.Docs)
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
 			literals = append(
@@ -3200,6 +3211,25 @@ func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
 		return maybePrimitive(typeReference.Container.Optional)
 	}
 	return ""
+}
+
+// maybeLiteral recurses into the given value type, returning its underlying literal
+// value, if any.
+func maybeLiteral(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.Literal {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeLiteral(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+		return maybeLiteral(typeReference.Container.Optional, types)
+	}
+	if typeReference.Container != nil && typeReference.Container.Literal != nil {
+		return typeReference.Container.Literal
+	}
+	return nil
 }
 
 // isLiteralType returns true if the given type reference is a literal.

@@ -6934,6 +6934,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedApiClientAccessToken",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -6952,6 +6955,8 @@ types:
       docs: >-
         Get the Bearer Access Token by giving the Suger API Client ID & Client
         Secret.
+      source:
+        openapi: ../swagger.json
       display-name: get api access token
       request:
         name: SharedGetApiClientAccessTokenParams
@@ -7068,6 +7073,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedIdentityBuyer",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListBuyersByOrganization": {
               "auth": true,
@@ -7114,6 +7122,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedIdentityBuyer>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "UpdateBuyerNameDescription": {
@@ -7205,6 +7216,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedIdentityBuyer",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -7223,6 +7237,8 @@ service:
       method: GET
       auth: true
       docs: list all buyers by the given organization
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -7255,6 +7271,8 @@ service:
       method: GET
       auth: true
       docs: get buyer by the given organization and buyer id
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -7311,6 +7329,8 @@ service:
       method: PATCH
       auth: true
       docs: update buyer name and description by the given organization and buyer id
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -7450,6 +7470,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedAddEntitlementCreditResponse",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "GetEntitlement": {
               "auth": true,
@@ -7539,6 +7562,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadEntitlement",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListEntitlements": {
               "auth": true,
@@ -7624,6 +7650,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlement>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListEntitlementsByBuyer": {
@@ -7716,6 +7745,9 @@ service:
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListEntitlementsByOffer": {
               "auth": true,
@@ -7806,6 +7838,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlement>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListEntitlementsByPartner": {
@@ -7898,6 +7933,9 @@ service:
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlement>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListEntitlementsByProduct": {
               "auth": true,
@@ -7988,6 +8026,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlement>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "UpdateEntitlementName": {
@@ -8092,6 +8133,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadEntitlement",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -8122,6 +8166,8 @@ service:
       method: GET
       auth: true
       docs: List all entitlements of the given buyer
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8190,6 +8236,8 @@ service:
       method: GET
       auth: true
       docs: List all entitlements under the organization
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8254,6 +8302,8 @@ service:
       method: GET
       auth: true
       docs: Get the entitlement by ID
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8325,6 +8375,8 @@ service:
         Add the credit amount to the given Entitlement. The credit amount is
         accumulated & saved in the current Entitlement Term of the gvien
         Entitlement.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8369,6 +8421,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the name of the given Entitlement
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8446,6 +8500,8 @@ service:
       method: GET
       auth: true
       docs: List all entitlements under the given offer
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8514,6 +8570,8 @@ service:
       method: GET
       auth: true
       docs: List all entitlements under the given partner
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8582,6 +8640,8 @@ service:
       method: GET
       auth: true
       docs: List all entitlements under the given product
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8760,6 +8820,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedWorkloadEntitlementTerm",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListEntitlementTerms": {
               "auth": true,
@@ -8851,6 +8914,9 @@ types:
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadEntitlementTerm>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -8869,6 +8935,8 @@ service:
       method: GET
       auth: true
       docs: List all Entitlement Terms of the given Entitlement
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -8937,6 +9005,8 @@ service:
       method: GET
       auth: true
       docs: Get the entitlement term by ID
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -9144,6 +9214,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedIdentityIntegration",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "DeleteIntegration": {
               "auth": true,
@@ -9184,6 +9257,9 @@ service:
               "response": {
                 "docs": "Empty string if deletion is successful",
                 "type": "string",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "GetIntegration": {
@@ -9302,6 +9378,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedIdentityIntegration",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListIntegrationsByOrganization": {
               "auth": true,
@@ -9343,6 +9422,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedIdentityIntegration>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "UpdateIntegration": {
@@ -9489,6 +9571,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedIdentityIntegration",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "VerifyIntegration": {
               "auth": true,
@@ -9529,6 +9614,9 @@ service:
               "response": {
                 "docs": "whether it is verified or not",
                 "type": "boolean",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
           },
@@ -9646,6 +9734,8 @@ service:
       method: GET
       auth: true
       docs: List all integrations for the given organization.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -9676,6 +9766,8 @@ service:
       docs: >-
         For each organization, partner & service, there should be at most one
         integration.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -9775,6 +9867,8 @@ service:
       method: GET
       auth: true
       docs: Get the integration for the given organization, partner & service.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -9867,6 +9961,8 @@ service:
       method: DELETE
       auth: true
       docs: delete the integration for the given orgId, partner and service.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -9895,6 +9991,8 @@ service:
       method: PATCH
       auth: true
       docs: Update the given integration.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -10005,6 +10103,8 @@ service:
       method: POST
       auth: true
       docs: Verify the given integration, check whether it works correctly.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -10161,6 +10261,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedMeteringUsageRecordGroup",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "GetUsageRecordReport": {
               "auth": true,
@@ -10253,6 +10356,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedMeteringUsageRecordReport",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListUsageRecordGroupsByEntitlement": {
               "auth": true,
@@ -10328,6 +10434,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordGroupsResponse",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListUsageRecordGroupsByOrganization": {
               "auth": true,
@@ -10397,6 +10506,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordGroupsResponse",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListUsageRecordGroupsByProduct": {
@@ -10473,6 +10585,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordGroupsResponse",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListUsageRecordReportsByEntitlement": {
               "auth": true,
@@ -10547,6 +10662,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordReportsResponse",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListUsageRecordReportsByOrganization": {
               "auth": true,
@@ -10611,6 +10729,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordReportsResponse",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListUsageRecordReportsByProduct": {
@@ -10681,6 +10802,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.SharedListUsageRecordReportsResponse",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ReportUsageRecordGroup": {
@@ -10765,6 +10889,9 @@ types:
                 "docs": "OK",
                 "type": "root.SharedMeteringUsageRecordGroup",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -10783,6 +10910,8 @@ service:
       method: GET
       auth: true
       docs: list UsageRecordGroups for the given organization and entitlement
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -10840,6 +10969,8 @@ service:
         It is recommended to provide the ID in the request body
         CreateUsageRecordGroupParams, so the report can be deduplicated. All
         duplicate report will return error code 409.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -10902,6 +11033,8 @@ service:
       docs: >-
         List usageRecordReports for the given organization and entitlement.
         Filter by entitlementTermId if it is given.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -10957,6 +11090,8 @@ service:
       method: GET
       auth: true
       docs: list UsageRecordGroups for the given organization and product
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11011,6 +11146,8 @@ service:
       method: GET
       auth: true
       docs: List usageRecordReports for the given organization and product
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11061,6 +11198,8 @@ service:
       method: GET
       auth: true
       docs: list UsageRecordGroups under the given organization.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11111,6 +11250,8 @@ service:
       method: GET
       auth: true
       docs: get UsageRecordGroup for the given organization and usageRecordGroup ID
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11148,6 +11289,8 @@ service:
       method: GET
       auth: true
       docs: List usageRecordReports under the given organization
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11196,6 +11339,8 @@ service:
       docs: >-
         get the usageRecordReport for a given organization and usageRecordReport
         ID.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -11305,6 +11450,9 @@ service:
               "response": {
                 "docs": "Empty string if cancellation is successful",
                 "type": "string",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "CreateOffer": {
@@ -11465,6 +11613,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadOffer",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "CreateOrUpdateDraftOffer": {
               "auth": true,
@@ -11624,6 +11775,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadOffer",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "DeleteOffer": {
               "auth": true,
@@ -11659,6 +11813,9 @@ service:
               "response": {
                 "docs": "Empty string if deletion is successful",
                 "type": "string",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "GetOffer": {
@@ -11818,6 +11975,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadOffer",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListOffersByOrganization": {
               "auth": true,
@@ -11908,6 +12068,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadOffer>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListOffersByPartner": {
@@ -12018,6 +12181,9 @@ service:
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadOffer>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListOffersByProduct": {
               "auth": true,
@@ -12114,6 +12280,9 @@ service:
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadOffer>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -12146,6 +12315,8 @@ service:
       docs: >-
         Create a new draft offer or update the existing draft offer. When
         updating draft offer, the offer.ID is required.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12268,6 +12439,8 @@ service:
       method: GET
       auth: true
       docs: List all offers under the given organization.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12334,6 +12507,8 @@ service:
       method: POST
       auth: true
       docs: Create a private offer under the given organization.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12456,6 +12631,8 @@ service:
       method: GET
       auth: true
       docs: Get the offer by the given offer ID.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12579,6 +12756,8 @@ service:
       docs: >-
         Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be
         deleted.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12605,6 +12784,8 @@ service:
       docs: >-
         Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is
         allowed to cancel.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12630,6 +12811,8 @@ service:
       method: GET
       auth: false
       docs: List all offers under the given organization & cloud partner.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12709,6 +12892,8 @@ service:
       method: GET
       auth: true
       docs: List all offers under the given organization & product.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12857,6 +13042,9 @@ types:
                 "docs": "OK",
                 "type": "list<root.SharedOperation>",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -12878,6 +13066,8 @@ service:
         List all long running operations under the given organization, offer,
         entitlement, crmOpportunity or partnerOpportunity. Only provide one
         filter on a request.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -12963,6 +13153,9 @@ service:
               "response": {
                 "docs": "Empty string if deletion is successful",
                 "type": "string",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "GetProduct": {
@@ -13079,6 +13272,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadProduct",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "ListProductMeteringDimensions": {
               "auth": true,
@@ -13124,6 +13320,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedAwsSaasProductDimension>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListProductsByOrganization": {
@@ -13189,6 +13388,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadProduct>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListProductsByPartner": {
@@ -13259,6 +13461,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "list<root.SharedWorkloadProduct>",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "UpdateProduct": {
@@ -13393,6 +13598,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedWorkloadProduct",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -13431,6 +13639,8 @@ service:
       method: GET
       auth: true
       docs: list all products under the given organization and cloud partner
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13481,6 +13691,8 @@ service:
       method: GET
       auth: true
       docs: list all products under the given organization
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13527,6 +13739,8 @@ service:
       method: GET
       auth: true
       docs: get product by product id
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13611,6 +13825,8 @@ service:
       method: DELETE
       auth: true
       docs: only the product with status = "CREATE_FAILED" is allowed to be deleted.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13635,6 +13851,8 @@ service:
       method: PATCH
       auth: true
       docs: currently only the Fulfillment URL is allowed to update via this API.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13731,6 +13949,8 @@ service:
       method: GET
       auth: true
       docs: list all metering dimensions of the given product
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -13875,6 +14095,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedRevenueReport",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
             "GetUsageReport": {
               "auth": true,
@@ -13940,6 +14163,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "root.SharedUsageReport",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListRevenueRecordDetails": {
@@ -14015,6 +14241,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "root.SharedListRevenueRecordDetailsResponse",
+              },
+              "source": {
+                "openapi": "../swagger.json",
               },
             },
             "ListRevenueRecords": {
@@ -14112,6 +14341,9 @@ service:
                 "docs": "OK",
                 "type": "root.SharedListRevenueRecordsResponse",
               },
+              "source": {
+                "openapi": "../swagger.json",
+              },
             },
           },
           "source": {
@@ -14188,6 +14420,8 @@ service:
       docs: >-
         list the revenue records for the given organization, product,
         entitlement, or buyer.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -14263,6 +14497,8 @@ service:
       docs: >-
         list the raw revenue record details for the given organization, product,
         entitlement, or buyer.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -14319,6 +14555,8 @@ service:
       docs: >-
         Get the revenue report of the given organization, product, entitlement,
         or buyer.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string
@@ -14402,6 +14640,8 @@ service:
       docs: >-
         get the daily usage report of the given entitlement, the default
         timespan is lifetime.
+      source:
+        openapi: ../swagger.json
       path-parameters:
         orgId:
           type: string

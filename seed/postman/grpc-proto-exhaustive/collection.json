@@ -1,23 +1,159 @@
 {
   "info": {
-    "name": "\"\"",
+    "name": "Test API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
   "variable": [
     {
       "key": "baseUrl",
+      "value": "https://localhost",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
       "value": "",
       "type": "string"
     }
   ],
-  "auth": null,
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "X-API-Key",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
   "item": [
     {
       "_type": "container",
       "description": null,
       "name": "DataService",
       "item": [
+        {
+          "_type": "endpoint",
+          "name": "Foo",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"key\": \"value\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
         {
           "_type": "endpoint",
           "name": "Upload",
@@ -35,6 +171,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -72,6 +214,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -113,6 +261,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -122,7 +276,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ]\n        },\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ]\n        }\n    ]\n}",
+                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -154,6 +308,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -193,6 +353,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -234,6 +400,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -243,7 +415,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"ids\": [\n        \"ids\",\n        \"ids\"\n    ],\n    \"deleteAll\": true,\n    \"namespace\": \"namespace\",\n    \"filter\": {\n        \"filter\": 1.1\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -275,6 +447,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -313,6 +491,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -355,6 +539,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -364,7 +554,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"filter\": {\n        \"filter\": 1.1\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -397,6 +587,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -427,6 +623,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -447,7 +649,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/fetch",
+                  "raw": "{{baseUrl}}/data/fetch?ids=ids&namespace=namespace",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -455,10 +657,27 @@
                     "data",
                     "fetch"
                   ],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "description": null,
+                      "value": "ids"
+                    },
+                    {
+                      "key": "namespace",
+                      "description": null,
+                      "value": "namespace"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -494,6 +713,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -524,6 +749,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -544,7 +775,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/list",
+                  "raw": "{{baseUrl}}/data/list?prefix=prefix&limit=1&paginationToken=paginationToken&namespace=namespace",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -552,10 +783,37 @@
                     "data",
                     "list"
                   ],
-                  "query": [],
+                  "query": [
+                    {
+                      "key": "prefix",
+                      "description": null,
+                      "value": "prefix"
+                    },
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "paginationToken",
+                      "description": null,
+                      "value": "paginationToken"
+                    },
+                    {
+                      "key": "namespace",
+                      "description": null,
+                      "value": "namespace"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -590,6 +848,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -628,6 +892,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -670,6 +940,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -679,7 +955,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"topK\": 1\n}",
+                  "raw": "{\n    \"namespace\": \"namespace\",\n    \"topK\": 1,\n    \"filter\": {\n        \"filter\": 1.1\n    },\n    \"includeValues\": true,\n    \"includeMetadata\": true,\n    \"queries\": [\n        {\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"topK\": 1,\n            \"namespace\": \"namespace\",\n            \"filter\": {\n                \"filter\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"topK\": 1,\n            \"namespace\": \"namespace\",\n            \"filter\": {\n                \"filter\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"column\": [\n        1.1,\n        1.1\n    ],\n    \"id\": \"id\",\n    \"indexedData\": {\n        \"indices\": [\n            1,\n            1\n        ],\n        \"values\": [\n            1.1,\n            1.1\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -711,6 +987,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -749,6 +1031,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -791,6 +1079,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -800,7 +1094,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"id\": \"id\"\n}",
+                  "raw": "{\n    \"id\": \"id\",\n    \"values\": [\n        1.1,\n        1.1\n    ],\n    \"setMetadata\": {\n        \"setMetadata\": 1.1\n    },\n    \"namespace\": \"namespace\",\n    \"indexedData\": {\n        \"indices\": [\n            1,\n            1\n        ],\n        \"values\": [\n            1.1,\n            1.1\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"

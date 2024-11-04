@@ -29,22 +29,20 @@ class PathParamClient
 
     /**
      * @param value-of<Operand> $operand
-     * @param ?value-of<Operand> $maybeOperand
      * @param value-of<Color>|value-of<Operand> $operandOrColor
-     * @param value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
      * @param ?array{
      *   baseUrl?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(string $operand, ?string $maybeOperand = null, string $operandOrColor, string|null $maybeOperandOrColor = null, ?array $options = null): void
+    public function send(string $operand, string $operandOrColor, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "path/$operand/$maybeOperand/$operandOrColor/$maybeOperandOrColor",
+                    path: "path/$operand/$operandOrColor",
                     method: HttpMethod::POST,
                 ),
             );

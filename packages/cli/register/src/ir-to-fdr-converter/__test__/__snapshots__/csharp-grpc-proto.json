@@ -1,0 +1,343 @@
+{
+  "types": {
+    "type_:CreateResponse": {
+      "name": "CreateResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "user",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:UserModel"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:UserModel": {
+      "name": "UserModel",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "username",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          },
+          {
+            "key": "weight",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "minimum": 2.2250738585072014e-308,
+                  "maximum": 1.7976931348623157e+308,
+                  "default": 0
+                }
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Metadata"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:Metadata": {
+      "name": "Metadata",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:MetadataValue"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:MetadataValue": {
+      "name": "MetadataValue",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_userservice": {
+      "subpackageId": "subpackage_userservice",
+      "displayName": "UserService",
+      "name": "userservice",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "create",
+          "originalEndpointId": "endpoint_userservice.create",
+          "name": "Create",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/users"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "username",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "email",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "age",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "uint"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "weight",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "minimum": 2.2250738585072014e-308,
+                          "maximum": 1.7976931348623157e+308,
+                          "default": 0
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "metadata",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Metadata"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:CreateResponse"
+              }
+            },
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "user": {
+                  "username": "username",
+                  "email": "email",
+                  "age": 1,
+                  "weight": 1.1,
+                  "metadata": {
+                    "key": 1.1
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "user": {
+                    "username": "username",
+                    "email": "email",
+                    "age": 1,
+                    "weight": 1.1,
+                    "metadata": {
+                      "key": 1.1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:CreateResponse",
+      "type_:UserModel",
+      "type_:Metadata",
+      "type_:MetadataValue"
+    ],
+    "subpackages": [
+      "subpackage_userservice"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

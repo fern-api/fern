@@ -32,7 +32,7 @@ const client = new SeedAnyAuthClient({
 await client.auth.getToken({
     clientId: "client_id",
     clientSecret: "client_secret",
-    scope: undefined,
+    scope: "scope",
 });
 ```
 

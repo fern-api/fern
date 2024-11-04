@@ -9,6 +9,7 @@ import datetime
 
 async def test_get_resource(client: SeedMixedCase, async_client: AsyncSeedMixedCase) -> None:
     expected_response: typing.Any = {
+        "status": "ACTIVE",
         "resource_type": "user",
         "userName": "username",
         "metadata_tags": ["tag1", "tag2"],
@@ -26,6 +27,7 @@ async def test_list_resources(client: SeedMixedCase, async_client: AsyncSeedMixe
     expected_response: typing.Any = [
         {
             "resource_type": "user",
+            "status": "ACTIVE",
             "userName": "username",
             "metadata_tags": ["tag1", "tag2"],
             "EXTRA_PROPERTIES": {"foo": "bar", "baz": "qux"},

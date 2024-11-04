@@ -36,9 +36,9 @@ export declare namespace EndpointResponseExample {
 export const EndpointResponseExample = {
     withStreaming: (value: FernOpenapiIr.FullExample[]): FernOpenapiIr.EndpointResponseExample.WithStreaming => {
         return {
-            value,
+            value: value,
             type: "withStreaming",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.EndpointResponseExample.WithStreaming,
                 visitor: FernOpenapiIr.EndpointResponseExample._Visitor<_Result>
             ) {
@@ -49,9 +49,9 @@ export const EndpointResponseExample = {
 
     withoutStreaming: (value: FernOpenapiIr.FullExample): FernOpenapiIr.EndpointResponseExample.WithoutStreaming => {
         return {
-            value,
+            value: value,
             type: "withoutStreaming",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.EndpointResponseExample.WithoutStreaming,
                 visitor: FernOpenapiIr.EndpointResponseExample._Visitor<_Result>
             ) {

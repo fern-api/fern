@@ -41,8 +41,8 @@ export class UserPosthogManager implements PosthogManager {
         });
     }
 
-    public flush(): void {
-        this.posthog.flush();
+    public async flush(): Promise<void> {
+        await this.posthog.flush();
     }
 
     private persistedDistinctId: string | undefined;

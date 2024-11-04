@@ -24,7 +24,7 @@ export class BaseOptionsGenerator {
             })
         );
         return csharp.field({
-            access: "public",
+            access: csharp.Access.Public,
             name: "HttpClient",
             get: true,
             init: true,
@@ -36,7 +36,7 @@ export class BaseOptionsGenerator {
 
     public getHttpHeadersField(): csharp.Field {
         return csharp.field({
-            access: "internal",
+            access: csharp.Access.Internal,
             name: "Headers",
             get: true,
             init: true,
@@ -49,7 +49,7 @@ export class BaseOptionsGenerator {
     public getMaxRetriesField({ optional, includeInitializer }: OptionArgs): csharp.Field {
         const type = csharp.Type.integer();
         return csharp.field({
-            access: "public",
+            access: csharp.Access.Public,
             name: "MaxRetries",
             get: true,
             init: true,
@@ -67,7 +67,7 @@ export class BaseOptionsGenerator {
             })
         );
         return csharp.field({
-            access: "public",
+            access: csharp.Access.Public,
             name: "Timeout",
             get: true,
             init: true,

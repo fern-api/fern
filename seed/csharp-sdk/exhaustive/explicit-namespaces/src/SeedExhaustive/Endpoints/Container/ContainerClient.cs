@@ -21,7 +21,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
-    ///     new List<string>() { "string", "string" }
+    ///     new List&lt;string&gt;() { "string", "string" }
     /// );
     /// </code>
     /// </example>
@@ -65,7 +65,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-    ///     new List<ObjectWithRequiredField>()
+    ///     new List&lt;ObjectWithRequiredField&gt;()
     ///     {
     ///         new ObjectWithRequiredField { String = "string" },
     ///         new ObjectWithRequiredField { String = "string" },
@@ -113,7 +113,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
-    ///     new HashSet<string>() { "string" }
+    ///     new HashSet&lt;string&gt;() { "string" }
     /// );
     /// </code>
     /// </example>
@@ -157,7 +157,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
-    ///     new HashSet<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
+    ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
     /// );
     /// </code>
     /// </example>
@@ -201,7 +201,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-    ///     new Dictionary<string, string>() { { "string", "string" } }
+    ///     new Dictionary&lt;string, string&gt;() { { "string", "string" } }
     /// );
     /// </code>
     /// </example>
@@ -245,7 +245,7 @@ public partial class ContainerClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
-    ///     new Dictionary<string, ObjectWithRequiredField>()
+    ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
     ///     {
     ///         {
     ///             "string",
@@ -298,7 +298,9 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(null);
+    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
     /// </code>
     /// </example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(

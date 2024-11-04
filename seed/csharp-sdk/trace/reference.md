@@ -272,19 +272,57 @@ await client.Admin.StoreTracedTestCaseAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = null,
-                ExpressionLocation = null,
-                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-                Stdout = null,
+                ReturnValue = 1,
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
+                {
+                    NumStackFrames = 1,
+                    TopStackFrame = new StackFrame
+                    {
+                        MethodName = "methodName",
+                        LineNumber = 1,
+                        Scopes = new List<Scope>()
+                        {
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                        },
+                    },
+                },
+                Stdout = "stdout",
             },
             new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = null,
-                ExpressionLocation = null,
-                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-                Stdout = null,
+                ReturnValue = 1,
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
+                {
+                    NumStackFrames = 1,
+                    TopStackFrame = new StackFrame
+                    {
+                        MethodName = "methodName",
+                        LineNumber = 1,
+                        Scopes = new List<Scope>()
+                        {
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                        },
+                    },
+                },
+                Stdout = "stdout",
             },
         },
     }
@@ -354,20 +392,58 @@ await client.Admin.StoreTracedTestCaseV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = null,
-            ExpressionLocation = null,
-            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-            Stdout = null,
+            ReturnValue = 1,
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
+            {
+                NumStackFrames = 1,
+                TopStackFrame = new StackFrame
+                {
+                    MethodName = "methodName",
+                    LineNumber = 1,
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                    },
+                },
+            },
+            Stdout = "stdout",
         },
         new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = null,
-            ExpressionLocation = null,
-            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-            Stdout = null,
+            ReturnValue = 1,
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
+            {
+                NumStackFrames = 1,
+                TopStackFrame = new StackFrame
+                {
+                    MethodName = "methodName",
+                    LineNumber = 1,
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                    },
+                },
+            },
+            Stdout = "stdout",
         },
     }
 );
@@ -432,8 +508,18 @@ await client.Admin.StoreTracedWorkspaceAsync(
     {
         WorkspaceRunDetails = new WorkspaceRunDetails
         {
-            ExceptionV2 = null,
-            Exception = null,
+            ExceptionV2 = new ExceptionInfo
+            {
+                ExceptionType = "exceptionType",
+                ExceptionMessage = "exceptionMessage",
+                ExceptionStacktrace = "exceptionStacktrace",
+            },
+            Exception = new ExceptionInfo
+            {
+                ExceptionType = "exceptionType",
+                ExceptionMessage = "exceptionMessage",
+                ExceptionStacktrace = "exceptionStacktrace",
+            },
             Stdout = "stdout",
         },
         TraceResponses = new List<TraceResponse>()
@@ -442,19 +528,57 @@ await client.Admin.StoreTracedWorkspaceAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = null,
-                ExpressionLocation = null,
-                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-                Stdout = null,
+                ReturnValue = 1,
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
+                {
+                    NumStackFrames = 1,
+                    TopStackFrame = new StackFrame
+                    {
+                        MethodName = "methodName",
+                        LineNumber = 1,
+                        Scopes = new List<Scope>()
+                        {
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                        },
+                    },
+                },
+                Stdout = "stdout",
             },
             new TraceResponse
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = null,
-                ExpressionLocation = null,
-                Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-                Stdout = null,
+                ReturnValue = 1,
+                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                Stack = new StackInformation
+                {
+                    NumStackFrames = 1,
+                    TopStackFrame = new StackFrame
+                    {
+                        MethodName = "methodName",
+                        LineNumber = 1,
+                        Scopes = new List<Scope>()
+                        {
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                            new Scope
+                            {
+                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            },
+                        },
+                    },
+                },
+                Stdout = "stdout",
             },
         },
     }
@@ -515,20 +639,58 @@ await client.Admin.StoreTracedWorkspaceV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = null,
-            ExpressionLocation = null,
-            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-            Stdout = null,
+            ReturnValue = 1,
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
+            {
+                NumStackFrames = 1,
+                TopStackFrame = new StackFrame
+                {
+                    MethodName = "methodName",
+                    LineNumber = 1,
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                    },
+                },
+            },
+            Stdout = "stdout",
         },
         new TraceResponseV2
         {
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = null,
-            ExpressionLocation = null,
-            Stack = new StackInformation { NumStackFrames = 1, TopStackFrame = null },
-            Stdout = null,
+            ReturnValue = 1,
+            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+            Stack = new StackInformation
+            {
+                NumStackFrames = 1,
+                TopStackFrame = new StackFrame
+                {
+                    MethodName = "methodName",
+                    LineNumber = 1,
+                    Scopes = new List<Scope>()
+                    {
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                        new Scope
+                        {
+                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                        },
+                    },
+                },
+            },
+            Stdout = "stdout",
         },
     }
 );
@@ -708,6 +870,7 @@ await client.Playlist.CreatePlaylistAsync(
     new CreatePlaylistRequest
     {
         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Body = new PlaylistCreateRequest
         {
             Name = "name",
@@ -780,8 +943,10 @@ await client.Playlist.GetPlaylistsAsync(
     1,
     new GetPlaylistsRequest
     {
+        Limit = 1,
         OtherField = "otherField",
         MultiLineDocs = "multiLineDocs",
+        OptionalMultipleField = ["optionalMultipleField"],
         MultipleField = ["multipleField"],
     }
 );
@@ -908,7 +1073,15 @@ Updates a playlist
 <dd>
 
 ```csharp
-await client.Playlist.UpdatePlaylistAsync(1, "playlistId", null);
+await client.Playlist.UpdatePlaylistAsync(
+    1,
+    "playlistId",
+    new UpdatePlaylistRequest
+    {
+        Name = "name",
+        Problems = new List<string>() { "problems", "problems" },
+    }
+);
 ```
 </dd>
 </dl>

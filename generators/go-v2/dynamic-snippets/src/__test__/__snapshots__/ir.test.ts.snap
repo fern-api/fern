@@ -55,7 +55,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetToken(
+	client.Auth.GetToken(
 		context.TODO(),
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
@@ -83,7 +83,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Get(
+	client.User.Get(
 		context.TODO(),
 	)
 }
@@ -100,7 +100,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Post(
+	client.Service.Post(
 		context.TODO(),
 		"pathParam",
 		"serviceParam",
@@ -121,7 +121,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.FolderA.GetDirectThread(
+	client.FolderA.Service.GetDirectThread(
 		context.TODO(),
 	)
 }
@@ -137,7 +137,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.FolderD.GetDirectThread(
+	client.FolderD.Service.GetDirectThread(
 		context.TODO(),
 	)
 }
@@ -154,7 +154,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Find(
+	client.Foo.Find(
 		context.TODO(),
 		&acme.FindRequest{
 			OptionalString: acme.String(
@@ -187,7 +187,7 @@ func do() {
 			"<value>",
 		),
 	)
-	client.GetWithAPIKey(
+	client.Service.GetWithAPIKey(
 		context.TODO(),
 	)
 }
@@ -209,7 +209,7 @@ func do() {
 			"<value>",
 		),
 	)
-	client.GetWithHeader(
+	client.Service.GetWithHeader(
 		context.TODO(),
 		&acme.HeaderAuthRequest{
 			XEndpointHeader: "X-Endpoint-Header",
@@ -235,7 +235,7 @@ func do() {
 			"<password>",
 		),
 	)
-	client.GetWithBasicAuth(
+	client.BasicAuth.GetWithBasicAuth(
 		context.TODO(),
 	)
 }
@@ -257,7 +257,7 @@ func do() {
 			"<password>",
 		),
 	)
-	client.PostWithBasicAuth(
+	client.BasicAuth.PostWithBasicAuth(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -283,7 +283,7 @@ func do() {
 			"<password>",
 		),
 	)
-	client.GetWithBasicAuth(
+	client.BasicAuth.GetWithBasicAuth(
 		context.TODO(),
 	)
 }
@@ -305,7 +305,7 @@ func do() {
 			"<password>",
 		),
 	)
-	client.PostWithBasicAuth(
+	client.BasicAuth.PostWithBasicAuth(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -330,7 +330,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetWithBearerToken(
+	client.Service.GetWithBearerToken(
 		context.TODO(),
 	)
 }
@@ -353,7 +353,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.FolderA.GetDirectThread(
+	client.FolderA.Service.GetDirectThread(
 		context.TODO(),
 	)
 }
@@ -369,7 +369,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.FolderA.GetDirectThread(
+	client.FolderA.Service.GetDirectThread(
 		context.TODO(),
 	)
 }
@@ -386,7 +386,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Find(
+	client.Foo.Find(
 		context.TODO(),
 		&acme.FindRequest{
 			OptionalString: acme.String(
@@ -404,6 +404,584 @@ func do() {
 "
 `;
 
+exports[`test definitions > csharp-grpc-proto 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Userservice.Create(
+		context.TODO(),
+		&acme.CreateRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Userservice.Create(
+		context.TODO(),
+		&acme.CreateRequest{
+			Username: acme.String(
+				"username",
+			),
+			Email: acme.String(
+				"email",
+			),
+			Age: acme.Int(
+				1,
+			),
+			Weight: acme.Float64(
+				1.1,
+			),
+			Metadata: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"metadata": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`test definitions > csharp-grpc-proto-exhaustive 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Foo(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Upload(
+		context.TODO(),
+		&acme.UploadRequest{
+			Columns: []*acme.Column{
+				&acme.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Upload(
+		context.TODO(),
+		&acme.UploadRequest{
+			Columns: []*acme.Column{
+				&acme.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					Metadata: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"metadata": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+				&acme.Column{
+					ID: "id",
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					Metadata: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"metadata": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Delete(
+		context.TODO(),
+		&acme.DeleteRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Delete(
+		context.TODO(),
+		&acme.DeleteRequest{
+			IDs: []string{
+				"ids",
+				"ids",
+			},
+			DeleteAll: acme.Bool(
+				true,
+			),
+			Namespace: acme.String(
+				"namespace",
+			),
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Describe(
+		context.TODO(),
+		&acme.DescribeRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Describe(
+		context.TODO(),
+		&acme.DescribeRequest{
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Fetch(
+		context.TODO(),
+		&acme.FetchRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Fetch(
+		context.TODO(),
+		&acme.FetchRequest{
+			IDs: []*string{
+				acme.String(
+					"ids",
+				),
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.List(
+		context.TODO(),
+		&acme.ListRequest{},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.List(
+		context.TODO(),
+		&acme.ListRequest{
+			Prefix: acme.String(
+				"prefix",
+			),
+			Limit: acme.Int(
+				1,
+			),
+			PaginationToken: acme.String(
+				"paginationToken",
+			),
+			Namespace: acme.String(
+				"namespace",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Query(
+		context.TODO(),
+		&acme.QueryRequest{
+			TopK: 1,
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Query(
+		context.TODO(),
+		&acme.QueryRequest{
+			Namespace: acme.String(
+				"namespace",
+			),
+			TopK: 1,
+			Filter: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"filter": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+			IncludeValues: acme.Bool(
+				true,
+			),
+			IncludeMetadata: acme.Bool(
+				true,
+			),
+			Queries: []*acme.QueryColumn{
+				&acme.QueryColumn{
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					TopK: acme.Int(
+						1,
+					),
+					Namespace: acme.String(
+						"namespace",
+					),
+					Filter: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"filter": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+				&acme.QueryColumn{
+					Values: []float64{
+						1.1,
+						1.1,
+					},
+					TopK: acme.Int(
+						1,
+					),
+					Namespace: acme.String(
+						"namespace",
+					),
+					Filter: &acme.Metadata{
+						StringMetadataValueMap: map[string]*acme.MetadataValue{
+							"filter": &acme.MetadataValue{
+								Double: 1.1,
+							},
+						},
+					},
+					IndexedData: &acme.IndexedData{
+						Indices: []int{
+							1,
+							1,
+						},
+						Values: []float64{
+							1.1,
+							1.1,
+						},
+					},
+				},
+			},
+			Column: []float64{
+				1.1,
+				1.1,
+			},
+			ID: acme.String(
+				"id",
+			),
+			IndexedData: &acme.IndexedData{
+				Indices: []int{
+					1,
+					1,
+				},
+				Values: []float64{
+					1.1,
+					1.1,
+				},
+			},
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Update(
+		context.TODO(),
+		&acme.UpdateRequest{
+			ID: "id",
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Dataservice.Update(
+		context.TODO(),
+		&acme.UpdateRequest{
+			ID: "id",
+			Values: []float64{
+				1.1,
+				1.1,
+			},
+			SetMetadata: &acme.Metadata{
+				StringMetadataValueMap: map[string]*acme.MetadataValue{
+					"setMetadata": &acme.MetadataValue{
+						Double: 1.1,
+					},
+				},
+			},
+			Namespace: acme.String(
+				"namespace",
+			),
+			IndexedData: &acme.IndexedData{
+				Indices: []int{
+					1,
+					1,
+				},
+				Values: []float64{
+					1.1,
+					1.1,
+				},
+			},
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > csharp-namespace-conflict 1`] = `
 "package example
 
@@ -414,7 +992,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Hello(
+	client.Tasktest.Hello(
 		context.TODO(),
 	)
 }
@@ -436,7 +1014,7 @@ func do() {
 			"<value>",
 		),
 	)
-	client.GetWithCustomAuth(
+	client.CustomAuth.GetWithCustomAuth(
 		context.TODO(),
 	)
 }
@@ -457,7 +1035,7 @@ func do() {
 			"<value>",
 		),
 	)
-	client.PostWithCustomAuth(
+	client.CustomAuth.PostWithCustomAuth(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -478,7 +1056,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.InlinedRequest.Send(
 		context.TODO(),
 		&acme.SendEnumInlinedRequest{
 			Operand: acme.OperandGreaterThan,
@@ -501,7 +1079,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.InlinedRequest.Send(
 		context.TODO(),
 		&acme.SendEnumInlinedRequest{
 			Operand:      acme.OperandGreaterThan,
@@ -528,13 +1106,9 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.PathParam.Send(
 		context.TODO(),
 		acme.OperandGreaterThan,
-		acme.OperandLessThan.Ptr(),
-		&acme.ColorOrOperand{
-			Color: acme.ColorRed,
-		},
 		&acme.ColorOrOperand{
 			Color: acme.ColorRed,
 		},
@@ -553,10 +1127,9 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.PathParam.Send(
 		context.TODO(),
 		acme.OperandGreaterThan,
-		acme.OperandGreaterThan.Ptr(),
 		&acme.ColorOrOperand{
 			Color: acme.ColorRed,
 		},
@@ -575,7 +1148,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.QueryParam.Send(
 		context.TODO(),
 		&acme.SendEnumAsQueryParamRequest{
 			Operand: acme.OperandGreaterThan,
@@ -598,7 +1171,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.QueryParam.Send(
 		context.TODO(),
 		&acme.SendEnumAsQueryParamRequest{
 			Operand:      acme.OperandGreaterThan,
@@ -622,7 +1195,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.SendList(
+	client.QueryParam.SendList(
 		context.TODO(),
 		&acme.SendEnumListAsQueryParamRequest{
 			Operand: []acme.Operand{
@@ -653,7 +1226,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.ThrowError(
+	client.PropertyBasedError.ThrowError(
 		context.TODO(),
 	)
 }
@@ -741,7 +1314,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.File.Notification.GetException(
+	client.File.Notification.Service.GetException(
 		context.TODO(),
 		"notification-hsy129x",
 	)
@@ -763,7 +1336,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.File.Notification.GetException(
+	client.File.Notification.Service.GetException(
 		context.TODO(),
 		"notificationId",
 	)
@@ -786,7 +1359,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.File.GetFile(
+	client.File.Service.GetFile(
 		context.TODO(),
 		"file.txt",
 		&file.GetFileRequest{
@@ -812,7 +1385,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.File.GetFile(
+	client.File.Service.GetFile(
 		context.TODO(),
 		"filename",
 		&file.GetFileRequest{
@@ -837,7 +1410,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Health.Check(
+	client.Health.Service.Check(
 		context.TODO(),
 		"id-2sdx82h",
 	)
@@ -859,7 +1432,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Health.Check(
+	client.Health.Service.Check(
 		context.TODO(),
 		"id-3tey93i",
 	)
@@ -881,7 +1454,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Health.Check(
+	client.Health.Service.Check(
 		context.TODO(),
 		"id",
 	)
@@ -903,7 +1476,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Health.Ping(
+	client.Health.Service.Ping(
 		context.TODO(),
 	)
 }
@@ -924,7 +1497,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Health.Ping(
+	client.Health.Service.Ping(
 		context.TODO(),
 	)
 }
@@ -945,7 +1518,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"movie-c06a4ad7",
 	)
@@ -967,7 +1540,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"movieId",
 	)
@@ -990,7 +1563,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateMovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		&acme.Movie{
 			ID: "movie-c06a4ad7",
@@ -1035,7 +1608,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateMovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		&acme.Movie{
 			ID: "id",
@@ -1076,7 +1649,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		&acme.GetMetadataRequest{
 			Shallow: acme.Bool(
@@ -1109,7 +1682,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		&acme.GetMetadataRequest{
 			Shallow: acme.Bool(
@@ -1144,7 +1717,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateBigEntity(
+	client.Service.CreateBigEntity(
 		context.TODO(),
 		&acme.BigEntity{
 			CastMember: &acme.CastMember{
@@ -1377,7 +1950,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnListOfPrimitives(
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		[]string{
 			"string",
@@ -1403,7 +1976,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnListOfObjects(
+	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		[]*types.ObjectWithRequiredField{
 			&types.ObjectWithRequiredField{
@@ -1432,7 +2005,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnSetOfPrimitives(
+	client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 		context.TODO(),
 		[]string{
 			"string",
@@ -1457,7 +2030,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnSetOfObjects(
+	client.Endpoints.Container.GetAndReturnSetOfObjects(
 		context.TODO(),
 		[]*types.ObjectWithRequiredField{
 			&types.ObjectWithRequiredField{
@@ -1483,7 +2056,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnMapPrimToPrim(
+	client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 		context.TODO(),
 		map[string]string{
 			"string": "string",
@@ -1508,7 +2081,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnMapOfPrimToObject(
+	client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 		context.TODO(),
 		map[string]*types.ObjectWithRequiredField{
 			"string": &types.ObjectWithRequiredField{
@@ -1535,7 +2108,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnOptional(
+	client.Endpoints.Container.GetAndReturnOptional(
 		context.TODO(),
 		&types.ObjectWithRequiredField{
 			String: "string",
@@ -1560,7 +2133,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnEnum(
+	client.Endpoints.Enum.GetAndReturnEnum(
 		context.TODO(),
 		types.WeatherReportSunny,
 	)
@@ -1582,7 +2155,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.TestGet(
+	client.Endpoints.HTTPMethods.TestGet(
 		context.TODO(),
 		"id",
 	)
@@ -1605,7 +2178,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.TestPost(
+	client.Endpoints.HTTPMethods.TestPost(
 		context.TODO(),
 		&types.ObjectWithRequiredField{
 			String: "string",
@@ -1630,7 +2203,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.TestPut(
+	client.Endpoints.HTTPMethods.TestPut(
 		context.TODO(),
 		"id",
 		&types.ObjectWithRequiredField{
@@ -1658,7 +2231,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.TestPatch(
+	client.Endpoints.HTTPMethods.TestPatch(
 		context.TODO(),
 		"id",
 		&types.ObjectWithOptionalField{
@@ -1726,7 +2299,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.TestDelete(
+	client.Endpoints.HTTPMethods.TestDelete(
 		context.TODO(),
 		"id",
 	)
@@ -1751,7 +2324,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnWithOptionalField(
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
 		&types.ObjectWithOptionalField{
 			String: acme.String(
@@ -1819,7 +2392,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnWithRequiredField(
+	client.Endpoints.Object.GetAndReturnWithRequiredField(
 		context.TODO(),
 		&types.ObjectWithRequiredField{
 			String: "string",
@@ -1844,7 +2417,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnWithMapOfMap(
+	client.Endpoints.Object.GetAndReturnWithMapOfMap(
 		context.TODO(),
 		&types.ObjectWithMapOfMap{
 			Map: map[string]map[string]string{
@@ -1875,7 +2448,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnNestedWithOptionalField(
+	client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 		context.TODO(),
 		&types.NestedObjectWithOptionalField{
 			String: acme.String(
@@ -1950,7 +2523,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnNestedWithRequiredField(
+	client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 		context.TODO(),
 		"string",
 		&types.NestedObjectWithRequiredField{
@@ -2024,7 +2597,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnNestedWithRequiredFieldAsList(
+	client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 		context.TODO(),
 		[]*types.NestedObjectWithRequiredField{
 			&types.NestedObjectWithRequiredField{
@@ -2145,7 +2718,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetWithPath(
+	client.Endpoints.Params.GetWithPath(
 		context.TODO(),
 		"param",
 	)
@@ -2168,7 +2741,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetWithQuery(
+	client.Endpoints.Params.GetWithQuery(
 		context.TODO(),
 		&endpoints.GetWithQuery{
 			Query:  "query",
@@ -2194,7 +2767,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetWithAllowMultipleQuery(
+	client.Endpoints.Params.GetWithAllowMultipleQuery(
 		context.TODO(),
 		&endpoints.GetWithMultipleQuery{
 			Query: []string{
@@ -2224,7 +2797,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetWithPathAndQuery(
+	client.Endpoints.Params.GetWithPathAndQuery(
 		context.TODO(),
 		"param",
 		&endpoints.GetWithPathAndQuery{
@@ -2249,7 +2822,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.ModifyWithPath(
+	client.Endpoints.Params.ModifyWithPath(
 		context.TODO(),
 		"param",
 		"string",
@@ -2272,7 +2845,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnString(
+	client.Endpoints.Primitive.GetAndReturnString(
 		context.TODO(),
 		"string",
 	)
@@ -2294,7 +2867,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnInt(
+	client.Endpoints.Primitive.GetAndReturnInt(
 		context.TODO(),
 		1,
 	)
@@ -2316,7 +2889,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnLong(
+	client.Endpoints.Primitive.GetAndReturnLong(
 		context.TODO(),
 		1000000,
 	)
@@ -2338,7 +2911,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnDouble(
+	client.Endpoints.Primitive.GetAndReturnDouble(
 		context.TODO(),
 		1.1,
 	)
@@ -2360,7 +2933,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnBool(
+	client.Endpoints.Primitive.GetAndReturnBool(
 		context.TODO(),
 		true,
 	)
@@ -2383,7 +2956,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnDatetime(
+	client.Endpoints.Primitive.GetAndReturnDatetime(
 		context.TODO(),
 		acme.MustParseDateTime(
 			"2024-01-15T09:30:00Z",
@@ -2408,7 +2981,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnDate(
+	client.Endpoints.Primitive.GetAndReturnDate(
 		context.TODO(),
 		acme.MustParseDateTime(
 			"2023-01-15",
@@ -2433,7 +3006,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnUUID(
+	client.Endpoints.Primitive.GetAndReturnUUID(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2457,7 +3030,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnBase64(
+	client.Endpoints.Primitive.GetAndReturnBase64(
 		context.TODO(),
 		[]byte("SGVsbG8gd29ybGQh"),
 	)
@@ -2480,7 +3053,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Endpoints.GetAndReturnUnion(
+	client.Endpoints.Union.GetAndReturnUnion(
 		context.TODO(),
 		&types.Animal{
 			Dog: &types.Dog{
@@ -2510,7 +3083,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.PostWithObjectBodyandResponse(
+	client.InlinedRequests.PostWithObjectBodyandResponse(
 		context.TODO(),
 		&acme.PostWithObjectBody{
 			String:  "string",
@@ -2581,7 +3154,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.PostWithNoAuth(
+	client.NoAuth.PostWithNoAuth(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -2605,7 +3178,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetWithNoRequestBody(
+	client.NoReqBody.GetWithNoRequestBody(
 		context.TODO(),
 	)
 }
@@ -2626,7 +3199,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.PostWithNoRequestBody(
+	client.NoReqBody.PostWithNoRequestBody(
 		context.TODO(),
 	)
 }
@@ -2648,7 +3221,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetWithCustomHeader(
+	client.ReqWithHeaders.GetWithCustomHeader(
 		context.TODO(),
 		&acme.ReqWithHeaders{
 			XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
@@ -2692,7 +3265,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.CreateUser(
+	client.User.CreateUser(
 		context.TODO(),
 		&acme.CreateUserRequest{
 			Name: "name",
@@ -2780,7 +3353,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Folder.Endpoint(
+	client.Folder.Service.Endpoint(
 		context.TODO(),
 	)
 }
@@ -2796,7 +3369,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Folder.UnknownRequest(
+	client.Folder.Service.UnknownRequest(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -2822,557 +3395,11 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateMovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		&acme.CreateMovieRequest{
 			Title:  "title",
 			Rating: 1.1,
-		},
-	)
-}
-"
-`;
-
-exports[`test definitions > grpc-proto 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Create(
-		context.TODO(),
-		&acme.CreateRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Create(
-		context.TODO(),
-		&acme.CreateRequest{
-			Username: acme.String(
-				"username",
-			),
-			Email: acme.String(
-				"email",
-			),
-			Age: acme.Int(
-				1,
-			),
-			Weight: acme.Float64(
-				1.1,
-			),
-			Metadata: &acme.Metadata{
-				StringMetadataValueMap: map[string]*acme.MetadataValue{
-					"metadata": &acme.MetadataValue{
-						Double: 1.1,
-					},
-				},
-			},
-		},
-	)
-}
-"
-`;
-
-exports[`test definitions > grpc-proto-exhaustive 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Upload(
-		context.TODO(),
-		&acme.UploadRequest{
-			Columns: []*acme.Column{
-				&acme.Column{
-					ID: "id",
-					Values: []float64{
-						1.1,
-					},
-				},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Upload(
-		context.TODO(),
-		&acme.UploadRequest{
-			Columns: []*acme.Column{
-				&acme.Column{
-					ID: "id",
-					Values: []float64{
-						1.1,
-						1.1,
-					},
-					Metadata: &acme.Metadata{
-						StringMetadataValueMap: map[string]*acme.MetadataValue{
-							"metadata": &acme.MetadataValue{
-								Double: 1.1,
-							},
-						},
-					},
-					IndexedData: &acme.IndexedData{
-						Indices: []int{
-							1,
-							1,
-						},
-						Values: []float64{
-							1.1,
-							1.1,
-						},
-					},
-				},
-				&acme.Column{
-					ID: "id",
-					Values: []float64{
-						1.1,
-						1.1,
-					},
-					Metadata: &acme.Metadata{
-						StringMetadataValueMap: map[string]*acme.MetadataValue{
-							"metadata": &acme.MetadataValue{
-								Double: 1.1,
-							},
-						},
-					},
-					IndexedData: &acme.IndexedData{
-						Indices: []int{
-							1,
-							1,
-						},
-						Values: []float64{
-							1.1,
-							1.1,
-						},
-					},
-				},
-			},
-			Namespace: acme.String(
-				"namespace",
-			),
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Delete(
-		context.TODO(),
-		&acme.DeleteRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Delete(
-		context.TODO(),
-		&acme.DeleteRequest{
-			IDs: []string{
-				"ids",
-				"ids",
-			},
-			DeleteAll: acme.Bool(
-				true,
-			),
-			Namespace: acme.String(
-				"namespace",
-			),
-			Filter: &acme.Metadata{
-				StringMetadataValueMap: map[string]*acme.MetadataValue{
-					"filter": &acme.MetadataValue{
-						Double: 1.1,
-					},
-				},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Describe(
-		context.TODO(),
-		&acme.DescribeRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Describe(
-		context.TODO(),
-		&acme.DescribeRequest{
-			Filter: &acme.Metadata{
-				StringMetadataValueMap: map[string]*acme.MetadataValue{
-					"filter": &acme.MetadataValue{
-						Double: 1.1,
-					},
-				},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Fetch(
-		context.TODO(),
-		&acme.FetchRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Fetch(
-		context.TODO(),
-		&acme.FetchRequest{
-			IDs: []*string{
-				acme.String(
-					"ids",
-				),
-			},
-			Namespace: acme.String(
-				"namespace",
-			),
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.List(
-		context.TODO(),
-		&acme.ListRequest{},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.List(
-		context.TODO(),
-		&acme.ListRequest{
-			Prefix: acme.String(
-				"prefix",
-			),
-			Limit: acme.Int(
-				1,
-			),
-			PaginationToken: acme.String(
-				"paginationToken",
-			),
-			Namespace: acme.String(
-				"namespace",
-			),
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Query(
-		context.TODO(),
-		&acme.QueryRequest{
-			TopK: 1,
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Query(
-		context.TODO(),
-		&acme.QueryRequest{
-			Namespace: acme.String(
-				"namespace",
-			),
-			TopK: 1,
-			Filter: &acme.Metadata{
-				StringMetadataValueMap: map[string]*acme.MetadataValue{
-					"filter": &acme.MetadataValue{
-						Double: 1.1,
-					},
-				},
-			},
-			IncludeValues: acme.Bool(
-				true,
-			),
-			IncludeMetadata: acme.Bool(
-				true,
-			),
-			Queries: []*acme.QueryColumn{
-				&acme.QueryColumn{
-					Values: []float64{
-						1.1,
-						1.1,
-					},
-					TopK: acme.Int(
-						1,
-					),
-					Namespace: acme.String(
-						"namespace",
-					),
-					Filter: &acme.Metadata{
-						StringMetadataValueMap: map[string]*acme.MetadataValue{
-							"filter": &acme.MetadataValue{
-								Double: 1.1,
-							},
-						},
-					},
-					IndexedData: &acme.IndexedData{
-						Indices: []int{
-							1,
-							1,
-						},
-						Values: []float64{
-							1.1,
-							1.1,
-						},
-					},
-				},
-				&acme.QueryColumn{
-					Values: []float64{
-						1.1,
-						1.1,
-					},
-					TopK: acme.Int(
-						1,
-					),
-					Namespace: acme.String(
-						"namespace",
-					),
-					Filter: &acme.Metadata{
-						StringMetadataValueMap: map[string]*acme.MetadataValue{
-							"filter": &acme.MetadataValue{
-								Double: 1.1,
-							},
-						},
-					},
-					IndexedData: &acme.IndexedData{
-						Indices: []int{
-							1,
-							1,
-						},
-						Values: []float64{
-							1.1,
-							1.1,
-						},
-					},
-				},
-			},
-			Column: []float64{
-				1.1,
-				1.1,
-			},
-			ID: acme.String(
-				"id",
-			),
-			IndexedData: &acme.IndexedData{
-				Indices: []int{
-					1,
-					1,
-				},
-				Values: []float64{
-					1.1,
-					1.1,
-				},
-			},
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Update(
-		context.TODO(),
-		&acme.UpdateRequest{
-			ID: "id",
-		},
-	)
-}
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.Update(
-		context.TODO(),
-		&acme.UpdateRequest{
-			ID: "id",
-			Values: []float64{
-				1.1,
-				1.1,
-			},
-			SetMetadata: &acme.Metadata{
-				StringMetadataValueMap: map[string]*acme.MetadataValue{
-					"setMetadata": &acme.MetadataValue{
-						Double: 1.1,
-					},
-				},
-			},
-			Namespace: acme.String(
-				"namespace",
-			),
-			IndexedData: &acme.IndexedData{
-				Indices: []int{
-					1,
-					1,
-				},
-				Values: []float64{
-					1.1,
-					1.1,
-				},
-			},
 		},
 	)
 }
@@ -3395,7 +3422,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Create(
+	client.Payment.Create(
 		context.TODO(),
 		&acme.CreatePaymentRequest{
 			Amount:   1,
@@ -3420,7 +3447,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.Delete(
+	client.Payment.Delete(
 		context.TODO(),
 		"paymentId",
 	)
@@ -3444,7 +3471,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateMovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		&acme.CreateMovieRequest{
 			Title:  "title",
@@ -3469,7 +3496,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMovie(
+	client.Imdb.GetMovie(
 		context.TODO(),
 		"movieId",
 	)
@@ -3488,7 +3515,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Headers.Send(
 		context.TODO(),
 		&acme.SendLiteralsInHeadersRequest{
 			Query: "What is the weather today",
@@ -3508,7 +3535,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Headers.Send(
 		context.TODO(),
 		&acme.SendLiteralsInHeadersRequest{
 			Query: "query",
@@ -3528,7 +3555,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Inlined.Send(
 		context.TODO(),
 		&acme.SendLiteralsInlinedRequest{
 			Temperature: acme.Float64(
@@ -3554,7 +3581,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Inlined.Send(
 		context.TODO(),
 		&acme.SendLiteralsInlinedRequest{
 			Query: "query",
@@ -3579,7 +3606,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Path.Send(
 		context.TODO(),
 	)
 }
@@ -3595,7 +3622,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Path.Send(
 		context.TODO(),
 	)
 }
@@ -3612,7 +3639,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Query.Send(
 		context.TODO(),
 		&acme.SendLiteralsInQueryRequest{
 			Query: "What is the weather today",
@@ -3632,7 +3659,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Query.Send(
 		context.TODO(),
 		&acme.SendLiteralsInQueryRequest{
 			Query: "query",
@@ -3652,7 +3679,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Reference.Send(
 		context.TODO(),
 		&acme.SendRequest{
 			Query: "What is the weather today",
@@ -3679,7 +3706,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Send(
+	client.Reference.Send(
 		context.TODO(),
 		&acme.SendRequest{
 			Query: "query",
@@ -3709,7 +3736,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetResource(
+	client.Service.GetResource(
 		context.TODO(),
 		"rsc-xyz",
 	)
@@ -3726,7 +3753,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetResource(
+	client.Service.GetResource(
 		context.TODO(),
 		"ResourceID",
 	)
@@ -3744,7 +3771,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.ListResources(
+	client.Service.ListResources(
 		context.TODO(),
 		&acme.ListResourcesRequest{
 			PageLimit: 10,
@@ -3767,7 +3794,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.ListResources(
+	client.Service.ListResources(
 		context.TODO(),
 		&acme.ListResourcesRequest{
 			PageLimit: 1,
@@ -3791,7 +3818,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Create(
+	client.Organization.Create(
 		context.TODO(),
 		&acme.CreateOrganizationRequest{
 			Name: "name",
@@ -3811,7 +3838,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.List(
+	client.User.List(
 		context.TODO(),
 		&acme.ListUsersRequest{
 			Limit: acme.Int(
@@ -3834,7 +3861,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.User.ListEvents(
+	client.User.Events.ListEvents(
 		context.TODO(),
 		&user.ListUserEventsRequest{
 			Limit: acme.Int(
@@ -3856,7 +3883,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.User.Events.GetMetadata(
+	client.User.Events.Metadata.GetMetadata(
 		context.TODO(),
 		&events.GetEventMetadataRequest{
 			ID: "id",
@@ -3876,7 +3903,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetUser(
+	client.User.GetUser(
 		context.TODO(),
 		"userId",
 	)
@@ -3894,7 +3921,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.CreateUser(
+	client.User.CreateUser(
 		context.TODO(),
 		&acme.CreateUserRequest{
 			Name: "name",
@@ -3923,7 +3950,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.BootInstance(
+	client.Ec2.BootInstance(
 		context.TODO(),
 		&acme.BootInstanceRequest{
 			Size: "size",
@@ -3948,7 +3975,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetPresignedURL(
+	client.S3.GetPresignedURL(
 		context.TODO(),
 		&acme.GetPresignedURLRequest{
 			S3Key: "s3Key",
@@ -3974,7 +4001,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.BootInstance(
+	client.Ec2.BootInstance(
 		context.TODO(),
 		&acme.BootInstanceRequest{
 			Size: "size",
@@ -3999,7 +4026,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetPresignedURL(
+	client.S3.GetPresignedURL(
 		context.TODO(),
 		&acme.GetPresignedURLRequest{
 			S3Key: "s3Key",
@@ -4024,7 +4051,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetDummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -4042,7 +4069,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetTokenWithClientCredentials(
+	client.Auth.GetTokenWithClientCredentials(
 		context.TODO(),
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
@@ -4066,7 +4093,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.RefreshToken(
+	client.Auth.RefreshToken(
 		context.TODO(),
 		&acme.RefreshTokenRequest{
 			ClientID:     "client_id",
@@ -4092,7 +4119,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetToken(
+	client.Auth.GetToken(
 		context.TODO(),
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
@@ -4114,7 +4141,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetTokenWithClientCredentials(
+	client.Auth.GetTokenWithClientCredentials(
 		context.TODO(),
 		&acme.GetTokenRequest{
 			ClientID:     "client_id",
@@ -4138,7 +4165,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.RefreshToken(
+	client.Auth.RefreshToken(
 		context.TODO(),
 		&acme.RefreshTokenRequest{
 			ClientID:     "client_id",
@@ -4193,7 +4220,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.SendOptionalBody(
+	client.Optional.SendOptionalBody(
 		context.TODO(),
 		map[string]interface{}{
 			"string": map[string]interface{}{
@@ -4259,7 +4286,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Nop(
+	client.Service.Nop(
 		context.TODO(),
 		"id-a2ijs82",
 		"id-219xca8",
@@ -4277,7 +4304,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Nop(
+	client.Service.Nop(
 		context.TODO(),
 		"id",
 		"nestedId",
@@ -4302,7 +4329,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithCursorPagination(
+	client.Users.ListWithCursorPagination(
 		context.TODO(),
 		&acme.ListUsersCursorPaginationRequest{
 			Page: acme.Int(
@@ -4336,7 +4363,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithBodyCursorPagination(
+	client.Users.ListWithBodyCursorPagination(
 		context.TODO(),
 		&acme.ListUsersBodyCursorPaginationRequest{
 			Pagination: &acme.WithCursor{
@@ -4365,7 +4392,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithCursorPagination(
+	client.Users.ListWithCursorPagination(
 		context.TODO(),
 		&acme.ListUsersCursorPaginationRequest{
 			Page: acme.Int(
@@ -4399,7 +4426,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithBodyOffsetPagination(
+	client.Users.ListWithBodyOffsetPagination(
 		context.TODO(),
 		&acme.ListUsersBodyOffsetPaginationRequest{
 			Pagination: &acme.WithPage{
@@ -4428,7 +4455,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithOffsetStepPagination(
+	client.Users.ListWithOffsetStepPagination(
 		context.TODO(),
 		&acme.ListUsersOffsetStepPaginationRequest{
 			Page: acme.Int(
@@ -4459,7 +4486,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithOffsetStepPagination(
+	client.Users.ListWithOffsetStepPagination(
 		context.TODO(),
 		&acme.ListUsersOffsetStepPaginationRequest{
 			Page: acme.Int(
@@ -4491,7 +4518,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithExtendedResults(
+	client.Users.ListWithExtendedResults(
 		context.TODO(),
 		&acme.ListUsersExtendedRequest{
 			Cursor: acme.UUID(
@@ -4521,7 +4548,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithExtendedResults(
+	client.Users.ListWithExtendedResults(
 		context.TODO(),
 		&acme.ListUsersExtendedRequest{
 			Cursor: acme.UUID(
@@ -4550,7 +4577,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithCursorPagination(
+	client.Users.ListWithCursorPagination(
 		context.TODO(),
 		&acme.ListUsersCursorPaginationRequest{
 			StartingAfter: acme.String(
@@ -4577,7 +4604,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.ListWithGlobalConfig(
+	client.Users.ListWithGlobalConfig(
 		context.TODO(),
 		&acme.ListWithGlobalConfigRequest{
 			Offset: acme.Int(
@@ -4604,7 +4631,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Test(
+	client.Package.Test(
 		context.TODO(),
 		&acme.TestRequest{
 			For: "for",
@@ -4624,7 +4651,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4641,7 +4668,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4658,7 +4685,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4675,7 +4702,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4692,7 +4719,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4709,7 +4736,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4726,7 +4753,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMovie(
+	client.Service.GetMovie(
 		context.TODO(),
 		"string",
 	)
@@ -4745,7 +4772,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Stream(
+	client.Completions.Stream(
 		context.TODO(),
 		&acme.StreamCompletionRequest{
 			Query: "foo",
@@ -4790,7 +4817,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetDummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -4812,7 +4839,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetDummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -4830,7 +4857,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Generate(
+	client.Dummy.Generate(
 		context.TODO(),
 		&acme.Generateequest{
 			NumEvents: 5,
@@ -4850,7 +4877,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Generate(
+	client.Dummy.Generate(
 		context.TODO(),
 		&acme.Generateequest{
 			NumEvents: 1,
@@ -4871,7 +4898,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Generate(
+	client.Dummy.Generate(
 		context.TODO(),
 		&acme.GenerateRequest{
 			Stream:    false,
@@ -4920,7 +4947,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.UpdateTestSubmissionStatus(
+	client.Admin.UpdateTestSubmissionStatus(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4949,7 +4976,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.SendTestSubmissionUpdate(
+	client.Admin.SendTestSubmissionUpdate(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -4981,7 +5008,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.UpdateWorkspaceSubmissionStatus(
+	client.Admin.UpdateWorkspaceSubmissionStatus(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5010,7 +5037,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.SendWorkspaceSubmissionUpdate(
+	client.Admin.SendWorkspaceSubmissionUpdate(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5042,7 +5069,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.StoreTracedTestCase(
+	client.Admin.StoreTracedTestCase(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5149,7 +5176,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.StoreTracedTestCaseV2(
+	client.Admin.StoreTracedTestCaseV2(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5252,7 +5279,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.StoreTracedWorkspace(
+	client.Admin.StoreTracedWorkspace(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5363,7 +5390,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.StoreTracedWorkspaceV2(
+	client.Admin.StoreTracedWorkspaceV2(
 		context.TODO(),
 		uuid.MustParse(
 			"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -5463,7 +5490,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetHomepageProblems(
+	client.Homepage.GetHomepageProblems(
 		context.TODO(),
 	)
 }
@@ -5485,7 +5512,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.SetHomepageProblems(
+	client.Homepage.SetHomepageProblems(
 		context.TODO(),
 		[]acme.ProblemID{
 			"string",
@@ -5511,7 +5538,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetAttemptedMigrations(
+	client.Migration.GetAttemptedMigrations(
 		context.TODO(),
 		&acme.GetAttemptedMigrationsRequest{
 			AdminKeyHeader: "admin-key-header",
@@ -5536,7 +5563,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreatePlaylist(
+	client.Playlist.CreatePlaylist(
 		context.TODO(),
 		1,
 		&acme.CreatePlaylistRequest{
@@ -5576,7 +5603,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetPlaylists(
+	client.Playlist.GetPlaylists(
 		context.TODO(),
 		1,
 		&acme.GetPlaylistsRequest{
@@ -5613,7 +5640,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetPlaylist(
+	client.Playlist.GetPlaylist(
 		context.TODO(),
 		1,
 		"playlistId",
@@ -5637,7 +5664,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.UpdatePlaylist(
+	client.Playlist.UpdatePlaylist(
 		context.TODO(),
 		1,
 		"playlistId",
@@ -5667,7 +5694,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.DeletePlaylist(
+	client.Playlist.DeletePlaylist(
 		context.TODO(),
 		1,
 		"playlist_id",
@@ -5691,7 +5718,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateProblem(
+	client.Problem.CreateProblem(
 		context.TODO(),
 		&acme.CreateProblemRequest{
 			ProblemName: "problemName",
@@ -5780,7 +5807,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.UpdateProblem(
+	client.Problem.UpdateProblem(
 		context.TODO(),
 		"problemId",
 		&acme.CreateProblemRequest{
@@ -5869,7 +5896,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.DeleteProblem(
+	client.Problem.DeleteProblem(
 		context.TODO(),
 		"problemId",
 	)
@@ -5892,7 +5919,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetDefaultStarterFiles(
+	client.Problem.GetDefaultStarterFiles(
 		context.TODO(),
 		&acme.GetDefaultStarterFilesRequest{
 			InputParams: []*acme.VariableTypeAndName{
@@ -5934,7 +5961,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateExecutionSession(
+	client.Submission.CreateExecutionSession(
 		context.TODO(),
 		acme.LanguageJava,
 	)
@@ -5956,7 +5983,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetExecutionSession(
+	client.Submission.GetExecutionSession(
 		context.TODO(),
 		"sessionId",
 	)
@@ -5978,7 +6005,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.StopExecutionSession(
+	client.Submission.StopExecutionSession(
 		context.TODO(),
 		"sessionId",
 	)
@@ -6000,7 +6027,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetExecutionSessionsState(
+	client.Submission.GetExecutionSessionsState(
 		context.TODO(),
 	)
 }
@@ -6022,7 +6049,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.SetNumWarmInstances(
+	client.Sysprop.SetNumWarmInstances(
 		context.TODO(),
 		acme.LanguageJava,
 		1,
@@ -6045,7 +6072,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetNumWarmInstances(
+	client.Sysprop.GetNumWarmInstances(
 		context.TODO(),
 	)
 }
@@ -6066,7 +6093,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetLightweightProblems(
+	client.V2.Problem.GetLightweightProblems(
 		context.TODO(),
 	)
 }
@@ -6087,7 +6114,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetProblems(
+	client.V2.Problem.GetProblems(
 		context.TODO(),
 	)
 }
@@ -6108,7 +6135,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetLatestProblem(
+	client.V2.Problem.GetLatestProblem(
 		context.TODO(),
 		"problemId",
 	)
@@ -6130,7 +6157,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetProblemVersion(
+	client.V2.Problem.GetProblemVersion(
 		context.TODO(),
 		"problemId",
 		1,
@@ -6153,7 +6180,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetLightweightProblems(
+	client.V2.Problem.GetLightweightProblems(
 		context.TODO(),
 	)
 }
@@ -6174,7 +6201,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetProblems(
+	client.V2.Problem.GetProblems(
 		context.TODO(),
 	)
 }
@@ -6195,7 +6222,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetLatestProblem(
+	client.V2.Problem.GetLatestProblem(
 		context.TODO(),
 		"problemId",
 	)
@@ -6217,7 +6244,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.V2.GetProblemVersion(
+	client.V2.Problem.GetProblemVersion(
 		context.TODO(),
 		"problemId",
 		1,
@@ -6242,7 +6269,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.CreateMovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		&acme.CreateMovieRequest{
 			ID:          "id",
@@ -6268,7 +6295,7 @@ func do() {
 			"<token>",
 		),
 	)
-	client.GetMovie(
+	client.Imdb.GetMovie(
 		context.TODO(),
 		"movie_id",
 	)
@@ -6287,7 +6314,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Get(
+	client.Union.Get(
 		context.TODO(),
 		&acme.MyUnion{
 			String: "string",
@@ -6306,7 +6333,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMetadata(
+	client.Union.GetMetadata(
 		context.TODO(),
 	)
 }
@@ -6322,7 +6349,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetMetadata(
+	client.Union.GetMetadata(
 		context.TODO(),
 	)
 }
@@ -6339,7 +6366,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Get(
+	client.Union.Get(
 		context.TODO(),
 		"id",
 	)
@@ -6357,7 +6384,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Update(
+	client.Union.Update(
 		context.TODO(),
 		&acme.Shape{
 			Circle: &acme.Circle{
@@ -6379,7 +6406,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Post(
+	client.Unknown.Post(
 		context.TODO(),
 		map[string]interface{}{
 			"key": "value",
@@ -6399,7 +6426,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.PostObject(
+	client.Unknown.PostObject(
 		context.TODO(),
 		&acme.MyObject{
 			Unknown: map[string]interface{}{
@@ -6467,7 +6494,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.Post(
+	client.Service.Post(
 		context.TODO(),
 		"endpointParam",
 	)
@@ -6485,7 +6512,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetUser(
+	client.User.GetUser(
 		context.TODO(),
 		"userId",
 	)
@@ -6503,7 +6530,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	client.GetUser(
+	client.User.GetUser(
 		context.TODO(),
 		"userId",
 	)

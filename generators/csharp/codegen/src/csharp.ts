@@ -113,6 +113,7 @@ export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiati
 
 export {
     Annotation,
+    Access,
     Class,
     ClassInstantiation,
     ClassReference,

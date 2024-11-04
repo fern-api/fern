@@ -109,6 +109,7 @@ client = SeedMultiLineDocs(
 )
 client.user.create_user(
     name="name",
+    age=1,
 )
 
 ```

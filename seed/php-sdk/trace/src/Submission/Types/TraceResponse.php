@@ -47,7 +47,7 @@ class TraceResponse extends JsonSerializableType
      * @param array{
      *   submissionId: string,
      *   lineNumber: int,
-     *   returnValue: mixed,
+     *   returnValue?: mixed,
      *   expressionLocation?: ?ExpressionLocation,
      *   stack: StackInformation,
      *   stdout?: ?string,
@@ -58,7 +58,7 @@ class TraceResponse extends JsonSerializableType
     ) {
         $this->submissionId = $values['submissionId'];
         $this->lineNumber = $values['lineNumber'];
-        $this->returnValue = $values['returnValue'];
+        $this->returnValue = $values['returnValue'] ?? null;
         $this->expressionLocation = $values['expressionLocation'] ?? null;
         $this->stack = $values['stack'];
         $this->stdout = $values['stdout'] ?? null;

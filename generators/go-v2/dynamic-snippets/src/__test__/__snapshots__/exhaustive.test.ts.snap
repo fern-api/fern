@@ -16,7 +16,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Endpoints.GetAndReturnListOfObjects(
+	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		[]*types.ObjectWithRequiredField{
 			&types.ObjectWithRequiredField{
@@ -49,7 +49,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Endpoints.GetAndReturnListOfPrimitives(
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		[]string{
 			"one",

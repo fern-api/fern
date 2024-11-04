@@ -25,7 +25,11 @@ from seed import SeedCrossPackageTypeNames
 client = SeedCrossPackageTypeNames(
     base_url="https://yourhost.com/path/to/api",
 )
-client.foo.find()
+client.foo.find(
+    optional_string="optionalString",
+    public_property="publicProperty",
+    private_property=1,
+)
 ```
 
 ## Async Client
@@ -43,7 +47,11 @@ client = AsyncSeedCrossPackageTypeNames(
 
 
 async def main() -> None:
-    await client.foo.find()
+    await client.foo.find(
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
+    )
 
 
 asyncio.run(main())

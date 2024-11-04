@@ -17,7 +17,9 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
-undefined;
+await client.user.list({
+  limit: 1,
+});
  
 ```                        
 
@@ -28,7 +30,9 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
-undefined;
+await client.user.events.listEvents({
+  limit: 1,
+});
  
 ```                        
 

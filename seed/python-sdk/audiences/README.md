@@ -26,7 +26,11 @@ from seed.environment import SeedAudiencesEnvironment
 client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
-client.foo.find()
+client.foo.find(
+    optional_string="optionalString",
+    public_property="publicProperty",
+    private_property=1,
+)
 ```
 
 ## Async Client
@@ -45,7 +49,11 @@ client = AsyncSeedAudiences(
 
 
 async def main() -> None:
-    await client.foo.find()
+    await client.foo.find(
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
+    )
 
 
 asyncio.run(main())

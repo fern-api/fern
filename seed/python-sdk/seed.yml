@@ -44,7 +44,7 @@ test:
       PYTEST_CURRENT_TEST: "some value"
 
 language: python
-generatorType: sdk
+generatorType: SDK
 defaultOutputMode: github
 customFixtureConfig:
   customConfig:
