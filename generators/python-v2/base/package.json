@@ -31,6 +31,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
+    "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/ir-sdk": "53.7.0",
     "@wasm-fmt/ruff_fmt": "^0.6.1",
     "zod": "^3.22.4"

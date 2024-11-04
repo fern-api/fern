@@ -30,20 +30,25 @@ export class ObjectGenerator {
             class_.addField(
                 python.field({
                     name: propertyName,
-                    type: propertyType
+                    type: propertyType,
+                    initializer: this.context.isTypeReferenceOptional(property.valueType)
+                        ? python.codeBlock("None")
+                        : undefined
                 })
             );
         }
 
         const module = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
+        const file = python.file({
+            moduleName: module.join("."),
+            path: ["test"],
+            name: filename
+        });
+        file.addStatement(class_);
 
         return new WriteablePythonFile({
-            contents: python.file({
-                moduleName: module.join("."),
-                path: ["test"],
-                name: filename
-            }),
+            contents: file,
             directory: RelativeFilePath.of(module.join("/")),
             filename: filename
         });

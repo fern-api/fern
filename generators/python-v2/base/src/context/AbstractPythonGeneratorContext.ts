@@ -1,7 +1,8 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { IntermediateRepresentation, Name, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
+import { PythonProject } from "../project";
 import { PythonTypeMapper } from "./PythonTypeMapper";
 
 export abstract class AbstractPythonGeneratorContext<
@@ -9,6 +10,7 @@ export abstract class AbstractPythonGeneratorContext<
 > extends AbstractGeneratorContext {
     private packageName: string;
     public readonly pythonTypeMapper: PythonTypeMapper;
+    public readonly project: PythonProject;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -19,6 +21,7 @@ export abstract class AbstractPythonGeneratorContext<
         super(config, generatorNotificationService);
         this.packageName = snakeCase(`${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`);
         this.pythonTypeMapper = new PythonTypeMapper(this);
+        this.project = new PythonProject({ context: this });
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
@@ -27,6 +30,19 @@ export abstract class AbstractPythonGeneratorContext<
             throw new Error(`Could not find type declaration for type id: ${typeId}`);
         }
         return typeDeclaration;
+    }
+
+    public isTypeReferenceOptional(typeReference: TypeReference): boolean {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return true;
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (typeDeclaration.shape.type === "alias") {
+                return this.isTypeReferenceOptional(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return false;
     }
 
     public getPascalCaseSafeName(name: Name): string {

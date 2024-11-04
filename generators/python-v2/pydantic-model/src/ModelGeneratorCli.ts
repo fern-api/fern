@@ -38,6 +38,10 @@ export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
 
     protected async generate(context: PydanticModelGeneratorContext): Promise<void> {
         const files = generateV2Models({ context });
+        for (const file of files) {
+            context.project.addSourceFiles(file);
+        }
+        await context.project.persist();
     }
 
     protected publishPackage(context: PydanticModelGeneratorContext): Promise<void> {
