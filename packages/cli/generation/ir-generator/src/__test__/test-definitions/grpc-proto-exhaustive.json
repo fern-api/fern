@@ -3575,7 +3575,7 @@
             "headers": [],
             "pathParameters": [],
             "encoding": {
-                "json": {},
+                "json": null,
                 "proto": {}
             },
             "transport": {

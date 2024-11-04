@@ -386,25 +386,10 @@ function convertTransportToEncoding(transport: Transport, service: RawSchemas.Ht
             };
         case "grpc":
             return {
-                json: serviceHasHttpEndpoints(service) ? {} : undefined,
+                json: undefined,
                 proto: {}
             };
         default:
             assertNever(transport);
     }
-}
-
-function serviceHasHttpEndpoints(service: RawSchemas.HttpServiceSchema): boolean {
-    return Object.values(service.endpoints).some((endpoint) => {
-        if (endpoint.source == null) {
-            return true;
-        }
-        if ("openapi" in endpoint.source) {
-            return true;
-        }
-        if ("proto" in endpoint.source) {
-            return false;
-        }
-        assertNever(endpoint.source);
-    });
 }
