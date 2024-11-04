@@ -298,7 +298,8 @@ async function visitEndpoint({
             }
         },
         pagination: noop,
-        source: noop
+        source: noop,
+        transport: noop
     });
 }
 
