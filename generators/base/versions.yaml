@@ -1,0 +1,6 @@
+- version: 0.0.1
+  createdAt: '2024-11-05'
+  changelogEntry:
+    - type: internal
+      summary: Initial release.
+  irVersion: 33
