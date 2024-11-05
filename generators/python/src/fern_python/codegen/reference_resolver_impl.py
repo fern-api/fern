@@ -2,9 +2,9 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
-from fern_python.codegen.node_writer_impl import NodeWriterImpl
-from fern_python.codegen.writer_impl import WriterImpl
 from ordered_set import OrderedSet
+
+from fern_python.codegen.node_writer_impl import NodeWriterImpl
 
 from . import AST
 from .reference_resolver import ReferenceResolver
@@ -99,8 +99,14 @@ class ReferenceResolverImpl(ReferenceResolver):
             )
         )
 
-        if reference.generic is not None: 
-            temp_writer = NodeWriterImpl(should_format=False, should_format_as_snippet=False, whitelabel=False, should_include_header=False, reference_resolver=self)
+        if reference.generic is not None:
+            temp_writer = NodeWriterImpl(
+                should_format=False,
+                should_format_as_snippet=False,
+                whitelabel=False,
+                should_include_header=False,
+                reference_resolver=self,
+            )
 
             resolved_reference += "["
             reference.generic.write(writer=temp_writer)

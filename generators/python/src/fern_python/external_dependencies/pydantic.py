@@ -1,6 +1,6 @@
 import enum
+from typing import Optional, Tuple
 
-from typing import Optional, Tuple, Union
 from fern_python.codegen import AST
 
 PYDANTIC_CORE_DEPENDENCY = AST.Dependency(name="pydantic-core", version="^2.18.2")
@@ -17,9 +17,7 @@ class PydanticVersionCompatibility(str, enum.Enum):
 
 def _export(export: Tuple[str, ...], generic: Optional[AST.TypeHint] = None) -> AST.ClassReference:
     return AST.ClassReference(
-        import_=Pydantic.PydanticImport(),
-        qualified_name_excluding_import=export,
-        generic=generic
+        import_=Pydantic.PydanticImport(), qualified_name_excluding_import=export, generic=generic
     )
 
 

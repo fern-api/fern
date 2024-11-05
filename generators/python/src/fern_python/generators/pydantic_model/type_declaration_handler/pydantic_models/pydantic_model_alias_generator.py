@@ -62,7 +62,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 source_file=self._source_file,
                 docstring=self._docs,
                 snippet=self._snippet,
-                is_root_model=is_pydantic_v2,
+                is_root_model=True,
                 base_models=[Pydantic.RootModel(type_hint)] if is_pydantic_v2 else [],
             ) as pydantic_model:
                 root_name = "root" if is_pydantic_v2 else "__root__"

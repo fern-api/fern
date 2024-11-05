@@ -15,72 +15,31 @@ class OptionalAlias(pydantic.RootModel[typing.Optional[str]]):
     def from_str(value: typing.Optional[str]) -> OptionalAlias:
         return OptionalAlias(root=value)
 
-    class Partial(pydantic.RootModel.Partial[typing.Optional[str]]):
-        pass
-
     class Validators:
         """
         Use this class to add validators to the Pydantic model.
 
-            @OptionalAlias.Validators.root()
-            def validate(values: OptionalAlias.Partial) -> OptionalAlias.Partial:
+            @OptionalAlias.Validators.validate
+            def validate(value: typing.Optional[str]) -> typing.Optional[str]:
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[OptionalAlias.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[OptionalAlias.Validators._RootValidator]
+        _validators: typing.ClassVar[
+            typing.List[typing.Callable[[typing.Optional[str]], typing.Optional[str]]]
         ] = []
 
-        @typing.overload
         @classmethod
-        def root(
-            cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [OptionalAlias.Validators._RootValidator],
-            OptionalAlias.Validators._RootValidator,
-        ]: ...
-        @typing.overload
-        @classmethod
-        def root(
-            cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [OptionalAlias.Validators._PreRootValidator],
-            OptionalAlias.Validators._PreRootValidator,
-        ]: ...
-        @classmethod
-        def root(cls, *, pre: bool = False) -> typing.Any:
-            def decorator(validator: typing.Any) -> typing.Any:
-                if pre:
-                    cls._pre_validators.append(validator)
-                else:
-                    cls._post_validators.append(validator)
-                return validator
-
-            return decorator
-
-        class _PreRootValidator(typing.Protocol):
-            def __call__(self, __values: typing.Any) -> typing.Any: ...
-
-        class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: OptionalAlias.Partial
-            ) -> OptionalAlias.Partial: ...
-
-    @pydantic.model_validator(mode="before")
-    def _pre_validate_types_optional_alias(
-        cls, values: OptionalAlias.Partial
-    ) -> OptionalAlias.Partial:
-        for validator in OptionalAlias.Validators._pre_validators:
-            values = validator(values)
-        return values
+        def validate(
+            cls,
+            validator: typing.Callable[[typing.Optional[str]], typing.Optional[str]],
+        ) -> None:
+            cls._validators.append(validator)
 
     @pydantic.model_validator(mode="after")
-    def _post_validate_types_optional_alias(
-        cls, values: OptionalAlias.Partial
-    ) -> OptionalAlias.Partial:
-        for validator in OptionalAlias.Validators._post_validators:
-            values = validator(values)
-        return values
+    def _validate(
+        cls, values: typing.Dict[str, typing.Any]
+    ) -> typing.Dict[str, typing.Any]:
+        value = typing.cast(typing.Optional[str], values.get("root"))
+        for validator in OptionalAlias.Validators._validators:
+            value = validator(value)
+        return {**values, "root": value}

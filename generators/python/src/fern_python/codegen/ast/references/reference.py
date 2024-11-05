@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Any
+from typing import Any, Optional
 
 from .module import Module
 from .qualfied_name import QualifiedName

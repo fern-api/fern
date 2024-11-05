@@ -24,7 +24,6 @@ class PydanticCustomRootTypeValidatorGenerator(ValidatorGenerator):
     def _write_validator_body(self, writer: AST.NodeWriter) -> None:
         ROOT_VARIABLE_NAME = "value"
         INDIVIDUAL_VALIDATOR_NAME = "validator"
-        ROOT_PROPERTY_NAME = self._get_root_property_name()
 
         writer.write(f"{ROOT_VARIABLE_NAME} = ")
         writer.write_node(
@@ -35,7 +34,9 @@ class PydanticCustomRootTypeValidatorGenerator(ValidatorGenerator):
                 ),
                 args=[
                     AST.Expression(self._root_type),
-                    AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("{ROOT_PROPERTY_NAME}")'),
+                    AST.Expression(
+                        f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("{self._get_root_property_name()}")'
+                    ),
                 ],
             ),
         )
@@ -64,7 +65,8 @@ class PydanticCustomRootTypeValidatorGenerator(ValidatorGenerator):
             )
             writer.write_line()
         writer.write_line(
-            f"return {{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, '{ROOT_PROPERTY_NAME}': {ROOT_VARIABLE_NAME} }}"
+            "return "
+            + f'{{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, "{self._get_root_property_name()}": {ROOT_VARIABLE_NAME} }}'
         )
 
     def add_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
