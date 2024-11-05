@@ -3,7 +3,7 @@ const tsup = require("tsup");
 const { writeFile, rename } = require("fs/promises");
 const path = require("path");
 
-main();
+lib_main();
 
 async function main() {
     await tsup.build({
@@ -40,4 +40,30 @@ async function main() {
             2
         )
     );
+}
+
+async function lib_main() {
+    process.chdir(path.join(__dirname, "lib"));
+
+    await writeFile(
+        "package.json",
+        JSON.stringify(
+            {
+                name: packageJson.name,
+                version: process.argv[2] || packageJson.version,
+                repository: packageJson.repository,
+                main: "index.cjs",
+                types: "index.d.ts",
+                type: "module",
+                files: ["*.js", "*.d.ts", "core/", ],
+                dependencies: {
+                    "@fern-api/core-utils": "^0.15.0-rc63",
+                    "@wasm-fmt/ruff_fmt": "^0.6.1"
+                }
+            },
+            undefined,
+            2
+        )
+    );
+    
 }
