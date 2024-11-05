@@ -8,16 +8,16 @@ import { MintlifyImporter } from "./MintlifyImporter";
 interface RunMintlifyMigrationParams {
     absolutePathToMintJson: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
-    context: TaskContext;
+    taskContext: TaskContext;
 }
 
 export async function runMintlifyMigration({
     absolutePathToMintJson,
     outputPath,
-    context
+    taskContext
 }: RunMintlifyMigrationParams): Promise<void> {
     const mintlifyImporter = new MintlifyImporter({
-        context
+        context: taskContext
     });
 
     const builder = new FernDocsBuilderImpl();

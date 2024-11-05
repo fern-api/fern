@@ -24,12 +24,12 @@ describe("add-generator-groups", () => {
 
             await mkdir(outputPath, { recursive: true });
 
-            const context = createMockTaskContext({ logger: CONSOLE_LOGGER });
+            const taskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
 
             await runMintlifyMigration({
                 absolutePathToMintJson,
                 outputPath,
-                context
+                taskContext
             });
         });
     }
