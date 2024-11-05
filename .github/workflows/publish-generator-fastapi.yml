@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dsinghvi/v2-wrapped-aliases
     paths:
       - "generators/python/fastapi/versions.yml"
   workflow_dispatch:

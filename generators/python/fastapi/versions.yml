@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.6.0-rc0
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support wrapped aliases in Pydantic V2. 
+
 - version: 1.5.0
   irVersion: 53
   changelogEntry:
