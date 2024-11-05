@@ -13,6 +13,7 @@ const OUTPUTS_PATH = AbsoluteFilePath.of(path.join(__dirname, "outputs"));
 
 const fixtures = ["bland", "layerfi", "zep"];
 
+// @todo update tests to use runMintlifyMigration
 describe("add-generator-groups", () => {
     for (const fixture of fixtures) {
         it(`${fixture}`, async () => {

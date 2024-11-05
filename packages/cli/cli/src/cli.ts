@@ -1,22 +1,24 @@
 #!/usr/bin/env node
 
 import {
-    fernConfigJson,
-    generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml,
     getFernDirectory,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
-import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
+import { runMintlifyMigration } from "@fern-api/mintlify-importer";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+import { RUNTIME } from "@fern-typescript/fetcher";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { loadMintJsonFromUrl, LoadMintJsonStatus } from "../../init/src/utils/loadMintJsonFromUrl";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -25,12 +27,15 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
@@ -40,14 +45,10 @@ import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
-import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
-import { RUNTIME } from "@fern-typescript/fetcher";
-import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 
 void runCli();
 
@@ -228,6 +229,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
+                })
+                .option("mintlify", {
+                    type: "string",
+                    description: "Migrate docs from Mintlify"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -239,6 +244,39 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         taskContext: context
                     });
+                });
+            } else if (argv.mintlify != null) {
+                let absolutePathToMintJson: AbsoluteFilePath | undefined = undefined;
+
+                // @todo get urls to work
+                if (isURL(argv.mintlify)) {
+                    const result = await loadMintJsonFromUrl({ url: argv.mintlify, logger: cliContext.logger });
+
+                    if (result.status === LoadMintJsonStatus.Failure) {
+                        cliContext.failAndThrow(result.errorMessage);
+                    }
+
+                    const tmpFilepath = result.filePath;
+
+                    absolutePathToMintJson = AbsoluteFilePath.of(tmpFilepath);
+                } else {
+                    absolutePathToMintJson = AbsoluteFilePath.of(resolve(cwd(), argv.mintlify));
+                }
+
+                const pathExists = await doesPathExist(absolutePathToMintJson);
+
+                if (!pathExists) {
+                    cliContext.failAndThrow(`${absolutePathToMintJson} does not exist`);
+                }
+
+                await cliContext.runTask(async () => {
+                    // @todo remove the if statement - need to appease the type checker for now
+                    if (absolutePathToMintJson) {
+                        await runMintlifyMigration({
+                            absolutePathToMintJson,
+                            outputPath: AbsoluteFilePath.of(cwd())
+                        });
+                    }
                 });
             } else {
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
@@ -1084,3 +1122,34 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
         }
     );
 }
+
+// function addMigrationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+//     cli.command(
+//         "migrate",
+//         "Migrate docs to Fern",
+//         (yargs) =>
+//             yargs
+//                 .option("migrateFrom", {
+//                     choices: ["mintlify", "readme"] as const,
+//                     description: "Original docs provider",
+//                     demandOption: true
+//                 })
+//                 .option("company", {
+//                     choices: ["bland", "layerfi", "zep"] as const,
+//                     description: "Client name",
+//                     demandOption: true
+//                 }),
+//         async (argv) => {
+//             await cliContext.runTask(async (context) => {
+//                 const builder = new FernDocsBuilderImpl();
+//                 await builder.migrateDocs({
+//                     companyName: argv.company,
+//                     migratingFromService: argv.migrateFrom,
+//                     pathToDocsToMigrate: AbsoluteFilePath.of(resolve(cwd(), argv.migrateFrom))
+//                 });
+
+//                 cliContext.logger.info("Migration completed successfully");
+//             });
+//         }
+//     );
+// }
