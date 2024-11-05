@@ -303,6 +303,9 @@ navigation:
           - page: NuGet (C#)
             slug: nuget
             path: ./pages/sdks/integration/nuget.mdx
+          - page: Pkgsite (Go)
+            slug: pkgsite
+            path: ./pages/sdks/integration/pkgsite.mdx
           - page: Maven Central (Java)
             slug: maven-central
             path: ./pages/sdks/integration/maven-central.mdx
