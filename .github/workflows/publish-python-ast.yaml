@@ -4,16 +4,16 @@ name: Publish @fern-api/python-ast
 on:
   push:
     branches:
-      - main
+      # - main
       - vargas/publish-python-ast
-    paths:
-      - "generators/python-v2/ast/versions.yml"
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "The version of the generator to publish."
-        required: true
-        type: string
+  #   paths:
+  #     - "generators/python-v2/ast/versions.yml"
+  # workflow_dispatch:
+  #   inputs:
+  #     version:
+  #       description: "The version of the generator to publish."
+  #       required: true
+  #       type: string
 
 env:
   PACKAGE_NAME: "@fern-api/python-ast"
