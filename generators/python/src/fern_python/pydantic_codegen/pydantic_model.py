@@ -257,7 +257,7 @@ class PydanticModel:
         if self._root_type is not None:
             raise RuntimeError("__root__ was already added")
 
-        self.root_type = root_type
+        self._root_type = root_type
 
         root_type_with_annotation = (
             AST.TypeHint.annotated(
@@ -279,7 +279,7 @@ class PydanticModel:
             )
 
     def get_root_type_unsafe(self) -> Optional[AST.TypeHint]:
-        return self.root_type
+        return self._root_type
 
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)

@@ -16,12 +16,7 @@ class PydanticVersionCompatibility(str, enum.Enum):
 
 def _export(*export: str) -> AST.ClassReference:
     return AST.ClassReference(
-        import_=AST.ReferenceImport(
-            module=AST.Module.external(
-                dependency=PYDANTIC_DEPENDENCY,
-                module_path=("pydantic",),
-            ),
-        ),
+        import_=Pydantic.PydanticImport(),
         qualified_name_excluding_import=export,
     )
 
@@ -46,6 +41,15 @@ class Pydantic:
     @staticmethod
     def RootModel() -> AST.ClassReference:
         return _export("RootModel")
+
+    @staticmethod
+    def PydanticImport() -> AST.ReferenceImport:
+        return AST.ReferenceImport(
+            module=AST.Module.external(
+                dependency=PYDANTIC_DEPENDENCY,
+                module_path=("pydantic",),
+            ),
+        )
 
     class Extra:
         @staticmethod

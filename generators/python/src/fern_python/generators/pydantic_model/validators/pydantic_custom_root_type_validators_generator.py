@@ -10,7 +10,7 @@ from .validator_generators import (
 from .validators_generator import ValidatorsGenerator
 
 
-class PydanticV1CustomRootTypeValidatorsGenerator(ValidatorsGenerator):
+class PydanticCustomRootTypeValidatorsGenerator(ValidatorsGenerator):
     def __init__(self, root_type: AST.TypeHint, model: PydanticModel):
         super().__init__(model=model)
         self._root_type = root_type
