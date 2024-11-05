@@ -52,7 +52,7 @@ async function lib_main() {
                 name: packageJson.name,
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
-                main: "index.cjs",
+                main: "index.js",
                 types: "index.d.ts",
                 type: "module",
                 files: ["*.js", "*.d.ts", "core/", ],

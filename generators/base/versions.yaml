@@ -1,3 +1,9 @@
+- version: 0.0.3
+  createdAt: '2024-11-05'
+  changelogEntry:
+    - type: internal
+      summary: Fix main field.
+  irVersion: 33
 - version: 0.0.2
   createdAt: '2024-11-05'
   changelogEntry:
