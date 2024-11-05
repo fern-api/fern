@@ -25,7 +25,8 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dist": "pnpm compile && node build.cjs"
   },
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
