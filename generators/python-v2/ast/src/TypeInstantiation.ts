@@ -143,7 +143,11 @@ export class TypeInstantiation extends AstNode {
                 }
                 break;
             case "str":
-                writer.write(`"${this.internalType.value}"`);
+                if (this.internalType.value.includes("\n")) {
+                    this.writeStringWithTripleQuotes({ writer, value: this.internalType.value });
+                } else {
+                    writer.write(`"${this.escapeString(this.internalType.value)}"`);
+                }
                 break;
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
@@ -199,6 +203,20 @@ export class TypeInstantiation extends AstNode {
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    private writeStringWithTripleQuotes({ writer, value }: { writer: Writer; value: string }): void {
+        writer.write('"""');
+        const parts = value.split("\n");
+        const head = parts[0] + "\n";
+        const tail = parts.slice(1).join("\n");
+        writer.write(this.escapeString(head));
+        writer.writeNoIndent(this.escapeString(tail));
+        writer.write('"""');
+    }
+
+    private escapeString(value: string): string {
+        return value.replaceAll('"', '\\"');
     }
 }
 
