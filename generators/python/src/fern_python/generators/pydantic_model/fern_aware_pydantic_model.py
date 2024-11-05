@@ -6,12 +6,13 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
 from .validators import (
-    PydanticV1CustomRootTypeValidatorsGenerator,
+    PydanticCustomRootTypeValidatorsGenerator,
     PydanticValidatorsGenerator,
     ValidatorsGenerator,
 )
@@ -69,7 +70,7 @@ class FernAwarePydanticModel:
 
         self._model_contains_forward_refs = False
 
-        is_pydantic_v2 = self._context.core_utilities.get_is_pydantic_v2()
+        is_pydantic_v2 = self._custom_config.version == "v2"
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
@@ -96,7 +97,9 @@ class FernAwarePydanticModel:
             require_optional_fields=custom_config.require_optional_fields,
             is_pydantic_v2=is_pydantic_v2,
             universal_field_validator=self._context.core_utilities.universal_field_validator,
-            universal_root_validator=self._context.core_utilities.universal_root_validator,
+            universal_root_validator=self._model_validator
+            if is_pydantic_v2
+            else self._context.core_utilities.universal_root_validator,
             is_root_model=is_root_model,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
@@ -111,6 +114,15 @@ class FernAwarePydanticModel:
 
     def get_class_name(self) -> str:
         return self._class_name
+
+    def _model_validator(self, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=("model_validator",),
+                import_=Pydantic.ModelValidator().import_,
+            ),
+            kwargs=[("mode", AST.Expression(expression='"before"' if pre else '"after"'))],
+        )
 
     def add_field(
         self,
@@ -309,7 +321,7 @@ class FernAwarePydanticModel:
     def _get_validators_generator(self) -> ValidatorsGenerator:
         root_type = self._pydantic_model.get_root_type_unsafe()
         if root_type is not None:
-            return PydanticV1CustomRootTypeValidatorsGenerator(
+            return PydanticCustomRootTypeValidatorsGenerator(
                 model=self._pydantic_model,
                 root_type=root_type,
             )

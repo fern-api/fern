@@ -47,6 +47,10 @@ class Pydantic:
     def RootModel() -> AST.ClassReference:
         return _export("RootModel")
 
+    @staticmethod
+    def ModelValidator() -> AST.ClassReference:
+        return _export("model_validator")
+
     class Extra:
         @staticmethod
         def forbid() -> AST.Expression:
