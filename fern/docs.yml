@@ -295,17 +295,26 @@ navigation:
           #   icon: fa-regular fa-pro
       - section: Package Managers
         contents:
-          - page: NPM
+          - page: NPM (TypeScript)
             path: ./pages/sdks/integration/npm.mdx
-          - page: PyPI
+          - page: PyPI (Python)
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
-          - page: NuGet
+          - page: NuGet (C#)
             slug: nuget
             path: ./pages/sdks/integration/nuget.mdx
-          - page: Maven Central
+          - page: Pkgsite (Go)
+            slug: pkgsite
+            path: ./pages/sdks/integration/pkgsite.mdx
+          - page: Maven Central (Java)
             slug: maven-central
             path: ./pages/sdks/integration/maven-central.mdx
+          - page: RubyGems (Ruby)
+            slug: rubygems
+            path: ./pages/sdks/integration/rubygems.mdx
+          - page: Packagist (PHP)
+            slug: packagist
+            path: ./pages/sdks/integration/packagist.mdx
 
       - section: Alternatives
         hidden: true

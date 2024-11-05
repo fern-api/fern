@@ -1,11 +1,39 @@
 import { MediaType } from "@fern-api/core-utils";
-import { MultipartRequestProperty, MultipartSchema, RequestWithExample, Source } from "@fern-api/openapi-ir";
+import {
+    MultipartRequestProperty,
+    MultipartSchema,
+    RequestWithExample,
+    Source,
+    NamedFullExample
+} from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";
+
+function getApplicationUrlFormEncodedRequest(
+    requestBody: OpenAPIV3.RequestBodyObject,
+    context: AbstractOpenAPIV3ParserContext
+):
+    | {
+          schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
+          contentType: string;
+          examples: NamedFullExample[];
+      }
+    | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
+        if (MediaType.parse(mediaType)?.isURLEncoded()) {
+            return {
+                schema: mediaTypeObject.schema,
+                contentType: mediaType,
+                examples: getExamples(mediaTypeObject, context)
+            };
+        }
+    }
+    return undefined;
+}
 
 function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject):
     | {
@@ -70,7 +98,29 @@ export function convertRequest({
     const multipartSchema = multipartFormData?.schema;
     const multipartEncoding = multipartFormData?.encoding;
 
+    const urlEncodedRequest = getApplicationUrlFormEncodedRequest(resolvedRequestBody, context);
+
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
+
+    // convert as application/x-www-form-urlencoded
+    if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
+        const convertedUrlEncodedSchema = convertSchema(
+            urlEncodedRequest.schema,
+            false,
+            context,
+            requestBreadcrumbs,
+            source,
+            namespace
+        );
+        return RequestWithExample.json({
+            schema: convertedUrlEncodedSchema,
+            description: resolvedRequestBody.description,
+            contentType: urlEncodedRequest.contentType,
+            source,
+            fullExamples: urlEncodedRequest.examples,
+            additionalProperties: false
+        });
+    }
 
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
