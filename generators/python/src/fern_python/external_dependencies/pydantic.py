@@ -43,10 +43,6 @@ class Pydantic:
         return _export("RootModel")
 
     @staticmethod
-    def ModelValidator() -> AST.ClassReference:
-        return _export("model_validator")
-
-    @staticmethod
     def PydanticImport() -> AST.ReferenceImport:
         return AST.ReferenceImport(
             module=AST.Module.external(
