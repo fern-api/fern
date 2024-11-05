@@ -119,6 +119,7 @@ fixtures:
         pydantic_config:
           version: v2
           wrapped_aliases: True
+          include_validators: True
       outputFolder: pydantic-v2-wrapped
     - customConfig:
         pydantic_config:

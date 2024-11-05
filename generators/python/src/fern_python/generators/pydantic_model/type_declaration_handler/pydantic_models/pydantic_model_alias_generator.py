@@ -3,6 +3,7 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
@@ -61,14 +62,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
                 is_root_model=is_pydantic_v2,
-                base_models=[
-                    AST.ClassReference(
-                        qualified_name_excluding_import=(),
-                        import_=AST.ReferenceImport(module=AST.Module.local("pydantic"), named_import="RootModel"),
-                    )
-                ]
-                if is_pydantic_v2
-                else [],
+                base_models=[Pydantic.RootModel()] if is_pydantic_v2 else [],
             ) as pydantic_model:
                 root_name = "root" if is_pydantic_v2 else "__root__"
                 pydantic_model.set_root_type(self._alias.alias_of)
