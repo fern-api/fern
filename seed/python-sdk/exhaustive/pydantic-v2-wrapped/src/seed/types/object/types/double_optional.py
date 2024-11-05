@@ -6,9 +6,8 @@ import typing_extensions
 import typing
 from .optional_alias import OptionalAlias
 from ....core.serialization import FieldMetadata
-from ....core.pydantic_utilities import universal_root_validator
-from ....core.pydantic_utilities import universal_field_validator
 import pydantic
+from ....core.pydantic_utilities import universal_field_validator
 
 
 class DoubleOptional(UniversalBaseModel):
@@ -108,13 +107,13 @@ class DoubleOptional(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: DoubleOptional.Partial) -> DoubleOptional.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._post_validators:
             values = validator(values)

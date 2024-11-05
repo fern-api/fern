@@ -5,9 +5,8 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ....core.serialization import FieldMetadata
 import typing
-from ....core.pydantic_utilities import universal_root_validator
-from ....core.pydantic_utilities import universal_field_validator
 import pydantic
+from ....core.pydantic_utilities import universal_field_validator
 
 
 class Cat(UniversalBaseModel):
@@ -122,13 +121,13 @@ class Cat(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: Cat.Partial) -> Cat.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate_types_cat(cls, values: Cat.Partial) -> Cat.Partial:
         for validator in Cat.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate_types_cat(cls, values: Cat.Partial) -> Cat.Partial:
         for validator in Cat.Validators._post_validators:
             values = validator(values)

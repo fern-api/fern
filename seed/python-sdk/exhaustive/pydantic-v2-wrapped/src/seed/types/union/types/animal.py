@@ -5,9 +5,8 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
 from ....core.serialization import FieldMetadata
-from ....core.pydantic_utilities import universal_root_validator
-from ....core.pydantic_utilities import universal_field_validator
 import pydantic
+from ....core.pydantic_utilities import universal_field_validator
 
 
 class Animal_Dog(UniversalBaseModel):
@@ -157,13 +156,13 @@ class Animal_Dog(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: Animal_Dog.Partial) -> Animal_Dog.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate(cls, values: Animal_Dog.Partial) -> Animal_Dog.Partial:
         for validator in Animal_Dog.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate(cls, values: Animal_Dog.Partial) -> Animal_Dog.Partial:
         for validator in Animal_Dog.Validators._post_validators:
             values = validator(values)
@@ -359,13 +358,13 @@ class Animal_Cat(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: Animal_Cat.Partial) -> Animal_Cat.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate(cls, values: Animal_Cat.Partial) -> Animal_Cat.Partial:
         for validator in Animal_Cat.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate(cls, values: Animal_Cat.Partial) -> Animal_Cat.Partial:
         for validator in Animal_Cat.Validators._post_validators:
             values = validator(values)

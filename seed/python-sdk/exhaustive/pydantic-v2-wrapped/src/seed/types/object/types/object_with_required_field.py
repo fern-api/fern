@@ -4,9 +4,8 @@ from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
-from ....core.pydantic_utilities import universal_root_validator
-from ....core.pydantic_utilities import universal_field_validator
 import pydantic
+from ....core.pydantic_utilities import universal_field_validator
 
 
 class ObjectWithRequiredField(UniversalBaseModel):
@@ -97,7 +96,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: ObjectWithRequiredField.Partial) -> ObjectWithRequiredField.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate_types_object_with_required_field(
         cls, values: ObjectWithRequiredField.Partial
     ) -> ObjectWithRequiredField.Partial:
@@ -105,7 +104,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate_types_object_with_required_field(
         cls, values: ObjectWithRequiredField.Partial
     ) -> ObjectWithRequiredField.Partial:

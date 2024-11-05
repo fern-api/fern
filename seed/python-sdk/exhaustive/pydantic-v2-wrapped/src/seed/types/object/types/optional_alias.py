@@ -3,7 +3,6 @@
 from __future__ import annotations
 import pydantic
 import typing
-from ....core.pydantic_utilities import universal_root_validator
 
 
 class OptionalAlias(pydantic.RootModel):
@@ -31,7 +30,7 @@ class OptionalAlias(pydantic.RootModel):
         def validate(cls, validator: typing.Callable[[typing.Optional[str]], typing.Optional[str]]) -> None:
             cls._validators.append(validator)
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(typing.Optional[str], values.get("root"))
         for validator in OptionalAlias.Validators._validators:

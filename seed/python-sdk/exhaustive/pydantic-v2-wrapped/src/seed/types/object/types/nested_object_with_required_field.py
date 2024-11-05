@@ -6,9 +6,8 @@ import typing_extensions
 from .object_with_optional_field import ObjectWithOptionalField
 from ....core.serialization import FieldMetadata
 import typing
-from ....core.pydantic_utilities import universal_root_validator
-from ....core.pydantic_utilities import universal_field_validator
 import pydantic
+from ....core.pydantic_utilities import universal_field_validator
 
 
 class NestedObjectWithRequiredField(UniversalBaseModel):
@@ -153,7 +152,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
                 self, __values: NestedObjectWithRequiredField.Partial
             ) -> NestedObjectWithRequiredField.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate_types_nested_object_with_required_field(
         cls, values: NestedObjectWithRequiredField.Partial
     ) -> NestedObjectWithRequiredField.Partial:
@@ -161,7 +160,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate_types_nested_object_with_required_field(
         cls, values: NestedObjectWithRequiredField.Partial
     ) -> NestedObjectWithRequiredField.Partial:

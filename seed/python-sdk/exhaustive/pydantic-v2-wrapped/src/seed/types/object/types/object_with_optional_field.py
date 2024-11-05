@@ -8,7 +8,6 @@ import typing_extensions
 from ....core.serialization import FieldMetadata
 import datetime as dt
 import uuid
-from ....core.pydantic_utilities import universal_root_validator
 from ....core.pydantic_utilities import universal_field_validator
 
 
@@ -567,7 +566,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: ObjectWithOptionalField.Partial) -> ObjectWithOptionalField.Partial: ...
 
-    @universal_root_validator(pre=True)
+    @pydantic.model_validator(mode=before)
     def _pre_validate_types_object_with_optional_field(
         cls, values: ObjectWithOptionalField.Partial
     ) -> ObjectWithOptionalField.Partial:
@@ -575,7 +574,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @universal_root_validator(pre=False)
+    @pydantic.model_validator(mode=after)
     def _post_validate_types_object_with_optional_field(
         cls, values: ObjectWithOptionalField.Partial
     ) -> ObjectWithOptionalField.Partial:
