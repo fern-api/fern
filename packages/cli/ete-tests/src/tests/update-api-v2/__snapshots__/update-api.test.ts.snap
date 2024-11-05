@@ -26,7 +26,13 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
   "servers": [
     {
       "url": "https://api.example.com",
-      "description": "Production"
+      "description": "Production",
+      "x-internal": false
+    },
+    {
+      "url": "https://mocks.example.com/rest",
+      "description": "Mock Server",
+      "x-internal": false
     }
   ],
   "security": [
@@ -73,16 +79,10 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "The page number to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            },
-            "example": 1
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
           },
           {
             "name": "coordinates",
@@ -106,6 +106,17 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
                 "Paris"
               ]
             }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Filter stations by country code",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "iso-country-code"
+            },
+            "example": "DE"
           }
         ],
         "responses": {
@@ -223,6 +234,12 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
             "name": "origin",
             "in": "query",
             "description": "The ID of the origin station",
@@ -273,16 +290,6 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
             "schema": {
               "type": "boolean",
               "default": false
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page of results to be returned",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "default": 1
             }
           }
         ],
@@ -428,16 +435,10 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "The page number to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            },
-            "example": 1
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
           }
         ],
         "responses": {
@@ -1015,6 +1016,33 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
     }
   },
   "components": {
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "The page number to return",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "example": 1
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The number of items to return per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        },
+        "example": 10
+      }
+    },
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
