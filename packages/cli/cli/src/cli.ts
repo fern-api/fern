@@ -1122,34 +1122,3 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
         }
     );
 }
-
-// function addMigrationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-//     cli.command(
-//         "migrate",
-//         "Migrate docs to Fern",
-//         (yargs) =>
-//             yargs
-//                 .option("migrateFrom", {
-//                     choices: ["mintlify", "readme"] as const,
-//                     description: "Original docs provider",
-//                     demandOption: true
-//                 })
-//                 .option("company", {
-//                     choices: ["bland", "layerfi", "zep"] as const,
-//                     description: "Client name",
-//                     demandOption: true
-//                 }),
-//         async (argv) => {
-//             await cliContext.runTask(async (context) => {
-//                 const builder = new FernDocsBuilderImpl();
-//                 await builder.migrateDocs({
-//                     companyName: argv.company,
-//                     migratingFromService: argv.migrateFrom,
-//                     pathToDocsToMigrate: AbsoluteFilePath.of(resolve(cwd(), argv.migrateFrom))
-//                 });
-
-//                 cliContext.logger.info("Migration completed successfully");
-//             });
-//         }
-//     );
-// }
