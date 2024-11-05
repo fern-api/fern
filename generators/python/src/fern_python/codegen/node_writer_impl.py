@@ -29,7 +29,7 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
         node.write(writer=self, should_write_as_snippet=should_write_as_snippet)
 
     def write_reference(self, reference: AST.Reference) -> None:
-        self.write(self._reference_resolver.resolve_reference(reference))
+        self.write(self._reference_resolver.resolve_reference(reference, self))
 
     def should_format_as_snippet(self) -> bool:
         return self._should_format_as_snippet

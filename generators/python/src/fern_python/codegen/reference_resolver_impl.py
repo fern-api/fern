@@ -76,7 +76,7 @@ class ReferenceResolverImpl(ReferenceResolver):
                     prefix_for_qualfied_names=prefix_for_qualfied_names,
                 )
 
-    def resolve_reference(self, reference: AST.Reference) -> str:
+    def resolve_reference(self, reference: AST.Reference, writer: AST.NodeWriter) -> str:
         if self._original_import_to_resolved_import is None:
             raise RuntimeError("References have not yet been resolved.")
 
@@ -96,6 +96,11 @@ class ReferenceResolverImpl(ReferenceResolver):
                 )
             )
         )
+
+        if reference.generic is not None: 
+            writer.write("[")
+            reference.generic.write(writer=writer)
+            writer.write("]")
 
         # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING` or if the import
         # is deferred until after the current declaration (e.g. for circular references when defining Pydantic models).

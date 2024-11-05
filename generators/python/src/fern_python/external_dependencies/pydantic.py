@@ -1,5 +1,6 @@
 import enum
 
+from typing import Optional, Tuple, Union
 from fern_python.codegen import AST
 
 PYDANTIC_CORE_DEPENDENCY = AST.Dependency(name="pydantic-core", version="^2.18.2")
@@ -14,33 +15,34 @@ class PydanticVersionCompatibility(str, enum.Enum):
     Both = "both"
 
 
-def _export(*export: str) -> AST.ClassReference:
+def _export(export: Tuple[str, ...], generic: Optional[AST.TypeHint] = None) -> AST.ClassReference:
     return AST.ClassReference(
         import_=Pydantic.PydanticImport(),
         qualified_name_excluding_import=export,
+        generic=generic
     )
 
 
 class Pydantic:
     @staticmethod
     def Field() -> AST.ClassReference:
-        return _export("Field")
+        return _export(("Field",))
 
     @staticmethod
     def BaseModel() -> AST.ClassReference:
-        return _export("BaseModel")
+        return _export(("BaseModel",))
 
     @staticmethod
     def ConfigDict() -> AST.ClassReference:
-        return _export("ConfigDict")
+        return _export(("ConfigDict",))
 
     @staticmethod
     def PrivateAttr() -> AST.ClassReference:
-        return _export("PrivateAttr")
+        return _export(("PrivateAttr",))
 
     @staticmethod
-    def RootModel() -> AST.ClassReference:
-        return _export("RootModel")
+    def RootModel(generic: Optional[AST.TypeHint] = None) -> AST.ClassReference:
+        return _export(("RootModel",), generic)
 
     @staticmethod
     def PydanticImport() -> AST.ReferenceImport:
@@ -54,8 +56,8 @@ class Pydantic:
     class Extra:
         @staticmethod
         def forbid() -> AST.Expression:
-            return AST.Expression(_export("Extra", "forbid"))
+            return AST.Expression(_export(("Extra", "forbid")))
 
         @staticmethod
         def allow() -> AST.Expression:
-            return AST.Expression(_export("Extra", "allow"))
+            return AST.Expression(_export(("Extra", "allow")))

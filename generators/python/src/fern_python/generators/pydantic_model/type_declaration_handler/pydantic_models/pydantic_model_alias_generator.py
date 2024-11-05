@@ -53,6 +53,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
         else:
             BUILDER_PARAMETER_NAME = "value"
             is_pydantic_v2 = self._custom_config.version == "v2"
+            type_hint = self._context.get_type_hint_for_type_reference(self._alias.alias_of)
             with FernAwarePydanticModel(
                 class_name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
                 type_name=self._name,
@@ -62,7 +63,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
                 is_root_model=is_pydantic_v2,
-                base_models=[Pydantic.RootModel()] if is_pydantic_v2 else [],
+                base_models=[Pydantic.RootModel(type_hint)] if is_pydantic_v2 else [],
             ) as pydantic_model:
                 root_name = "root" if is_pydantic_v2 else "__root__"
                 pydantic_model.set_root_type(self._alias.alias_of)

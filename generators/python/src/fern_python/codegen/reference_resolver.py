@@ -7,5 +7,5 @@ from . import AST
 
 class ReferenceResolver(ABC):
     @abstractmethod
-    def resolve_reference(self, reference: AST.Reference) -> str:
+    def resolve_reference(self, reference: AST.Reference, writer: AST.NodeWriter) -> str:
         ...

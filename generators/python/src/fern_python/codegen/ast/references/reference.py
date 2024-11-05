@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Any
 
 from .module import Module
 from .qualfied_name import QualifiedName
@@ -70,3 +70,5 @@ class Reference:
     This was originally added to ensure the use of NotRequired for TypedDicts
     brings in this import.
     """
+
+    generic: Optional[Any] = None
