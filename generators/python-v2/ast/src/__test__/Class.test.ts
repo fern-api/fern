@@ -103,4 +103,20 @@ describe("class", () => {
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
+
+    it("class with de-indented multi-line string", async () => {
+        const clazz = python.class_({
+            name: "MyClass"
+        });
+        clazz.add(
+            python.field({
+                name: "multiline_string",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello\nWorld")
+            })
+        );
+
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
 });

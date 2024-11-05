@@ -31,9 +31,26 @@ describe("TypeInstantiation", () => {
         });
     });
 
-    it("str", async () => {
-        TypeInstantiation.str("hello").write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    describe("str", () => {
+        it("should render a basic string", async () => {
+            TypeInstantiation.str("hello").write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should render a string containing quote", async () => {
+            TypeInstantiation.str('She said "hello!"').write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should render a string containing newline characters", async () => {
+            TypeInstantiation.str("\n\n####\n\n").write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should render a string containing newline characters and quotes", async () => {
+            TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"').write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
     });
 
     it("bytes", async () => {
