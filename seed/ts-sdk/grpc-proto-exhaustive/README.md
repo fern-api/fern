@@ -20,17 +20,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/grpc-proto-exhaustive";
+import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.dataservice.upload({
-    columns: [
-        {
-            id: "id",
-            values: [1.1],
-        },
-    ],
-});
+const client = new SeedApiClient({ apiKey: "YOUR_API_KEY" });
+await client.dataservice.foo();
 ```
 
 ## Request And Response Types
@@ -55,7 +48,7 @@ will be thrown.
 import { SeedApiError } from "@fern/grpc-proto-exhaustive";
 
 try {
-    await client.dataservice.upload(...);
+    await client.dataservice.foo(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -82,7 +75,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.dataservice.upload(..., {
+const response = await client.dataservice.foo(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -92,7 +85,7 @@ const response = await client.dataservice.upload(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.dataservice.upload(..., {
+const response = await client.dataservice.foo(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -103,7 +96,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.dataservice.upload(..., {
+const response = await client.dataservice.foo(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

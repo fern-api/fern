@@ -1,23 +1,159 @@
 {
   "info": {
-    "name": "\"\"",
+    "name": "Test API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
   "variable": [
     {
       "key": "baseUrl",
+      "value": "https://localhost",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
       "value": "",
       "type": "string"
     }
   ],
-  "auth": null,
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "X-API-Key",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
   "item": [
     {
       "_type": "container",
       "description": null,
       "name": "DataService",
       "item": [
+        {
+          "_type": "endpoint",
+          "name": "Foo",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/foo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "foo"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"key\": \"value\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
         {
           "_type": "endpoint",
           "name": "Upload",
@@ -35,6 +171,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -72,6 +214,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -112,6 +260,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -155,6 +309,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -192,6 +352,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -233,6 +399,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -276,6 +448,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -313,6 +491,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -354,6 +538,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -397,6 +587,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -426,6 +622,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -471,6 +673,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -505,6 +713,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -534,6 +748,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -589,6 +809,12 @@
                 },
                 "header": [
                   {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
                     "type": "text",
                     "key": "Content-Type",
                     "value": "application/json"
@@ -622,6 +848,12 @@
               "variable": []
             },
             "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
               {
                 "type": "text",
                 "key": "Content-Type",
@@ -660,6 +892,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -701,6 +939,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -744,6 +988,12 @@
             },
             "header": [
               {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "string",
+                "description": null
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -781,6 +1031,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -822,6 +1078,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-API-Key",
+                    "value": "{{apiKey}}",
+                    "type": "string",
+                    "description": null
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",

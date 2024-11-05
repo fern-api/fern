@@ -8,6 +8,7 @@ from .resources import (
     UploadRequest,
     dataservice,
 )
+from .security import ApiAuth
 from .types import (
     Column,
     DeleteResponse,
@@ -30,6 +31,7 @@ from .types import (
 )
 
 __all__ = [
+    "ApiAuth",
     "Column",
     "DeleteRequest",
     "DeleteResponse",

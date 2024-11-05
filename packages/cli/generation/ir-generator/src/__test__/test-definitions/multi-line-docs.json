@@ -707,6 +707,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "Retrieve a user.\nThis endpoint is used to retrieve a user."
                 },
@@ -1515,6 +1516,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "Create a new user.\nThis endpoint is used to create a new user."
                 }

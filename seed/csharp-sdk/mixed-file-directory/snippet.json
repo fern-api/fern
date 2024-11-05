@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.ListAsync(new ListUsersRequest());\n"
+                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.ListAsync(new ListUsersRequest { Limit = 1 });\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest());\n"
+                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });\n"
             }
         },
         {

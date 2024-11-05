@@ -25,7 +25,13 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/users")
+                    .WithParam("offset", "1")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -34,7 +40,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithGlobalConfigAsync(
-            new ListWithGlobalConfigRequest(),
+            new ListWithGlobalConfigRequest { Offset = 1 },
             RequestOptions
         );
         JToken

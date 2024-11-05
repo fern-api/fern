@@ -8,7 +8,7 @@ public partial class SeedApiClient
 {
     private RawClient _client;
 
-    public SeedApiClient(ClientOptions? clientOptions = null)
+    public SeedApiClient(string apiKey, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()

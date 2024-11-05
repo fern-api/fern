@@ -92,5 +92,7 @@ service:
       response:
         docs: A list of available train trips
         type: GetTripsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml

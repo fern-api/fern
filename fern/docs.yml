@@ -341,6 +341,9 @@ navigation:
           - page: Navigation
             icon: fa-regular fa-compass
             path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Versioning
+            icon: fa-regular fa-code-branch
+            path: ./pages/docs/building-your-docs/versioning.mdx
           - page: Announcement Banner
             icon: fa-regular fa-bullhorn
             path: ./pages/docs/building-your-docs/announcement-banner.mdx
@@ -452,6 +455,9 @@ navigation:
             path: ./pages/fern-docs/content/api-playground.mdx
             icon: fa-regular fa-square-terminal
             contents:
+              - page: Auto-populate API Keys
+                icon: fa-regular fa-key
+                path: ./pages/fern-docs/content/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-wrench
                 path: ./pages/fern-docs/content/customize-api-playground.mdx
