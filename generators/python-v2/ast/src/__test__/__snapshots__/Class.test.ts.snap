@@ -13,6 +13,13 @@ class MyDataClass:
 "
 `;
 
+exports[`class > class with de-indented multi-line string 1`] = `
+"class MyClass:
+    multiline_string: str = """Hello
+    World"""
+"
+`;
+
 exports[`class > fields with annotation and initializer 1`] = `
 "class Car:
     color: str = "red"

@@ -50,8 +50,29 @@ exports[`TypeInstantiation > set 1`] = `
 "
 `;
 
-exports[`TypeInstantiation > str 1`] = `
+exports[`TypeInstantiation > str > should render a basic string 1`] = `
 ""hello"
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing newline characters 1`] = `
+""""
+
+####
+
+"""
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing newline characters and quotes 1`] = `
+""""She said \\"Hi\\"
+He said \\"bye\\"
+She said \\"okay then\\" """
+"
+`;
+
+exports[`TypeInstantiation > str > should render a string containing quote 1`] = `
+"'She said "hello!"'
 "
 `;
 
