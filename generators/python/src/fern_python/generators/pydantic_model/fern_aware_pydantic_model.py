@@ -119,7 +119,7 @@ class FernAwarePydanticModel:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
                 qualified_name_excluding_import=("model_validator",),
-                import_=Pydantic.ModelValidator().import_,
+                import_=Pydantic.PydanticImport(),
             ),
             kwargs=[("mode", AST.Expression(expression='"before"' if pre else '"after"'))],
         )
