@@ -1,4 +1,6 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, rmdir } from "fs/promises";
 import path from "path";
 import { runMintlifyMigration } from "../runMintlifyMigration";
@@ -22,9 +24,12 @@ describe("add-generator-groups", () => {
 
             await mkdir(outputPath, { recursive: true });
 
+            const context = createMockTaskContext({ logger: CONSOLE_LOGGER });
+
             await runMintlifyMigration({
                 absolutePathToMintJson,
-                outputPath
+                outputPath,
+                context
             });
         });
     }
