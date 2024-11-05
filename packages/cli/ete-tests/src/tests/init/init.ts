@@ -4,8 +4,9 @@ import { runFernCli } from "../../utils/runFernCli";
 
 export async function init({
     directory,
-    openApiArg
-}: { directory?: AbsoluteFilePath; openApiArg?: string } = {}): Promise<AbsoluteFilePath> {
+    openApiArg,
+    mintJsonArg
+}: { directory?: AbsoluteFilePath; openApiArg?: string; mintJsonArg?: string } = {}): Promise<AbsoluteFilePath> {
     if (directory == null) {
         const tmpDir = await tmp.dir();
         directory = AbsoluteFilePath.of(tmpDir.path);
@@ -15,6 +16,10 @@ export async function init({
     if (openApiArg != null) {
         cliArgs.push("--openapi", openApiArg);
         cliArgs.push("--log-level", "debug");
+    }
+
+    if (mintJsonArg != null) {
+        cliArgs.push("--mintlify", mintJsonArg);
     }
 
     await runFernCli(cliArgs, {

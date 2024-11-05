@@ -62,4 +62,12 @@ describe("fern init", () => {
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
+
+    it("init mintlify", async () => {
+        const mintJsonPath = join(FIXTURES_DIR, RelativeFilePath.of("mintlify"), RelativeFilePath.of("mint.json"));
+
+        const pathOfDirectory = await init({ mintJsonArg: mintJsonPath });
+
+        expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
 });
