@@ -10,10 +10,10 @@ class OptionalAlias(UniversalBaseModel):
     root: typing.Optional[str]
 
     def get_as_str(self) -> typing.Optional[str]:
-        return self.__root__
+        return self.root
 
     @staticmethod
     def from_str(value: typing.Optional[str]) -> OptionalAlias:
-        return OptionalAlias(__root__=value)
+        return OptionalAlias(root=value)
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

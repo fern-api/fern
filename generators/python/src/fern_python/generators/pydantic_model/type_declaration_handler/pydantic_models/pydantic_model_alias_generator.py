@@ -60,18 +60,19 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
             ) as pydantic_model:
+                root_name = "__root__" if self._custom_config.version == "v1" else "root"
                 pydantic_model.set_root_type(self._alias.alias_of)
                 pydantic_model.add_method(
                     name=self._get_getter_name(self._alias.alias_of),
                     parameters=[],
                     return_type=self._alias.alias_of,
-                    body=AST.CodeWriter("return self.__root__"),
+                    body=AST.CodeWriter(f"return self.{root_name}"),
                 )
                 pydantic_model.add_method(
                     name=self._get_builder_name(self._alias.alias_of),
                     parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
                     return_type=ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name)),
-                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__={BUILDER_PARAMETER_NAME})"),
+                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"),
                     decorator=AST.ClassMethodDecorator.STATIC,
                 )
 
