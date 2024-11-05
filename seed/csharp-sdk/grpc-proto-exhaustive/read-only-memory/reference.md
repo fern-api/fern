@@ -1,5 +1,30 @@
 # Reference
 ## DataService
+<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">FooAsync</a>() -> object</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Dataservice.FooAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">UploadAsync</a>(UploadRequest { ... }) -> UploadResponse</code></summary>
 <dl>
 <dd>

@@ -39,6 +39,7 @@ public class CreatePlaylistTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/create")
                     .WithParam("datetime", "2024-01-15T09:30:00.000Z")
+                    .WithParam("optionalDatetime", "2024-01-15T09:30:00.000Z")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -54,6 +55,11 @@ public class CreatePlaylistTest : BaseMockServerTest
             new CreatePlaylistRequest
             {
                 Datetime = DateTime.Parse(
+                    "2024-01-15T09:30:00.000Z",
+                    null,
+                    DateTimeStyles.AdjustToUniversal
+                ),
+                OptionalDatetime = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
                     DateTimeStyles.AdjustToUniversal

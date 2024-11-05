@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require "json"
 require_relative "../types/column"
 require_relative "../types/upload_response"
 require_relative "../types/metadata"
@@ -25,6 +26,35 @@ module SeedApiClient
       @request_client = request_client
     end
 
+    # @param request_options [SeedApiClient::RequestOptions]
+    # @return [Hash{String => Object}]
+    # @example
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
+    #  api.dataservice.foo
+    def foo(request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
+        req.url "#{@request_client.get_url(request_options: request_options)}/foo"
+      end
+      JSON.parse(response.body)
+    end
+
     # @param columns [Array<Hash>] Request of type Array<SeedApiClient::Column>, as a Hash
     #   * :id (String)
     #   * :values (Array<Float>)
@@ -36,11 +66,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::UploadResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.upload(columns: [{ id: "id", values: [1.1] }])
     def upload(columns:, namespace: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -66,11 +101,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::DeleteResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.delete
     def delete(ids: nil, delete_all: nil, namespace: nil, filter: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -95,11 +135,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::DescribeResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.describe
     def describe(filter: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -119,11 +164,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::FetchResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.fetch
     def fetch(ids: nil, namespace: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -149,11 +199,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::ListResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.list
     def list(prefix: nil, limit: nil, pagination_token: nil, namespace: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -195,12 +250,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::QueryResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.query(top_k: 1)
     def query(top_k:, namespace: nil, filter: nil, include_values: nil, include_metadata: nil, queries: nil,
               column: nil, id: nil, indexed_data: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -236,11 +296,16 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::UpdateResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.update(id: "id")
     def update(id:, values: nil, set_metadata: nil, namespace: nil, indexed_data: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -273,6 +338,38 @@ module SeedApiClient
       @request_client = request_client
     end
 
+    # @param request_options [SeedApiClient::RequestOptions]
+    # @return [Hash{String => Object}]
+    # @example
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
+    #  api.dataservice.foo
+    def foo(request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
+          req.url "#{@request_client.get_url(request_options: request_options)}/foo"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
     # @param columns [Array<Hash>] Request of type Array<SeedApiClient::Column>, as a Hash
     #   * :id (String)
     #   * :values (Array<Float>)
@@ -284,12 +381,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::UploadResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.upload(columns: [{ id: "id", values: [1.1] }])
     def upload(columns:, namespace: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -316,12 +418,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::DeleteResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.delete
     def delete(ids: nil, delete_all: nil, namespace: nil, filter: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -347,12 +454,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::DescribeResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.describe
     def describe(filter: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -373,12 +485,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::FetchResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.fetch
     def fetch(ids: nil, namespace: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -405,12 +522,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::ListResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.list
     def list(prefix: nil, limit: nil, pagination_token: nil, namespace: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -453,13 +575,18 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::QueryResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.query(top_k: 1)
     def query(top_k:, namespace: nil, filter: nil, include_values: nil, include_metadata: nil, queries: nil,
               column: nil, id: nil, indexed_data: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -496,12 +623,17 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::UpdateResponse]
     # @example
-    #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
+    #  api = SeedApiClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedApiClient::Environment::DEFAULT,
+    #    api_key: "YOUR_API_KEY"
+    #  )
     #  api.dataservice.update(id: "id")
     def update(id:, values: nil, set_metadata: nil, namespace: nil, indexed_data: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X-API-Key"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,

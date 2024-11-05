@@ -28,6 +28,7 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $apiKey The apiKey to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -35,6 +36,7 @@ class SeedClient
      * } $options
      */
     public function __construct(
+        ?string $apiKey = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -42,6 +44,9 @@ class SeedClient
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
         ];
+        if ($apiKey != null) {
+            $defaultHeaders['X-API-Key'] = $apiKey;
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(

@@ -2,23 +2,27 @@ package example
 
 import (
     client "github.com/grpc-proto-exhaustive/fern/client"
+    option "github.com/grpc-proto-exhaustive/fern/option"
     context "context"
     fern "github.com/grpc-proto-exhaustive/fern"
 )
 
 func do() () {
-    client := client.NewClient()
-    client.Dataservice.Fetch(
+    client := client.NewClient(
+        option.WithApiKey(
+            "<value>",
+        ),
+    )
+    client.Dataservice.Describe(
         context.TODO(),
-        &fern.FetchRequest{
-            Ids: []*string{
-                fern.String(
-                    "ids",
-                ),
+        &fern.DescribeRequest{
+            Filter: &fern.Metadata{
+                StringMetadataValueMap: map[string]*fern.MetadataValue{
+                    "filter": &fern.MetadataValue{
+                        Double: 1.1,
+                    },
+                },
             },
-            Namespace: fern.String(
-                "namespace",
-            ),
         },
     )
 }
