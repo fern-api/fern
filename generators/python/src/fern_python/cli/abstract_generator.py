@@ -102,11 +102,14 @@ class AbstractGenerator(ABC):
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
             # we run ruff using the fern_python poetry.toml (copied into the docker)
-            publisher._run_command(
-                command=["poetry", "run", "ruff", "format", "/fern/output"],
-                safe_command="poetry run ruff format /fern/output",
-                cwd="/",
-            )
+            try: 
+                publisher._run_command(
+                    command=["poetry", "run", "ruff", "format", "/fern/output"],
+                    safe_command="poetry run ruff format /fern/output",
+                    cwd="/",
+                )
+            except: 
+                pass
         elif output_mode_union.type == "github":
             publisher.run_poetry_install()
             publisher.run_ruff_format()

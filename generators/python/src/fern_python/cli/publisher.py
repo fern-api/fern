@@ -22,11 +22,14 @@ class Publisher:
         self._generator_config = generator_config
 
     def run_ruff_format(self) -> None:
-        self._run_command(
-            command=["poetry", "run", "ruff", "format", "--cache-dir", "../.ruffcache"],
-            safe_command="poetry run ruff format",
-            cwd=None,
-        )
+        try: 
+            self._run_command(
+                command=["poetry", "run", "ruff", "format", "--cache-dir", "../.ruffcache"],
+                safe_command="poetry run ruff format",
+                cwd=None,
+            )
+        except: 
+            pass 
 
     def run_poetry_install(self) -> None:
         self._run_command(

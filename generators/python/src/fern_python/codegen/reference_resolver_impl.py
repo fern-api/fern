@@ -2,6 +2,8 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
+from fern_python.codegen.node_writer_impl import NodeWriterImpl
+from fern_python.codegen.writer_impl import WriterImpl
 from ordered_set import OrderedSet
 
 from . import AST
@@ -98,9 +100,12 @@ class ReferenceResolverImpl(ReferenceResolver):
         )
 
         if reference.generic is not None: 
-            writer.write("[")
-            reference.generic.write(writer=writer)
-            writer.write("]")
+            temp_writer = NodeWriterImpl(should_format=False, should_format_as_snippet=False, whitelabel=False, should_include_header=False, reference_resolver=self)
+
+            resolved_reference += "["
+            reference.generic.write(writer=temp_writer)
+            resolved_reference += temp_writer.to_str()
+            resolved_reference += "]"
 
         # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING` or if the import
         # is deferred until after the current declaration (e.g. for circular references when defining Pydantic models).
