@@ -245,6 +245,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else if (argv.mintlify != null) {
+                // The file path should include `mint.json` in it
+                if (!argv.mintlify.includes("mint.json")) {
+                    cliContext.failAndThrow("Provide a path to a mint.json file");
+                }
+
                 let absolutePathToMintJson: AbsoluteFilePath | undefined = undefined;
 
                 // @todo get urls to work
