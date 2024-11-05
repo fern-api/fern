@@ -114,3 +114,4 @@ class PydanticCustomRootTypeValidatorGenerator(ValidatorGenerator):
     
     def _get_root_property_name(self) -> str:
         return "__root__" if self._model._version == PydanticVersionCompatibility.V1 else "root"
+
