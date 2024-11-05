@@ -38,7 +38,7 @@ jobs:
         run: pnpm --filter=${{ env.PACKAGE_NAME }} test
 
       - name: Run publish
-        working-directory: generators/python-v2/ast
+        working-directory: generators/commons
         run: |
           pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
           cd lib
