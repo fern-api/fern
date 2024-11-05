@@ -1,12 +1,13 @@
 from typing import Tuple
 
 from fern_python.codegen import AST
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticModel
 
 from .validator_generator import ValidatorGenerator
 
 
-class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
+class PydanticCustomRootTypeValidatorGenerator(ValidatorGenerator):
     _DECORATOR_FUNCTION_NAME = "validate"
     _VALIDATOR_CLASS_VALIDATORS_CLASS_VAR = "_validators"
 
@@ -23,6 +24,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
     def _write_validator_body(self, writer: AST.NodeWriter) -> None:
         ROOT_VARIABLE_NAME = "value"
         INDIVIDUAL_VALIDATOR_NAME = "validator"
+        ROOT_PROPERTY_NAME = self._get_root_property_name()
 
         writer.write(f"{ROOT_VARIABLE_NAME} = ")
         writer.write_node(
@@ -33,7 +35,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
                 ),
                 args=[
                     AST.Expression(self._root_type),
-                    AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("__root__")'),
+                    AST.Expression(f'{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}.get("{ROOT_PROPERTY_NAME}")'),
                 ],
             ),
         )
@@ -44,7 +46,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
             ".".join(
                 (
                     *self._reference_to_validators_class,
-                    PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                    PydanticCustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
                 )
             )
             + ":"
@@ -62,7 +64,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
             )
             writer.write_line()
         writer.write_line(
-            "return " + f'{{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, "__root__": {ROOT_VARIABLE_NAME} }}'
+            f"return {{ **{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, '{ROOT_PROPERTY_NAME}': {ROOT_VARIABLE_NAME} }}"
         )
 
     def add_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:
@@ -71,20 +73,20 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
         validator_type = AST.TypeHint.callable([self._root_type], self._root_type)
         validators_class.add_class_var(
             AST.VariableDeclaration(
-                name=PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
+                name=PydanticCustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR,
                 type_hint=AST.TypeHint.class_var(AST.TypeHint.list(validator_type)),
                 initializer=AST.Expression("[]"),
             )
         )
         validators_class.add_method(
             declaration=AST.FunctionDeclaration(
-                name=PydanticV1CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME,
+                name=PydanticCustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME,
                 signature=AST.FunctionSignature(
                     parameters=[AST.FunctionParameter(name=VALIDATOR_PARAMETER, type_hint=validator_type)],
                     return_type=AST.TypeHint.none(),
                 ),
                 body=AST.CodeWriter(
-                    f"cls.{PydanticV1CustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
+                    f"cls.{PydanticCustomRootTypeValidatorGenerator._VALIDATOR_CLASS_VALIDATORS_CLASS_VAR}"
                     + f".append({VALIDATOR_PARAMETER})"
                 ),
             ),
@@ -94,7 +96,7 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
     def write_example_for_docstring(self, writer: AST.NodeWriter) -> None:
 
         reference_to_decorator = ".".join(
-            (*self._reference_to_validators_class, PydanticV1CustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
+            (*self._reference_to_validators_class, PydanticCustomRootTypeValidatorGenerator._DECORATOR_FUNCTION_NAME)
         )
 
         with writer.indent():
@@ -109,3 +111,6 @@ class PydanticV1CustomRootTypeValidatorGenerator(ValidatorGenerator):
 
             with writer.indent():
                 writer.write_line("...")
+    
+    def _get_root_property_name(self) -> str:
+        return "__root__" if self._model._version == PydanticVersionCompatibility.V1 else "root"

@@ -50,8 +50,6 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 should_export=True,
             )
         else:
-            # NOTE: We validate the config to ensure wrapped aliases are only available for Pydantic V1 users.
-            # As such, we force the root field to be __root__ as opposed to conditional based on the Pydantic version.
             BUILDER_PARAMETER_NAME = "value"
             with FernAwarePydanticModel(
                 class_name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
@@ -62,7 +60,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
             ) as pydantic_model:
-                pydantic_model.set_root_type_v1_only(self._alias.alias_of)
+                pydantic_model.set_root_type(self._alias.alias_of)
                 pydantic_model.add_method(
                     name=self._get_getter_name(self._alias.alias_of),
                     parameters=[],
