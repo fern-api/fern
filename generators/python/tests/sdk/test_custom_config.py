@@ -53,5 +53,5 @@ def test_parse_wrapped_aliases() -> None:
             "wrapped_aliases": True,
         },
     }
-    with pytest.raises(pydantic.ValidationError, match="Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases."):
+    with pytest.raises(pydantic.ValidationError, match="Wrapped aliases are not supported for `both`, please update your `version` field to be 'v1' or `v2` to continue using wrapped aliases."):
         SDKCustomConfig.parse_obj(both)

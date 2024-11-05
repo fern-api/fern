@@ -109,11 +109,7 @@ class PydanticModel:
         self._has_aliases |= is_aliased
 
         default_value = (
-            (
-                AST.Expression("None")
-                if unsanitized_field.type_hint.is_optional and self._require_optional_fields is False
-                else None
-            )
+            (AST.Expression("None") if unsanitized_field.type_hint.is_optional and self._require_optional_fields is False else None)
             if field.default_value is None
             else field.default_value
         )
@@ -141,22 +137,16 @@ class PydanticModel:
                 type_hint=aliased_type_hint,
             )
 
-        self._class_declaration.add_class_var(
-            AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
-        )
+        self._class_declaration.add_class_var(AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer))
 
         self._fields.append(field)
 
     def get_public_fields(self) -> List[PydanticField]:
         return self._fields
 
-    def add_private_instance_field(
-        self, name: str, type_hint: AST.TypeHint, default_factory: Optional[AST.Expression] = None
-    ) -> None:
+    def add_private_instance_field(self, name: str, type_hint: AST.TypeHint, default_factory: Optional[AST.Expression] = None) -> None:
         if not name.startswith("_"):
-            raise RuntimeError(
-                f"Private pydantic field {name} in {self._class_declaration.name} does not start with an underscore"
-            )
+            raise RuntimeError(f"Private pydantic field {name} in {self._class_declaration.name} does not start with an underscore")
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(
                 name=name,
@@ -240,9 +230,7 @@ class PydanticModel:
             declaration=AST.FunctionDeclaration(
                 name=validator_name,
                 signature=AST.FunctionSignature(
-                    parameters=[
-                        AST.FunctionParameter(name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type)
-                    ],
+                    parameters=[AST.FunctionParameter(name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type)],
                     return_type=value_type,
                 ),
                 body=body,
@@ -250,15 +238,13 @@ class PydanticModel:
             ),
         )
 
-    def set_root_type_unsafe(
-        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
-    ) -> None:
+    def set_root_type_unsafe(self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None) -> None:
         if self._version == PydanticVersionCompatibility.Both:
             raise RuntimeError("Overriding root types is only available in Pydantic v1 or v2")
-        
+
         if self._root_type is not None:
             raise RuntimeError("__root__ was already added")
-        
+
         self.root_type = root_type
 
         root_type_with_annotation = (
@@ -270,16 +256,11 @@ class PydanticModel:
             else root_type
         )
 
-        if self._version == PydanticVersionCompatibility.V1: 
-            self._class_declaration.add_statement(
-                AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
-            )
-        
-        if self._version == PydanticVersionCompatibility.V2: 
-            self._class_declaration.add_statement(
-                AST.VariableDeclaration(name="root", type_hint=root_type_with_annotation)
-            )
-        
+        if self._version == PydanticVersionCompatibility.V1:
+            self._class_declaration.add_statement(AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation))
+
+        if self._version == PydanticVersionCompatibility.V2:
+            self._class_declaration.add_statement(AST.VariableDeclaration(name="root", type_hint=root_type_with_annotation))
 
     def get_root_type_unsafe(self) -> Optional[AST.TypeHint]:
         return self.root_type
@@ -296,8 +277,7 @@ class PydanticModel:
             extends=[
                 dataclasses.replace(
                     base_model,
-                    qualified_name_excluding_import=base_model.qualified_name_excluding_import
-                    + (PydanticModel._PARTIAL_CLASS_NAME,),
+                    qualified_name_excluding_import=base_model.qualified_name_excluding_import + (PydanticModel._PARTIAL_CLASS_NAME,),
                 )
                 for base_model in self._base_models
             ]
@@ -380,10 +360,7 @@ class PydanticModel:
                 writer.write_node(v2_model_config)
 
         if (
-            (
-                self._version == PydanticVersionCompatibility.Both
-                and (v1_config_class is not None or v2_model_config is not None)
-            )
+            (self._version == PydanticVersionCompatibility.Both and (v1_config_class is not None or v2_model_config is not None))
             or (self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None)
             or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
         ):
