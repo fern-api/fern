@@ -306,6 +306,9 @@ navigation:
           - page: Maven Central (Java)
             slug: maven-central
             path: ./pages/sdks/integration/maven-central.mdx
+          - page: RubyGems (Ruby)
+            slug: rubygems
+            path: ./pages/sdks/integration/rubygems.mdx
           - page: Packagist (PHP)
             slug: packagist
             path: ./pages/sdks/integration/packagist.mdx
