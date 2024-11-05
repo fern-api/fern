@@ -3,6 +3,20 @@ imports:
   endpoints: ./endpoints.yml
 
 types:
+  ErrorSeverity:
+    audiences:
+      - dynamic
+    enum:
+      - CRITICAL
+      - WARNING
+
+  Error:
+    audiences:
+      - dynamic
+    properties:
+      severity: ErrorSeverity
+      message: string
+
   Values:
     audiences:
       - dynamic
@@ -31,5 +45,10 @@ types:
       - dynamic
     docs: |
       The user-facing response type containing the generated snippet.
+
+      If there are any errors, the snippet will still sometimes represent a
+      partial and/or valid result. This is useful for rendering a snippet alongside
+      error messages the user can use to diagnose and resolve the problem.
     properties:
       snippet: string
+      errors: optional<list<Error>>
