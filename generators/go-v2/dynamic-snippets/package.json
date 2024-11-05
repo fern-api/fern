@@ -40,7 +40,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-sdk": "^53.15.0",
+    "@fern-fern/ir-sdk": "^53.19.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
