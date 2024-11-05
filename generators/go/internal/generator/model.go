@@ -738,6 +738,8 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.WriteDocs(member.docs)
 		t.writer.P(member.field, " ", member.value)
 	}
+	t.writer.P()
+	t.writer.P("typ string")
 	t.writer.P("}")
 	t.writer.P()
 
@@ -746,10 +748,10 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		if member.isLiteral {
 			t.writer.P("func New", t.typeName, "With", strings.Title(member.field), "() *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", member.field, ": ", member.literal, "}")
+			t.writer.P("return &", t.typeName, "{ typ: \"", member.field, "\", ", member.field, ": ", member.literal, "}")
 		} else if t.unionVersion != UnionVersionV1 {
 			t.writer.P("func New", t.typeName, "From", member.field, "(value ", member.value, ") *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", member.field, ": value}")
+			t.writer.P("return &", t.typeName, "{ typ: \"", member.field, "\", ", member.field, ": value}")
 		} else {
 			continue
 		}
@@ -785,6 +787,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.isLiteral {
 			// If the undiscriminated union specifies a literal, it will only
 			// succeed if the literal matches exactly.
+			t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
 			t.writer.P(receiver, ".", member.field, " = ", member.variable)
 			t.writer.P("if ", receiver, ".", member.field, " != ", member.literal, " {")
 			t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", member.literal, ", ", member.variable, ")")
@@ -797,6 +800,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.valueUnmarshalerMethodSuffix != "" {
 			variable += member.valueUnmarshalerMethodSuffix
 		}
+		t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
 		t.writer.P(receiver, ".", member.field, " = ", variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
@@ -809,9 +813,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		field := fmt.Sprintf("%s.%s", receiver, member.field)
 		if member.date != nil && !member.isOptional {
-			t.writer.P("if !", field, ".IsZero() {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
 		} else {
-			t.writer.P("if ", field, " != ", member.zeroValue, " {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
 		}
 		if member.isLiteral {
 			// If we have a literal, we need to marshal it directly.
@@ -843,9 +847,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		field := fmt.Sprintf("%s.%s", receiver, member.field)
 		if member.date != nil && !member.isOptional {
-			t.writer.P("if !", field, ".IsZero() {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
 		} else {
-			t.writer.P("if ", field, " != ", member.zeroValue, " {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
 		}
 		t.writer.P("return visitor.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
 		t.writer.P("}")

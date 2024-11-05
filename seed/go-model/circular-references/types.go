@@ -306,51 +306,58 @@ type JsonLike struct {
 	String            string
 	Integer           int
 	Boolean           bool
+
+	typ string
 }
 
 func NewJsonLikeFromJsonLikeList(value []*JsonLike) *JsonLike {
-	return &JsonLike{JsonLikeList: value}
+	return &JsonLike{typ: "JsonLikeList", JsonLikeList: value}
 }
 
 func NewJsonLikeFromStringJsonLikeMap(value map[string]*JsonLike) *JsonLike {
-	return &JsonLike{StringJsonLikeMap: value}
+	return &JsonLike{typ: "StringJsonLikeMap", StringJsonLikeMap: value}
 }
 
 func NewJsonLikeFromString(value string) *JsonLike {
-	return &JsonLike{String: value}
+	return &JsonLike{typ: "String", String: value}
 }
 
 func NewJsonLikeFromInteger(value int) *JsonLike {
-	return &JsonLike{Integer: value}
+	return &JsonLike{typ: "Integer", Integer: value}
 }
 
 func NewJsonLikeFromBoolean(value bool) *JsonLike {
-	return &JsonLike{Boolean: value}
+	return &JsonLike{typ: "Boolean", Boolean: value}
 }
 
 func (j *JsonLike) UnmarshalJSON(data []byte) error {
 	var valueJsonLikeList []*JsonLike
 	if err := json.Unmarshal(data, &valueJsonLikeList); err == nil {
+		j.typ = "JsonLikeList"
 		j.JsonLikeList = valueJsonLikeList
 		return nil
 	}
 	var valueStringJsonLikeMap map[string]*JsonLike
 	if err := json.Unmarshal(data, &valueStringJsonLikeMap); err == nil {
+		j.typ = "StringJsonLikeMap"
 		j.StringJsonLikeMap = valueStringJsonLikeMap
 		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		j.typ = "String"
 		j.String = valueString
 		return nil
 	}
 	var valueInteger int
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		j.typ = "Integer"
 		j.Integer = valueInteger
 		return nil
 	}
 	var valueBoolean bool
 	if err := json.Unmarshal(data, &valueBoolean); err == nil {
+		j.typ = "Boolean"
 		j.Boolean = valueBoolean
 		return nil
 	}
@@ -358,19 +365,19 @@ func (j *JsonLike) UnmarshalJSON(data []byte) error {
 }
 
 func (j JsonLike) MarshalJSON() ([]byte, error) {
-	if j.JsonLikeList != nil {
+	if j.typ == "JsonLikeList" || j.JsonLikeList != nil {
 		return json.Marshal(j.JsonLikeList)
 	}
-	if j.StringJsonLikeMap != nil {
+	if j.typ == "StringJsonLikeMap" || j.StringJsonLikeMap != nil {
 		return json.Marshal(j.StringJsonLikeMap)
 	}
-	if j.String != "" {
+	if j.typ == "String" || j.String != "" {
 		return json.Marshal(j.String)
 	}
-	if j.Integer != 0 {
+	if j.typ == "Integer" || j.Integer != 0 {
 		return json.Marshal(j.Integer)
 	}
-	if j.Boolean != false {
+	if j.typ == "Boolean" || j.Boolean != false {
 		return json.Marshal(j.Boolean)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
@@ -385,19 +392,19 @@ type JsonLikeVisitor interface {
 }
 
 func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
-	if j.JsonLikeList != nil {
+	if j.typ == "JsonLikeList" || j.JsonLikeList != nil {
 		return visitor.VisitJsonLikeList(j.JsonLikeList)
 	}
-	if j.StringJsonLikeMap != nil {
+	if j.typ == "StringJsonLikeMap" || j.StringJsonLikeMap != nil {
 		return visitor.VisitStringJsonLikeMap(j.StringJsonLikeMap)
 	}
-	if j.String != "" {
+	if j.typ == "String" || j.String != "" {
 		return visitor.VisitString(j.String)
 	}
-	if j.Integer != 0 {
+	if j.typ == "Integer" || j.Integer != 0 {
 		return visitor.VisitInteger(j.Integer)
 	}
-	if j.Boolean != false {
+	if j.typ == "Boolean" || j.Boolean != false {
 		return visitor.VisitBoolean(j.Boolean)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", j)
