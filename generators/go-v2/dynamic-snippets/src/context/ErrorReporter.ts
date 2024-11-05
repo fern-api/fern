@@ -23,6 +23,7 @@ export declare namespace ErrorReporter {
 
 interface Error_ {
     severity: "CRITICAL" | "WARNING";
+    path: string[] | undefined;
     message: string;
 }
 
@@ -38,7 +39,7 @@ export class ErrorReporter {
     public add(err: Omit<ErrorReporter.Error, "path">): void {
         this.errors.push({
             ...err,
-            path: this.path
+            path: [...this.path]
         });
     }
 
@@ -74,17 +75,15 @@ export class ErrorReporter {
         this.path = [];
     }
 
-    public reportAsString(err: ErrorReporter.Error): string {
-        if (err.path == null || err.path.length === 0) {
-            return err.message;
-        }
-        return `${err.path.join(".")}: ${err.message}`;
-    }
-
     public toDynamicSnippetErrors(): Error_[] {
         return this.errors.map((err) => ({
             severity: err.severity,
+            path: err.path != null ? this.pathToStringArray(err.path) : undefined,
             message: err.message
         }));
+    }
+
+    private pathToStringArray(path: ErrorReporter.Path): string[] {
+        return path.map((item) => (typeof item === "string" ? item : `[${item.index}]`));
     }
 }

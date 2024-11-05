@@ -3,7 +3,7 @@ import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
-import { Severity } from "./context/ErrorReporter";
+import { ErrorReporter, Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
 
 const SNIPPET_PACKAGE_NAME = "example";
@@ -43,7 +43,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
 
-        let bestReporter = this.context.errors.clone();
+        let bestReporter: ErrorReporter | undefined;
         let bestSnippet: string | undefined;
         let err: Error | undefined;
         for (const endpoint of endpoints) {
@@ -63,7 +63,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                         errors: undefined
                     };
                 }
-                if (bestReporter.size() > this.context.errors.size()) {
+                if (bestReporter == null || bestReporter.size() > this.context.errors.size()) {
                     bestReporter = this.context.errors.clone();
                     bestSnippet = snippet;
                 }
@@ -73,7 +73,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                 }
             }
         }
-        if (bestSnippet != null) {
+        if (bestSnippet != null && bestReporter != null) {
             return {
                 snippet: bestSnippet,
                 errors: bestReporter.toDynamicSnippetErrors()

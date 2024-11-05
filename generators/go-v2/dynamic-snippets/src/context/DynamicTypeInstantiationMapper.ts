@@ -631,6 +631,6 @@ export class DynamicTypeInstantiationMapper {
     }
 
     private newTypeMismatchError({ expected, value }: { expected: string; value: unknown }): Error {
-        return new Error(`Expected ${expected}, got: ${typeof value}`);
+        return new Error(`Expected ${expected} but got ${typeof value}`);
     }
 }
