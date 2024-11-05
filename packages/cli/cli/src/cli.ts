@@ -18,7 +18,6 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { loadMintJsonFromUrl, LoadMintJsonStatus } from "../../init/src/utils/loadMintJsonFromUrl";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -250,15 +249,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
                 // @todo get urls to work
                 if (isURL(argv.mintlify)) {
-                    const result = await loadMintJsonFromUrl({ url: argv.mintlify, logger: cliContext.logger });
-
-                    if (result.status === LoadMintJsonStatus.Failure) {
-                        cliContext.failAndThrow(result.errorMessage);
-                    }
-
-                    const tmpFilepath = result.filePath;
-
-                    absolutePathToMintJson = AbsoluteFilePath.of(tmpFilepath);
+                    // For now, throw an error if the user provides a URL
+                    cliContext.failAndThrow(
+                        "Clone the repo locally and run this command again by referencing the path to the local mint.json file"
+                    );
                 } else {
                     absolutePathToMintJson = AbsoluteFilePath.of(resolve(cwd(), argv.mintlify));
                 }

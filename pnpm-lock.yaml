@@ -3910,9 +3910,6 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../login
-      '@fern-api/mintlify-importer':
-        specifier: workspace:*
-        version: link:../docs-importers/mintlify
       '@fern-api/mock':
         specifier: workspace:*
         version: link:../mock
