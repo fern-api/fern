@@ -244,10 +244,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else if (argv.mintlify != null) {
-                await cliContext.runTask(async (context) => {
+                await cliContext.runTask(async (taskContext) => {
                     await initializeWithMintlify({
                         pathToMintJson: argv.mintlify,
-                        context
+                        taskContext
                     });
                 });
             } else {
