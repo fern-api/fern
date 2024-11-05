@@ -250,15 +250,13 @@ class PydanticModel:
             ),
         )
 
-    def set_root_type_unsafe(
-        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
-    ) -> None:
+    def set_root_type_unsafe(self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None) -> None:
         if self._version == PydanticVersionCompatibility.Both:
             raise RuntimeError("Overriding root types is only available in Pydantic v1 or v2")
-        
+
         if self._root_type is not None:
             raise RuntimeError("__root__ was already added")
-        
+
         self.root_type = root_type
 
         root_type_with_annotation = (
@@ -270,16 +268,15 @@ class PydanticModel:
             else root_type
         )
 
-        if self._version == PydanticVersionCompatibility.V1: 
+        if self._version == PydanticVersionCompatibility.V1:
             self._class_declaration.add_statement(
                 AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
             )
-        
-        if self._version == PydanticVersionCompatibility.V2: 
+
+        if self._version == PydanticVersionCompatibility.V2:
             self._class_declaration.add_statement(
                 AST.VariableDeclaration(name="root", type_hint=root_type_with_annotation)
             )
-        
 
     def get_root_type_unsafe(self) -> Optional[AST.TypeHint]:
         return self.root_type
