@@ -28,3 +28,4 @@ export {
 } from "./osPathConverter";
 export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
 export { getFilename } from "./getFilename";
+export { isURL } from "./isUrl";
