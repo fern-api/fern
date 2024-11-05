@@ -3,11 +3,23 @@ import { go } from "@fern-api/go-codegen";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
+import { ErrorReporter, Severity } from "./context/ErrorReporter";
+import { Scope } from "./Scope";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
+
+// TODO(amckinney): Use the latest DynamicSnippets.EndpointSnippetResponse type directly when available.
+interface EndpointSnippetResponse extends DynamicSnippets.EndpointSnippetResponse {
+    errors:
+        | {
+              severity: "CRITICAL" | "WARNING";
+              message: string;
+          }[]
+        | undefined;
+}
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
     private formatter: AbstractFormatter | undefined;
@@ -25,35 +37,52 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         this.formatter = formatter;
     }
 
-    public async generate(
-        snippet: DynamicSnippets.EndpointSnippetRequest
-    ): Promise<DynamicSnippets.EndpointSnippetResponse> {
-        const endpoints = this.context.resolveEndpointLocationOrThrow(snippet.endpoint);
+    public async generate(request: DynamicSnippets.EndpointSnippetRequest): Promise<EndpointSnippetResponse> {
+        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
-            throw new Error(`No endpoints found for ${JSON.stringify(snippet.endpoint)}`);
+            throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
         }
 
+        let bestReporter: ErrorReporter | undefined;
+        let bestSnippet: string | undefined;
         let err: Error | undefined;
         for (const endpoint of endpoints) {
+            this.context.errors.reset();
             try {
-                const code = this.buildCodeBlock({ endpoint, snippet });
-                return {
-                    snippet: await code.toString({
-                        packageName: SNIPPET_PACKAGE_NAME,
-                        importPath: SNIPPET_IMPORT_PATH,
-                        rootImportPath: this.context.rootImportPath,
-                        customConfig: this.context.customConfig ?? {},
-                        formatter: this.formatter
-                    })
-                };
+                const code = this.buildCodeBlock({ endpoint, snippet: request });
+                const snippet = await code.toString({
+                    packageName: SNIPPET_PACKAGE_NAME,
+                    importPath: SNIPPET_IMPORT_PATH,
+                    rootImportPath: this.context.rootImportPath,
+                    customConfig: this.context.customConfig ?? {},
+                    formatter: this.formatter
+                });
+                if (this.context.errors.empty()) {
+                    return {
+                        snippet,
+                        errors: undefined
+                    };
+                }
+                if (bestReporter == null || bestReporter.size() > this.context.errors.size()) {
+                    bestReporter = this.context.errors.clone();
+                    bestSnippet = snippet;
+                }
             } catch (error) {
                 if (err == null) {
-                    // Report the first error that occurs.
                     err = error as Error;
                 }
             }
         }
-        throw err ?? new Error(`Failed to generate snippet for ${JSON.stringify(snippet.endpoint)}`);
+        if (bestSnippet != null && bestReporter != null) {
+            return {
+                snippet: bestSnippet,
+                errors: bestReporter.toDynamicSnippetErrors()
+            };
+        }
+        throw (
+            err ??
+            new Error(`Failed to generate snippet for endpoint "${request.endpoint.method} ${request.endpoint.path}"`)
+        );
     }
 
     private buildCodeBlock({
@@ -114,12 +143,17 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
             if (snippet.auth != null) {
                 args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                throw new Error(`Auth with ${endpoint.auth.type} configuration is required for this endpoint`);
+                this.context.errors.add({
+                    severity: Severity.Warning,
+                    message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
+                });
             }
         }
+        this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
             args.push(...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers }));
         }
+        this.context.errors.unscope();
         return args;
     }
 
@@ -133,17 +167,29 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
-                    throw this.newAuthMismatchError({ auth, values });
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.newAuthMismatchError({ auth, values }).message
+                    });
+                    return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
                 if (values.type !== "bearer") {
-                    throw this.newAuthMismatchError({ auth, values });
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.newAuthMismatchError({ auth, values }).message
+                    });
+                    return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorBearerAuthArg({ auth, values });
             case "header":
                 if (values.type !== "header") {
-                    throw this.newAuthMismatchError({ auth, values });
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.newAuthMismatchError({ auth, values }).message
+                    });
+                    return go.TypeInstantiation.nop();
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
         }
@@ -286,12 +332,19 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         snippet: DynamicSnippets.EndpointSnippetRequest;
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
+
+        this.context.errors.scope(Scope.PathParameters);
         if (request.pathParameters != null) {
             args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
+        this.context.errors.unscope();
+
         return args;
     }
 
@@ -313,7 +366,11 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
         if (typeof value !== "string") {
-            throw new Error("Expected bytes value to be a string, got " + typeof value);
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected bytes value to be a string, got ${typeof value}`
+            });
+            return go.TypeInstantiation.nop();
         }
         return go.TypeInstantiation.bytes(value as string);
     }
@@ -326,9 +383,13 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         snippet: DynamicSnippets.EndpointSnippetRequest;
     }): go.TypeInstantiation[] {
         const args: go.TypeInstantiation[] = [];
+
+        this.context.errors.scope(Scope.PathParameters);
         if (request.pathParameters != null) {
             args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
+        this.context.errors.unscope();
+
         args.push(this.getInlinedRequestArg({ request, snippet }));
         return args;
     }
@@ -342,33 +403,41 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
     }): go.TypeInstantiation {
         const fields: go.StructField[] = [];
 
-        const parameters = [
-            ...this.context.associateQueryParametersByWireValue({
-                parameters: request.queryParameters ?? [],
-                values: snippet.queryParameters ?? {}
-            }),
-            ...this.context.associateByWireValue({
-                parameters: request.headers ?? [],
-                values: snippet.headers ?? {}
-            })
-        ];
-        for (const parameter of parameters) {
-            fields.push({
-                name: parameter.name.pascalCase.unsafeName,
-                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
-            });
-        }
+        this.context.errors.scope(Scope.QueryParameters);
+        const queryParameters = this.context.associateQueryParametersByWireValue({
+            parameters: request.queryParameters ?? [],
+            values: snippet.queryParameters ?? {}
+        });
+        const queryParameterFields = queryParameters.map((queryParameter) => ({
+            name: queryParameter.name.name.pascalCase.unsafeName,
+            value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
+        }));
+        this.context.errors.unscope();
 
-        if (request.body != null) {
-            fields.push(...this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody }));
-        }
+        this.context.errors.scope(Scope.Headers);
+        const headers = this.context.associateByWireValue({
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {}
+        });
+        const headerFields = headers.map((header) => ({
+            name: header.name.name.pascalCase.unsafeName,
+            value: this.context.dynamicTypeInstantiationMapper.convert(header)
+        }));
+        this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.RequestBody);
+        const requestBodyFields =
+            request.body != null
+                ? this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody })
+                : [];
+        this.context.errors.unscope();
 
         return go.TypeInstantiation.structPointer({
             typeReference: go.typeReference({
                 name: this.context.getMethodName(request.declaration.name),
                 importPath: this.context.getImportPath(request.declaration.fernFilepath)
             }),
-            fields
+            fields: [...queryParameterFields, ...headerFields, ...requestBodyFields]
         });
     }
 
@@ -428,11 +497,11 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
 
         const bodyProperties = this.context.associateByWireValue({
             parameters,
-            values: this.context.getRecordOrThrow(value)
+            values: this.context.getRecord(value) ?? {}
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: this.context.getTypeName(parameter.name),
+                name: this.context.getTypeName(parameter.name.name),
                 value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
             });
         }
