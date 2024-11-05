@@ -432,6 +432,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${endpoint.name.pascalCase.safeName}Async`;
     }
 
+    public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint) {
+        return service.transport?.type === "grpc" && endpoint.transport?.type !== "http";
+    }
+
     public getExtraDependencies(): Record<string, string> {
         return this.customConfig["extra-dependencies"] ?? {};
     }

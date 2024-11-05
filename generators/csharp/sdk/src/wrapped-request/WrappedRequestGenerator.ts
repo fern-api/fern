@@ -47,8 +47,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
 
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        // If the service transport is grpc and the endpoint transport is not http, we need to generate a proto request
-        const isProtoRequest = service.transport?.type === "grpc" && this.endpoint.transport?.type !== "http";
+        const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
