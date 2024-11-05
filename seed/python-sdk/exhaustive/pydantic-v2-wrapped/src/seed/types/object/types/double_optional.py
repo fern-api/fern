@@ -107,13 +107,13 @@ class DoubleOptional(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: DoubleOptional.Partial) -> DoubleOptional.Partial: ...
 
-    @pydantic.model_validator(mode=before)
+    @pydantic.model_validator(mode="before")
     def _pre_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _post_validate_types_double_optional(cls, values: DoubleOptional.Partial) -> DoubleOptional.Partial:
         for validator in DoubleOptional.Validators._post_validators:
             values = validator(values)

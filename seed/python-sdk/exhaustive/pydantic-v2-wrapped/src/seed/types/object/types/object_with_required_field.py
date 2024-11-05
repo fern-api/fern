@@ -96,7 +96,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: ObjectWithRequiredField.Partial) -> ObjectWithRequiredField.Partial: ...
 
-    @pydantic.model_validator(mode=before)
+    @pydantic.model_validator(mode="before")
     def _pre_validate_types_object_with_required_field(
         cls, values: ObjectWithRequiredField.Partial
     ) -> ObjectWithRequiredField.Partial:
@@ -104,7 +104,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _post_validate_types_object_with_required_field(
         cls, values: ObjectWithRequiredField.Partial
     ) -> ObjectWithRequiredField.Partial:

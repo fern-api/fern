@@ -30,7 +30,7 @@ class OptionalAlias(pydantic.RootModel):
         def validate(cls, validator: typing.Callable[[typing.Optional[str]], typing.Optional[str]]) -> None:
             cls._validators.append(validator)
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         value = typing.cast(typing.Optional[str], values.get("root"))
         for validator in OptionalAlias.Validators._validators:

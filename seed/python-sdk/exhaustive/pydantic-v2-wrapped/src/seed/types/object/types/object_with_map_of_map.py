@@ -102,7 +102,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: ObjectWithMapOfMap.Partial) -> ObjectWithMapOfMap.Partial: ...
 
-    @pydantic.model_validator(mode=before)
+    @pydantic.model_validator(mode="before")
     def _pre_validate_types_object_with_map_of_map(
         cls, values: ObjectWithMapOfMap.Partial
     ) -> ObjectWithMapOfMap.Partial:
@@ -110,7 +110,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _post_validate_types_object_with_map_of_map(
         cls, values: ObjectWithMapOfMap.Partial
     ) -> ObjectWithMapOfMap.Partial:

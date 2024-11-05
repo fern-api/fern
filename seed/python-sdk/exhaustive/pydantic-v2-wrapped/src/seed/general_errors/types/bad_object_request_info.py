@@ -95,7 +95,7 @@ class BadObjectRequestInfo(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: BadObjectRequestInfo.Partial) -> BadObjectRequestInfo.Partial: ...
 
-    @pydantic.model_validator(mode=before)
+    @pydantic.model_validator(mode="before")
     def _pre_validate_bad_object_request_info(
         cls, values: BadObjectRequestInfo.Partial
     ) -> BadObjectRequestInfo.Partial:
@@ -103,7 +103,7 @@ class BadObjectRequestInfo(UniversalBaseModel):
             values = validator(values)
         return values
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _post_validate_bad_object_request_info(
         cls, values: BadObjectRequestInfo.Partial
     ) -> BadObjectRequestInfo.Partial:

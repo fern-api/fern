@@ -121,13 +121,13 @@ class Dog(UniversalBaseModel):
         class _RootValidator(typing.Protocol):
             def __call__(self, __values: Dog.Partial) -> Dog.Partial: ...
 
-    @pydantic.model_validator(mode=before)
+    @pydantic.model_validator(mode="before")
     def _pre_validate_types_dog(cls, values: Dog.Partial) -> Dog.Partial:
         for validator in Dog.Validators._pre_validators:
             values = validator(values)
         return values
 
-    @pydantic.model_validator(mode=after)
+    @pydantic.model_validator(mode="after")
     def _post_validate_types_dog(cls, values: Dog.Partial) -> Dog.Partial:
         for validator in Dog.Validators._post_validators:
             values = validator(values)
