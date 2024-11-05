@@ -84,6 +84,14 @@ export class ErrorReporter {
     }
 
     private pathToStringArray(path: ErrorReporter.Path): string[] {
-        return path.map((item) => (typeof item === "string" ? item : `[${item.index}]`));
+        const result: string[] = [];
+        for (const item of path) {
+            if (typeof item === "string") {
+                result.push(item);
+                continue;
+            }
+            result[result.length - 1] += `[${item.index}]`;
+        }
+        return result;
     }
 }

@@ -5,8 +5,7 @@ exports[`exhaustive (errors) > invalid request body 1`] = `
   {
     "message": "Expected string but got boolean",
     "path": [
-      "requestBody",
-      "[0]",
+      "requestBody[0]",
       "string",
     ],
     "severity": "CRITICAL",
@@ -14,8 +13,7 @@ exports[`exhaustive (errors) > invalid request body 1`] = `
   {
     "message": ""invalid" is not a recognized parameter for this endpoint",
     "path": [
-      "requestBody",
-      "[1]",
+      "requestBody[1]",
       "invalid",
     ],
     "severity": "CRITICAL",
@@ -23,8 +21,7 @@ exports[`exhaustive (errors) > invalid request body 1`] = `
   {
     "message": "Expected string but got number",
     "path": [
-      "requestBody",
-      "[2]",
+      "requestBody[2]",
       "string",
     ],
     "severity": "CRITICAL",
