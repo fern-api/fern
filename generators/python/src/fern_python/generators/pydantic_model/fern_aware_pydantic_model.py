@@ -69,6 +69,8 @@ class FernAwarePydanticModel:
 
         self._model_contains_forward_refs = False
 
+        is_pydantic_v2 = self._context.core_utilities.get_is_pydantic_v2()
+
         models_to_extend = [item for item in base_models] if base_models is not None else []
         extends_crs = (
             [context.get_class_reference_for_type_id(extended.type_id, as_request=False) for extended in extends]
@@ -86,13 +88,13 @@ class FernAwarePydanticModel:
             docstring=docstring,
             snippet=snippet,
             extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,
-            frozen=custom_config.frozen,
+            frozen=custom_config.frozen if not (is_root_model and is_pydantic_v2) else False,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
             pydantic_base_model=pydantic_base_model_override
             or self._context.core_utilities.get_unchecked_pydantic_base_model(),
             require_optional_fields=custom_config.require_optional_fields,
-            is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+            is_pydantic_v2=is_pydantic_v2,
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
             is_root_model=is_root_model,
@@ -285,7 +287,7 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            if self._pydantic_model.root_type is None:
+            if self._pydantic_model._root_type is None:
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:

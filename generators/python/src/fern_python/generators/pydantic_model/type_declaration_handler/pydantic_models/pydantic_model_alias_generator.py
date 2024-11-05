@@ -51,6 +51,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
             )
         else:
             BUILDER_PARAMETER_NAME = "value"
+            is_pydantic_v2 = self._custom_config.version == "v2"
             with FernAwarePydanticModel(
                 class_name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
                 type_name=self._name,
@@ -59,8 +60,17 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 source_file=self._source_file,
                 docstring=self._docs,
                 snippet=self._snippet,
+                is_root_model=is_pydantic_v2,
+                base_models=[
+                    AST.ClassReference(
+                        qualified_name_excluding_import=(),
+                        import_=AST.ReferenceImport(module=AST.Module.local("pydantic"), named_import="RootModel"),
+                    )
+                ]
+                if is_pydantic_v2
+                else [],
             ) as pydantic_model:
-                root_name = "_root_" if self._custom_config.version == "v1" else "root"
+                root_name = "root" if is_pydantic_v2 else "__root__"
                 pydantic_model.set_root_type(self._alias.alias_of)
                 pydantic_model.add_method(
                     name=self._get_getter_name(self._alias.alias_of),
@@ -72,7 +82,9 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                     name=self._get_builder_name(self._alias.alias_of),
                     parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
                     return_type=ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name)),
-                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"),
+                    body=AST.CodeWriter(
+                        f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"
+                    ),
                     decorator=AST.ClassMethodDecorator.STATIC,
                 )
 
