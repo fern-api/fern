@@ -1,8 +1,14 @@
+- version: 0.0.6
+  createdAt: '2024-11-05'
+  changelogEntry:
+    - type: internal
+      summary: Publish Commons 0.0.3.
+  irVersion: 33
 - version: 0.0.5
   createdAt: '2024-11-05'
   changelogEntry:
     - type: internal
-      summary: Publish Commons 0.0.3 and fix main field.
+      summary: Fix main field.
   irVersion: 33
 - version: 0.0.4
   createdAt: '2024-11-04'
