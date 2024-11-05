@@ -52,9 +52,9 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
         version_compat = self.version
         use_wrapped_aliases = self.wrapped_aliases
 
-        if use_wrapped_aliases and version_compat != PydanticVersionCompatibility.V1:
+        if use_wrapped_aliases and version_compat == PydanticVersionCompatibility.Both:
             raise ValueError(
-                "Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases."
+                "Wrapped aliases are not supported for `both`, please update your `version` field to be 'v1' or `v2` to continue using wrapped aliases."
             )
 
         if self.enum_type != "literals":
