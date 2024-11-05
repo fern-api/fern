@@ -7,11 +7,10 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs } from "@fern-api/init";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
+import { initializeAPI, initializeDocs, initializeWithMintlify } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import { runMintlifyMigration } from "@fern-api/mintlify-importer";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import { RUNTIME } from "@fern-typescript/fetcher";
 import getPort from "get-port";
@@ -47,7 +46,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { isURL } from "./utils/isUrl";
+} from "@fern-api/configuration";
 
 void runCli();
 
@@ -245,37 +244,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else if (argv.mintlify != null) {
-                // The file path should include `mint.json` in it
-                if (!argv.mintlify.includes("mint.json")) {
-                    cliContext.failAndThrow("Provide a path to a mint.json file");
-                }
-
-                let absolutePathToMintJson: AbsoluteFilePath | undefined = undefined;
-
-                // @todo get urls to work
-                if (isURL(argv.mintlify)) {
-                    // For now, throw an error if the user provides a URL
-                    cliContext.failAndThrow(
-                        "Clone the repo locally and run this command again by referencing the path to the local mint.json file"
-                    );
-                } else {
-                    absolutePathToMintJson = AbsoluteFilePath.of(resolve(cwd(), argv.mintlify));
-                }
-
-                const pathExists = await doesPathExist(absolutePathToMintJson);
-
-                if (!pathExists) {
-                    cliContext.failAndThrow(`${absolutePathToMintJson} does not exist`);
-                }
-
-                await cliContext.runTask(async () => {
-                    // @todo remove the if statement - need to appease the type checker for now
-                    if (absolutePathToMintJson) {
-                        await runMintlifyMigration({
-                            absolutePathToMintJson,
-                            outputPath: AbsoluteFilePath.of(cwd())
-                        });
-                    }
+                await cliContext.runTask(async (context) => {
+                    await initializeWithMintlify({
+                        pathToMintJson: argv.mintlify,
+                        context
+                    });
                 });
             } else {
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
