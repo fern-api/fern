@@ -5,6 +5,7 @@ from ......core.pydantic_utilities import UniversalBaseModel
 from .object_with_optional_field import ObjectWithOptionalField
 import pydantic
 import typing
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -13,6 +14,10 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+
+    class Partial(typing.TypedDict):
+        string: typing_extensions.NotRequired[str]
+        nested_object: typing_extensions.NotRequired[ObjectWithOptionalField]
 
     class Validators:
         """

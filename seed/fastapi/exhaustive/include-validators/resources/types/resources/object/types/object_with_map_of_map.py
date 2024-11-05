@@ -4,6 +4,7 @@ from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -11,6 +12,9 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 class ObjectWithMapOfMap(UniversalBaseModel):
     map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+
+    class Partial(typing.TypedDict):
+        map_: typing_extensions.NotRequired[typing.Dict[str, typing.Dict[str, str]]]
 
     class Validators:
         """

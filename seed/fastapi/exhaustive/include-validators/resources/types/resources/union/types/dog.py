@@ -4,6 +4,7 @@ from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -12,6 +13,10 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 class Dog(UniversalBaseModel):
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+
+    class Partial(typing.TypedDict):
+        name: typing_extensions.NotRequired[str]
+        likes_to_woof: typing_extensions.NotRequired[bool]
 
     class Validators:
         """

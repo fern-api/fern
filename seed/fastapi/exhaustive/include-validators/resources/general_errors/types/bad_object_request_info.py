@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import typing_extensions
 from ....core.pydantic_utilities import universal_root_validator
 from ....core.pydantic_utilities import universal_field_validator
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
@@ -11,6 +12,9 @@ import pydantic
 
 class BadObjectRequestInfo(UniversalBaseModel):
     message: str
+
+    class Partial(typing.TypedDict):
+        message: typing_extensions.NotRequired[str]
 
     class Validators:
         """

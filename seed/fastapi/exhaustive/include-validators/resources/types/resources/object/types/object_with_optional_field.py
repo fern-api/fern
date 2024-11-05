@@ -6,6 +6,7 @@ import typing
 import pydantic
 import datetime as dt
 import uuid
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -33,6 +34,21 @@ class ObjectWithOptionalField(UniversalBaseModel):
         alias="map", default=None
     )
     bigint: typing.Optional[str] = None
+
+    class Partial(typing.TypedDict):
+        string: typing_extensions.NotRequired[typing.Optional[str]]
+        integer: typing_extensions.NotRequired[typing.Optional[int]]
+        long_: typing_extensions.NotRequired[typing.Optional[int]]
+        double: typing_extensions.NotRequired[typing.Optional[float]]
+        bool_: typing_extensions.NotRequired[typing.Optional[bool]]
+        datetime: typing_extensions.NotRequired[typing.Optional[dt.datetime]]
+        date: typing_extensions.NotRequired[typing.Optional[dt.date]]
+        uuid_: typing_extensions.NotRequired[typing.Optional[uuid.UUID]]
+        base_64: typing_extensions.NotRequired[typing.Optional[str]]
+        list_: typing_extensions.NotRequired[typing.Optional[typing.List[str]]]
+        set_: typing_extensions.NotRequired[typing.Optional[typing.Set[str]]]
+        map_: typing_extensions.NotRequired[typing.Optional[typing.Dict[int, str]]]
+        bigint: typing_extensions.NotRequired[typing.Optional[str]]
 
     class Validators:
         """

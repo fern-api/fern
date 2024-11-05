@@ -5,6 +5,7 @@ from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 from .optional_alias import OptionalAlias
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -14,6 +15,9 @@ class DoubleOptional(UniversalBaseModel):
     optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(
         alias="optionalAlias", default=None
     )
+
+    class Partial(typing.TypedDict):
+        optional_alias: typing_extensions.NotRequired[typing.Optional[OptionalAlias]]
 
     class Validators:
         """

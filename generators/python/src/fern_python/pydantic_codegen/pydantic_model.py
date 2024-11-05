@@ -257,7 +257,7 @@ class PydanticModel:
         if self._root_type is not None:
             raise RuntimeError("__root__ was already added")
 
-        self._root_type = root_type
+        self.root_type = root_type
 
         root_type_with_annotation = (
             AST.TypeHint.annotated(

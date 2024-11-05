@@ -362,26 +362,27 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
-            external_pydantic_model.set_root_type_unsafe(
-                is_forward_ref=True,
-                root_type=root_type,
-                annotation=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=Pydantic.Field(),
-                        kwargs=[
-                            (
-                                "discriminator",
-                                AST.Expression(
-                                    f'"{self._get_discriminant_attr_name()}"',
-                                ),
-                            )
-                        ],
+            if self._custom_config.version == PydanticVersionCompatibility.V1:
+                external_pydantic_model.set_root_type_unsafe(
+                    is_forward_ref=True,
+                    root_type=root_type,
+                    annotation=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=Pydantic.Field(),
+                            kwargs=[
+                                (
+                                    "discriminator",
+                                    AST.Expression(
+                                        f'"{self._get_discriminant_attr_name()}"',
+                                    ),
+                                )
+                            ],
+                        )
                     )
+                    # can't use discriminator without single variant pydantic models
+                    # https://github.com/pydantic/pydantic/pull/3639
+                    if len(internal_single_union_types) != 1 else None,
                 )
-                # can't use discriminator without single variant pydantic models
-                # https://github.com/pydantic/pydantic/pull/3639
-                if len(internal_single_union_types) != 1 else None,
-            )
 
     def _create_body_writer(
         self,
