@@ -40,7 +40,7 @@ jobs:
       - name: Run publish
         working-directory: generators/python-v2/ast
         run: |
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.1
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist 0.0.2
           ls -al dist
           cd dist
           echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc

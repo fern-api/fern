@@ -31,7 +31,7 @@ async function main() {
                 main: "index.cjs",
                 types: "index.d.ts",
                 type: "module",
-                files: ["*.cjs", "*.d.cts", "core/"],
+                files: ["*.cjs", "*.d.cts", "core/", "*.d.ts"],
                 dependencies: {
                     "@wasm-fmt/ruff_fmt": "^0.6.1"
                 }
