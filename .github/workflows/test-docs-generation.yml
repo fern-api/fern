@@ -41,8 +41,8 @@ jobs:
           cd cohere-developer-experience
           sed -i 's/"organization": "[^"]*"/"organization": "fern"/' fern/fern.config.json
           sed -i 's/"version": "[^"]*"/"version": "*"/' fern/fern.config.json
-          sed -i 's/^url:.*$/url: test-fern-cohere.docs.buildwithfern.com/' fern/docs.yaml
-          sed -i '/^customDomain:/d' fern/docs.yaml
+          sed -i 's/^url:.*$/url: test-fern-cohere.docs.buildwithfern.com/' fern/docs.yml
+          sed -i '/^customDomain:/d' fern/docs.yml
           pnpm install
           pnpm compile
           node $cli_path generate --docs --preview --log-level debug 
