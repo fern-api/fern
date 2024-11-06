@@ -1,19 +1,19 @@
 name: test-docs-generation
 
-on: pull_request
-  # push:
-  #   paths:
-  #     - "fern/packages/cli/**"
-  #     - "fern/packages/core/**"
-  #     - "fern/packages/commons/**"
-  #     - ".github/workflows/publish-docs.yml"
-  #   branches:
-  #     - main
+on:
+  push:
+    paths:
+      - "fern/packages/cli/**"
+      - "fern/packages/core/**"
+      - "fern/packages/commons/**"
+      - ".github/workflows/publish-docs.yml"
+    branches:
+      - main
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
