@@ -56,8 +56,6 @@ jobs:
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
   publish-manually:
     runs-on: ubuntu-latest
-    # Only run this job if this has been triggered manually
-    if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
@@ -77,5 +75,5 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator fastapi --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local publish generator fastapi --ver 1.6.0-rc1 --log-level debug
           pnpm seed:local register generator --generators fastapi
