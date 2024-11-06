@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using Data.V1.Grpc;
 using Grpc.Core;
@@ -28,33 +30,38 @@ public partial class DataserviceClient
     /// </code>
     /// </example>
     public async Task<object> FooAsync(
-        GrpcRequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        try
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "foo",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
-            var call = _dataService.FooAsync(null, callOptions);
-            var response = await call.ConfigureAwait(false);
-            return object.FromProto(response);
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
         }
-        catch (RpcException rpc)
-        {
-            var statusCode = (int)rpc.StatusCode;
-            throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
-            );
-        }
-        catch (Exception e)
-        {
-            throw new SeedApiException("Error", e);
-        }
+
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <example>

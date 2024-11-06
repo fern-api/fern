@@ -30,42 +30,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Foo(
-	ctx context.Context,
-	opts ...option.RequestOption,
-) (map[string]interface{}, error) {
-	options := core.NewRequestOptions(opts...)
-
-	baseURL := "https://localhost"
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := baseURL + "/foo"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	var response map[string]interface{}
-	if err := c.caller.Call(
-		ctx,
-		&core.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
-			Headers:         headers,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
-		return nil, err
-	}
-	return response, nil
-}
-
 func (c *Client) Upload(
 	ctx context.Context,
 	request *fern.UploadRequest,
@@ -73,7 +37,7 @@ func (c *Client) Upload(
 ) (*fern.UploadResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -112,7 +76,7 @@ func (c *Client) Delete(
 ) (*fern.DeleteResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -151,7 +115,7 @@ func (c *Client) Describe(
 ) (*fern.DescribeResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -190,7 +154,7 @@ func (c *Client) Fetch(
 ) (*fern.FetchResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -235,7 +199,7 @@ func (c *Client) List(
 ) (*fern.ListResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -280,7 +244,7 @@ func (c *Client) Query(
 ) (*fern.QueryResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
@@ -319,7 +283,7 @@ func (c *Client) Update(
 ) (*fern.UpdateResponse, error) {
 	options := core.NewRequestOptions(opts...)
 
-	baseURL := "https://localhost"
+	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}

@@ -55,6 +55,8 @@ export abstract class FernDocsBuilder {
     public abstract setLayout({ layout }: { layout: docsYml.RawSchemas.LayoutConfig }): void;
 
     public abstract build({ outputDirectory }: { outputDirectory: AbsoluteFilePath }): void;
+
+    public abstract setInstance({ companyName }: { companyName: string }): string;
 }
 
 export abstract class FernDocsNavigationBuilder {

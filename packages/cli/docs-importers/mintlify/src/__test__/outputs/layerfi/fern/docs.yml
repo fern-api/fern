@@ -1,4 +1,5 @@
-instances: []
+instances:
+  - url: https://layer.docs.buildwithfern.com
 title: Layer
 favicon: favicon.png
 logo:

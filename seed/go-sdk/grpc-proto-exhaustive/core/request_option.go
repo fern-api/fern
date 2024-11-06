@@ -3,7 +3,6 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 	url "net/url"
 )
@@ -24,7 +23,6 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
-	ApiKey          string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -45,13 +43,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header {
-	header := r.cloneHeader()
-	if r.ApiKey != "" {
-		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
-	}
-	return header
-}
+func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
@@ -113,13 +105,4 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
-}
-
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
-}
-
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
 }
