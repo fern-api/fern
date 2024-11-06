@@ -1,3 +1,9 @@
+- version: 0.0.7
+  createdAt: '2024-11-06'
+  changelogEntry:
+    - type: internal
+      summary: AST Changes.
+  irVersion: 33
 - version: 0.0.6
   createdAt: '2024-11-05'
   changelogEntry:
