@@ -49,7 +49,12 @@ describe("fern init", () => {
             RelativeFilePath.of("openapi"),
             RelativeFilePath.of("petstore-openapi.yml")
         );
-        const pathOfDirectory = await init({ openApiArg: openApiPath });
+        const pathOfDirectory = await init({
+            additionalArgs: [
+                { name: "--openapi", value: openApiPath },
+                { name: "--log-level", value: "debug" }
+            ]
+        });
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
@@ -66,7 +71,9 @@ describe("fern init", () => {
     it("init mintlify", async () => {
         const mintJsonPath = join(FIXTURES_DIR, RelativeFilePath.of("mintlify"), RelativeFilePath.of("mint.json"));
 
-        const pathOfDirectory = await init({ mintJsonArg: mintJsonPath });
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--mintlify", value: mintJsonPath }]
+        });
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);

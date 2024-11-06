@@ -2,24 +2,25 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli";
 
-export async function init({
-    directory,
-    openApiArg,
-    mintJsonArg
-}: { directory?: AbsoluteFilePath; openApiArg?: string; mintJsonArg?: string } = {}): Promise<AbsoluteFilePath> {
+interface InitOptions {
+    directory?: AbsoluteFilePath;
+    additionalArgs?: {
+        name: "--openapi" | "--mintlify" | "--log-level";
+        value: string;
+    }[];
+}
+
+export async function init(options: InitOptions = {}): Promise<AbsoluteFilePath> {
+    let directory = options.directory;
     if (directory == null) {
         const tmpDir = await tmp.dir();
         directory = AbsoluteFilePath.of(tmpDir.path);
     }
 
     const cliArgs = ["init", "--organization", "fern"];
-    if (openApiArg != null) {
-        cliArgs.push("--openapi", openApiArg);
-        cliArgs.push("--log-level", "debug");
-    }
 
-    if (mintJsonArg != null) {
-        cliArgs.push("--mintlify", mintJsonArg);
+    for (const additionalArg of options.additionalArgs ?? []) {
+        cliArgs.push(additionalArg.name, additionalArg.value);
     }
 
     await runFernCli(cliArgs, {
