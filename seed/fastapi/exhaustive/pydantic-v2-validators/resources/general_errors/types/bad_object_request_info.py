@@ -122,7 +122,7 @@ class BadObjectRequestInfo(UniversalBaseModel):
     ) -> BadObjectRequestInfo:
         for validator in BadObjectRequestInfo.Validators._pre_validators:
             values = validator(values)
-        return values
+        return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_bad_object_request_info(
@@ -130,7 +130,7 @@ class BadObjectRequestInfo(UniversalBaseModel):
     ) -> BadObjectRequestInfo:
         for validator in BadObjectRequestInfo.Validators._post_validators:
             values = validator(values)
-        return values
+        return model
 
     @universal_field_validator("message", pre=True)
     def _pre_validate_message(cls, v: str, values: BadObjectRequestInfo.Partial) -> str:

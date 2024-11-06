@@ -105,13 +105,13 @@ class Animal(pydantic.RootModel):
     def _pre_validate_types_animal(cls, model: Animal) -> Animal:
         for validator in Animal.Validators._pre_validators:
             values = validator(values)
-        return values
+        return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_animal(cls, model: Animal) -> Animal:
         for validator in Animal.Validators._post_validators:
             values = validator(values)
-        return values
+        return model
 
 
 class _Animal:

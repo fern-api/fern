@@ -85,5 +85,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          labels: version=1.6.0-rc2
-          tags: fernapi/fern-fastapi-server:1.6.0-rc2
+          labels: version=1.6.0-rc3
+          tags: fernapi/fern-fastapi-server:1.6.0-rc3

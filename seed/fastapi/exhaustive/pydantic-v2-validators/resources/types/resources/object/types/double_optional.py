@@ -130,7 +130,7 @@ class DoubleOptional(UniversalBaseModel):
     ) -> DoubleOptional:
         for validator in DoubleOptional.Validators._pre_validators:
             values = validator(values)
-        return values
+        return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_double_optional(
@@ -138,7 +138,7 @@ class DoubleOptional(UniversalBaseModel):
     ) -> DoubleOptional:
         for validator in DoubleOptional.Validators._post_validators:
             values = validator(values)
-        return values
+        return model
 
     @universal_field_validator("optional_alias", pre=True)
     def _pre_validate_optional_alias(
