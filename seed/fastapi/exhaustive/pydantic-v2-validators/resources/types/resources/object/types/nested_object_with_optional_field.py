@@ -178,16 +178,16 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
 
     @pydantic.model_validator(mode="before")
     def _pre_validate_types_nested_object_with_optional_field(
-        cls, values: NestedObjectWithOptionalField.Partial
-    ) -> NestedObjectWithOptionalField.Partial:
+        cls, model: NestedObjectWithOptionalField
+    ) -> NestedObjectWithOptionalField:
         for validator in NestedObjectWithOptionalField.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_nested_object_with_optional_field(
-        cls, values: NestedObjectWithOptionalField.Partial
-    ) -> NestedObjectWithOptionalField.Partial:
+        cls, model: NestedObjectWithOptionalField
+    ) -> NestedObjectWithOptionalField:
         for validator in NestedObjectWithOptionalField.Validators._post_validators:
             values = validator(values)
         return values

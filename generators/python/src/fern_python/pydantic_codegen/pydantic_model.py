@@ -18,6 +18,7 @@ BASE_MODEL_PROPERTIES = set(dir(BaseModel))
 class PydanticModel:
     VALIDATOR_FIELD_VALUE_PARAMETER_NAME = "v"
     VALIDATOR_VALUES_PARAMETER_NAME = "values"
+    MODEL_PARAMETER_NAME = "model"
 
     _PARTIAL_CLASS_NAME = "Partial"
 
@@ -234,21 +235,40 @@ class PydanticModel:
             if should_use_partial_type
             else AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())
         )
-        self._class_declaration.add_method(
-            decorator=AST.ClassMethodDecorator.CLASS_METHOD,
-            no_implicit_decorator=True,
-            declaration=AST.FunctionDeclaration(
-                name=validator_name,
-                signature=AST.FunctionSignature(
-                    parameters=[
-                        AST.FunctionParameter(name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type)
-                    ],
-                    return_type=value_type,
+        if self._version == PydanticVersionCompatibility.V1:
+            self._class_declaration.add_method(
+                decorator=AST.ClassMethodDecorator.CLASS_METHOD,
+                no_implicit_decorator=True,
+                declaration=AST.FunctionDeclaration(
+                    name=validator_name,
+                    signature=AST.FunctionSignature(
+                        parameters=[
+                            AST.FunctionParameter(
+                                name=PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME, type_hint=value_type
+                            )
+                        ],
+                        return_type=value_type,
+                    ),
+                    body=body,
+                    decorators=[self._universal_root_validator(pre)],
                 ),
-                body=body,
-                decorators=[self._universal_root_validator(pre)],
-            ),
-        )
+            )
+        elif self._version == PydanticVersionCompatibility.V2:
+            self._class_declaration.add_method(
+                decorator=AST.ClassMethodDecorator.CLASS_METHOD,
+                no_implicit_decorator=True,
+                declaration=AST.FunctionDeclaration(
+                    name=validator_name,
+                    signature=AST.FunctionSignature(
+                        parameters=[
+                            AST.FunctionParameter(name=PydanticModel.MODEL_PARAMETER_NAME, type_hint=AST.TypeHint(self._local_class_reference))
+                        ],
+                        return_type=AST.TypeHint(self._local_class_reference),
+                    ),
+                    body=body,
+                    decorators=[self._universal_root_validator(pre)],
+                ),
+            )
 
     def set_root_type_unsafe(self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None) -> None:
         if self._version == PydanticVersionCompatibility.Both:

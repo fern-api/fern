@@ -118,16 +118,16 @@ class BadObjectRequestInfo(UniversalBaseModel):
 
     @pydantic.model_validator(mode="before")
     def _pre_validate_bad_object_request_info(
-        cls, values: BadObjectRequestInfo.Partial
-    ) -> BadObjectRequestInfo.Partial:
+        cls, model: BadObjectRequestInfo
+    ) -> BadObjectRequestInfo:
         for validator in BadObjectRequestInfo.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.model_validator(mode="after")
     def _post_validate_bad_object_request_info(
-        cls, values: BadObjectRequestInfo.Partial
-    ) -> BadObjectRequestInfo.Partial:
+        cls, model: BadObjectRequestInfo
+    ) -> BadObjectRequestInfo:
         for validator in BadObjectRequestInfo.Validators._post_validators:
             values = validator(values)
         return values

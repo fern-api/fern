@@ -118,16 +118,16 @@ class ObjectWithRequiredField(UniversalBaseModel):
 
     @pydantic.model_validator(mode="before")
     def _pre_validate_types_object_with_required_field(
-        cls, values: ObjectWithRequiredField.Partial
-    ) -> ObjectWithRequiredField.Partial:
+        cls, model: ObjectWithRequiredField
+    ) -> ObjectWithRequiredField:
         for validator in ObjectWithRequiredField.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_object_with_required_field(
-        cls, values: ObjectWithRequiredField.Partial
-    ) -> ObjectWithRequiredField.Partial:
+        cls, model: ObjectWithRequiredField
+    ) -> ObjectWithRequiredField:
         for validator in ObjectWithRequiredField.Validators._post_validators:
             values = validator(values)
         return values
