@@ -208,7 +208,7 @@ export class ExampleGenerator {
             double: (p) => csharp.InstantiatedPrimitive.double(p),
             boolean: (p) => csharp.InstantiatedPrimitive.boolean(p),
             string: (p) => csharp.InstantiatedPrimitive.string(p.original),
-            datetime: (datetime) => csharp.InstantiatedPrimitive.dateTime(datetime, parseDatetimes),
+            datetime: (example) => csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
             date: (dateString) => csharp.InstantiatedPrimitive.date(dateString),
             uuid: (p) => csharp.InstantiatedPrimitive.uuid(p),
             base64: (p) => csharp.InstantiatedPrimitive.string(p),
