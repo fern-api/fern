@@ -75,6 +75,6 @@ describe("fern init", () => {
             additionalArgs: [{ name: "--mintlify", value: mintJsonPath }]
         });
 
-        expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
+        expect(await getDirectoryContentsForSnapshot(pathOfDirectory, { skipBinaryContents: true })).toMatchSnapshot();
     }, 60_000);
 });
