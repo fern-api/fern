@@ -27,7 +27,6 @@ jobs:
       - name: Clone the Cohere Developer Experience repo
         run: |
           git clone https://github.com/cohere-ai/cohere-developer-experience.git
-          cd cohere-developer-experience
           echo "Cohere Developer Experience repo cloned successfully!"
 
       - name: Publish Docs
@@ -39,4 +38,5 @@ jobs:
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs" 
+          cd cohere-developer-experience
           node $cli_path generate --docs --preview --log-level debug 
