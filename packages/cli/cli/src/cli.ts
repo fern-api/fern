@@ -247,7 +247,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.runTask(async (taskContext) => {
                     await initializeWithMintlify({
                         pathToMintJson: argv.mintlify,
-                        taskContext
+                        taskContext,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
                 });
             } else {
