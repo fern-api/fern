@@ -39,4 +39,6 @@ jobs:
           pnpm --filter @fern-api/cli dist:cli:prod
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs" 
           cd cohere-developer-experience
+          pnpm install
+          pnpm compile
           node $cli_path generate --docs --preview --log-level debug 
