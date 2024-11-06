@@ -4,10 +4,12 @@ import { TaskContext } from "@fern-api/task-context";
 
 export const initializeWithMintlify = async ({
     pathToMintJson,
-    taskContext
+    taskContext,
+    versionOfCli
 }: {
     pathToMintJson?: string;
     taskContext: TaskContext;
+    versionOfCli: string;
 }): Promise<void> => {
     // The file path should include `mint.json` in it
     if (!pathToMintJson?.includes("mint.json")) {
@@ -39,6 +41,7 @@ export const initializeWithMintlify = async ({
     await runMintlifyMigration({
         absolutePathToMintJson,
         outputPath,
-        taskContext
+        taskContext,
+        versionOfCli
     });
 };

@@ -9,12 +9,14 @@ interface RunMintlifyMigrationParams {
     absolutePathToMintJson: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
     taskContext: TaskContext;
+    versionOfCli: string;
 }
 
 export async function runMintlifyMigration({
     absolutePathToMintJson,
     outputPath,
-    taskContext
+    taskContext,
+    versionOfCli
 }: RunMintlifyMigrationParams): Promise<void> {
     const mintlifyImporter = new MintlifyImporter({
         context: taskContext
@@ -37,7 +39,7 @@ export async function runMintlifyMigration({
         ),
         JSON.stringify(
             {
-                version: "*",
+                version: versionOfCli,
                 organization: "fern"
             },
             undefined,
