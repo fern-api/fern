@@ -1,7 +1,7 @@
 import grayMatter from "gray-matter";
 import { MintlifyFrontmatter } from "./mintlify";
 import { readFile } from "fs/promises";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
 
@@ -49,7 +49,39 @@ export async function convertMarkdown({
             layout: data.mode != null ? "reference" : undefined,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             image: data["og:image"] as any,
-            slug
+            slug: FernRegistry.navigation.latest.Slug(slug),
+
+            // TODO: check if any of these can be set:
+            headline: undefined,
+            description: undefined,
+            "edit-this-page-url": undefined,
+            "hide-toc": undefined,
+            "hide-feedback": undefined,
+            "no-image-zoom": undefined,
+            "force-toc": undefined,
+            "hide-nav-links": undefined,
+            breadcrumb: undefined,
+            excerpt: undefined,
+            "canonical-url": undefined,
+            "og:site_name": undefined,
+            "og:title": undefined,
+            "og:description": undefined,
+            "og:url": undefined,
+            "og:image": undefined,
+            "og:image:width": undefined,
+            "og:image:height": undefined,
+            "og:locale": undefined,
+            "og:logo": undefined,
+            "twitter:title": undefined,
+            "twitter:description": undefined,
+            "twitter:handle": undefined,
+            "twitter:image": undefined,
+            "twitter:site": undefined,
+            "twitter:url": undefined,
+            "twitter:card": undefined,
+            noindex: undefined,
+            nofollow: undefined,
+            "jsonld:breadcrumb": undefined
         },
         content: transformedContent
     };

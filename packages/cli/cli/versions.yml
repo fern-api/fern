@@ -1,5 +1,27 @@
 - changelogEntry:
     - summary: |
+        The Fern CLI now supports roles and viewers in your docs configuration, if you are on the enteprise plan for docs:
+
+        ```yml docs.ym
+        roles: 
+          - internal
+          - beta-users
+          - enterprise-users
+        
+        navigation:
+          - section: Internal Section
+            viewers:
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc33
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now supports reading endpoints that have application/x-www-form-urlencoded requests
       type: fix
   irVersion: 53
