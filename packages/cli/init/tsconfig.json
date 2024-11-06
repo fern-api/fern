@@ -32,6 +32,9 @@
     },
     {
       "path": "../fern-definition/schema"
+    },
+    { 
+      "path": "../docs-importers/mintlify" 
     }
   ]
 }
