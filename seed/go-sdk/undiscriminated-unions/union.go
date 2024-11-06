@@ -20,36 +20,44 @@ type MyUnion struct {
 	IntegerList     []int
 	IntegerListList [][]int
 	StringSet       []string
+
+	typ string
 }
 
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		m.typ = "String"
 		m.String = valueString
 		return nil
 	}
 	var valueStringList []string
 	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		m.typ = "StringList"
 		m.StringList = valueStringList
 		return nil
 	}
 	var valueInteger int
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		m.typ = "Integer"
 		m.Integer = valueInteger
 		return nil
 	}
 	var valueIntegerList []int
 	if err := json.Unmarshal(data, &valueIntegerList); err == nil {
+		m.typ = "IntegerList"
 		m.IntegerList = valueIntegerList
 		return nil
 	}
 	var valueIntegerListList [][]int
 	if err := json.Unmarshal(data, &valueIntegerListList); err == nil {
+		m.typ = "IntegerListList"
 		m.IntegerListList = valueIntegerListList
 		return nil
 	}
 	var valueStringSet []string
 	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		m.typ = "StringSet"
 		m.StringSet = valueStringSet
 		return nil
 	}
@@ -57,22 +65,22 @@ func (m *MyUnion) UnmarshalJSON(data []byte) error {
 }
 
 func (m MyUnion) MarshalJSON() ([]byte, error) {
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return json.Marshal(m.String)
 	}
-	if m.StringList != nil {
+	if m.typ == "StringList" || m.StringList != nil {
 		return json.Marshal(m.StringList)
 	}
-	if m.Integer != 0 {
+	if m.typ == "Integer" || m.Integer != 0 {
 		return json.Marshal(m.Integer)
 	}
-	if m.IntegerList != nil {
+	if m.typ == "IntegerList" || m.IntegerList != nil {
 		return json.Marshal(m.IntegerList)
 	}
-	if m.IntegerListList != nil {
+	if m.typ == "IntegerListList" || m.IntegerListList != nil {
 		return json.Marshal(m.IntegerListList)
 	}
-	if m.StringSet != nil {
+	if m.typ == "StringSet" || m.StringSet != nil {
 		return json.Marshal(m.StringSet)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
@@ -88,22 +96,22 @@ type MyUnionVisitor interface {
 }
 
 func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return visitor.VisitString(m.String)
 	}
-	if m.StringList != nil {
+	if m.typ == "StringList" || m.StringList != nil {
 		return visitor.VisitStringList(m.StringList)
 	}
-	if m.Integer != 0 {
+	if m.typ == "Integer" || m.Integer != 0 {
 		return visitor.VisitInteger(m.Integer)
 	}
-	if m.IntegerList != nil {
+	if m.typ == "IntegerList" || m.IntegerList != nil {
 		return visitor.VisitIntegerList(m.IntegerList)
 	}
-	if m.IntegerListList != nil {
+	if m.typ == "IntegerListList" || m.IntegerListList != nil {
 		return visitor.VisitIntegerListList(m.IntegerListList)
 	}
-	if m.StringSet != nil {
+	if m.typ == "StringSet" || m.StringSet != nil {
 		return visitor.VisitStringSet(m.StringSet)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)

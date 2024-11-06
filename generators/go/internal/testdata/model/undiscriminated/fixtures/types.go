@@ -13,18 +13,20 @@ type AnotherUnion struct {
 	String            string
 	fernStringLiteral string
 	Foo               *Foo
+
+	typ string
 }
 
 func NewAnotherUnionFromString(value string) *AnotherUnion {
-	return &AnotherUnion{String: value}
+	return &AnotherUnion{typ: "String", String: value}
 }
 
 func NewAnotherUnionWithFernStringLiteral() *AnotherUnion {
-	return &AnotherUnion{fernStringLiteral: "fern"}
+	return &AnotherUnion{typ: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
 func NewAnotherUnionFromFoo(value *Foo) *AnotherUnion {
-	return &AnotherUnion{Foo: value}
+	return &AnotherUnion{typ: "Foo", Foo: value}
 }
 
 func (a *AnotherUnion) FernStringLiteral() string {
@@ -34,11 +36,13 @@ func (a *AnotherUnion) FernStringLiteral() string {
 func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		a.typ = "String"
 		a.String = valueString
 		return nil
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		a.typ = "fernStringLiteral"
 		a.fernStringLiteral = valueFernStringLiteral
 		if a.fernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "fern", valueFernStringLiteral)
@@ -47,6 +51,7 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	}
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
+		a.typ = "Foo"
 		a.Foo = valueFoo
 		return nil
 	}
@@ -54,13 +59,13 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 }
 
 func (a AnotherUnion) MarshalJSON() ([]byte, error) {
-	if a.String != "" {
+	if a.typ == "String" || a.String != "" {
 		return json.Marshal(a.String)
 	}
-	if a.fernStringLiteral != "" {
+	if a.typ == "fernStringLiteral" || a.fernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
-	if a.Foo != nil {
+	if a.typ == "Foo" || a.Foo != nil {
 		return json.Marshal(a.Foo)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
@@ -73,13 +78,13 @@ type AnotherUnionVisitor interface {
 }
 
 func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
-	if a.String != "" {
+	if a.typ == "String" || a.String != "" {
 		return visitor.VisitString(a.String)
 	}
-	if a.fernStringLiteral != "" {
+	if a.typ == "fernStringLiteral" || a.fernStringLiteral != "" {
 		return visitor.VisitFernStringLiteral(a.fernStringLiteral)
 	}
-	if a.Foo != nil {
+	if a.typ == "Foo" || a.Foo != nil {
 		return visitor.VisitFoo(a.Foo)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", a)
@@ -199,50 +204,52 @@ type Union struct {
 	DoubleSet            []float64
 	fernStringLiteral    string
 	anotherStringLiteral string
+
+	typ string
 }
 
 func NewUnionFromFoo(value *Foo) *Union {
-	return &Union{Foo: value}
+	return &Union{typ: "Foo", Foo: value}
 }
 
 func NewUnionFromBar(value *Bar) *Union {
-	return &Union{Bar: value}
+	return &Union{typ: "Bar", Bar: value}
 }
 
 func NewUnionFromBaz(value *Baz) *Union {
-	return &Union{Baz: value}
+	return &Union{typ: "Baz", Baz: value}
 }
 
 func NewUnionFromString(value string) *Union {
-	return &Union{String: value}
+	return &Union{typ: "String", String: value}
 }
 
 func NewUnionFromIntegerOptional(value *int) *Union {
-	return &Union{IntegerOptional: value}
+	return &Union{typ: "IntegerOptional", IntegerOptional: value}
 }
 
 func NewUnionFromStringBooleanMap(value map[string]bool) *Union {
-	return &Union{StringBooleanMap: value}
+	return &Union{typ: "StringBooleanMap", StringBooleanMap: value}
 }
 
 func NewUnionFromStringList(value []string) *Union {
-	return &Union{StringList: value}
+	return &Union{typ: "StringList", StringList: value}
 }
 
 func NewUnionFromStringListList(value [][]string) *Union {
-	return &Union{StringListList: value}
+	return &Union{typ: "StringListList", StringListList: value}
 }
 
 func NewUnionFromDoubleSet(value []float64) *Union {
-	return &Union{DoubleSet: value}
+	return &Union{typ: "DoubleSet", DoubleSet: value}
 }
 
 func NewUnionWithFernStringLiteral() *Union {
-	return &Union{fernStringLiteral: "fern"}
+	return &Union{typ: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
 func NewUnionWithAnotherStringLiteral() *Union {
-	return &Union{anotherStringLiteral: "another"}
+	return &Union{typ: "anotherStringLiteral", anotherStringLiteral: "another"}
 }
 
 func (u *Union) FernStringLiteral() string {
@@ -256,51 +263,61 @@ func (u *Union) AnotherStringLiteral() string {
 func (u *Union) UnmarshalJSON(data []byte) error {
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
+		u.typ = "Foo"
 		u.Foo = valueFoo
 		return nil
 	}
 	valueBar := new(Bar)
 	if err := json.Unmarshal(data, &valueBar); err == nil {
+		u.typ = "Bar"
 		u.Bar = valueBar
 		return nil
 	}
 	valueBaz := new(Baz)
 	if err := json.Unmarshal(data, &valueBaz); err == nil {
+		u.typ = "Baz"
 		u.Baz = valueBaz
 		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
 		u.String = valueString
 		return nil
 	}
 	var valueIntegerOptional *int
 	if err := json.Unmarshal(data, &valueIntegerOptional); err == nil {
+		u.typ = "IntegerOptional"
 		u.IntegerOptional = valueIntegerOptional
 		return nil
 	}
 	var valueStringBooleanMap map[string]bool
 	if err := json.Unmarshal(data, &valueStringBooleanMap); err == nil {
+		u.typ = "StringBooleanMap"
 		u.StringBooleanMap = valueStringBooleanMap
 		return nil
 	}
 	var valueStringList []string
 	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		u.typ = "StringList"
 		u.StringList = valueStringList
 		return nil
 	}
 	var valueStringListList [][]string
 	if err := json.Unmarshal(data, &valueStringListList); err == nil {
+		u.typ = "StringListList"
 		u.StringListList = valueStringListList
 		return nil
 	}
 	var valueDoubleSet []float64
 	if err := json.Unmarshal(data, &valueDoubleSet); err == nil {
+		u.typ = "DoubleSet"
 		u.DoubleSet = valueDoubleSet
 		return nil
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		u.typ = "fernStringLiteral"
 		u.fernStringLiteral = valueFernStringLiteral
 		if u.fernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
@@ -309,6 +326,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	var valueAnotherStringLiteral string
 	if err := json.Unmarshal(data, &valueAnotherStringLiteral); err == nil {
+		u.typ = "anotherStringLiteral"
 		u.anotherStringLiteral = valueAnotherStringLiteral
 		if u.anotherStringLiteral != "another" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "another", valueAnotherStringLiteral)
@@ -319,37 +337,37 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 }
 
 func (u Union) MarshalJSON() ([]byte, error) {
-	if u.Foo != nil {
+	if u.typ == "Foo" || u.Foo != nil {
 		return json.Marshal(u.Foo)
 	}
-	if u.Bar != nil {
+	if u.typ == "Bar" || u.Bar != nil {
 		return json.Marshal(u.Bar)
 	}
-	if u.Baz != nil {
+	if u.typ == "Baz" || u.Baz != nil {
 		return json.Marshal(u.Baz)
 	}
-	if u.String != "" {
+	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
-	if u.IntegerOptional != nil {
+	if u.typ == "IntegerOptional" || u.IntegerOptional != nil {
 		return json.Marshal(u.IntegerOptional)
 	}
-	if u.StringBooleanMap != nil {
+	if u.typ == "StringBooleanMap" || u.StringBooleanMap != nil {
 		return json.Marshal(u.StringBooleanMap)
 	}
-	if u.StringList != nil {
+	if u.typ == "StringList" || u.StringList != nil {
 		return json.Marshal(u.StringList)
 	}
-	if u.StringListList != nil {
+	if u.typ == "StringListList" || u.StringListList != nil {
 		return json.Marshal(u.StringListList)
 	}
-	if u.DoubleSet != nil {
+	if u.typ == "DoubleSet" || u.DoubleSet != nil {
 		return json.Marshal(u.DoubleSet)
 	}
-	if u.fernStringLiteral != "" {
+	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
-	if u.anotherStringLiteral != "" {
+	if u.typ == "anotherStringLiteral" || u.anotherStringLiteral != "" {
 		return json.Marshal("another")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -370,37 +388,37 @@ type UnionVisitor interface {
 }
 
 func (u *Union) Accept(visitor UnionVisitor) error {
-	if u.Foo != nil {
+	if u.typ == "Foo" || u.Foo != nil {
 		return visitor.VisitFoo(u.Foo)
 	}
-	if u.Bar != nil {
+	if u.typ == "Bar" || u.Bar != nil {
 		return visitor.VisitBar(u.Bar)
 	}
-	if u.Baz != nil {
+	if u.typ == "Baz" || u.Baz != nil {
 		return visitor.VisitBaz(u.Baz)
 	}
-	if u.String != "" {
+	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
-	if u.IntegerOptional != nil {
+	if u.typ == "IntegerOptional" || u.IntegerOptional != nil {
 		return visitor.VisitIntegerOptional(u.IntegerOptional)
 	}
-	if u.StringBooleanMap != nil {
+	if u.typ == "StringBooleanMap" || u.StringBooleanMap != nil {
 		return visitor.VisitStringBooleanMap(u.StringBooleanMap)
 	}
-	if u.StringList != nil {
+	if u.typ == "StringList" || u.StringList != nil {
 		return visitor.VisitStringList(u.StringList)
 	}
-	if u.StringListList != nil {
+	if u.typ == "StringListList" || u.StringListList != nil {
 		return visitor.VisitStringListList(u.StringListList)
 	}
-	if u.DoubleSet != nil {
+	if u.typ == "DoubleSet" || u.DoubleSet != nil {
 		return visitor.VisitDoubleSet(u.DoubleSet)
 	}
-	if u.fernStringLiteral != "" {
+	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
 		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
 	}
-	if u.anotherStringLiteral != "" {
+	if u.typ == "anotherStringLiteral" || u.anotherStringLiteral != "" {
 		return visitor.VisitAnotherStringLiteral(u.anotherStringLiteral)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -409,14 +427,16 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UnionWithLiteral struct {
 	fernStringLiteral string
 	String            string
+
+	typ string
 }
 
 func NewUnionWithLiteralWithFernStringLiteral() *UnionWithLiteral {
-	return &UnionWithLiteral{fernStringLiteral: "fern"}
+	return &UnionWithLiteral{typ: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
 func NewUnionWithLiteralFromString(value string) *UnionWithLiteral {
-	return &UnionWithLiteral{String: value}
+	return &UnionWithLiteral{typ: "String", String: value}
 }
 
 func (u *UnionWithLiteral) FernStringLiteral() string {
@@ -426,6 +446,7 @@ func (u *UnionWithLiteral) FernStringLiteral() string {
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		u.typ = "fernStringLiteral"
 		u.fernStringLiteral = valueFernStringLiteral
 		if u.fernStringLiteral != "fern" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
@@ -434,6 +455,7 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
 		u.String = valueString
 		return nil
 	}
@@ -441,10 +463,10 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
-	if u.fernStringLiteral != "" {
+	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
 		return json.Marshal("fern")
 	}
-	if u.String != "" {
+	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -456,10 +478,10 @@ type UnionWithLiteralVisitor interface {
 }
 
 func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
-	if u.fernStringLiteral != "" {
+	if u.typ == "fernStringLiteral" || u.fernStringLiteral != "" {
 		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
 	}
-	if u.String != "" {
+	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -468,24 +490,28 @@ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 type UnionWithOptionalTime struct {
 	DateOptional     *time.Time
 	DateTimeOptional *time.Time
+
+	typ string
 }
 
 func NewUnionWithOptionalTimeFromDateOptional(value *time.Time) *UnionWithOptionalTime {
-	return &UnionWithOptionalTime{DateOptional: value}
+	return &UnionWithOptionalTime{typ: "DateOptional", DateOptional: value}
 }
 
 func NewUnionWithOptionalTimeFromDateTimeOptional(value *time.Time) *UnionWithOptionalTime {
-	return &UnionWithOptionalTime{DateTimeOptional: value}
+	return &UnionWithOptionalTime{typ: "DateTimeOptional", DateTimeOptional: value}
 }
 
 func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 	var valueDateOptional *core.Date
 	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
+		u.typ = "DateOptional"
 		u.DateOptional = valueDateOptional.TimePtr()
 		return nil
 	}
 	var valueDateTimeOptional *core.DateTime
 	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
+		u.typ = "DateTimeOptional"
 		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
 		return nil
 	}
@@ -493,10 +519,10 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
-	if u.DateOptional != nil {
+	if u.typ == "DateOptional" || u.DateOptional != nil {
 		return json.Marshal(core.NewOptionalDate(u.DateOptional))
 	}
-	if u.DateTimeOptional != nil {
+	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
 		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -508,10 +534,10 @@ type UnionWithOptionalTimeVisitor interface {
 }
 
 func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) error {
-	if u.DateOptional != nil {
+	if u.typ == "DateOptional" || u.DateOptional != nil {
 		return visitor.VisitDateOptional(u.DateOptional)
 	}
-	if u.DateTimeOptional != nil {
+	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
 		return visitor.VisitDateTimeOptional(u.DateTimeOptional)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -523,51 +549,58 @@ type UnionWithTime struct {
 	DateTime         time.Time
 	DateOptional     *time.Time
 	DateTimeOptional *time.Time
+
+	typ string
 }
 
 func NewUnionWithTimeFromInteger(value int) *UnionWithTime {
-	return &UnionWithTime{Integer: value}
+	return &UnionWithTime{typ: "Integer", Integer: value}
 }
 
 func NewUnionWithTimeFromDate(value time.Time) *UnionWithTime {
-	return &UnionWithTime{Date: value}
+	return &UnionWithTime{typ: "Date", Date: value}
 }
 
 func NewUnionWithTimeFromDateTime(value time.Time) *UnionWithTime {
-	return &UnionWithTime{DateTime: value}
+	return &UnionWithTime{typ: "DateTime", DateTime: value}
 }
 
 func NewUnionWithTimeFromDateOptional(value *time.Time) *UnionWithTime {
-	return &UnionWithTime{DateOptional: value}
+	return &UnionWithTime{typ: "DateOptional", DateOptional: value}
 }
 
 func NewUnionWithTimeFromDateTimeOptional(value *time.Time) *UnionWithTime {
-	return &UnionWithTime{DateTimeOptional: value}
+	return &UnionWithTime{typ: "DateTimeOptional", DateTimeOptional: value}
 }
 
 func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 	var valueInteger int
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		u.typ = "Integer"
 		u.Integer = valueInteger
 		return nil
 	}
 	var valueDate *core.Date
 	if err := json.Unmarshal(data, &valueDate); err == nil {
+		u.typ = "Date"
 		u.Date = valueDate.Time()
 		return nil
 	}
 	var valueDateTime *core.DateTime
 	if err := json.Unmarshal(data, &valueDateTime); err == nil {
+		u.typ = "DateTime"
 		u.DateTime = valueDateTime.Time()
 		return nil
 	}
 	var valueDateOptional *core.Date
 	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
+		u.typ = "DateOptional"
 		u.DateOptional = valueDateOptional.TimePtr()
 		return nil
 	}
 	var valueDateTimeOptional *core.DateTime
 	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
+		u.typ = "DateTimeOptional"
 		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
 		return nil
 	}
@@ -575,19 +608,19 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 }
 
 func (u UnionWithTime) MarshalJSON() ([]byte, error) {
-	if u.Integer != 0 {
+	if u.typ == "Integer" || u.Integer != 0 {
 		return json.Marshal(u.Integer)
 	}
-	if !u.Date.IsZero() {
+	if u.typ == "Date" || !u.Date.IsZero() {
 		return json.Marshal(core.NewDate(u.Date))
 	}
-	if !u.DateTime.IsZero() {
+	if u.typ == "DateTime" || !u.DateTime.IsZero() {
 		return json.Marshal(core.NewDateTime(u.DateTime))
 	}
-	if u.DateOptional != nil {
+	if u.typ == "DateOptional" || u.DateOptional != nil {
 		return json.Marshal(core.NewOptionalDate(u.DateOptional))
 	}
-	if u.DateTimeOptional != nil {
+	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
 		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
@@ -602,19 +635,19 @@ type UnionWithTimeVisitor interface {
 }
 
 func (u *UnionWithTime) Accept(visitor UnionWithTimeVisitor) error {
-	if u.Integer != 0 {
+	if u.typ == "Integer" || u.Integer != 0 {
 		return visitor.VisitInteger(u.Integer)
 	}
-	if !u.Date.IsZero() {
+	if u.typ == "Date" || !u.Date.IsZero() {
 		return visitor.VisitDate(u.Date)
 	}
-	if !u.DateTime.IsZero() {
+	if u.typ == "DateTime" || !u.DateTime.IsZero() {
 		return visitor.VisitDateTime(u.DateTime)
 	}
-	if u.DateOptional != nil {
+	if u.typ == "DateOptional" || u.DateOptional != nil {
 		return visitor.VisitDateOptional(u.DateOptional)
 	}
-	if u.DateTimeOptional != nil {
+	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
 		return visitor.VisitDateTimeOptional(u.DateTimeOptional)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)

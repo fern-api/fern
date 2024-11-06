@@ -1,18 +1,16 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
+import { Config } from "@wasm-fmt/ruff_fmt";
 
 export declare namespace Writer {}
-
-/* Dot delimited string where */
-type Module = string;
 
 export class Writer extends AbstractWriter {
     public toString(): string {
         return this.buffer;
     }
 
-    public async toStringFormatted(): Promise<string> {
+    public async toStringFormatted(config?: Config): Promise<string> {
         const { default: init, format } = await import("@wasm-fmt/ruff_fmt");
         await init();
-        return format(this.buffer);
+        return format(this.buffer, undefined, config);
     }
 }

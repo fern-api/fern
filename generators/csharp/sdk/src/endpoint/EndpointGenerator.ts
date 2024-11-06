@@ -32,7 +32,9 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
     }): csharp.Method {
-        if (grpcClientInfo != null) {
+        // If the service is a grpc service, grpcClientInfo will not be null or undefined,
+        // so any endpoint will be generated as a grpc endpoint, unless the transport is overriden by setting type to http
+        if (grpcClientInfo != null && endpoint.transport?.type !== "http") {
             return this.grpc.generate({
                 serviceId,
                 endpoint,
