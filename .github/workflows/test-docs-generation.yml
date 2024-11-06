@@ -1,17 +1,14 @@
 name: test-docs-generation
 
-on:
-  pull_request:
-    branches:
-      - main
-  push:
-    paths:
-      - "fern/packages/cli/**"
-      - "fern/packages/core/**"
-      - "fern/packages/commons/**"
-      - ".github/workflows/publish-docs.yml"
-    branches:
-      - main
+on: pull_request
+  # push:
+  #   paths:
+  #     - "fern/packages/cli/**"
+  #     - "fern/packages/core/**"
+  #     - "fern/packages/commons/**"
+  #     - ".github/workflows/publish-docs.yml"
+  #   branches:
+  #     - main
 
 jobs:
   run:
