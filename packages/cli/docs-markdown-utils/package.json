@@ -38,10 +38,10 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/diff": "^5.2.1",
-    "@types/node": "18.7.18",
+    "@types/diff": "^6.0.0",
+    "@types/node": "22.9.0",
     "depcheck": "^1.4.6",
-    "diff": "^5.2.0",
+    "diff": "^7.0.0",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
