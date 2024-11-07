@@ -1,4 +1,4 @@
-irVersion: v40
+irVersion: v53
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml

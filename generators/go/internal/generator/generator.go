@@ -1461,8 +1461,8 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir
 			return "false"
 		}
 	}
-	if typeReference.Primitive != "" {
-		return zeroValueForPrimitive(typeReference.Primitive)
+	if typeReference.Primitive != nil {
+		return zeroValueForPrimitive(typeReference.Primitive.V1)
 	}
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
@@ -1476,17 +1476,17 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir
 	return "nil"
 }
 
-func zeroValueForPrimitive(primitive fernir.PrimitiveType) string {
+func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
 	switch primitive {
-	case fernir.PrimitiveTypeString:
+	case fernir.PrimitiveTypeV1String, fernir.PrimitiveTypeV1BigInteger:
 		return `""`
-	case fernir.PrimitiveTypeInteger, fernir.PrimitiveTypeDouble, fernir.PrimitiveTypeLong:
+	case fernir.PrimitiveTypeV1Integer, fernir.PrimitiveTypeV1Long, fernir.PrimitiveTypeV1Uint, fernir.PrimitiveTypeV1Uint64, fernir.PrimitiveTypeV1Float, fernir.PrimitiveTypeV1Double:
 		return "0"
-	case fernir.PrimitiveTypeBoolean:
+	case fernir.PrimitiveTypeV1Boolean:
 		return "false"
-	case fernir.PrimitiveTypeDateTime, fernir.PrimitiveTypeDate:
+	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case fernir.PrimitiveTypeUuid, fernir.PrimitiveTypeBase64:
+	case fernir.PrimitiveTypeV1Uuid, fernir.PrimitiveTypeV1Base64:
 		return "nil"
 	}
 	return "nil"
@@ -1565,6 +1565,7 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uint64":     struct{}{},
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
+	// TODO: Add support for BigInteger.
 }
 
 // valueOf dereferences the given value, or returns the zero value if nil.

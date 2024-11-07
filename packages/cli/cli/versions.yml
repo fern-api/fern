@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The CLI now recognizes the versions of the Go generator that require IRv53.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc34
+
+- changelogEntry:
+    - summary: |
         The Fern CLI now supports roles and viewers in your docs configuration, if you are on the enteprise plan for docs:
 
         ```yml docs.ym
