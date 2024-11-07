@@ -1,4 +1,4 @@
-irVersion: v40
+irVersion: v53
 displayName: Go Model
 image: fernapi/fern-go-model
 changelogLocation: ../../generators/go/model/versions.yml
