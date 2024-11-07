@@ -709,7 +709,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
         cls, model: ObjectWithOptionalField
     ) -> ObjectWithOptionalField:
         for validator in ObjectWithOptionalField.Validators._pre_validators:
-            values = validator(values)
+            model = validator(values)
         return model
 
     @pydantic.model_validator(mode="after")
@@ -717,7 +717,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
         cls, model: ObjectWithOptionalField
     ) -> ObjectWithOptionalField:
         for validator in ObjectWithOptionalField.Validators._post_validators:
-            values = validator(values)
+            model = validator(values)
         return model
 
     @universal_field_validator("string", pre=True)

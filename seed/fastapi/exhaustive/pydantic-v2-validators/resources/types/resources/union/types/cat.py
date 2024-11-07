@@ -157,13 +157,13 @@ class Cat(UniversalBaseModel):
     @pydantic.model_validator(mode="before")
     def _pre_validate_types_cat(cls, model: Cat) -> Cat:
         for validator in Cat.Validators._pre_validators:
-            values = validator(values)
+            model = validator(values)
         return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_cat(cls, model: Cat) -> Cat:
         for validator in Cat.Validators._post_validators:
-            values = validator(values)
+            model = validator(values)
         return model
 
     @universal_field_validator("name", pre=True)

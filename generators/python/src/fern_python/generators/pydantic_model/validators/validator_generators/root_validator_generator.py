@@ -50,7 +50,10 @@ class RootValidatorGenerator(ValidatorGenerator):
             )
 
             with writer.indent():
-                writer.write(f"{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} = ")
+                if self._model._version == PydanticVersionCompatibility.V2: 
+                    writer.write(f"{PydanticModel.MODEL_PARAMETER_NAME} = ")
+                else: 
+                    writer.write(f"{PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME} = ")
                 writer.write_node(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
