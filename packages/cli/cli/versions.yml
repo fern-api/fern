@@ -12,7 +12,7 @@
         ```
       type: fix
   irVersion: 53
-  version: 0.45.0-rc35
+  version: 0.45.0-rc36
 
 - changelogEntry:
     - summary: |
