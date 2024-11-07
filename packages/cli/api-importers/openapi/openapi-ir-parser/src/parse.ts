@@ -28,6 +28,7 @@ export interface SpecImportSettings {
     asyncApiNaming?: "v1" | "v2";
     optionalAdditionalProperties: boolean;
     cooerceEnumsToLiterals: boolean;
+    objectQueryParameters: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
