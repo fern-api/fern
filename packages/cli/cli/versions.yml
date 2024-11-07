@@ -1,5 +1,21 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI importer now supports importing deep object query parameters. To do this, you will 
+        need to configure a setting in your `generators.yml`
+
+        ```yml
+        api: 
+         specs: 
+           - openapi: ./path/to/openapi.yml
+             settings: 
+               object-query-paramaters: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc35
+
+- changelogEntry:
+    - summary: |
         The CLI now recognizes the versions of the Go generator that require IRv53.
       type: internal
   irVersion: 53
