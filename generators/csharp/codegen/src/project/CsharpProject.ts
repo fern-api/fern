@@ -182,7 +182,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
-        this.context.logger.debug(`this.context.config ${JSON.stringify(this.context.config)}`);
         const csproj = new CsProj({
             license: this.context.config.license,
             githubUrl: this.context.config.output?.mode._visit({
@@ -217,7 +216,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             this.absolutePathToOutputDirectory,
             this.filepaths.getTestFilesDirectory()
         );
-        this.context.logger.debug(`mkdir ${absolutePathToTestProject}`);
         await mkdir(absolutePathToTestProject, { recursive: true });
 
         const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
@@ -609,9 +607,9 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
         if (this.license != null && this.license.type === "custom") {
             result.push(`
-<ItemGroup>
-    <None Include="..\\..\\${this.license.filename}" Pack="true" PackagePath=""/>
-</ItemGroup>
+    <ItemGroup>
+        <None Include="..\\..\\${this.license.filename}" Pack="true" PackagePath=""/>
+    </ItemGroup>
 `);
         }
 
