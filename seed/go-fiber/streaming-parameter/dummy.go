@@ -8,6 +8,11 @@ import (
 	core "github.com/streaming-parameter/fern/core"
 )
 
+type GenerateRequest struct {
+	Stream    bool `json:"stream" url:"-"`
+	NumEvents int  `json:"num_events" url:"-"`
+}
+
 type RegularResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`

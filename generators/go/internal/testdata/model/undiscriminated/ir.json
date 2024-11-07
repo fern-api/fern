@@ -1,4 +1,6 @@
 {
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
     "apiName": {
         "originalName": "api",
         "camelCase": {
@@ -162,7 +164,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Foo"
+                            "typeId": "type_imdb:Foo",
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
@@ -231,7 +235,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Bar"
+                            "typeId": "type_imdb:Bar",
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
@@ -300,14 +306,23 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Baz"
+                            "typeId": "type_imdb:Baz",
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     },
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     },
@@ -318,7 +333,14 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "primitive",
-                                    "primitive": "INTEGER"
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -331,11 +353,21 @@
                                 "_type": "map",
                                 "keyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "BOOLEAN"
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -348,7 +380,14 @@
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -365,7 +404,14 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "primitive",
-                                            "primitive": "STRING"
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -380,7 +426,14 @@
                                 "_type": "set",
                                 "set": {
                                     "_type": "primitive",
-                                    "primitive": "DOUBLE"
+                                    "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": {
+                                            "type": "double",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -419,7 +472,13 @@
                 "type_imdb:Bar",
                 "type_imdb:Baz"
             ],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -495,7 +554,14 @@
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     },
@@ -577,7 +643,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Foo"
+                            "typeId": "type_imdb:Foo",
+                            "default": null,
+                            "inline": null
                         },
                         "docs": null
                     }
@@ -586,7 +654,13 @@
             "referencedTypes": [
                 "type_imdb:Foo"
             ],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -675,14 +749,27 @@
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -758,21 +845,34 @@
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "INTEGER"
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     },
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "DATE"
+                            "primitive": {
+                                "v1": "DATE",
+                                "v2": null
+                            }
                         },
                         "docs": null
                     },
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "DATE_TIME"
+                            "primitive": {
+                                "v1": "DATE_TIME",
+                                "v2": null
+                            }
                         },
                         "docs": null
                     },
@@ -783,7 +883,10 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "primitive",
-                                    "primitive": "DATE"
+                                    "primitive": {
+                                        "v1": "DATE",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -796,7 +899,10 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "primitive",
-                                    "primitive": "DATE_TIME"
+                                    "primitive": {
+                                        "v1": "DATE_TIME",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -805,7 +911,13 @@
                 ]
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -885,7 +997,10 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "primitive",
-                                    "primitive": "DATE"
+                                    "primitive": {
+                                        "v1": "DATE",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -898,7 +1013,10 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "primitive",
-                                    "primitive": "DATE_TIME"
+                                    "primitive": {
+                                        "v1": "DATE_TIME",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -907,7 +1025,13 @@
                 ]
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -1006,15 +1130,30 @@
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -1113,15 +1252,30 @@
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         },
@@ -1220,15 +1374,30 @@
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
             },
             "referencedTypes": [],
-            "examples": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
             "availability": null,
             "docs": null
         }
@@ -1280,6 +1449,10 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_imdb": {
             "name": {
@@ -1359,6 +1532,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -1369,6 +1543,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -1383,11 +1558,13 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }
