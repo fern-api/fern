@@ -89,7 +89,7 @@ class FernAwarePydanticModel:
             docstring=docstring,
             snippet=snippet,
             extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,
-            frozen=custom_config.frozen if not (is_root_model and self._is_pydantic_v2_only) else False,
+            frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
             pydantic_base_model=pydantic_base_model_override

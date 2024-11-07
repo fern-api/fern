@@ -40,5 +40,8 @@ class OptionalAlias(pydantic.RootModel[typing.Optional[str]]):
         value = model.root
         for validator in OptionalAlias.Validators._validators:
             value = validator(value)
-        model.root = value
         return model
+
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+        frozen=True
+    )  # type: ignore # Pydantic v2

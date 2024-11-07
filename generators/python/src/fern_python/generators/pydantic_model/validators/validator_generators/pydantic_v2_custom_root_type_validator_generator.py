@@ -53,8 +53,6 @@ class PydanticV2CustomRootTypeValidatorGenerator(ValidatorGenerator):
             )
             writer.write_line()
 
-        writer.write_line(f"model.{self._get_root_property_name()} = {ROOT_VARIABLE_NAME}")    
-
         writer.write_line(f"return model")    
 
     def add_to_validators_class(self, validators_class: AST.ClassDeclaration) -> None:

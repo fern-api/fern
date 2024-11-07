@@ -149,5 +149,5 @@ class ObjectWithRequiredField(UniversalBaseModel):
         return v
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-        extra="forbid"
+        extra="forbid", frozen=True
     )  # type: ignore # Pydantic v2
