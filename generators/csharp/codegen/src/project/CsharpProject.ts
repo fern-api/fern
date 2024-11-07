@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher, File, AbstractProject } from "@fern-api/generator-commons";
+import { SourceFetcher, File, AbstractProject, FernGeneratorExec } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -182,17 +182,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
-
         const csproj = new CsProj({
-            license: this.context.config.license?._visit({
-                custom: (val) => {
-                    return val.filename;
-                },
-                basic: (val) => {
-                    return val.id;
-                },
-                _other: () => undefined
-            }),
+            license: this.context.config.license,
             githubUrl: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
                 github: (github) => github.repoUrl,
@@ -225,7 +216,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             this.absolutePathToOutputDirectory,
             this.filepaths.getTestFilesDirectory()
         );
-        this.context.logger.debug(`mkdir ${absolutePathToTestProject}`);
         await mkdir(absolutePathToTestProject, { recursive: true });
 
         const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
@@ -446,7 +436,7 @@ class CsharpProjectFilepaths {
 declare namespace CsProj {
     interface Args {
         version?: string;
-        license?: string;
+        license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         protobufSourceFilePaths: RelativeFilePath[];
@@ -456,7 +446,7 @@ declare namespace CsProj {
 const FOUR_SPACES = "    ";
 
 class CsProj {
-    private license: string | undefined;
+    private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
@@ -593,8 +583,17 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
-        if (this.license != null) {
-            result.push(`<PackageLicenseFile>${this.license}</PackageLicenseFile>`);
+        this.context.logger.debug(`this.license ${JSON.stringify(this.license)}`);
+        if (this.license) {
+            result.push(
+                this.license._visit<string>({
+                    basic: (value) => `<PackageLicenseExpression>${value.id}</PackageLicenseExpression>`,
+                    custom: (value) => `<PackageLicenseFile>${value.filename}</PackageLicenseFile>`,
+                    _other: () => {
+                        throw new Error("Unknown license type");
+                    }
+                })
+            );
         }
 
         if (this.githubUrl != null) {
@@ -606,11 +605,11 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getAdditionalItemGroups(): string[] {
         const result: string[] = [];
 
-        if (this.license != null) {
+        if (this.license != null && this.license.type === "custom") {
             result.push(`
-<ItemGroup>
-    <None Include="..\\..\\${this.license}" Pack="true" PackagePath=""/>
-</ItemGroup>
+    <ItemGroup>
+        <None Include="..\\..\\${this.license.filename}" Pack="true" PackagePath=""/>
+    </ItemGroup>
 `);
         }
 

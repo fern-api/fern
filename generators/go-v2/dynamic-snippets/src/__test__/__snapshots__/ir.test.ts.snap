@@ -3504,6 +3504,23 @@ func do() {
 "
 `;
 
+exports[`test definitions > license 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
+	)
+}
+"
+`;
+
 exports[`test definitions > literal 1`] = `
 "package example
 
