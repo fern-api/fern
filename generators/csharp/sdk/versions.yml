@@ -11,7 +11,7 @@
   changelogEntry:
     - type: fix
       summary: Generate the license NuGet properties inside the .csproj file correctly.
-      irVersion: 53
+  irVersion: 53
 - version: 1.9.1
   createdAt: "2024-11-06"
   changelogEntry:
