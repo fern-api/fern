@@ -191,7 +191,7 @@ function getParseOptions({
         cooerceEnumsToLiterals:
             overrides?.cooerceEnumsToLiterals ??
             specSettings?.cooerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals,
+            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals
     };
 }
 
