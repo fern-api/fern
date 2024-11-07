@@ -121,7 +121,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
         cls, model: ObjectWithRequiredField
     ) -> ObjectWithRequiredField:
         for validator in ObjectWithRequiredField.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
@@ -129,7 +129,7 @@ class ObjectWithRequiredField(UniversalBaseModel):
         cls, model: ObjectWithRequiredField
     ) -> ObjectWithRequiredField:
         for validator in ObjectWithRequiredField.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     @universal_field_validator("string", pre=True)

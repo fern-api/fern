@@ -217,13 +217,13 @@ class PostWithObjectBody(UniversalBaseModel):
     @pydantic.model_validator(mode="before")
     def _pre_validate(cls, model: PostWithObjectBody) -> PostWithObjectBody:
         for validator in PostWithObjectBody.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate(cls, model: PostWithObjectBody) -> PostWithObjectBody:
         for validator in PostWithObjectBody.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     @universal_field_validator("string", pre=True)

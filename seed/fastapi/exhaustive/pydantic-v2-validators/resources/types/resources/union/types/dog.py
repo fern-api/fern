@@ -157,13 +157,13 @@ class Dog(UniversalBaseModel):
     @pydantic.model_validator(mode="before")
     def _pre_validate_types_dog(cls, model: Dog) -> Dog:
         for validator in Dog.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_dog(cls, model: Dog) -> Dog:
         for validator in Dog.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     @universal_field_validator("name", pre=True)

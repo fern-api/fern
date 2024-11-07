@@ -123,7 +123,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         cls, model: ObjectWithMapOfMap
     ) -> ObjectWithMapOfMap:
         for validator in ObjectWithMapOfMap.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
@@ -131,7 +131,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         cls, model: ObjectWithMapOfMap
     ) -> ObjectWithMapOfMap:
         for validator in ObjectWithMapOfMap.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     @universal_field_validator("map_", pre=True)

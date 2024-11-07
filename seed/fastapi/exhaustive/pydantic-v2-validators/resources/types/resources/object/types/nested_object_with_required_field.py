@@ -175,7 +175,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         cls, model: NestedObjectWithRequiredField
     ) -> NestedObjectWithRequiredField:
         for validator in NestedObjectWithRequiredField.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
@@ -183,7 +183,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         cls, model: NestedObjectWithRequiredField
     ) -> NestedObjectWithRequiredField:
         for validator in NestedObjectWithRequiredField.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     @universal_field_validator("string", pre=True)

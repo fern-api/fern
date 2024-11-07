@@ -104,13 +104,13 @@ class Animal(pydantic.RootModel):
     @pydantic.model_validator(mode="before")
     def _pre_validate_types_animal(cls, model: Animal) -> Animal:
         for validator in Animal.Validators._pre_validators:
-            model = validator(values)
+            model = validator(model)
         return model
 
     @pydantic.model_validator(mode="after")
     def _post_validate_types_animal(cls, model: Animal) -> Animal:
         for validator in Animal.Validators._post_validators:
-            model = validator(values)
+            model = validator(model)  # type: ignore
         return model
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

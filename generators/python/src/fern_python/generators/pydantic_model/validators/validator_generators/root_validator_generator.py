@@ -59,9 +59,11 @@ class RootValidatorGenerator(ValidatorGenerator):
                         function_definition=AST.Reference(
                             qualified_name_excluding_import=(INDIVIDUAL_VALIDATOR_NAME,),
                         ),
-                        args=[AST.Expression(PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME)],
+                        args=[AST.Expression(PydanticModel.MODEL_PARAMETER_NAME if self._model._version == PydanticVersionCompatibility.V2 else PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME)],
                     )
                 )
+                if not pre: 
+                    writer.write(' # type: ignore')
                 writer.write_line()
 
             if self._model._version == PydanticVersionCompatibility.V2: 
