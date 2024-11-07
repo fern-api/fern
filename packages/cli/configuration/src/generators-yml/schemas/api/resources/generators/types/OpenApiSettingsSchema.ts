@@ -6,4 +6,6 @@ export interface OpenApiSettingsSchema {
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
     "coerce-enums-to-literals"?: boolean;
+    /** Enables parsing deep object query parameters */
+    "object-query-parameters"?: boolean;
 }

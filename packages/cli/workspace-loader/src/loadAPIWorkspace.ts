@@ -70,7 +70,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                    cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true
+                    cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                    objectQueryParameters: definition.settings?.objectQueryParameters ?? false
                 }
             });
             continue;
@@ -111,7 +112,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true
+                cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                objectQueryParameters: definition.settings?.objectQueryParameters ?? false
             },
             source: {
                 type: "openapi",

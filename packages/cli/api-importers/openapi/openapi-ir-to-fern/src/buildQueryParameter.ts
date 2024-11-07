@@ -19,6 +19,7 @@ export function buildQueryParameter({
     fileContainingReference: RelativeFilePath;
     namespace: string | undefined;
 }): RawSchemas.HttpQueryParameterSchema | undefined {
+    console.log(`context.objectQueryParameters ${context.objectQueryParameters}`);
     const typeReference = getQueryParameterTypeReference({
         schema: queryParameter.schema,
         context,
@@ -197,8 +198,17 @@ function getQueryParameterTypeReference({
                     namespace
                 });
             }
-        } else if (resolvedSchema.type === "object") {
-            return undefined;
+        } else if (context.objectQueryParameters) {
+            return {
+                value: buildTypeReference({
+                    schema,
+                    context,
+                    fileContainingReference,
+                    declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                    namespace
+                }),
+                allowMultiple: true
+            };
         }
     }
 
@@ -225,6 +235,17 @@ function getQueryParameterTypeReference({
                         namespace
                     }),
                     allowMultiple: true
+                };
+            } else if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace
+                    }),
+                    allowMultiple: false
                 };
             }
         }
@@ -341,6 +362,18 @@ function getQueryParameterTypeReference({
                 });
             }
         } else if (schema.value.type === "object") {
+            if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace
+                    }),
+                    allowMultiple: false
+                };
+            }
             return undefined;
         }
         return {
