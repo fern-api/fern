@@ -38,13 +38,13 @@ pydantic-core = "^2.18.2"
 typing_extensions = ">= 4.0.0"
 
 [tool.poetry.dev-dependencies]
+covcheck = { version = "^0.4.3", extras = ["toml"]}
 mypy = "1.0.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
-types-python-dateutil = "^2.9.0.20240316"
-covcheck = { version = "^0.4.3", extras = ["toml"]}
 ruff = "^0.5.6"
+types-python-dateutil = "^2.9.0.20240316"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]

@@ -196,6 +196,17 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
+    - customConfig:
+        extra_dev_dependencies:
+          mypy: 1.11.0
+      outputFolder: overriding-dev-dependencies
+    - customConfig:
+        pyproject_toml: |
+          [tool.mypy]
+          plugins = ["pydantic.mypy", "my.custom.mypy"]
+          check_untyped_defs = true
+          mypy_path = "src"
+      outputFolder: custom-mypy-config
   unions:
     - customConfig: null
       outputFolder: no-custom-config
