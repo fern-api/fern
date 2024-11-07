@@ -19,7 +19,6 @@ export function buildQueryParameter({
     fileContainingReference: RelativeFilePath;
     namespace: string | undefined;
 }): RawSchemas.HttpQueryParameterSchema | undefined {
-    console.log(`context.objectQueryParameters ${context.objectQueryParameters}`);
     const typeReference = getQueryParameterTypeReference({
         schema: queryParameter.schema,
         context,
@@ -207,7 +206,7 @@ function getQueryParameterTypeReference({
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     namespace
                 }),
-                allowMultiple: true
+                allowMultiple: false
             };
         }
     }
