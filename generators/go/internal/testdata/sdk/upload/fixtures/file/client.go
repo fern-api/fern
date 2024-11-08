@@ -3,14 +3,12 @@
 package file
 
 import (
-	bytes "bytes"
 	context "context"
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/option"
 	io "io"
-	multipart "mime/multipart"
 	http "net/http"
 )
 
@@ -54,17 +52,8 @@ func (c *Client) Upload(
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if err := writer.WriteField("fern", fmt.Sprintf("%v", "fern")); err != nil {
@@ -76,7 +65,7 @@ func (c *Client) Upload(
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -88,7 +77,7 @@ func (c *Client) Upload(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {
@@ -116,23 +105,14 @@ func (c *Client) UploadSimple(
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -144,7 +124,7 @@ func (c *Client) UploadSimple(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {
@@ -174,29 +154,12 @@ func (c *Client) UploadMultiple(
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if optionalFile != nil {
-		optionalFileFilename := "optionalFile_filename"
-		if named, ok := optionalFile.(interface{ Name() string }); ok {
-			optionalFileFilename = named.Name()
-		}
-		optionalFilePart, err := writer.CreateFormFile("optionalFile", optionalFileFilename)
-		if err != nil {
-			return "", err
-		}
-		if _, err := io.Copy(optionalFilePart, optionalFile); err != nil {
+		if err := writer.WriteFile("optionalFile", optionalFile); err != nil {
 			return "", err
 		}
 	}
@@ -206,7 +169,7 @@ func (c *Client) UploadMultiple(
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -218,7 +181,7 @@ func (c *Client) UploadMultiple(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {
