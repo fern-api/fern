@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedMixedCase.Custom.props" />
 </Project>

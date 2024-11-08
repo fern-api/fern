@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedStreaming.Custom.props" />
 </Project>

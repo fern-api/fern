@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedUnions.Custom.props" />
 </Project>

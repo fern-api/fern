@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedExtends.Custom.props" />
 </Project>

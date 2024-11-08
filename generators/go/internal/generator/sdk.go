@@ -32,6 +32,15 @@ var (
 	//go:embed sdk/core/extra_properties_test.go
 	extraPropertiesTestFile string
 
+	//go:embed sdk/core/file_param.go
+	fileParamFile string
+
+	//go:embed sdk/core/multipart.go
+	multipartFile string
+
+	//go:embed sdk/core/multipart_test.go
+	multipartTestFile string
+
 	//go:embed sdk/core/optional.go
 	optionalFile string
 
@@ -1123,50 +1132,51 @@ func (f *fileWriter) WriteClient(
 		}
 
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
-			f.P("requestBuffer := bytes.NewBuffer(nil)")
-			f.P("writer := multipart.NewWriter(requestBuffer)")
+			f.P("writer := core.NewMultipartWriter()")
 			for _, fileProperty := range endpoint.FileProperties {
 				filePropertyInfo, err := filePropertyToInfo(fileProperty)
 				if err != nil {
 					return nil, err
 				}
 				var (
-					fileVariable     = filePropertyInfo.Key.Name.CamelCase.SafeName
-					filenameVariable = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Filename"
-					filenameValue    = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "_filename"
-					partVariable     = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Part"
+					fileVariable            = filePropertyInfo.Key.Name.CamelCase.SafeName
+					contentTypeVariableName = filePropertyInfo.Key.Name.CamelCase.SafeName + "ContentType"
 				)
 				if filePropertyInfo.IsArray {
 					// We don't care whether the file array is optional or not; the range
 					// handles that for us.
-					f.P("for i, f := range ", fileVariable, "{")
-					f.P(filenameVariable, ` := fmt.Sprintf("`, filenameValue, `_%d", i)`)
-					f.P("if named, ok := f.(interface{ Name() string }); ok {")
-					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
-					f.P("}")
-					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
-					f.P("if err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
-					f.P("if _, err := io.Copy(", partVariable, ", f); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					f.P("for _, f := range ", fileVariable, "{")
+					if filePropertyInfo.ContentType != "" {
+						f.P(contentTypeVariableName, " := \"", filePropertyInfo.ContentType, "\"")
+						f.P("if contentTyped, ok := f.(core.ContentTyped); ok {")
+						f.P(contentTypeVariableName, " = contentTyped.ContentType()")
+						f.P("}")
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, core.WithMultipartContentType(", contentTypeVariableName, ")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
 					f.P("}")
 				} else {
 					if filePropertyInfo.IsOptional {
 						f.P("if ", fileVariable, " != nil {")
 					}
-					f.P(fmt.Sprintf("%s := %q", filenameVariable, filenameValue))
-					f.P("if named, ok := ", fileVariable, ".(interface{ Name() string }); ok {")
-					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
-					f.P("}")
-					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
-					f.P("if err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
-					f.P("if _, err := io.Copy(", partVariable, ", ", fileVariable, "); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					if filePropertyInfo.ContentType != "" {
+						f.P(contentTypeVariableName, " := \"", filePropertyInfo.ContentType, "\"")
+						f.P("if contentTyped, ok := ", fileVariable, ".(core.ContentTyped); ok {")
+						f.P(contentTypeVariableName, " = contentTyped.ContentType()")
+						f.P("}")
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", core.WithMultipartContentType(", contentTypeVariableName, ")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, "); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
 					if filePropertyInfo.IsOptional {
 						f.P("}")
 					}
@@ -1186,11 +1196,16 @@ func (f *fileWriter) WriteClient(
 				// Encapsulate the multipart form WriteField in a closure so that we can easily
 				// wrap it with an optional nil check below.
 				writeField := func() {
-					if !valueTypeFormat.IsPrimitive {
-						// Non-primitive types need to be JSON-serialized (e.g. lists, objects, etc).
-						f.P(`if err := core.WriteMultipartJSON(writer, "`, fileBodyProperty.Name.WireValue, `", `, requestField, "); err != nil {")
+					field := requestField
+					if valueTypeFormat.IsIterable {
+						field = "part"
+					}
+					if valueTypeFormat.IsPrimitive {
+						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, field, ")); err != nil {")
+					} else if fileBodyProperty.ContentType != nil {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, core.WithMultipartContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
 					} else {
-						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, "); err != nil {")
 					}
 					f.P("return ", endpoint.ErrorReturnValues)
 					f.P("}")
@@ -1198,16 +1213,22 @@ func (f *fileWriter) WriteClient(
 
 				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
-					writeField()
+				}
+				if valueTypeFormat.IsIterable {
+					f.P("for _, part := range ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, " {")
+				}
+				writeField()
+				if valueTypeFormat.IsIterable {
 					f.P("}")
-				} else {
-					writeField()
+				}
+				if valueTypeFormat.IsOptional {
+					f.P("}")
 				}
 			}
 			f.P("if err := writer.Close(); err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
-			f.P(headersParameter, `.Set("Content-Type", writer.FormDataContentType())`)
+			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
 			f.P()
 		}
 
@@ -2014,23 +2035,34 @@ func generatedClientInstantiation(
 }
 
 type filePropertyInfo struct {
-	Key        *ir.NameAndWireValue
-	IsOptional bool
-	IsArray    bool
+	Key         *ir.NameAndWireValue
+	IsOptional  bool
+	IsArray     bool
+	ContentType string
 }
 
 func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error) {
 	switch fileProperty.Type {
 	case "file":
+		var contentType string
+		if fileProperty.File.ContentType != nil {
+			contentType = *fileProperty.File.ContentType
+		}
 		return &filePropertyInfo{
-			Key:        fileProperty.File.Key,
-			IsOptional: fileProperty.File.IsOptional,
+			Key:         fileProperty.File.Key,
+			IsOptional:  fileProperty.File.IsOptional,
+			ContentType: contentType,
 		}, nil
 	case "fileArray":
+		var contentType string
+		if fileProperty.FileArray.ContentType != nil {
+			contentType = *fileProperty.FileArray.ContentType
+		}
 		return &filePropertyInfo{
-			Key:        fileProperty.FileArray.Key,
-			IsOptional: fileProperty.FileArray.IsOptional,
-			IsArray:    true,
+			Key:         fileProperty.FileArray.Key,
+			IsOptional:  fileProperty.FileArray.IsOptional,
+			IsArray:     true,
+			ContentType: contentType,
 		}, nil
 	}
 	return nil, fmt.Errorf("file property %s is not yet supported", fileProperty.Type)
@@ -2235,7 +2267,7 @@ func (f *fileWriter) endpointFromIR(
 		if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 			// This is a file upload request, so we prepare a buffer for the request body
 			// instead of just using the request specified by the function signature.
-			requestValueName = "requestBuffer"
+			requestValueName = "writer.Buffer()"
 		}
 	}
 
@@ -3085,6 +3117,7 @@ type valueTypeFormat struct {
 	ZeroValue   string
 	IsOptional  bool
 	IsPrimitive bool
+	IsIterable  bool
 }
 
 func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
@@ -3094,6 +3127,18 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 		isOptional  bool
 		isPrimitive bool
 	)
+	iterableType := maybeIterableType(typeReference, types)
+	if iterableType != nil {
+		value := formatForValueType(iterableType, types)
+		return &valueTypeFormat{
+			Prefix:      value.Prefix,
+			Suffix:      value.Suffix,
+			ZeroValue:   value.ZeroValue,
+			IsOptional:  value.IsOptional,
+			IsPrimitive: value.IsPrimitive,
+			IsIterable:  true,
+		}
+	}
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		isOptional = true
 		if needsOptionalDereference(typeReference.Container.Optional, types) {
@@ -3267,6 +3312,29 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
 	return typeReference.Container != nil && typeReference.Container.Optional != nil
+}
+
+// maybeIterableType returns the given type reference's iterable type, if any.
+func maybeIterableType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeIterableType(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	if typeReference.Container != nil {
+		if typeReference.Container.Optional != nil {
+			return maybeIterableType(typeReference.Container.Optional, types)
+		}
+		if typeReference.Container.List != nil {
+			return typeReference.Container.List
+		}
+		if typeReference.Container.Set != nil {
+			return typeReference.Container.Set
+		}
+	}
+	return nil
 }
 
 // needsOptionalDereference returns true if the optional type needs to be referenced.

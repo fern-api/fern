@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedPlainText.Custom.props" />
 </Project>

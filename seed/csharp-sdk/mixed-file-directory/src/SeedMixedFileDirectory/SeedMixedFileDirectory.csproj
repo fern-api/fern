@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedMixedFileDirectory.Custom.props" />
 </Project>
