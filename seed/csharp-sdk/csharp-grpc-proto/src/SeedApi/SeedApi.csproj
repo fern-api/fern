@@ -66,4 +66,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedApi.Custom.props" />
 </Project>

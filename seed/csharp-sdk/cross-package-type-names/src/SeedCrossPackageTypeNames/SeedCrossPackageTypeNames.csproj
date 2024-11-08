@@ -47,4 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedCrossPackageTypeNames.Custom.props" />
 </Project>

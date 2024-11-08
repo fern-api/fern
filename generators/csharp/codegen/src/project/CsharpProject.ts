@@ -183,6 +183,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
         const csproj = new CsProj({
+            name: this.name,
             license: this.context.config.license,
             githubUrl: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
@@ -198,6 +199,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`)),
             templateCsProjContents
         );
+
+        await writeFile(
+            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
+        );
+
         await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
             doNotPipeOutput: true,
             cwd: absolutePathToSrcDirectory
@@ -435,6 +442,7 @@ class CsharpProjectFilepaths {
 
 declare namespace CsProj {
     interface Args {
+        name: string;
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
@@ -446,13 +454,15 @@ declare namespace CsProj {
 const FOUR_SPACES = "    ";
 
 class CsProj {
+    private name: string;
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+    public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+        this.name = name;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
@@ -501,6 +511,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="${this.name}.Custom.props" />
 </Project>
 `;
     }
