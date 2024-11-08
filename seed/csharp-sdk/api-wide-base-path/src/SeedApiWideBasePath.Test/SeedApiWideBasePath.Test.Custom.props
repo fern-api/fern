@@ -4,17 +4,4 @@ Configure additional MSBuild properties for your project in this file:
 - Step 2: Modify this file to your liking.
 -->
 <Project>
-  <!--
-    <PropertyGroup>
-        <Title>Contoso SDK</Title>
-        <Authors>Contoso</Authors>
-        <Company>Contoso</Company>
-        <AssemblyName>Contoso.Sdk</AssemblyName>
-        <AssemblyTitle>Contoso SDK</AssemblyTitle>
-        <PackageIcon>icon.png</PackageIcon>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\icon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
-    -->
 </Project>

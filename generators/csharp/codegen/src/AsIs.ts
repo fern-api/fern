@@ -34,5 +34,5 @@ export enum AsIsFiles {
     UsingCs = "Using.cs",
     Extensions = "Extensions.cs",
     CustomProps = "Custom.props.Template",
-    TestCustomProps = "Custom.props.Template"
+    TestCustomProps = "Test.Custom.props.Template"
 }
