@@ -17,14 +17,13 @@ export declare namespace PythonFile {
 export class PythonFile extends AstNode {
     public readonly moduleName: string;
     public readonly path: ModulePath;
-    public readonly name: string;
+    private readonly statementsAboveImports: AstNode[] = [];
     private readonly statements: AstNode[] = [];
 
-    constructor({ moduleName, path, name }: PythonFile.Args) {
+    constructor({ moduleName, path }: PythonFile.Args) {
         super();
         this.moduleName = moduleName;
         this.path = path;
-        this.name = name;
     }
 
     public addStatement(statement: AstNode): void {
@@ -32,20 +31,34 @@ export class PythonFile extends AstNode {
         this.inheritReferences(statement);
     }
 
+    public addStatementAboveImports(statement: AstNode): void {
+        this.statementsAboveImports.push(statement);
+        this.inheritReferences(statement);
+    }
+
     public write(writer: Writer): void {
-        this.writeImports(writer);
-        this.statements.forEach((statement, idx) => {
-            statement.write(writer);
+        if (this.statementsAboveImports.length > 0) {
+            this.writeStatements(writer, this.statementsAboveImports);
             writer.newLine();
-            if (idx < this.statements.length - 1) {
-                writer.newLine();
-            }
-        });
+        }
+
+        this.writeImports(writer);
+        this.writeStatements(writer, this.statements);
     }
 
     /*******************************
      * Helper Methods
      *******************************/
+
+    private writeStatements(writer: Writer, statements: AstNode[]): void {
+        statements.forEach((statement, idx) => {
+            statement.write(writer);
+            writer.newLine();
+            if (idx < statements.length - 1) {
+                writer.newLine();
+            }
+        });
+    }
 
     private getImportName(reference: Reference): string {
         const name = reference.name;

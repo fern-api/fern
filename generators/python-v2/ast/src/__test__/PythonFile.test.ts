@@ -75,6 +75,26 @@ describe("PythonFile", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("Include statements above imports", async () => {
+        const file = python.file({
+            moduleName: "test_module",
+            path: ["test"],
+            name: "test_file"
+        });
+
+        const testClass = python.class_({
+            name: "TestClass"
+        });
+        testClass.addReference(python.reference({ modulePath: ["itertools"], name: "chain" }));
+        testClass.add(python.codeBlock("flat_list = list(itertools.chain([[1, 2], [3, 4]]))"));
+
+        file.addStatement(testClass);
+        file.addStatementAboveImports(python.codeBlock("# flake8: noqa: F401, F403"));
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("Set a variable to a nested attribute of an imported reference", async () => {
         const file = python.file({
             moduleName: "test_module",

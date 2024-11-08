@@ -84,6 +84,17 @@ var_b: List[str]
 "
 `;
 
+exports[`PythonFile > Include statements above imports 1`] = `
+"# flake8: noqa: F401, F403
+
+from itertools import chain
+
+
+class TestClass:
+    flat_list = list(itertools.chain([[1, 2], [3, 4]]))
+"
+`;
+
 exports[`PythonFile > Multiple imports from the same module should work 1`] = `
 "from typing import Union, List, Set
 
