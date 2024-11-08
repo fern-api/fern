@@ -1,5 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`examples (errors) > invalid request body 1`] = `
+[
+  {
+    "message": "Expected string but got number",
+    "path": [
+      "requestBody",
+      "title",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
 exports[`examples > 'GET /metadata (allow-multiple)' 1`] = `
 "package example
 

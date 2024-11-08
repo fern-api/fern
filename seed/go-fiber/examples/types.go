@@ -97,24 +97,28 @@ func (i *Identifier) String() string {
 type Type struct {
 	BasicType   BasicType
 	ComplexType ComplexType
+
+	typ string
 }
 
 func NewTypeFromBasicType(value BasicType) *Type {
-	return &Type{BasicType: value}
+	return &Type{typ: "BasicType", BasicType: value}
 }
 
 func NewTypeFromComplexType(value ComplexType) *Type {
-	return &Type{ComplexType: value}
+	return &Type{typ: "ComplexType", ComplexType: value}
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
 	var valueBasicType BasicType
 	if err := json.Unmarshal(data, &valueBasicType); err == nil {
+		t.typ = "BasicType"
 		t.BasicType = valueBasicType
 		return nil
 	}
 	var valueComplexType ComplexType
 	if err := json.Unmarshal(data, &valueComplexType); err == nil {
+		t.typ = "ComplexType"
 		t.ComplexType = valueComplexType
 		return nil
 	}
@@ -122,10 +126,10 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 }
 
 func (t Type) MarshalJSON() ([]byte, error) {
-	if t.BasicType != "" {
+	if t.typ == "BasicType" || t.BasicType != "" {
 		return json.Marshal(t.BasicType)
 	}
-	if t.ComplexType != "" {
+	if t.typ == "ComplexType" || t.ComplexType != "" {
 		return json.Marshal(t.ComplexType)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
@@ -137,10 +141,10 @@ type TypeVisitor interface {
 }
 
 func (t *Type) Accept(visitor TypeVisitor) error {
-	if t.BasicType != "" {
+	if t.typ == "BasicType" || t.BasicType != "" {
 		return visitor.VisitBasicType(t.BasicType)
 	}
-	if t.ComplexType != "" {
+	if t.typ == "ComplexType" || t.ComplexType != "" {
 		return visitor.VisitComplexType(t.ComplexType)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", t)
@@ -266,33 +270,38 @@ type CastMember struct {
 	Actor       *Actor
 	Actress     *Actress
 	StuntDouble *StuntDouble
+
+	typ string
 }
 
 func NewCastMemberFromActor(value *Actor) *CastMember {
-	return &CastMember{Actor: value}
+	return &CastMember{typ: "Actor", Actor: value}
 }
 
 func NewCastMemberFromActress(value *Actress) *CastMember {
-	return &CastMember{Actress: value}
+	return &CastMember{typ: "Actress", Actress: value}
 }
 
 func NewCastMemberFromStuntDouble(value *StuntDouble) *CastMember {
-	return &CastMember{StuntDouble: value}
+	return &CastMember{typ: "StuntDouble", StuntDouble: value}
 }
 
 func (c *CastMember) UnmarshalJSON(data []byte) error {
 	valueActor := new(Actor)
 	if err := json.Unmarshal(data, &valueActor); err == nil {
+		c.typ = "Actor"
 		c.Actor = valueActor
 		return nil
 	}
 	valueActress := new(Actress)
 	if err := json.Unmarshal(data, &valueActress); err == nil {
+		c.typ = "Actress"
 		c.Actress = valueActress
 		return nil
 	}
 	valueStuntDouble := new(StuntDouble)
 	if err := json.Unmarshal(data, &valueStuntDouble); err == nil {
+		c.typ = "StuntDouble"
 		c.StuntDouble = valueStuntDouble
 		return nil
 	}
@@ -300,13 +309,13 @@ func (c *CastMember) UnmarshalJSON(data []byte) error {
 }
 
 func (c CastMember) MarshalJSON() ([]byte, error) {
-	if c.Actor != nil {
+	if c.typ == "Actor" || c.Actor != nil {
 		return json.Marshal(c.Actor)
 	}
-	if c.Actress != nil {
+	if c.typ == "Actress" || c.Actress != nil {
 		return json.Marshal(c.Actress)
 	}
-	if c.StuntDouble != nil {
+	if c.typ == "StuntDouble" || c.StuntDouble != nil {
 		return json.Marshal(c.StuntDouble)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
@@ -319,13 +328,13 @@ type CastMemberVisitor interface {
 }
 
 func (c *CastMember) Accept(visitor CastMemberVisitor) error {
-	if c.Actor != nil {
+	if c.typ == "Actor" || c.Actor != nil {
 		return visitor.VisitActor(c.Actor)
 	}
-	if c.Actress != nil {
+	if c.typ == "Actress" || c.Actress != nil {
 		return visitor.VisitActress(c.Actress)
 	}
-	if c.StuntDouble != nil {
+	if c.typ == "StuntDouble" || c.StuntDouble != nil {
 		return visitor.VisitStuntDouble(c.StuntDouble)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", c)

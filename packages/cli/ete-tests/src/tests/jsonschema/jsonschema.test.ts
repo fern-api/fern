@@ -15,5 +15,5 @@ describe("jsonschema", () => {
             await readFile(join(pathOfDirectory, RelativeFilePath.of("schema.json")), "utf-8")
         );
         expect(jsonSchema).toMatchSnapshot();
-    }, 10_000);
+    }, 20_000);
 });

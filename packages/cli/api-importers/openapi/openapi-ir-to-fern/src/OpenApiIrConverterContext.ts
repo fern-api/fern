@@ -26,6 +26,11 @@ export interface OpenApiIrConverterContextOpts {
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 
     globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+
+    /**
+     * If true, the converter will generate complex query parameters in the generated Fern Definition.
+     */
+    objectQueryParameters: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -37,6 +42,7 @@ export class OpenApiIrConverterContext {
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public detectGlobalHeaders: boolean;
+    public objectQueryParameters: boolean;
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
@@ -48,7 +54,8 @@ export class OpenApiIrConverterContext {
         detectGlobalHeaders,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides
+        authOverrides,
+        objectQueryParameters
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -62,6 +69,7 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
+        this.objectQueryParameters = objectQueryParameters;
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { collectLinksAndSources } from "../rules/valid-markdown-link/valid-markdown-link";
+import { collectLinksAndSources } from "../rules/valid-markdown-link/collect-links";
 
 describe("getReferencedMarkdownFiles", () => {
     it("should match on .md and .mdx", () => {

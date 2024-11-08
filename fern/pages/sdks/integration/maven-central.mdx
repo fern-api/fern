@@ -1,6 +1,8 @@
 ---
-title: Integrating Maven
+title: Publish your Java SDK with Maven
 ---
+
+To make your Java SDK publicly accessible, publish to [Maven](https://central.sonatype.com/). Once you've followed the steps below to connect your Maven account to your SDK, Fern will automatically publish the latest version of your SDK.  
 
 ## Creating a Maven username and password
 
@@ -48,3 +50,5 @@ one for the username and one for the password.
 </Info>
 
 </Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to Maven!

@@ -42,7 +42,16 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/users")
+                    .WithParam("page", "1")
+                    .WithParam("per_page", "1")
+                    .WithParam("order", "asc")
+                    .WithParam("starting_after", "starting_after")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -51,7 +60,13 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithCursorPaginationAsync(
-            new ListUsersCursorPaginationRequest(),
+            new ListUsersCursorPaginationRequest
+            {
+                Page = 1,
+                PerPage = 1,
+                Order = Order.Asc,
+                StartingAfter = "starting_after",
+            },
             RequestOptions
         );
         JToken

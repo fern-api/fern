@@ -1,6 +1,53 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+exports[`imdb (errors) > invalid path parameter 1`] = `
+[
+  {
+    "message": ""invalid" is not a recognized parameter for this endpoint",
+    "path": [
+      "pathParameters",
+      "invalid",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
+exports[`imdb (errors) > invalid request body 1`] = `
+[
+  {
+    "message": ""invalid" is not a recognized parameter for this endpoint",
+    "path": [
+      "requestBody",
+      "invalid",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
+exports[`imdb (errors) > invalid request body property type 1`] = `
+[
+  {
+    "message": "Expected string but got number",
+    "path": [
+      "requestBody",
+      "title",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": "Expected number but got string",
+    "path": [
+      "requestBody",
+      "rating",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
+exports[`imdb (success) > 'GET /movies/{movieId} (simple)' 1`] = `
 "package example
 
 import (
@@ -23,7 +70,7 @@ func do() {
 "
 `;
 
-exports[`imdb > 'POST /movies/create-movie (simple)' 1`] = `
+exports[`imdb (success) > 'POST /movies/create-movie (simple)' 1`] = `
 "package example
 
 import (

@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using Data.V1.Grpc;
 using Grpc.Core;
@@ -20,6 +22,46 @@ public partial class DataserviceClient
         _client = client;
         _grpc = _client.Grpc;
         _dataService = new DataService.DataServiceClient(_grpc.Channel);
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.FooAsync();
+    /// </code>
+    /// </example>
+    public async Task<object> FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "foo",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <example>

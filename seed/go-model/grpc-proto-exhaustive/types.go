@@ -259,24 +259,28 @@ func (l *ListResponse) String() string {
 type Metadata struct {
 	StringMetadataValueMap map[string]*MetadataValue
 	StringUnknownMap       map[string]interface{}
+
+	typ string
 }
 
 func NewMetadataFromStringMetadataValueMap(value map[string]*MetadataValue) *Metadata {
-	return &Metadata{StringMetadataValueMap: value}
+	return &Metadata{typ: "StringMetadataValueMap", StringMetadataValueMap: value}
 }
 
 func NewMetadataFromStringUnknownMap(value map[string]interface{}) *Metadata {
-	return &Metadata{StringUnknownMap: value}
+	return &Metadata{typ: "StringUnknownMap", StringUnknownMap: value}
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	var valueStringMetadataValueMap map[string]*MetadataValue
 	if err := json.Unmarshal(data, &valueStringMetadataValueMap); err == nil {
+		m.typ = "StringMetadataValueMap"
 		m.StringMetadataValueMap = valueStringMetadataValueMap
 		return nil
 	}
 	var valueStringUnknownMap map[string]interface{}
 	if err := json.Unmarshal(data, &valueStringUnknownMap); err == nil {
+		m.typ = "StringUnknownMap"
 		m.StringUnknownMap = valueStringUnknownMap
 		return nil
 	}
@@ -284,10 +288,10 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 }
 
 func (m Metadata) MarshalJSON() ([]byte, error) {
-	if m.StringMetadataValueMap != nil {
+	if m.typ == "StringMetadataValueMap" || m.StringMetadataValueMap != nil {
 		return json.Marshal(m.StringMetadataValueMap)
 	}
-	if m.StringUnknownMap != nil {
+	if m.typ == "StringUnknownMap" || m.StringUnknownMap != nil {
 		return json.Marshal(m.StringUnknownMap)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
@@ -299,10 +303,10 @@ type MetadataVisitor interface {
 }
 
 func (m *Metadata) Accept(visitor MetadataVisitor) error {
-	if m.StringMetadataValueMap != nil {
+	if m.typ == "StringMetadataValueMap" || m.StringMetadataValueMap != nil {
 		return visitor.VisitStringMetadataValueMap(m.StringMetadataValueMap)
 	}
-	if m.StringUnknownMap != nil {
+	if m.typ == "StringUnknownMap" || m.StringUnknownMap != nil {
 		return visitor.VisitStringUnknownMap(m.StringUnknownMap)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
@@ -312,33 +316,38 @@ type MetadataValue struct {
 	Double  float64
 	String  string
 	Boolean bool
+
+	typ string
 }
 
 func NewMetadataValueFromDouble(value float64) *MetadataValue {
-	return &MetadataValue{Double: value}
+	return &MetadataValue{typ: "Double", Double: value}
 }
 
 func NewMetadataValueFromString(value string) *MetadataValue {
-	return &MetadataValue{String: value}
+	return &MetadataValue{typ: "String", String: value}
 }
 
 func NewMetadataValueFromBoolean(value bool) *MetadataValue {
-	return &MetadataValue{Boolean: value}
+	return &MetadataValue{typ: "Boolean", Boolean: value}
 }
 
 func (m *MetadataValue) UnmarshalJSON(data []byte) error {
 	var valueDouble float64
 	if err := json.Unmarshal(data, &valueDouble); err == nil {
+		m.typ = "Double"
 		m.Double = valueDouble
 		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		m.typ = "String"
 		m.String = valueString
 		return nil
 	}
 	var valueBoolean bool
 	if err := json.Unmarshal(data, &valueBoolean); err == nil {
+		m.typ = "Boolean"
 		m.Boolean = valueBoolean
 		return nil
 	}
@@ -346,13 +355,13 @@ func (m *MetadataValue) UnmarshalJSON(data []byte) error {
 }
 
 func (m MetadataValue) MarshalJSON() ([]byte, error) {
-	if m.Double != 0 {
+	if m.typ == "Double" || m.Double != 0 {
 		return json.Marshal(m.Double)
 	}
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return json.Marshal(m.String)
 	}
-	if m.Boolean != false {
+	if m.typ == "Boolean" || m.Boolean != false {
 		return json.Marshal(m.Boolean)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
@@ -365,13 +374,13 @@ type MetadataValueVisitor interface {
 }
 
 func (m *MetadataValue) Accept(visitor MetadataValueVisitor) error {
-	if m.Double != 0 {
+	if m.typ == "Double" || m.Double != 0 {
 		return visitor.VisitDouble(m.Double)
 	}
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return visitor.VisitString(m.String)
 	}
-	if m.Boolean != false {
+	if m.typ == "Boolean" || m.Boolean != false {
 		return visitor.VisitBoolean(m.Boolean)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)

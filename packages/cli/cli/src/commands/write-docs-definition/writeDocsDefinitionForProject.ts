@@ -21,7 +21,7 @@ export async function writeDocsDefinitionForProject({
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         const docsResolver = new DocsDefinitionResolver(
-            `https://${docsWorkspace.config.instances[0]?.url ?? "https://localhost:8080"}`,
+            docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
             docsWorkspace,
             project.loadAPIWorkspace,
             context

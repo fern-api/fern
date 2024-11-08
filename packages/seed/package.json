@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "test": "vitest --run",
     "test:update": "vitest --run -u",
@@ -67,10 +67,9 @@
     "depcheck": "^1.4.6",
     "esbuild": "^0.24.0",
     "eslint": "^8.56.0",
-    "globals": "link:@types/vitest/globals",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.3.5",
     "typescript": "4.6.4",
     "vitest": "^2.0.5"
   }

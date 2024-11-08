@@ -2,13 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Rule, RuleViolation } from "../../Rule";
 import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { createMockTaskContext } from "@fern-api/task-context";
-import {
-    APIV1Read,
-    convertDbDocsConfigToRead,
-    convertDocsDefinitionToDb,
-    FernNavigation,
-    ApiDefinition
-} from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation, ApiDefinition } from "@fern-api/fdr-sdk";
 import type { Position } from "unist";
 import { toBaseUrl, getInstanceUrls } from "./url-utils";
 import chalk from "chalk";
@@ -32,45 +26,27 @@ export const ValidMarkdownLinks: Rule = {
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
-        const db = convertDocsDefinitionToDb({
-            writeShape: resolvedDocsDefinition,
-            files: {}
-        });
-
-        const readShape = convertDbDocsConfigToRead({ dbShape: db.config });
-
-        const baseUrl = toBaseUrl(url);
+        if (!resolvedDocsDefinition.config.root) {
+            throw new Error("Root node not found");
+        }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
         // from the docs definition resolver, once there's a light way to retrieve it.
-        const root = FernNavigation.utils.toRootNode({
-            baseUrl,
-            definition: {
-                algoliaSearchIndex: undefined,
-                pages: resolvedDocsDefinition.pages,
-                apis: docsDefinitionResolver.apiDefinitions,
-                files: {},
-                filesV2: {},
-                jsFiles: resolvedDocsDefinition.jsFiles,
-                id: undefined,
-                search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
-                config: readShape
-            },
-            lightModeEnabled: true
-        });
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root);
 
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);
 
-        const pageSlugs = new Set<string>();
+        const visitableSlugs = new Set<string>();
         const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
         const endpoints: FernNavigation.NavigationNodeApiLeaf[] = [];
         collector.slugMap.forEach((node, slug) => {
+            // NOTE: even if the node is not a page, it can still be "visitable" because it will redirect to another page.
+            visitableSlugs.add(slug);
+
             if (node == null || !FernNavigation.isPage(node)) {
                 return;
             }
-
-            pageSlugs.add(slug);
 
             if (FernNavigation.isApiLeaf(node)) {
                 endpoints.push(node);
@@ -89,9 +65,18 @@ export const ValidMarkdownLinks: Rule = {
 
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
+                const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);
+
                 // if this happens, this probably means that the current file is omitted from the docs navigation
                 // most likely due to a slug collision. This should be handled in a different rule.
-                if (!absoluteFilePathsToSlugs.has(absoluteFilepath)) {
+                if (!slugs || slugs.length === 0) {
+                    return [];
+                }
+
+                // if this file cannot be indexed (noindex=true, or hidden=true), then we don't need to check for links
+                // since it will not hurt SEO.
+                // TODO: we should at least report this somehow, since it's a bad UX.
+                if (slugs.every((slug) => !collector.indexablePageSlugs.includes(slug))) {
                     return [];
                 }
 
@@ -107,7 +92,7 @@ export const ValidMarkdownLinks: Rule = {
                             markdown: pathnameToCheck.markdown,
                             absoluteFilepath,
                             workspaceAbsoluteFilePath: workspace.absoluteFilePath,
-                            pageSlugs,
+                            pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
                             baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
@@ -168,7 +153,7 @@ export const ValidMarkdownLinks: Rule = {
                                 const exists = await checkIfPathnameExists(pathnameToCheck.pathname, {
                                     markdown: pathnameToCheck.markdown,
                                     workspaceAbsoluteFilePath: workspace.absoluteFilePath,
-                                    pageSlugs,
+                                    pageSlugs: visitableSlugs,
                                     absoluteFilePathsToSlugs,
                                     redirects: workspace.config.redirects,
                                     baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")

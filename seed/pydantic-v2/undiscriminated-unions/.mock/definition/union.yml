@@ -1,0 +1,62 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: ""
+      method: POST
+      request: MyUnion
+      response: MyUnion
+    
+    getMetadata:
+      path: "/metadata"
+      method: GET
+      response: Metadata
+      examples:
+        - response:
+            body:
+              name: exampleName
+              value: exampleValue
+              default: exampleDefault
+
+
+types:
+  TypeWithOptionalUnion:
+    properties:
+      myUnion: optional<MyUnion>
+
+  MyUnion:
+    docs: |
+      Several different types are accepted.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
+      - set<string>
+
+  Metadata:
+    docs: |
+      Undiscriminated unions can act as a map key
+      as long as all of their values are valid keys
+      (i.e. do they have a valid string representation).
+    type: map<Key, string>
+    examples:
+      - value:
+          name: exampleName
+          value: exampleValue
+          default: exampleDefault
+
+
+  Key:
+    discriminated: false
+    union:
+      - KeyType
+      - literal<"default">
+
+  KeyType:
+    enum:
+      - name
+      - value

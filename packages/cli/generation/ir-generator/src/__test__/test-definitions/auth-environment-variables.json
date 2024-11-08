@@ -310,6 +310,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -551,6 +552,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }

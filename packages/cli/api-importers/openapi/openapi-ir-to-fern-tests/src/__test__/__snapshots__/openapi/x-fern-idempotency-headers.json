@@ -45,6 +45,9 @@
                 "docs": "Success!",
                 "type": "string",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -60,6 +63,8 @@
       path: /send
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: SendRequest
         body:

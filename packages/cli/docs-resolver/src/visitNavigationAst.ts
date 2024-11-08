@@ -106,7 +106,9 @@ async function visitNavigationItem({
                     context
                 });
             });
-        }
+        },
+        viewers: noop,
+        orphaned: noop
     });
 
     if (navigationItemIsApi(navigationItem)) {

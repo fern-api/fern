@@ -311,42 +311,48 @@ type ResourceList struct {
 	Patient      *Patient
 	Practitioner *Practitioner
 	Script       *Script
+
+	typ string
 }
 
 func NewResourceListFromAccount(value *Account) *ResourceList {
-	return &ResourceList{Account: value}
+	return &ResourceList{typ: "Account", Account: value}
 }
 
 func NewResourceListFromPatient(value *Patient) *ResourceList {
-	return &ResourceList{Patient: value}
+	return &ResourceList{typ: "Patient", Patient: value}
 }
 
 func NewResourceListFromPractitioner(value *Practitioner) *ResourceList {
-	return &ResourceList{Practitioner: value}
+	return &ResourceList{typ: "Practitioner", Practitioner: value}
 }
 
 func NewResourceListFromScript(value *Script) *ResourceList {
-	return &ResourceList{Script: value}
+	return &ResourceList{typ: "Script", Script: value}
 }
 
 func (r *ResourceList) UnmarshalJSON(data []byte) error {
 	valueAccount := new(Account)
 	if err := json.Unmarshal(data, &valueAccount); err == nil {
+		r.typ = "Account"
 		r.Account = valueAccount
 		return nil
 	}
 	valuePatient := new(Patient)
 	if err := json.Unmarshal(data, &valuePatient); err == nil {
+		r.typ = "Patient"
 		r.Patient = valuePatient
 		return nil
 	}
 	valuePractitioner := new(Practitioner)
 	if err := json.Unmarshal(data, &valuePractitioner); err == nil {
+		r.typ = "Practitioner"
 		r.Practitioner = valuePractitioner
 		return nil
 	}
 	valueScript := new(Script)
 	if err := json.Unmarshal(data, &valueScript); err == nil {
+		r.typ = "Script"
 		r.Script = valueScript
 		return nil
 	}
@@ -354,16 +360,16 @@ func (r *ResourceList) UnmarshalJSON(data []byte) error {
 }
 
 func (r ResourceList) MarshalJSON() ([]byte, error) {
-	if r.Account != nil {
+	if r.typ == "Account" || r.Account != nil {
 		return json.Marshal(r.Account)
 	}
-	if r.Patient != nil {
+	if r.typ == "Patient" || r.Patient != nil {
 		return json.Marshal(r.Patient)
 	}
-	if r.Practitioner != nil {
+	if r.typ == "Practitioner" || r.Practitioner != nil {
 		return json.Marshal(r.Practitioner)
 	}
-	if r.Script != nil {
+	if r.typ == "Script" || r.Script != nil {
 		return json.Marshal(r.Script)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", r)
@@ -377,16 +383,16 @@ type ResourceListVisitor interface {
 }
 
 func (r *ResourceList) Accept(visitor ResourceListVisitor) error {
-	if r.Account != nil {
+	if r.typ == "Account" || r.Account != nil {
 		return visitor.VisitAccount(r.Account)
 	}
-	if r.Patient != nil {
+	if r.typ == "Patient" || r.Patient != nil {
 		return visitor.VisitPatient(r.Patient)
 	}
-	if r.Practitioner != nil {
+	if r.typ == "Practitioner" || r.Practitioner != nil {
 		return visitor.VisitPractitioner(r.Practitioner)
 	}
-	if r.Script != nil {
+	if r.typ == "Script" || r.Script != nil {
 		return visitor.VisitScript(r.Script)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", r)

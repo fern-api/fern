@@ -27,7 +27,7 @@ await client.Auth.GetTokenAsync(
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = null,
+        Scope = "scope",
     }
 );
 ```

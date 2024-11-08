@@ -77,7 +77,6 @@ export async function runRemoteGenerationForDocsWorkspace({
             context,
             loadAPIWorkspace,
             preview,
-            audiences: maybeInstance.audiences,
             editThisPage: maybeInstance.editThisPage,
             isPrivate: maybeInstance.private
         });

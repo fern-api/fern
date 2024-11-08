@@ -448,19 +448,194 @@ await client.Service.GetMetadataAsync(
 await client.Service.CreateBigEntityAsync(
     new BigEntity
     {
-        CastMember = null,
-        ExtendedMovie = null,
-        Entity = null,
-        Metadata = null,
-        CommonMetadata = null,
-        EventInfo = null,
-        Data = null,
-        Migration = null,
-        Exception = null,
-        Test = null,
-        Node = null,
-        Directory = null,
-        Moment = null,
+        CastMember = new Actor { Name = "name", Id = "id" },
+        ExtendedMovie = new ExtendedMovie
+        {
+            Cast = new List<string>() { "cast", "cast" },
+        },
+        Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+        Metadata = "metadata",
+        CommonMetadata = new SeedExamples.Commons.Metadata
+        {
+            Id = "id",
+            Data = new Dictionary<string, string>() { { "data", "data" } },
+            JsonString = "jsonString",
+        },
+        EventInfo = new SeedExamples.Commons.Metadata
+        {
+            Id = "id",
+            Data = new Dictionary<string, string>() { { "data", "data" } },
+            JsonString = "jsonString",
+        },
+        Data = "data",
+        Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+        Exception = new ExceptionInfo
+        {
+            ExceptionType = "exceptionType",
+            ExceptionMessage = "exceptionMessage",
+            ExceptionStacktrace = "exceptionStacktrace",
+        },
+        Test = true,
+        Node = new Node
+        {
+            Name = "name",
+            Nodes = new List<Node>()
+            {
+                new Node
+                {
+                    Name = "name",
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                    Trees = new List<Tree>()
+                    {
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                    },
+                },
+                new Node
+                {
+                    Name = "name",
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                    Trees = new List<Tree>()
+                    {
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                    },
+                },
+            },
+            Trees = new List<Tree>()
+            {
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                },
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                },
+            },
+        },
+        Directory = new Directory
+        {
+            Name = "name",
+            Files = new List<SeedExamples.File>()
+            {
+                new SeedExamples.File { Name = "name", Contents = "contents" },
+                new SeedExamples.File { Name = "name", Contents = "contents" },
+            },
+            Directories = new List<Directory>()
+            {
+                new Directory
+                {
+                    Name = "name",
+                    Files = new List<SeedExamples.File>()
+                    {
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                    },
+                    Directories = new List<Directory>()
+                    {
+                        new Directory
+                        {
+                            Name = "name",
+                            Files = new List<SeedExamples.File>() { },
+                            Directories = new List<Directory>() { },
+                        },
+                        new Directory
+                        {
+                            Name = "name",
+                            Files = new List<SeedExamples.File>() { },
+                            Directories = new List<Directory>() { },
+                        },
+                    },
+                },
+                new Directory
+                {
+                    Name = "name",
+                    Files = new List<SeedExamples.File>()
+                    {
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                    },
+                    Directories = new List<Directory>()
+                    {
+                        new Directory
+                        {
+                            Name = "name",
+                            Files = new List<SeedExamples.File>() { },
+                            Directories = new List<Directory>() { },
+                        },
+                        new Directory
+                        {
+                            Name = "name",
+                            Files = new List<SeedExamples.File>() { },
+                            Directories = new List<Directory>() { },
+                        },
+                    },
+                },
+            },
+        },
+        Moment = new Moment
+        {
+            Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            Date = new DateOnly(2023, 1, 15),
+            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        },
     }
 );
 ```
