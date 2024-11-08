@@ -14,6 +14,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     "optional-additional-properties": core.serialization.boolean().optional(),
     "coerce-enums-to-literals": core.serialization.boolean().optional(),
     "object-query-parameters": core.serialization.boolean().optional(),
+    "respect-readonly-schemas": core.serialization.boolean().optional(),
 });
 
 export declare namespace OpenApiSettingsSchema {
@@ -22,5 +23,6 @@ export declare namespace OpenApiSettingsSchema {
         "optional-additional-properties"?: boolean | null;
         "coerce-enums-to-literals"?: boolean | null;
         "object-query-parameters"?: boolean | null;
+        "respect-readonly-schemas"?: boolean | null;
     }
 }

@@ -13,6 +13,8 @@ export interface ParseOpenAPIOptions {
     optionalAdditionalProperties: boolean;
     /* Whether or not to cooerce enums as literals */
     cooerceEnumsToLiterals: boolean;
+    /* Whether or not to respect readonly properties in schemas */
+    respectReadonlySchemas: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -21,5 +23,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useTitlesAsName: true,
     audiences: undefined,
     optionalAdditionalProperties: true,
-    cooerceEnumsToLiterals: true
+    cooerceEnumsToLiterals: true,
+    respectReadonlySchemas: false,
 };

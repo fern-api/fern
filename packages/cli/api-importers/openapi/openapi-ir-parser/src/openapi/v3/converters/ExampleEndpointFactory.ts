@@ -21,16 +21,17 @@ import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory"
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
 import { hasIncompleteExample } from "../hasIncompleteExample";
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private logger: Logger;
     private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
+    constructor(schemas: Record<string, SchemaWithExample>, context: OpenAPIV3ParserContext) {
         this.schemas = schemas;
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas);
-        this.logger = logger;
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context);
+        this.logger = context.logger;
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
