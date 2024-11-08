@@ -20,8 +20,8 @@ export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private schemas: Record<string, SchemaWithExample>;
 
-    constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas);
+    constructor(schemas: Record<string, SchemaWithExample>, context: AsyncAPIV2ParserContext) {
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context);
         this.schemas = schemas;
     }
 

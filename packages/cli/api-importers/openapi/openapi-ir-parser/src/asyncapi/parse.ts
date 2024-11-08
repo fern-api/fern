@@ -76,7 +76,7 @@ export function parseAsyncAPI({
         schemas[schemaId] = convertedSchema;
     }
 
-    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, taskContext.logger);
+    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
         if (channel.bindings?.ws == null) {

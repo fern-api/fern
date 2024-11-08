@@ -1,8 +1,25 @@
 - changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting readonly properties in schemas. When enabled, readonly properties will be excluded from request bodies for 
+        POST/PUT/PATCH endpoints. To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-readonly-schemas: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc38
+
+- changelogEntry:
     - summary: Support parsing alpha and beta version numbers of Fern generators
       type: internal
   irVersion: 53
   version: 0.45.0-rc37
+
 - changelogEntry:
     - summary: |
         The OpenAPI importer now supports importing deep object query parameters. To do this, you will
