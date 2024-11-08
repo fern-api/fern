@@ -469,10 +469,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
+		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newMultipartFile(g.coordinator))
+		files = append(files, newMultipartTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
-		files = append(files, newRetrierFile(g.coordinator))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		files = append(files, newRetrierFile(g.coordinator))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
@@ -924,6 +927,52 @@ func newPointerFile(coordinator *coordinator.Client, rootPackageName string, gen
 	)
 }
 
+// newFileParamFile returns a *File containing the FileParam helper type
+// for multipart file uploads.
+//
+// In general, this file is deposited at the root of the SDK so that users can
+// access the helpers alongside the rest of the top-level definitions. However,
+// if any naming conflict exists between the generated types, this file is
+// deposited in the core package.
+func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// First determine whether or not we need to generate the type in the
+	// core package.
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/file_param.go",
+			[]byte(fileParamFile),
+		)
+	}
+	// We're going to generate the pointers at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "file_param.go"
+	if _, ok := generatedNames["FileParam"]; ok {
+		filename = "_file_param.go"
+	}
+	// Finally, we need to replace the package declaration so that it matches
+	// the root package declaration of the generated SDK.
+	content := strings.Replace(
+		fileParamFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
 func newClientTestFile(
 	baseImportPath string,
 	coordinator *coordinator.Client,
@@ -956,6 +1005,22 @@ func newCoreTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/core_test.go",
 		[]byte(coreTestFile),
+	)
+}
+
+func newMultipartFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/multipart.go",
+		[]byte(multipartFile),
+	)
+}
+
+func newMultipartTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/multipart_test.go",
+		[]byte(multipartTestFile),
 	)
 }
 

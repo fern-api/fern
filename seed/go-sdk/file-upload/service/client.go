@@ -3,14 +3,12 @@
 package service
 
 import (
-	bytes "bytes"
 	context "context"
 	fmt "fmt"
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
 	option "github.com/file-upload/fern/option"
 	io "io"
-	multipart "mime/multipart"
 	http "net/http"
 )
 
@@ -56,55 +54,22 @@ func (c *Client) Post(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
-	if _, err := io.Copy(filePart, file); err != nil {
-		return err
-	}
-	for i, f := range fileList {
-		fileListFilename := fmt.Sprintf("fileList_filename_%d", i)
-		if named, ok := f.(interface{ Name() string }); ok {
-			fileListFilename = named.Name()
-		}
-		fileListPart, err := writer.CreateFormFile("fileList", fileListFilename)
-		if err != nil {
-			return err
-		}
-		if _, err := io.Copy(fileListPart, f); err != nil {
+	for _, f := range fileList {
+		if err := writer.WriteFile("fileList", f); err != nil {
 			return err
 		}
 	}
 	if maybeFile != nil {
-		maybeFileFilename := "maybeFile_filename"
-		if named, ok := maybeFile.(interface{ Name() string }); ok {
-			maybeFileFilename = named.Name()
-		}
-		maybeFilePart, err := writer.CreateFormFile("maybeFile", maybeFileFilename)
-		if err != nil {
-			return err
-		}
-		if _, err := io.Copy(maybeFilePart, maybeFile); err != nil {
+		if err := writer.WriteFile("maybeFile", maybeFile); err != nil {
 			return err
 		}
 	}
-	for i, f := range maybeFileList {
-		maybeFileListFilename := fmt.Sprintf("maybeFileList_filename_%d", i)
-		if named, ok := f.(interface{ Name() string }); ok {
-			maybeFileListFilename = named.Name()
-		}
-		maybeFileListPart, err := writer.CreateFormFile("maybeFileList", maybeFileListFilename)
-		if err != nil {
-			return err
-		}
-		if _, err := io.Copy(maybeFileListPart, f); err != nil {
+	for _, f := range maybeFileList {
+		if err := writer.WriteFile("maybeFileList", f); err != nil {
 			return err
 		}
 	}
@@ -121,33 +86,35 @@ func (c *Client) Post(
 			return err
 		}
 	}
-	if request.OptionalListOfStrings != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalListOfStrings", request.OptionalListOfStrings); err != nil {
+	for _, part := range request.OptionalListOfStrings {
+		if err := writer.WriteField("optionalListOfStrings", fmt.Sprintf("%v", part)); err != nil {
 			return err
 		}
 	}
-	if err := core.WriteMultipartJSON(writer, "listOfObjects", request.ListOfObjects); err != nil {
-		return err
+	for _, part := range request.ListOfObjects {
+		if err := writer.WriteJSON("listOfObjects", part); err != nil {
+			return err
+		}
 	}
 	if request.OptionalMetadata != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalMetadata", request.OptionalMetadata); err != nil {
+		if err := writer.WriteJSON("optionalMetadata", request.OptionalMetadata); err != nil {
 			return err
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalObjectType", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optionalObjectType", *request.OptionalObjectType); err != nil {
 			return err
 		}
 	}
 	if request.OptionalId != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalId", *request.OptionalId); err != nil {
+		if err := writer.WriteJSON("optionalId", *request.OptionalId); err != nil {
 			return err
 		}
 	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -159,7 +126,7 @@ func (c *Client) Post(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 		},
 	); err != nil {
 		return err
@@ -185,23 +152,14 @@ func (c *Client) JustFile(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -213,7 +171,7 @@ func (c *Client) JustFile(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 		},
 	); err != nil {
 		return err
@@ -248,23 +206,14 @@ func (c *Client) JustFileWithQueryParams(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	writer := core.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -276,7 +225,7 @@ func (c *Client) JustFileWithQueryParams(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 		},
 	); err != nil {
 		return err
@@ -303,29 +252,24 @@ func (c *Client) WithContentType(
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
+	writer := core.NewMultipartWriter()
+	fileContentType := "application/octet-stream"
+	if contentTyped, ok := file.(core.ContentTyped); ok {
+		fileContentType = contentTyped.ContentType()
 	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	if err := writer.WriteFile("file", file, core.WithMultipartContentType(fileContentType)); err != nil {
 		return err
 	}
 	if err := writer.WriteField("foo", fmt.Sprintf("%v", request.Foo)); err != nil {
 		return err
 	}
-	if err := core.WriteMultipartJSON(writer, "bar", request.Bar); err != nil {
+	if err := writer.WriteJSON("bar", request.Bar, core.WithMultipartContentType("application/json")); err != nil {
 		return err
 	}
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
 	if err := c.caller.Call(
 		ctx,
@@ -337,7 +281,7 @@ func (c *Client) WithContentType(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 		},
 	); err != nil {
 		return err
