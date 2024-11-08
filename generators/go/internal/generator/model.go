@@ -165,16 +165,20 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
-	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
-	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
-	t.writer.P("}")
-	t.writer.P()
+	typeFields := t.getTypeFieldsForObject(object)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, literal := range objectProperties.literals {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
 		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
+	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
+	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
+	t.writer.P("}")
+	t.writer.P()
 
 	// Implement the json.Unmarshaler interface.
 	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
@@ -365,8 +369,15 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
+	typeFields := t.getTypeFieldsForUnion(union)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, literal := range append(literals, unionLiterals...) {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", zeroValueForLiteral(literal.Value))
+		t.writer.P("}")
 		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
@@ -760,6 +771,10 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 
 	// Write getters for literal values, if any.
+	typeFields := t.getTypeFieldsForUndiscriminatedUnion(union)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, member := range members {
 		if !member.isLiteral {
 			continue
@@ -1013,6 +1028,103 @@ func (t *typeVisitor) visitObjectProperties(
 	}
 }
 
+// typeField represent a single type field. This is used to generate getter methods for objects,
+// unions, and undiscriminated unions.
+type typeField struct {
+	Name      string
+	GoType    string
+	ZeroValue string
+}
+
+func (t *typeVisitor) writeGetterMethod(receiver string, field *typeField) {
+	getterName := fmt.Sprintf("%s%s", "Get", field.Name)
+	t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return ", field.ZeroValue)
+	t.writer.P("}")
+	t.writer.P("return ", receiver, ".", field.Name)
+	t.writer.P("}")
+	t.writer.P()
+}
+
+// getTypeFieldsForObject retrieves the type fields for the given object.
+func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) []*typeField {
+	var fields []*typeField
+	for _, extend := range object.Extends {
+		extended := t.writer.types[extend.TypeId].Shape.Object
+		fields = append(fields, t.getTypeFieldsForObject(extended)...)
+	}
+	for _, property := range object.Properties {
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
+		fields = append(fields, &typeField{
+			Name:      property.Name.Name.PascalCase.UnsafeName,
+			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+		})
+	}
+	return fields
+}
+
+// getTypeFieldsForUnion retrieves the type fields for the given union.
+func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*typeField {
+	var fields []*typeField
+	fields = append(
+		fields,
+		&typeField{
+			Name:      union.Discriminant.Name.PascalCase.UnsafeName,
+			GoType:    "string",
+			ZeroValue: `""`,
+		},
+	)
+	for _, extend := range union.Extends {
+		extended := t.writer.types[extend.TypeId].Shape.Object
+		fields = append(fields, t.getTypeFieldsForObject(extended)...)
+	}
+	for _, property := range union.BaseProperties {
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
+		fields = append(fields, &typeField{
+			Name:      property.Name.Name.PascalCase.UnsafeName,
+			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+		})
+	}
+	for _, property := range union.Types {
+		if property.Shape.SingleProperty != nil && isLiteralType(property.Shape.SingleProperty.Type, t.writer.types) {
+			continue
+		}
+		fields = append(fields, t.typeFieldForSingleUnionType(property))
+	}
+	return fields
+}
+
+func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
+	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+	return &typeField{
+		Name:      singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		GoType:    singleUnionProperty.goType,
+		ZeroValue: singleUnionProperty.zeroValue,
+	}
+}
+
+func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion *ir.UndiscriminatedUnionTypeDeclaration) []*typeField {
+	var typeFields []*typeField
+	for _, member := range undiscriminatedUnion.Members {
+		if isLiteralType(member.Type, t.writer.types) {
+			continue
+		}
+		typeFields = append(typeFields, &typeField{
+			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types),
+			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
+		})
+	}
+	return typeFields
+}
+
 // typeReferenceVisitor retrieves the string representation of type references
 // (e.g. containers, primitives, etc).
 type typeReferenceVisitor struct {
@@ -1112,6 +1224,7 @@ func (c *containerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
 // single union type properties.
 type singleUnionTypePropertiesVisitor struct {
 	goType                       string
+	zeroValue                    string
 	valueMarshalerGoType         string
 	valueMarshalerConstructor    string
 	valueUnmarshalerMethodSuffix string
@@ -1135,12 +1248,14 @@ func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir
 		name = c.scope.AddImport(importPath) + "." + name
 	}
 	c.goType = fmt.Sprintf(format, name)
+	c.zeroValue = "nil"
 	c.valueMarshalerGoType = c.goType
 	return nil
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
 	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
+	c.zeroValue = zeroValueForTypeReference(property.Type, c.types)
 
 	if date := maybeDateProperty(property.Type, property.Name, false); date != nil {
 		c.valueMarshalerGoType = date.TypeDeclaration
@@ -1155,6 +1270,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.Sing
 
 func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
 	c.goType = "interface{}"
+	c.zeroValue = "nil"
 	c.valueMarshalerGoType = c.goType
 	return nil
 }
@@ -1280,6 +1396,7 @@ func containerTypeToGoType(
 
 type singleUnionProperty struct {
 	goType               string
+	zeroValue            string
 	valueMarshalerGoType string
 
 	// Optional; required for date[-time] properties.
@@ -1304,6 +1421,7 @@ func singleUnionTypePropertiesToGoType(
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return &singleUnionProperty{
 		goType:                       visitor.goType,
+		zeroValue:                    visitor.zeroValue,
 		valueMarshalerGoType:         visitor.valueMarshalerGoType,
 		valueMarshalerConstructor:    visitor.valueMarshalerConstructor,
 		valueUnmarshalerMethodSuffix: visitor.valueUnmarshalerMethodSuffix,

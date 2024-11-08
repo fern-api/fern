@@ -16,6 +16,13 @@ type Foo struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *Foo) GetBarProperty() uuid.UUID {
+	if f == nil {
+		return uuid.UUID{}
+	}
+	return f.BarProperty
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

@@ -15,6 +15,20 @@ type StreamResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *StreamResponse) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *StreamResponse) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }

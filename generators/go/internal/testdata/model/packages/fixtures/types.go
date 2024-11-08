@@ -15,6 +15,13 @@ type Base struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Base) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
 func (b *Base) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -47,6 +54,13 @@ type Value struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (v *Value) GetName() string {
+	if v == nil {
+		return ""
+	}
+	return v.Name
 }
 
 func (v *Value) GetExtraProperties() map[string]interface{} {
@@ -83,6 +97,27 @@ type Foo struct {
 	Bar   *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *Foo) GetValue() *Value {
+	if f == nil {
+		return nil
+	}
+	return f.Value
+}
+
+func (f *Foo) GetBar() *bar.Bar {
+	if f == nil {
+		return nil
+	}
+	return f.Bar
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
@@ -135,6 +170,41 @@ func NewUnionFromBar(value *bar.Bar) *Union {
 
 func NewUnionFromAnotherBar(value *bar.Bar) *Union {
 	return &Union{Type: "anotherBar", AnotherBar: value}
+}
+
+func (u *Union) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *Union) GetValue() *Value {
+	if u == nil {
+		return nil
+	}
+	return u.Value
+}
+
+func (u *Union) GetAnotherValue() *Value {
+	if u == nil {
+		return nil
+	}
+	return u.AnotherValue
+}
+
+func (u *Union) GetBar() *bar.Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
+func (u *Union) GetAnotherBar() *bar.Bar {
+	if u == nil {
+		return nil
+	}
+	return u.AnotherBar
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {

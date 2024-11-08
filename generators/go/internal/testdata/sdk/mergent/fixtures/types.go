@@ -44,6 +44,27 @@ type Error struct {
 	_rawJSON        json.RawMessage
 }
 
+func (e *Error) GetMessage() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+func (e *Error) GetParam() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Param
+}
+
+func (e *Error) GetErrors() []*Error {
+	if e == nil {
+		return nil
+	}
+	return e.Errors
+}
+
 func (e *Error) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -93,6 +114,27 @@ type Request struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.Url
+}
+
+func (r *Request) GetHeaders() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Headers
+}
+
+func (r *Request) GetBody() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Body
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
@@ -156,6 +198,76 @@ type Schedule struct {
 	_rawJSON        json.RawMessage
 }
 
+func (s *Schedule) GetId() *Id {
+	if s == nil {
+		return nil
+	}
+	return s.Id
+}
+
+func (s *Schedule) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
+func (s *Schedule) GetQueue() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Queue
+}
+
+func (s *Schedule) GetDescription() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Description
+}
+
+func (s *Schedule) GetCron() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Cron
+}
+
+func (s *Schedule) GetRrule() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Rrule
+}
+
+func (s *Schedule) GetDtstart() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Dtstart
+}
+
+func (s *Schedule) GetPaused() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.Paused
+}
+
+func (s *Schedule) GetRequest() *Request {
+	if s == nil {
+		return nil
+	}
+	return s.Request
+}
+
+func (s *Schedule) GetCreatedAt() *CreatedAt {
+	if s == nil {
+		return nil
+	}
+	return s.CreatedAt
+}
+
 func (s *Schedule) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -209,6 +321,62 @@ type Task struct {
 	_rawJSON        json.RawMessage
 }
 
+func (t *Task) GetId() *Id {
+	if t == nil {
+		return nil
+	}
+	return t.Id
+}
+
+func (t *Task) GetName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Name
+}
+
+func (t *Task) GetQueue() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Queue
+}
+
+func (t *Task) GetStatus() *TaskStatus {
+	if t == nil {
+		return nil
+	}
+	return t.Status
+}
+
+func (t *Task) GetRequest() *Request {
+	if t == nil {
+		return nil
+	}
+	return t.Request
+}
+
+func (t *Task) GetScheduledFor() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ScheduledFor
+}
+
+func (t *Task) GetDelay() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Delay
+}
+
+func (t *Task) GetCreatedAt() *CreatedAt {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAt
+}
+
 func (t *Task) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -260,6 +428,62 @@ type TaskNew struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (t *TaskNew) GetId() *Id {
+	if t == nil {
+		return nil
+	}
+	return t.Id
+}
+
+func (t *TaskNew) GetName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Name
+}
+
+func (t *TaskNew) GetQueue() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Queue
+}
+
+func (t *TaskNew) GetStatus() *TaskStatus {
+	if t == nil {
+		return nil
+	}
+	return t.Status
+}
+
+func (t *TaskNew) GetRequest() *Request {
+	if t == nil {
+		return nil
+	}
+	return t.Request
+}
+
+func (t *TaskNew) GetScheduledFor() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ScheduledFor
+}
+
+func (t *TaskNew) GetDelay() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Delay
+}
+
+func (t *TaskNew) GetCreatedAt() *CreatedAt {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAt
 }
 
 func (t *TaskNew) GetExtraProperties() map[string]interface{} {

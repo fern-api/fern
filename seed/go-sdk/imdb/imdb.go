@@ -16,6 +16,20 @@ type CreateMovieRequest struct {
 	_rawJSON        json.RawMessage
 }
 
+func (c *CreateMovieRequest) GetTitle() string {
+	if c == nil {
+		return ""
+	}
+	return c.Title
+}
+
+func (c *CreateMovieRequest) GetRating() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Rating
+}
+
 func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -58,6 +72,27 @@ type Movie struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (m *Movie) GetId() MovieId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
+func (m *Movie) GetRating() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Rating
 }
 
 func (m *Movie) GetExtraProperties() map[string]interface{} {

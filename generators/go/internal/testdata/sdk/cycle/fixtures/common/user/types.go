@@ -15,6 +15,13 @@ type Username struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *Username) GetValue() string {
+	if u == nil {
+		return ""
+	}
+	return u.Value
+}
+
 func (u *Username) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }

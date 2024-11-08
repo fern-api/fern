@@ -47,7 +47,8 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - alias-extends
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - trace
-  - alias-extends

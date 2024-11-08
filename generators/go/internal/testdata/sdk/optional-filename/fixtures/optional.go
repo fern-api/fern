@@ -15,6 +15,13 @@ type Request struct {
 	_rawJSON        json.RawMessage
 }
 
+func (r *Request) GetValue() string {
+	if r == nil {
+		return ""
+	}
+	return r.Value
+}
+
 func (r *Request) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }

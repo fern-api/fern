@@ -48,6 +48,48 @@ func NewMyUnionFromStringSet(value []string) *MyUnion {
 	return &MyUnion{typ: "StringSet", StringSet: value}
 }
 
+func (m *MyUnion) GetString() string {
+	if m == nil {
+		return ""
+	}
+	return m.String
+}
+
+func (m *MyUnion) GetStringList() []string {
+	if m == nil {
+		return nil
+	}
+	return m.StringList
+}
+
+func (m *MyUnion) GetInteger() int {
+	if m == nil {
+		return 0
+	}
+	return m.Integer
+}
+
+func (m *MyUnion) GetIntegerList() []int {
+	if m == nil {
+		return nil
+	}
+	return m.IntegerList
+}
+
+func (m *MyUnion) GetIntegerListList() [][]int {
+	if m == nil {
+		return nil
+	}
+	return m.IntegerListList
+}
+
+func (m *MyUnion) GetStringSet() []string {
+	if m == nil {
+		return nil
+	}
+	return m.StringSet
+}
+
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {

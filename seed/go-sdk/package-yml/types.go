@@ -16,6 +16,20 @@ type EchoRequest struct {
 	_rawJSON        json.RawMessage
 }
 
+func (e *EchoRequest) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EchoRequest) GetSize() int {
+	if e == nil {
+		return 0
+	}
+	return e.Size
+}
+
 func (e *EchoRequest) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }

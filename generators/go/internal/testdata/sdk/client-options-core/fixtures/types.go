@@ -15,6 +15,13 @@ type WithAuthToken struct {
 	_rawJSON        json.RawMessage
 }
 
+func (w *WithAuthToken) GetValue() string {
+	if w == nil {
+		return ""
+	}
+	return w.Value
+}
+
 func (w *WithAuthToken) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }

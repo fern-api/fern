@@ -21,6 +21,13 @@ type ImportingType struct {
 	_rawJSON        json.RawMessage
 }
 
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
+}
+
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }

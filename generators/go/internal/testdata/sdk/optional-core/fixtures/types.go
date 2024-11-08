@@ -15,6 +15,13 @@ type Optional struct {
 	_rawJSON        json.RawMessage
 }
 
+func (o *Optional) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 func (o *Optional) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }

@@ -35,6 +35,20 @@ type NestedUser struct {
 	_rawJSON        json.RawMessage
 }
 
+func (n *NestedUser) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NestedUser) GetUser() *User {
+	if n == nil {
+		return nil
+	}
+	return n.User
+}
+
 func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -75,6 +89,20 @@ type User struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetTags() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Tags
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {

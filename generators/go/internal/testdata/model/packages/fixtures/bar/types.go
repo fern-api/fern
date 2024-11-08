@@ -14,6 +14,13 @@ type Bar struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Bar) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }

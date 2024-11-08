@@ -15,6 +15,34 @@ type Shape struct {
 	Square *Square
 }
 
+func (s *Shape) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *Shape) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *Shape) GetCircle() *Circle {
+	if s == nil {
+		return nil
+	}
+	return s.Circle
+}
+
+func (s *Shape) GetSquare() *Square {
+	if s == nil {
+		return nil
+	}
+	return s.Square
+}
+
 func (s *Shape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

@@ -15,6 +15,13 @@ type Foo struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *Foo) GetBarProperty() uuid.UUID {
+	if f == nil {
+		return uuid.UUID{}
+	}
+	return f.BarProperty
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

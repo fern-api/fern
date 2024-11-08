@@ -17,6 +17,34 @@ type Column struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *Column) GetId() string {
+	if c == nil {
+		return ""
+	}
+	return c.Id
+}
+
+func (c *Column) GetValues() []float64 {
+	if c == nil {
+		return nil
+	}
+	return c.Values
+}
+
+func (c *Column) GetMetadata() *Metadata {
+	if c == nil {
+		return nil
+	}
+	return c.Metadata
+}
+
+func (c *Column) GetIndexedData() *IndexedData {
+	if c == nil {
+		return nil
+	}
+	return c.IndexedData
+}
+
 func (c *Column) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -86,6 +114,34 @@ type DescribeResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *DescribeResponse) GetNamespaces() map[string]*NamespaceSummary {
+	if d == nil {
+		return nil
+	}
+	return d.Namespaces
+}
+
+func (d *DescribeResponse) GetDimension() *int {
+	if d == nil {
+		return nil
+	}
+	return d.Dimension
+}
+
+func (d *DescribeResponse) GetFullness() *float64 {
+	if d == nil {
+		return nil
+	}
+	return d.Fullness
+}
+
+func (d *DescribeResponse) GetTotalCount() *int {
+	if d == nil {
+		return nil
+	}
+	return d.TotalCount
+}
+
 func (d *DescribeResponse) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -120,6 +176,27 @@ type FetchResponse struct {
 	Usage     *Usage             `json:"usage,omitempty" url:"usage,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *FetchResponse) GetColumns() map[string]*Column {
+	if f == nil {
+		return nil
+	}
+	return f.Columns
+}
+
+func (f *FetchResponse) GetNamespace() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Namespace
+}
+
+func (f *FetchResponse) GetUsage() *Usage {
+	if f == nil {
+		return nil
+	}
+	return f.Usage
 }
 
 func (f *FetchResponse) GetExtraProperties() map[string]interface{} {
@@ -157,6 +234,20 @@ type IndexedData struct {
 	extraProperties map[string]interface{}
 }
 
+func (i *IndexedData) GetIndices() []int {
+	if i == nil {
+		return nil
+	}
+	return i.Indices
+}
+
+func (i *IndexedData) GetValues() []float64 {
+	if i == nil {
+		return nil
+	}
+	return i.Values
+}
+
 func (i *IndexedData) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -189,6 +280,13 @@ type ListElement struct {
 	Id *string `json:"id,omitempty" url:"id,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (l *ListElement) GetId() *string {
+	if l == nil {
+		return nil
+	}
+	return l.Id
 }
 
 func (l *ListElement) GetExtraProperties() map[string]interface{} {
@@ -226,6 +324,34 @@ type ListResponse struct {
 	Usage      *Usage         `json:"usage,omitempty" url:"usage,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (l *ListResponse) GetColumns() []*ListElement {
+	if l == nil {
+		return nil
+	}
+	return l.Columns
+}
+
+func (l *ListResponse) GetPagination() *Pagination {
+	if l == nil {
+		return nil
+	}
+	return l.Pagination
+}
+
+func (l *ListResponse) GetNamespace() *string {
+	if l == nil {
+		return nil
+	}
+	return l.Namespace
+}
+
+func (l *ListResponse) GetUsage() *Usage {
+	if l == nil {
+		return nil
+	}
+	return l.Usage
 }
 
 func (l *ListResponse) GetExtraProperties() map[string]interface{} {
@@ -269,6 +395,20 @@ func NewMetadataFromStringMetadataValueMap(value map[string]*MetadataValue) *Met
 
 func NewMetadataFromStringUnknownMap(value map[string]interface{}) *Metadata {
 	return &Metadata{typ: "StringUnknownMap", StringUnknownMap: value}
+}
+
+func (m *Metadata) GetStringMetadataValueMap() map[string]*MetadataValue {
+	if m == nil {
+		return nil
+	}
+	return m.StringMetadataValueMap
+}
+
+func (m *Metadata) GetStringUnknownMap() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.StringUnknownMap
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
@@ -332,6 +472,27 @@ func NewMetadataValueFromBoolean(value bool) *MetadataValue {
 	return &MetadataValue{typ: "Boolean", Boolean: value}
 }
 
+func (m *MetadataValue) GetDouble() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Double
+}
+
+func (m *MetadataValue) GetString() string {
+	if m == nil {
+		return ""
+	}
+	return m.String
+}
+
+func (m *MetadataValue) GetBoolean() bool {
+	if m == nil {
+		return false
+	}
+	return m.Boolean
+}
+
 func (m *MetadataValue) UnmarshalJSON(data []byte) error {
 	var valueDouble float64
 	if err := json.Unmarshal(data, &valueDouble); err == nil {
@@ -392,6 +553,13 @@ type NamespaceSummary struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *NamespaceSummary) GetCount() *int {
+	if n == nil {
+		return nil
+	}
+	return n.Count
+}
+
 func (n *NamespaceSummary) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -424,6 +592,13 @@ type Pagination struct {
 	Next *string `json:"next,omitempty" url:"next,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *Pagination) GetNext() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Next
 }
 
 func (p *Pagination) GetExtraProperties() map[string]interface{} {
@@ -464,6 +639,41 @@ type QueryColumn struct {
 	extraProperties map[string]interface{}
 }
 
+func (q *QueryColumn) GetValues() []float64 {
+	if q == nil {
+		return nil
+	}
+	return q.Values
+}
+
+func (q *QueryColumn) GetTopK() *int {
+	if q == nil {
+		return nil
+	}
+	return q.TopK
+}
+
+func (q *QueryColumn) GetNamespace() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Namespace
+}
+
+func (q *QueryColumn) GetFilter() *Metadata {
+	if q == nil {
+		return nil
+	}
+	return q.Filter
+}
+
+func (q *QueryColumn) GetIndexedData() *IndexedData {
+	if q == nil {
+		return nil
+	}
+	return q.IndexedData
+}
+
 func (q *QueryColumn) GetExtraProperties() map[string]interface{} {
 	return q.extraProperties
 }
@@ -501,6 +711,34 @@ type QueryResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (q *QueryResponse) GetResults() []*QueryResult {
+	if q == nil {
+		return nil
+	}
+	return q.Results
+}
+
+func (q *QueryResponse) GetMatches() []*ScoredColumn {
+	if q == nil {
+		return nil
+	}
+	return q.Matches
+}
+
+func (q *QueryResponse) GetNamespace() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Namespace
+}
+
+func (q *QueryResponse) GetUsage() *Usage {
+	if q == nil {
+		return nil
+	}
+	return q.Usage
+}
+
 func (q *QueryResponse) GetExtraProperties() map[string]interface{} {
 	return q.extraProperties
 }
@@ -534,6 +772,20 @@ type QueryResult struct {
 	Namespace *string         `json:"namespace,omitempty" url:"namespace,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (q *QueryResult) GetMatches() []*ScoredColumn {
+	if q == nil {
+		return nil
+	}
+	return q.Matches
+}
+
+func (q *QueryResult) GetNamespace() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Namespace
 }
 
 func (q *QueryResult) GetExtraProperties() map[string]interface{} {
@@ -572,6 +824,41 @@ type ScoredColumn struct {
 	IndexedData *IndexedData `json:"indexedData,omitempty" url:"indexedData,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *ScoredColumn) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *ScoredColumn) GetScore() *float64 {
+	if s == nil {
+		return nil
+	}
+	return s.Score
+}
+
+func (s *ScoredColumn) GetValues() []float64 {
+	if s == nil {
+		return nil
+	}
+	return s.Values
+}
+
+func (s *ScoredColumn) GetMetadata() *Metadata {
+	if s == nil {
+		return nil
+	}
+	return s.Metadata
+}
+
+func (s *ScoredColumn) GetIndexedData() *IndexedData {
+	if s == nil {
+		return nil
+	}
+	return s.IndexedData
 }
 
 func (s *ScoredColumn) GetExtraProperties() map[string]interface{} {
@@ -640,6 +927,13 @@ type UploadResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *UploadResponse) GetCount() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Count
+}
+
 func (u *UploadResponse) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -672,6 +966,13 @@ type Usage struct {
 	Units *int `json:"units,omitempty" url:"units,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *Usage) GetUnits() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Units
 }
 
 func (u *Usage) GetExtraProperties() map[string]interface{} {

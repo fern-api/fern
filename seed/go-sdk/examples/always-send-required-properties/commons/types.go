@@ -22,6 +22,27 @@ func NewDataFromBase64(value []byte) *Data {
 	return &Data{Type: "base64", Base64: value}
 }
 
+func (d *Data) GetType() string {
+	if d == nil {
+		return ""
+	}
+	return d.Type
+}
+
+func (d *Data) GetString() string {
+	if d == nil {
+		return ""
+	}
+	return d.String
+}
+
+func (d *Data) GetBase64() []byte {
+	if d == nil {
+		return nil
+	}
+	return d.Base64
+}
+
 func (d *Data) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -109,6 +130,27 @@ func NewEventInfoFromTag(value Tag) *EventInfo {
 	return &EventInfo{Type: "tag", Tag: value}
 }
 
+func (e *EventInfo) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventInfo) GetMetadata() *Metadata {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
+}
+
+func (e *EventInfo) GetTag() Tag {
+	if e == nil {
+		return ""
+	}
+	return e.Tag
+}
+
 func (e *EventInfo) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -180,6 +222,27 @@ type Metadata struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (m *Metadata) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetData() map[string]string {
+	if m == nil {
+		return nil
+	}
+	return m.Data
+}
+
+func (m *Metadata) GetJsonString() *string {
+	if m == nil {
+		return nil
+	}
+	return m.JsonString
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {

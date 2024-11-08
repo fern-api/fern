@@ -16,6 +16,13 @@ type Bar struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Bar) GetFoo() *Foo {
+	if b == nil {
+		return nil
+	}
+	return b.Foo
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -50,6 +57,20 @@ type Foo struct {
 	Name string    `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetId() uuid.UUID {
+	if f == nil {
+		return nil
+	}
+	return f.Id
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {

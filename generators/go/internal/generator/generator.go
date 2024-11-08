@@ -1519,12 +1519,7 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 // zeroValueForTypeReference returns the zero value for the given type reference.
 func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
-		switch typeReference.Container.Literal.Type {
-		case "string":
-			return `""`
-		case "boolean":
-			return "false"
-		}
+		return zeroValueForLiteral(typeReference.Container.Literal)
 	}
 	if typeReference.Primitive != nil {
 		return zeroValueForPrimitive(typeReference.Primitive.V1)
@@ -1541,6 +1536,16 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir
 	return "nil"
 }
 
+func zeroValueForLiteral(literal *fernir.Literal) string {
+	switch literal.Type {
+	case "string":
+		return `""`
+	case "boolean":
+		return "false"
+	}
+	return "nil"
+}
+
 func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
 	switch primitive {
 	case fernir.PrimitiveTypeV1String, fernir.PrimitiveTypeV1BigInteger:
@@ -1551,7 +1556,9 @@ func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
 		return "false"
 	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case fernir.PrimitiveTypeV1Uuid, fernir.PrimitiveTypeV1Base64:
+	case fernir.PrimitiveTypeV1Uuid:
+		return "uuid.UUID{}"
+	case fernir.PrimitiveTypeV1Base64:
 		return "nil"
 	}
 	return "nil"

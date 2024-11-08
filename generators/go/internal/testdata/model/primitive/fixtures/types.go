@@ -24,6 +24,69 @@ type Type struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *Type) GetOne() int {
+	if t == nil {
+		return 0
+	}
+	return t.One
+}
+
+func (t *Type) GetTwo() float64 {
+	if t == nil {
+		return 0
+	}
+	return t.Two
+}
+
+func (t *Type) GetThree() string {
+	if t == nil {
+		return ""
+	}
+	return t.Three
+}
+
+func (t *Type) GetFour() bool {
+	if t == nil {
+		return false
+	}
+	return t.Four
+}
+
+func (t *Type) GetFive() int64 {
+	if t == nil {
+		return 0
+	}
+	return t.Five
+}
+
+func (t *Type) GetSix() time.Time {
+	if t == nil {
+		return time.Time{}
+	}
+	return t.Six
+}
+
+func (t *Type) GetSeven() time.Time {
+	if t == nil {
+		return time.Time{}
+	}
+	return t.Seven
+}
+
+func (t *Type) GetEight() uuid.UUID {
+	if t == nil {
+		return nil
+	}
+	return t.Eight
+}
+
+func (t *Type) GetNine() []byte {
+	if t == nil {
+		return nil
+	}
+	return t.Nine
+}
+
 func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }

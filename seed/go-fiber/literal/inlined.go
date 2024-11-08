@@ -59,6 +59,13 @@ type ATopLevelLiteral struct {
 	extraProperties map[string]interface{}
 }
 
+func (a *ATopLevelLiteral) GetNestedLiteral() *ANestedLiteral {
+	if a == nil {
+		return nil
+	}
+	return a.NestedLiteral
+}
+
 func (a *ATopLevelLiteral) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }

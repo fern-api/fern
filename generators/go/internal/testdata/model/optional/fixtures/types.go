@@ -15,6 +15,20 @@ type AnotherType struct {
 	extraProperties map[string]interface{}
 }
 
+func (a *AnotherType) GetString() *string {
+	if a == nil {
+		return nil
+	}
+	return a.String
+}
+
+func (a *AnotherType) GetType() *Type {
+	if a == nil {
+		return nil
+	}
+	return a.Type
+}
+
 func (a *AnotherType) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
@@ -47,6 +61,13 @@ type Type struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {

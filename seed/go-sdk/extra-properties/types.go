@@ -16,12 +16,12 @@ type Failure struct {
 	_rawJSON json.RawMessage
 }
 
-func (f *Failure) GetExtraProperties() map[string]interface{} {
-	return f.ExtraProperties
-}
-
 func (f *Failure) Status() string {
 	return f.status
+}
+
+func (f *Failure) GetExtraProperties() map[string]interface{} {
+	return f.ExtraProperties
 }
 
 func (f *Failure) UnmarshalJSON(data []byte) error {

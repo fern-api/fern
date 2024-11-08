@@ -19,6 +19,20 @@ type Type struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *Type) GetId() TypeId {
+	if t == nil {
+		return ""
+	}
+	return t.Id
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
 func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }

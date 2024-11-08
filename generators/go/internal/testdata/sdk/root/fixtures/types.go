@@ -20,6 +20,48 @@ type Bar struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Bar) GetId() *Id {
+	if b == nil {
+		return nil
+	}
+	return b.Id
+}
+
+func (b *Bar) GetName() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Name
+}
+
+func (b *Bar) GetList() *string {
+	if b == nil {
+		return nil
+	}
+	return b.List
+}
+
+func (b *Bar) GetType() *FooType {
+	if b == nil {
+		return nil
+	}
+	return b.Type
+}
+
+func (b *Bar) GetRequest() *Request {
+	if b == nil {
+		return nil
+	}
+	return b.Request
+}
+
+func (b *Bar) GetDelay() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Delay
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -68,6 +110,41 @@ type Baz struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Baz) GetId() *Id {
+	if b == nil {
+		return nil
+	}
+	return b.Id
+}
+
+func (b *Baz) GetName() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Name
+}
+
+func (b *Baz) GetList() *string {
+	if b == nil {
+		return nil
+	}
+	return b.List
+}
+
+func (b *Baz) GetDescription() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Description
+}
+
+func (b *Baz) GetHasDocs() *string {
+	if b == nil {
+		return nil
+	}
+	return b.HasDocs
+}
+
 func (b *Baz) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -108,6 +185,20 @@ type Error struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (e *Error) GetMessage() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+func (e *Error) GetRecursive() []*Error {
+	if e == nil {
+		return nil
+	}
+	return e.Recursive
 }
 
 func (e *Error) GetExtraProperties() map[string]interface{} {
@@ -154,6 +245,48 @@ type Foo struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetId() *Id {
+	if f == nil {
+		return nil
+	}
+	return f.Id
+}
+
+func (f *Foo) GetName() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Name
+}
+
+func (f *Foo) GetList() *string {
+	if f == nil {
+		return nil
+	}
+	return f.List
+}
+
+func (f *Foo) GetType() *FooType {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *Foo) GetRequest() *Request {
+	if f == nil {
+		return nil
+	}
+	return f.Request
+}
+
+func (f *Foo) GetDelay() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Delay
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
@@ -227,6 +360,34 @@ type Request struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.Url
+}
+
+func (r *Request) GetHeaders() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Headers
+}
+
+func (r *Request) GetBody() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Body
+}
+
+func (r *Request) GetUnknown() interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Unknown
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {

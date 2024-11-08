@@ -22,6 +22,20 @@ type Event struct {
 	_rawJSON        json.RawMessage
 }
 
+func (e *Event) GetId() fern.Id {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *Event) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
 func (e *Event) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }

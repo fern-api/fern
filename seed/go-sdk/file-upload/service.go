@@ -36,6 +36,13 @@ type MyObject struct {
 	_rawJSON        json.RawMessage
 }
 
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
+}
+
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }

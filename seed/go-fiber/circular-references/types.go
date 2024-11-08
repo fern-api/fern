@@ -14,6 +14,13 @@ type ImportingA struct {
 	extraProperties map[string]interface{}
 }
 
+func (i *ImportingA) GetA() *A {
+	if i == nil {
+		return nil
+	}
+	return i.A
+}
+
 func (i *ImportingA) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -48,6 +55,13 @@ type RootType struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *RootType) GetS() string {
+	if r == nil {
+		return ""
+	}
+	return r.S
+}
+
 func (r *RootType) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -80,6 +94,13 @@ type A struct {
 	S string `json:"s" url:"s"`
 
 	extraProperties map[string]interface{}
+}
+
+func (a *A) GetS() string {
+	if a == nil {
+		return ""
+	}
+	return a.S
 }
 
 func (a *A) GetExtraProperties() map[string]interface{} {
@@ -122,6 +143,27 @@ func NewContainerValueFromList(value []*FieldValue) *ContainerValue {
 
 func NewContainerValueFromOptional(value *FieldValue) *ContainerValue {
 	return &ContainerValue{Type: "optional", Optional: value}
+}
+
+func (c *ContainerValue) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *ContainerValue) GetList() []*FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.List
+}
+
+func (c *ContainerValue) GetOptional() *FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.Optional
 }
 
 func (c *ContainerValue) UnmarshalJSON(data []byte) error {
@@ -214,6 +256,34 @@ func NewFieldValueFromObjectValue(value *ObjectValue) *FieldValue {
 
 func NewFieldValueFromContainerValue(value *ContainerValue) *FieldValue {
 	return &FieldValue{Type: "container_value", ContainerValue: value}
+}
+
+func (f *FieldValue) GetType() string {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FieldValue) GetPrimitiveValue() PrimitiveValue {
+	if f == nil {
+		return ""
+	}
+	return f.PrimitiveValue
+}
+
+func (f *FieldValue) GetObjectValue() *ObjectValue {
+	if f == nil {
+		return nil
+	}
+	return f.ObjectValue
+}
+
+func (f *FieldValue) GetContainerValue() *ContainerValue {
+	if f == nil {
+		return nil
+	}
+	return f.ContainerValue
 }
 
 func (f *FieldValue) UnmarshalJSON(data []byte) error {
@@ -328,6 +398,41 @@ func NewJsonLikeFromInteger(value int) *JsonLike {
 
 func NewJsonLikeFromBoolean(value bool) *JsonLike {
 	return &JsonLike{typ: "Boolean", Boolean: value}
+}
+
+func (j *JsonLike) GetJsonLikeList() []*JsonLike {
+	if j == nil {
+		return nil
+	}
+	return j.JsonLikeList
+}
+
+func (j *JsonLike) GetStringJsonLikeMap() map[string]*JsonLike {
+	if j == nil {
+		return nil
+	}
+	return j.StringJsonLikeMap
+}
+
+func (j *JsonLike) GetString() string {
+	if j == nil {
+		return ""
+	}
+	return j.String
+}
+
+func (j *JsonLike) GetInteger() int {
+	if j == nil {
+		return 0
+	}
+	return j.Integer
+}
+
+func (j *JsonLike) GetBoolean() bool {
+	if j == nil {
+		return false
+	}
+	return j.Boolean
 }
 
 func (j *JsonLike) UnmarshalJSON(data []byte) error {
