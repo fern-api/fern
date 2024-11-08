@@ -63,7 +63,7 @@ export class OpenApiIrConverterContext {
      * This is used to determine whether certain properties should be included
      * in the generated definition (e.g. readonly properties are excluded for request bodies).
      */
-    private inRequest: boolean = false;
+    private inRequest = false;
 
     constructor({
         taskContext,
