@@ -9,8 +9,6 @@ export declare namespace PythonFile {
         moduleName: string;
         /* The path of the Python file relative to the module */
         path: ModulePath;
-        /* The name of the Python file */
-        name: string;
     }
 }
 
