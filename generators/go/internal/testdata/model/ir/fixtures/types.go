@@ -5647,7 +5647,7 @@ func (e *ExamplePrimitive) GetDate() time.Time {
 
 func (e *ExamplePrimitive) GetUuid() uuid.UUID {
 	if e == nil {
-		return nil
+		return uuid.UUID{}
 	}
 	return e.Uuid
 }

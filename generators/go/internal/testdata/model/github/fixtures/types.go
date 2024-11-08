@@ -34,7 +34,7 @@ func (f *Foo) GetBar() *bar.Bar {
 
 func (f *Foo) GetUuid() uuid.UUID {
 	if f == nil {
-		return nil
+		return uuid.UUID{}
 	}
 	return f.Uuid
 }
