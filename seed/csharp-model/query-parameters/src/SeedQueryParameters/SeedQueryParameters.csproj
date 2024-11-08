@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedQueryParameters.Custom.props" />
+    <Import Project="SeedQueryParameters.Custom.props" Condition="Exists('SeedQueryParameters.Custom.props')" />
 </Project>

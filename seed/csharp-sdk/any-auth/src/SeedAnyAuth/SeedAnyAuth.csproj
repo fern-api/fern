@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedAnyAuth.Custom.props" />
+    <Import Project="SeedAnyAuth.Custom.props" Condition="Exists('SeedAnyAuth.Custom.props')" />
 </Project>

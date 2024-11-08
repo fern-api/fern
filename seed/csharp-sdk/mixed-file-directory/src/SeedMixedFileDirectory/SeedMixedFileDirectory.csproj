@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedMixedFileDirectory.Custom.props" />
+    <Import Project="SeedMixedFileDirectory.Custom.props" Condition="Exists('SeedMixedFileDirectory.Custom.props')" />
 </Project>

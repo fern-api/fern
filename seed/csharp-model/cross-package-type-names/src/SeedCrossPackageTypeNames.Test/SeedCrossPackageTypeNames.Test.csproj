@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedCrossPackageTypeNames\SeedCrossPackageTypeNames.csproj" />
+        <ProjectReference Include="..\SeedCrossPackageTypeNames\SeedCrossPackageTypeNames.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedCrossPackageTypeNames.Test.Custom.props" Condition="Exists('SeedCrossPackageTypeNames.Test.Custom.props')" />
 </Project>

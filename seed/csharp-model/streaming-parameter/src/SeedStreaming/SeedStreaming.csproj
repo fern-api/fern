@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedStreaming.Custom.props" />
+    <Import Project="SeedStreaming.Custom.props" Condition="Exists('SeedStreaming.Custom.props')" />
 </Project>

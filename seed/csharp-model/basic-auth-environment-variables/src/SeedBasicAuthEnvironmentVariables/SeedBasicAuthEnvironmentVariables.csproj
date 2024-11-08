@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedBasicAuthEnvironmentVariables.Custom.props" />
+    <Import Project="SeedBasicAuthEnvironmentVariables.Custom.props" Condition="Exists('SeedBasicAuthEnvironmentVariables.Custom.props')" />
 </Project>

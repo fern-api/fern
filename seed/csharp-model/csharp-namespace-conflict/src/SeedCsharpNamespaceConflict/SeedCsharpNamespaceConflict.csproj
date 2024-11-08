@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedCsharpNamespaceConflict.Custom.props" />
+    <Import Project="SeedCsharpNamespaceConflict.Custom.props" Condition="Exists('SeedCsharpNamespaceConflict.Custom.props')" />
 </Project>

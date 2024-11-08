@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedIdempotencyHeaders.Custom.props" />
+    <Import Project="SeedIdempotencyHeaders.Custom.props" Condition="Exists('SeedIdempotencyHeaders.Custom.props')" />
 </Project>

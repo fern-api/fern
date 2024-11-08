@@ -6,6 +6,16 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.4
+  createdAt: "2024-11-08"
+  changelogEntry:
+    - type: feat
+      summary: Generate a ProjectName.Test.Custom.props file for you to configure any MSBuild properties for your test project.
+    - type: feat
+      summary: Only import ProjectName.Custom.props and ProjectName.Test.Custom.props if the file exists, so you can delete the file if you wish to.
+    - type: fix
+      summary: Do not re-import the .NET SDK inside of ProjectName.Custom.props.
+  irVersion: 53
 - version: 1.9.3
   createdAt: "2024-11-07"
   changelogEntry:

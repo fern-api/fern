@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedErrorProperty\SeedErrorProperty.csproj" />
+        <ProjectReference Include="..\SeedErrorProperty\SeedErrorProperty.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedErrorProperty.Test.Custom.props" Condition="Exists('SeedErrorProperty.Test.Custom.props')" />
 </Project>

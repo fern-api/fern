@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedMultiUrlEnvironment.Custom.props" />
+    <Import Project="SeedMultiUrlEnvironment.Custom.props" Condition="Exists('SeedMultiUrlEnvironment.Custom.props')" />
 </Project>

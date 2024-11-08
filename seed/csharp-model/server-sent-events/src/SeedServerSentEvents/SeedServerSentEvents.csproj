@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedServerSentEvents.Custom.props" />
+    <Import Project="SeedServerSentEvents.Custom.props" Condition="Exists('SeedServerSentEvents.Custom.props')" />
 </Project>

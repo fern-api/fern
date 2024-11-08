@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedSingleUrlEnvironmentDefault.Custom.props" />
+    <Import Project="SeedSingleUrlEnvironmentDefault.Custom.props" Condition="Exists('SeedSingleUrlEnvironmentDefault.Custom.props')" />
 </Project>
