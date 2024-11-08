@@ -18,8 +18,8 @@ export function parseMarkdownToTree(markdown: string, format: "mdx" | "md" = "md
         });
     } else if (format === "mdx") {
         return fromMarkdown(content, {
-            extensions: [gfm(), mdxjs(), math()],
-            mdastExtensions: [gfmFromMarkdown(), mdxFromMarkdown(), mathFromMarkdown()]
+            extensions: [mdxjs(), gfm(), math()],
+            mdastExtensions: [mdxFromMarkdown(), gfmFromMarkdown(), mathFromMarkdown()]
         });
     } else {
         throw new UnreachableCaseError(format);

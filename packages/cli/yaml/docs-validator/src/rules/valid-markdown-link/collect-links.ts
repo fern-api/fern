@@ -1,9 +1,11 @@
 import { parseMarkdownToTree, getMarkdownFormat } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { toHast } from "mdast-util-to-hast";
 import type { Root as HastRoot } from "hast";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
+import { walk } from "estree-walker";
+import { readFileSync } from "node:fs";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
@@ -23,59 +25,137 @@ interface HastSource {
     position?: Position;
 }
 
-// TODO: this currently doesn't handle markdown snippets, but it should.
 export function collectLinksAndSources({
-    content,
-    absoluteFilepath
+    readFile = (path) => readFileSync(path, "utf-8"),
+    ...opts
 }: {
+    readFile?: (path: AbsoluteFilePath) => string;
     content: string;
     absoluteFilepath?: AbsoluteFilePath;
 }): {
     links: HastLink[];
     sources: HastSource[];
 } {
-    const mdast = parseMarkdownToTree(content, absoluteFilepath ? getMarkdownFormat(absoluteFilepath) : "mdx");
+    const visitedAbsoluteFilepaths = new Set<AbsoluteFilePath>();
 
-    const hast = toHast(mdast, {
-        allowDangerousHtml: true,
-        passThrough: [...MDX_NODE_TYPES]
-    }) as HastRoot;
+    // we'll use this queue to trace imported markdown files (e.g. via mdxjsEsm, or the <Markdown> component)
+    // which are markdown snippets that should be checked for links as well.
+    const contentQueue: {
+        content: string;
+        absoluteFilepath?: AbsoluteFilePath;
+    }[] = [opts];
 
     const links: HastLink[] = [];
     const sources: HastSource[] = [];
 
-    visit(hast, (node) => {
-        if (node.type === "element") {
-            const href = node.properties.href;
-            if (typeof href === "string") {
-                links.push({ href, position: node.position });
-            }
-
-            const src = node.properties.src;
-            if (typeof src === "string") {
-                sources.push({ src, position: node.position });
-            }
+    const LOOP_LIMIT = 1000;
+    let loopCount = 0;
+    do {
+        loopCount++;
+        if (loopCount > LOOP_LIMIT) {
+            throw new Error("Infinit loop detected while collecting links and sources");
+        }
+        const popped = contentQueue.shift();
+        if (popped == null) {
+            break;
         }
 
-        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-            const hrefAttribute = node.attributes.find(
-                (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "href"
-            );
+        const { content, absoluteFilepath } = popped;
 
-            // NOTE: this collects links if they are in the form of <a href="...">
-            // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
-            if (hrefAttribute != null && typeof hrefAttribute.value === "string") {
-                links.push({ href: hrefAttribute.value, position: node.position });
+        // NOTE: we don't want to visit the same file multiple times
+        if (absoluteFilepath != null) {
+            if (visitedAbsoluteFilepaths.has(absoluteFilepath)) {
+                throw new Error(`Circular import detected: ${absoluteFilepath}`);
             }
-
-            const srcAttribute = node.attributes.find(
-                (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "src"
-            );
-            if (srcAttribute != null && typeof srcAttribute.value === "string") {
-                sources.push({ src: srcAttribute.value, position: node.position });
-            }
+            visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
-    });
+
+        const format = absoluteFilepath ? getMarkdownFormat(absoluteFilepath) : "mdx";
+        const mdast = parseMarkdownToTree(content, format);
+
+        const hast = toHast(mdast, {
+            allowDangerousHtml: true,
+            passThrough: [...MDX_NODE_TYPES]
+        }) as HastRoot;
+
+        visit(hast, (node) => {
+            // if mdxjsEsm imports from a .md or .mdx file, we'll treat it as if it was a markdown snippet
+            // this doesn't handle plain javascript imports (which is outside of the scope of this rule)
+            // TODO: should we verify that the imported file is actually used in the current page?
+            if (node.type === "mdxjsEsm" && absoluteFilepath != null) {
+                if (node.data?.estree) {
+                    walk(node.data.estree, {
+                        enter: (child) => {
+                            if (
+                                child.type === "ImportDeclaration" &&
+                                child.source.type === "Literal" &&
+                                typeof child.source.value === "string"
+                            ) {
+                                const importPath = RelativeFilePath.of(child.source.value);
+                                const resolvedImportPath = resolve(dirname(absoluteFilepath), importPath);
+                                // TODO: should we handle md files? what about other md extensions?
+                                if (resolvedImportPath.endsWith(".mdx") || resolvedImportPath.endsWith(".md")) {
+                                    contentQueue.push({
+                                        content: readFile(resolvedImportPath),
+                                        absoluteFilepath: resolvedImportPath
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+                return "skip";
+            }
+
+            if (node.type === "element") {
+                const href = node.properties.href;
+                if (typeof href === "string") {
+                    links.push({ href, position: node.position });
+                }
+
+                const src = node.properties.src;
+                if (typeof src === "string") {
+                    sources.push({ src, position: node.position });
+                }
+            }
+
+            if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+                const hrefAttribute = node.attributes.find(
+                    (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "href"
+                );
+
+                const srcAttribute = node.attributes.find(
+                    (attribute) => attribute.type === "mdxJsxAttribute" && attribute.name === "src"
+                );
+
+                // this is a special case for the <Markdown> component
+                // which is our legacy support for markdown snippets. This should be deprecated soon.
+                if (node.name === "Markdown") {
+                    if (absoluteFilepath && srcAttribute != null && typeof srcAttribute.value === "string") {
+                        const resolvedImportPath = resolve(dirname(absoluteFilepath), srcAttribute.value);
+                        contentQueue.push({
+                            content: readFile(resolvedImportPath),
+                            absoluteFilepath: resolvedImportPath
+                        });
+                    }
+
+                    // Markdown component are special: they shouldn't have children, so we can skip them
+                    return "skip";
+                }
+
+                // NOTE: this collects links if they are in the form of <a href="...">
+                // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
+                if (hrefAttribute != null && typeof hrefAttribute.value === "string") {
+                    links.push({ href: hrefAttribute.value, position: node.position });
+                }
+
+                if (srcAttribute != null && typeof srcAttribute.value === "string") {
+                    sources.push({ src: srcAttribute.value, position: node.position });
+                }
+            }
+            return;
+        });
+    } while (contentQueue.length > 0);
 
     return { links, sources };
 }

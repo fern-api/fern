@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, getFilename, RelativeFilePath } from "@fern-api/fs-utils";
 
+// TODO: support more markdown extensions (https://github.com/sindresorhus/markdown-extensions/blob/main/index.js)
 export function getMarkdownFormat(absoluteFilepath: AbsoluteFilePath | RelativeFilePath): "mdx" | "md" {
     const filename = getFilename(absoluteFilepath);
     if (filename == null) {
