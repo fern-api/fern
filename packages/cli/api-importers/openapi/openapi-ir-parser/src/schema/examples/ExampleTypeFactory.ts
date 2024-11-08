@@ -34,14 +34,10 @@ export declare namespace ExampleTypeFactory {
 }
 
 export class ExampleTypeFactory {
-    private skipReadonly: boolean;
-
     constructor(
         private readonly schemas: Record<SchemaId, SchemaWithExample>,
         private readonly context: SchemaParserContext
-    ) {
-        this.skipReadonly = !context.options.respectReadonlySchemas;
-    }
+    ) {}
 
     public buildExample({
         schema,
@@ -108,7 +104,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: this.skipReadonly
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -136,7 +132,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: this.skipReadonly
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -164,7 +160,7 @@ export class ExampleTypeFactory {
                         visitedSchemaIds,
                         depth,
                         options,
-                        skipReadonly: this.skipReadonly
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -236,7 +232,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: this.skipReadonly
+                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -251,7 +247,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: this.skipReadonly
+                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -273,7 +269,7 @@ export class ExampleTypeFactory {
                                 visitedSchemaIds,
                                 depth,
                                 options,
-                                skipReadonly: this.skipReadonly
+                                skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                             });
                         }
                         break;
@@ -312,7 +308,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: this.skipReadonly
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -328,7 +324,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: this.skipReadonly
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -343,7 +339,7 @@ export class ExampleTypeFactory {
                         depth: depth + 1,
                         visitedSchemaIds,
                         options,
-                        skipReadonly: this.skipReadonly
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     if (itemExample != null) {
                         itemExamples.push(itemExample);
@@ -369,7 +365,7 @@ export class ExampleTypeFactory {
                             visitedSchemaIds,
                             depth: depth + 1,
                             options,
-                            skipReadonly: this.skipReadonly
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (valueExample != null) {
                             kvs.push({
@@ -413,7 +409,7 @@ export class ExampleTypeFactory {
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
                         name: "value"
                     },
-                    skipReadonly: this.skipReadonly
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (valueExample != null) {
                     return FullExample.map([
@@ -454,7 +450,7 @@ export class ExampleTypeFactory {
                             ...options,
                             name: property
                         },
-                        skipReadonly: this.skipReadonly
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     if (required && propertyExample != null) {
                         result[property] = propertyExample;

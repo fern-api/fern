@@ -27797,9 +27797,7 @@ webhooks:
                   "request": {
                     "openGraph": {
                       "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
-                      "descriptionCopied": false,
                       "title": "Explore the Cosmos with The Ultimate Guide",
-                      "titleCopied": false,
                     },
                     "seo": {
                       "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -29412,11 +29410,9 @@ service:
                 Vogon poetry to the importance of towels.
             openGraph:
               title: Explore the Cosmos with The Ultimate Guide
-              titleCopied: false
               description: >-
                 Dive deep into the mysteries of the universe with your guide to
                 everything galactic.
-              descriptionCopied: false
           response:
             body:
               id: 6596da6045e56dee495bcbba
