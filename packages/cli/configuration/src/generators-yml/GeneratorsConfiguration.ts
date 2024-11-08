@@ -53,6 +53,7 @@ export interface APIDefinitionSettings {
     shouldUseOptionalAdditionalProperties: boolean | undefined;
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
+    respectReadonlySchemas: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

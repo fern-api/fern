@@ -8,4 +8,6 @@ export interface OpenApiSettingsSchema {
     "coerce-enums-to-literals"?: boolean;
     /** Enables parsing deep object query parameters */
     "object-query-parameters"?: boolean;
+    /** Enables exploring readonly schemas in OpenAPI specifications */
+    "respect-readonly-schemas"?: boolean;
 }

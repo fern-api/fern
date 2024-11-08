@@ -11,6 +11,8 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
+import { SchemaParserContext } from "../SchemaParserContext";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
@@ -32,11 +34,10 @@ export declare namespace ExampleTypeFactory {
 }
 
 export class ExampleTypeFactory {
-    private schemas: Record<SchemaId, SchemaWithExample>;
-
-    constructor(schemas: Record<SchemaId, SchemaWithExample>) {
-        this.schemas = schemas;
-    }
+    constructor(
+        private readonly schemas: Record<SchemaId, SchemaWithExample>,
+        private readonly context: SchemaParserContext
+    ) {}
 
     public buildExample({
         schema,
@@ -103,7 +104,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -131,7 +132,7 @@ export class ExampleTypeFactory {
                     example,
                     depth,
                     options,
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined;
@@ -159,7 +160,7 @@ export class ExampleTypeFactory {
                         visitedSchemaIds,
                         depth,
                         options,
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -231,7 +232,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -246,7 +247,7 @@ export class ExampleTypeFactory {
                                     visitedSchemaIds,
                                     depth: depth + 1,
                                     options,
-                                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -268,7 +269,7 @@ export class ExampleTypeFactory {
                                 visitedSchemaIds,
                                 depth,
                                 options,
-                                skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                                skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                             });
                         }
                         break;
@@ -307,7 +308,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -323,7 +324,7 @@ export class ExampleTypeFactory {
                             depth: depth + 1,
                             visitedSchemaIds,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (itemExample != null) {
                             itemExamples.push(itemExample);
@@ -338,7 +339,7 @@ export class ExampleTypeFactory {
                         depth: depth + 1,
                         visitedSchemaIds,
                         options,
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     if (itemExample != null) {
                         itemExamples.push(itemExample);
@@ -364,7 +365,7 @@ export class ExampleTypeFactory {
                             visitedSchemaIds,
                             depth: depth + 1,
                             options,
-                            skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                            skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                         });
                         if (valueExample != null) {
                             kvs.push({
@@ -408,7 +409,7 @@ export class ExampleTypeFactory {
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
                         name: "value"
                     },
-                    skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                    skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                 });
                 if (valueExample != null) {
                     return FullExample.map([
@@ -449,7 +450,7 @@ export class ExampleTypeFactory {
                             ...options,
                             name: property
                         },
-                        skipReadonly: false // TODO(dsinghvi): nested readonly are not respected yet
+                        skipReadonly: skipReadonly && this.context.options.respectReadonlySchemas
                     });
                     if (required && propertyExample != null) {
                         result[property] = propertyExample;

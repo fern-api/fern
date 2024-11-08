@@ -65,6 +65,7 @@ export interface SpecImportSettings {
     asyncApiNaming?: "v1" | "v2";
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
+    respectReadonlySchemas: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -111,10 +112,13 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public specs: Spec[];
     public sources: IdentifiableSource[];
 
+    private respectReadonlySchemas: boolean;
+
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
+        this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
     }
 
     public async getOpenAPIIr(
@@ -128,11 +132,15 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        const optionOverrides = getOptionsOverridesFromSettings(settings);
         return await parse({
             absoluteFilePathToWorkspace: this.absoluteFilePath,
             specs: openApiSpecs,
             taskContext: context,
-            optionOverrides: getOptionsOverridesFromSettings(settings)
+            optionOverrides: {
+                ...optionOverrides,
+                respectReadonlySchemas: this.respectReadonlySchemas
+            }
         });
     }
 
@@ -167,7 +175,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
-            objectQueryParameters
+            objectQueryParameters,
+            respectReadonlySchemas: this.respectReadonlySchemas
         });
 
         return {

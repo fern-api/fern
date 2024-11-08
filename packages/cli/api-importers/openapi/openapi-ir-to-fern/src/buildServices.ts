@@ -32,11 +32,15 @@ export function buildServices(context: OpenApiIrConverterContext): {
             }
         }
         const irTag = tag == null ? undefined : tags.tagsById[tag];
+
+        context.setEndpointMethod(endpoint.method);
         const convertedEndpoint = buildEndpoint({
             context,
             endpoint,
             declarationFile: file
         });
+        context.unsetEndpointMethod();
+
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
             name: endpointId,

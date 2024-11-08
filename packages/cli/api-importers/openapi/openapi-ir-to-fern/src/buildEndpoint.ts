@@ -124,6 +124,7 @@ export function buildEndpoint({
     }
 
     if (endpoint.request != null) {
+        context.setInRequest();
         const convertedRequest = getRequest({
             endpoint,
             context,
@@ -139,6 +140,7 @@ export function buildEndpoint({
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
+        context.unsetInRequest();
     } else {
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;

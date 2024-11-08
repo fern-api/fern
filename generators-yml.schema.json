@@ -1284,6 +1284,16 @@
               "type": "null"
             }
           ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
