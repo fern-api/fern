@@ -333,7 +333,7 @@ async function parseApiConfigurationV2Schema({
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
                     coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
                     objectQueryParameters: spec.settings?.["object-query-parameters"],
-                    respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"],
+                    respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"]
                 }
             };
             if (spec.namespace == null) {

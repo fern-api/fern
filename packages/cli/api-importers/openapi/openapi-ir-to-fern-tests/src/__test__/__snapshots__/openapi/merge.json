@@ -6,51 +6,6 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
-          "AccountDetails": {
-            "docs": undefined,
-            "properties": {
-              "category": "optional<CategoryEnum>",
-              "end_user_email_address": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "email",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "end_user_organization_name": "optional<string>",
-              "end_user_origin_id": "optional<string>",
-              "id": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "integration": "optional<string>",
-              "integration_slug": "optional<string>",
-              "is_duplicate": {
-                "docs": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
-                "type": "optional<boolean>",
-              },
-              "status": "optional<string>",
-              "webhook_listener_url": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "AccountDetailsAndActions": {
             "docs": "# The LinkedAccount Object
 ### Description
@@ -106,7 +61,52 @@ View a list of your organization's `LinkedAccount` objects.",
               "openapi": "../openapi.yml",
             },
           },
-          "AccountIntegration": {
+          "AccountDetailsRead": {
+            "docs": undefined,
+            "properties": {
+              "category": "optional<CategoryEnum>",
+              "end_user_email_address": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "email",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "end_user_organization_name": "optional<string>",
+              "end_user_origin_id": "optional<string>",
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "integration": "optional<string>",
+              "integration_slug": "optional<string>",
+              "is_duplicate": {
+                "docs": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
+                "type": "optional<boolean>",
+              },
+              "status": "optional<string>",
+              "webhook_listener_url": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AccountIntegrationRead": {
             "docs": undefined,
             "properties": {
               "api_endpoints_to_documentation_urls": {
@@ -198,7 +198,7 @@ Fetch all the actions available for the `Zenefits` integration.",
               "openapi": "../openapi.yml",
             },
           },
-          "BankInfo": {
+          "BankInfoRead": {
             "docs": "# The BankInfo Object
 ### Description
 The `BankInfo` object is used to represent the Bank Account information for an Employee.
@@ -273,7 +273,7 @@ Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank info
               "openapi": "../openapi.yml",
             },
           },
-          "Benefit": {
+          "BenefitRead": {
             "docs": "# The Benefit Object
 ### Description
 The `Benefit` object is used to represent a benefit that an employee has enrolled in.
@@ -404,7 +404,7 @@ Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
               "openapi": "../openapi.yml",
             },
           },
-          "Company": {
+          "CompanyRead": {
             "docs": "# The Company Object
 ### Description
 The `Company` object is used to represent a company within the HRIS / Payroll system.
@@ -452,7 +452,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               "openapi": "../openapi.yml",
             },
           },
-          "ConditionSchema": {
+          "ConditionSchemaRead": {
             "docs": undefined,
             "properties": {
               "common_model": {
@@ -1104,7 +1104,7 @@ Create a `DataPassthrough` to get team hierarchies from your Rippling integratio
               "openapi": "../openapi.yml",
             },
           },
-          "Deduction": {
+          "DeductionRead": {
             "docs": "# The Deduction Object
 ### Description
 The `Deduction` object is used to represent an array of the wages withheld from total earnings for the purpose of paying taxes.
@@ -1161,7 +1161,7 @@ Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deducti
               "openapi": "../openapi.yml",
             },
           },
-          "Earning": {
+          "EarningRead": {
             "docs": "# The Earning Object
 ### Description
 The `Earning` object is used to represent an array of different compensations that an employee receives within specific wage categories.
@@ -1234,7 +1234,95 @@ Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
               "openapi": "../openapi.yml",
             },
           },
-          "Employee": {
+          "EmployeeEndpointRequest": {
+            "docs": undefined,
+            "properties": {
+              "model": "EmployeeRequest",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmployeePayrollRunRead": {
+            "docs": "# The EmployeePayrollRun Object
+### Description
+The `EmployeePayrollRun` object is used to represent an employee's pay statement for a specific payroll run.
+
+### Usage Example
+Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all employee payroll runs.",
+            "properties": {
+              "check_date": {
+                "docs": "The day and time the payroll run was checked.",
+                "type": "optional<datetime>",
+              },
+              "deductions": "optional<list<Deduction>>",
+              "earnings": "optional<list<Earning>>",
+              "employee": {
+                "docs": "The employee whose payroll is being run.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "end_date": {
+                "docs": "The day and time the payroll run ended.",
+                "type": "optional<datetime>",
+              },
+              "field_mappings": "optional<map<string, unknown>>",
+              "gross_pay": {
+                "docs": "The total earnings throughout a given period for an employee before any deductions are made.",
+                "type": "optional<double>",
+              },
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "modified_at": {
+                "docs": "This is the datetime that this object was last updated by Merge",
+                "type": "optional<datetime>",
+              },
+              "net_pay": {
+                "docs": "The take-home pay throughout a given period for an employee after deductions are made.",
+                "type": "optional<double>",
+              },
+              "payroll_run": {
+                "docs": "The payroll being run.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "remote_data": "optional<list<RemoteData>>",
+              "remote_id": {
+                "docs": "The third-party API ID of the matching object.",
+                "type": "optional<string>",
+              },
+              "remote_was_deleted": {
+                "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
+                "type": "optional<boolean>",
+              },
+              "start_date": {
+                "docs": "The day and time the payroll run started.",
+                "type": "optional<datetime>",
+              },
+              "taxes": "optional<list<Tax>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmployeeRead": {
             "docs": "# The Employee Object
 ### Description
 The `Employee` object is used to represent any person who has been employed by a company.
@@ -1462,94 +1550,6 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               "openapi": "../openapi.yml",
             },
           },
-          "EmployeeEndpointRequest": {
-            "docs": undefined,
-            "properties": {
-              "model": "EmployeeRequest",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EmployeePayrollRun": {
-            "docs": "# The EmployeePayrollRun Object
-### Description
-The `EmployeePayrollRun` object is used to represent an employee's pay statement for a specific payroll run.
-
-### Usage Example
-Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all employee payroll runs.",
-            "properties": {
-              "check_date": {
-                "docs": "The day and time the payroll run was checked.",
-                "type": "optional<datetime>",
-              },
-              "deductions": "optional<list<Deduction>>",
-              "earnings": "optional<list<Earning>>",
-              "employee": {
-                "docs": "The employee whose payroll is being run.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "end_date": {
-                "docs": "The day and time the payroll run ended.",
-                "type": "optional<datetime>",
-              },
-              "field_mappings": "optional<map<string, unknown>>",
-              "gross_pay": {
-                "docs": "The total earnings throughout a given period for an employee before any deductions are made.",
-                "type": "optional<double>",
-              },
-              "id": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "modified_at": {
-                "docs": "This is the datetime that this object was last updated by Merge",
-                "type": "optional<datetime>",
-              },
-              "net_pay": {
-                "docs": "The take-home pay throughout a given period for an employee after deductions are made.",
-                "type": "optional<double>",
-              },
-              "payroll_run": {
-                "docs": "The payroll being run.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "remote_data": "optional<list<RemoteData>>",
-              "remote_id": {
-                "docs": "The third-party API ID of the matching object.",
-                "type": "optional<string>",
-              },
-              "remote_was_deleted": {
-                "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
-                "type": "optional<boolean>",
-              },
-              "start_date": {
-                "docs": "The day and time the payroll run started.",
-                "type": "optional<datetime>",
-              },
-              "taxes": "optional<list<Tax>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "EmployeeRequest": {
             "docs": "# The Employee Object
 ### Description
@@ -1764,7 +1764,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               "openapi": "../openapi.yml",
             },
           },
-          "Employment": {
+          "EmploymentRead": {
             "docs": "# The Employment Object
 ### Description
 The `Employment` object is used to represent a job position at a company.
@@ -2411,7 +2411,7 @@ Post a `GenerateRemoteKey` to create a new remote key.",
               "openapi": "../openapi.yml",
             },
           },
-          "Group": {
+          "GroupRead": {
             "docs": "# The Group Object
 ### Description
 The `Group` object is used to represent any subset of employees, such as `PayGroup` or `Team`. Employees can be in multiple Groups.
@@ -2506,7 +2506,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "openapi": "../openapi.yml",
             },
           },
-          "Issue": {
+          "IssueRead": {
             "docs": undefined,
             "properties": {
               "end_user": "optional<map<string, unknown>>",
@@ -2558,7 +2558,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "openapi": "../openapi.yml",
             },
           },
-          "LinkedAccountCondition": {
+          "LinkedAccountConditionRead": {
             "docs": undefined,
             "properties": {
               "common_model": {
@@ -2622,7 +2622,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "openapi": "../openapi.yml",
             },
           },
-          "LinkedAccountSelectiveSyncConfiguration": {
+          "LinkedAccountSelectiveSyncConfigurationRead": {
             "docs": undefined,
             "properties": {
               "linked_account_conditions": {
@@ -2656,7 +2656,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "openapi": "../openapi.yml",
             },
           },
-          "Location": {
+          "LocationRead": {
             "docs": "# The Location Object
 ### Description
 The `Location` object is used to represent an address that can be associated with an employee.
@@ -3121,7 +3121,7 @@ Create a `MultipartFormField` to define a multipart form entry.",
               "openapi": "../openapi.yml",
             },
           },
-          "OperatorSchema": {
+          "OperatorSchemaRead": {
             "docs": undefined,
             "properties": {
               "is_unique": {
@@ -3971,7 +3971,7 @@ Create a `MultipartFormField` to define a multipart form entry.",
               "openapi": "../openapi.yml",
             },
           },
-          "PayGroup": {
+          "PayGroupRead": {
             "docs": "# The PayGroup Object
 ### Description
 The `PayGroup` object is used to represent a subset of employees that are put together for payroll processing purposes.
@@ -4036,7 +4036,7 @@ Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group
               "openapi": "../openapi.yml",
             },
           },
-          "PayrollRun": {
+          "PayrollRunRead": {
             "docs": "# The PayrollRun Object
 ### Description
 The `PayrollRun` object is used to represent a group of pay statements for a specific pay schedule.
@@ -4330,7 +4330,7 @@ View the `SyncStatus` for an account to see how recently its models were synced.
               "openapi": "../openapi.yml",
             },
           },
-          "Tax": {
+          "TaxRead": {
             "docs": "# The Tax Object
 ### Description
 The `Tax` object is used to represent an array of the tax deductions for a given employee's payroll run.
@@ -4387,7 +4387,7 @@ Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
               "openapi": "../openapi.yml",
             },
           },
-          "Team": {
+          "TeamRead": {
             "docs": "# The Team Object
 ### Description
 The `Team` object is used to represent a subdivision of the company, usually a department. Each employee will be grouped into one specific Team.
@@ -4437,7 +4437,81 @@ If you're building a way to filter by `Team`, you'd hit the `GET Teams` endpoint
               "openapi": "../openapi.yml",
             },
           },
-          "TimeOff": {
+          "TimeOffBalanceRead": {
+            "docs": "# The TimeOffBalance Object
+### Description
+The `TimeOffBalance` object is used to represent current balances for an employee's Time Off plan.
+
+### Usage Example
+Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all time off balances.",
+            "properties": {
+              "balance": {
+                "docs": "The current remaining PTO balance, always measured in terms of hours.",
+                "type": "optional<double>",
+              },
+              "employee": {
+                "docs": "The employee the balance belongs to.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "field_mappings": "optional<map<string, unknown>>",
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "modified_at": {
+                "docs": "This is the datetime that this object was last updated by Merge",
+                "type": "optional<datetime>",
+              },
+              "policy_type": {
+                "docs": "The policy type of this time off balance.
+
+* `VACATION` - VACATION
+* `SICK` - SICK
+* `PERSONAL` - PERSONAL
+* `JURY_DUTY` - JURY_DUTY
+* `VOLUNTEER` - VOLUNTEER
+* `BEREAVEMENT` - BEREAVEMENT",
+                "type": "optional<PolicyTypeEnum>",
+              },
+              "remote_data": "optional<list<RemoteData>>",
+              "remote_id": {
+                "docs": "The third-party API ID of the matching object.",
+                "type": "optional<string>",
+              },
+              "remote_was_deleted": {
+                "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
+                "type": "optional<boolean>",
+              },
+              "used": {
+                "docs": "The amount of PTO used in terms of hours.",
+                "type": "optional<double>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TimeOffEndpointRequest": {
+            "docs": undefined,
+            "properties": {
+              "model": "TimeOffRequest",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TimeOffRead": {
             "docs": "# The TimeOff Object
 ### Description
 The `TimeOff` object is used to represent all employees' Time Off entries.
@@ -4529,80 +4603,6 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
 * `DAYS` - DAYS",
                 "type": "optional<UnitsEnum>",
               },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TimeOffBalance": {
-            "docs": "# The TimeOffBalance Object
-### Description
-The `TimeOffBalance` object is used to represent current balances for an employee's Time Off plan.
-
-### Usage Example
-Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all time off balances.",
-            "properties": {
-              "balance": {
-                "docs": "The current remaining PTO balance, always measured in terms of hours.",
-                "type": "optional<double>",
-              },
-              "employee": {
-                "docs": "The employee the balance belongs to.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "field_mappings": "optional<map<string, unknown>>",
-              "id": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "modified_at": {
-                "docs": "This is the datetime that this object was last updated by Merge",
-                "type": "optional<datetime>",
-              },
-              "policy_type": {
-                "docs": "The policy type of this time off balance.
-
-* `VACATION` - VACATION
-* `SICK` - SICK
-* `PERSONAL` - PERSONAL
-* `JURY_DUTY` - JURY_DUTY
-* `VOLUNTEER` - VOLUNTEER
-* `BEREAVEMENT` - BEREAVEMENT",
-                "type": "optional<PolicyTypeEnum>",
-              },
-              "remote_data": "optional<list<RemoteData>>",
-              "remote_id": {
-                "docs": "The third-party API ID of the matching object.",
-                "type": "optional<string>",
-              },
-              "remote_was_deleted": {
-                "docs": "Indicates whether or not this object has been deleted by third party webhooks.",
-                "type": "optional<boolean>",
-              },
-              "used": {
-                "docs": "The amount of PTO used in terms of hours.",
-                "type": "optional<double>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TimeOffEndpointRequest": {
-            "docs": undefined,
-            "properties": {
-              "model": "TimeOffRequest",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4789,7 +4789,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         },
       },
       "rawContents": "types:
-  AccountDetails:
+  AccountDetailsRead:
     properties:
       id:
         type: optional<string>
@@ -4873,7 +4873,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `RELINK_NEEDED` - RELINK_NEEDED
     source:
       openapi: ../openapi.yml
-  AccountIntegration:
+  AccountIntegrationRead:
     properties:
       name:
         type: string
@@ -4955,7 +4955,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       available_model_operations: optional<list<ModelOperation>>
     source:
       openapi: ../openapi.yml
-  BankInfo:
+  BankInfoRead:
     docs: >-
       # The BankInfo Object
 
@@ -5015,7 +5015,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  Benefit:
+  BenefitRead:
     docs: >-
       # The Benefit Object
 
@@ -5120,7 +5120,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       disabled_fields: list<string>
     source:
       openapi: ../openapi.yml
-  Company:
+  CompanyRead:
     docs: >-
       # The Company Object
 
@@ -5163,7 +5163,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  ConditionSchema:
+  ConditionSchemaRead:
     properties:
       id:
         type: string
@@ -5790,7 +5790,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       status_code: integer
     source:
       openapi: ../openapi.yml
-  Deduction:
+  DeductionRead:
     docs: >-
       # The Deduction Object
 
@@ -5841,7 +5841,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  Earning:
+  EarningRead:
     docs: >-
       # The Earning Object
 
@@ -5904,7 +5904,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `BONUS` - BONUS
     source:
       openapi: ../openapi.yml
-  Employee:
+  EmployeeRead:
     docs: >-
       # The Employee Object
 
@@ -6102,7 +6102,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       model: EmployeeRequest
     source:
       openapi: ../openapi.yml
-  EmployeePayrollRun:
+  EmployeePayrollRunRead:
     docs: >-
       # The EmployeePayrollRun Object
 
@@ -6352,7 +6352,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       logs: optional<list<DebugModeLog>>
     source:
       openapi: ../openapi.yml
-  Employment:
+  EmploymentRead:
     docs: >-
       # The Employment Object
 
@@ -7267,7 +7267,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           minLength: 1
     source:
       openapi: ../openapi.yml
-  Group:
+  GroupRead:
     docs: >-
       # The Group Object
 
@@ -7344,7 +7344,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           maxLength: 256
     source:
       openapi: ../openapi.yml
-  Issue:
+  IssueRead:
     properties:
       id:
         type: optional<string>
@@ -7381,7 +7381,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       magic_link_url: optional<string>
     source:
       openapi: ../openapi.yml
-  LinkedAccountCondition:
+  LinkedAccountConditionRead:
     properties:
       condition_schema_id:
         type: string
@@ -7424,7 +7424,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       value: unknown
     source:
       openapi: ../openapi.yml
-  LinkedAccountSelectiveSyncConfiguration:
+  LinkedAccountSelectiveSyncConfigurationRead:
     properties:
       linked_account_conditions:
         type: optional<list<LinkedAccountCondition>>
@@ -7444,7 +7444,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       can_make_request: boolean
     source:
       openapi: ../openapi.yml
-  Location:
+  LocationRead:
     docs: >-
       # The Location Object
 
@@ -7881,7 +7881,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           minLength: 1
     source:
       openapi: ../openapi.yml
-  OperatorSchema:
+  OperatorSchemaRead:
     properties:
       operator:
         type: optional<string>
@@ -8957,7 +8957,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `SEMIMONTHLY` - SEMIMONTHLY
     source:
       openapi: ../openapi.yml
-  PayGroup:
+  PayGroupRead:
     docs: >-
       # The PayGroup Object
 
@@ -9017,7 +9017,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `YEAR` - YEAR
     source:
       openapi: ../openapi.yml
-  PayrollRun:
+  PayrollRunRead:
     docs: >-
       # The PayrollRun Object
 
@@ -9293,7 +9293,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `PARTIALLY_SYNCED` - PARTIALLY_SYNCED
     source:
       openapi: ../openapi.yml
-  Tax:
+  TaxRead:
     docs: >-
       # The Tax Object
 
@@ -9339,7 +9339,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  Team:
+  TeamRead:
     docs: >-
       # The Team Object
 
@@ -9383,7 +9383,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  TimeOff:
+  TimeOffRead:
     docs: >-
       # The TimeOff Object
 
@@ -9467,7 +9467,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data: optional<list<RemoteData>>
     source:
       openapi: ../openapi.yml
-  TimeOffBalance:
+  TimeOffBalanceRead:
     docs: >-
       # The TimeOffBalance Object
 

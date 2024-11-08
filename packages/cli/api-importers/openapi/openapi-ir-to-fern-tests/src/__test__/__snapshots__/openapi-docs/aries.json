@@ -481,7 +481,44 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ConnRecord": {
+          "ConnRecordAccept": {
+            "docs": "Connection acceptance: manual or auto",
+            "enum": [
+              "manual",
+              "auto",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnRecordConnectionProtocol": {
+            "docs": "Connection protocol used",
+            "enum": [
+              {
+                "name": "Connections10",
+                "value": "connections/1.0",
+              },
+              {
+                "name": "Didexchange10",
+                "value": "didexchange/1.0",
+              },
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnRecordInvitationMode": {
+            "docs": "Invitation mode",
+            "enum": [
+              "once",
+              "multi",
+              "static",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnRecordRead": {
             "docs": undefined,
             "properties": {
               "accept": {
@@ -599,43 +636,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ConnRecordAccept": {
-            "docs": "Connection acceptance: manual or auto",
-            "enum": [
-              "manual",
-              "auto",
-            ],
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ConnRecordConnectionProtocol": {
-            "docs": "Connection protocol used",
-            "enum": [
-              {
-                "name": "Connections10",
-                "value": "connections/1.0",
-              },
-              {
-                "name": "Didexchange10",
-                "value": "didexchange/1.0",
-              },
-            ],
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ConnRecordInvitationMode": {
-            "docs": "Invitation mode",
-            "enum": [
-              "once",
-              "multi",
-              "static",
-            ],
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ConnRecordRoutingState": {
             "docs": "Routing state of connection",
             "enum": [
@@ -660,7 +660,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ConnectionInvitation": {
+          "ConnectionInvitationRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -1275,7 +1275,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "CredentialOffer": {
+          "CredentialOfferRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -1318,7 +1318,7 @@
             "docs": "The proof of the credential",
             "type": "LinkedDataProof",
           },
-          "CredentialProposal": {
+          "CredentialProposalRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -1681,7 +1681,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "Disclose": {
+          "DiscloseRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -1701,7 +1701,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "Disclosures": {
+          "DisclosuresRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -3538,29 +3538,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "KeylistQuery": {
-            "docs": undefined,
-            "properties": {
-              "@id": {
-                "docs": "Message identifier",
-                "type": "optional<string>",
-              },
-              "@type": {
-                "docs": "Message type",
-                "type": "optional<string>",
-              },
-              "filter": {
-                "docs": "Query dictionary object",
-                "type": "optional<KeylistQueryFilter>",
-              },
-              "paginate": {
-                "type": "optional<KeylistQueryPaginate>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "KeylistQueryFilter": {
             "docs": "Query dictionary object",
             "properties": {},
@@ -3584,7 +3561,30 @@
               "openapi": "../openapi.yml",
             },
           },
-          "KeylistUpdate": {
+          "KeylistQueryRead": {
+            "docs": undefined,
+            "properties": {
+              "@id": {
+                "docs": "Message identifier",
+                "type": "optional<string>",
+              },
+              "@type": {
+                "docs": "Message type",
+                "type": "optional<string>",
+              },
+              "filter": {
+                "docs": "Query dictionary object",
+                "type": "optional<KeylistQueryFilter>",
+              },
+              "paginate": {
+                "type": "optional<KeylistQueryPaginate>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "KeylistUpdateRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -3795,7 +3795,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "MediationDeny": {
+          "MediationDenyRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -3817,7 +3817,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "MediationGrant": {
+          "MediationGrantRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -3895,38 +3895,6 @@
                   "minLength": undefined,
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "Menu": {
-            "docs": undefined,
-            "properties": {
-              "@id": {
-                "docs": "Message identifier",
-                "type": "optional<string>",
-              },
-              "@type": {
-                "docs": "Message type",
-                "type": "optional<string>",
-              },
-              "description": {
-                "docs": "Introductory text for the menu",
-                "type": "optional<string>",
-              },
-              "errormsg": {
-                "docs": "An optional error message to display in menu header",
-                "type": "optional<string>",
-              },
-              "options": {
-                "docs": "List of menu options",
-                "type": "list<MenuOption>",
-              },
-              "title": {
-                "docs": "Menu title",
-                "type": "optional<string>",
               },
             },
             "source": {
@@ -4034,6 +4002,38 @@
               "title": {
                 "docs": "Menu option title",
                 "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "MenuRead": {
+            "docs": undefined,
+            "properties": {
+              "@id": {
+                "docs": "Message identifier",
+                "type": "optional<string>",
+              },
+              "@type": {
+                "docs": "Message type",
+                "type": "optional<string>",
+              },
+              "description": {
+                "docs": "Introductory text for the menu",
+                "type": "optional<string>",
+              },
+              "errormsg": {
+                "docs": "An optional error message to display in menu header",
+                "type": "optional<string>",
+              },
+              "options": {
+                "docs": "List of menu options",
+                "type": "list<MenuOption>",
+              },
+              "title": {
+                "docs": "Menu title",
+                "type": "optional<string>",
               },
             },
             "source": {
@@ -4189,7 +4189,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PresentationProposal": {
+          "PresentationProposalRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -4212,7 +4212,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PresentationRequest": {
+          "PresentationRequestRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -4260,7 +4260,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "Queries": {
+          "QueriesRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -4274,26 +4274,6 @@
               "queries": {
                 "type": "optional<list<QueryItem>>",
               },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "Query": {
-            "docs": undefined,
-            "properties": {
-              "@id": {
-                "docs": "Message identifier",
-                "type": "optional<string>",
-              },
-              "@type": {
-                "docs": "Message type",
-                "type": "optional<string>",
-              },
-              "comment": {
-                "type": "optional<string>",
-              },
-              "query": "string",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4324,6 +4304,26 @@
                 "value": "goal-code",
               },
             ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "QueryRead": {
+            "docs": undefined,
+            "properties": {
+              "@id": {
+                "docs": "Message identifier",
+                "type": "optional<string>",
+              },
+              "@type": {
+                "docs": "Message type",
+                "type": "optional<string>",
+              },
+              "comment": {
+                "type": "optional<string>",
+              },
+              "query": "string",
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6058,7 +6058,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20CredIssue": {
+          "V20CredIssueRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6090,7 +6090,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20CredOffer": {
+          "V20CredOfferRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6138,7 +6138,11 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20CredProposal": {
+          "V20CredProposalCredentialPreview": {
+            "docs": "Credential preview",
+            "type": "V20CredPreview",
+          },
+          "V20CredProposalRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6169,11 +6173,11 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20CredProposalCredentialPreview": {
-            "docs": "Credential preview",
-            "type": "V20CredPreview",
+          "V20CredRequestFreeFilter": {
+            "docs": "Credential specification criteria by format",
+            "type": "V20CredFilterLdProof",
           },
-          "V20CredRequest": {
+          "V20CredRequestRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6200,10 +6204,6 @@
             "source": {
               "openapi": "../openapi.yml",
             },
-          },
-          "V20CredRequestFreeFilter": {
-            "docs": "Credential specification criteria by format",
-            "type": "V20CredFilterLdProof",
           },
           "V20DiscoveryExchangeListResult": {
             "docs": undefined,
@@ -6294,33 +6294,6 @@
             "type": "Queries",
           },
           "V20IssueCredentialModuleResponse": "map<string, unknown>",
-          "V20Pres": {
-            "docs": undefined,
-            "properties": {
-              "@id": {
-                "docs": "Message identifier",
-                "type": "optional<string>",
-              },
-              "@type": {
-                "docs": "Message type",
-                "type": "optional<string>",
-              },
-              "comment": {
-                "docs": "Human-readable comment",
-                "type": "optional<string>",
-              },
-              "formats": {
-                "docs": "Acceptable attachment formats",
-                "type": "list<V20PresFormat>",
-              },
-              "presentations~attach": {
-                "type": "list<AttachDecorator>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "V20PresExRecord": {
             "docs": undefined,
             "properties": {
@@ -6544,7 +6517,29 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20PresProposal": {
+          "V20PresProposalByFormat": {
+            "docs": undefined,
+            "properties": {
+              "dif": {
+                "type": "optional<V20PresProposalByFormatDif>",
+              },
+              "indy": {
+                "type": "optional<V20PresProposalByFormatIndy>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "V20PresProposalByFormatDif": {
+            "docs": "Presentation proposal for DIF",
+            "type": "DIFProofProposal",
+          },
+          "V20PresProposalByFormatIndy": {
+            "docs": "Presentation proposal for indy",
+            "type": "IndyProofRequest",
+          },
+          "V20PresProposalRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6571,29 +6566,56 @@
               "openapi": "../openapi.yml",
             },
           },
-          "V20PresProposalByFormat": {
+          "V20PresRead": {
             "docs": undefined,
             "properties": {
-              "dif": {
-                "type": "optional<V20PresProposalByFormatDif>",
+              "@id": {
+                "docs": "Message identifier",
+                "type": "optional<string>",
               },
-              "indy": {
-                "type": "optional<V20PresProposalByFormatIndy>",
+              "@type": {
+                "docs": "Message type",
+                "type": "optional<string>",
+              },
+              "comment": {
+                "docs": "Human-readable comment",
+                "type": "optional<string>",
+              },
+              "formats": {
+                "docs": "Acceptable attachment formats",
+                "type": "list<V20PresFormat>",
+              },
+              "presentations~attach": {
+                "type": "list<AttachDecorator>",
               },
             },
             "source": {
               "openapi": "../openapi.yml",
             },
           },
-          "V20PresProposalByFormatDif": {
-            "docs": "Presentation proposal for DIF",
-            "type": "DIFProofProposal",
+          "V20PresRequestByFormat": {
+            "docs": undefined,
+            "properties": {
+              "dif": {
+                "type": "optional<V20PresRequestByFormatDif>",
+              },
+              "indy": {
+                "type": "optional<V20PresRequestByFormatIndy>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
-          "V20PresProposalByFormatIndy": {
-            "docs": "Presentation proposal for indy",
+          "V20PresRequestByFormatDif": {
+            "docs": "Presentation request for DIF",
+            "type": "DIFProofRequest",
+          },
+          "V20PresRequestByFormatIndy": {
+            "docs": "Presentation request for indy",
             "type": "IndyProofRequest",
           },
-          "V20PresRequest": {
+          "V20PresRequestRead": {
             "docs": undefined,
             "properties": {
               "@id": {
@@ -6623,28 +6645,6 @@
             "source": {
               "openapi": "../openapi.yml",
             },
-          },
-          "V20PresRequestByFormat": {
-            "docs": undefined,
-            "properties": {
-              "dif": {
-                "type": "optional<V20PresRequestByFormatDif>",
-              },
-              "indy": {
-                "type": "optional<V20PresRequestByFormatIndy>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "V20PresRequestByFormatDif": {
-            "docs": "Presentation request for DIF",
-            "type": "DIFProofRequest",
-          },
-          "V20PresRequestByFormatIndy": {
-            "docs": "Presentation request for indy",
-            "type": "IndyProofRequest",
           },
           "V20PresSpecByFormatRequestDif": {
             "docs": "Optional Presentation specification for DIF, overrides the PresentionExchange record's PresRequest",
@@ -7237,7 +7237,7 @@ types:
     docs: Their role in the connection protocol
     source:
       openapi: ../openapi.yml
-  ConnRecord:
+  ConnRecordRead:
     properties:
       accept:
         type: optional<ConnRecordAccept>
@@ -7318,7 +7318,7 @@ types:
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
     source:
       openapi: ../openapi.yml
-  ConnectionInvitation:
+  ConnectionInvitationRead:
     properties:
       '@id':
         type: optional<string>
@@ -7696,7 +7696,7 @@ types:
         type: optional<list<string>>
     source:
       openapi: ../openapi.yml
-  CredentialOffer:
+  CredentialOfferRead:
     properties:
       '@id':
         type: optional<string>
@@ -7721,7 +7721,7 @@ types:
       attributes: list<CredAttrSpec>
     source:
       openapi: ../openapi.yml
-  CredentialProposal:
+  CredentialProposalRead:
     properties:
       '@id':
         type: optional<string>
@@ -7973,7 +7973,7 @@ types:
         type: PresentationDefinition
     source:
       openapi: ../openapi.yml
-  Disclose:
+  DiscloseRead:
     properties:
       '@id':
         type: optional<string>
@@ -7986,7 +7986,7 @@ types:
         type: list<ProtocolDescriptor>
     source:
       openapi: ../openapi.yml
-  Disclosures:
+  DisclosuresRead:
     properties:
       '@id':
         type: optional<string>
@@ -9105,7 +9105,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
-  KeylistQuery:
+  KeylistQueryRead:
     properties:
       '@id':
         type: optional<string>
@@ -9130,7 +9130,7 @@ types:
         docs: Offset value for query
     source:
       openapi: ../openapi.yml
-  KeylistUpdate:
+  KeylistUpdateRead:
     properties:
       '@id':
         type: optional<string>
@@ -9272,7 +9272,7 @@ types:
           pattern: \w+:(\/?\/?)[^\s]+
     source:
       openapi: ../openapi.yml
-  MediationDeny:
+  MediationDenyRead:
     properties:
       '@id':
         type: optional<string>
@@ -9286,7 +9286,7 @@ types:
         type: optional<list<string>>
     source:
       openapi: ../openapi.yml
-  MediationGrant:
+  MediationGrantRead:
     properties:
       '@id':
         type: optional<string>
@@ -9341,7 +9341,7 @@ types:
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
     source:
       openapi: ../openapi.yml
-  Menu:
+  MenuRead:
     properties:
       '@id':
         type: optional<string>
@@ -9537,7 +9537,7 @@ types:
         type: optional<list<SubmissionRequirements>>
     source:
       openapi: ../openapi.yml
-  PresentationProposal:
+  PresentationProposalRead:
     properties:
       '@id':
         type: optional<string>
@@ -9552,7 +9552,7 @@ types:
         type: IndyPresPreview
     source:
       openapi: ../openapi.yml
-  PresentationRequest:
+  PresentationRequestRead:
     properties:
       '@id':
         type: optional<string>
@@ -9582,7 +9582,7 @@ types:
         docs: Credential revocation ids by revocation registry id
     source:
       openapi: ../openapi.yml
-  Queries:
+  QueriesRead:
     properties:
       '@id':
         type: optional<string>
@@ -9594,7 +9594,7 @@ types:
         type: optional<list<QueryItem>>
     source:
       openapi: ../openapi.yml
-  Query:
+  QueryRead:
     properties:
       '@id':
         type: optional<string>
@@ -10654,7 +10654,7 @@ types:
         docs: Attachment format specifier
     source:
       openapi: ../openapi.yml
-  V20CredIssue:
+  V20CredIssueRead:
     properties:
       '@id':
         type: optional<string>
@@ -10676,7 +10676,7 @@ types:
         docs: Issuer-unique identifier to coordinate credential replacement
     source:
       openapi: ../openapi.yml
-  V20CredOffer:
+  V20CredOfferRead:
     properties:
       '@id':
         type: optional<string>
@@ -10708,7 +10708,7 @@ types:
       attributes: list<V20CredAttrSpec>
     source:
       openapi: ../openapi.yml
-  V20CredProposal:
+  V20CredProposalRead:
     properties:
       '@id':
         type: optional<string>
@@ -10729,7 +10729,7 @@ types:
         type: list<V20CredFormat>
     source:
       openapi: ../openapi.yml
-  V20CredRequest:
+  V20CredRequestRead:
     properties:
       '@id':
         type: optional<string>
@@ -10798,7 +10798,7 @@ types:
     source:
       openapi: ../openapi.yml
   V20IssueCredentialModuleResponse: map<string, unknown>
-  V20Pres:
+  V20PresRead:
     properties:
       '@id':
         type: optional<string>
@@ -10957,7 +10957,7 @@ types:
         docs: Attachment format specifier
     source:
       openapi: ../openapi.yml
-  V20PresProposal:
+  V20PresProposalRead:
     properties:
       '@id':
         type: optional<string>
@@ -10983,7 +10983,7 @@ types:
         type: optional<V20PresProposalByFormatIndy>
     source:
       openapi: ../openapi.yml
-  V20PresRequest:
+  V20PresRequestRead:
     properties:
       '@id':
         type: optional<string>

@@ -24,5 +24,5 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     audiences: undefined,
     optionalAdditionalProperties: true,
     cooerceEnumsToLiterals: true,
-    respectReadonlySchemas: false,
+    respectReadonlySchemas: false
 };

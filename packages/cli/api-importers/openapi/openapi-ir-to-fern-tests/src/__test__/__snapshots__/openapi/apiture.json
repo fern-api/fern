@@ -452,7 +452,7 @@ This error response may have one of the following `type` values:
               "openapi": "../openapi.yml",
             },
           },
-          "AbstractPagedBodyFields": {
+          "AbstractPagedBodyFieldsRead": {
             "docs": "Common properties of collection page responses.",
             "properties": {
               "limit": {
@@ -476,26 +476,6 @@ This error response may have one of the following `type` values:
                   "minLength": undefined,
                   "pattern": undefined,
                 },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "Account": {
-            "docs": "An internal customer account.",
-            "extends": [
-              "AbstractBody",
-              "AccountFields",
-            ],
-            "properties": {
-              "allows": {
-                "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
-                "type": "FullAccountPermissions",
-              },
-              "electronicStatements": {
-                "docs": "If `true`, the customer has opted in to receive account statements electronically.",
-                "type": "boolean",
               },
             },
             "source": {
@@ -557,7 +537,7 @@ This error response may have one of the following `type` values:
               "openapi": "../openapi.yml",
             },
           },
-          "AccountBalance": {
+          "AccountBalanceRead": {
             "docs": "The current balances of the given account.",
             "properties": {
               "available": {
@@ -604,7 +584,7 @@ This error response may have one of the following `type` values:
               "openapi": "../openapi.yml",
             },
           },
-          "AccountFields": {
+          "AccountFieldsRead": {
             "docs": "Fragment schema use to build other account schemas.",
             "properties": {
               "id": {
@@ -643,7 +623,7 @@ This error response may have one of the following `type` values:
             "docs": "An array of account IDs.",
             "type": "list<ResourceId>",
           },
-          "AccountItem": {
+          "AccountItemRead": {
             "docs": "An account item in a list items in the `accounts` schema.",
             "properties": {
               "allows": {
@@ -770,6 +750,26 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "openapi": "../openapi.yml",
             },
           },
+          "AccountRead": {
+            "docs": "An internal customer account.",
+            "extends": [
+              "AbstractBody",
+              "AccountFields",
+            ],
+            "properties": {
+              "allows": {
+                "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
+                "type": "FullAccountPermissions",
+              },
+              "electronicStatements": {
+                "docs": "If `true`, the customer has opted in to receive account statements electronically.",
+                "type": "boolean",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "AccountRoutingNumber": {
             "docs": "An account ABA routing and transit number.",
             "type": "string",
@@ -780,7 +780,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
               "pattern": "^[0-9]{9}$",
             },
           },
-          "Accounts": {
+          "AccountsRead": {
             "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The `location` property indicates where the account is held. Items in the list contain `url` links to the actual account resource which are in the `accounts`, `externalAccounts` or `outsideAccounts` collections.",
             "extends": [
               "AbstractBody",
@@ -1333,7 +1333,7 @@ The client can use this value to localize the `items[].time` values to the local
             "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
             "type": "OverdraftAccountFields",
           },
-          "EligibleOverdraftAccounts": {
+          "EligibleOverdraftAccountsRead": {
             "docs": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
             "extends": [
               "AbstractBody",
@@ -1671,7 +1671,7 @@ The client can use this value to localize the `items[].time` values to the local
               "pattern": "^(0|[1-9][0-9]*)\.[0-9][0-9]$",
             },
           },
-          "OverdraftAccountFields": {
+          "OverdraftAccountFieldsRead": {
             "docs": "Fields of an overdraft protection account, used to compose other schemas.",
             "properties": {
               "id": {
@@ -1700,7 +1700,18 @@ The client can use this value to localize the `items[].time` values to the local
             "docs": "An overdraft protection account linked to another protected account. The `label` and `maskedNumber` are informational only.",
             "type": "OverdraftAccountFields",
           },
-          "OverdraftProtection": {
+          "OverdraftProtectionFields": {
+            "docs": "Fields used to compose other overdraft protection schemas.",
+            "properties": {
+              "accounts": {
+                "type": "optional<unknown>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OverdraftProtectionRead": {
             "docs": "Representation of the overdraft protection settings, consisting of a list of overdraft protection accounts linked to the account identified by the `{accountId}`.",
             "extends": [
               "AbstractBody",
@@ -1717,17 +1728,6 @@ The client can use this value to localize the `items[].time` values to the local
                   "min": undefined,
                   "multipleOf": undefined,
                 },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "OverdraftProtectionFields": {
-            "docs": "Fields used to compose other overdraft protection schemas.",
-            "properties": {
-              "accounts": {
-                "type": "optional<unknown>",
               },
             },
             "source": {
@@ -1931,7 +1931,7 @@ The client can use this value to localize the `items[].time` values to the local
               "pattern": "^America\/[a-zA-Z_]+(?:\/[a-zA-Z_]+)*",
             },
           },
-          "TimestampFields": {
+          "TimestampFieldsRead": {
             "docs": "Timestamps which describe when a resource was created or last updated.",
             "properties": {
               "createdAt": {
@@ -1959,7 +1959,7 @@ The client can use this value to localize the `items[].time` values to the local
               "openapi": "../openapi.yml",
             },
           },
-          "TransactionCategorization": {
+          "TransactionCategorizationRead": {
             "docs": "The transaction categorization.",
             "properties": {
               "id": {
@@ -2074,7 +2074,7 @@ The client can use this value to localize the `items[].time` values to the local
               "openapi": "../openapi.yml",
             },
           },
-          "TransactionFields": {
+          "TransactionFieldsRead": {
             "docs": "Common fields of the transaction resource used to build other model schemas.",
             "properties": {
               "amount": {
@@ -2588,7 +2588,7 @@ The response may include dates prior to requested the start date, as that is use
               "openapi": "../openapi.yml",
             },
           },
-          "TransferItem": {
+          "TransferItemRead": {
             "docs": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [`getTransfer`](#op-getTransfer) operation, passing this item's `id` field as the `transferId` path parameter.",
             "extends": [
               "TransferFields",
@@ -2626,7 +2626,7 @@ The response may include dates prior to requested the start date, as that is use
               "openapi": "../openapi.yml",
             },
           },
-          "TransferItemSchedule": {
+          "TransferItemScheduleRead": {
             "docs": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
             "extends": [
               "TransferSchedule",
@@ -3486,7 +3486,7 @@ types:
       - AccountPermissions
     source:
       openapi: ../openapi.yml
-  Account:
+  AccountRead:
     docs: An internal customer account.
     properties:
       allows:
@@ -3504,7 +3504,7 @@ types:
       - AccountFields
     source:
       openapi: ../openapi.yml
-  OverdraftAccountFields:
+  OverdraftAccountFieldsRead:
     docs: Fields of an overdraft protection account, used to compose other schemas.
     properties:
       id:
@@ -3530,7 +3530,7 @@ types:
     docs: >-
       An account that is eligible to be assigned as an overdraft protection
       account for another account.
-  EligibleOverdraftAccounts:
+  EligibleOverdraftAccountsRead:
     docs: >-
       A page of zero or more accounts that are eligible to be assigned as an
       overdraft protection account for another account.
@@ -3581,7 +3581,7 @@ types:
         type: optional<unknown>
     source:
       openapi: ../openapi.yml
-  OverdraftProtection:
+  OverdraftProtectionRead:
     docs: >-
       Representation of the overdraft protection settings, consisting of a list
       of overdraft protection accounts linked to the account identified by the
@@ -3599,7 +3599,7 @@ types:
       - OverdraftProtectionFields
     source:
       openapi: ../openapi.yml
-  Accounts:
+  AccountsRead:
     docs: >-
       A paginated list of the customer's accounts. This list contains internal
       banking accounts and external banking accounts. and outside fund accounts.
@@ -3664,7 +3664,7 @@ types:
       accounts. All accounts are considered when calculating total cash balance.
     source:
       openapi: ../openapi.yml
-  AccountFields:
+  AccountFieldsRead:
     docs: Fragment schema use to build other account schemas.
     properties:
       id:
@@ -3691,7 +3691,7 @@ types:
         docs: Indicates where an account is held.
     source:
       openapi: ../openapi.yml
-  AccountItem:
+  AccountItemRead:
     docs: An account item in a list items in the `accounts` schema.
     properties:
       id:
@@ -3832,7 +3832,7 @@ types:
       - AbstractBody
     source:
       openapi: ../openapi.yml
-  AccountBalance:
+  AccountBalanceRead:
     docs: The current balances of the given account.
     properties:
       id:
@@ -4425,7 +4425,7 @@ types:
   CheckNumberRange:
     type: PositiveIntegerRange
     docs: A numeric range for a checking account check number.
-  TransactionFields:
+  TransactionFieldsRead:
     docs: >-
       Common fields of the transaction resource used to build other model
       schemas.
@@ -4563,7 +4563,7 @@ types:
           maxLength: 400
     source:
       openapi: ../openapi.yml
-  TransactionCategorization:
+  TransactionCategorizationRead:
     docs: The transaction categorization.
     properties:
       label:
@@ -4805,7 +4805,7 @@ types:
           if `frequency` is `once`.
     source:
       openapi: ../openapi.yml
-  TransferItemSchedule:
+  TransferItemScheduleRead:
     docs: >-
       A transfer's schedule: when the transfer is scheduled, its recurrence
       properties, and derived credit and debit dates.
@@ -4936,7 +4936,7 @@ types:
 
     source:
       openapi: ../openapi.yml
-  TransferItem:
+  TransferItemRead:
     docs: >-
       Summary representation of a transfer resource in transfers collections. To
       fetch the full representation of this transfer, use the
@@ -5404,7 +5404,7 @@ types:
       the API.
     validation:
       pattern: ^(0|[1-9][0-9]*)\.[0-9][0-9]$
-  TimestampFields:
+  TimestampFieldsRead:
     docs: Timestamps which describe when a resource was created or last updated.
     properties:
       createdAt:
@@ -5595,7 +5595,7 @@ types:
         type: list<ChallengeFactor>
     source:
       openapi: ../openapi.yml
-  AbstractPagedBodyFields:
+  AbstractPagedBodyFieldsRead:
     docs: Common properties of collection page responses.
     properties:
       limit:
