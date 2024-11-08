@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedPagination\SeedPagination.csproj" />
+        <ProjectReference Include="..\SeedPagination\SeedPagination.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedPagination.Test.Custom.props" Condition="Exists('SeedPagination.Test.Custom.props')" />
 </Project>

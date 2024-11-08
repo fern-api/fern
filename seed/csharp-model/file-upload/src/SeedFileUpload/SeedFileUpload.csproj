@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedFileUpload.Custom.props" />
+    <Import Project="SeedFileUpload.Custom.props" Condition="Exists('SeedFileUpload.Custom.props')" />
 </Project>

@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedPagination.Custom.props" />
+    <Import Project="SeedPagination.Custom.props" Condition="Exists('SeedPagination.Custom.props')" />
 </Project>

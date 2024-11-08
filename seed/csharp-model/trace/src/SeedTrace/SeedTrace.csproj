@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedTrace.Custom.props" />
+    <Import Project="SeedTrace.Custom.props" Condition="Exists('SeedTrace.Custom.props')" />
 </Project>

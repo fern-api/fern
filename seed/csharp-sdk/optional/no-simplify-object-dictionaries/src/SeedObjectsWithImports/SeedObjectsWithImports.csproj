@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedObjectsWithImports.Custom.props" />
+    <Import Project="SeedObjectsWithImports.Custom.props" Condition="Exists('SeedObjectsWithImports.Custom.props')" />
 </Project>

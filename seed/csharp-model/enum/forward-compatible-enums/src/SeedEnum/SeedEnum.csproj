@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedEnum.Custom.props" />
+    <Import Project="SeedEnum.Custom.props" Condition="Exists('SeedEnum.Custom.props')" />
 </Project>

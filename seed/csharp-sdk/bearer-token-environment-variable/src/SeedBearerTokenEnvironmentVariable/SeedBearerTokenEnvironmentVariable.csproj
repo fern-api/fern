@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedBearerTokenEnvironmentVariable.Custom.props" />
+    <Import Project="SeedBearerTokenEnvironmentVariable.Custom.props" Condition="Exists('SeedBearerTokenEnvironmentVariable.Custom.props')" />
 </Project>

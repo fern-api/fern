@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedCrossPackageTypeNames.Custom.props" />
+    <Import Project="SeedCrossPackageTypeNames.Custom.props" Condition="Exists('SeedCrossPackageTypeNames.Custom.props')" />
 </Project>

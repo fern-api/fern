@@ -49,5 +49,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedApi.Custom.props" />
+    <Import Project="SeedApi.Custom.props" Condition="Exists('SeedApi.Custom.props')" />
 </Project>

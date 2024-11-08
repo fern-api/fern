@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedAnyAuth\SeedAnyAuth.csproj" />
+        <ProjectReference Include="..\SeedAnyAuth\SeedAnyAuth.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedAnyAuth.Test.Custom.props" Condition="Exists('SeedAnyAuth.Test.Custom.props')" />
 </Project>

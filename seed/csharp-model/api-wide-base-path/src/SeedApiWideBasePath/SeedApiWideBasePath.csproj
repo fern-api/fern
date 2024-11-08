@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedApiWideBasePath.Custom.props" />
+    <Import Project="SeedApiWideBasePath.Custom.props" Condition="Exists('SeedApiWideBasePath.Custom.props')" />
 </Project>

@@ -227,11 +227,16 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
         const testCsProjContents = template(testCsProjTemplateContents)({
-            projectName: this.name
+            projectName: this.name,
+            testProjectName
         });
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`)),
             testCsProjContents
+        );
+        await writeFile(
+            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.TestCustomProps))).toString()
         );
         await loggingExeca(
             this.context.logger,
@@ -511,7 +516,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="${this.name}.Custom.props" />
+    <Import Project="${this.name}.Custom.props" Condition="Exists('${this.name}.Custom.props')" />
 </Project>
 `;
     }

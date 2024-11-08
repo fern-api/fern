@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedMultiLineDocs.Custom.props" />
+    <Import Project="SeedMultiLineDocs.Custom.props" Condition="Exists('SeedMultiLineDocs.Custom.props')" />
 </Project>

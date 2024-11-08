@@ -47,5 +47,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="SeedWebsocket.Custom.props" />
+    <Import Project="SeedWebsocket.Custom.props" Condition="Exists('SeedWebsocket.Custom.props')" />
 </Project>
