@@ -16,6 +16,20 @@ type Organization struct {
 	_rawJSON        json.RawMessage
 }
 
+func (o *Organization) GetId() string {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
 func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }

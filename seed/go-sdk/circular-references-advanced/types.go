@@ -15,6 +15,13 @@ type ImportingA struct {
 	_rawJSON        json.RawMessage
 }
 
+func (i *ImportingA) GetA() *A {
+	if i == nil {
+		return nil
+	}
+	return i.A
+}
+
 func (i *ImportingA) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -56,6 +63,13 @@ type RootType struct {
 	_rawJSON        json.RawMessage
 }
 
+func (r *RootType) GetS() string {
+	if r == nil {
+		return ""
+	}
+	return r.S
+}
+
 func (r *RootType) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -95,6 +109,13 @@ type A struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (a *A) GetS() string {
+	if a == nil {
+		return ""
+	}
+	return a.S
 }
 
 func (a *A) GetExtraProperties() map[string]interface{} {
@@ -143,6 +164,27 @@ func NewContainerValueFromList(value []*FieldValue) *ContainerValue {
 
 func NewContainerValueFromOptional(value *FieldValue) *ContainerValue {
 	return &ContainerValue{Type: "optional", Optional: value}
+}
+
+func (c *ContainerValue) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *ContainerValue) GetList() []*FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.List
+}
+
+func (c *ContainerValue) GetOptional() *FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.Optional
 }
 
 func (c *ContainerValue) UnmarshalJSON(data []byte) error {
@@ -239,6 +281,34 @@ func NewFieldValueFromContainerValue(value *ContainerValue) *FieldValue {
 	return &FieldValue{Type: "container_value", ContainerValue: value}
 }
 
+func (f *FieldValue) GetType() string {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FieldValue) GetPrimitiveValue() PrimitiveValue {
+	if f == nil {
+		return ""
+	}
+	return f.PrimitiveValue
+}
+
+func (f *FieldValue) GetObjectValue() *ObjectValue {
+	if f == nil {
+		return nil
+	}
+	return f.ObjectValue
+}
+
+func (f *FieldValue) GetContainerValue() *ContainerValue {
+	if f == nil {
+		return nil
+	}
+	return f.ContainerValue
+}
+
 func (f *FieldValue) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -330,6 +400,20 @@ type ObjectFieldValue struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (o *ObjectFieldValue) GetName() FieldName {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *ObjectFieldValue) GetValue() *FieldValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {

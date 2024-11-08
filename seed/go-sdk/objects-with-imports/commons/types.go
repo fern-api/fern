@@ -16,6 +16,20 @@ type Metadata struct {
 	_rawJSON        json.RawMessage
 }
 
+func (m *Metadata) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetData() map[string]string {
+	if m == nil {
+		return nil
+	}
+	return m.Data
+}
+
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }

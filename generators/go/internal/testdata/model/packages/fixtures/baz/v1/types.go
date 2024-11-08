@@ -14,6 +14,13 @@ type Baz struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Baz) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
 func (b *Baz) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }

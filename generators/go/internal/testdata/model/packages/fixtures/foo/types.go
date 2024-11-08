@@ -15,6 +15,13 @@ type Foo struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *Foo) GetFoo() *fixtures.Foo {
+	if f == nil {
+		return nil
+	}
+	return f.Foo
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

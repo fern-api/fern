@@ -50,6 +50,20 @@ type TokenResponse struct {
 	_rawJSON        json.RawMessage
 }
 
+func (t *TokenResponse) GetAccessToken() string {
+	if t == nil {
+		return ""
+	}
+	return t.AccessToken
+}
+
+func (t *TokenResponse) GetExpiresIn() int {
+	if t == nil {
+		return 0
+	}
+	return t.ExpiresIn
+}
+
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }

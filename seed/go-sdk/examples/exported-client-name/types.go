@@ -67,6 +67,27 @@ type Identifier struct {
 	_rawJSON        json.RawMessage
 }
 
+func (i *Identifier) GetType() *Type {
+	if i == nil {
+		return nil
+	}
+	return i.Type
+}
+
+func (i *Identifier) GetValue() string {
+	if i == nil {
+		return ""
+	}
+	return i.Value
+}
+
+func (i *Identifier) GetLabel() string {
+	if i == nil {
+		return ""
+	}
+	return i.Label
+}
+
 func (i *Identifier) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -114,6 +135,20 @@ func NewTypeFromBasicType(value BasicType) *Type {
 
 func NewTypeFromComplexType(value ComplexType) *Type {
 	return &Type{typ: "ComplexType", ComplexType: value}
+}
+
+func (t *Type) GetBasicType() BasicType {
+	if t == nil {
+		return ""
+	}
+	return t.BasicType
+}
+
+func (t *Type) GetComplexType() ComplexType {
+	if t == nil {
+		return ""
+	}
+	return t.ComplexType
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
@@ -165,6 +200,20 @@ type Actor struct {
 	_rawJSON        json.RawMessage
 }
 
+func (a *Actor) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Actor) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
+}
+
 func (a *Actor) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
@@ -205,6 +254,20 @@ type Actress struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (a *Actress) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Actress) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
 }
 
 func (a *Actress) GetExtraProperties() map[string]interface{} {
@@ -260,6 +323,97 @@ type BigEntity struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *BigEntity) GetCastMember() *CastMember {
+	if b == nil {
+		return nil
+	}
+	return b.CastMember
+}
+
+func (b *BigEntity) GetExtendedMovie() *ExtendedMovie {
+	if b == nil {
+		return nil
+	}
+	return b.ExtendedMovie
+}
+
+func (b *BigEntity) GetEntity() *Entity {
+	if b == nil {
+		return nil
+	}
+	return b.Entity
+}
+
+func (b *BigEntity) GetMetadata() *Metadata {
+	if b == nil {
+		return nil
+	}
+	return b.Metadata
+}
+
+func (b *BigEntity) GetCommonMetadata() *commons.Metadata {
+	if b == nil {
+		return nil
+	}
+	return b.CommonMetadata
+}
+
+func (b *BigEntity) GetEventInfo() *commons.EventInfo {
+	if b == nil {
+		return nil
+	}
+	return b.EventInfo
+}
+
+func (b *BigEntity) GetData() *commons.Data {
+	if b == nil {
+		return nil
+	}
+	return b.Data
+}
+
+func (b *BigEntity) GetMigration() *Migration {
+	if b == nil {
+		return nil
+	}
+	return b.Migration
+}
+
+func (b *BigEntity) GetException() *Exception {
+	if b == nil {
+		return nil
+	}
+	return b.Exception
+}
+
+func (b *BigEntity) GetTest() *Test {
+	if b == nil {
+		return nil
+	}
+	return b.Test
+}
+
+func (b *BigEntity) GetNode() *Node {
+	if b == nil {
+		return nil
+	}
+	return b.Node
+}
+
+func (b *BigEntity) GetDirectory() *Directory {
+	if b == nil {
+		return nil
+	}
+	return b.Directory
+}
+
+func (b *BigEntity) GetMoment() *Moment {
+	if b == nil {
+		return nil
+	}
+	return b.Moment
+}
+
 func (b *BigEntity) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -312,6 +466,27 @@ func NewCastMemberFromActress(value *Actress) *CastMember {
 
 func NewCastMemberFromStuntDouble(value *StuntDouble) *CastMember {
 	return &CastMember{typ: "StuntDouble", StuntDouble: value}
+}
+
+func (c *CastMember) GetActor() *Actor {
+	if c == nil {
+		return nil
+	}
+	return c.Actor
+}
+
+func (c *CastMember) GetActress() *Actress {
+	if c == nil {
+		return nil
+	}
+	return c.Actress
+}
+
+func (c *CastMember) GetStuntDouble() *StuntDouble {
+	if c == nil {
+		return nil
+	}
+	return c.StuntDouble
 }
 
 func (c *CastMember) UnmarshalJSON(data []byte) error {
@@ -377,6 +552,27 @@ type Directory struct {
 	_rawJSON        json.RawMessage
 }
 
+func (d *Directory) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Directory) GetFiles() []*File {
+	if d == nil {
+		return nil
+	}
+	return d.Files
+}
+
+func (d *Directory) GetDirectories() []*Directory {
+	if d == nil {
+		return nil
+	}
+	return d.Directories
+}
+
 func (d *Directory) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -417,6 +613,20 @@ type Entity struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (e *Entity) GetType() *Type {
+	if e == nil {
+		return nil
+	}
+	return e.Type
+}
+
+func (e *Entity) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
 }
 
 func (e *Entity) GetExtraProperties() map[string]interface{} {
@@ -465,6 +675,27 @@ func NewExceptionFromGeneric(value *ExceptionInfo) *Exception {
 
 func NewExceptionFromTimeout(value interface{}) *Exception {
 	return &Exception{Type: "timeout", Timeout: value}
+}
+
+func (e *Exception) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *Exception) GetGeneric() *ExceptionInfo {
+	if e == nil {
+		return nil
+	}
+	return e.Generic
+}
+
+func (e *Exception) GetTimeout() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.Timeout
 }
 
 func (e *Exception) UnmarshalJSON(data []byte) error {
@@ -538,6 +769,27 @@ type ExceptionInfo struct {
 	_rawJSON        json.RawMessage
 }
 
+func (e *ExceptionInfo) GetExceptionType() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionType
+}
+
+func (e *ExceptionInfo) GetExceptionMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionMessage
+}
+
+func (e *ExceptionInfo) GetExceptionStacktrace() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionStacktrace
+}
+
 func (e *ExceptionInfo) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -590,12 +842,82 @@ type ExtendedMovie struct {
 	_rawJSON        json.RawMessage
 }
 
-func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
+func (e *ExtendedMovie) GetId() MovieId {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *ExtendedMovie) GetPrequel() *MovieId {
+	if e == nil {
+		return nil
+	}
+	return e.Prequel
+}
+
+func (e *ExtendedMovie) GetTitle() string {
+	if e == nil {
+		return ""
+	}
+	return e.Title
+}
+
+func (e *ExtendedMovie) GetFrom() string {
+	if e == nil {
+		return ""
+	}
+	return e.From
+}
+
+func (e *ExtendedMovie) GetRating() float64 {
+	if e == nil {
+		return 0
+	}
+	return e.Rating
+}
+
+func (e *ExtendedMovie) GetTag() commons.Tag {
+	if e == nil {
+		return ""
+	}
+	return e.Tag
+}
+
+func (e *ExtendedMovie) GetBook() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Book
+}
+
+func (e *ExtendedMovie) GetMetadata() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
+}
+
+func (e *ExtendedMovie) GetRevenue() int64 {
+	if e == nil {
+		return 0
+	}
+	return e.Revenue
+}
+
+func (e *ExtendedMovie) GetCast() []string {
+	if e == nil {
+		return nil
+	}
+	return e.Cast
 }
 
 func (e *ExtendedMovie) Type() string {
 	return e.type_
+}
+
+func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
@@ -657,6 +979,20 @@ type File struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *File) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *File) GetContents() string {
+	if f == nil {
+		return ""
+	}
+	return f.Contents
+}
+
 func (f *File) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -705,6 +1041,41 @@ func NewMetadataFromHtml(value string) *Metadata {
 
 func NewMetadataFromMarkdown(value string) *Metadata {
 	return &Metadata{Type: "markdown", Markdown: value}
+}
+
+func (m *Metadata) GetType() string {
+	if m == nil {
+		return ""
+	}
+	return m.Type
+}
+
+func (m *Metadata) GetExtra() map[string]string {
+	if m == nil {
+		return nil
+	}
+	return m.Extra
+}
+
+func (m *Metadata) GetTags() []string {
+	if m == nil {
+		return nil
+	}
+	return m.Tags
+}
+
+func (m *Metadata) GetHtml() string {
+	if m == nil {
+		return ""
+	}
+	return m.Html
+}
+
+func (m *Metadata) GetMarkdown() string {
+	if m == nil {
+		return ""
+	}
+	return m.Markdown
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
@@ -800,6 +1171,20 @@ type Migration struct {
 	_rawJSON        json.RawMessage
 }
 
+func (m *Migration) GetName() string {
+	if m == nil {
+		return ""
+	}
+	return m.Name
+}
+
+func (m *Migration) GetStatus() MigrationStatus {
+	if m == nil {
+		return ""
+	}
+	return m.Status
+}
+
 func (m *Migration) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -868,6 +1253,27 @@ type Moment struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (m *Moment) GetId() uuid.UUID {
+	if m == nil {
+		return uuid.UUID{}
+	}
+	return m.Id
+}
+
+func (m *Moment) GetDate() time.Time {
+	if m == nil {
+		return time.Time{}
+	}
+	return m.Date
+}
+
+func (m *Moment) GetDatetime() time.Time {
+	if m == nil {
+		return time.Time{}
+	}
+	return m.Datetime
 }
 
 func (m *Moment) GetExtraProperties() map[string]interface{} {
@@ -943,12 +1349,75 @@ type Movie struct {
 	_rawJSON        json.RawMessage
 }
 
-func (m *Movie) GetExtraProperties() map[string]interface{} {
-	return m.extraProperties
+func (m *Movie) GetId() MovieId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetPrequel() *MovieId {
+	if m == nil {
+		return nil
+	}
+	return m.Prequel
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
+func (m *Movie) GetFrom() string {
+	if m == nil {
+		return ""
+	}
+	return m.From
+}
+
+func (m *Movie) GetRating() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Rating
+}
+
+func (m *Movie) GetTag() commons.Tag {
+	if m == nil {
+		return ""
+	}
+	return m.Tag
+}
+
+func (m *Movie) GetBook() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Book
+}
+
+func (m *Movie) GetMetadata() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.Metadata
+}
+
+func (m *Movie) GetRevenue() int64 {
+	if m == nil {
+		return 0
+	}
+	return m.Revenue
 }
 
 func (m *Movie) Type() string {
 	return m.type_
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Movie) UnmarshalJSON(data []byte) error {
@@ -1013,6 +1482,27 @@ type Node struct {
 	_rawJSON        json.RawMessage
 }
 
+func (n *Node) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *Node) GetNodes() []*Node {
+	if n == nil {
+		return nil
+	}
+	return n.Nodes
+}
+
+func (n *Node) GetTrees() []*Tree {
+	if n == nil {
+		return nil
+	}
+	return n.Trees
+}
+
 func (n *Node) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -1052,6 +1542,13 @@ type Request struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetRequest() interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Request
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
@@ -1096,6 +1593,20 @@ type Response struct {
 	_rawJSON        json.RawMessage
 }
 
+func (r *Response) GetResponse() interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Response
+}
+
+func (r *Response) GetIdentifiers() []*Identifier {
+	if r == nil {
+		return nil
+	}
+	return r.Identifiers
+}
+
 func (r *Response) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -1135,6 +1646,13 @@ type ResponseType struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (r *ResponseType) GetType() *Type {
+	if r == nil {
+		return nil
+	}
+	return r.Type
 }
 
 func (r *ResponseType) GetExtraProperties() map[string]interface{} {
@@ -1177,6 +1695,20 @@ type StuntDouble struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (s *StuntDouble) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
+}
+
+func (s *StuntDouble) GetActorOrActressId() string {
+	if s == nil {
+		return ""
+	}
+	return s.ActorOrActressId
 }
 
 func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
@@ -1225,6 +1757,27 @@ func NewTestFromAnd(value bool) *Test {
 
 func NewTestFromOr(value bool) *Test {
 	return &Test{Type: "or", Or: value}
+}
+
+func (t *Test) GetType() string {
+	if t == nil {
+		return ""
+	}
+	return t.Type
+}
+
+func (t *Test) GetAnd() bool {
+	if t == nil {
+		return false
+	}
+	return t.And
+}
+
+func (t *Test) GetOr() bool {
+	if t == nil {
+		return false
+	}
+	return t.Or
 }
 
 func (t *Test) UnmarshalJSON(data []byte) error {
@@ -1305,6 +1858,13 @@ type Tree struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (t *Tree) GetNodes() []*Node {
+	if t == nil {
+		return nil
+	}
+	return t.Nodes
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {

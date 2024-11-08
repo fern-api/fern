@@ -14,6 +14,13 @@ type CreateResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *CreateResponse) GetUser() *UserModel {
+	if c == nil {
+		return nil
+	}
+	return c.User
+}
+
 func (c *CreateResponse) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -55,6 +62,20 @@ func NewMetadataFromStringMetadataValueMap(value map[string]*MetadataValue) *Met
 
 func NewMetadataFromStringUnknownMap(value map[string]interface{}) *Metadata {
 	return &Metadata{typ: "StringUnknownMap", StringUnknownMap: value}
+}
+
+func (m *Metadata) GetStringMetadataValueMap() map[string]*MetadataValue {
+	if m == nil {
+		return nil
+	}
+	return m.StringMetadataValueMap
+}
+
+func (m *Metadata) GetStringUnknownMap() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.StringUnknownMap
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
@@ -116,6 +137,27 @@ func NewMetadataValueFromString(value string) *MetadataValue {
 
 func NewMetadataValueFromBoolean(value bool) *MetadataValue {
 	return &MetadataValue{typ: "Boolean", Boolean: value}
+}
+
+func (m *MetadataValue) GetDouble() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Double
+}
+
+func (m *MetadataValue) GetString() string {
+	if m == nil {
+		return ""
+	}
+	return m.String
+}
+
+func (m *MetadataValue) GetBoolean() bool {
+	if m == nil {
+		return false
+	}
+	return m.Boolean
 }
 
 func (m *MetadataValue) UnmarshalJSON(data []byte) error {
@@ -180,6 +222,41 @@ type UserModel struct {
 	Metadata *Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *UserModel) GetUsername() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Username
+}
+
+func (u *UserModel) GetEmail() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Email
+}
+
+func (u *UserModel) GetAge() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Age
+}
+
+func (u *UserModel) GetWeight() *float64 {
+	if u == nil {
+		return nil
+	}
+	return u.Weight
+}
+
+func (u *UserModel) GetMetadata() *Metadata {
+	if u == nil {
+		return nil
+	}
+	return u.Metadata
 }
 
 func (u *UserModel) GetExtraProperties() map[string]interface{} {

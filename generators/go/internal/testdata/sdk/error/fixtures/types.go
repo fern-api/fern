@@ -15,6 +15,13 @@ type UserNotFoundErrorBody struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UserNotFoundErrorBody) GetRequestedUserId() string {
+	if u == nil {
+		return ""
+	}
+	return u.RequestedUserId
+}
+
 func (u *UserNotFoundErrorBody) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }

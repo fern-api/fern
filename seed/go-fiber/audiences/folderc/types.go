@@ -15,6 +15,13 @@ type FolderCFoo struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *FolderCFoo) GetBarProperty() uuid.UUID {
+	if f == nil {
+		return uuid.UUID{}
+	}
+	return f.BarProperty
+}
+
 func (f *FolderCFoo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

@@ -88,6 +88,13 @@ type UsernameCursor struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UsernameCursor) GetCursor() *UsernamePage {
+	if u == nil {
+		return nil
+	}
+	return u.Cursor
+}
+
 func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -130,6 +137,27 @@ type ListUsersExtendedOptionalListResponse struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetData() *UserOptionalListContainer {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetNext() *uuid.UUID {
+	if l == nil {
+		return nil
+	}
+	return l.Next
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
 }
 
 func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]interface{} {
@@ -176,6 +204,27 @@ type ListUsersExtendedResponse struct {
 	_rawJSON        json.RawMessage
 }
 
+func (l *ListUsersExtendedResponse) GetData() *UserListContainer {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersExtendedResponse) GetNext() *uuid.UUID {
+	if l == nil {
+		return nil
+	}
+	return l.Next
+}
+
+func (l *ListUsersExtendedResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
 func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
@@ -219,6 +268,34 @@ type ListUsersPaginationResponse struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (l *ListUsersPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersPaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
 }
 
 func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{} {
@@ -284,6 +361,13 @@ type UsernameContainer struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UsernameContainer) GetResults() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Results
+}
+
 func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -325,6 +409,13 @@ type WithCursor struct {
 	_rawJSON        json.RawMessage
 }
 
+func (w *WithCursor) GetCursor() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Cursor
+}
+
 func (w *WithCursor) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -364,6 +455,13 @@ type WithPage struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (w *WithPage) GetPage() *int {
+	if w == nil {
+		return nil
+	}
+	return w.Page
 }
 
 func (w *WithPage) GetExtraProperties() map[string]interface{} {

@@ -16,6 +16,13 @@ type Foo struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *Foo) GetFoo() *folderc.FolderCFoo {
+	if f == nil {
+		return nil
+	}
+	return f.Foo
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

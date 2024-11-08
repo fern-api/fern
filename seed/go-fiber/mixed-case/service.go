@@ -29,6 +29,34 @@ func NewResourceFromOrganization(value *Organization) *Resource {
 	return &Resource{ResourceType: "Organization", Organization: value}
 }
 
+func (r *Resource) GetResourceType() string {
+	if r == nil {
+		return ""
+	}
+	return r.ResourceType
+}
+
+func (r *Resource) GetStatus() ResourceStatus {
+	if r == nil {
+		return ""
+	}
+	return r.Status
+}
+
+func (r *Resource) GetUser() *User {
+	if r == nil {
+		return nil
+	}
+	return r.User
+}
+
+func (r *Resource) GetOrganization() *Organization {
+	if r == nil {
+		return nil
+	}
+	return r.Organization
+}
+
 func (r *Resource) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		ResourceType string         `json:"resource_type"`

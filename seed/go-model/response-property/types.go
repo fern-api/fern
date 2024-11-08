@@ -14,6 +14,13 @@ type WithMetadata struct {
 	extraProperties map[string]interface{}
 }
 
+func (w *WithMetadata) GetMetadata() map[string]string {
+	if w == nil {
+		return nil
+	}
+	return w.Metadata
+}
+
 func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -49,6 +56,20 @@ type Movie struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *Movie) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetName() string {
+	if m == nil {
+		return ""
+	}
+	return m.Name
+}
+
 func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -81,6 +102,13 @@ type WithDocs struct {
 	Docs string `json:"docs" url:"docs"`
 
 	extraProperties map[string]interface{}
+}
+
+func (w *WithDocs) GetDocs() string {
+	if w == nil {
+		return ""
+	}
+	return w.Docs
 }
 
 func (w *WithDocs) GetExtraProperties() map[string]interface{} {

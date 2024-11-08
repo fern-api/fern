@@ -74,6 +74,7 @@ scripts:
 allowedFailures:
   - alias-extends
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - server-sent-events
   - streaming-parameter

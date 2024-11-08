@@ -16,6 +16,20 @@ type Notification struct {
 	_rawJSON        json.RawMessage
 }
 
+func (n *Notification) GetId() string {
+	if n == nil {
+		return ""
+	}
+	return n.Id
+}
+
+func (n *Notification) GetMessage() string {
+	if n == nil {
+		return ""
+	}
+	return n.Message
+}
+
 func (n *Notification) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }

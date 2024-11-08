@@ -16,6 +16,13 @@ type Bar struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Bar) GetFoo() *Foo {
+	if b == nil {
+		return nil
+	}
+	return b.Foo
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -64,6 +71,27 @@ type Foo struct {
 	StringAlias String    `json:"stringAlias" url:"stringAlias"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetId() uuid.UUID {
+	if f == nil {
+		return uuid.UUID{}
+	}
+	return f.Id
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *Foo) GetStringAlias() String {
+	if f == nil {
+		return ""
+	}
+	return f.StringAlias
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
@@ -131,6 +159,34 @@ func NewUnionFromBarAlias(value BarAlias) *Union {
 
 func NewUnionFromDoubleAlias(value Double) *Union {
 	return &Union{Type: "doubleAlias", DoubleAlias: value}
+}
+
+func (u *Union) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *Union) GetFooAlias() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.FooAlias
+}
+
+func (u *Union) GetBarAlias() BarAlias {
+	if u == nil {
+		return nil
+	}
+	return u.BarAlias
+}
+
+func (u *Union) GetDoubleAlias() Double {
+	if u == nil {
+		return 0
+	}
+	return u.DoubleAlias
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {

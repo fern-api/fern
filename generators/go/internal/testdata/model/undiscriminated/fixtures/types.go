@@ -29,6 +29,20 @@ func NewAnotherUnionFromFoo(value *Foo) *AnotherUnion {
 	return &AnotherUnion{typ: "Foo", Foo: value}
 }
 
+func (a *AnotherUnion) GetString() string {
+	if a == nil {
+		return ""
+	}
+	return a.String
+}
+
+func (a *AnotherUnion) GetFoo() *Foo {
+	if a == nil {
+		return nil
+	}
+	return a.Foo
+}
+
 func (a *AnotherUnion) FernStringLiteral() string {
 	return a.fernStringLiteral
 }
@@ -96,6 +110,13 @@ type Bar struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Bar) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -130,6 +151,13 @@ type Baz struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *Baz) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
 func (b *Baz) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -162,6 +190,13 @@ type Foo struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
@@ -250,6 +285,69 @@ func NewUnionWithFernStringLiteral() *Union {
 
 func NewUnionWithAnotherStringLiteral() *Union {
 	return &Union{typ: "anotherStringLiteral", anotherStringLiteral: "another"}
+}
+
+func (u *Union) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *Union) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
+func (u *Union) GetBaz() *Baz {
+	if u == nil {
+		return nil
+	}
+	return u.Baz
+}
+
+func (u *Union) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *Union) GetIntegerOptional() *int {
+	if u == nil {
+		return nil
+	}
+	return u.IntegerOptional
+}
+
+func (u *Union) GetStringBooleanMap() map[string]bool {
+	if u == nil {
+		return nil
+	}
+	return u.StringBooleanMap
+}
+
+func (u *Union) GetStringList() []string {
+	if u == nil {
+		return nil
+	}
+	return u.StringList
+}
+
+func (u *Union) GetStringListList() [][]string {
+	if u == nil {
+		return nil
+	}
+	return u.StringListList
+}
+
+func (u *Union) GetDoubleSet() []float64 {
+	if u == nil {
+		return nil
+	}
+	return u.DoubleSet
 }
 
 func (u *Union) FernStringLiteral() string {
@@ -439,6 +537,13 @@ func NewUnionWithLiteralFromString(value string) *UnionWithLiteral {
 	return &UnionWithLiteral{typ: "String", String: value}
 }
 
+func (u *UnionWithLiteral) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
 func (u *UnionWithLiteral) FernStringLiteral() string {
 	return u.fernStringLiteral
 }
@@ -500,6 +605,20 @@ func NewUnionWithOptionalTimeFromDateOptional(value *time.Time) *UnionWithOption
 
 func NewUnionWithOptionalTimeFromDateTimeOptional(value *time.Time) *UnionWithOptionalTime {
 	return &UnionWithOptionalTime{typ: "DateTimeOptional", DateTimeOptional: value}
+}
+
+func (u *UnionWithOptionalTime) GetDateOptional() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.DateOptional
+}
+
+func (u *UnionWithOptionalTime) GetDateTimeOptional() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.DateTimeOptional
 }
 
 func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
@@ -571,6 +690,41 @@ func NewUnionWithTimeFromDateOptional(value *time.Time) *UnionWithTime {
 
 func NewUnionWithTimeFromDateTimeOptional(value *time.Time) *UnionWithTime {
 	return &UnionWithTime{typ: "DateTimeOptional", DateTimeOptional: value}
+}
+
+func (u *UnionWithTime) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithTime) GetDate() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.Date
+}
+
+func (u *UnionWithTime) GetDateTime() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.DateTime
+}
+
+func (u *UnionWithTime) GetDateOptional() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.DateOptional
+}
+
+func (u *UnionWithTime) GetDateTimeOptional() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.DateTimeOptional
 }
 
 func (u *UnionWithTime) UnmarshalJSON(data []byte) error {

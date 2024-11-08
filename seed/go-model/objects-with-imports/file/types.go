@@ -17,6 +17,27 @@ type Directory struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *Directory) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Directory) GetFiles() []*fern.File {
+	if d == nil {
+		return nil
+	}
+	return d.Files
+}
+
+func (d *Directory) GetDirectories() []*Directory {
+	if d == nil {
+		return nil
+	}
+	return d.Directories
+}
+
 func (d *Directory) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }

@@ -35,6 +35,13 @@ type MyObject struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
+}
+
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }

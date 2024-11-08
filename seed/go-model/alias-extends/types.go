@@ -17,6 +17,20 @@ type Child struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *Child) GetParent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Parent
+}
+
+func (c *Child) GetChild() string {
+	if c == nil {
+		return ""
+	}
+	return c.Child
+}
+
 func (c *Child) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -49,6 +63,13 @@ type Parent struct {
 	Parent string `json:"parent" url:"parent"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *Parent) GetParent() string {
+	if p == nil {
+		return ""
+	}
+	return p.Parent
 }
 
 func (p *Parent) GetExtraProperties() map[string]interface{} {

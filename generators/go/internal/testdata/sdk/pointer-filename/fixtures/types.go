@@ -15,6 +15,13 @@ type Pointer struct {
 	_rawJSON        json.RawMessage
 }
 
+func (p *Pointer) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
 func (p *Pointer) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }

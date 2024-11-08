@@ -54,6 +54,13 @@ type User struct {
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 }
 
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
 }

@@ -36,6 +36,27 @@ type User struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *User) GetId() string {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetAge() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Age
+}
+
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }

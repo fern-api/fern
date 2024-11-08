@@ -20,6 +20,13 @@ type Docs struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *Docs) GetDocs() string {
+	if d == nil {
+		return ""
+	}
+	return d.Docs
+}
+
 func (d *Docs) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -53,6 +60,20 @@ type ExampleType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleType) GetDocs() string {
+	if e == nil {
+		return ""
+	}
+	return e.Docs
+}
+
+func (e *ExampleType) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
 }
 
 func (e *ExampleType) GetExtraProperties() map[string]interface{} {
@@ -90,6 +111,20 @@ type Json struct {
 	extraProperties map[string]interface{}
 }
 
+func (j *Json) GetDocs() string {
+	if j == nil {
+		return ""
+	}
+	return j.Docs
+}
+
+func (j *Json) GetRaw() string {
+	if j == nil {
+		return ""
+	}
+	return j.Raw
+}
+
 func (j *Json) GetExtraProperties() map[string]interface{} {
 	return j.extraProperties
 }
@@ -124,6 +159,27 @@ type NestedType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NestedType) GetDocs() string {
+	if n == nil {
+		return ""
+	}
+	return n.Docs
+}
+
+func (n *NestedType) GetRaw() string {
+	if n == nil {
+		return ""
+	}
+	return n.Raw
+}
+
+func (n *NestedType) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
 }
 
 func (n *NestedType) GetExtraProperties() map[string]interface{} {

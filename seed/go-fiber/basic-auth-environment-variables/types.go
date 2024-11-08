@@ -14,6 +14,13 @@ type UnauthorizedRequestErrorBody struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *UnauthorizedRequestErrorBody) GetMessage() string {
+	if u == nil {
+		return ""
+	}
+	return u.Message
+}
+
 func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }

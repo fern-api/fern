@@ -20,8 +20,18 @@ type SendRequest struct {
 	_rawJSON        json.RawMessage
 }
 
-func (s *SendRequest) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
+func (s *SendRequest) GetQuery() string {
+	if s == nil {
+		return ""
+	}
+	return s.Query
+}
+
+func (s *SendRequest) GetContainerObject() *ContainerObject {
+	if s == nil {
+		return nil
+	}
+	return s.ContainerObject
 }
 
 func (s *SendRequest) Prompt() string {
@@ -30,6 +40,10 @@ func (s *SendRequest) Prompt() string {
 
 func (s *SendRequest) Stream() bool {
 	return s.stream
+}
+
+func (s *SendRequest) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendRequest) UnmarshalJSON(data []byte) error {

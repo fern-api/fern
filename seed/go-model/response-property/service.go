@@ -16,6 +16,13 @@ type StringResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *StringResponse) GetData() string {
+	if s == nil {
+		return ""
+	}
+	return s.Data
+}
+
 func (s *StringResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -52,6 +59,27 @@ type Response struct {
 	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *Response) GetMetadata() map[string]string {
+	if r == nil {
+		return nil
+	}
+	return r.Metadata
+}
+
+func (r *Response) GetDocs() string {
+	if r == nil {
+		return ""
+	}
+	return r.Docs
+}
+
+func (r *Response) GetData() *Movie {
+	if r == nil {
+		return nil
+	}
+	return r.Data
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {

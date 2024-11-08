@@ -64,6 +64,34 @@ type Type struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *Type) GetDecimal() float64 {
+	if t == nil {
+		return 0
+	}
+	return t.Decimal
+}
+
+func (t *Type) GetEven() int {
+	if t == nil {
+		return 0
+	}
+	return t.Even
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *Type) GetShape() Shape {
+	if t == nil {
+		return ""
+	}
+	return t.Shape
+}
+
 func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }

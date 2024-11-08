@@ -23,6 +23,13 @@ func NewKeyWithDefaultStringLiteral() *Key {
 	return &Key{typ: "defaultStringLiteral", defaultStringLiteral: "default"}
 }
 
+func (k *Key) GetKeyType() KeyType {
+	if k == nil {
+		return ""
+	}
+	return k.KeyType
+}
+
 func (k *Key) DefaultStringLiteral() string {
 	return k.defaultStringLiteral
 }
@@ -97,6 +104,13 @@ type TypeWithOptionalUnion struct {
 	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
+	if t == nil {
+		return nil
+	}
+	return t.MyUnion
 }
 
 func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
