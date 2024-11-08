@@ -6,6 +6,42 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
+          "Game": {
+            "docs": undefined,
+            "properties": {
+              "added_at": "optional<datetime>",
+              "complete": "GameComplete",
+              "date": {
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "extra_fields": "list<GameExtraFieldsItem>",
+              "group": "optional<string>",
+              "id": "optional<integer>",
+              "name": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 255,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "photos": "optional<list<GamePhotosItem>>",
+              "room": "optional<string>",
+              "start_at": "optional<datetime>",
+              "time": "string",
+              "updated_at": "optional<datetime>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "GameComplete": {
             "docs": undefined,
             "properties": {
@@ -51,11 +87,10 @@
               "openapi": "../openapi.yml",
             },
           },
-          "GameRead": {
+          "Group": {
             "docs": undefined,
             "properties": {
               "added_at": "optional<datetime>",
-              "complete": "GameComplete",
               "date": {
                 "type": "string",
                 "validation": {
@@ -65,9 +100,9 @@
                   "pattern": undefined,
                 },
               },
-              "extra_fields": "list<GameExtraFieldsItem>",
-              "group": "optional<string>",
+              "games": "optional<list<GroupGamesItem>>",
               "id": "optional<integer>",
+              "is_event": "optional<boolean>",
               "name": {
                 "type": "optional<string>",
                 "validation": {
@@ -77,8 +112,8 @@
                   "pattern": undefined,
                 },
               },
-              "photos": "optional<list<GamePhotosItem>>",
-              "room": "optional<string>",
+              "photos": "optional<list<GroupPhotosItem>>",
+              "players": "list<GroupPlayersItem>",
               "start_at": "optional<datetime>",
               "time": "string",
               "updated_at": "optional<datetime>",
@@ -220,36 +255,21 @@
               "openapi": "../openapi.yml",
             },
           },
-          "GroupRead": {
+          "Photo": {
             "docs": undefined,
             "properties": {
               "added_at": "optional<datetime>",
-              "date": {
+              "id": "optional<string>",
+              "original_image": {
                 "type": "string",
                 "validation": {
-                  "format": "date",
+                  "format": "binary",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "pattern": undefined,
                 },
               },
-              "games": "optional<list<GroupGamesItem>>",
-              "id": "optional<integer>",
-              "is_event": "optional<boolean>",
-              "name": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 255,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "photos": "optional<list<GroupPhotosItem>>",
-              "players": "list<GroupPlayersItem>",
-              "start_at": "optional<datetime>",
-              "time": "string",
-              "updated_at": "optional<datetime>",
+              "processed": "list<PhotoProcessedItem>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -277,39 +297,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PhotoRead": {
-            "docs": undefined,
-            "properties": {
-              "added_at": "optional<datetime>",
-              "id": "optional<string>",
-              "original_image": {
-                "type": "string",
-                "validation": {
-                  "format": "binary",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "processed": "list<PhotoProcessedItem>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PlayerExtraFieldsItem": {
-            "docs": undefined,
-            "properties": {
-              "key": "string",
-              "label": "optional<string>",
-              "present": "boolean",
-              "value": "optional<map<string, unknown>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PlayerRead": {
+          "Player": {
             "docs": undefined,
             "properties": {
               "added_at": "optional<datetime>",
@@ -350,7 +338,19 @@
               "openapi": "../openapi.yml",
             },
           },
-          "RoomRead": {
+          "PlayerExtraFieldsItem": {
+            "docs": undefined,
+            "properties": {
+              "key": "string",
+              "label": "optional<string>",
+              "present": "boolean",
+              "value": "optional<map<string, unknown>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Room": {
             "docs": undefined,
             "properties": {
               "hidden": "optional<boolean>",
@@ -372,7 +372,7 @@
         },
       },
       "rawContents": "types:
-  RoomRead:
+  Room:
     properties:
       id: optional<integer>
       name:
@@ -410,7 +410,7 @@
       completion_time: optional<integer>
     source:
       openapi: ../openapi.yml
-  GameRead:
+  Game:
     properties:
       id: optional<integer>
       added_at: optional<datetime>
@@ -511,7 +511,7 @@
       ready: optional<string>
     source:
       openapi: ../openapi.yml
-  GroupRead:
+  Group:
     properties:
       id: optional<integer>
       added_at: optional<datetime>
@@ -540,7 +540,7 @@
       present: boolean
     source:
       openapi: ../openapi.yml
-  PlayerRead:
+  Player:
     properties:
       id: optional<integer>
       added_at: optional<datetime>
@@ -575,7 +575,7 @@
       ready: optional<string>
     source:
       openapi: ../openapi.yml
-  PhotoRead:
+  Photo:
     properties:
       id: optional<string>
       added_at: optional<datetime>

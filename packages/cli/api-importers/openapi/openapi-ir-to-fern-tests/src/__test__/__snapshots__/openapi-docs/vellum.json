@@ -838,7 +838,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "DeploymentReadRead": {
+          "DeploymentRead": {
             "docs": undefined,
             "properties": {
               "active_model_version_ids": "list<string>",
@@ -914,7 +914,45 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "DocumentDocumentToDocumentIndexRead": {
+          "Document": {
+            "docs": undefined,
+            "properties": {
+              "external_id": {
+                "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 1000,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "id": {
+                "docs": "The ID of the document.",
+                "type": "string",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "label": {
+                "docs": "The human-readable name for the document.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 1000,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "DocumentDocumentToDocumentIndex": {
             "docs": undefined,
             "properties": {
               "document_index_id": {
@@ -952,7 +990,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "DocumentIndexReadRead": {
+          "DocumentIndexRead": {
             "docs": undefined,
             "properties": {
               "created": "datetime",
@@ -1016,44 +1054,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "ACTIVE",
               "ARCHIVED",
             ],
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DocumentRead": {
-            "docs": undefined,
-            "properties": {
-              "external_id": {
-                "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 1000,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "id": {
-                "docs": "The ID of the document.",
-                "type": "string",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "label": {
-                "docs": "The human-readable name for the document.",
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 1000,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1408,7 +1408,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "ModelVersionReadRead": {
+          "ModelVersionRead": {
             "docs": undefined,
             "properties": {
               "build_config": {
@@ -1494,7 +1494,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "ModelVersionSandboxSnapshotRead": {
+          "ModelVersionSandboxSnapshot": {
             "docs": undefined,
             "properties": {
               "id": {
@@ -2153,7 +2153,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "SlimDocumentRead": {
+          "SlimDocument": {
             "docs": undefined,
             "properties": {
               "document_to_document_indexes": "list<DocumentDocumentToDocumentIndex>",
@@ -2595,7 +2595,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "STRING": "WorkflowResultEventOutputDataString",
             },
           },
-          "WorkflowResultEventOutputDataChatHistoryRead": {
+          "WorkflowResultEventOutputDataChatHistory": {
             "docs": undefined,
             "properties": {
               "delta": {
@@ -2611,7 +2611,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
-          "WorkflowResultEventOutputDataJsonRead": {
+          "WorkflowResultEventOutputDataJson": {
             "docs": undefined,
             "properties": {
               "delta": {
@@ -3196,7 +3196,7 @@ types:
       delta: optional<string>
     source:
       openapi: ../openapi.yml
-  DeploymentReadRead:
+  DeploymentRead:
     properties:
       id:
         type: string
@@ -3251,7 +3251,7 @@ types:
       * `ARCHIVED` - Archived
     source:
       openapi: ../openapi.yml
-  DocumentRead:
+  Document:
     properties:
       id:
         type: string
@@ -3272,7 +3272,7 @@ types:
           maxLength: 1000
     source:
       openapi: ../openapi.yml
-  DocumentDocumentToDocumentIndexRead:
+  DocumentDocumentToDocumentIndex:
     properties:
       id:
         type: string
@@ -3304,7 +3304,7 @@ types:
           * `FAILED` - Failed
     source:
       openapi: ../openapi.yml
-  DocumentIndexReadRead:
+  DocumentIndexRead:
     properties:
       id:
         type: string
@@ -3615,7 +3615,7 @@ types:
       top_k: optional<double>
     source:
       openapi: ../openapi.yml
-  ModelVersionReadRead:
+  ModelVersionRead:
     properties:
       id:
         type: string
@@ -3679,7 +3679,7 @@ types:
       * `DISABLED` - Disabled
     source:
       openapi: ../openapi.yml
-  ModelVersionSandboxSnapshotRead:
+  ModelVersionSandboxSnapshot:
     properties:
       id:
         type: string
@@ -4097,7 +4097,7 @@ types:
         docs: The relative weight to give to keyword matches
     source:
       openapi: ../openapi.yml
-  SlimDocumentRead:
+  SlimDocument:
     properties:
       id:
         type: string
@@ -4399,7 +4399,7 @@ types:
       CHAT_HISTORY: WorkflowResultEventOutputDataChatHistory
     source:
       openapi: ../openapi.yml
-  WorkflowResultEventOutputDataChatHistoryRead:
+  WorkflowResultEventOutputDataChatHistory:
     properties:
       name: string
       state: WorkflowNodeResultEventState
@@ -4412,7 +4412,7 @@ types:
       value: optional<list<ChatMessage>>
     source:
       openapi: ../openapi.yml
-  WorkflowResultEventOutputDataJsonRead:
+  WorkflowResultEventOutputDataJson:
     properties:
       name: string
       state: WorkflowNodeResultEventState

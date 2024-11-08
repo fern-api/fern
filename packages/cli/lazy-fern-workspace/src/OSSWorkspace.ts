@@ -118,7 +118,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
-        this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.cooerceEnumsToLiterals);
+        this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
     }
 
     public async getOpenAPIIr(

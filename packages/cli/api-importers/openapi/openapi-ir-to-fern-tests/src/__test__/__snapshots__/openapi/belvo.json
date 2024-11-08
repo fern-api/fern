@@ -8159,42 +8159,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "openapi": "../openapi.yml",
             },
           },
-          "ReceivablesTransactionAccount": {
-            "docs": "Basic information about the account associated with the transaction.",
-            "properties": {
-              "id": {
-                "docs": "Belvo's unique ID for the account associated with the transaction.",
-                "type": "string",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "institution": "InstitutionAccount",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ReceivablesTransactionNumberOfInstallments": {
-            "docs": "Details regarding the number of installments for the transaction, if applicable.",
-            "properties": {
-              "paid": {
-                "docs": "The number of payments already made to pay the cost of the transaction.",
-                "type": "optional<integer>",
-              },
-              "total": {
-                "docs": "The number of payments required to pay the cost of the transaction.",
-                "type": "optional<integer>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ReceivablesTransactionRead": {
+          "ReceivablesTransaction": {
             "docs": undefined,
             "properties": {
               "account": "ReceivablesTransactionAccount",
@@ -8255,6 +8220,41 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "value_hour": {
                 "docs": "The time that the transaction occurred, according to the institution, in `HH:MM` format.",
                 "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ReceivablesTransactionAccount": {
+            "docs": "Basic information about the account associated with the transaction.",
+            "properties": {
+              "id": {
+                "docs": "Belvo's unique ID for the account associated with the transaction.",
+                "type": "string",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "institution": "InstitutionAccount",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ReceivablesTransactionNumberOfInstallments": {
+            "docs": "Details regarding the number of installments for the transaction, if applicable.",
+            "properties": {
+              "paid": {
+                "docs": "The number of payments already made to pay the cost of the transaction.",
+                "type": "optional<integer>",
+              },
+              "total": {
+                "docs": "The number of payments required to pay the cost of the transaction.",
+                "type": "optional<integer>",
               },
             },
             "source": {
@@ -16602,7 +16602,7 @@ types:
         docs: The number of payments required to pay the cost of the transaction.
     source:
       openapi: ../openapi.yml
-  ReceivablesTransactionRead:
+  ReceivablesTransaction:
     properties:
       id:
         type: string

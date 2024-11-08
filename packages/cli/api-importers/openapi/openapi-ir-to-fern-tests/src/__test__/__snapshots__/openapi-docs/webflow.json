@@ -35804,7 +35804,9 @@ webhooks:
                   "request": {
                     "openGraph": {
                       "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
+                      "descriptionCopied": false,
                       "title": "Explore the Cosmos with The Ultimate Guide",
+                      "titleCopied": false,
                     },
                     "seo": {
                       "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -36436,9 +36438,19 @@ Required scope | `pages:write`
                 "docs": "The description supplied to Open Graph annotations",
                 "type": "optional<string>",
               },
+              "descriptionCopied": {
+                "default": true,
+                "docs": "Indicates the Open Graph description was copied from the SEO description",
+                "type": "optional<boolean>",
+              },
               "title": {
                 "docs": "The title supplied to Open Graph annotations",
                 "type": "optional<string>",
+              },
+              "titleCopied": {
+                "default": true,
+                "docs": "Indicates the Open Graph title was copied from the SEO title",
+                "type": "optional<boolean>",
               },
             },
             "source": {
@@ -36914,9 +36926,19 @@ Required scope | `pages:write`
       title:
         type: optional<string>
         docs: The title supplied to Open Graph annotations
+      titleCopied:
+        type: optional<boolean>
+        docs: Indicates the Open Graph title was copied from the SEO title
+        default: true
       description:
         type: optional<string>
         docs: The description supplied to Open Graph annotations
+      descriptionCopied:
+        type: optional<boolean>
+        docs: >-
+          Indicates the Open Graph description was copied from the SEO
+          description
+        default: true
     source:
       openapi: ../openapi.yml
   UpdatePageSettingsResponseSeo:
@@ -37417,9 +37439,11 @@ service:
                 Vogon poetry to the importance of towels.
             openGraph:
               title: Explore the Cosmos with The Ultimate Guide
+              titleCopied: false
               description: >-
                 Dive deep into the mysteries of the universe with your guide to
                 everything galactic.
+              descriptionCopied: false
           response:
             body:
               id: 6596da6045e56dee495bcbba
@@ -39289,9 +39313,29 @@ Required scope | `ecommerce:write`
           "ProductsCreateRequestSku": {
             "docs": "The SKU object",
             "properties": {
+              "cmsLocaleId": {
+                "docs": "Identifier for the locale of the CMS item",
+                "type": "optional<string>",
+              },
+              "createdOn": {
+                "docs": "The date the Product was created",
+                "type": "optional<datetime>",
+              },
               "fieldData": {
                 "docs": "Standard and Custom fields for a SKU",
                 "type": "optional<ProductsCreateRequestSkuFieldData>",
+              },
+              "id": {
+                "docs": "Unique identifier for the Product",
+                "type": "optional<string>",
+              },
+              "lastPublished": {
+                "docs": "The date the Product was last published",
+                "type": "optional<datetime>",
+              },
+              "lastUpdated": {
+                "docs": "The date the Product was last updated",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -39377,6 +39421,7 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
+              "plans": "optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -39393,6 +39438,37 @@ Required scope | `ecommerce:write`
               "week",
               "month",
               "year",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "docs": "The unique identifier of the plan",
+                "type": "optional<string>",
+              },
+              "platform": {
+                "docs": "The platform of the subscription plan",
+                "type": "optional<literal<"stripe">>",
+              },
+              "status": {
+                "docs": "The status of the plan",
+                "type": "optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus": {
+            "docs": "The status of the plan",
+            "enum": [
+              "active",
+              "inactive",
+              "canceled",
             ],
             "source": {
               "openapi": "../openapi.yml",
@@ -39883,9 +39959,29 @@ Required scope | `ecommerce:write`
           "ProductsCreateSkuRequestSkusItem": {
             "docs": "The SKU object",
             "properties": {
+              "cmsLocaleId": {
+                "docs": "Identifier for the locale of the CMS item",
+                "type": "optional<string>",
+              },
+              "createdOn": {
+                "docs": "The date the Product was created",
+                "type": "optional<datetime>",
+              },
               "fieldData": {
                 "docs": "Standard and Custom fields for a SKU",
                 "type": "optional<ProductsCreateSkuRequestSkusItemFieldData>",
+              },
+              "id": {
+                "docs": "Unique identifier for the Product",
+                "type": "optional<string>",
+              },
+              "lastPublished": {
+                "docs": "The date the Product was last published",
+                "type": "optional<datetime>",
+              },
+              "lastUpdated": {
+                "docs": "The date the Product was last updated",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -39971,6 +40067,7 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
+              "plans": "optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -39987,6 +40084,37 @@ Required scope | `ecommerce:write`
               "week",
               "month",
               "year",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "docs": "The unique identifier of the plan",
+                "type": "optional<string>",
+              },
+              "platform": {
+                "docs": "The platform of the subscription plan",
+                "type": "optional<literal<"stripe">>",
+              },
+              "status": {
+                "docs": "The status of the plan",
+                "type": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus": {
+            "docs": "The status of the plan",
+            "enum": [
+              "active",
+              "inactive",
+              "canceled",
             ],
             "source": {
               "openapi": "../openapi.yml",
@@ -41146,9 +41274,21 @@ Required scope | `ecommerce:write`
           "ProductsUpdateRequestProduct": {
             "docs": "The Product object",
             "properties": {
+              "cmsLocaleId": {
+                "docs": "Identifier for the locale of the CMS item",
+                "type": "optional<string>",
+              },
+              "createdOn": {
+                "docs": "The date the Product was created",
+                "type": "optional<datetime>",
+              },
               "fieldData": {
                 "docs": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
                 "type": "optional<ProductsUpdateRequestProductFieldData>",
+              },
+              "id": {
+                "docs": "Unique identifier for the Product",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -41159,6 +41299,14 @@ Required scope | `ecommerce:write`
                 "default": false,
                 "docs": "Boolean determining if the Product is set to draft",
                 "type": "optional<boolean>",
+              },
+              "lastPublished": {
+                "docs": "The date the Product was last published",
+                "type": "optional<datetime>",
+              },
+              "lastUpdated": {
+                "docs": "The date the Product was last updated",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -41396,9 +41544,29 @@ Required scope | `ecommerce:write`
           "ProductsUpdateRequestSku": {
             "docs": "The SKU object",
             "properties": {
+              "cmsLocaleId": {
+                "docs": "Identifier for the locale of the CMS item",
+                "type": "optional<string>",
+              },
+              "createdOn": {
+                "docs": "The date the Product was created",
+                "type": "optional<datetime>",
+              },
               "fieldData": {
                 "docs": "Standard and Custom fields for a SKU",
                 "type": "optional<ProductsUpdateRequestSkuFieldData>",
+              },
+              "id": {
+                "docs": "Unique identifier for the Product",
+                "type": "optional<string>",
+              },
+              "lastPublished": {
+                "docs": "The date the Product was last published",
+                "type": "optional<datetime>",
+              },
+              "lastUpdated": {
+                "docs": "The date the Product was last updated",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -41484,6 +41652,7 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
+              "plans": "optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -41500,6 +41669,37 @@ Required scope | `ecommerce:write`
               "week",
               "month",
               "year",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "docs": "The unique identifier of the plan",
+                "type": "optional<string>",
+              },
+              "platform": {
+                "docs": "The platform of the subscription plan",
+                "type": "optional<literal<"stripe">>",
+              },
+              "status": {
+                "docs": "The status of the plan",
+                "type": "optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus": {
+            "docs": "The status of the plan",
+            "enum": [
+              "active",
+              "inactive",
+              "canceled",
             ],
             "source": {
               "openapi": "../openapi.yml",
@@ -41794,9 +41994,29 @@ Required scope | `ecommerce:write`
           "ProductsUpdateSkuRequestSku": {
             "docs": "The SKU object",
             "properties": {
+              "cmsLocaleId": {
+                "docs": "Identifier for the locale of the CMS item",
+                "type": "optional<string>",
+              },
+              "createdOn": {
+                "docs": "The date the Product was created",
+                "type": "optional<datetime>",
+              },
               "fieldData": {
                 "docs": "Standard and Custom fields for a SKU",
                 "type": "optional<ProductsUpdateSkuRequestSkuFieldData>",
+              },
+              "id": {
+                "docs": "Unique identifier for the Product",
+                "type": "optional<string>",
+              },
+              "lastPublished": {
+                "docs": "The date the Product was last published",
+                "type": "optional<datetime>",
+              },
+              "lastUpdated": {
+                "docs": "The date the Product was last updated",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -41882,6 +42102,7 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
+              "plans": "optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -41898,6 +42119,37 @@ Required scope | `ecommerce:write`
               "week",
               "month",
               "year",
+            ],
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "docs": "The unique identifier of the plan",
+                "type": "optional<string>",
+              },
+              "platform": {
+                "docs": "The platform of the subscription plan",
+                "type": "optional<literal<"stripe">>",
+              },
+              "status": {
+                "docs": "The status of the plan",
+                "type": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus": {
+            "docs": "The status of the plan",
+            "enum": [
+              "active",
+              "inactive",
+              "canceled",
             ],
             "source": {
               "openapi": "../openapi.yml",
@@ -42655,6 +42907,28 @@ Required scope | `ecommerce:write`
     docs: Interval of subscription renewal
     source:
       openapi: ../openapi.yml
+  ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
+    enum:
+      - active
+      - inactive
+      - canceled
+    docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
+  ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
+    properties:
+      platform:
+        type: optional<literal<"stripe">>
+        docs: The platform of the subscription plan
+      id:
+        type: optional<string>
+        docs: The unique identifier of the plan
+      status:
+        type: >-
+          optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>
+        docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
   ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlan:
     properties:
       interval:
@@ -42667,6 +42941,8 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
+      plans: >-
+        optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestSkuFieldData:
@@ -42705,6 +42981,21 @@ Required scope | `ecommerce:write`
   ProductsCreateRequestSku:
     docs: The SKU object
     properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the Product
+      cmsLocaleId:
+        type: optional<string>
+        docs: Identifier for the locale of the CMS item
+      lastPublished:
+        type: optional<datetime>
+        docs: The date the Product was last published
+      lastUpdated:
+        type: optional<datetime>
+        docs: The date the Product was last updated
+      createdOn:
+        type: optional<datetime>
+        docs: The date the Product was created
       fieldData:
         type: optional<ProductsCreateRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
@@ -43508,6 +43799,21 @@ Required scope | `ecommerce:write`
   ProductsUpdateRequestProduct:
     docs: The Product object
     properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the Product
+      cmsLocaleId:
+        type: optional<string>
+        docs: Identifier for the locale of the CMS item
+      lastPublished:
+        type: optional<datetime>
+        docs: The date the Product was last published
+      lastUpdated:
+        type: optional<datetime>
+        docs: The date the Product was last updated
+      createdOn:
+        type: optional<datetime>
+        docs: The date the Product was created
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -43562,6 +43868,28 @@ Required scope | `ecommerce:write`
     docs: Interval of subscription renewal
     source:
       openapi: ../openapi.yml
+  ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
+    enum:
+      - active
+      - inactive
+      - canceled
+    docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
+  ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
+    properties:
+      platform:
+        type: optional<literal<"stripe">>
+        docs: The platform of the subscription plan
+      id:
+        type: optional<string>
+        docs: The unique identifier of the plan
+      status:
+        type: >-
+          optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>
+        docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
   ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlan:
     properties:
       interval:
@@ -43574,6 +43902,8 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
+      plans: >-
+        optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
     source:
       openapi: ../openapi.yml
   ProductsUpdateRequestSkuFieldData:
@@ -43612,6 +43942,21 @@ Required scope | `ecommerce:write`
   ProductsUpdateRequestSku:
     docs: The SKU object
     properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the Product
+      cmsLocaleId:
+        type: optional<string>
+        docs: Identifier for the locale of the CMS item
+      lastPublished:
+        type: optional<datetime>
+        docs: The date the Product was last published
+      lastUpdated:
+        type: optional<datetime>
+        docs: The date the Product was last updated
+      createdOn:
+        type: optional<datetime>
+        docs: The date the Product was created
       fieldData:
         type: optional<ProductsUpdateRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
@@ -43841,6 +44186,28 @@ Required scope | `ecommerce:write`
     docs: Interval of subscription renewal
     source:
       openapi: ../openapi.yml
+  ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus:
+    enum:
+      - active
+      - inactive
+      - canceled
+    docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
+  ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem:
+    properties:
+      platform:
+        type: optional<literal<"stripe">>
+        docs: The platform of the subscription plan
+      id:
+        type: optional<string>
+        docs: The unique identifier of the plan
+      status:
+        type: >-
+          optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItemStatus>
+        docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlan:
     properties:
       interval:
@@ -43853,6 +44220,8 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
+      plans: >-
+        optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
     source:
       openapi: ../openapi.yml
   ProductsCreateSkuRequestSkusItemFieldData:
@@ -43891,6 +44260,21 @@ Required scope | `ecommerce:write`
   ProductsCreateSkuRequestSkusItem:
     docs: The SKU object
     properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the Product
+      cmsLocaleId:
+        type: optional<string>
+        docs: Identifier for the locale of the CMS item
+      lastPublished:
+        type: optional<datetime>
+        docs: The date the Product was last published
+      lastUpdated:
+        type: optional<datetime>
+        docs: The date the Product was last updated
+      createdOn:
+        type: optional<datetime>
+        docs: The date the Product was created
       fieldData:
         type: optional<ProductsCreateSkuRequestSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -44080,6 +44464,28 @@ Required scope | `ecommerce:write`
     docs: Interval of subscription renewal
     source:
       openapi: ../openapi.yml
+  ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus:
+    enum:
+      - active
+      - inactive
+      - canceled
+    docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
+  ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem:
+    properties:
+      platform:
+        type: optional<literal<"stripe">>
+        docs: The platform of the subscription plan
+      id:
+        type: optional<string>
+        docs: The unique identifier of the plan
+      status:
+        type: >-
+          optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItemStatus>
+        docs: The status of the plan
+    source:
+      openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlan:
     properties:
       interval:
@@ -44092,6 +44498,8 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
+      plans: >-
+        optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
     source:
       openapi: ../openapi.yml
   ProductsUpdateSkuRequestSkuFieldData:
@@ -44130,6 +44538,21 @@ Required scope | `ecommerce:write`
   ProductsUpdateSkuRequestSku:
     docs: The SKU object
     properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the Product
+      cmsLocaleId:
+        type: optional<string>
+        docs: Identifier for the locale of the CMS item
+      lastPublished:
+        type: optional<datetime>
+        docs: The date the Product was last published
+      lastUpdated:
+        type: optional<datetime>
+        docs: The date the Product was last updated
+      createdOn:
+        type: optional<datetime>
+        docs: The date the Product was created
       fieldData:
         type: optional<ProductsUpdateSkuRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
