@@ -6,6 +6,12 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.5
+  createdAt: "2024-11-09"
+  changelogEntry:
+    - type: feat
+      summary: Copy the csproj Version as the AssemblyVersion and FileVersion.
+  irVersion: 53
 - version: 1.9.4
   createdAt: "2024-11-08"
   changelogEntry:
