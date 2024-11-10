@@ -91,6 +91,13 @@ variable: Union[List[str], Set[str]]
 "
 `;
 
+exports[`PythonFile > References to other nodes in same module in __init__.py work 1`] = `
+"from ..trains import Train
+
+exported_car: Train
+"
+`;
+
 exports[`PythonFile > Set a variable to a nested attribute of an imported reference 1`] = `
 "from external_module import ImportedClass
 
