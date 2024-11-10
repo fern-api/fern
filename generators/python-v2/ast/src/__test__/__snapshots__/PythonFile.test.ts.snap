@@ -7,7 +7,7 @@ exports[`PythonFile > Add a Method 1`] = `
 `;
 
 exports[`PythonFile > Add a class that inherits from a class imported from another file 1`] = `
-"from .test_module.base import BaseClass
+"from .base import BaseClass
 
 
 class DerivedClass(BaseClass):
@@ -25,8 +25,8 @@ class TestClass:
 `;
 
 exports[`PythonFile > Add a class with a reference that uses a relative import 1`] = `
-"from .my_module.level_1 import OtherClass
-from .my_module.level_1.level_2 import DeepClass
+"from .level_1 import OtherClass
+from .level_1.level_2 import DeepClass
 
 
 class TestClass(OtherClass):
@@ -39,7 +39,7 @@ class DeeplyNestedTestClass(DeepClass):
 `;
 
 exports[`PythonFile > Add a class with a relative import and alias 1`] = `
-"from ..test_module.test.sibling_dir import SiblingClass as AliasedSibling
+"from .test.sibling_dir import SiblingClass as AliasedSibling
 
 
 class TestClassWithRelativeAlias(AliasedSibling):
@@ -69,7 +69,7 @@ exports[`PythonFile > Add a code block 1`] = `
 
 exports[`PythonFile > Add a field with a list of reference type and initializer 1`] = `
 "from typing import List
-from .test_module.cars import Car
+from .cars import Car
 
 cars: List[Car] = [Car(), Car()]
 "

@@ -5,8 +5,6 @@ import { ModulePath } from "./core/types";
 
 export declare namespace PythonFile {
     interface Args {
-        /* The name of the Python module that this file belongs to*/
-        moduleName: string;
         /* The path of the Python file relative to the module */
         path: ModulePath;
         /* Whether or not this represents the root of a Python module */
@@ -15,14 +13,12 @@ export declare namespace PythonFile {
 }
 
 export class PythonFile extends AstNode {
-    public readonly moduleName: string;
     public readonly path: ModulePath;
     public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
 
-    constructor({ moduleName, path, isInitFile = false }: PythonFile.Args) {
+    constructor({ path, isInitFile = false }: PythonFile.Args) {
         super();
-        this.moduleName = moduleName;
         this.path = path;
         this.isInitFile = isInitFile;
     }
@@ -79,7 +75,7 @@ export class PythonFile extends AstNode {
 
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
-            if (refModulePath[0] === this.moduleName) {
+            if (refModulePath[0] === this.path[0]) {
                 // Relativize the import
                 // Calculate the common prefix length
                 let commonPrefixLength = 0;
