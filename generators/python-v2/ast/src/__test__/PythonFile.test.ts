@@ -12,9 +12,7 @@ describe("PythonFile", () => {
 
     it("Add a class with no references", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const testClass = python.class_({ name: "TestClass" });
@@ -26,9 +24,7 @@ describe("PythonFile", () => {
 
     it("Add a class with a reference that uses a python standard library reference", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const testClass = python.class_({
@@ -45,9 +41,7 @@ describe("PythonFile", () => {
 
     it("Add a class with a reference that uses a relative import", async () => {
         const file = python.file({
-            moduleName: "my_module",
-            path: ["level_1"],
-            name: "test_file"
+            path: ["my_module"]
         });
 
         const relativeRef = python.reference({
@@ -77,9 +71,7 @@ describe("PythonFile", () => {
 
     it("Set a variable to a nested attribute of an imported reference", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const importedRef = python.reference({
@@ -101,9 +93,7 @@ describe("PythonFile", () => {
 
     it("Add a Method", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const testMethod = new Method({
@@ -119,9 +109,7 @@ describe("PythonFile", () => {
 
     it("Add a code block", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const codeBlock = new CodeBlock("print('Hello, World!')");
@@ -133,9 +121,7 @@ describe("PythonFile", () => {
 
     it("Add a class with an absolute import and alias", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const absoluteRef = python.reference({
@@ -155,9 +141,7 @@ describe("PythonFile", () => {
 
     it("Add a class with a relative import and alias", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test", "subdir"],
-            name: "test_file"
+            path: ["test_module", "subdir"]
         });
 
         const relativeRef = python.reference({
@@ -177,9 +161,7 @@ describe("PythonFile", () => {
 
     it("Add a class that inherits from a class imported from another file", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const baseClassRef = python.reference({
@@ -200,9 +182,7 @@ describe("PythonFile", () => {
 
     it("Add a field with a list of reference type and initializer", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const carRef = python.reference({
@@ -224,9 +204,7 @@ describe("PythonFile", () => {
 
     it("Multiple imports from the same module should work", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const unionField = python.field({
@@ -242,9 +220,7 @@ describe("PythonFile", () => {
 
     it("Ensure we don't duplicate imports", async () => {
         const file = python.file({
-            moduleName: "test_module",
-            path: ["test"],
-            name: "test_file"
+            path: ["test_module"]
         });
 
         const varAField = python.field({
@@ -259,6 +235,28 @@ describe("PythonFile", () => {
 
         file.addStatement(varAField);
         file.addStatement(varBField);
+
+        file.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("References to other nodes in same module in __init__.py work", async () => {
+        const file = python.file({
+            path: ["root", "car"],
+            isInitFile: true
+        });
+
+        const carRef = python.reference({
+            name: "Train",
+            modulePath: ["root", "trains"]
+        });
+
+        const exportField = python.field({
+            name: "exported_car",
+            type: python.Type.reference(carRef)
+        });
+
+        file.addStatement(exportField);
 
         file.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
