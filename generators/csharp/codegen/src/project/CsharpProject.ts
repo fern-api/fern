@@ -595,6 +595,8 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         if (this.context.version != null) {
             result.push(`<Version>${this.context.version}</Version>`);
+            result.push("<AssemblyVersion>$(Version)</AssemblyVersion>");
+            result.push("<FileVersion>$(Version)</FileVersion>");
         }
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
