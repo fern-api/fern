@@ -394,6 +394,7 @@ function consolidateRequestResponseExamples(
 
     const visitedResponseIdx = new Set<number>();
     for (const [requestId, requestExample] of requestExamples) {
+        // If the request has no id, or response cannot be paired, pair the request with the first response example that has no id, falling back to the first response example
         const fallbackResponseExample =
             responseExamples.find(([responseId]) => responseId == null)?.[1] ?? responseExamples[0]?.[1];
 
@@ -411,6 +412,7 @@ function consolidateRequestResponseExamples(
 
         let paired = false;
         for (let idx = 0; idx < responseExamples.length; idx++) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const [responseId, responseExample] = responseExamples[idx]!;
             if (responseId == null || visitedResponseIdx.has(idx)) {
                 continue;
@@ -442,7 +444,7 @@ function consolidateRequestResponseExamples(
         if (visitedResponseIdx.has(idx)) {
             continue;
         }
-
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const [responseId, responseExample] = responseExamples[idx]!;
 
         const requestExample = requestExamples.find(([requestId]) => requestId == null)?.[1] ?? requestExamples[0]?.[1];
