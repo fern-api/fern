@@ -427,7 +427,6 @@ function consolidateRequestResponseExamples(
                     visitedResponseIdx.add(idx);
                 }
                 paired = true;
-                break;
             }
         }
 
