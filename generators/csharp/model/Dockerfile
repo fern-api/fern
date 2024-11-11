@@ -1,4 +1,4 @@
-FROM node:18-alpine3.18 AS node
+FROM node:20.18-alpine3.20 AS node
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18
 
 RUN apk --no-cache add bash curl git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
