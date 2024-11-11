@@ -13,6 +13,10 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
     environments: core.serialization.list(core.serialization.string()).optional(),
     button: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundButtonSettings).optional(),
     oauth: core.serialization.boolean().optional(),
+    limitWebsocketMessagesPerConnection: core.serialization.property(
+        "limit-websocket-messages-per-connection",
+        core.serialization.number().optional()
+    ),
 });
 
 export declare namespace PlaygroundSettings {
@@ -20,5 +24,6 @@ export declare namespace PlaygroundSettings {
         environments?: string[] | null;
         button?: serializers.PlaygroundButtonSettings.Raw | null;
         oauth?: boolean | null;
+        "limit-websocket-messages-per-connection"?: number | null;
     }
 }

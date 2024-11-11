@@ -1,22 +1,16 @@
-import { DEFINITION_DIRECTORY } from "@fern-api/configuration";
-import {
-    GeneratorGroup,
-    GeneratorInvocation,
-    GeneratorsConfiguration
-} from "@fern-api/configuration/src/generators-yml";
+import { DEFINITION_DIRECTORY, GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     FernWorkspace,
     getOSSWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
-import { group } from "yargs";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../workspaceShouldGenerateDynamicSnippetTests";
 import { ScriptRunner } from "../test/ScriptRunner";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner } from "../test/test-runner";
@@ -73,7 +67,7 @@ export async function runWithCustomFixture({
     }
 
     try {
-        let fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
+        const fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
             { context: taskContext },
             getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
         );
@@ -84,7 +78,8 @@ export async function runWithCustomFixture({
             absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
             taskContext,
             irVersion: workspace.workspaceConfig.irVersion,
-            group: generatorGroup.group
+            group: generatorGroup.group,
+            shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace)
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,
@@ -115,7 +110,7 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation: invocation
+                    invocation
                 };
             }
         }

@@ -16,6 +16,13 @@ type Bar struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Bar) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -57,6 +64,13 @@ type Foo struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -96,6 +110,27 @@ type Union struct {
 	Type string
 	Foo  *Foo
 	Bar  *Bar
+}
+
+func (u *Union) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *Union) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *Union) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {
@@ -175,6 +210,41 @@ type UnionWithBaseProperties struct {
 	Integer int
 	String  string
 	Foo     *Foo
+}
+
+func (u *UnionWithBaseProperties) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithBaseProperties) GetId() string {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *UnionWithBaseProperties) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithBaseProperties) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithBaseProperties) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
 }
 
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
@@ -274,6 +344,27 @@ type UnionWithDiscriminant struct {
 	Bar *Bar
 }
 
+func (u *UnionWithDiscriminant) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithDiscriminant) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *UnionWithDiscriminant) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
 func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
@@ -355,11 +446,24 @@ func NewUnionWithLiteralWithFern() *UnionWithLiteral {
 	return &UnionWithLiteral{Type: "fern", fern: "fern"}
 }
 
+func (u *UnionWithLiteral) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
 func (u *UnionWithLiteral) Base() string {
+	if u == nil {
+		return ""
+	}
 	return u.base
 }
 
 func (u *UnionWithLiteral) Fern() string {
+	if u == nil {
+		return ""
+	}
 	return u.fern
 }
 
@@ -426,6 +530,27 @@ type UnionWithOptionalTime struct {
 	Type     string
 	Date     *time.Time
 	Dateimte *time.Time
+}
+
+func (u *UnionWithOptionalTime) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithOptionalTime) GetDate() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.Date
+}
+
+func (u *UnionWithOptionalTime) GetDateimte() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.Dateimte
 }
 
 func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
@@ -505,6 +630,27 @@ type UnionWithPrimitive struct {
 	String  string
 }
 
+func (u *UnionWithPrimitive) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithPrimitive) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithPrimitive) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
 func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -581,6 +727,20 @@ type UnionWithSingleElement struct {
 	Foo  *Foo
 }
 
+func (u *UnionWithSingleElement) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithSingleElement) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
 func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -626,6 +786,34 @@ type UnionWithTime struct {
 	Value    int
 	Date     time.Time
 	Datetime time.Time
+}
+
+func (u *UnionWithTime) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithTime) GetValue() int {
+	if u == nil {
+		return 0
+	}
+	return u.Value
+}
+
+func (u *UnionWithTime) GetDate() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.Date
+}
+
+func (u *UnionWithTime) GetDatetime() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.Datetime
 }
 
 func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
@@ -727,6 +915,27 @@ type UnionWithUnknown struct {
 	Unknown interface{}
 }
 
+func (u *UnionWithUnknown) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithUnknown) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *UnionWithUnknown) GetUnknown() interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.Unknown
+}
+
 func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -794,6 +1003,27 @@ type UnionWithoutKey struct {
 	Bar *Bar
 }
 
+func (u *UnionWithoutKey) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithoutKey) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *UnionWithoutKey) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
+}
+
 func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -854,6 +1084,13 @@ type Circle struct {
 	_rawJSON        json.RawMessage
 }
 
+func (c *Circle) GetRadius() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Radius
+}
+
 func (c *Circle) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -895,6 +1132,13 @@ type GetShapeRequest struct {
 	_rawJSON        json.RawMessage
 }
 
+func (g *GetShapeRequest) GetId() string {
+	if g == nil {
+		return ""
+	}
+	return g.Id
+}
+
 func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
@@ -934,6 +1178,13 @@ type Square struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (s *Square) GetLength() float64 {
+	if s == nil {
+		return 0
+	}
+	return s.Length
 }
 
 func (s *Square) GetExtraProperties() map[string]interface{} {

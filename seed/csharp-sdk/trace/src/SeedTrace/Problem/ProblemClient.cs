@@ -28,16 +28,16 @@ public partial class ProblemClient
     ///         ProblemName = "problemName",
     ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List<object>() { "boards", "boards" },
+    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
     ///         },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
     ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
     ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                         new FileInfo { Filename = "filename", Contents = "contents" },
@@ -45,20 +45,20 @@ public partial class ProblemClient
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List<object>() { 1, 1 },
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
@@ -67,7 +67,7 @@ public partial class ProblemClient
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List<object>() { 1, 1 },
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
@@ -126,16 +126,16 @@ public partial class ProblemClient
     ///         ProblemName = "problemName",
     ///         ProblemDescription = new ProblemDescription
     ///         {
-    ///             Boards = new List<object>() { "boards", "boards" },
+    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
     ///         },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
     ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
     ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                         new FileInfo { Filename = "filename", Contents = "contents" },
@@ -143,20 +143,20 @@ public partial class ProblemClient
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List<object>() { 1, 1 },
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
@@ -165,7 +165,7 @@ public partial class ProblemClient
     ///                 TestCase = new TestCase
     ///                 {
     ///                     Id = "id",
-    ///                     Params = new List<object>() { 1, 1 },
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
@@ -257,7 +257,7 @@ public partial class ProblemClient
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },

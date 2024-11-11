@@ -3088,6 +3088,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "Create a new organization."
                 }
@@ -4337,6 +4338,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "List all users."
                 }
@@ -5735,6 +5737,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "List all user events."
                 }
@@ -6846,6 +6849,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "Get event metadata."
                 }

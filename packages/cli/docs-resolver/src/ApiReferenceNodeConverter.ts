@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -78,6 +78,12 @@ export class ApiReferenceNodeConverter {
 
     public get(): FernNavigation.V1.ApiReferenceNode {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
+        const changelogNodeConverter = new ChangelogNodeConverter(
+            this.markdownFilesToFullSlugs,
+            this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
+            this.docsWorkspace,
+            this.#idgen
+        ).orUndefined();
         return {
             id: this.#idgen.get(this.apiDefinitionId),
             type: "apiReference",
@@ -90,14 +96,9 @@ export class ApiReferenceNodeConverter {
             hidden: this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
             showErrors: this.apiSection.showErrors,
-            changelog: new ChangelogNodeConverter(
-                this.markdownFilesToFullSlugs,
-                this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
-                this.docsWorkspace,
-                this.#idgen
-            ).toChangelogNode({
+            changelog: changelogNodeConverter?.toChangelogNode({
                 parentSlug: this.#slug,
-                viewers: []
+                viewers: undefined
             }),
             children: this.#children,
             availability: undefined,
@@ -532,7 +533,7 @@ export class ApiReferenceNodeConverter {
             return {
                 ...child,
                 children,
-                pointsTo: FernNavigation.V1.followRedirects(children)
+                pointsTo: undefined
             };
         }
         return child;
@@ -651,7 +652,7 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: undefined,
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
-                    pointsTo: FernNavigation.V1.followRedirects(subpackageChildren),
+                    pointsTo: undefined,
                     noindex: undefined,
                     playground: undefined,
                     authed: undefined,
@@ -706,6 +707,10 @@ export class ApiReferenceNodeConverter {
                 button:
                     playgroundSettings.button != null && playgroundSettings.button.href
                         ? { href: FernNavigation.V1.Url(playgroundSettings.button.href) }
+                        : undefined,
+                "limit-websocket-messages-per-connection":
+                    playgroundSettings.limitWebsocketMessagesPerConnection != null
+                        ? playgroundSettings.limitWebsocketMessagesPerConnection
                         : undefined
             };
         }

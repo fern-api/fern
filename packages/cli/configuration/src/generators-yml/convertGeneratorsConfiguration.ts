@@ -96,7 +96,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -115,7 +117,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -134,7 +138,9 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -153,7 +159,9 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined
                         }
                     });
                 } else {
@@ -170,7 +178,9 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined
                         }
                     });
                 }
@@ -189,7 +199,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -213,7 +225,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         } else if (openapi != null) {
@@ -230,7 +244,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -249,7 +265,9 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: settings?.["message-naming"],
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -313,7 +331,9 @@ async function parseApiConfigurationV2Schema({
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
-                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"]
+                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
+                    objectQueryParameters: spec.settings?.["object-query-parameters"],
+                    respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"]
                 }
             };
             if (spec.namespace == null) {

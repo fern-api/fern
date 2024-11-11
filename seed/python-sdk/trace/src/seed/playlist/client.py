@@ -74,6 +74,9 @@ class PlaylistClient:
             datetime=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
+            optional_datetime=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
             name="name",
             problems=["problems", "problems"],
         )
@@ -154,8 +157,10 @@ class PlaylistClient:
         )
         client.playlist.get_playlists(
             service_param=1,
+            limit=1,
             other_field="otherField",
             multi_line_docs="multiLineDocs",
+            optional_multiple_field="optionalMultipleField",
             multiple_field="multipleField",
         )
         """
@@ -278,6 +283,7 @@ class PlaylistClient:
         Examples
         --------
         from seed import SeedTrace
+        from seed.playlist import UpdatePlaylistRequest
 
         client = SeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -286,6 +292,10 @@ class PlaylistClient:
         client.playlist.update_playlist(
             service_param=1,
             playlist_id="playlistId",
+            request=UpdatePlaylistRequest(
+                name="name",
+                problems=["problems", "problems"],
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -423,6 +433,9 @@ class AsyncPlaylistClient:
                 datetime=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
+                optional_datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
                 name="name",
                 problems=["problems", "problems"],
             )
@@ -511,8 +524,10 @@ class AsyncPlaylistClient:
         async def main() -> None:
             await client.playlist.get_playlists(
                 service_param=1,
+                limit=1,
                 other_field="otherField",
                 multi_line_docs="multiLineDocs",
+                optional_multiple_field="optionalMultipleField",
                 multiple_field="multipleField",
             )
 
@@ -648,6 +663,7 @@ class AsyncPlaylistClient:
         import asyncio
 
         from seed import AsyncSeedTrace
+        from seed.playlist import UpdatePlaylistRequest
 
         client = AsyncSeedTrace(
             x_random_header="YOUR_X_RANDOM_HEADER",
@@ -659,6 +675,10 @@ class AsyncPlaylistClient:
             await client.playlist.update_playlist(
                 service_param=1,
                 playlist_id="playlistId",
+                request=UpdatePlaylistRequest(
+                    name="name",
+                    problems=["problems", "problems"],
+                ),
             )
 
 

@@ -5,8 +5,10 @@
 /**
  * @example
  *     {
+ *         limit: 1,
  *         otherField: "otherField",
  *         multiLineDocs: "multiLineDocs",
+ *         optionalMultipleField: "optionalMultipleField",
  *         multipleField: "multipleField"
  *     }
  */

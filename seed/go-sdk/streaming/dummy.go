@@ -80,6 +80,20 @@ type StreamResponse struct {
 	_rawJSON        json.RawMessage
 }
 
+func (s *StreamResponse) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *StreamResponse) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }

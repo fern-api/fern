@@ -92,16 +92,42 @@ await client.admin.storeTracedTestCase(
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			},
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
@@ -126,9 +152,22 @@ await client.admin.storeTracedTestCaseV2(
 					filename: "filename",
 					directory: "directory"
 				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			},
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -137,9 +176,22 @@ await client.admin.storeTracedTestCaseV2(
 					filename: "filename",
 					directory: "directory"
 				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
@@ -151,31 +203,68 @@ await client.admin.storeTracedTestCaseV2(
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
 await client.admin.storeTracedWorkspace(
-  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  {
-    workspaceRunDetails: {
-      stdout: "stdout",
-    },
-    traceResponses: [
-      {
-        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        lineNumber: 1,
-        stack: {
-          numStackFrames: 1,
-        },
-      },
-      {
-        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        lineNumber: 1,
-        stack: {
-          numStackFrames: 1,
-        },
-      },
-    ],
-  }
-);
+	"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+	{
+		workspaceRunDetails: {
+			exceptionV2: exceptionV2: { 
+				type : "generic", 
+				exceptionType: "exceptionType",
+				exceptionMessage: "exceptionMessage",
+				exceptionStacktrace: "exceptionStacktrace"
+			},
+			exception: {
+				exceptionType: "exceptionType",
+				exceptionMessage: "exceptionMessage",
+				exceptionStacktrace: "exceptionStacktrace"
+			},
+			stdout: "stdout"
+		},
+		traceResponses: [
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
+			},
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
+			}
+		]
+	}
+)
  
 ```                        
 
@@ -195,9 +284,22 @@ await client.admin.storeTracedWorkspaceV2(
 					filename: "filename",
 					directory: "directory"
 				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			},
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -206,9 +308,22 @@ await client.admin.storeTracedWorkspaceV2(
 					filename: "filename",
 					directory: "directory"
 				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
 				stack: {
-					numStackFrames: 1
-				}
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
@@ -259,6 +374,7 @@ import { SeedTraceClient } from "@fern/trace";
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.createPlaylist(1, {
   datetime: "2024-01-15T09:30:00Z",
+  optionalDatetime: "2024-01-15T09:30:00Z",
   name: "name",
   problems: ["problems", "problems"],
 });
@@ -271,8 +387,10 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.getPlaylists(1, {
+  limit: 1,
   otherField: "otherField",
   multiLineDocs: "multiLineDocs",
+  optionalMultipleField: "optionalMultipleField",
   multipleField: "multipleField",
 });
  
@@ -292,7 +410,10 @@ await client.playlist.getPlaylist(1, "playlistId");
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.updatePlaylist(1, "playlistId");
+await client.playlist.updatePlaylist(1, "playlistId", {
+  name: "name",
+  problems: ["problems", "problems"],
+});
  
 ```                        
 

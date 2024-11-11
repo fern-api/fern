@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedQueryParameters\SeedQueryParameters.csproj" />
+        <ProjectReference Include="..\SeedQueryParameters\SeedQueryParameters.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedQueryParameters.Test.Custom.props" Condition="Exists('SeedQueryParameters.Test.Custom.props')" />
 </Project>

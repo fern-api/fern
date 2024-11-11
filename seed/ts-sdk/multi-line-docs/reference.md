@@ -100,7 +100,7 @@ This endpoint is used to create a new user.
 ```typescript
 await client.user.createUser({
     name: "name",
-    age: undefined,
+    age: 1,
 });
 ```
 

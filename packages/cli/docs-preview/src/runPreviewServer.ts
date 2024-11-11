@@ -37,8 +37,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         analyticsConfig: undefined,
         integrations: undefined,
         css: undefined,
-        js: undefined,
-        playground: undefined
+        js: undefined
     },
     search: {
         type: "legacyMultiAlgoliaIndex",
@@ -77,12 +76,13 @@ export async function runPreviewServer({
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
         } catch (err) {
             const pathToBundle = getPathToBundleFolder();
+            if (err instanceof Error) {
+                context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+            }
             if (await doesPathExist(pathToBundle)) {
-                context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+                context.logger.warn("Falling back to cached bundle...");
             } else {
-                context.logger.warn(
-                    "Failed to download docs application. Please reach out to support@buildwithfern.com."
-                );
+                context.logger.warn("Please reach out to support@buildwithfern.com.");
                 return;
             }
         }
@@ -112,7 +112,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;

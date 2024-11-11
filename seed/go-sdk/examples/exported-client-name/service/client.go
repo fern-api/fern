@@ -152,8 +152,9 @@ func (c *Client) GetMetadata(
 	return response, nil
 }
 
-func (c *Client) GetResponse(
+func (c *Client) CreateBigEntity(
 	ctx context.Context,
+	request *fern.BigEntity,
 	opts ...option.RequestOption,
 ) (*fern.Response, error) {
 	options := core.NewRequestOptions(opts...)
@@ -165,7 +166,7 @@ func (c *Client) GetResponse(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/response"
+	endpointURL := baseURL + "/big-entity"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -180,6 +181,7 @@ func (c *Client) GetResponse(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			Request:         request,
 			Response:        &response,
 		},
 	); err != nil {

@@ -11,14 +11,23 @@ import (
 type Key struct {
 	KeyType              KeyType
 	defaultStringLiteral string
+
+	typ string
 }
 
 func NewKeyFromKeyType(value KeyType) *Key {
-	return &Key{KeyType: value}
+	return &Key{typ: "KeyType", KeyType: value}
 }
 
 func NewKeyWithDefaultStringLiteral() *Key {
-	return &Key{defaultStringLiteral: "default"}
+	return &Key{typ: "defaultStringLiteral", defaultStringLiteral: "default"}
+}
+
+func (k *Key) GetKeyType() KeyType {
+	if k == nil {
+		return ""
+	}
+	return k.KeyType
 }
 
 func (k *Key) DefaultStringLiteral() string {
@@ -28,11 +37,13 @@ func (k *Key) DefaultStringLiteral() string {
 func (k *Key) UnmarshalJSON(data []byte) error {
 	var valueKeyType KeyType
 	if err := json.Unmarshal(data, &valueKeyType); err == nil {
+		k.typ = "KeyType"
 		k.KeyType = valueKeyType
 		return nil
 	}
 	var valueDefaultStringLiteral string
 	if err := json.Unmarshal(data, &valueDefaultStringLiteral); err == nil {
+		k.typ = "defaultStringLiteral"
 		k.defaultStringLiteral = valueDefaultStringLiteral
 		if k.defaultStringLiteral != "default" {
 			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", k, "default", valueDefaultStringLiteral)
@@ -43,10 +54,10 @@ func (k *Key) UnmarshalJSON(data []byte) error {
 }
 
 func (k Key) MarshalJSON() ([]byte, error) {
-	if k.KeyType != "" {
+	if k.typ == "KeyType" || k.KeyType != "" {
 		return json.Marshal(k.KeyType)
 	}
-	if k.defaultStringLiteral != "" {
+	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
 		return json.Marshal("default")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", k)
@@ -58,10 +69,10 @@ type KeyVisitor interface {
 }
 
 func (k *Key) Accept(visitor KeyVisitor) error {
-	if k.KeyType != "" {
+	if k.typ == "KeyType" || k.KeyType != "" {
 		return visitor.VisitKeyType(k.KeyType)
 	}
-	if k.defaultStringLiteral != "" {
+	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
 		return visitor.VisitDefaultStringLiteral(k.defaultStringLiteral)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", k)
@@ -93,6 +104,13 @@ type TypeWithOptionalUnion struct {
 	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
+	if t == nil {
+		return nil
+	}
+	return t.MyUnion
 }
 
 func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {

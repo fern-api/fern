@@ -50,8 +50,8 @@ export interface ServiceServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
-    getResponse(
-        req: express.Request<never, SeedExamples.Response, never, never>,
+    createBigEntity(
+        req: express.Request<never, SeedExamples.Response, SeedExamples.BigEntity, never>,
         res: {
             send: (responseBody: SeedExamples.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -178,34 +178,45 @@ export class ServiceService {
                 next(error);
             }
         });
-        this.router.post("/response", async (req, res, next) => {
-            try {
-                await this.methods.getResponse(
-                    req as any,
-                    {
-                        send: async (responseBody) => {
-                            res.json(
-                                serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+        this.router.post("/big-entity", async (req, res, next) => {
+            const request = serializers.BigEntity.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createBigEntity(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    },
-                    next
-                );
-                next();
-            } catch (error) {
-                if (error instanceof errors.SeedExamplesError) {
-                    console.warn(
-                        `Endpoint 'getResponse' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                        next
                     );
-                    await error.send(res);
-                } else {
-                    res.status(500).json("Internal Server Error");
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedExamplesError) {
+                        console.warn(
+                            `Endpoint 'createBigEntity' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
                 }
-                next(error);
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

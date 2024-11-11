@@ -2913,6 +2913,7 @@
                         }
                     },
                     "jsonExample": {
+                        "status": "ACTIVE",
                         "resource_type": "user",
                         "userName": "username",
                         "metadata_tags": [
@@ -3201,7 +3202,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "625e8d23ceadb5d4efb47ccef83f3feebb7acd8051c753945c49f3c20f3dc769",
+                                "id": "0fed9fb2d42988bf41f50ad8d3024a6a6b993e9cc2b0e8abfeeacb915069fa0f",
                                 "name": null,
                                 "url": "/resource/rsc-xyz",
                                 "rootPathParameters": [],
@@ -3792,6 +3793,7 @@
                                                 }
                                             },
                                             "jsonExample": {
+                                                "status": "ACTIVE",
                                                 "resource_type": "user",
                                                 "userName": "username",
                                                 "metadata_tags": [
@@ -4396,6 +4398,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 },
@@ -5320,6 +5323,7 @@
                                                             },
                                                             "jsonExample": {
                                                                 "resource_type": "user",
+                                                                "status": "ACTIVE",
                                                                 "userName": "username",
                                                                 "metadata_tags": [
                                                                     "tag1",
@@ -5405,6 +5409,7 @@
                                             "jsonExample": [
                                                 {
                                                     "resource_type": "user",
+                                                    "status": "ACTIVE",
                                                     "userName": "username",
                                                     "metadata_tags": [
                                                         "tag1",
@@ -6679,6 +6684,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": null
                 }

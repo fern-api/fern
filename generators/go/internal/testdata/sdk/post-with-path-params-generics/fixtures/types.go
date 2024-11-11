@@ -15,6 +15,13 @@ type Bar struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Bar) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -54,6 +61,13 @@ type Foo struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetId() string {
+	if f == nil {
+		return ""
+	}
+	return f.Id
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {

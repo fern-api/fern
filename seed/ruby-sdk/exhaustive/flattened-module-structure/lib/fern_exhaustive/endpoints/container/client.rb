@@ -177,7 +177,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object_::Types::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_optional
+      #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
       def get_and_return_optional(request: nil, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -380,7 +380,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object_::Types::ObjectWithRequiredField]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_optional
+      #  exhaustive.endpoints.container.get_and_return_optional(request: { string: "string" })
       def get_and_return_optional(request: nil, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|

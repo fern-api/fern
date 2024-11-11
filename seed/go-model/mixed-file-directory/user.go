@@ -16,6 +16,27 @@ type User struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *User) GetId() Id {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetAge() int {
+	if u == nil {
+		return 0
+	}
+	return u.Age
+}
+
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }

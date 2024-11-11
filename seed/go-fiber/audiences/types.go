@@ -17,6 +17,20 @@ type FilteredType struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *FilteredType) GetPublicProperty() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PublicProperty
+}
+
+func (f *FilteredType) GetPrivateProperty() int {
+	if f == nil {
+		return 0
+	}
+	return f.PrivateProperty
+}
+
 func (f *FilteredType) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }

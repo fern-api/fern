@@ -114,9 +114,8 @@ export class Type extends AstNode {
             case "map": {
                 writer.write("map[");
                 this.internalType.keyType.write(writer);
-                writer.write("][");
-                this.internalType.valueType.write(writer);
                 writer.write("]");
+                this.internalType.valueType.write(writer);
                 break;
             }
             case "optional": {
@@ -212,6 +211,11 @@ export class Type extends AstNode {
             type: "optional",
             value
         });
+    }
+
+    public static pointer(value: Type): Type {
+        // Specifying a pointer is equivalent to defining an optional.
+        return Type.optional(value);
     }
 
     public static reference(value: GoTypeReference): Type {

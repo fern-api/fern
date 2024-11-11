@@ -9,3 +9,4 @@ export * as fernConfigJson from "./fern-config-json";
 export * as generatorsYml from "./generators-yml";
 export { GeneratorName } from "./generators-yml/GeneratorName";
 export * from "./getFernDirectory";
+export type { GeneratorGroup, GeneratorInvocation } from "./generators-yml";

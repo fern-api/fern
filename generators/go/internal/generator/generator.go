@@ -157,6 +157,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 					if err := writer.WriteRequestType(
 						typeToGenerate.FernFilepath,
 						typeToGenerate.Endpoint,
+						typeToGenerate.Service.Headers,
 						ir.IdempotencyHeaders,
 						g.config.EnableExplicitNull,
 					); err != nil {
@@ -468,10 +469,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
+		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newMultipartFile(g.coordinator))
+		files = append(files, newMultipartTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
-		files = append(files, newRetrierFile(g.coordinator))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		files = append(files, newRetrierFile(g.coordinator))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
@@ -654,6 +658,7 @@ func (g *Generator) generateService(
 		ir.Auth,
 		irService.Endpoints,
 		ir.Headers,
+		irService.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
@@ -697,6 +702,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Auth,
 		nil,
 		ir.Headers,
+		nil,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -734,6 +740,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Auth,
 		nil,
 		ir.Headers,
+		nil,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -920,6 +927,52 @@ func newPointerFile(coordinator *coordinator.Client, rootPackageName string, gen
 	)
 }
 
+// newFileParamFile returns a *File containing the FileParam helper type
+// for multipart file uploads.
+//
+// In general, this file is deposited at the root of the SDK so that users can
+// access the helpers alongside the rest of the top-level definitions. However,
+// if any naming conflict exists between the generated types, this file is
+// deposited in the core package.
+func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// First determine whether or not we need to generate the type in the
+	// core package.
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/file_param.go",
+			[]byte(fileParamFile),
+		)
+	}
+	// We're going to generate the pointers at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "file_param.go"
+	if _, ok := generatedNames["FileParam"]; ok {
+		filename = "_file_param.go"
+	}
+	// Finally, we need to replace the package declaration so that it matches
+	// the root package declaration of the generated SDK.
+	content := strings.Replace(
+		fileParamFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
 func newClientTestFile(
 	baseImportPath string,
 	coordinator *coordinator.Client,
@@ -952,6 +1005,22 @@ func newCoreTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/core_test.go",
 		[]byte(coreTestFile),
+	)
+}
+
+func newMultipartFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/multipart.go",
+		[]byte(multipartFile),
+	)
+}
+
+func newMultipartTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/multipart_test.go",
+		[]byte(multipartTestFile),
 	)
 }
 
@@ -1271,6 +1340,7 @@ type typeToGenerate struct {
 	// Exactly one of these will be non-nil.
 	TypeDeclaration *fernir.TypeDeclaration
 	Endpoint        *fernir.HttpEndpoint
+	Service         *fernir.HttpService
 }
 
 // fileInfoToTypes consolidates all of the given types based on the file they will be generated into.
@@ -1287,7 +1357,7 @@ func fileInfoToTypes(
 				continue
 			}
 			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint})
+			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint, Service: irService})
 		}
 	}
 	if irServiceTypeReferenceInfo == nil {
@@ -1449,15 +1519,10 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 // zeroValueForTypeReference returns the zero value for the given type reference.
 func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
-		switch typeReference.Container.Literal.Type {
-		case "string":
-			return `""`
-		case "boolean":
-			return "false"
-		}
+		return zeroValueForLiteral(typeReference.Container.Literal)
 	}
-	if typeReference.Primitive != "" {
-		return zeroValueForPrimitive(typeReference.Primitive)
+	if typeReference.Primitive != nil {
+		return zeroValueForPrimitive(typeReference.Primitive.V1)
 	}
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
@@ -1471,17 +1536,29 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir
 	return "nil"
 }
 
-func zeroValueForPrimitive(primitive fernir.PrimitiveType) string {
-	switch primitive {
-	case fernir.PrimitiveTypeString:
+func zeroValueForLiteral(literal *fernir.Literal) string {
+	switch literal.Type {
+	case "string":
 		return `""`
-	case fernir.PrimitiveTypeInteger, fernir.PrimitiveTypeDouble, fernir.PrimitiveTypeLong:
-		return "0"
-	case fernir.PrimitiveTypeBoolean:
+	case "boolean":
 		return "false"
-	case fernir.PrimitiveTypeDateTime, fernir.PrimitiveTypeDate:
+	}
+	return "nil"
+}
+
+func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
+	switch primitive {
+	case fernir.PrimitiveTypeV1String, fernir.PrimitiveTypeV1BigInteger:
+		return `""`
+	case fernir.PrimitiveTypeV1Integer, fernir.PrimitiveTypeV1Long, fernir.PrimitiveTypeV1Uint, fernir.PrimitiveTypeV1Uint64, fernir.PrimitiveTypeV1Float, fernir.PrimitiveTypeV1Double:
+		return "0"
+	case fernir.PrimitiveTypeV1Boolean:
+		return "false"
+	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case fernir.PrimitiveTypeUuid, fernir.PrimitiveTypeBase64:
+	case fernir.PrimitiveTypeV1Uuid:
+		return "uuid.UUID{}"
+	case fernir.PrimitiveTypeV1Base64:
 		return "nil"
 	}
 	return "nil"
@@ -1560,6 +1637,7 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uint64":     struct{}{},
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
+	// TODO: Add support for BigInteger.
 }
 
 // valueOf dereferences the given value, or returns the zero value if nil.

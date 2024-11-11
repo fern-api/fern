@@ -19,7 +19,8 @@ import {
     DATETIME_SERIALIZER_CLASS_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
-    STRING_ENUM_SERIALIZER_CLASS_NAME
+    STRING_ENUM_SERIALIZER_CLASS_NAME,
+    ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
 import { Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -155,10 +156,18 @@ export abstract class AbstractCsharpGeneratorContext<
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
     }
 
-    public getStringEnumSerializerClassReference(): csharp.ClassReference {
+    public getStringEnumSerializerClassReference(enumClassReference: csharp.ClassReference): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
-            name: STRING_ENUM_SERIALIZER_CLASS_NAME
+            name: STRING_ENUM_SERIALIZER_CLASS_NAME,
+            generics: [csharp.Type.reference(enumClassReference)]
+        });
+    }
+
+    public getEnumSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: ENUM_SERIALIZER_CLASS_NAME
         });
     }
 
@@ -324,7 +333,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public getToStringMethod(): csharp.Method {
         return csharp.method({
             name: "ToString",
-            access: "public",
+            access: csharp.Access.Public,
             isAsync: false,
             override: true,
             parameters: [],
@@ -428,6 +437,8 @@ export abstract class AbstractCsharpGeneratorContext<
             skipImports: true
         });
     }
+
+    public abstract getRawAsIsFiles(): string[];
 
     public abstract getCoreAsIsFiles(): string[];
 

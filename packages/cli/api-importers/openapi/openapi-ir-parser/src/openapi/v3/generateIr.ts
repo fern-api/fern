@@ -14,7 +14,9 @@ import {
     SchemaWithExample,
     SecurityScheme,
     Source,
-    Webhook
+    Webhook,
+    WebhookExampleCall,
+    WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
@@ -96,7 +98,7 @@ export function generateIr({
     const audiences = options.audiences ?? [];
 
     const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooks: Webhook[] = [];
+    const webhooksWithExample: WebhookWithExample[] = [];
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
@@ -124,7 +126,7 @@ export function generateIr({
                     }
                     break;
                 case "webhook":
-                    webhooks.push(operation.value);
+                    webhooksWithExample.push(operation.value);
                     break;
                 default:
                     assertNever(operation);
@@ -142,7 +144,7 @@ export function generateIr({
             if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
                 continue;
             }
-            webhooks.push(webhook.value);
+            webhooksWithExample.push(webhook.value);
         }
     });
 
@@ -188,8 +190,41 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants);
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context.logger);
+    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants, context);
+
+    const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
+        const extensionExamples = webhookWithExample.examples;
+        let examples: WebhookExampleCall[] = extensionExamples;
+        if (!options.disableExamples && examples.length === 0) {
+            const webhookExample = exampleTypeFactory.buildExample({
+                schema: webhookWithExample.payload,
+                exampleId: undefined,
+                example: undefined,
+                skipReadonly: false,
+                options: {
+                    ignoreOptionals: false,
+                    isParameter: false
+                }
+            });
+            if (webhookExample != null) {
+                examples = [
+                    {
+                        name: undefined,
+                        description: undefined,
+                        payload: webhookExample
+                    }
+                ];
+            }
+        }
+
+        return {
+            ...webhookWithExample,
+            payload: convertSchemaWithExampleToSchema(webhookWithExample.payload),
+            examples
+        };
+    });
+
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;

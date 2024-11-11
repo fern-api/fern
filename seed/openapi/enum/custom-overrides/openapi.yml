@@ -37,7 +37,7 @@ paths:
                 value:
                   operand: '>'
                   operandOrColor: red
-  /path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}:
+  /path/{operand}/{operandOrColor}:
     post:
       operationId: pathParam_send
       tags:
@@ -52,31 +52,11 @@ paths:
           examples:
             Example1:
               value: '>'
-        - name: maybeOperand
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/Operand'
-            nullable: true
-          example: less_than
-          examples:
-            Example1:
-              value: less_than
         - name: operandOrColor
           in: path
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
-          example: red
-          examples:
-            Example1:
-              value: red
-        - name: maybeOperandOrColor
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/ColorOrOperand'
-            nullable: true
           example: red
           examples:
             Example1:

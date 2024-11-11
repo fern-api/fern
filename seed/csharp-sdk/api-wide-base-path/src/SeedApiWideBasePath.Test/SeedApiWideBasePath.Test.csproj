@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedApiWideBasePath\SeedApiWideBasePath.csproj" />
+        <ProjectReference Include="..\SeedApiWideBasePath\SeedApiWideBasePath.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedApiWideBasePath.Test.Custom.props" Condition="Exists('SeedApiWideBasePath.Test.Custom.props')" />
 </Project>

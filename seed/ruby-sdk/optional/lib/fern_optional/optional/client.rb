@@ -20,7 +20,7 @@ module SeedObjectsWithImportsClient
     # @return [String]
     # @example
     #  objects_with_imports = SeedObjectsWithImportsClient::Client.new(base_url: "https://api.example.com")
-    #  objects_with_imports.optional.send_optional_body
+    #  objects_with_imports.optional.send_optional_body(request: { "string": {"key":"value"} })
     def send_optional_body(request: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -54,7 +54,7 @@ module SeedObjectsWithImportsClient
     # @return [String]
     # @example
     #  objects_with_imports = SeedObjectsWithImportsClient::Client.new(base_url: "https://api.example.com")
-    #  objects_with_imports.optional.send_optional_body
+    #  objects_with_imports.optional.send_optional_body(request: { "string": {"key":"value"} })
     def send_optional_body(request: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

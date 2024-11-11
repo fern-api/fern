@@ -5,11 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v53.15.0] - 2024-10-07
+## [v53.19.0] - 2024-11-04
+
+- Internal: Add errors property to dynamic `EndpointSnippetResponse`.
+
+## [v53.18.0] - 2024-11-04
+
+- Internal: Add `transport` to `HttpEndpoint`. `transport` on the endpoint overrides the `transport` on the `HttpService`.
+
+## [v53.17.0] - 2024-11-01
+
+- Internal: Add dynamic audience to endpoint snippet request and response.
+
+## [v53.16.0] - 2024-10-31
+
+- Internal: Publish @fern-api/dynamic-ir-sdk
+
+## [v53.15.0] - 2024-10-23
 
 - Internal: Introduce dynamic IR types.
 
-## [v53.14.0] - 2024-10-07
+## [v53.14.0] - 2024-10-16
 
 - Feature: Add `inline` to type declarations so that generators can nest unnamed types.
 

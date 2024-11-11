@@ -18,6 +18,27 @@ type Node struct {
 	_rawJSON        json.RawMessage
 }
 
+func (n *Node) GetId() string {
+	if n == nil {
+		return ""
+	}
+	return n.Id
+}
+
+func (n *Node) GetLabel() *string {
+	if n == nil {
+		return nil
+	}
+	return n.Label
+}
+
+func (n *Node) GetMetadata() *commons.Metadata {
+	if n == nil {
+		return nil
+	}
+	return n.Metadata
+}
+
 func (n *Node) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -57,6 +78,13 @@ type Tree struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (t *Tree) GetNodes() []*Node {
+	if t == nil {
+		return nil
+	}
+	return t.Nodes
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {
@@ -100,6 +128,27 @@ type File struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (f *File) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *File) GetContents() string {
+	if f == nil {
+		return ""
+	}
+	return f.Contents
+}
+
+func (f *File) GetInfo() FileInfo {
+	if f == nil {
+		return ""
+	}
+	return f.Info
 }
 
 func (f *File) GetExtraProperties() map[string]interface{} {

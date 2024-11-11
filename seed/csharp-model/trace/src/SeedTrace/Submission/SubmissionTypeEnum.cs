@@ -6,7 +6,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<SubmissionTypeEnum>))]
+[JsonConverter(typeof(EnumSerializer<SubmissionTypeEnum>))]
 public enum SubmissionTypeEnum
 {
     [EnumMember(Value = "TEST")]

@@ -84,6 +84,9 @@
                 "docs": "",
                 "type": "root.Completion",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create_stream": {
               "auth": false,
@@ -123,6 +126,9 @@
                 "format": "json",
                 "type": "root.CompletionChunk",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -140,6 +146,8 @@ service:
       path: /completions/chat
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: ChatCompletionsCreateStreamRequest
         body:
@@ -162,6 +170,8 @@ service:
       path: /completions/chat
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: ChatCompletionsCreateRequest
         body:

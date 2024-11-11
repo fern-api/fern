@@ -6,7 +6,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(StringEnumSerializer<PrimitiveValue>))]
+[JsonConverter(typeof(EnumSerializer<PrimitiveValue>))]
 public enum PrimitiveValue
 {
     [EnumMember(Value = "STRING")]

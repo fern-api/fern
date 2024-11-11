@@ -25,6 +25,24 @@ jobs:
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
           fern generate --api ir-types-latest --group node --version $version
+
+  dynamic-ir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Release SDKs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          cd packages/ir-sdk
+          version=$(cat fern/apis/ir-types-latest/VERSION)
+          fern generate --api ir-types-latest --group dynamic-ir --version $version
   
   python:
     runs-on: ubuntu-latest

@@ -5,7 +5,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithCursorPagination({
+  page: 1,
+  perPage: 1,
+  startingAfter: "starting_after",
+});
  
 ```                        
 
@@ -17,7 +21,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithBodyCursorPagination({
+  pagination: {
+    cursor: "cursor",
+  },
+});
  
 ```                        
 
@@ -29,7 +37,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithOffsetPagination({
+  page: 1,
+  perPage: 1,
+  startingAfter: "starting_after",
+});
  
 ```                        
 
@@ -41,7 +53,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithBodyOffsetPagination({
+  pagination: {
+    page: 1,
+  },
+});
  
 ```                        
 
@@ -53,7 +69,10 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithOffsetStepPagination({
+  page: 1,
+  limit: 1,
+});
  
 ```                        
 
@@ -65,7 +84,10 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithOffsetPaginationHasNextPage({
+  page: 1,
+  limit: 1,
+});
  
 ```                        
 
@@ -77,7 +99,9 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithExtendedResults({
+  cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
  
 ```                        
 
@@ -89,7 +113,9 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithExtendedResultsAndOptionalData({
+  cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
  
 ```                        
 
@@ -101,7 +127,9 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listUsernames({
+  startingAfter: "starting_after",
+});
  
 ```                        
 
@@ -113,7 +141,9 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithGlobalConfig({
+  offset: 1,
+});
  
 ```                        
 

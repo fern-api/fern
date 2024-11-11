@@ -188,8 +188,9 @@ export class Type extends AstNode {
                 break;
             }
             case "optional": {
+                const isMixed = this.internalType.value.internalType.type === "mixed";
                 const isUnion = this.internalType.value.internalType.type === "union";
-                if (!isUnion) {
+                if (!isUnion && !isMixed) {
                     writer.write("?");
                 }
                 this.internalType.value.write(writer, { comment });
@@ -342,7 +343,7 @@ export class Type extends AstNode {
     }
 
     private static isAlreadyOptional(value: Type) {
-        return value.internalType.type === "optional" || value.internalType.type === "mixed";
+        return value.internalType.type === "optional";
     }
 
     private writeTypeDictEntry({

@@ -26,6 +26,34 @@ func NewTagFromBoolean(value bool) *Tag {
 	return &Tag{Type: "boolean", Boolean: value}
 }
 
+func (t *Tag) GetType() string {
+	if t == nil {
+		return ""
+	}
+	return t.Type
+}
+
+func (t *Tag) GetNumber() int {
+	if t == nil {
+		return 0
+	}
+	return t.Number
+}
+
+func (t *Tag) GetString() string {
+	if t == nil {
+		return ""
+	}
+	return t.String
+}
+
+func (t *Tag) GetBoolean() bool {
+	if t == nil {
+		return false
+	}
+	return t.Boolean
+}
+
 func (t *Tag) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

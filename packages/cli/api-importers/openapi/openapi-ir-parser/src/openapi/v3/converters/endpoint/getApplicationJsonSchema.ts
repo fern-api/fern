@@ -85,7 +85,7 @@ export function getSchemaMediaObject(
     return undefined;
 }
 
-function getExamples(
+export function getExamples(
     mediaObject: OpenAPIV3.MediaTypeObject,
     context: AbstractOpenAPIV3ParserContext
 ): NamedFullExample[] {

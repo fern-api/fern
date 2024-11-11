@@ -16,6 +16,7 @@ import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -94,7 +95,8 @@ export function buildEndpoint({
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,
-        pagination
+        pagination,
+        source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
     };
 
     if (Object.keys(pathParameters).length > 0) {
@@ -122,6 +124,7 @@ export function buildEndpoint({
     }
 
     if (endpoint.request != null) {
+        context.setInRequest();
         const convertedRequest = getRequest({
             endpoint,
             context,
@@ -137,6 +140,7 @@ export function buildEndpoint({
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
+        context.unsetInRequest();
     } else {
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;

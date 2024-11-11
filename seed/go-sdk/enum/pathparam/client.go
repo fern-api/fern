@@ -33,9 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Send(
 	ctx context.Context,
 	operand fern.Operand,
-	maybeOperand *fern.Operand,
 	operandOrColor *fern.ColorOrOperand,
-	maybeOperandOrColor *fern.ColorOrOperand,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
@@ -48,11 +46,9 @@ func (c *Client) Send(
 		baseURL = options.BaseURL
 	}
 	endpointURL := core.EncodeURL(
-		baseURL+"/path/%v/%v/%v/%v",
+		baseURL+"/path/%v/%v",
 		operand,
-		maybeOperand,
 		operandOrColor,
-		maybeOperandOrColor,
 	)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())

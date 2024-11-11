@@ -97,7 +97,9 @@ List all users.
 <dd>
 
 ```typescript
-await client.user.list();
+await client.user.list({
+    limit: 1,
+});
 ```
 
 </dd>
@@ -162,7 +164,9 @@ List all user events.
 <dd>
 
 ```typescript
-await client.user.events.listEvents();
+await client.user.events.listEvents({
+    limit: 1,
+});
 ```
 
 </dd>

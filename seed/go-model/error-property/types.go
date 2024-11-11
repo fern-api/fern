@@ -14,6 +14,13 @@ type PropertyBasedErrorTestBody struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PropertyBasedErrorTestBody) GetMessage() string {
+	if p == nil {
+		return ""
+	}
+	return p.Message
+}
+
 func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }

@@ -65,12 +65,6 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
 
-        if (getExamplesString({ schema: resolvedParameter, logger: context.logger })?.includes(" ")) {
-            context.logger.warn(
-                "Parameter example contains a space, which is ambiguous. Consider using enums for multiple examples, or use an encoding if a space is part of the parameter."
-            );
-        }
-
         let schema =
             resolvedParameter.schema != null
                 ? convertSchema(
@@ -172,7 +166,10 @@ export function convertParameters({
                 variableReference: getVariableReference(resolvedParameter)
             });
         } else if (resolvedParameter.in === "header") {
-            if (!HEADERS_TO_SKIP.has(resolvedParameter.name) && !context.authHeaders.has(resolvedParameter.name)) {
+            if (
+                !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
+                !context.authHeaders.has(resolvedParameter.name)
+            ) {
                 convertedParameters.headers.push({ ...convertedParameter, env: undefined });
             } else {
                 context.logger.debug(
@@ -192,12 +189,12 @@ export function convertParameters({
 }
 
 const HEADERS_TO_SKIP = new Set([
-    "User-Agent",
-    "Content-Length",
-    "Content-Type",
-    "X-Forwarded-For",
-    "Cookie",
-    "Origin",
-    "Content-Disposition",
-    "X-Ping-Custom-Domain"
+    "user-agent",
+    "content-length",
+    "content-type",
+    "x-forwarded-for",
+    "cookie",
+    "origin",
+    "content-disposition",
+    "x-ping-custom-domain"
 ]);

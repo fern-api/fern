@@ -31,6 +31,18 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
+undefined;
+ 
+```                        
+
+
+```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+  environment: SeedExamplesEnvironment.Production,
+  token: "YOUR_TOKEN",
+});
 await client.file.notification.service.getException("notification-hsy129x");
  
 ```                        
@@ -190,10 +202,12 @@ const client = new SeedExamplesClient({
 });
 await client.service.createMovie({
   id: "id",
+  prequel: "prequel",
   title: "title",
   from: "from",
   rating: 1.1,
   tag: "tag",
+  book: "book",
   metadata: {
     metadata: { key: "value" },
   },
@@ -224,6 +238,8 @@ import { SeedExamplesClient } from "@fern/examples";
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
 await client.service.getMetadata(
 	{
+		shallow: true,
+		tag: "tag",
 		X-API-Version: "X-API-Version"
 	}
 )
@@ -234,23 +250,96 @@ await client.service.getMetadata(
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.service.getResponse();
- 
-```                        
-
-
-```typescript
-import { SeedExamplesClient } from "@fern/examples";
-
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.service.getResponse();
+const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
+await client.service.createBigEntity(
+	{
+		extendedMovie: {
+				cast: [
+					"cast",
+					"cast"
+				]
+			},
+		entity: {
+				name: "name"
+			},
+		metadata: metadata: { 
+				type : "html", 
+				value: "metadata"
+			},
+		commonMetadata: {
+				id: "id",
+				data: {
+					"data": "data"
+				},
+				jsonString: "jsonString"
+			},
+		eventInfo: eventInfo: { 
+				type : "metadata", 
+				id: "id",
+				data: {
+						"data": "data"
+					},
+				jsonString: "jsonString"
+			},
+		data: data: { 
+				type : "string", 
+				value: "data"
+			},
+		migration: {
+				name: "name"
+			},
+		exception: exception: { 
+				type : "generic", 
+				exceptionType: "exceptionType",
+				exceptionMessage: "exceptionMessage",
+				exceptionStacktrace: "exceptionStacktrace"
+			},
+		test: test: { 
+				type : "and", 
+				value: true
+			},
+		node: {
+				name: "name",
+				nodes: [
+					{
+						name: "name"
+					},
+					{
+						name: "name"
+					}
+				],
+				trees: [
+					
+				]
+			},
+		directory: {
+				name: "name",
+				files: [
+					{
+						name: "name",
+						contents: "contents"
+					},
+					{
+						name: "name",
+						contents: "contents"
+					}
+				],
+				directories: [
+					{
+						name: "name"
+					},
+					{
+						name: "name"
+					}
+				]
+			},
+		moment: {
+				id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				date: "2023-01-15",
+				datetime: "2024-01-15T09:30:00Z"
+			}
+	}
+)
  
 ```                        
 

@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using OneOf;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;
@@ -79,6 +80,48 @@ public partial class SeedExamplesClient
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedExamplesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.CreateTypeAsync(BasicType.Primitive);
+    /// </code>
+    /// </example>
+    public async Task<Identifier> CreateTypeAsync(
+        OneOf<BasicType, ComplexType> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<Identifier>(responseBody)!;
             }
             catch (JsonException e)
             {

@@ -374,9 +374,15 @@ client.admin.send_workspace_submission_update(
 import uuid
 
 from seed import SeedTrace
-from seed.commons import VariableValue_IntegerValue
+from seed.commons import (
+    DebugVariableValue_IntegerValue,
+    VariableValue_IntegerValue,
+)
 from seed.submission import (
     ActualResult_Value,
+    ExpressionLocation,
+    Scope,
+    StackFrame,
     StackInformation,
     TestCaseResult,
     TestCaseResultWithStdout,
@@ -408,18 +414,70 @@ client.admin.store_traced_test_case(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
         TraceResponse(
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
     ],
 )
@@ -498,7 +556,15 @@ client.admin.store_traced_test_case(
 import uuid
 
 from seed import SeedTrace
-from seed.submission import StackInformation, TracedFile, TraceResponseV2
+from seed.commons import DebugVariableValue_IntegerValue
+from seed.submission import (
+    ExpressionLocation,
+    Scope,
+    StackFrame,
+    StackInformation,
+    TracedFile,
+    TraceResponseV2,
+)
 
 client = SeedTrace(
     x_random_header="YOUR_X_RANDOM_HEADER",
@@ -519,9 +585,35 @@ client.admin.store_traced_test_case_v_2(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
         TraceResponseV2(
             submission_id=uuid.UUID(
@@ -532,9 +624,35 @@ client.admin.store_traced_test_case_v_2(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
     ],
 )
@@ -605,7 +723,17 @@ client.admin.store_traced_test_case_v_2(
 import uuid
 
 from seed import SeedTrace
-from seed.submission import StackInformation, TraceResponse, WorkspaceRunDetails
+from seed.commons import DebugVariableValue_IntegerValue
+from seed.submission import (
+    ExceptionInfo,
+    ExceptionV2_Generic,
+    ExpressionLocation,
+    Scope,
+    StackFrame,
+    StackInformation,
+    TraceResponse,
+    WorkspaceRunDetails,
+)
 
 client = SeedTrace(
     x_random_header="YOUR_X_RANDOM_HEADER",
@@ -616,6 +744,16 @@ client.admin.store_traced_workspace(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
     workspace_run_details=WorkspaceRunDetails(
+        exception_v_2=ExceptionV2_Generic(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
+        exception=ExceptionInfo(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
         stdout="stdout",
     ),
     trace_responses=[
@@ -624,18 +762,70 @@ client.admin.store_traced_workspace(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
         TraceResponse(
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
     ],
 )
@@ -706,7 +896,15 @@ client.admin.store_traced_workspace(
 import uuid
 
 from seed import SeedTrace
-from seed.submission import StackInformation, TracedFile, TraceResponseV2
+from seed.commons import DebugVariableValue_IntegerValue
+from seed.submission import (
+    ExpressionLocation,
+    Scope,
+    StackFrame,
+    StackInformation,
+    TracedFile,
+    TraceResponseV2,
+)
 
 client = SeedTrace(
     x_random_header="YOUR_X_RANDOM_HEADER",
@@ -726,9 +924,35 @@ client.admin.store_traced_workspace_v_2(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
         TraceResponseV2(
             submission_id=uuid.UUID(
@@ -739,9 +963,35 @@ client.admin.store_traced_workspace_v_2(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
             ),
+            stdout="stdout",
         ),
     ],
 )
@@ -992,6 +1242,9 @@ client.playlist.create_playlist(
     datetime=datetime.datetime.fromisoformat(
         "2024-01-15 09:30:00+00:00",
     ),
+    optional_datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
     name="name",
     problems=["problems", "problems"],
 )
@@ -1097,8 +1350,10 @@ client = SeedTrace(
 )
 client.playlist.get_playlists(
     service_param=1,
+    limit=1,
     other_field="otherField",
     multi_line_docs="multiLineDocs",
+    optional_multiple_field="optionalMultipleField",
     multiple_field="multipleField",
 )
 
@@ -1287,6 +1542,7 @@ Updates a playlist
 
 ```python
 from seed import SeedTrace
+from seed.playlist import UpdatePlaylistRequest
 
 client = SeedTrace(
     x_random_header="YOUR_X_RANDOM_HEADER",
@@ -1295,6 +1551,10 @@ client = SeedTrace(
 client.playlist.update_playlist(
     service_param=1,
     playlist_id="playlistId",
+    request=UpdatePlaylistRequest(
+        name="name",
+        problems=["problems", "problems"],
+    ),
 )
 
 ```

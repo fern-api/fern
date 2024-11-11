@@ -48,6 +48,8 @@ service:
         - {}
       method: POST
       path: /pets
+      source:
+        openapi: openapi/openapi.yml
     listPets:
       auth: false
       display-name: List all pets
@@ -68,6 +70,8 @@ service:
       response:
         docs: A paged array of pets
         type: root.Pets
+      source:
+        openapi: openapi/openapi.yml
     showPetById:
       auth: false
       display-name: Info for a specific pet
@@ -88,6 +92,8 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      source:
+        openapi: openapi/openapi.yml
   source:
     openapi: openapi/openapi.yml
 ",
@@ -147,6 +153,8 @@ service:
         - {}
       method: POST
       path: /pets
+      source:
+        openapi: openapi/openapi.yml
     listPets:
       auth: false
       display-name: List all pets
@@ -167,6 +175,8 @@ service:
       response:
         docs: A paged array of pets
         type: root.Pets
+      source:
+        openapi: openapi/openapi.yml
     showPetById:
       auth: false
       display-name: Info for a specific pet
@@ -187,6 +197,8 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      source:
+        openapi: openapi/openapi.yml
   source:
     openapi: openapi/openapi.yml
 ",
@@ -275,6 +287,8 @@ service:
         - {}
       method: POST
       path: /pets
+      source:
+        openapi: openapi/petstore/openapi.yml
     listPets:
       auth: false
       display-name: List all pets
@@ -297,6 +311,8 @@ service:
       response:
         docs: A paged array of pets
         type: neopetsRoot.Pets
+      source:
+        openapi: openapi/petstore/openapi.yml
     showPetById:
       auth: false
       display-name: Info for a specific pet
@@ -319,6 +335,8 @@ service:
       response:
         docs: Expected response to a valid request
         type: neopetsRoot.Pet
+      source:
+        openapi: openapi/petstore/openapi.yml
   source:
     openapi: openapi/petstore/openapi.yml
 ",
@@ -941,6 +959,8 @@ service:
       response:
         docs: Booking successful
         type: CreateBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
     delete-booking:
       auth: true
       display-name: Delete a booking
@@ -961,6 +981,8 @@ service:
         bookingId:
           docs: The ID of the booking to retrieve.
           type: string
+      source:
+        openapi: openapi/trains/openapi.yml
     get-booking:
       auth: true
       display-name: Get a booking
@@ -994,6 +1016,8 @@ service:
       response:
         docs: The booking details
         type: GetBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
     get-bookings:
       auth: true
       display-name: List existing bookings
@@ -1027,6 +1051,8 @@ service:
       response:
         docs: A list of bookings
         type: GetBookingsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml
 ",
@@ -1229,6 +1255,8 @@ service:
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml
 ",
@@ -1299,6 +1327,8 @@ service:
       response:
         docs: A list of train stations
         type: GetStationsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml
 ",
@@ -1441,6 +1471,8 @@ service:
       response:
         docs: A list of available train trips
         type: GetTripsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml
 ",
@@ -1915,6 +1947,8 @@ service:
       response:
         docs: OK
         type: list<string>
+      source:
+        openapi: openapi/cohere.yaml
   source:
     openapi: openapi/cohere.yaml
 ",
@@ -2221,6 +2255,8 @@ service:
       response:
         docs: OK
         type: list<string>
+      source:
+        openapi: openapi/cohere-v2.yaml
   source:
     openapi: openapi/cohere-v2.yaml
 ",

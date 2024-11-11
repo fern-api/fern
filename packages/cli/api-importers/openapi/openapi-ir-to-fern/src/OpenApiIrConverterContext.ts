@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId, SchemaWithExample } from "@fern-api/openapi-ir";
+import { OpenApiIntermediateRepresentation, Schema, SchemaId, HttpMethod } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
@@ -26,6 +26,16 @@ export interface OpenApiIrConverterContextOpts {
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 
     globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+
+    /**
+     * If true, the converter will generate complex query parameters in the generated Fern Definition.
+     */
+    objectQueryParameters: boolean;
+
+    /**
+     * If true, the converter will respect readonly properties in OpenAPI schemas.
+     */
+    respectReadonlySchemas: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -37,9 +47,23 @@ export class OpenApiIrConverterContext {
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public detectGlobalHeaders: boolean;
+    public objectQueryParameters: boolean;
+    public respectReadonlySchemas: boolean;
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
+    /**
+     * The current endpoint method being processed. This is used to determine
+     * whether certain properties should be included in the generated definition
+     * (e.g. readonly properties are excluded for POST/PUT endpoints).
+     */
+    private endpointMethod: HttpMethod | undefined;
+    /**
+     * Whether the current schema being processed is part of a request body.
+     * This is used to determine whether certain properties should be included
+     * in the generated definition (e.g. readonly properties are excluded for request bodies).
+     */
+    private inRequest = false;
 
     constructor({
         taskContext,
@@ -48,7 +72,9 @@ export class OpenApiIrConverterContext {
         detectGlobalHeaders,
         environmentOverrides,
         globalHeaderOverrides,
-        authOverrides
+        authOverrides,
+        objectQueryParameters,
+        respectReadonlySchemas
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -62,6 +88,8 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
+        this.objectQueryParameters = objectQueryParameters;
+        this.respectReadonlySchemas = respectReadonlySchemas;
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
@@ -112,5 +140,47 @@ export class OpenApiIrConverterContext {
      */
     public isErrorUnknownSchema(statusCode: number): boolean {
         return this.unknownSchema.has(statusCode);
+    }
+
+    /**
+     * Returns the current endpoint method being processed
+     */
+    public getEndpointMethod(): HttpMethod | undefined {
+        return this.endpointMethod;
+    }
+
+    /**
+     * Sets the current endpoint method being processed
+     */
+    public setEndpointMethod(method: HttpMethod): void {
+        this.endpointMethod = method;
+    }
+
+    /**
+     * Unsets the current endpoint method being processed
+     */
+    public unsetEndpointMethod(): void {
+        this.endpointMethod = undefined;
+    }
+
+    /**
+     * Returns whether we're currently processing a request
+     */
+    public isInRequest(): boolean {
+        return this.inRequest;
+    }
+
+    /**
+     * Sets that we're currently processing a request
+     */
+    public setInRequest(): void {
+        this.inRequest = true;
+    }
+
+    /**
+     * Unsets that we're currently processing a request
+     */
+    public unsetInRequest(): void {
+        this.inRequest = false;
     }
 }

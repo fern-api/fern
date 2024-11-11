@@ -16,6 +16,13 @@ type Response struct {
 	_rawJSON        json.RawMessage
 }
 
+func (r *Response) GetFoo() *folderb.Foo {
+	if r == nil {
+		return nil
+	}
+	return r.Foo
+}
+
 func (r *Response) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }

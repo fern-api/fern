@@ -15,6 +15,13 @@ type Error struct {
 	_rawJSON        json.RawMessage
 }
 
+func (e *Error) GetMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.Message
+}
+
 func (e *Error) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -55,6 +62,20 @@ type Foo struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetId() string {
+	if f == nil {
+		return ""
+	}
+	return f.Id
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {

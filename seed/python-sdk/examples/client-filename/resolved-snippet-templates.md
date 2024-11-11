@@ -27,6 +27,16 @@ from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
+undefined
+ 
+```                        
+
+
+```python
+from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
+
+client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.notification.service.get_exception(
 	
 )
@@ -184,10 +194,12 @@ from seed.environment import SeedExhaustiveEnvironment
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.create_movie(
 	id="id",
+	prequel="prequel",
 	title="title",
 	from_="from",
 	rating=1.1,
 	tag="tag",
+	book="book",
 	metadata={
 		"metadata": {"key":"value"}
 	},
@@ -217,7 +229,9 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_metadata(
-	x_api_version="X-API-Version"
+	x_api_version="X-API-Version",
+	shallow=true,
+	tag="tag"
 )
  
 ```                        
@@ -226,22 +240,76 @@ client.service.get_metadata(
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
+from seed.types import ExtendedMovie
+from seed.types import Entity
+from seed.commons.types import Metadata
+from seed.types import Migration
+from seed.types import Node
+from seed.types import Directory
+from seed.types import File
+from seed.types import Moment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.service.get_response(
-	
-)
- 
-```                        
-
-
-```python
-from seed import SeedExhaustive
-from seed.environment import SeedExhaustiveEnvironment
-
-client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-client.service.get_response(
-	
+client.service.create_big_entity(
+	extended_movie=ExtendedMovie(
+		cast=[
+			"cast",
+			"cast"
+		]
+	),
+	entity=Entity(
+		name="name"
+	),
+	common_metadata=Metadata(
+		id="id",
+		data={
+			"data": "data"
+		},
+		json_string="jsonString"
+	),
+	migration=Migration(
+		name="name"
+	),
+	node=Node(
+		name="name",
+		nodes=[
+			Node(
+				name="name"
+			),
+			Node(
+				name="name"
+			)
+		],
+		trees=[
+			
+		]
+	),
+	directory=Directory(
+		name="name",
+		files=[
+			File(
+				name="name",
+				contents="contents"
+			),
+			File(
+				name="name",
+				contents="contents"
+			)
+		],
+		directories=[
+			Directory(
+				name="name"
+			),
+			Directory(
+				name="name"
+			)
+		]
+	),
+	moment=Moment(
+		id="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+		date="2023-01-15",
+		datetime="2024-01-15T09:30:00Z"
+	)
 )
  
 ```                        

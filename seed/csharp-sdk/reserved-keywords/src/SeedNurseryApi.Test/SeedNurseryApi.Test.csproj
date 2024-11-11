@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedNurseryApi\SeedNurseryApi.csproj" />
+        <ProjectReference Include="..\SeedNurseryApi\SeedNurseryApi.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedNurseryApi.Test.Custom.props" Condition="Exists('SeedNurseryApi.Test.Custom.props')" />
 </Project>

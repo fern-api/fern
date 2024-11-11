@@ -69,16 +69,16 @@ public partial class ServiceClient
     ///         Rating = 8,
     ///         Type = "movie",
     ///         Tag = "tag-wf9as23d",
-    ///         Metadata = new Dictionary<string, object>()
+    ///         Metadata = new Dictionary&lt;string, object&gt;()
     ///         {
     ///             {
     ///                 "actors",
-    ///                 new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
     ///             },
     ///             { "releaseDate", "2023-12-08" },
     ///             {
     ///                 "ratings",
-    ///                 new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
     ///             },
     ///         },
     ///         Revenue = 1000000,
@@ -184,10 +184,203 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetResponseAsync();
+    /// await client.Service.CreateBigEntityAsync(
+    ///     new BigEntity
+    ///     {
+    ///         CastMember = new Actor { Name = "name", Id = "id" },
+    ///         ExtendedMovie = new ExtendedMovie
+    ///         {
+    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
+    ///         },
+    ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+    ///         Metadata = "metadata",
+    ///         CommonMetadata = new SeedExamples.Commons.Metadata
+    ///         {
+    ///             Id = "id",
+    ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///             JsonString = "jsonString",
+    ///         },
+    ///         EventInfo = new SeedExamples.Commons.Metadata
+    ///         {
+    ///             Id = "id",
+    ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///             JsonString = "jsonString",
+    ///         },
+    ///         Data = "data",
+    ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+    ///         Exception = new ExceptionInfo
+    ///         {
+    ///             ExceptionType = "exceptionType",
+    ///             ExceptionMessage = "exceptionMessage",
+    ///             ExceptionStacktrace = "exceptionStacktrace",
+    ///         },
+    ///         Test = true,
+    ///         Node = new Node
+    ///         {
+    ///             Name = "name",
+    ///             Nodes = new List&lt;Node&gt;()
+    ///             {
+    ///                 new Node
+    ///                 {
+    ///                     Name = "name",
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     {
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                     },
+    ///                 },
+    ///                 new Node
+    ///                 {
+    ///                     Name = "name",
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     {
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Trees = new List&lt;Tree&gt;()
+    ///             {
+    ///                 new Tree
+    ///                 {
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 new Tree
+    ///                 {
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///         },
+    ///         Directory = new Directory
+    ///         {
+    ///             Name = "name",
+    ///             Files = new List&lt;SeedExamples.File&gt;()
+    ///             {
+    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///             },
+    ///             Directories = new List&lt;Directory&gt;()
+    ///             {
+    ///                 new Directory
+    ///                 {
+    ///                     Name = "name",
+    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     {
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                     },
+    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     {
+    ///                         new Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                         },
+    ///                         new Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 new Directory
+    ///                 {
+    ///                     Name = "name",
+    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     {
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                     },
+    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     {
+    ///                         new Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                         },
+    ///                         new Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
+    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///         },
+    ///         Moment = new Moment
+    ///         {
+    ///             Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         },
+    ///     }
+    /// );
     /// </code>
     /// </example>
-    public async Task<Response> GetResponseAsync(
+    public async Task<Response> CreateBigEntityAsync(
+        BigEntity request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -197,7 +390,8 @@ public partial class ServiceClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/response",
+                Path = "/big-entity",
+                Body = request,
                 Options = options,
             },
             cancellationToken

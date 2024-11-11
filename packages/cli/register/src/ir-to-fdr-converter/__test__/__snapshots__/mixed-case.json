@@ -222,6 +222,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "status": "ACTIVE",
                 "resource_type": "user",
                 "userName": "username",
                 "metadata_tags": [
@@ -236,6 +237,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "status": "ACTIVE",
                   "resource_type": "user",
                   "userName": "username",
                   "metadata_tags": [
@@ -319,6 +321,7 @@
               "responseBody": [
                 {
                   "resource_type": "user",
+                  "status": "ACTIVE",
                   "userName": "username",
                   "metadata_tags": [
                     "tag1",
@@ -335,6 +338,7 @@
                 "value": [
                   {
                     "resource_type": "user",
+                    "status": "ACTIVE",
                     "userName": "username",
                     "metadata_tags": [
                       "tag1",

@@ -254,14 +254,176 @@ export class Service {
     }
 
     /**
+     * @param {SeedExamples.BigEntity} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getResponse()
+     *     await client.service.createBigEntity({
+     *         castMember: {
+     *             name: "name",
+     *             id: "id"
+     *         },
+     *         extendedMovie: {
+     *             cast: ["cast", "cast"]
+     *         },
+     *         entity: {
+     *             type: "primitive",
+     *             name: "name"
+     *         },
+     *         metadata: {
+     *             type: "html",
+     *             value: "metadata"
+     *         },
+     *         commonMetadata: {
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         eventInfo: {
+     *             type: "metadata",
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         data: {
+     *             type: "string",
+     *             value: "data"
+     *         },
+     *         migration: {
+     *             name: "name",
+     *             status: "RUNNING"
+     *         },
+     *         exception: {
+     *             type: "generic",
+     *             exceptionType: "exceptionType",
+     *             exceptionMessage: "exceptionMessage",
+     *             exceptionStacktrace: "exceptionStacktrace"
+     *         },
+     *         test: {
+     *             type: "and",
+     *             value: true
+     *         },
+     *         node: {
+     *             name: "name",
+     *             nodes: [{
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }],
+     *             trees: [{
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }, {
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }]
+     *         },
+     *         directory: {
+     *             name: "name",
+     *             files: [{
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }, {
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }],
+     *             directories: [{
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }]
+     *         },
+     *         moment: {
+     *             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             date: "2023-01-15",
+     *             datetime: "2024-01-15T09:30:00Z"
+     *         }
+     *     })
      */
-    public async getResponse(requestOptions?: Service.RequestOptions): Promise<SeedExamples.Response> {
+    public async createBigEntity(
+        request: SeedExamples.BigEntity,
+        requestOptions?: Service.RequestOptions
+    ): Promise<SeedExamples.Response> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/response"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/big-entity"),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -274,6 +436,7 @@ export class Service {
             },
             contentType: "application/json",
             requestType: "json",
+            body: serializers.BigEntity.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

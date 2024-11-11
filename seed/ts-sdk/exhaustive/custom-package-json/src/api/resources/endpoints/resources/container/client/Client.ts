@@ -367,7 +367,9 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnOptional(undefined)
+     *     await client.endpoints.container.getAndReturnOptional({
+     *         string: "string"
+     *     })
      */
     public async getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,

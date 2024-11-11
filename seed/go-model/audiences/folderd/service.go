@@ -14,6 +14,13 @@ type Response struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *Response) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
+}
+
 func (r *Response) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }

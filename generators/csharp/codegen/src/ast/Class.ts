@@ -1,18 +1,20 @@
-import { assertNever } from "@fern-api/core-utils";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
+import { Type } from "./Type";
 
 export declare namespace Class {
+    type ClassType = typeof Class.ClassType[keyof typeof Class.ClassType];
     interface Args {
         /* The name of the C# class */
         name: string;
@@ -21,13 +23,17 @@ export declare namespace Class {
         /* The access level of the C# class */
         access: Access;
         /* Defaults to false */
+        static_?: boolean;
+        /* Defaults to false */
         abstract?: boolean;
         /* Defaults to false */
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
         /* Defaults to false */
-        record?: boolean;
+        readonly?: boolean;
+        /* Defaults to class */
+        type?: Class.ClassType;
         /* Summary for the method */
         summary?: string;
         /* The class to inherit from if any */
@@ -60,28 +66,43 @@ export declare namespace Class {
         superClassArguments: (CodeBlock | ClassInstantiation)[];
     }
 
-    interface Operator {
-        /* The type of the method */
+    interface CastOperator {
+        parameter: Parameter;
         type: "implicit" | "explicit";
-        /* The parameters of the method */
-        parameters: Parameter[];
-        /* The body of the operator */
         body: CodeBlock;
+        useExpressionBody?: boolean;
     }
+    interface NormalOperator {
+        type: "==" | "!=";
+        parameters: Parameter[];
+        return: Type;
+        body: CodeBlock;
+        useExpressionBody?: boolean;
+    }
+    type Operator = CastOperator | NormalOperator;
 }
 
 export class Class extends AstNode {
+    public static readonly ClassType = {
+        Class: "class",
+        Record: "record",
+        Struct: "struct",
+        RecordStruct: "record struct"
+    } as const;
+    public static readonly Access = Access;
     public readonly name: string;
     public readonly namespace: string;
     public readonly access: Access;
+    public readonly static_: boolean;
     public readonly abstract: boolean;
     public readonly sealed: boolean;
+    public readonly readonly: boolean;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
-    public readonly record: boolean;
+    public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
@@ -97,13 +118,15 @@ export class Class extends AstNode {
         name,
         namespace,
         access,
+        static_,
         abstract,
         sealed,
         partial,
+        readonly,
         parentClassReference,
         interfaceReferences,
         isNestedClass,
-        record,
+        type,
         summary,
         annotations,
         primaryConstructor
@@ -112,11 +135,13 @@ export class Class extends AstNode {
         this.name = name;
         this.namespace = namespace;
         this.access = access;
+        this.static_ = static_ ?? false;
         this.abstract = abstract ?? false;
         this.sealed = sealed ?? false;
+        this.readonly = readonly ?? false;
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
-        this.record = record ?? false;
+        this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
 
         this.parentClassReference = parentClassReference;
@@ -168,11 +193,8 @@ export class Class extends AstNode {
         }
 
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
-            writer.writeLine("/// </summary>");
+            const docXmlWriter = new DocXmlWriter(writer);
+            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
         }
         if (this.annotations.length > 0) {
             writer.write("[");
@@ -183,16 +205,22 @@ export class Class extends AstNode {
             writer.writeNewLineIfLastLineNot();
         }
         writer.write(`${this.access}`);
+        if (this.static_) {
+            writer.write(" static");
+        }
         if (this.abstract) {
             writer.write(" abstract");
         }
         if (this.sealed) {
             writer.write(" sealed");
         }
+        if (this.readonly) {
+            writer.write(" readonly");
+        }
         if (this.partial) {
             writer.write(" partial");
         }
-        writer.write(this.record ? " record" : " class");
+        writer.write(` ${this.type}`);
         writer.write(` ${this.name}`);
         if (this.primaryConstructor != null && this.primaryConstructor.parameters.length > 0) {
             const primaryConstructor = this.primaryConstructor;
@@ -355,27 +383,30 @@ export class Class extends AstNode {
 
     private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
         writer.write("public static ");
-        switch (operator.type) {
-            case "implicit":
-                writer.write("implicit ");
-                break;
-            case "explicit":
-                writer.write("explicit ");
-                break;
-            default:
-                assertNever(operator.type);
+        if (operator.type === "explicit" || operator.type === "implicit") {
+            writer.write(`${operator.type} `);
+            writer.write("operator ");
+            writer.write(`${this.name}(`);
+            operator.parameter.write(writer);
+        } else {
+            const normalOperator = operator as Class.NormalOperator;
+            normalOperator.return.write(writer);
+            writer.write(" operator ");
+            writer.write(`${operator.type}(`);
+            normalOperator.parameters.forEach((parameter, idx) => {
+                parameter.write(writer);
+                if (idx < normalOperator.parameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
         }
-        writer.write("operator ");
-
-        writer.write(`${this.name}(`);
-        operator.parameters.forEach((parameter, idx) => {
-            parameter.write(writer);
-            if (idx < operator.parameters.length - 1) {
-                writer.write(", ");
-            }
-        });
-        writer.write(") => ");
-
-        writer.writeNodeStatement(operator.body);
+        if (operator.useExpressionBody) {
+            writer.write(") => ");
+            writer.writeNodeStatement(operator.body);
+        } else {
+            writer.write(") {");
+            writer.writeNode(operator.body);
+            writer.writeLine("}");
+        }
     }
 }

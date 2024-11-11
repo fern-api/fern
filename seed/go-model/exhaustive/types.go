@@ -14,6 +14,13 @@ type BadObjectRequestInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *BadObjectRequestInfo) GetMessage() string {
+	if b == nil {
+		return ""
+	}
+	return b.Message
+}
+
 func (b *BadObjectRequestInfo) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }

@@ -1274,6 +1274,26 @@
               "type": "null"
             }
           ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

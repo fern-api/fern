@@ -1,6 +1,6 @@
 ---
 title: Configure your site navigation
-description: Set up the navigation for your documentation site built with Fern Docs using the docs.yml file, including tabs, sections, pages, versions, and more.
+description: Set up the navigation for your documentation site built with Fern Docs using the docs.yml file, including tabs, sections, pages, and more.
 ---
 
 ## Use `docs.yml`
@@ -179,58 +179,5 @@ Here's an example of what the Tabs implementation looks like:
 
 ## Versions
 
-If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the `versions`.
+If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the `versions`. For more information, check out our [documentation on versioning](/learn/docs/building-your-docs/versioning). 
 
-<Frame>
-![A dropdown of the available versions](https://fern-image-hosting.s3.amazonaws.com/versions.png)
-</Frame>
-
-When adding an entry to the `versions` list, specify the version's `display-name`, which is visible to users, and `path`, which is a file that must be in a folder called `versions/`:
-
-<CodeBlock title="docs.yml">
-```yaml
-versions: 
-  - display-name: v1.0
-      path: v1-0.yml # must be in a `versions` folder
-  - display-name: v1.1
-      path: v1-1.yml
-```
-</CodeBlock>
-
-<CodeBlock title="versions/v1-0.yml">
-```yaml
-navigation: 
-  - section: Introduction
-    contents: 
-      - page: My Page
-        path: my-page.mdx
-  - api: API Reference
-```
-</CodeBlock>
-
-<CodeBlock title="versions/v1-1.yml">
-```yaml
-tabs: 
-  api: 
-    title: API Reference
-    icon: puzzle
-  help:
-    title: Help Center
-    icon: home
-    
- navigation:
-  - tab: api
-     contents:
-        - section: Introduction
-           contents: 
-              - page: My Page
-                 path: my-page.mdx
-        - api: API Reference
-   - tab: help
-      contents: 
-         - section: Help Center
-           contents: 
-              - page: Contact Us
-                 path: contact-us.mdx
-```
-</CodeBlock>

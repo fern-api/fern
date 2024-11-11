@@ -15,7 +15,11 @@
 <dd>
 
 ```typescript
-await client.optional.sendOptionalBody(undefined);
+await client.optional.sendOptionalBody({
+    string: {
+        key: "value",
+    },
+});
 ```
 
 </dd>

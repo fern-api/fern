@@ -65,6 +65,9 @@
                 "docs": "Success",
                 "type": "root.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_all": {
               "auth": false,
@@ -87,6 +90,9 @@
                 "docs": "Success",
                 "type": "list<root.User>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -104,6 +110,8 @@ service:
       path: /user
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: root.User
@@ -115,6 +123,8 @@ service:
       path: /users
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: list<root.User>

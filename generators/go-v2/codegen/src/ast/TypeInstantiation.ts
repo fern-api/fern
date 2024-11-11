@@ -18,6 +18,7 @@ type InternalTypeInstantiation =
     | Int
     | Int64
     | Map
+    | Nil
     | Nop
     | Optional
     | Slice
@@ -87,6 +88,10 @@ interface MapEntry {
     value: TypeInstantiation;
 }
 
+interface Nil {
+    type: "nil";
+}
+
 interface Nop {
     type: "nop";
 }
@@ -154,6 +159,9 @@ export class TypeInstantiation extends AstNode {
             case "map":
                 this.writeMap({ writer, map: this.internalType });
                 break;
+            case "nil":
+                writer.write("nil");
+                break;
             case "nop":
                 break; // no-op
             case "optional":
@@ -163,7 +171,11 @@ export class TypeInstantiation extends AstNode {
                 this.writeSlice({ writer, slice: this.internalType });
                 break;
             case "string":
-                writer.write(`"${this.internalType.value}"`);
+                writer.write(
+                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
+                        ? `\`${this.internalType.value}\``
+                        : `"${this.internalType.value}"`
+                );
                 break;
             case "struct":
                 this.writeStruct({ writer, struct: this.internalType });
@@ -257,6 +269,12 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static nil(): TypeInstantiation {
+        return new this({
+            type: "nil"
+        });
+    }
+
     public static nop(): TypeInstantiation {
         return new this({
             type: "nop"
@@ -264,6 +282,10 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static optional(value: TypeInstantiation): TypeInstantiation {
+        if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
+            return value;
+        }
         return new this({
             type: "optional",
             value
@@ -299,11 +321,35 @@ export class TypeInstantiation extends AstNode {
         });
     }
 
+    public static structPointer({
+        typeReference,
+        fields
+    }: {
+        typeReference: GoTypeReference;
+        fields: StructField[];
+    }): TypeInstantiation {
+        return new this({
+            type: "optional",
+            value: new this({
+                type: "struct",
+                typeReference,
+                fields
+            })
+        });
+    }
+
     public static uuid(value: string): TypeInstantiation {
         return new this({
             type: "uuid",
             value
         });
+    }
+
+    public static isNop(typeInstantiation: TypeInstantiation): boolean {
+        if (typeInstantiation.internalType.type === "optional") {
+            return this.isNop(typeInstantiation.internalType.value);
+        }
+        return typeInstantiation.internalType.type === "nop";
     }
 
     private writeAny({ writer, value }: { writer: Writer; value: unknown }): void {
@@ -420,6 +466,10 @@ export class TypeInstantiation extends AstNode {
         type.write(writer);
     }
 
+    private static isAlreadyOptional(value: TypeInstantiation) {
+        return value.internalType.type === "optional" || ADDRESSABLE_TYPES.has(value.internalType.type);
+    }
+
     private writeSlice({ writer, slice }: { writer: Writer; slice: Slice }): void {
         writer.write("[]");
         writer.writeNode(slice.valueType);
@@ -515,13 +565,13 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
 }
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {
-    return entries.filter((entry) => entry.key.internalType.type !== "nop" && entry.value.internalType.type !== "nop");
+    return entries.filter((entry) => !TypeInstantiation.isNop(entry.key) && !TypeInstantiation.isNop(entry.value));
 }
 
 function filterNopStructFields({ fields }: { fields: StructField[] }): StructField[] {
-    return fields.filter((field) => field.value.internalType.type !== "nop");
+    return fields.filter((field) => !TypeInstantiation.isNop(field.value));
 }
 
 function filterNopValues({ values }: { values: TypeInstantiation[] }): TypeInstantiation[] {
-    return values.filter((value) => value.internalType.type !== "nop");
+    return values.filter((value) => !TypeInstantiation.isNop(value));
 }

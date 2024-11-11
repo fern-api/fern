@@ -8,11 +8,30 @@ import (
 	core "github.com/streaming-parameter/fern/core"
 )
 
+type GenerateRequest struct {
+	Stream    bool `json:"stream" url:"-"`
+	NumEvents int  `json:"num_events" url:"-"`
+}
+
 type RegularResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *RegularResponse) GetId() string {
+	if r == nil {
+		return ""
+	}
+	return r.Id
+}
+
+func (r *RegularResponse) GetName() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Name
 }
 
 func (r *RegularResponse) GetExtraProperties() map[string]interface{} {
@@ -48,6 +67,20 @@ type StreamResponse struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *StreamResponse) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *StreamResponse) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
 }
 
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {

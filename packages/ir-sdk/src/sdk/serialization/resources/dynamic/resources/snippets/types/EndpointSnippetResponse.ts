@@ -5,16 +5,19 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
+import { Error_ } from "./Error_";
 
 export const EndpointSnippetResponse: core.serialization.ObjectSchema<
     serializers.dynamic.EndpointSnippetResponse.Raw,
     FernIr.dynamic.EndpointSnippetResponse
 > = core.serialization.objectWithoutOptionalProperties({
     snippet: core.serialization.string(),
+    errors: core.serialization.list(Error_).optional(),
 });
 
 export declare namespace EndpointSnippetResponse {
     interface Raw {
         snippet: string;
+        errors?: Error_.Raw[] | null;
     }
 }

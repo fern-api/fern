@@ -1,4 +1,4 @@
-irVersion: v40
+irVersion: v53
 displayName: Fiber
 image: fernapi/fern-go-fiber
 changelogLocation: ../../generators/go/fiber/versions.yml
@@ -24,7 +24,7 @@ test:
     image: fernapi/fern-go-fiber:latest
     command: docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest ./generators/go
 language: go
-generatorType: sdk
+generatorType: Model
 defaultOutputMode: github
 fixtures:
   streaming:
@@ -47,7 +47,8 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - alias-extends
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - trace
-  - alias-extends

@@ -12,8 +12,8 @@ async def test_list_(client: SeedMixedFileDirectory, async_client: AsyncSeedMixe
         "list",
         {0: {"id": None, "name": None, "age": "integer"}, 1: {"id": None, "name": None, "age": "integer"}},
     )
-    response = client.user.list()
+    response = client.user.list(limit=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.user.list()
+    async_response = await async_client.user.list(limit=1)
     validate_response(async_response, expected_response, expected_types)

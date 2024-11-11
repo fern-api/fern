@@ -14,6 +14,8 @@ import com.seed.examples.core.Suppliers;
 import com.seed.examples.resources.file.FileClient;
 import com.seed.examples.resources.health.HealthClient;
 import com.seed.examples.resources.service.ServiceClient;
+import com.seed.examples.types.Identifier;
+import com.seed.examples.types.Type;
 import java.io.IOException;
 import java.util.function.Supplier;
 import okhttp3.Headers;
@@ -69,6 +71,46 @@ public class SeedExamplesClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedExamplesApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedExamplesException("Network error executing HTTP request", e);
+        }
+    }
+
+    public Identifier createType(Type request) {
+        return createType(request, null);
+    }
+
+    public Identifier createType(Type request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedExamplesException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Identifier.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedExamplesApiException(

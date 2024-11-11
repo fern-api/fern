@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "environment"
 require "faraday"
 require "faraday/retry"
 require "async/http/faraday"
@@ -10,13 +11,22 @@ module SeedApiClient
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
+    # @return [String]
+    attr_reader :default_environment
 
     # @param base_url [String]
+    # @param environment [SeedApiClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param api_key [String]
     # @return [SeedApiClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @base_url = base_url
+    def initialize(api_key:, base_url: nil, environment: SeedApiClient::Environment::DEFAULT, max_retries: nil,
+                   timeout_in_seconds: nil)
+      @default_environment = environment
+      @base_url = environment || base_url
+      @api_key = api_key
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -28,16 +38,18 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
     end
 
     # @return [Hash{String => String}]
     def get_headers
-      {
+      headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_grpc_proto_exhaustive",
         "X-Fern-SDK-Version": "0.0.1"
       }
+      headers["X-API-Key"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers
     end
   end
 
@@ -46,13 +58,22 @@ module SeedApiClient
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
+    # @return [String]
+    attr_reader :default_environment
 
     # @param base_url [String]
+    # @param environment [SeedApiClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param api_key [String]
     # @return [SeedApiClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @base_url = base_url
+    def initialize(api_key:, base_url: nil, environment: SeedApiClient::Environment::DEFAULT, max_retries: nil,
+                   timeout_in_seconds: nil)
+      @default_environment = environment
+      @base_url = environment || base_url
+      @api_key = api_key
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -65,16 +86,18 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
-      request_options&.base_url || @base_url
+      request_options&.base_url || @default_environment || @base_url
     end
 
     # @return [Hash{String => String}]
     def get_headers
-      {
+      headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_grpc_proto_exhaustive",
         "X-Fern-SDK-Version": "0.0.1"
       }
+      headers["X-API-Key"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers
     end
   end
 
@@ -83,6 +106,8 @@ module SeedApiClient
   class RequestOptions
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -93,14 +118,16 @@ module SeedApiClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
+    # @param api_key [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedApiClient::RequestOptions]
-    def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
+    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
+      @api_key = api_key
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
@@ -113,6 +140,8 @@ module SeedApiClient
   class IdempotencyRequestOptions
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -123,14 +152,16 @@ module SeedApiClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
+    # @param api_key [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedApiClient::IdempotencyRequestOptions]
-    def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
+    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
+      @api_key = api_key
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters

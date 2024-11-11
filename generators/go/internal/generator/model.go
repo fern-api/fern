@@ -165,16 +165,20 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
-	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
-	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
-	t.writer.P("}")
-	t.writer.P()
+	typeFields := t.getTypeFieldsForObject(object)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, literal := range objectProperties.literals {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
 		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
+	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
+	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
+	t.writer.P("}")
+	t.writer.P()
 
 	// Implement the json.Unmarshaler interface.
 	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
@@ -365,8 +369,15 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
+	typeFields := t.getTypeFieldsForUnion(union)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, literal := range append(literals, unionLiterals...) {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", zeroValueForLiteral(literal.Value))
+		t.writer.P("}")
 		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
@@ -738,6 +749,8 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.WriteDocs(member.docs)
 		t.writer.P(member.field, " ", member.value)
 	}
+	t.writer.P()
+	t.writer.P("typ string")
 	t.writer.P("}")
 	t.writer.P()
 
@@ -746,10 +759,10 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		if member.isLiteral {
 			t.writer.P("func New", t.typeName, "With", strings.Title(member.field), "() *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", member.field, ": ", member.literal, "}")
+			t.writer.P("return &", t.typeName, "{ typ: \"", member.field, "\", ", member.field, ": ", member.literal, "}")
 		} else if t.unionVersion != UnionVersionV1 {
 			t.writer.P("func New", t.typeName, "From", member.field, "(value ", member.value, ") *", t.typeName, "{")
-			t.writer.P("return &", t.typeName, "{", member.field, ": value}")
+			t.writer.P("return &", t.typeName, "{ typ: \"", member.field, "\", ", member.field, ": value}")
 		} else {
 			continue
 		}
@@ -758,6 +771,10 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 
 	// Write getters for literal values, if any.
+	typeFields := t.getTypeFieldsForUndiscriminatedUnion(union)
+	for _, typeField := range typeFields {
+		t.writeGetterMethod(receiver, typeField)
+	}
 	for _, member := range members {
 		if !member.isLiteral {
 			continue
@@ -785,6 +802,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.isLiteral {
 			// If the undiscriminated union specifies a literal, it will only
 			// succeed if the literal matches exactly.
+			t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
 			t.writer.P(receiver, ".", member.field, " = ", member.variable)
 			t.writer.P("if ", receiver, ".", member.field, " != ", member.literal, " {")
 			t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", member.literal, ", ", member.variable, ")")
@@ -797,6 +815,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.valueUnmarshalerMethodSuffix != "" {
 			variable += member.valueUnmarshalerMethodSuffix
 		}
+		t.writer.P(fmt.Sprintf("%s.typ = %q", receiver, member.field))
 		t.writer.P(receiver, ".", member.field, " = ", variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
@@ -809,9 +828,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		field := fmt.Sprintf("%s.%s", receiver, member.field)
 		if member.date != nil && !member.isOptional {
-			t.writer.P("if !", field, ".IsZero() {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
 		} else {
-			t.writer.P("if ", field, " != ", member.zeroValue, " {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
 		}
 		if member.isLiteral {
 			// If we have a literal, we need to marshal it directly.
@@ -843,9 +862,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	for _, member := range members {
 		field := fmt.Sprintf("%s.%s", receiver, member.field)
 		if member.date != nil && !member.isOptional {
-			t.writer.P("if !", field, ".IsZero() {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
 		} else {
-			t.writer.P("if ", field, " != ", member.zeroValue, " {")
+			t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
 		}
 		t.writer.P("return visitor.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
 		t.writer.P("}")
@@ -872,12 +891,12 @@ func (u *undiscriminatedUnionTypeReferenceVisitor) VisitContainer(container *ir.
 	return nil
 }
 
-func (u *undiscriminatedUnionTypeReferenceVisitor) VisitNamed(named *ir.DeclaredTypeName) error {
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitNamed(named *ir.NamedType) error {
 	u.value = named.Name.PascalCase.UnsafeName
 	return nil
 }
 
-func (u *undiscriminatedUnionTypeReferenceVisitor) VisitPrimitive(primitive ir.PrimitiveType) error {
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitPrimitive(primitive *ir.PrimitiveType) error {
 	u.value = primitiveToUndiscriminatedUnionField(primitive)
 	return nil
 }
@@ -1009,6 +1028,103 @@ func (t *typeVisitor) visitObjectProperties(
 	}
 }
 
+// typeField represent a single type field. This is used to generate getter methods for objects,
+// unions, and undiscriminated unions.
+type typeField struct {
+	Name      string
+	GoType    string
+	ZeroValue string
+}
+
+func (t *typeVisitor) writeGetterMethod(receiver string, field *typeField) {
+	getterName := fmt.Sprintf("%s%s", "Get", field.Name)
+	t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return ", field.ZeroValue)
+	t.writer.P("}")
+	t.writer.P("return ", receiver, ".", field.Name)
+	t.writer.P("}")
+	t.writer.P()
+}
+
+// getTypeFieldsForObject retrieves the type fields for the given object.
+func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) []*typeField {
+	var fields []*typeField
+	for _, extend := range object.Extends {
+		extended := t.writer.types[extend.TypeId].Shape.Object
+		fields = append(fields, t.getTypeFieldsForObject(extended)...)
+	}
+	for _, property := range object.Properties {
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
+		fields = append(fields, &typeField{
+			Name:      property.Name.Name.PascalCase.UnsafeName,
+			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+		})
+	}
+	return fields
+}
+
+// getTypeFieldsForUnion retrieves the type fields for the given union.
+func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*typeField {
+	var fields []*typeField
+	fields = append(
+		fields,
+		&typeField{
+			Name:      union.Discriminant.Name.PascalCase.UnsafeName,
+			GoType:    "string",
+			ZeroValue: `""`,
+		},
+	)
+	for _, extend := range union.Extends {
+		extended := t.writer.types[extend.TypeId].Shape.Object
+		fields = append(fields, t.getTypeFieldsForObject(extended)...)
+	}
+	for _, property := range union.BaseProperties {
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
+		fields = append(fields, &typeField{
+			Name:      property.Name.Name.PascalCase.UnsafeName,
+			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+		})
+	}
+	for _, property := range union.Types {
+		if property.Shape.SingleProperty != nil && isLiteralType(property.Shape.SingleProperty.Type, t.writer.types) {
+			continue
+		}
+		fields = append(fields, t.typeFieldForSingleUnionType(property))
+	}
+	return fields
+}
+
+func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
+	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+	return &typeField{
+		Name:      singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		GoType:    singleUnionProperty.goType,
+		ZeroValue: singleUnionProperty.zeroValue,
+	}
+}
+
+func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion *ir.UndiscriminatedUnionTypeDeclaration) []*typeField {
+	var typeFields []*typeField
+	for _, member := range undiscriminatedUnion.Members {
+		if isLiteralType(member.Type, t.writer.types) {
+			continue
+		}
+		typeFields = append(typeFields, &typeField{
+			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types),
+			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
+		})
+	}
+	return typeFields
+}
+
 // typeReferenceVisitor retrieves the string representation of type references
 // (e.g. containers, primitives, etc).
 type typeReferenceVisitor struct {
@@ -1028,7 +1144,7 @@ func (t *typeReferenceVisitor) VisitContainer(container *ir.ContainerType) error
 	return nil
 }
 
-func (t *typeReferenceVisitor) VisitNamed(named *ir.DeclaredTypeName) error {
+func (t *typeReferenceVisitor) VisitNamed(named *ir.NamedType) error {
 	format := "%s"
 	if isPointer(t.types[named.TypeId]) {
 		format = "*%s"
@@ -1041,7 +1157,7 @@ func (t *typeReferenceVisitor) VisitNamed(named *ir.DeclaredTypeName) error {
 	return nil
 }
 
-func (t *typeReferenceVisitor) VisitPrimitive(primitive ir.PrimitiveType) error {
+func (t *typeReferenceVisitor) VisitPrimitive(primitive *ir.PrimitiveType) error {
 	t.value = primitiveToGoType(primitive)
 	return nil
 }
@@ -1108,6 +1224,7 @@ func (c *containerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
 // single union type properties.
 type singleUnionTypePropertiesVisitor struct {
 	goType                       string
+	zeroValue                    string
 	valueMarshalerGoType         string
 	valueMarshalerConstructor    string
 	valueUnmarshalerMethodSuffix string
@@ -1131,12 +1248,14 @@ func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir
 		name = c.scope.AddImport(importPath) + "." + name
 	}
 	c.goType = fmt.Sprintf(format, name)
+	c.zeroValue = "nil"
 	c.valueMarshalerGoType = c.goType
 	return nil
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
 	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
+	c.zeroValue = zeroValueForTypeReference(property.Type, c.types)
 
 	if date := maybeDateProperty(property.Type, property.Name, false); date != nil {
 		c.valueMarshalerGoType = date.TypeDeclaration
@@ -1151,6 +1270,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.Sing
 
 func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
 	c.goType = "interface{}"
+	c.zeroValue = "nil"
 	c.valueMarshalerGoType = c.goType
 	return nil
 }
@@ -1276,6 +1396,7 @@ func containerTypeToGoType(
 
 type singleUnionProperty struct {
 	goType               string
+	zeroValue            string
 	valueMarshalerGoType string
 
 	// Optional; required for date[-time] properties.
@@ -1300,6 +1421,7 @@ func singleUnionTypePropertiesToGoType(
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return &singleUnionProperty{
 		goType:                       visitor.goType,
+		zeroValue:                    visitor.zeroValue,
 		valueMarshalerGoType:         visitor.valueMarshalerGoType,
 		valueMarshalerConstructor:    visitor.valueMarshalerConstructor,
 		valueUnmarshalerMethodSuffix: visitor.valueUnmarshalerMethodSuffix,
@@ -1559,7 +1681,7 @@ func tagFormatForType(
 				primitive = typeDeclaration.Shape.Alias.AliasOf.Primitive
 			}
 		}
-		if primitive != "" {
+		if primitive != nil {
 			return "%s:%q"
 		}
 	}
@@ -1593,26 +1715,41 @@ func literalToUndiscriminatedUnionField(literal *ir.Literal) string {
 }
 
 // primitiveToGoType maps Fern's primitive types to their Go-equivalent.
-func primitiveToGoType(primitive ir.PrimitiveType) string {
-	switch primitive {
-	case ir.PrimitiveTypeInteger:
+func primitiveToGoType(primitive *ir.PrimitiveType) string {
+	if primitive == nil {
+		return "interface{}"
+	}
+	switch primitive.V1 {
+	case ir.PrimitiveTypeV1Integer:
 		return "int"
-	case ir.PrimitiveTypeDouble:
-		return "float64"
-	case ir.PrimitiveTypeString:
-		return "string"
-	case ir.PrimitiveTypeBoolean:
-		return "bool"
-	case ir.PrimitiveTypeLong:
+	case ir.PrimitiveTypeV1Long:
 		return "int64"
-	case ir.PrimitiveTypeDateTime:
+	case ir.PrimitiveTypeV1Uint:
+		// TODO: Add support for uint.
+		return "int"
+	case ir.PrimitiveTypeV1Uint64:
+		// TODO: Add support for uint64.
+		return "int64"
+	case ir.PrimitiveTypeV1Float:
+		// TODO: Add support for float32.
+		return "float64"
+	case ir.PrimitiveTypeV1Double:
+		return "float64"
+	case ir.PrimitiveTypeV1String:
+		return "string"
+	case ir.PrimitiveTypeV1Boolean:
+		return "bool"
+	case ir.PrimitiveTypeV1DateTime:
 		return "time.Time"
-	case ir.PrimitiveTypeDate:
+	case ir.PrimitiveTypeV1Date:
 		return "time.Time"
-	case ir.PrimitiveTypeUuid:
+	case ir.PrimitiveTypeV1Uuid:
 		return "uuid.UUID"
-	case ir.PrimitiveTypeBase64:
+	case ir.PrimitiveTypeV1Base64:
 		return "[]byte"
+	case ir.PrimitiveTypeV1BigInteger:
+		// TODO: Add support for big integer.
+		return "string"
 	default:
 		return "interface{}"
 	}
@@ -1620,34 +1757,48 @@ func primitiveToGoType(primitive ir.PrimitiveType) string {
 
 // primitiveToUndiscriminatedUnionField maps Fern's primitive types to the field name used in an
 // undiscriminated union.
-func primitiveToUndiscriminatedUnionField(primitive ir.PrimitiveType) string {
-	switch primitive {
-	case ir.PrimitiveTypeInteger:
+func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
+	if primitive == nil {
+		return "Any"
+	}
+	switch primitive.V1 {
+	case ir.PrimitiveTypeV1Integer:
 		return "Integer"
-	case ir.PrimitiveTypeDouble:
-		return "Double"
-	case ir.PrimitiveTypeString:
-		return "String"
-	case ir.PrimitiveTypeBoolean:
-		return "Boolean"
-	case ir.PrimitiveTypeLong:
+	case ir.PrimitiveTypeV1Long:
 		return "Long"
-	case ir.PrimitiveTypeDateTime:
-		return "DateTime"
-	case ir.PrimitiveTypeDate:
+	case ir.PrimitiveTypeV1Uint:
+		// TODO: Add support for uint.
+		return "Integer"
+	case ir.PrimitiveTypeV1Uint64:
+		// TODO: Add support for uint64.
+		return "Long"
+	case ir.PrimitiveTypeV1Float:
+		// TODO: Add support for float32.
+		return "Double"
+	case ir.PrimitiveTypeV1Double:
+		return "Double"
+	case ir.PrimitiveTypeV1String:
+		return "String"
+	case ir.PrimitiveTypeV1Boolean:
+		return "Boolean"
+	case ir.PrimitiveTypeV1Date:
 		return "Date"
-	case ir.PrimitiveTypeUuid:
+	case ir.PrimitiveTypeV1DateTime:
+		return "DateTime"
+	case ir.PrimitiveTypeV1Uuid:
 		return "Uuid"
-	case ir.PrimitiveTypeBase64:
+	case ir.PrimitiveTypeV1Base64:
 		return "Base64"
+	case ir.PrimitiveTypeV1BigInteger:
+		// TODO: Implement big integer.
+		return "BigInteger"
 	default:
 		return "Any"
 	}
 }
 
-// mayybeDateProperty returns the *date associated with the given type reference, if any.
 func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, isOptional bool) *date {
-	if valueType.Primitive == ir.PrimitiveTypeDate {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*core.Date"
 			constructor     = "core.NewDate"
@@ -1669,7 +1820,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive == ir.PrimitiveTypeDateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*core.DateTime"
 			constructor     = "core.NewDateTime"
@@ -1702,7 +1853,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 // any property-oriented information. This is tailored to the undiscriminated
 // union use case.
 func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
-	if valueType.Primitive == ir.PrimitiveTypeDate {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*core.Date"
 			constructor     = "core.NewDate"
@@ -1720,7 +1871,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive == ir.PrimitiveTypeDateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*core.DateTime"
 			constructor     = "core.NewDateTime"
@@ -1749,7 +1900,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 // Note that we don't need to include a custom layout for DateTime because that
 // is the default format used for time.Time types.
 func maybeFormatStructTag(valueType *ir.TypeReference) string {
-	if valueType.Primitive == ir.PrimitiveTypeDate {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
 		return `format:"date"`
 	}
 	if valueType.Type != "container" {
@@ -1790,7 +1941,7 @@ func defaultValueForTypeReference(typeReference *ir.TypeReference, types map[str
 	if typeReference.Named != nil {
 		return defaultValueForTypeDeclaration(types[typeReference.Named.TypeId], types)
 	}
-	if typeReference.Primitive != "" {
+	if typeReference.Primitive != nil {
 		return defaultValueForPrimitiveType(typeReference.Primitive)
 	}
 	return "nil"
@@ -1806,26 +1957,38 @@ func defaultValueForTypeDeclaration(typeDeclaration *ir.TypeDeclaration, types m
 	return "nil"
 }
 
-func defaultValueForPrimitiveType(primitiveType ir.PrimitiveType) string {
-	switch primitiveType {
-	case ir.PrimitiveTypeInteger:
-		return "0"
-	case ir.PrimitiveTypeDouble:
-		return "0"
-	case ir.PrimitiveTypeString:
-		return `""`
-	case ir.PrimitiveTypeBoolean:
-		return "false"
-	case ir.PrimitiveTypeLong:
-		return "0"
-	case ir.PrimitiveTypeDateTime:
-		return "time.Time{}"
-	case ir.PrimitiveTypeDate:
-		return "time.Time{}"
-	case ir.PrimitiveTypeUuid:
-		return "uuid.Nil"
-	case ir.PrimitiveTypeBase64:
+func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
+	if primitiveType == nil {
 		return "nil"
+	}
+	switch primitiveType.V1 {
+	case ir.PrimitiveTypeV1Integer:
+		return "0"
+	case ir.PrimitiveTypeV1Long:
+		return "0"
+	case ir.PrimitiveTypeV1Uint:
+		return "0"
+	case ir.PrimitiveTypeV1Uint64:
+		return "0"
+	case ir.PrimitiveTypeV1Float:
+		return "0"
+	case ir.PrimitiveTypeV1Double:
+		return "0"
+	case ir.PrimitiveTypeV1String:
+		return `""`
+	case ir.PrimitiveTypeV1Boolean:
+		return "false"
+	case ir.PrimitiveTypeV1DateTime:
+		return "time.Time{}"
+	case ir.PrimitiveTypeV1Date:
+		return "time.Time{}"
+	case ir.PrimitiveTypeV1Uuid:
+		return "uuid.Nil"
+	case ir.PrimitiveTypeV1Base64:
+		return "nil"
+	case ir.PrimitiveTypeV1BigInteger:
+		// TODO: Implement big integer types.
+		return `""`
 	}
 	return "nil"
 }

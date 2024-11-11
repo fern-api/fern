@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`exhaustive (errors) > invalid request body 1`] = `
+[
+  {
+    "message": "Expected string but got boolean",
+    "path": [
+      "requestBody[0]",
+      "string",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": ""invalid" is not a recognized parameter for this endpoint",
+    "path": [
+      "requestBody[1]",
+      "invalid",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": "Expected string but got number",
+    "path": [
+      "requestBody[2]",
+      "string",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
+exports[`exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfObjects(
+		context.TODO(),
+		[]*types.ObjectWithRequiredField{
+			&types.ObjectWithRequiredField{
+				String: "one",
+			},
+			&types.ObjectWithRequiredField{
+				String: "two",
+			},
+			&types.ObjectWithRequiredField{
+				String: "three",
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+		context.TODO(),
+		[]string{
+			"one",
+			"two",
+			"three",
+		},
+	)
+}
+"
+`;

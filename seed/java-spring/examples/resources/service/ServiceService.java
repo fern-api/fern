@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import resources.types.types.BigEntity;
 import resources.types.types.Metadata;
 import resources.types.types.Movie;
 import resources.types.types.MovieId;
@@ -45,8 +46,9 @@ public interface ServiceService {
       @RequestParam("tag") Optional<String> tag);
 
   @PostMapping(
-      value = "/response",
-      produces = "application/json"
+      value = "/big-entity",
+      produces = "application/json",
+      consumes = "application/json"
   )
-  Response getResponse();
+  Response createBigEntity(@RequestBody BigEntity body);
 }

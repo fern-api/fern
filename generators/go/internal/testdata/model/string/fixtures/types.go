@@ -15,6 +15,20 @@ type Movie struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *Movie) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
 func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }

@@ -44,6 +44,13 @@ type DoubleOptional struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalAlias
+}
+
 func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -77,6 +84,20 @@ type NestedObjectWithOptionalField struct {
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NestedObjectWithOptionalField) GetString() *string {
+	if n == nil {
+		return nil
+	}
+	return n.String
+}
+
+func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalField {
+	if n == nil {
+		return nil
+	}
+	return n.NestedObject
 }
 
 func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
@@ -114,6 +135,20 @@ type NestedObjectWithRequiredField struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *NestedObjectWithRequiredField) GetString() string {
+	if n == nil {
+		return ""
+	}
+	return n.String
+}
+
+func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalField {
+	if n == nil {
+		return nil
+	}
+	return n.NestedObject
+}
+
 func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -146,6 +181,13 @@ type ObjectWithMapOfMap struct {
 	Map map[string]map[string]string `json:"map,omitempty" url:"map,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Map
 }
 
 func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
@@ -193,6 +235,97 @@ type ObjectWithOptionalField struct {
 	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithOptionalField) GetString() *string {
+	if o == nil {
+		return nil
+	}
+	return o.String
+}
+
+func (o *ObjectWithOptionalField) GetInteger() *int {
+	if o == nil {
+		return nil
+	}
+	return o.Integer
+}
+
+func (o *ObjectWithOptionalField) GetLong() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Long
+}
+
+func (o *ObjectWithOptionalField) GetDouble() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Double
+}
+
+func (o *ObjectWithOptionalField) GetBool() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Bool
+}
+
+func (o *ObjectWithOptionalField) GetDatetime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.Datetime
+}
+
+func (o *ObjectWithOptionalField) GetDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.Date
+}
+
+func (o *ObjectWithOptionalField) GetUuid() *uuid.UUID {
+	if o == nil {
+		return nil
+	}
+	return o.Uuid
+}
+
+func (o *ObjectWithOptionalField) GetBase64() *[]byte {
+	if o == nil {
+		return nil
+	}
+	return o.Base64
+}
+
+func (o *ObjectWithOptionalField) GetList() []string {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *ObjectWithOptionalField) GetSet() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Set
+}
+
+func (o *ObjectWithOptionalField) GetMap() map[int]string {
+	if o == nil {
+		return nil
+	}
+	return o.Map
+}
+
+func (o *ObjectWithOptionalField) GetBigint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Bigint
 }
 
 func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
@@ -251,6 +384,13 @@ type ObjectWithRequiredField struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *ObjectWithRequiredField) GetString() string {
+	if o == nil {
+		return ""
+	}
+	return o.String
+}
+
 func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -293,6 +433,27 @@ func NewAnimalFromDog(value *Dog) *Animal {
 
 func NewAnimalFromCat(value *Cat) *Animal {
 	return &Animal{Animal: "cat", Cat: value}
+}
+
+func (a *Animal) GetAnimal() string {
+	if a == nil {
+		return ""
+	}
+	return a.Animal
+}
+
+func (a *Animal) GetDog() *Dog {
+	if a == nil {
+		return nil
+	}
+	return a.Dog
+}
+
+func (a *Animal) GetCat() *Cat {
+	if a == nil {
+		return nil
+	}
+	return a.Cat
 }
 
 func (a *Animal) UnmarshalJSON(data []byte) error {
@@ -357,6 +518,20 @@ type Cat struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *Cat) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *Cat) GetLikesToMeow() bool {
+	if c == nil {
+		return false
+	}
+	return c.LikesToMeow
+}
+
 func (c *Cat) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -390,6 +565,20 @@ type Dog struct {
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
 
 	extraProperties map[string]interface{}
+}
+
+func (d *Dog) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Dog) GetLikesToWoof() bool {
+	if d == nil {
+		return false
+	}
+	return d.LikesToWoof
 }
 
 func (d *Dog) GetExtraProperties() map[string]interface{} {

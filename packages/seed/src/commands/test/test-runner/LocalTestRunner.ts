@@ -1,8 +1,12 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
-import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
-import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
+import {
+    generateDynamicSnippetTests,
+    getGeneratorConfig,
+    getIntermediateRepresentation,
+    LocalTaskHandler
+} from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
@@ -43,7 +47,8 @@ export class LocalTestRunner extends TestRunner {
         outputMode,
         irVersion,
         publishMetadata,
-        readme
+        readme,
+        shouldGenerateDynamicSnippetTests
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -152,6 +157,21 @@ export class LocalTestRunner extends TestRunner {
             });
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
+
+            if (shouldGenerateDynamicSnippetTests && language != null) {
+                taskContext.logger.info(`Writing dynamic snippet tests to ${outputDir}`);
+                await generateDynamicSnippetTests({
+                    context: taskContext,
+                    ir: ir.latest,
+                    config: generatorConfig,
+                    language,
+                    outputDir
+                });
+            } else {
+                taskContext.logger.info(
+                    `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${language}`
+                );
+            }
         }
     }
 

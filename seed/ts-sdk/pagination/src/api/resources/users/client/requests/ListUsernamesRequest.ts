@@ -4,7 +4,9 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         startingAfter: "starting_after"
+ *     }
  */
 export interface ListUsernamesRequest {
     /**

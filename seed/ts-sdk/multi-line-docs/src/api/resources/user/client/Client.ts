@@ -91,7 +91,7 @@ export class User {
      * @example
      *     await client.user.createUser({
      *         name: "name",
-     *         age: undefined
+     *         age: 1
      *     })
      */
     public async createUser(

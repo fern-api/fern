@@ -5809,6 +5809,9 @@ types:
                 "docs": "OK.",
                 "type": "root.AccountJointOwners",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -5829,6 +5832,8 @@ service:
       docs: >-
         Return a collection of account joint owners. The user must have the
         `account.manageJointOwners` permission to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -5887,27 +5892,27 @@ docs: Account Joint Owners
                   "response": {
                     "body": {
                       "allows": {
-                        "billPay": true,
-                        "manageCards": true,
+                        "billPay": false,
+                        "manageCards": false,
                         "manageJointOwners": true,
                         "manageOverdraftAccounts": true,
                         "mobileCheckDeposit": true,
-                        "transferFrom": true,
+                        "transferFrom": false,
                         "transferTo": true,
                         "view": true,
                         "viewCards": true,
                       },
                       "electronicStatements": true,
-                      "id": "id",
-                      "label": "Checking *1008",
+                      "id": "bf23bc970b78d27691e8",
+                      "label": "Payroll Checking *1008",
                       "location": "internal",
-                      "maskedNumber": "maskedNumber",
+                      "maskedNumber": "*1008",
                       "nickname": "Payroll Checking",
                       "product": {
-                        "code": "180D_CDA",
-                        "description": "Certificate of Deposit with a 180 day term",
-                        "label": "180 Day CD",
-                        "type": "cd",
+                        "code": "DDA",
+                        "description": "Business checking account",
+                        "label": "Business Checking",
+                        "type": "checking",
                       },
                     },
                   },
@@ -5925,6 +5930,9 @@ docs: Account Joint Owners
               "response": {
                 "docs": "OK. The response is a representation of the customer's account.",
                 "type": "root.Account",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listAccountBalances": {
@@ -5987,6 +5995,9 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                 "docs": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
                 "type": "root.AccountBalances",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listAccounts": {
               "auth": true,
@@ -6002,33 +6013,55 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                 {
                   "response": {
                     "body": {
-                      "count": 1,
+                      "count": 6,
                       "items": [
                         {
                           "allows": {
-                            "billPay": true,
-                            "manageCards": true,
+                            "billPay": false,
+                            "manageCards": false,
                             "mobileCheckDeposit": true,
-                            "transferFrom": true,
+                            "transferFrom": false,
                             "transferTo": true,
                             "view": true,
                             "viewCards": true,
                           },
-                          "id": "id",
-                          "label": "Checking *1008",
+                          "id": "bf23bc970b78d27691e8",
+                          "label": "Payroll Checking *1008",
                           "location": "internal",
-                          "maskedNumber": "maskedNumber",
+                          "maskedNumber": "*1008",
                           "nickname": "Payroll Checking",
                           "product": {
-                            "code": "180D_CDA",
-                            "description": "Certificate of Deposit with a 180 day term",
-                            "label": "180 Day CD",
+                            "code": "DDA",
+                            "description": "Basic business checking accounts",
+                            "label": "Business Checking",
+                            "type": "checking",
+                          },
+                        },
+                        {
+                          "allows": {
+                            "billPay": false,
+                            "manageCards": false,
+                            "mobileCheckDeposit": false,
+                            "transferFrom": false,
+                            "transferTo": false,
+                            "view": true,
+                            "viewCards": true,
+                          },
+                          "id": "b78d27691e8bf23bc970",
+                          "label": "College CD *2017",
+                          "location": "internal",
+                          "maskedNumber": "*2017",
+                          "nickname": "College CD",
+                          "product": {
+                            "code": "CDA",
+                            "description": "24 Month certificate of deposit",
+                            "label": "24 Month CD",
                             "type": "cd",
                           },
                         },
                       ],
                       "limit": 1,
-                      "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                      "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
                       "primaryAccountId": "primaryAccountId",
                       "start": "start",
                     },
@@ -6068,6 +6101,9 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               "response": {
                 "docs": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.Accounts",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listEligibleAchAccounts": {
@@ -6115,6 +6151,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "docs": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.Accounts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6154,6 +6193,8 @@ service:
         Return a paginated list of the customer's accounts, consisting of
         internal accounts at this financial institution and accounts at other
         financial institutions, if any.
+      source:
+        openapi: ../openapi.yml
       display-name: List Accounts
       request:
         name: AccountsListAccountsRequest
@@ -6208,34 +6249,54 @@ service:
             body:
               limit: 1
               nextPage_url: >-
-                https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8
+                https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view
               start: start
               items:
-                - id: id
-                  label: Checking *1008
+                - id: bf23bc970b78d27691e8
+                  label: Payroll Checking *1008
                   nickname: Payroll Checking
-                  maskedNumber: maskedNumber
+                  maskedNumber: '*1008'
                   product:
-                    type: cd
-                    code: 180D_CDA
-                    label: 180 Day CD
-                    description: Certificate of Deposit with a 180 day term
+                    type: checking
+                    code: DDA
+                    label: Business Checking
+                    description: Basic business checking accounts
                   location: internal
                   allows:
-                    billPay: true
+                    billPay: false
                     mobileCheckDeposit: true
-                    transferFrom: true
+                    transferFrom: false
                     transferTo: true
                     view: true
                     viewCards: true
-                    manageCards: true
-              count: 1
+                    manageCards: false
+                - id: b78d27691e8bf23bc970
+                  label: College CD *2017
+                  nickname: College CD
+                  maskedNumber: '*2017'
+                  product:
+                    type: cd
+                    code: CDA
+                    label: 24 Month CD
+                    description: 24 Month certificate of deposit
+                  location: internal
+                  allows:
+                    billPay: false
+                    mobileCheckDeposit: false
+                    transferFrom: false
+                    transferTo: false
+                    view: true
+                    viewCards: true
+                    manageCards: false
+              count: 6
               primaryAccountId: primaryAccountId
     getAccount:
       path: /accounts/{accountId}
       method: GET
       auth: true
       docs: Return details of the customer's internal account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -6255,24 +6316,24 @@ service:
             accountId: accountId
           response:
             body:
-              id: id
-              label: Checking *1008
+              id: bf23bc970b78d27691e8
+              label: Payroll Checking *1008
               nickname: Payroll Checking
-              maskedNumber: maskedNumber
+              maskedNumber: '*1008'
               product:
-                type: cd
-                code: 180D_CDA
-                label: 180 Day CD
-                description: Certificate of Deposit with a 180 day term
+                type: checking
+                code: DDA
+                label: Business Checking
+                description: Business checking account
               location: internal
               allows:
-                billPay: true
+                billPay: false
                 mobileCheckDeposit: true
-                transferFrom: true
+                transferFrom: false
                 transferTo: true
                 view: true
                 viewCards: true
-                manageCards: true
+                manageCards: false
                 manageJointOwners: true
                 manageOverdraftAccounts: true
               electronicStatements: true
@@ -6294,6 +6355,8 @@ service:
         the client can retry the operation after a short delay, requesting only
         the accounts which are incomplete; see the 202 Accepted response for
         details.
+      source:
+        openapi: ../openapi.yml
       display-name: List Account Balances
       request:
         name: AccountsListAccountBalancesRequest
@@ -6352,6 +6415,8 @@ service:
         Optionally, an agent can access a business customer's ACH accounts when
         acting on behalf of that business customer via the optional `customerId`
         query parameter.
+      source:
+        openapi: ../openapi.yml
       display-name: List Eligible ACH Accounts
       request:
         name: AccountsListEligibleAchAccountsRequest
@@ -6441,6 +6506,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                   "path-parameters": {
                     "institutionId": "TIBURON",
                   },
+                  "query-parameters": {
+                    "timeZoneId": "America/New_York",
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -6494,6 +6562,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "response": {
                 "docs": "OK.",
                 "type": "root.CutoffTimes",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransferDateRestrictions": {
@@ -6657,6 +6728,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.TransferDateRestrictions",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listTransferSchedule": {
               "auth": true,
@@ -6750,6 +6824,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.TransferSchedules",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "lookUpInstitutionByLocator": {
               "auth": true,
@@ -6764,7 +6841,7 @@ This information provides hints to clients, allowing bank customers to select tr
               "examples": [
                 {
                   "query-parameters": {
-                    "countryCode": "countryCode",
+                    "countryCode": "US",
                     "locator": "locator",
                     "locatorType": "abaRoutingNumber",
                   },
@@ -6779,7 +6856,7 @@ This information provides hints to clients, allowing bank customers to select tr
                           "locality": "Andalasia",
                           "postalCode": "28407",
                           "regionCode": "NC",
-                          "regionName": "regionName",
+                          "regionName": "NC",
                         },
                         "locator": "503000196",
                         "locatorType": "abaRoutingNumber",
@@ -6794,6 +6871,7 @@ This information provides hints to clients, allowing bank customers to select tr
                             "locality": "Andalasia",
                             "postalCode": "28407",
                             "regionCode": "NC",
+                            "regionName": "NC",
                           },
                           "locator": "503000196",
                           "locatorType": "abaRoutingNumber",
@@ -6832,6 +6910,9 @@ This information provides hints to clients, allowing bank customers to select tr
                 "docs": "OK.",
                 "type": "root.InstitutionLookupResult",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -6858,6 +6939,8 @@ service:
         code](https://www.swift.com/standards/data-standards/bic-business-identifier-code).
         Optionally, include a list of intermediary institutions that may be
         necessary to complete international wire transfers.
+      source:
+        openapi: ../openapi.yml
       display-name: Look up institution by routing number, IBAN, or SWIFT/BIC code
       request:
         name: InstitutionsLookUpInstitutionByLocatorRequest
@@ -6895,7 +6978,7 @@ service:
         - query-parameters:
             locator: locator
             locatorType: abaRoutingNumber
-            countryCode: countryCode
+            countryCode: US
           response:
             body:
               found: true
@@ -6906,7 +6989,7 @@ service:
                   address2: Building 14, Suite 1500
                   locality: Andalasia
                   countryCode: US
-                  regionName: regionName
+                  regionName: NC
                   regionCode: NC
                   postalCode: '28407'
                 locator: '503000196'
@@ -6918,6 +7001,7 @@ service:
                     address2: Building 14, Suite 1500
                     locality: Andalasia
                     countryCode: US
+                    regionName: NC
                     regionCode: NC
                     postalCode: '28407'
                   locator: '503000196'
@@ -6927,6 +7011,8 @@ service:
       method: GET
       auth: true
       docs: Return a transfer schedule list for this institution.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7013,6 +7099,8 @@ service:
         `getCutoffTimes` response and the `ETag` returned from a previous call
         to this operation, this operation returns a 304 Not Modified when called
         again if the cutoff times have not changed.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7050,6 +7138,8 @@ service:
       examples:
         - path-parameters:
             institutionId: TIBURON
+          query-parameters:
+            timeZoneId: America/New_York
           response:
             body:
               timeZoneId: America/New_York
@@ -7078,6 +7168,8 @@ service:
         restricted dates but the financial institution may shift the date when
         funds are drafted to account for holidays, closures, or to adjust based
         on the risk level of the funding account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         institutionId:
           type: root.InstitutionId
@@ -7279,6 +7371,9 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
                 "docs": "OK.",
                 "type": "root.JointOwnerInvitation",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7305,6 +7400,8 @@ service:
 
         The authenticated user must have the `account.allows.manageJointOwners`
         permission to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7400,6 +7497,9 @@ service:
                 "docs": "OK.",
                 "type": "root.OverdraftProtection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listEligibleOverdraftAccounts": {
               "auth": true,
@@ -7469,6 +7569,9 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                 "docs": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
                 "type": "root.EligibleOverdraftAccounts",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "patchOverdraftAccounts": {
               "auth": true,
@@ -7525,6 +7628,9 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
                 "docs": "OK.",
                 "type": "root.OverdraftProtection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7556,6 +7662,8 @@ service:
 
         To obtain available balances for these accounts, use
         [`listAccountBalances`](#op-listAccountBalances).
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7615,6 +7723,8 @@ service:
       docs: >-
         Return the JSON representation of this account's overdraft protection
         settings.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7651,6 +7761,8 @@ service:
 
         The user must have the `allows.manageOverdraftAccounts` permission on
         the account to use this operation.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -7746,6 +7858,9 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
                 "docs": "OK.",
                 "type": "root.TransactionCategories",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -7772,6 +7887,8 @@ service:
         used. If the client has a `transactionCategories` response and the
         `ETag` returned from a previous call, this operation returns a 304 Not
         Modified if called again when the categories collection has not changed.
+      source:
+        openapi: ../openapi.yml
       display-name: Return a collection of transaction categories
       request:
         name: TransactionCategoriesListTransactionCategoriesRequest
@@ -7839,6 +7956,13 @@ The default response lists only recent transactions. Normally, this is transacti
                 {
                   "path-parameters": {
                     "accountId": "accountId",
+                  },
+                  "query-parameters": {
+                    "amount": "[1000.00,1200.00)",
+                    "checkNumber": "[1000,1200)",
+                    "createdOn": "2022-05-19",
+                    "occurredOn": "2023-05-19",
+                    "postedOn": "2022-05-19",
                   },
                   "response": {
                     "body": {
@@ -7970,6 +8094,9 @@ The default response lists only recent transactions. Normally, this is transacti
                 "docs": "OK.",
                 "type": "root.Transactions",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8004,6 +8131,8 @@ service:
         The default response lists only recent transactions. Normally, this is
         transactions for the most recent 30 days, although for high-volume
         accounts, it may be a shorter period.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         accountId:
           type: root.ResourceId
@@ -8143,6 +8272,12 @@ service:
       examples:
         - path-parameters:
             accountId: accountId
+          query-parameters:
+            occurredOn: '2023-05-19'
+            createdOn: '2022-05-19'
+            postedOn: '2022-05-19'
+            amount: '[1000.00,1200.00)'
+            checkNumber: '[1000,1200)'
           response:
             body:
               limit: 10
@@ -8307,6 +8442,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "Created.",
                 "type": "root.Transfer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "deleteTransfer": {
               "auth": true,
@@ -8333,6 +8471,9 @@ Note: This operation requires an identity challenge if the financial institution
                   "docs": "The unique identifier of this transfer. This is an opaque string.",
                   "type": "root.ResourceId",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTransfer": {
@@ -8398,6 +8539,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "OK.",
                 "type": "root.Transfer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listTransfers": {
               "auth": true,
@@ -8411,6 +8555,11 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "creditsOn": "2022-05-19",
+                    "debitsOn": "2022-05-19",
+                    "scheduledOn": "2022-05-19",
+                  },
                   "response": {
                     "body": {
                       "count": 1,
@@ -8518,6 +8667,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "OK.",
                 "type": "root.Transfers",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "patchTransfer": {
               "auth": true,
@@ -8620,6 +8772,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "docs": "OK.",
                 "type": "root.Transfer",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8643,6 +8798,8 @@ service:
         collection of transfers. The
         [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links)
         in the response is a pagination link.
+      source:
+        openapi: ../openapi.yml
       display-name: Return a collection of transfers
       request:
         name: TransfersListTransfersRequest
@@ -8706,7 +8863,11 @@ service:
         - root.ForbiddenError
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            scheduledOn: '2022-05-19'
+            debitsOn: '2022-05-19'
+            creditsOn: '2022-05-19'
+          response:
             body:
               limit: 10
               nextPage_url: >-
@@ -8778,6 +8939,8 @@ service:
         Note: This operation requires an identity challenge if the financial
         institution requires the user to proove their identity for some types of
         transfers. See the "Challenges API".
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new transfer
       request:
         name: NewTransfer
@@ -8858,6 +9021,8 @@ service:
       method: GET
       auth: true
       docs: Return the JSON representation of this transfer resource.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId
@@ -8909,6 +9074,8 @@ service:
       docs: >-
         Delete this transfer resource and any resources that are owned by it.
         Only transfers that have not been processed may be deleted.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId
@@ -8936,6 +9103,8 @@ service:
         Note: This operation requires an identity challenge if the financial
         institution requires the user to prove their identity for some types of
         transfers. See the "Challenges API".
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transferId:
           type: root.ResourceId

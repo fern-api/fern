@@ -1,0 +1,26 @@
+imports:
+  root: __package__.yml
+  user: user.yml
+
+types:
+  Organization:
+    properties:
+      id: root.Id
+      name: string
+      users: list<user.User>
+
+  CreateOrganizationRequest:
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /organizations
+  endpoints:
+    create:
+      path: /
+      method: POST
+      auth: false
+      docs: Create a new organization.
+      request: CreateOrganizationRequest
+      response: Organization

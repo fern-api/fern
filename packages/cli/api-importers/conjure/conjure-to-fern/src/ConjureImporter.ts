@@ -139,6 +139,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
                     };
 
+                    if (endpointDeclaration.docs != null) {
+                        endpoint.docs = endpointDeclaration.docs;
+                    }
+
                     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
                     if (endpointDeclaration.args != null) {
                         for (const pathParameter of endpointLocator.pathParameters) {

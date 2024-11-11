@@ -3,14 +3,16 @@
 namespace Seed\Dataservice;
 
 use Seed\Core\Client\RawClient;
-use Seed\Dataservice\Requests\UploadRequest;
-use Seed\Types\UploadResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Dataservice\Requests\UploadRequest;
+use Seed\Types\UploadResponse;
 use Seed\Dataservice\Requests\DeleteRequest;
 use Seed\Types\DeleteResponse;
 use Seed\Dataservice\Requests\DescribeRequest;
@@ -41,6 +43,41 @@ class DataserviceClient
     }
 
     /**
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @return array<string, mixed>
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function foo(?array $options = null): array
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "foo",
+                    method: HttpMethod::POST,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ['string' => 'mixed']); // @phpstan-ignore-line
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * @param UploadRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -54,7 +91,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data",
                     method: HttpMethod::POST,
                     body: $request,
@@ -91,7 +128,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/delete",
                     method: HttpMethod::POST,
                     body: $request,
@@ -128,7 +165,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/describe",
                     method: HttpMethod::POST,
                     body: $request,
@@ -172,7 +209,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/fetch",
                     method: HttpMethod::GET,
                     query: $query,
@@ -222,7 +259,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/list",
                     method: HttpMethod::GET,
                     query: $query,
@@ -259,7 +296,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/query",
                     method: HttpMethod::POST,
                     body: $request,
@@ -296,7 +333,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "data/update",
                     method: HttpMethod::POST,
                     body: $request,

@@ -14,6 +14,13 @@ type CreateOrganizationRequest struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *CreateOrganizationRequest) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
 func (c *CreateOrganizationRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -48,6 +55,27 @@ type Organization struct {
 	Users []*User `json:"users,omitempty" url:"users,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *Organization) GetId() Id {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Organization) GetUsers() []*User {
+	if o == nil {
+		return nil
+	}
+	return o.Users
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {

@@ -16,9 +16,7 @@ import { GoTypeMapper } from "./GoTypeMapper";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "..";
 import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
-
-const DEFAULT_MODULE_PATH = "sdk";
-
+import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 export interface FileLocation {
     importPath: string;
     directory: RelativeFilePath;
@@ -38,7 +36,8 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.goTypeMapper = new GoTypeMapper(this);
-        this.rootImportPath = this.resolveRootImportPath({
+        this.rootImportPath = resolveRootImportPath({
+            config: this.config,
             customConfig: this.customConfig
         });
     }
@@ -52,7 +51,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getClassName(name: Name): string {
-        return name.pascalCase.safeName;
+        return name.pascalCase.unsafeName;
     }
 
     public getRootImportPath(): string {
@@ -192,35 +191,5 @@ export abstract class AbstractGoGeneratorContext<
             importPath: [this.getRootImportPath(), ...parts].join("/"),
             directory: RelativeFilePath.of(parts.join("/"))
         };
-    }
-
-    private resolveRootImportPath({ customConfig }: { customConfig: BaseGoCustomConfigSchema }): string {
-        const suffix = this.getMajorVersionSuffix();
-        if (customConfig.importPath != null) {
-            return customConfig.importPath + suffix;
-        }
-        if (customConfig.module != null) {
-            return customConfig.module.path + suffix;
-        }
-        return DEFAULT_MODULE_PATH + suffix;
-    }
-
-    private getMajorVersionSuffix(): string | undefined {
-        const majorVersion = this.parseMajorVersion();
-        if (majorVersion == null) {
-            return undefined;
-        }
-        return `/v${majorVersion}`;
-    }
-
-    private parseMajorVersion(): string | undefined {
-        if (this.version == null) {
-            return undefined;
-        }
-        const split = this.version.split(".");
-        if (split[0] == null) {
-            return undefined;
-        }
-        return split[0];
     }
 }

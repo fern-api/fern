@@ -17,12 +17,26 @@ type SendResponse struct {
 	_rawJSON        json.RawMessage
 }
 
-func (s *SendResponse) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
+func (s *SendResponse) GetMessage() string {
+	if s == nil {
+		return ""
+	}
+	return s.Message
+}
+
+func (s *SendResponse) GetStatus() int {
+	if s == nil {
+		return 0
+	}
+	return s.Status
 }
 
 func (s *SendResponse) Success() bool {
 	return s.success
+}
+
+func (s *SendResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendResponse) UnmarshalJSON(data []byte) error {
@@ -83,12 +97,12 @@ type ANestedLiteral struct {
 	_rawJSON        json.RawMessage
 }
 
-func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
 func (a *ANestedLiteral) MyLiteral() string {
 	return a.myLiteral
+}
+
+func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
 func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
@@ -149,6 +163,13 @@ type ContainerObject struct {
 	_rawJSON        json.RawMessage
 }
 
+func (c *ContainerObject) GetNestedObjects() []*NestedObjectWithLiterals {
+	if c == nil {
+		return nil
+	}
+	return c.NestedObjects
+}
+
 func (c *ContainerObject) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -192,8 +213,11 @@ type NestedObjectWithLiterals struct {
 	_rawJSON        json.RawMessage
 }
 
-func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
+func (n *NestedObjectWithLiterals) GetStrProp() string {
+	if n == nil {
+		return ""
+	}
+	return n.StrProp
 }
 
 func (n *NestedObjectWithLiterals) Literal1() string {
@@ -202,6 +226,10 @@ func (n *NestedObjectWithLiterals) Literal1() string {
 
 func (n *NestedObjectWithLiterals) Literal2() string {
 	return n.literal2
+}
+
+func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *NestedObjectWithLiterals) UnmarshalJSON(data []byte) error {

@@ -73,7 +73,7 @@ types:
       discriminantValue: commons.NameAndWireValue
       properties:
         docs: |
-            Includes the object properties, as well as any base and/or extended properties from the union.
+          Any properties included here are the base and/or extended properties from the union.
         type: list<NamedParameter>
 
   SingleDiscriminatedUnionTypeSingleProperty:

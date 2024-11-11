@@ -24,8 +24,9 @@ import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from "@fer
 
 const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL" });
 await client.foo.find({
-    publicProperty: undefined,
-    privateProperty: undefined,
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1,
 });
 ```
 

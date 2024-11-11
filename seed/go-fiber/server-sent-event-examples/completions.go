@@ -19,6 +19,20 @@ type StreamedCompletion struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *StreamedCompletion) GetDelta() string {
+	if s == nil {
+		return ""
+	}
+	return s.Delta
+}
+
+func (s *StreamedCompletion) GetTokens() *int {
+	if s == nil {
+		return nil
+	}
+	return s.Tokens
+}
+
 func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }

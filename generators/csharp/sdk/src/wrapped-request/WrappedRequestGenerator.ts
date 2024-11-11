@@ -42,10 +42,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: "public",
-            record: true
+            access: csharp.Access.Public,
+            type: csharp.Class.ClassType.Record
         });
 
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
@@ -59,7 +61,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 csharp.field({
                     name: propertyName,
                     type,
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     set: true,
                     summary: query.docs,
@@ -67,20 +69,21 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 })
             );
 
-            protobufProperties.push({
-                propertyName,
-                typeReference: query.allowMultiple
-                    ? TypeReference.container(ContainerType.list(query.valueType))
-                    : query.valueType
-            });
+            if (isProtoRequest) {
+                protobufProperties.push({
+                    propertyName,
+                    typeReference: query.allowMultiple
+                        ? TypeReference.container(ContainerType.list(query.valueType))
+                        : query.valueType
+                });
+            }
         }
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
         for (const header of [...service.headers, ...this.endpoint.headers]) {
             class_.addField(
                 csharp.field({
                     name: header.name.name.pascalCase.safeName,
                     type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     set: true,
                     summary: header.docs,
@@ -97,7 +100,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     csharp.field({
                         name: this.wrapper.bodyKey.pascalCase.safeName,
                         type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
-                        access: "public",
+                        access: csharp.Access.Public,
                         get: true,
                         set: true,
                         summary: reference.docs,
@@ -112,7 +115,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         csharp.field({
                             name: propertyName,
                             type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
-                            access: "public",
+                            access: csharp.Access.Public,
                             get: true,
                             set: true,
                             summary: property.docs,
@@ -121,10 +124,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         })
                     );
 
-                    protobufProperties.push({
-                        propertyName,
-                        typeReference: property.valueType
-                    });
+                    if (isProtoRequest) {
+                        protobufProperties.push({
+                            propertyName,
+                            typeReference: property.valueType
+                        });
+                    }
                 }
             },
             fileUpload: () => undefined,
@@ -134,20 +139,22 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
         class_.addMethod(this.context.getToStringMethod());
 
-        const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
-        if (protobufService != null) {
-            const protobufClassReference = new csharp.ClassReference({
-                name: this.classReference.name,
-                namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
-                namespaceAlias: "Proto"
-            });
-            class_.addMethod(
-                this.context.csharpProtobufTypeMapper.toProtoMethod({
-                    classReference: this.classReference,
-                    protobufClassReference,
-                    properties: protobufProperties
-                })
-            );
+        if (isProtoRequest) {
+            const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
+            if (protobufService != null) {
+                const protobufClassReference = new csharp.ClassReference({
+                    name: this.classReference.name,
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                    namespaceAlias: "Proto"
+                });
+                class_.addMethod(
+                    this.context.csharpProtobufTypeMapper.toProtoMethod({
+                        classReference: this.classReference,
+                        protobufClassReference,
+                        properties: protobufProperties
+                    })
+                );
+            }
         }
 
         return new CSharpFile({

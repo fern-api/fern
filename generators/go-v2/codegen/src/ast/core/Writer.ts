@@ -1,6 +1,7 @@
-import { AbstractWriter } from "@fern-api/generator-commons";
+import { AbstractWriter, NopFormatter } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 import path from "path";
+import { AbstractFormatter } from "@fern-api/generator-commons";
 
 type Alias = string;
 type ImportPath = string;
@@ -19,6 +20,8 @@ export declare namespace Writer {
         importPath: string;
         /* Custom generator config */
         customConfig: BaseGoCustomConfigSchema;
+        /* Formatter used to format Go source files */
+        formatter?: AbstractFormatter;
     }
 }
 
@@ -31,16 +34,19 @@ export class Writer extends AbstractWriter {
     public importPath: string;
     /* Custom generator config */
     public customConfig: BaseGoCustomConfigSchema;
+    /* Formatter used to format Go source files */
+    public formatter: AbstractFormatter;
 
     /* Import statements */
     protected imports: Record<ImportPath, Alias> = {};
 
-    constructor({ packageName, rootImportPath, importPath, customConfig }: Writer.Args) {
+    constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: Writer.Args) {
         super();
         this.packageName = packageName;
         this.rootImportPath = rootImportPath;
         this.importPath = importPath;
         this.customConfig = customConfig;
+        this.formatter = formatter ?? new NopFormatter();
     }
 
     /**

@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MethodInvocation > should write a method invocation with a parent 1`] = `
+"parent_object.test_method("arg1", kwarg=42)
+"
+`;
+
+exports[`MethodInvocation > should write a method invocation with a reference argument 1`] = `
+"test_method(SomeClass())
+"
+`;
+
+exports[`MethodInvocation > should write a method invocation with multiple positional and kwarg args 1`] = `
+"test_method(42, "hello", key1=True, key2=[1, 2, 3])
+"
+`;
+
+exports[`MethodInvocation > should write a method invocation with no args 1`] = `
+"test_method()
+"
+`;
+
+exports[`MethodInvocation > should write a method invocation with one positional arg 1`] = `
+"test_method(42)
+"
+`;
+
+exports[`MethodInvocation > should write a method invocation with one positional arg and one kwarg 1`] = `
+"test_method(42, key="value")
+"
+`;

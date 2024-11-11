@@ -21,7 +21,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         const class_ = csharp.class_({
             ...this.context.getClientOptionsClassReference(),
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
         const optionArgs: OptionArgs = {
             optional: false,
@@ -36,7 +36,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             class_.addField(this.getGrpcOptionsField());
         }
 
-        class_.addMethod(this.getCloneMethod());
+        class_.addMethod(this.getCloneMethod(class_));
 
         return new CSharpFile({
             clazz: class_,
@@ -82,7 +82,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             const field = this.context.ir.environments.environments._visit({
                 singleBaseUrl: () => {
                     return csharp.field({
-                        access: "public",
+                        access: csharp.Access.Public,
                         name: BASE_URL_FIELD_NAME,
                         get: true,
                         init: true,
@@ -100,7 +100,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 },
                 multipleBaseUrls: () => {
                     return csharp.field({
-                        access: "public",
+                        access: csharp.Access.Public,
                         name: "Environment",
                         get: true,
                         init: true,
@@ -124,7 +124,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         }
 
         return csharp.field({
-            access: "public",
+            access: csharp.Access.Public,
             name: BASE_URL_FIELD_NAME,
             get: true,
             init: true,
@@ -143,7 +143,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 
     private getGrpcOptionsField(): csharp.Field {
         return csharp.field({
-            access: "public",
+            access: csharp.Access.Public,
             name: this.context.getGrpcChannelOptionsFieldName(),
             get: true,
             init: true,
@@ -152,22 +152,33 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         });
     }
 
-    private getCloneMethod(): csharp.Method {
+    private getCloneMethod(class_: csharp.Class): csharp.Method {
         // TODO: add the GRPC options here eventually
         return csharp.method({
-            access: "internal",
+            access: csharp.Access.Internal,
             summary: "Clones this and returns a new instance",
             name: "Clone",
             return_: csharp.Type.reference(this.context.getClientOptionsClassReference()),
             body: csharp.codeblock((writer) => {
-                writer.writeTextStatement(`return new ClientOptions
+                writer.writeTextStatement(
+                    `return new ClientOptions
 {
-    Environment = Environment,
+` +
+                        // TODO: iterate over all public fields and generate the clone logic
+                        // for Headers, we should add a `.Clone` method on it and call that
+                        (class_.getFields().find((field) => field.name === "Environment") !== undefined
+                            ? "    Environment = Environment,"
+                            : "") +
+                        (class_.getFields().find((field) => field.name === BASE_URL_FIELD_NAME) !== undefined
+                            ? `    ${BASE_URL_FIELD_NAME} = ${BASE_URL_FIELD_NAME},`
+                            : "") +
+                        `
     HttpClient = HttpClient,
     MaxRetries = MaxRetries,
     Timeout = Timeout,
     Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
-};`);
+};`
+                );
             }),
             isAsync: false,
             parameters: []

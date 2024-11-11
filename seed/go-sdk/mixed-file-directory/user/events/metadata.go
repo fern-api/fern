@@ -21,6 +21,20 @@ type Metadata struct {
 	_rawJSON        json.RawMessage
 }
 
+func (m *Metadata) GetId() fern.Id {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetValue() interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.Value
+}
+
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }

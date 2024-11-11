@@ -42,12 +42,12 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         class_.addField(
             csharp.field({
-                access: "private",
+                access: csharp.Access.Private,
                 name: CLIENT_MEMBER_NAME,
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
@@ -56,14 +56,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         if (this.grpcClientInfo != null) {
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
                 })
             );
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
                     type: csharp.Type.reference(this.grpcClientInfo.classReference)
                 })
@@ -73,7 +73,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         for (const subpackage of this.getSubpackages()) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
@@ -109,7 +109,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
     private getConstructorMethod(): csharp.Class.Constructor {
         return {
-            access: "internal",
+            access: csharp.Access.Internal,
             parameters: [
                 csharp.parameter({
                     name: "client",

@@ -1,10 +1,6 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
-if (RUNTIME.type === "browser") {
-    require("jest-fetch-mock").enableMocks();
-}
-
 describe("Test exponential backoff", () => {
     let mockFetch: jest.Mock;
     let originalSetTimeout: typeof setTimeout;

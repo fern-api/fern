@@ -1,5 +1,5 @@
 - version: 0.0.1
-  createdAt: '2024-03-31'
+  createdAt: "2024-03-31"
   changelogEntry:
     - type: internal
       summary: Initial release.

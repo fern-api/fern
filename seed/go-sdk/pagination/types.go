@@ -17,6 +17,20 @@ type UsernamePage struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UsernamePage) GetAfter() *string {
+	if u == nil {
+		return nil
+	}
+	return u.After
+}
+
+func (u *UsernamePage) GetData() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
 func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -57,6 +71,20 @@ type NextPage struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (n *NextPage) GetPage() int {
+	if n == nil {
+		return 0
+	}
+	return n.Page
+}
+
+func (n *NextPage) GetStartingAfter() string {
+	if n == nil {
+		return ""
+	}
+	return n.StartingAfter
 }
 
 func (n *NextPage) GetExtraProperties() map[string]interface{} {
@@ -104,6 +132,34 @@ type Page struct {
 	_rawJSON        json.RawMessage
 }
 
+func (p *Page) GetPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.Page
+}
+
+func (p *Page) GetNext() *NextPage {
+	if p == nil {
+		return nil
+	}
+	return p.Next
+}
+
+func (p *Page) GetPerPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.PerPage
+}
+
+func (p *Page) GetTotalPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.TotalPage
+}
+
 func (p *Page) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -144,6 +200,20 @@ type User struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetId() int {
+	if u == nil {
+		return 0
+	}
+	return u.Id
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -187,6 +257,13 @@ type UserListContainer struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UserListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
+}
+
 func (u *UserListContainer) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -226,6 +303,13 @@ type UserOptionalListContainer struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (u *UserOptionalListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
 }
 
 func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} {
@@ -270,6 +354,20 @@ type UserOptionalListPage struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *UserOptionalListPage) GetData() *UserOptionalListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserOptionalListPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
+}
+
 func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -310,6 +408,20 @@ type UserPage struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (u *UserPage) GetData() *UserListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
 }
 
 func (u *UserPage) GetExtraProperties() map[string]interface{} {

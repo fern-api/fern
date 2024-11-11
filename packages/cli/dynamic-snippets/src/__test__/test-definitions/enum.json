@@ -550,7 +550,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}"
+                "path": "/path/{operand}/{operandOrColor}"
             },
             "request": {
                 "type": "body",
@@ -586,37 +586,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "maybeOperand",
-                                "camelCase": {
-                                    "unsafeName": "maybeOperand",
-                                    "safeName": "maybeOperand"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "maybe_operand",
-                                    "safeName": "maybe_operand"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MAYBE_OPERAND",
-                                    "safeName": "MAYBE_OPERAND"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MaybeOperand",
-                                    "safeName": "MaybeOperand"
-                                }
-                            },
-                            "wireValue": "maybeOperand"
-                        },
-                        "typeReference": {
-                            "_type": "optional",
-                            "value": {
-                                "_type": "named",
-                                "value": "type_:Operand"
-                            }
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "operandOrColor",
                                 "camelCase": {
                                     "unsafeName": "operandOrColor",
@@ -640,37 +609,6 @@
                         "typeReference": {
                             "_type": "named",
                             "value": "type_:ColorOrOperand"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "maybeOperandOrColor",
-                                "camelCase": {
-                                    "unsafeName": "maybeOperandOrColor",
-                                    "safeName": "maybeOperandOrColor"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "maybe_operand_or_color",
-                                    "safeName": "maybe_operand_or_color"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MAYBE_OPERAND_OR_COLOR",
-                                    "safeName": "MAYBE_OPERAND_OR_COLOR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MaybeOperandOrColor",
-                                    "safeName": "MaybeOperandOrColor"
-                                }
-                            },
-                            "wireValue": "maybeOperandOrColor"
-                        },
-                        "typeReference": {
-                            "_type": "optional",
-                            "value": {
-                                "_type": "named",
-                                "value": "type_:ColorOrOperand"
-                            }
                         }
                     }
                 ],
@@ -1106,8 +1044,11 @@
                             "wireValue": "operand"
                         },
                         "typeReference": {
-                            "_type": "named",
-                            "value": "type_:Operand"
+                            "_type": "list",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:Operand"
+                            }
                         }
                     },
                     {
@@ -1134,10 +1075,13 @@
                             "wireValue": "maybeOperand"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "named",
-                                "value": "type_:Operand"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "named",
+                                    "value": "type_:Operand"
+                                }
                             }
                         }
                     },
@@ -1165,8 +1109,11 @@
                             "wireValue": "operandOrColor"
                         },
                         "typeReference": {
-                            "_type": "named",
-                            "value": "type_:ColorOrOperand"
+                            "_type": "list",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:ColorOrOperand"
+                            }
                         }
                     },
                     {
@@ -1193,10 +1140,13 @@
                             "wireValue": "maybeOperandOrColor"
                         },
                         "typeReference": {
-                            "_type": "optional",
+                            "_type": "list",
                             "value": {
-                                "_type": "named",
-                                "value": "type_:ColorOrOperand"
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "named",
+                                    "value": "type_:ColorOrOperand"
+                                }
                             }
                         }
                     }

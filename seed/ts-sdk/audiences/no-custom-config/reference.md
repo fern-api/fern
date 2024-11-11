@@ -100,8 +100,9 @@ await client.folderD.service.getDirectThread();
 
 ```typescript
 await client.foo.find({
-    publicProperty: undefined,
-    privateProperty: undefined,
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1,
 });
 ```
 

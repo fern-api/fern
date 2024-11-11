@@ -276,23 +276,53 @@ export class Admin {
      *         traceResponses: [{
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }, {
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
@@ -358,13 +388,28 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }, {
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
@@ -372,13 +417,28 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }])
      */
     public async storeTracedTestCaseV2(
@@ -439,30 +499,68 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         workspaceRunDetails: {
-     *             exceptionV2: undefined,
-     *             exception: undefined,
+     *             exceptionV2: SeedTrace.ExceptionV2.generic({
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             }),
+     *             exception: {
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             },
      *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }, {
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
-     *                 returnValue: undefined,
-     *                 expressionLocation: undefined,
+     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
      *                     numStackFrames: 1,
-     *                     topStackFrame: undefined
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                                 }
+     *                             }]
+     *                     }
      *                 },
-     *                 stdout: undefined
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
@@ -526,13 +624,28 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }, {
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
@@ -540,13 +653,28 @@ export class Admin {
      *                 filename: "filename",
      *                 directory: "directory"
      *             },
-     *             returnValue: undefined,
-     *             expressionLocation: undefined,
+     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
      *             stack: {
      *                 numStackFrames: 1,
-     *                 topStackFrame: undefined
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
+     *                             }
+     *                         }]
+     *                 }
      *             },
-     *             stdout: undefined
+     *             stdout: "stdout"
      *         }])
      */
     public async storeTracedWorkspaceV2(

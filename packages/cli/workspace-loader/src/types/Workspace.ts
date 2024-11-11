@@ -66,6 +66,8 @@ export interface SpecImportSettings {
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
     cooerceEnumsToLiterals: boolean;
+    objectQueryParameters: boolean;
+    respectReadonlySchemas: boolean;
 }
 
 export interface OpenAPIFile {

@@ -15,6 +15,13 @@ type ClientOptions struct {
 	_rawJSON        json.RawMessage
 }
 
+func (c *ClientOptions) GetValue() string {
+	if c == nil {
+		return ""
+	}
+	return c.Value
+}
+
 func (c *ClientOptions) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }

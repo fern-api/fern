@@ -4,6 +4,7 @@ namespace Seed\Core\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
@@ -11,6 +12,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Multipart\MultipartApiRequest;
 
 class RawClient
 {
@@ -74,6 +76,10 @@ class RawClient
                 $this->headers,
                 $request->headers
             ),
+            MultipartApiRequest::class => array_merge(
+                $this->headers,
+                $request->headers
+            ),
             default => throw new InvalidArgumentException('Unsupported request type: ' . get_class($request)),
         };
     }
@@ -83,6 +89,7 @@ class RawClient
     ): ?StreamInterface {
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body != null ? Utils::streamFor(json_encode($request->body)) : null,
+            MultipartApiRequest::class => $request->body != null ? new MultipartStream($request->body->toArray()) : null,
             default => throw new InvalidArgumentException('Unsupported request type: '.get_class($request)),
         };
     }

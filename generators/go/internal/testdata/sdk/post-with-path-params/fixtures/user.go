@@ -121,6 +121,13 @@ type Filter struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *Filter) GetTag() string {
+	if f == nil {
+		return ""
+	}
+	return f.Tag
+}
+
 func (f *Filter) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -160,6 +167,13 @@ type SetNameRequestV3Body struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (s *SetNameRequestV3Body) GetUserName() string {
+	if s == nil {
+		return ""
+	}
+	return s.UserName
 }
 
 func (s *SetNameRequestV3Body) GetExtraProperties() map[string]interface{} {
@@ -208,6 +222,27 @@ func NewUnionFromFoo(value *Foo) *Union {
 
 func NewUnionFromBar(value *Bar) *Union {
 	return &Union{Type: "bar", Bar: value}
+}
+
+func (u *Union) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *Union) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *Union) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {

@@ -15,6 +15,13 @@ type Config struct {
 	_rawJSON        json.RawMessage
 }
 
+func (c *Config) GetId() string {
+	if c == nil {
+		return ""
+	}
+	return c.Id
+}
+
 func (c *Config) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }

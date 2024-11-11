@@ -1,14 +1,17 @@
 import { Argument, Arguments, isNamedArgument } from "@fern-api/generator-commons";
 import { Writer } from "../core/Writer";
+import { TypeInstantiation } from "../TypeInstantiation";
 
 export function writeArguments({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
-    if (arguments_.length === 0) {
+    const filteredArguments = filterNopArguments(arguments_);
+
+    if (filteredArguments.length === 0) {
         writer.write("()");
         return;
     }
     writer.writeLine("(");
     writer.indent();
-    for (const argument of arguments_) {
+    for (const argument of filteredArguments) {
         writeArgument({ writer, argument });
         writer.writeLine(",");
     }
@@ -22,4 +25,10 @@ function writeArgument({ writer, argument }: { writer: Writer; argument: Argumen
     } else {
         argument.write(writer);
     }
+}
+
+function filterNopArguments(arguments_: Argument[]): Argument[] {
+    return arguments_.filter(
+        (argument) => !(argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument))
+    );
 }

@@ -15,6 +15,20 @@ type CreateMovieRequest struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *CreateMovieRequest) GetTitle() string {
+	if c == nil {
+		return ""
+	}
+	return c.Title
+}
+
+func (c *CreateMovieRequest) GetRating() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Rating
+}
+
 func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }

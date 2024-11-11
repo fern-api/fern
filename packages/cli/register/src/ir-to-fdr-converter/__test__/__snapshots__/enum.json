@@ -176,30 +176,10 @@
                 }
               },
               {
-                "key": "maybeOperand",
-                "type": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "id",
-                    "value": "type_:Operand"
-                  }
-                }
-              },
-              {
                 "key": "operandOrColor",
                 "type": {
                   "type": "id",
                   "value": "type_:ColorOrOperand"
-                }
-              },
-              {
-                "key": "maybeOperandOrColor",
-                "type": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "id",
-                    "value": "type_:ColorOrOperand"
-                  }
                 }
               }
             ],
@@ -222,23 +202,7 @@
               },
               {
                 "type": "pathParameter",
-                "value": "maybeOperand"
-              },
-              {
-                "type": "literal",
-                "value": "/"
-              },
-              {
-                "type": "pathParameter",
                 "value": "operandOrColor"
-              },
-              {
-                "type": "literal",
-                "value": "/"
-              },
-              {
-                "type": "pathParameter",
-                "value": "maybeOperandOrColor"
               },
               {
                 "type": "literal",
@@ -251,12 +215,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/path/>/less_than/red/red",
+              "path": "/path/>/red",
               "pathParameters": {
                 "operand": ">",
-                "maybeOperand": "less_than",
-                "operandOrColor": "red",
-                "maybeOperandOrColor": "red"
+                "operandOrColor": "red"
               },
               "queryParameters": {},
               "headers": {},

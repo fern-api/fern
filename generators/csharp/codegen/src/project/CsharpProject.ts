@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher, File, AbstractProject } from "@fern-api/generator-commons";
+import { SourceFetcher, File, AbstractProject, FernGeneratorExec } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -86,13 +86,6 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
         const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
 
-        await loggingExeca(this.context.logger, "dotnet", ["new", "gitignore"], {
-            doNotPipeOutput: true,
-            cwd: this.absolutePathToOutputDirectory
-        });
-
-        await this.writeRawFiles();
-
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
@@ -100,6 +93,8 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
+
+        await this.createRawFiles();
 
         for (const filename of this.context.getCoreAsIsFiles()) {
             this.coreFiles.push(
@@ -187,17 +182,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
-
         const csproj = new CsProj({
-            license: this.context.config.license?._visit({
-                custom: (val) => {
-                    return val.filename;
-                },
-                basic: (val) => {
-                    return val.id;
-                },
-                _other: () => undefined
-            }),
+            name: this.name,
+            license: this.context.config.license,
             githubUrl: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
                 github: (github) => github.repoUrl,
@@ -212,6 +199,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`)),
             templateCsProjContents
         );
+
+        await writeFile(
+            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
+        );
+
         await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
             doNotPipeOutput: true,
             cwd: absolutePathToSrcDirectory
@@ -230,16 +223,20 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             this.absolutePathToOutputDirectory,
             this.filepaths.getTestFilesDirectory()
         );
-        this.context.logger.debug(`mkdir ${absolutePathToTestProject}`);
         await mkdir(absolutePathToTestProject, { recursive: true });
 
         const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
         const testCsProjContents = template(testCsProjTemplateContents)({
-            projectName: this.name
+            projectName: this.name,
+            testProjectName
         });
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`)),
             testCsProjContents
+        );
+        await writeFile(
+            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.TestCustomProps))).toString()
         );
         await loggingExeca(
             this.context.logger,
@@ -382,6 +379,19 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             })
         );
     }
+
+    private async createRawFiles(): Promise<void> {
+        for (const filename of this.context.getRawAsIsFiles()) {
+            this.addRawFiles(await this.createRawAsIsFile({ filename }));
+        }
+        await this.writeRawFiles();
+    }
+
+    private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        filename = filename.replace(".Template", "");
+        return new File(filename, RelativeFilePath.of(""), contents);
+    }
 }
 
 function replaceTemplate({
@@ -437,8 +447,9 @@ class CsharpProjectFilepaths {
 
 declare namespace CsProj {
     interface Args {
+        name: string;
         version?: string;
-        license?: string;
+        license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
         protobufSourceFilePaths: RelativeFilePath[];
@@ -448,13 +459,15 @@ declare namespace CsProj {
 const FOUR_SPACES = "    ";
 
 class CsProj {
-    private license: string | undefined;
+    private name: string;
+    private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+    public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+        this.name = name;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
@@ -465,7 +478,7 @@ class CsProj {
     public toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
-        return ` 
+        return `
 <Project Sdk="Microsoft.NET.Sdk">
 
 ${projectGroup.join("\n")}
@@ -473,15 +486,15 @@ ${projectGroup.join("\n")}
     <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
         <Reference Include="System.Net.Http" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="PolySharp" Version="1.14.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -503,6 +516,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="${this.name}.Custom.props" Condition="Exists('${this.name}.Custom.props')" />
 </Project>
 `;
     }
@@ -511,7 +525,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
         result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.4" />');
+        result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
@@ -581,12 +595,23 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         const result: string[] = [];
         if (this.context.version != null) {
             result.push(`<Version>${this.context.version}</Version>`);
+            result.push("<AssemblyVersion>$(Version)</AssemblyVersion>");
+            result.push("<FileVersion>$(Version)</FileVersion>");
         }
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
-        if (this.license != null) {
-            result.push(`<PackageLicenseFile>${this.license}</PackageLicenseFile>`);
+        this.context.logger.debug(`this.license ${JSON.stringify(this.license)}`);
+        if (this.license) {
+            result.push(
+                this.license._visit<string>({
+                    basic: (value) => `<PackageLicenseExpression>${value.id}</PackageLicenseExpression>`,
+                    custom: (value) => `<PackageLicenseFile>${value.filename}</PackageLicenseFile>`,
+                    _other: () => {
+                        throw new Error("Unknown license type");
+                    }
+                })
+            );
         }
 
         if (this.githubUrl != null) {
@@ -598,11 +623,11 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     private getAdditionalItemGroups(): string[] {
         const result: string[] = [];
 
-        if (this.license != null) {
+        if (this.license != null && this.license.type === "custom") {
             result.push(`
-<ItemGroup>
-    <None Include="..\\..\\${this.license}" Pack="true" PackagePath=""/>
-</ItemGroup>
+    <ItemGroup>
+        <None Include="..\\..\\${this.license.filename}" Pack="true" PackagePath=""/>
+    </ItemGroup>
 `);
         }
 

@@ -32,8 +32,9 @@ export class Foo {
      *
      * @example
      *     await client.foo.find({
-     *         publicProperty: undefined,
-     *         privateProperty: undefined
+     *         optionalString: "optionalString",
+     *         publicProperty: "publicProperty",
+     *         privateProperty: 1
      *     })
      */
     public async find(

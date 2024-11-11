@@ -268,19 +268,19 @@ func (s *SnippetWriter) getSnippetForContainer(
 ) ast.Expr {
 	switch exampleContainer.Type {
 	case "list":
-		return s.getSnippetForListOrSet(exampleContainer.List)
+		return s.getSnippetForListOrSet(exampleContainer.List.List)
 	case "set":
-		return s.getSnippetForListOrSet(exampleContainer.List)
+		return s.getSnippetForListOrSet(exampleContainer.Set.Set)
 	case "optional":
-		if exampleContainer.Optional == nil {
+		if exampleContainer.Optional == nil || exampleContainer.Optional.Optional == nil {
 			return nil
 		}
-		if primitive := maybePrimitiveExampleTypeReferenceShape(exampleContainer.Optional.Shape); primitive != nil {
+		if primitive := maybePrimitiveExampleTypeReferenceShape(exampleContainer.Optional.Optional.Shape); primitive != nil {
 			return s.getSnippetForOptionalPrimitive(primitive)
 		}
-		return s.GetSnippetForExampleTypeReference(exampleContainer.Optional)
+		return s.GetSnippetForExampleTypeReference(exampleContainer.Optional.Optional)
 	case "map":
-		return s.getSnippetForMap(exampleContainer.Map)
+		return s.getSnippetForMap(exampleContainer.Map.Map)
 	}
 	return nil
 }
@@ -342,7 +342,9 @@ func (s *SnippetWriter) getSnippetForMap(
 		baseImportPath: s.baseImportPath,
 		types:          s.types,
 	}
-	_ = visitor.VisitMap(exampleKeyValuePairs)
+	_ = visitor.VisitMap(&ir.ExampleMapContainer{
+		Map: exampleKeyValuePairs,
+	})
 	mapType, ok := visitor.value.(*ast.MapType)
 	if !ok {
 		// This should be unreachable.
@@ -426,6 +428,9 @@ func (s *SnippetWriter) getSnippetForUnknown(
 func (s *SnippetWriter) getSnippetForOptionalPrimitive(
 	examplePrimitive *ir.ExamplePrimitive,
 ) ast.Expr {
+	if examplePrimitive.Type == "base64" {
+		return s.getSnippetForPrimitive(examplePrimitive)
+	}
 	return &ast.CallExpr{
 		FunctionName: &ast.ImportedReference{
 			Name:       examplePrimitiveToPointerConstructorName(examplePrimitive),
@@ -445,6 +450,24 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 		return &ast.BasicLit{
 			Value: strconv.Itoa(exampleTypeReference.Integer),
 		}
+	case "long":
+		return &ast.BasicLit{
+			Value: strconv.FormatInt(exampleTypeReference.Long, 10),
+		}
+	case "uint":
+		// TODO: Add support for uint.
+		return &ast.BasicLit{
+			Value: strconv.Itoa(exampleTypeReference.Uint),
+		}
+	case "uint64":
+		// TODO: Add support for uint64.
+		return &ast.BasicLit{
+			Value: strconv.FormatInt(exampleTypeReference.Uint64, 10),
+		}
+	case "float":
+		return &ast.BasicLit{
+			Value: strconv.FormatFloat(exampleTypeReference.Float, 'f', -1, 64),
+		}
 	case "double":
 		return &ast.BasicLit{
 			Value: strconv.FormatFloat(exampleTypeReference.Double, 'f', -1, 64),
@@ -461,10 +484,6 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 		return &ast.BasicLit{
 			Value: strconv.FormatBool(exampleTypeReference.Boolean),
 		}
-	case "long":
-		return &ast.BasicLit{
-			Value: strconv.FormatInt(exampleTypeReference.Long, 10),
-		}
 	case "datetime":
 		return &ast.CallExpr{
 			FunctionName: &ast.ImportedReference{
@@ -473,7 +492,7 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 			},
 			Parameters: []ast.Expr{
 				&ast.BasicLit{
-					Value: fmt.Sprintf("%q", exampleTypeReference.Datetime.Format(time.RFC3339)),
+					Value: fmt.Sprintf("%q", exampleTypeReference.Datetime.Datetime.Format(time.RFC3339)),
 				},
 			},
 		}
@@ -500,6 +519,15 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 					Value: fmt.Sprintf("%q", exampleTypeReference.Uuid.String()),
 				},
 			},
+		}
+	case "base64":
+		return &ast.BasicLit{
+			Value: fmt.Sprintf("[]byte(%q)", string(exampleTypeReference.Base64)),
+		}
+	case "bigInteger":
+		// TODO: Add support for BigInteger.
+		return &ast.BasicLit{
+			Value: fmt.Sprintf("%q", exampleTypeReference.BigInteger),
 		}
 	}
 	return nil
@@ -592,7 +620,7 @@ func maybePrimitiveExampleTypeReferenceShape(
 		return exampleTypeReferenceShape.Primitive
 	case "container":
 		if exampleTypeReferenceShape.Container.Optional != nil {
-			return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Shape)
+			return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Optional.Shape)
 		}
 	case "named":
 		if exampleTypeReferenceShape.Named.Shape.Alias != nil {
@@ -608,20 +636,34 @@ func examplePrimitiveToPointerConstructorName(
 	switch examplePrimitive.Type {
 	case "integer":
 		return "Int"
-	case "double":
-		return "Float64"
-	case "string":
-		return "String"
-	case "boolean":
-		return "Bool"
 	case "long":
 		return "Int64"
-	case "datetime":
-		return "Time"
+	case "uint":
+		// TODO: Add support for uint.
+		return "Int"
+	case "uint64":
+		// TODO: Add support for uint64.
+		return "Int64"
+	case "float":
+		// TODO: Add support for float32.
+		return "Float64"
+	case "double":
+		return "Float64"
+	case "boolean":
+		return "Bool"
+	case "string":
+		return "String"
 	case "date":
+		return "Time"
+	case "datetime":
 		return "Time"
 	case "uuid":
 		return "UUID"
+	case "base64":
+		return "" // Unused
+	case "bigInteger":
+		// TODO: Add support for BigInteger.
+		return "String"
 	}
 	return "Unknown"
 }
@@ -685,24 +727,34 @@ func (e *exampleTypeReferenceShapeVisitor) VisitNamed(named *ir.ExampleNamedType
 }
 
 func (e *exampleTypeReferenceShapeVisitor) VisitPrimitive(primitive *ir.ExamplePrimitive) error {
-	var primitiveType ir.PrimitiveType
+	var primitiveType *ir.PrimitiveType
 	switch primitive.Type {
 	case "integer":
-		primitiveType = ir.PrimitiveTypeInteger
-	case "double":
-		primitiveType = ir.PrimitiveTypeDouble
-	case "string":
-		primitiveType = ir.PrimitiveTypeString
-	case "boolean":
-		primitiveType = ir.PrimitiveTypeBoolean
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Integer}
 	case "long":
-		primitiveType = ir.PrimitiveTypeLong
-	case "datetime":
-		primitiveType = ir.PrimitiveTypeDateTime
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Long}
+	case "uint":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uint}
+	case "uint64":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uint64}
+	case "float":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Float}
+	case "double":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Double}
+	case "boolean":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Boolean}
+	case "string":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1String}
 	case "date":
-		primitiveType = ir.PrimitiveTypeDate
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Date}
+	case "datetime":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1DateTime}
 	case "uuid":
-		primitiveType = ir.PrimitiveTypeUuid
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uuid}
+	case "base64":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Base64}
+	case "bigInteger":
+		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1BigInteger}
 	}
 	e.value = &ast.BasicLit{
 		Value: primitiveToGoType(primitiveType),
@@ -740,8 +792,8 @@ func exampleContainerTypeToGoType(
 // Compile-time assertion.
 var _ ir.ExampleContainerVisitor = (*exampleContainerVisitor)(nil)
 
-func (e *exampleContainerVisitor) VisitList(list []*ir.ExampleTypeReference) error {
-	if len(list) == 0 {
+func (e *exampleContainerVisitor) VisitList(list *ir.ExampleListContainer) error {
+	if list == nil || len(list.List) == 0 {
 		// The example doesn't have enough information on its own.
 		e.value = &ast.ArrayType{
 			Expr: &ast.LocalReference{
@@ -751,15 +803,15 @@ func (e *exampleContainerVisitor) VisitList(list []*ir.ExampleTypeReference) err
 		return nil
 	}
 	e.value = exampleTypeReferenceShapeToGoType(
-		list[0].Shape,
+		list.List[0].Shape,
 		e.types,
 		e.baseImportPath,
 	)
 	return nil
 }
 
-func (e *exampleContainerVisitor) VisitSet(set []*ir.ExampleTypeReference) error {
-	if len(set) == 0 {
+func (e *exampleContainerVisitor) VisitSet(set *ir.ExampleSetContainer) error {
+	if set == nil || len(set.Set) == 0 {
 		// The example doesn't have enough information on its own.
 		e.value = &ast.ArrayType{
 			Expr: &ast.LocalReference{
@@ -769,15 +821,15 @@ func (e *exampleContainerVisitor) VisitSet(set []*ir.ExampleTypeReference) error
 		return nil
 	}
 	e.value = exampleTypeReferenceShapeToGoType(
-		set[0].Shape,
+		set.Set[0].Shape,
 		e.types,
 		e.baseImportPath,
 	)
 	return nil
 }
 
-func (e *exampleContainerVisitor) VisitMap(pairs []*ir.ExampleKeyValuePair) error {
-	if len(pairs) == 0 {
+func (e *exampleContainerVisitor) VisitMap(mapContainer *ir.ExampleMapContainer) error {
+	if mapContainer == nil || len(mapContainer.Map) == 0 {
 		// The example doesn't have enough information on its own.
 		e.value = &ast.MapType{
 			Key: &ast.LocalReference{
@@ -789,7 +841,8 @@ func (e *exampleContainerVisitor) VisitMap(pairs []*ir.ExampleKeyValuePair) erro
 		}
 		return nil
 	}
-	pair := pairs[0]
+	pair := mapContainer.Map[0]
+
 	e.value = &ast.MapType{
 		Key: exampleTypeReferenceShapeToGoType(
 			pair.Key.Shape,
@@ -805,13 +858,23 @@ func (e *exampleContainerVisitor) VisitMap(pairs []*ir.ExampleKeyValuePair) erro
 	return nil
 }
 
-func (e *exampleContainerVisitor) VisitOptional(optional *ir.ExampleTypeReference) error {
+func (e *exampleContainerVisitor) VisitOptional(optional *ir.ExampleOptionalContainer) error {
+	if optional == nil || optional.Optional == nil {
+		return nil
+	}
 	e.value = &ast.Optional{
 		Expr: exampleTypeReferenceShapeToGoType(
-			optional.Shape,
+			optional.Optional.Shape,
 			e.types,
 			e.baseImportPath,
 		),
+	}
+	return nil
+}
+
+func (e *exampleContainerVisitor) VisitLiteral(literal *ir.ExampleLiteralContainer) error {
+	if literal == nil {
+		return nil
 	}
 	return nil
 }

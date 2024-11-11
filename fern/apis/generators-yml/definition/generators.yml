@@ -216,6 +216,12 @@ types:
       title-as-schema-name: optional<boolean>
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
+      object-query-parameters: 
+        type: optional<boolean>
+        docs: Enables parsing deep object query parameters
+      respect-readonly-schemas:
+        type: optional<boolean>
+        docs: Enables exploring readonly schemas in OpenAPI specifications
 
   OpenAPISpecSchema:
     properties:

@@ -296,3 +296,19 @@ types:
         value:
           type: unknown
           name: unknown
+
+  BigEntity:
+    properties:
+      castMember: optional<CastMember>
+      extendedMovie: optional<ExtendedMovie>
+      entity: optional<Entity>
+      metadata: optional<Metadata>
+      commonMetadata: optional<commons.Metadata>
+      eventInfo: optional<commons.EventInfo>
+      data: optional<commons.Data>
+      migration: optional<Migration>
+      exception: optional<Exception>
+      test: optional<Test>
+      node: optional<Node>
+      directory: optional<Directory>
+      moment: optional<Moment>

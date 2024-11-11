@@ -4,6 +4,8 @@ from seed import SeedExhaustive
 from seed import AsyncSeedExhaustive
 import typing
 from seed.types.object import ObjectWithOptionalField
+import datetime
+import uuid
 from .utilities import validate_response
 
 
@@ -39,11 +41,43 @@ async def test_post_with_object_bodyand_response(client: SeedExhaustive, async_c
         "bigint": None,
     }
     response = client.inlined_requests.post_with_object_bodyand_response(
-        string="string", integer=1, nested_object=ObjectWithOptionalField()
+        string="string",
+        integer=1,
+        nested_object=ObjectWithOptionalField(
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
+            bool_=True,
+            datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            date=datetime.date.fromisoformat("2023-01-15"),
+            uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_={"set"},
+            map_={1: "map"},
+            bigint=1000000,
+        ),
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.inlined_requests.post_with_object_bodyand_response(
-        string="string", integer=1, nested_object=ObjectWithOptionalField()
+        string="string",
+        integer=1,
+        nested_object=ObjectWithOptionalField(
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
+            bool_=True,
+            datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            date=datetime.date.fromisoformat("2023-01-15"),
+            uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_={"set"},
+            map_={1: "map"},
+            bigint=1000000,
+        ),
     )
     validate_response(async_response, expected_response, expected_types)

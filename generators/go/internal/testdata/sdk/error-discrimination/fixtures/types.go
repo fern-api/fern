@@ -15,6 +15,13 @@ type OrganizationNotFoundErrorBody struct {
 	_rawJSON        json.RawMessage
 }
 
+func (o *OrganizationNotFoundErrorBody) GetRequestedOrganizationId() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequestedOrganizationId
+}
+
 func (o *OrganizationNotFoundErrorBody) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -54,6 +61,13 @@ type UserNotFoundErrorBody struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (u *UserNotFoundErrorBody) GetRequestedUserId() string {
+	if u == nil {
+		return ""
+	}
+	return u.RequestedUserId
 }
 
 func (u *UserNotFoundErrorBody) GetExtraProperties() map[string]interface{} {

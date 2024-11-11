@@ -1,3 +1,132 @@
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting readonly properties in schemas. When enabled, readonly properties will be excluded from request bodies for 
+        POST/PUT/PATCH endpoints. To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-readonly-schemas: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc38
+
+- changelogEntry:
+    - summary: Support parsing alpha and beta version numbers of Fern generators
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc37
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports importing deep object query parameters. To do this, you will
+        need to configure a setting in your `generators.yml`
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               object-query-paramaters: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc36
+
+- changelogEntry:
+    - summary: |
+        The CLI now recognizes the versions of the Go generator that require IRv53.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc34
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports roles and viewers in your docs configuration, if you are on the enteprise plan for docs:
+
+        ```yml docs.ym
+        roles:
+          - internal
+          - beta-users
+          - enterprise-users
+
+        navigation:
+          - section: Internal Section
+            viewers:
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc33
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports reading endpoints that have application/x-www-form-urlencoded requests
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc32
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses webhook examples and generates examples for webhooks when none are provided.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc31
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field for primitive schema types like `string`, `number`, `array` and `boolean`.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc30
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field that may be present on OpenAPI 3.1 schemas.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc29
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now skips headers in a case-insensitive way (e.g. both "Content-Type" and "content-type" are skipped).
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc28
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now brings in endpoint level descriptions.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc27
+
+- changelogEntry:
+    - summary: |
+        `fern check` handles validating unions that contain base properties.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc26
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly).
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc25
+
+- changelogEntry:
+    - summary: |
+        `fern docs dev` now runs in Node 16 - Node 22 environments.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc24
 
 - changelogEntry:
     - summary: |
@@ -19,14 +148,14 @@
       type: feat
     - summary: |
         The RBAC config model is now renamed to `roles` and `viewers`:
-        
+
         ```yml docs.yml
         roles:
           - internal
-          
+
         navigation:
           - section: Internal Section
-            viewers: 
+            viewers:
               - internal
             contents:
               - page: Internal Page
@@ -45,7 +174,7 @@
         # all audiences must be declared at the top level
         audiences:
           - internal
-        
+
         navigation:
           - section: Internal Section
             audience: internal # audience is optional
@@ -72,7 +201,7 @@
   version: 0.45.0-rc18
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         - Improved union example generation by increasing depth for better handling of recursive structures.
         - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
         - Added detailed error messages when 'fern docs dev' fails, accessible with --log-level debug.
@@ -82,7 +211,7 @@
 
 - changelogEntry:
     - summary: |
-        The Conjure importer now correctly keys the union subvariant by the property of the discriminant. 
+        The Conjure importer now correctly keys the union subvariant by the property of the discriminant.
 
         ```conjure
         union:
@@ -98,10 +227,10 @@
         union:
           discriminant: type
           types:
-            square: 
+            square:
               type: Square
               key: square
-            circle: 
+            circle:
               type: Circle
               key: circle
         ```
@@ -155,8 +284,8 @@
   irVersion: 53
   version: 0.45.0-rc10
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         Improved JSON Schema generation for object extensions and const values:
         - Object extensions are now properly represented using `allOf` in the JSON Schema
         - Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
@@ -164,29 +293,29 @@
   irVersion: 53
   version: 0.45.0-rc9
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         Add `#!/usr/bin/env node` to the CLI to prevent runtime errors.
       type: internal
   irVersion: 53
   version: 0.45.0-rc8
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         Stop minifying the CLI to prevent javascript runtime errors.
       type: internal
   irVersion: 53
   version: 0.45.0-rc7
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         Update the CLI package.json to include the correct files.
       type: fix
   irVersion: 53
   version: 0.45.0-rc6
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         Introduce a new command `fern jsonschema <output-file> --type <type-name>`
         that outputs the JSON Schema for a given type in your Fern Definition.
 
@@ -197,43 +326,43 @@
   irVersion: 53
   version: 0.45.0-rc5
 
-- changelogEntry: 
-    - summary: | 
-        SCIM has been added as a common initialism. 
+- changelogEntry:
+    - summary: |
+        SCIM has been added as a common initialism.
       type: chore
   irVersion: 53
   version: 0.45.0-rc4
 
 - changelogEntry:
-    - summary: | 
-        Numerous fixes to the Conjure API Importer such as reading in request bodies and query parameters. 
+    - summary: |
+        Numerous fixes to the Conjure API Importer such as reading in request bodies and query parameters.
       type: fix
   irVersion: 53
   version: 0.45.0-rc3
 
 - changelogEntry:
-    - summary: | 
-        The CLI now generates endpoint examples for undiscriminated unions that are recusive. 
+    - summary: |
+        The CLI now generates endpoint examples for undiscriminated unions that are recusive.
       type: fix
   irVersion: 53
   version: 0.45.0-rc2
 
 - changelogEntry:
-    - summary: | 
-        The OpenAPI importer now generates streaming examples based on OpenAPI examples. 
+    - summary: |
+        The OpenAPI importer now generates streaming examples based on OpenAPI examples.
       type: fix
   irVersion: 53
   version: 0.45.0-rc1
 
 - changelogEntry:
-    - summary: | 
-        The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs. 
+    - summary: |
+        The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs.
       type: fix
   irVersion: 53
   version: 0.45.0-rc0
 
 - changelogEntry:
-    - summary: Several improvements to the conjure importer. 
+    - summary: Several improvements to the conjure importer.
       type: fix
   irVersion: 53
   version: 0.44.11

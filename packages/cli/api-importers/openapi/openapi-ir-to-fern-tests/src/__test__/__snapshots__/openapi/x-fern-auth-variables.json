@@ -34,6 +34,9 @@
                 "docs": "Success",
                 "type": "UserGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get_all": {
               "auth": false,
@@ -55,6 +58,9 @@
               "response": {
                 "docs": "Success",
                 "type": "list<UserGetAllResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -124,6 +130,8 @@ service:
       path: /user
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: UserGetResponse
@@ -135,6 +143,8 @@ service:
       path: /users
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Success
         type: list<UserGetAllResponseItem>

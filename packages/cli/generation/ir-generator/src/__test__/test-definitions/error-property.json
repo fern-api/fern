@@ -548,6 +548,7 @@
                         }
                     ],
                     "pagination": null,
+                    "transport": null,
                     "availability": null,
                     "docs": "GET request that always throws an error"
                 }

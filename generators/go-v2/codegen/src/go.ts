@@ -2,6 +2,7 @@ import {
     CodeBlock,
     Enum,
     Field,
+    Func,
     FuncInvocation,
     GoTypeReference,
     Method,
@@ -20,6 +21,10 @@ export function enum_(args: Enum.Args): Enum {
 
 export function field(args: Field.Args): Field {
     return new Field(args);
+}
+
+export function func(args: Func.Args): Func {
+    return new Func(args);
 }
 
 export function invokeFunc(args: FuncInvocation.Args): FuncInvocation {
@@ -51,6 +56,7 @@ export {
     CodeBlock,
     Enum,
     Field,
+    Func,
     FuncInvocation,
     GoTypeReference as TypeReference,
     Method,
@@ -59,5 +65,6 @@ export {
     Struct,
     Type,
     TypeInstantiation,
+    type StructField,
     Writer
 } from "./ast";

@@ -21,6 +21,11 @@ export enum AsIsFiles {
     JsonSerializableType = "Json/JsonSerializableType.Template.php",
     Utils = "Json/Utils.Template.php",
 
+    // Core/Multipart files.
+    MultipartApiRequest = "Multipart/MultipartApiRequest.Template.php",
+    MultipartFormData = "Multipart/MultipartFormData.Template.php",
+    MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
+
     // Tests/Core/Json files.
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
@@ -39,5 +44,9 @@ export enum AsIsFiles {
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
-    Union = "Types/Union.Template.php"
+    Union = "Types/Union.Template.php",
+
+    // Utils files.
+    // TODO: Should add explicit "core" and "utils" prefixes to organize better
+    File = "File.Template.php"
 }

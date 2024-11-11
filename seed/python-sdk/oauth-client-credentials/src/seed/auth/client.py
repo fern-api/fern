@@ -53,6 +53,7 @@ class AuthClient:
         client.auth.get_token_with_client_credentials(
             client_id="client_id",
             client_secret="client_secret",
+            scope="scope",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -122,6 +123,7 @@ class AuthClient:
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
+            scope="scope",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -198,6 +200,7 @@ class AsyncAuthClient:
             await client.auth.get_token_with_client_credentials(
                 client_id="client_id",
                 client_secret="client_secret",
+                scope="scope",
             )
 
 
@@ -275,6 +278,7 @@ class AsyncAuthClient:
                 client_id="client_id",
                 client_secret="client_secret",
                 refresh_token="refresh_token",
+                scope="scope",
             )
 
 

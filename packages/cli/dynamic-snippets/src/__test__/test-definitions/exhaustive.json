@@ -1843,64 +1843,7 @@
                         },
                         "wireValue": "dog"
                     },
-                    "properties": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "name",
-                                    "camelCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NAME",
-                                        "safeName": "NAME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Name",
-                                        "safeName": "Name"
-                                    }
-                                },
-                                "wireValue": "name"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "STRING"
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "likesToWoof",
-                                    "camelCase": {
-                                        "unsafeName": "likesToWoof",
-                                        "safeName": "likesToWoof"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "likes_to_woof",
-                                        "safeName": "likes_to_woof"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "LIKES_TO_WOOF",
-                                        "safeName": "LIKES_TO_WOOF"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "LikesToWoof",
-                                        "safeName": "LikesToWoof"
-                                    }
-                                },
-                                "wireValue": "likesToWoof"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "BOOLEAN"
-                            }
-                        }
-                    ]
+                    "properties": []
                 },
                 "cat": {
                     "type": "samePropertiesAsObject",
@@ -1927,64 +1870,7 @@
                         },
                         "wireValue": "cat"
                     },
-                    "properties": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "name",
-                                    "camelCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "name",
-                                        "safeName": "name"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NAME",
-                                        "safeName": "NAME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Name",
-                                        "safeName": "Name"
-                                    }
-                                },
-                                "wireValue": "name"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "STRING"
-                            }
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "likesToMeow",
-                                    "camelCase": {
-                                        "unsafeName": "likesToMeow",
-                                        "safeName": "likesToMeow"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "likes_to_meow",
-                                        "safeName": "likes_to_meow"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "LIKES_TO_MEOW",
-                                        "safeName": "LIKES_TO_MEOW"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "LikesToMeow",
-                                        "safeName": "LikesToMeow"
-                                    }
-                                },
-                                "wireValue": "likesToMeow"
-                            },
-                            "typeReference": {
-                                "_type": "primitive",
-                                "value": "BOOLEAN"
-                            }
-                        }
-                    ]
+                    "properties": []
                 }
             }
         },
@@ -5969,8 +5855,11 @@
                             "wireValue": "query"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "STRING"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     {
@@ -5997,8 +5886,11 @@
                             "wireValue": "numer"
                         },
                         "typeReference": {
-                            "_type": "primitive",
-                            "value": "INTEGER"
+                            "_type": "list",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     }
                 ],
@@ -8654,6 +8546,34 @@
                 "pathParameters": [],
                 "queryParameters": [],
                 "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-TEST-SERVICE-HEADER",
+                                "camelCase": {
+                                    "unsafeName": "xTestServiceHeader",
+                                    "safeName": "xTestServiceHeader"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_test_service_header",
+                                    "safeName": "x_test_service_header"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_TEST_SERVICE_HEADER",
+                                    "safeName": "X_TEST_SERVICE_HEADER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XTestServiceHeader",
+                                    "safeName": "XTestServiceHeader"
+                                }
+                            },
+                            "wireValue": "X-TEST-SERVICE-HEADER"
+                        },
+                        "typeReference": {
+                            "_type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
                     {
                         "name": {
                             "name": {

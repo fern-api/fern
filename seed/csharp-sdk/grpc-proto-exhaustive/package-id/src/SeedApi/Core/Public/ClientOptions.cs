@@ -12,7 +12,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get; init; } = "";
+    public string BaseUrl { get; init; } = SeedApiEnvironment.Default;
 
     /// <summary>
     /// The http client used to make requests.
@@ -46,7 +46,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            Environment = Environment,
+            BaseUrl = BaseUrl,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,

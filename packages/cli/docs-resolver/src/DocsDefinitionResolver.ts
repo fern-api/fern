@@ -37,6 +37,8 @@ export interface UploadedFile extends FilePathPair {
     fileId: string;
 }
 
+export type PlaygroundConfig = Pick<docsYml.RawSchemas.PlaygroundSettings, "oauth">;
+
 type AsyncOrSync<T> = T | Promise<T>;
 
 type UploadFilesFn = (files: FilePathPair[]) => AsyncOrSync<UploadedFile[]>;
@@ -44,7 +46,7 @@ type UploadFilesFn = (files: FilePathPair[]) => AsyncOrSync<UploadedFile[]>;
 type RegisterApiFn = (opts: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
-    playgroundConfig?: DocsV1Write.PlaygroundConfig;
+    playgroundConfig?: PlaygroundConfig;
     apiName?: string;
 }) => AsyncOrSync<string>;
 
@@ -318,7 +320,6 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            playground: undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,

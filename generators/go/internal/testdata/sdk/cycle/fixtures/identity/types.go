@@ -16,6 +16,13 @@ type Token struct {
 	_rawJSON        json.RawMessage
 }
 
+func (t *Token) GetUsername() *user.Username {
+	if t == nil {
+		return nil
+	}
+	return t.Username
+}
+
 func (t *Token) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }

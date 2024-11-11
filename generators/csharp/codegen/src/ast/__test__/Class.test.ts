@@ -5,7 +5,7 @@ describe("class", () => {
         const clazz = csharp.class_({
             name: "Car",
             namespace: "Automotive",
-            access: "public",
+            access: csharp.Access.Public,
             primaryConstructor: {
                 parameters: [
                     csharp.parameter({
