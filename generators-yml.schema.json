@@ -12,7 +12,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "auth-schemes"
     },
     "api": {
       "oneOf": [
@@ -22,7 +23,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "api"
     },
     "whitelabel": {
       "oneOf": [
@@ -32,7 +34,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "White Label Configuration"
     },
     "metadata": {
       "oneOf": [
@@ -42,7 +45,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "metadata"
     },
     "readme": {
       "oneOf": [
@@ -52,7 +56,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "readme"
     },
     "default-group": {
       "oneOf": [
@@ -62,7 +67,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "default-group"
     },
     "groups": {
       "oneOf": [
@@ -75,7 +81,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "groups"
     },
     "reviewers": {
       "oneOf": [
@@ -85,7 +92,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "reviewers"
     },
     "openapi": {
       "oneOf": [
@@ -95,7 +103,9 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "openapi",
+      "description": "Deprecated, use the `api` key instead"
     },
     "openapi-overrides": {
       "oneOf": [
@@ -105,7 +115,9 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "openapi-overrides",
+      "description": "Deprecated, use the `api` key instead"
     },
     "spec-origin": {
       "oneOf": [
@@ -115,7 +127,9 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "spec-origin",
+      "description": "Deprecated, use the `api` key instead"
     },
     "async-api": {
       "oneOf": [
@@ -125,7 +139,9 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "async-api",
+      "description": "Deprecated, use the `api` key instead"
     },
     "api-settings": {
       "oneOf": [
@@ -135,7 +151,9 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "api-settings",
+      "description": "Deprecated, use the `api` key instead"
     }
   },
   "additionalProperties": false,
@@ -151,7 +169,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "client-id",
+          "description": "The property name for the client ID."
         },
         "client-secret": {
           "oneOf": [
@@ -161,7 +181,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "client-secret",
+          "description": "The property name for the client secret."
         },
         "scopes": {
           "oneOf": [
@@ -171,7 +193,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "scopes",
+          "description": "The property name for the scopes."
         }
       },
       "additionalProperties": false
@@ -187,7 +211,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "access-token",
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -197,7 +223,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "expires-in",
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -207,7 +235,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "refresh-token",
+          "description": "The property name for the refresh token"
         }
       },
       "additionalProperties": false
@@ -216,7 +246,9 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "title": "endpoint",
+          "description": "The endpoint to get the access token, such as 'auth.get_token"
         },
         "request-properties": {
           "oneOf": [
@@ -226,7 +258,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "request-properties"
         },
         "response-properties": {
           "oneOf": [
@@ -236,7 +269,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "response-properties"
         }
       },
       "required": [
@@ -248,7 +282,9 @@
       "type": "object",
       "properties": {
         "refresh-token": {
-          "type": "string"
+          "type": "string",
+          "title": "refresh-token",
+          "description": "The property name for the refresh token."
         }
       },
       "required": [
@@ -267,7 +303,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "access-token",
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -277,7 +315,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "expires-in",
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -287,7 +327,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "refresh-token",
+          "description": "The property name for the refresh token."
         }
       },
       "additionalProperties": false
@@ -296,7 +338,9 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "title": "endpoint",
+          "description": "The endpoint to refresh the access token, such as 'auth.refresh_token"
         },
         "request-properties": {
           "oneOf": [
@@ -306,7 +350,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "request-properties"
         },
         "response-properties": {
           "oneOf": [
@@ -316,7 +361,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "response-properties"
         }
       },
       "required": [
@@ -335,13 +381,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "scheme": {
-          "const": "oauth"
+          "const": "oauth",
+          "title": "scheme"
         },
         "type": {
-          "const": "client-credentials"
+          "const": "client-credentials",
+          "title": "type"
         },
         "scopes": {
           "oneOf": [
@@ -354,7 +403,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "scopes"
         },
         "client-id-env": {
           "oneOf": [
@@ -364,7 +414,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "client-id-env"
         },
         "client-secret-env": {
           "oneOf": [
@@ -374,7 +425,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "client-secret-env"
         },
         "token-prefix": {
           "oneOf": [
@@ -384,10 +436,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "token-prefix"
         },
         "get-token": {
-          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema",
+          "title": "get-token"
         },
         "refresh-token": {
           "oneOf": [
@@ -397,7 +451,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "refresh-token"
         }
       },
       "required": [
@@ -418,7 +473,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "env"
         },
         "name": {
           "oneOf": [
@@ -428,7 +484,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -438,10 +495,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "header": {
-          "type": "string"
+          "type": "string",
+          "title": "header"
         },
         "type": {
           "oneOf": [
@@ -451,7 +510,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "type",
+          "description": "Defaults to string"
         },
         "prefix": {
           "oneOf": [
@@ -461,7 +522,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "prefix"
         }
       },
       "required": [
@@ -480,7 +542,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "env"
         },
         "name": {
           "oneOf": [
@@ -490,7 +553,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         }
       },
       "additionalProperties": false
@@ -506,10 +570,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "scheme": {
-          "const": "basic"
+          "const": "basic",
+          "title": "scheme"
         },
         "username": {
           "oneOf": [
@@ -519,7 +585,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "username"
         },
         "password": {
           "oneOf": [
@@ -529,7 +596,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "password"
         }
       },
       "required": [
@@ -548,10 +616,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "scheme": {
-          "const": "bearer"
+          "const": "bearer",
+          "title": "scheme"
         },
         "token": {
           "oneOf": [
@@ -561,7 +631,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "token"
         }
       },
       "required": [
@@ -612,7 +683,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "use-title",
+          "description": "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true."
         },
         "unions": {
           "oneOf": [
@@ -622,7 +695,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "unions",
+          "description": "What version of union generation to use, this will grow over time. Defaults to v0."
         },
         "message-naming": {
           "oneOf": [
@@ -632,7 +707,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "message-naming",
+          "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
         }
       },
       "additionalProperties": false
@@ -641,7 +718,8 @@
       "type": "object",
       "properties": {
         "path": {
-          "$ref": "#/definitions/generators.APIDefinitionPathSchema"
+          "$ref": "#/definitions/generators.APIDefinitionPathSchema",
+          "title": "path"
         },
         "origin": {
           "oneOf": [
@@ -651,7 +729,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "origin",
+          "description": "The URL of the API definition origin, from which the file should be polled."
         },
         "overrides": {
           "oneOf": [
@@ -661,7 +741,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "overrides",
+          "description": "Path to the OpenAPI or AsyncAPI overrides"
         },
         "audiences": {
           "oneOf": [
@@ -674,7 +756,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences",
+          "description": "Audiences that you would like to filter to"
         },
         "settings": {
           "oneOf": [
@@ -684,7 +768,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "settings"
         }
       },
       "required": [
@@ -696,10 +781,14 @@
       "type": "object",
       "properties": {
         "root": {
-          "type": "string"
+          "type": "string",
+          "title": "root",
+          "description": "The path to the `.proto` directory root (e.g. `proto`)."
         },
         "target": {
-          "type": "string"
+          "type": "string",
+          "title": "target",
+          "description": "The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`)."
         },
         "overrides": {
           "oneOf": [
@@ -709,7 +798,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "overrides",
+          "description": "Path to the overrides configuration"
         },
         "local-generation": {
           "oneOf": [
@@ -719,7 +810,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "local-generation",
+          "description": "Whether to compile the `.proto` files locally. By default, we generate remotely."
         }
       },
       "required": [
@@ -732,7 +825,8 @@
       "type": "object",
       "properties": {
         "proto": {
-          "$ref": "#/definitions/generators.ProtobufDefinitionSchema"
+          "$ref": "#/definitions/generators.ProtobufDefinitionSchema",
+          "title": "proto"
         }
       },
       "required": [
@@ -782,7 +876,8 @@
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/generators.APIConfigurationSchemaInternal"
-          }
+          },
+          "title": "namespaces"
         }
       },
       "required": [
@@ -794,7 +889,9 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type",
+          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
         }
       },
       "required": [
@@ -813,7 +910,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "proto"
         }
       },
       "additionalProperties": false
@@ -829,7 +927,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "minLength"
         },
         "maxLength": {
           "oneOf": [
@@ -839,7 +938,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "maxLength"
         },
         "pattern": {
           "oneOf": [
@@ -849,7 +949,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "pattern"
         },
         "format": {
           "oneOf": [
@@ -859,7 +960,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "format"
         }
       },
       "additionalProperties": false
@@ -875,7 +977,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "min"
         },
         "max": {
           "oneOf": [
@@ -885,7 +988,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "max"
         },
         "exclusiveMin": {
           "oneOf": [
@@ -895,7 +999,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "exclusiveMin"
         },
         "exclusiveMax": {
           "oneOf": [
@@ -905,7 +1010,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "exclusiveMax"
         },
         "multipleOf": {
           "oneOf": [
@@ -915,7 +1021,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "multipleOf"
         }
       },
       "additionalProperties": false
@@ -943,7 +1050,8 @@
       "type": "object",
       "properties": {
         "status": {
-          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema"
+          "$ref": "#/definitions/fernDefinition.availability.AvailabilityStatusSchema",
+          "title": "status"
         },
         "message": {
           "oneOf": [
@@ -953,7 +1061,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "message"
         }
       },
       "required": [
@@ -975,7 +1084,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "default": {
           "oneOf": [
@@ -992,7 +1102,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -1002,7 +1113,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -1012,7 +1124,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -1022,7 +1135,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1032,7 +1146,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -1042,7 +1157,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -1055,7 +1171,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "env": {
           "oneOf": [
@@ -1065,7 +1182,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "env"
         }
       },
       "required": [
@@ -1100,7 +1218,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "docs": {
           "oneOf": [
@@ -1110,10 +1229,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "title": "url"
         }
       },
       "required": [
@@ -1135,7 +1256,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "docs": {
           "oneOf": [
@@ -1145,13 +1267,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "urls": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "title": "urls"
         }
       },
       "required": [
@@ -1183,10 +1307,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "scheme": {
-          "type": "string"
+          "type": "string",
+          "title": "scheme"
         }
       },
       "required": [
@@ -1215,13 +1341,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "any": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/fernDefinition.auth.AnyAuthItem"
-          }
+          },
+          "title": "any"
         }
       },
       "required": [
@@ -1253,7 +1381,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "title-as-schema-name"
         },
         "optional-additional-properties": {
           "oneOf": [
@@ -1263,7 +1392,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "optional-additional-properties"
         },
         "coerce-enums-to-literals": {
           "oneOf": [
@@ -1273,7 +1403,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "coerce-enums-to-literals"
         },
         "object-query-parameters": {
           "oneOf": [
@@ -1283,7 +1414,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "object-query-parameters",
+          "description": "Enables parsing deep object query parameters"
         },
         "respect-readonly-schemas": {
           "oneOf": [
@@ -1293,7 +1426,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "respect-readonly-schemas",
+          "description": "Enables exploring readonly schemas in OpenAPI specifications"
         }
       },
       "additionalProperties": false
@@ -1302,7 +1437,8 @@
       "type": "object",
       "properties": {
         "openapi": {
-          "type": "string"
+          "type": "string",
+          "title": "openapi"
         },
         "origin": {
           "oneOf": [
@@ -1312,7 +1448,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "origin"
         },
         "overrides": {
           "oneOf": [
@@ -1322,7 +1459,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "overrides"
         },
         "namespace": {
           "oneOf": [
@@ -1332,7 +1470,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "namespace"
         },
         "settings": {
           "oneOf": [
@@ -1342,7 +1481,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "settings"
         }
       },
       "required": [
@@ -1361,7 +1501,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "title-as-schema-name"
         },
         "optional-additional-properties": {
           "oneOf": [
@@ -1371,7 +1512,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "optional-additional-properties"
         },
         "coerce-enums-to-literals": {
           "oneOf": [
@@ -1381,7 +1523,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "coerce-enums-to-literals"
         }
       },
       "additionalProperties": false
@@ -1390,7 +1533,8 @@
       "type": "object",
       "properties": {
         "asyncapi": {
-          "type": "string"
+          "type": "string",
+          "title": "asyncapi"
         },
         "origin": {
           "oneOf": [
@@ -1400,7 +1544,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "origin"
         },
         "overrides": {
           "oneOf": [
@@ -1410,7 +1555,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "overrides"
         },
         "namespace": {
           "oneOf": [
@@ -1420,7 +1566,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "namespace"
         },
         "settings": {
           "oneOf": [
@@ -1430,7 +1577,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "settings"
         }
       },
       "required": [
@@ -1452,7 +1600,8 @@
       "type": "object",
       "properties": {
         "conjure": {
-          "type": "string"
+          "type": "string",
+          "title": "conjure"
         }
       },
       "required": [
@@ -1487,7 +1636,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers",
+          "description": "Global Headers for the entire API"
         },
         "default-url": {
           "oneOf": [
@@ -1497,7 +1648,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default-url"
         },
         "default-environment": {
           "oneOf": [
@@ -1507,7 +1659,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default-environment"
         },
         "environments": {
           "oneOf": [
@@ -1520,7 +1673,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "environments"
         },
         "auth": {
           "oneOf": [
@@ -1530,10 +1684,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "auth"
         },
         "specs": {
-          "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
+          "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema",
+          "title": "specs"
         }
       },
       "required": [
@@ -1558,13 +1714,16 @@
       "type": "object",
       "properties": {
         "username": {
-          "type": "string"
+          "type": "string",
+          "title": "username"
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "title": "email"
         },
         "token": {
-          "type": "string"
+          "type": "string",
+          "title": "token"
         }
       },
       "required": [
@@ -1585,7 +1744,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "github"
         }
       },
       "additionalProperties": false
@@ -1594,10 +1754,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "title": "email"
         }
       },
       "required": [
@@ -1617,7 +1779,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "description"
         },
         "authors": {
           "oneOf": [
@@ -1630,7 +1793,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "authors"
         }
       },
       "additionalProperties": false
@@ -1639,10 +1803,12 @@
       "type": "object",
       "properties": {
         "method": {
-          "type": "string"
+          "type": "string",
+          "title": "method"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "path"
         },
         "stream": {
           "oneOf": [
@@ -1652,7 +1818,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "stream"
         }
       },
       "required": [
@@ -1683,7 +1850,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "bannerLink"
         },
         "introduction": {
           "oneOf": [
@@ -1693,7 +1861,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "introduction"
         },
         "apiReferenceLink": {
           "oneOf": [
@@ -1703,7 +1872,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "apiReferenceLink"
         },
         "defaultEndpoint": {
           "oneOf": [
@@ -1713,7 +1883,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "defaultEndpoint",
+          "description": "If set, use this endpoint's snippet as the default whenever possible"
         },
         "features": {
           "oneOf": [
@@ -1729,7 +1901,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "features",
+          "description": "Specifies a list of endpoints associated with the feature"
         }
       },
       "additionalProperties": false
@@ -1738,13 +1912,16 @@
       "type": "object",
       "properties": {
         "keyId": {
-          "type": "string"
+          "type": "string",
+          "title": "keyId"
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "title": "password"
         },
         "secretKey": {
-          "type": "string"
+          "type": "string",
+          "title": "secretKey"
         }
       },
       "required": [
@@ -1765,7 +1942,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "description"
         },
         "authors": {
           "oneOf": [
@@ -1778,7 +1956,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "authors"
         },
         "keywords": {
           "oneOf": [
@@ -1791,7 +1970,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "keywords"
         },
         "documentation-link": {
           "oneOf": [
@@ -1801,7 +1981,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "documentation-link"
         },
         "homepage-link": {
           "oneOf": [
@@ -1811,7 +1992,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "homepage-link"
         }
       },
       "additionalProperties": false
@@ -1849,10 +2031,12 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "url"
             },
             "package-name": {
-              "type": "string"
+              "type": "string",
+              "title": "package-name"
             },
             "token": {
               "oneOf": [
@@ -1862,7 +2046,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "token"
             }
           },
           "required": [
@@ -1883,10 +2068,12 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "url"
             },
             "coordinate": {
-              "type": "string"
+              "type": "string",
+              "title": "coordinate"
             },
             "username": {
               "oneOf": [
@@ -1896,7 +2083,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "username"
             },
             "password": {
               "oneOf": [
@@ -1906,7 +2094,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "password"
             },
             "signature": {
               "oneOf": [
@@ -1916,7 +2105,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "signature"
             }
           },
           "required": [
@@ -1937,10 +2127,12 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "url"
             },
             "package-name": {
-              "type": "string"
+              "type": "string",
+              "title": "package-name"
             },
             "token": {
               "oneOf": [
@@ -1950,7 +2142,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "token"
             },
             "username": {
               "oneOf": [
@@ -1960,7 +2153,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "username"
             },
             "password": {
               "oneOf": [
@@ -1970,7 +2164,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "password"
             },
             "metadata": {
               "oneOf": [
@@ -1980,7 +2175,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "metadata"
             }
           },
           "required": [
@@ -1994,10 +2190,12 @@
               "const": "postman"
             },
             "api-key": {
-              "type": "string"
+              "type": "string",
+              "title": "api-key"
             },
             "workspace-id": {
-              "type": "string"
+              "type": "string",
+              "title": "workspace-id"
             },
             "collection-id": {
               "oneOf": [
@@ -2007,7 +2205,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "collection-id"
             }
           },
           "required": [
@@ -2022,7 +2221,8 @@
               "const": "local-file-system"
             },
             "path": {
-              "type": "string"
+              "type": "string",
+              "title": "path"
             }
           },
           "required": [
@@ -2043,10 +2243,12 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "url"
             },
             "package-name": {
-              "type": "string"
+              "type": "string",
+              "title": "package-name"
             },
             "api-key": {
               "oneOf": [
@@ -2056,7 +2258,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "api-key"
             }
           },
           "required": [
@@ -2077,10 +2280,12 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "url"
             },
             "package-name": {
-              "type": "string"
+              "type": "string",
+              "title": "package-name"
             },
             "api-key": {
               "oneOf": [
@@ -2090,7 +2295,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "api-key"
             }
           },
           "required": [
@@ -2111,7 +2317,8 @@
       "type": "object",
       "properties": {
         "custom": {
-          "type": "string"
+          "type": "string",
+          "title": "custom"
         }
       },
       "required": [
@@ -2140,7 +2347,8 @@
       "type": "object",
       "properties": {
         "repository": {
-          "type": "string"
+          "type": "string",
+          "title": "repository"
         },
         "license": {
           "oneOf": [
@@ -2150,7 +2358,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "license"
         },
         "mode": {
           "oneOf": [
@@ -2160,7 +2369,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "mode"
         }
       },
       "required": [
@@ -2172,7 +2382,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [
@@ -2194,7 +2405,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "teams"
         },
         "users": {
           "oneOf": [
@@ -2207,7 +2419,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "users"
         }
       },
       "additionalProperties": false
@@ -2216,7 +2429,8 @@
       "type": "object",
       "properties": {
         "repository": {
-          "type": "string"
+          "type": "string",
+          "title": "repository"
         },
         "branch": {
           "oneOf": [
@@ -2226,7 +2440,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "branch"
         },
         "license": {
           "oneOf": [
@@ -2236,10 +2451,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "license"
         },
         "mode": {
-          "const": "pull-request"
+          "const": "pull-request",
+          "title": "mode"
         },
         "reviewers": {
           "oneOf": [
@@ -2249,7 +2466,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "reviewers"
         }
       },
       "required": [
@@ -2262,7 +2480,8 @@
       "type": "object",
       "properties": {
         "repository": {
-          "type": "string"
+          "type": "string",
+          "title": "repository"
         },
         "license": {
           "oneOf": [
@@ -2272,10 +2491,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "license"
         },
         "mode": {
-          "const": "push"
+          "const": "push",
+          "title": "mode"
         },
         "branch": {
           "oneOf": [
@@ -2285,7 +2506,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "branch"
         }
       },
       "required": [
@@ -2318,7 +2540,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "package-description"
         },
         "email": {
           "oneOf": [
@@ -2328,7 +2551,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "email"
         },
         "reference-url": {
           "oneOf": [
@@ -2338,7 +2562,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "reference-url"
         },
         "author": {
           "oneOf": [
@@ -2348,7 +2573,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "author"
         },
         "license": {
           "oneOf": [
@@ -2358,7 +2584,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "license"
         }
       },
       "additionalProperties": false
@@ -2367,7 +2594,9 @@
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "path",
+          "description": "The path to the generated snippets file."
         }
       },
       "required": [
@@ -2386,7 +2615,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "settings"
         }
       },
       "additionalProperties": false
@@ -2395,10 +2625,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "title": "version"
         },
         "output": {
           "oneOf": [
@@ -2408,7 +2640,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "output"
         },
         "github": {
           "oneOf": [
@@ -2418,7 +2651,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "github"
         },
         "config": {
           "type": [
@@ -2428,7 +2662,8 @@
             "object",
             "array",
             "null"
-          ]
+          ],
+          "title": "config"
         },
         "metadata": {
           "oneOf": [
@@ -2438,7 +2673,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "metadata"
         },
         "keywords": {
           "oneOf": [
@@ -2451,7 +2687,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "keywords",
+          "description": "Overrides the keywords that require safe name variants."
         },
         "snippets": {
           "oneOf": [
@@ -2461,7 +2699,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "snippets",
+          "description": "Configures snippets for a particular generator."
         },
         "ir-version": {
           "oneOf": [
@@ -2471,7 +2711,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "ir-version",
+          "description": "Overrides the version of the IR used by the generator."
         },
         "smart-casing": {
           "oneOf": [
@@ -2481,7 +2723,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "smart-casing",
+          "description": "Feature flag used to enable better IR naming."
         },
         "api": {
           "oneOf": [
@@ -2491,7 +2735,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "api",
+          "description": "Override API import settings (this is applied across all specs)"
         },
         "disable-examples": {
           "oneOf": [
@@ -2501,7 +2747,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "disable-examples",
+          "description": "Temporary way to unblock example serialization."
         },
         "publish-metadata": {
           "oneOf": [
@@ -2511,7 +2759,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "publish-metadata",
+          "description": "Deprecated, use `metadata` on the output block instead."
         }
       },
       "required": [
@@ -2535,13 +2785,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "generators": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/group.GeneratorInvocationSchema"
-          }
+          },
+          "title": "generators"
         },
         "metadata": {
           "oneOf": [
@@ -2551,7 +2803,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "metadata"
         },
         "reviewers": {
           "oneOf": [
@@ -2561,7 +2814,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "reviewers"
         }
       },
       "required": [
@@ -2573,7 +2827,8 @@
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "path"
         },
         "origin": {
           "oneOf": [
@@ -2583,7 +2838,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "origin"
         },
         "overrides": {
           "oneOf": [
@@ -2593,7 +2849,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "overrides"
         },
         "disable-examples": {
           "oneOf": [
@@ -2603,10 +2860,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "disable-examples"
         },
         "settings": {
-          "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+          "$ref": "#/definitions/generators.APIDefinitionSettingsSchema",
+          "title": "settings"
         }
       },
       "required": [

@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "docs"
     },
     "imports": {
       "oneOf": [
@@ -22,7 +23,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "imports"
     },
     "types": {
       "oneOf": [
@@ -35,7 +37,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "types"
     },
     "service": {
       "oneOf": [
@@ -45,7 +48,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "service"
     },
     "errors": {
       "oneOf": [
@@ -58,7 +62,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "errors"
     },
     "webhooks": {
       "oneOf": [
@@ -71,7 +76,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "webhooks"
     },
     "channel": {
       "oneOf": [
@@ -81,7 +87,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "channel"
     }
   },
   "additionalProperties": false,
@@ -107,7 +114,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -117,10 +125,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "value": {
-          "$ref": "#/definitions/examples.ExampleTypeValueSchema"
+          "$ref": "#/definitions/examples.ExampleTypeValueSchema",
+          "title": "value"
         }
       },
       "required": [
@@ -132,7 +142,9 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type",
+          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
         }
       },
       "required": [
@@ -151,7 +163,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "proto"
         }
       },
       "additionalProperties": false
@@ -160,7 +173,9 @@
       "type": "object",
       "properties": {
         "openapi": {
-          "type": "string"
+          "type": "string",
+          "title": "openapi",
+          "description": "Path to the OpenAPI spec"
         }
       },
       "required": [
@@ -172,7 +187,9 @@
       "type": "object",
       "properties": {
         "proto": {
-          "type": "string"
+          "type": "string",
+          "title": "proto",
+          "description": "Path to the Protobuf spec"
         }
       },
       "required": [
@@ -203,7 +220,8 @@
       "type": "object",
       "properties": {
         "status": {
-          "$ref": "#/definitions/availability.AvailabilityStatusSchema"
+          "$ref": "#/definitions/availability.AvailabilityStatusSchema",
+          "title": "status"
         },
         "message": {
           "oneOf": [
@@ -213,7 +231,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "message"
         }
       },
       "required": [
@@ -255,7 +274,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "minLength"
         },
         "maxLength": {
           "oneOf": [
@@ -265,7 +285,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "maxLength"
         },
         "pattern": {
           "oneOf": [
@@ -275,7 +296,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "pattern"
         },
         "format": {
           "oneOf": [
@@ -285,7 +307,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "format"
         }
       },
       "additionalProperties": false
@@ -301,7 +324,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "min"
         },
         "max": {
           "oneOf": [
@@ -311,7 +335,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "max"
         },
         "exclusiveMin": {
           "oneOf": [
@@ -321,7 +346,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "exclusiveMin"
         },
         "exclusiveMax": {
           "oneOf": [
@@ -331,7 +357,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "exclusiveMax"
         },
         "multipleOf": {
           "oneOf": [
@@ -341,7 +368,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "multipleOf"
         }
       },
       "additionalProperties": false
@@ -374,7 +402,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -384,7 +413,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -394,7 +424,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -404,7 +435,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -414,7 +446,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -424,7 +457,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -437,10 +471,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -475,7 +511,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "encoding": {
           "oneOf": [
@@ -485,7 +522,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "source": {
           "oneOf": [
@@ -495,7 +533,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "docs": {
           "oneOf": [
@@ -505,7 +544,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -515,7 +555,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -528,7 +569,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "extends": {
           "oneOf": [
@@ -538,7 +580,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extends"
         },
         "properties": {
           "oneOf": [
@@ -551,7 +594,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "properties"
         },
         "extra-properties": {
           "oneOf": [
@@ -561,7 +605,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extra-properties"
         }
       },
       "additionalProperties": false
@@ -577,7 +622,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "camel"
         },
         "snake": {
           "oneOf": [
@@ -587,7 +633,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "snake"
         },
         "pascal": {
           "oneOf": [
@@ -597,7 +644,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "pascal"
         },
         "screaming-snake": {
           "oneOf": [
@@ -607,7 +655,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "screaming-snake"
         }
       },
       "additionalProperties": false
@@ -623,7 +672,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "name": {
           "oneOf": [
@@ -633,10 +683,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "title": "value"
         },
         "casing": {
           "oneOf": [
@@ -646,7 +698,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "casing"
         }
       },
       "required": [
@@ -678,7 +731,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "encoding": {
           "oneOf": [
@@ -688,7 +742,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "source": {
           "oneOf": [
@@ -698,7 +753,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "docs": {
           "oneOf": [
@@ -708,7 +764,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -718,7 +775,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -731,7 +789,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "default": {
           "oneOf": [
@@ -741,13 +800,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "enum": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/types.EnumValue"
-          }
+          },
+          "title": "enum"
         }
       },
       "required": [
@@ -766,10 +827,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "title": "value"
         }
       },
       "required": [
@@ -805,7 +868,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -815,7 +879,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -825,7 +890,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -835,7 +901,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -845,7 +912,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -855,7 +923,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -868,10 +937,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -900,10 +971,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "title": "value"
         }
       },
       "required": [
@@ -932,7 +1005,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "name": {
           "oneOf": [
@@ -942,7 +1016,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "availability": {
           "oneOf": [
@@ -952,7 +1027,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "display-name": {
           "oneOf": [
@@ -962,7 +1038,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "type": {
           "oneOf": [
@@ -972,7 +1049,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "type"
         },
         "key": {
           "oneOf": [
@@ -982,7 +1060,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "key"
         }
       },
       "additionalProperties": false
@@ -1011,7 +1090,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "encoding": {
           "oneOf": [
@@ -1021,7 +1101,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "source": {
           "oneOf": [
@@ -1031,7 +1112,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "docs": {
           "oneOf": [
@@ -1041,7 +1123,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1051,7 +1134,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -1064,7 +1148,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "discriminant": {
           "oneOf": [
@@ -1074,7 +1159,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "discriminant"
         },
         "extends": {
           "oneOf": [
@@ -1084,7 +1170,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extends"
         },
         "base-properties": {
           "oneOf": [
@@ -1097,13 +1184,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "base-properties"
         },
         "union": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/types.SingleUnionTypeSchema"
-          }
+          },
+          "title": "union"
         }
       },
       "required": [
@@ -1122,7 +1211,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "display-name": {
           "oneOf": [
@@ -1132,10 +1222,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -1167,7 +1259,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "encoding": {
           "oneOf": [
@@ -1177,7 +1270,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "source": {
           "oneOf": [
@@ -1187,7 +1281,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "docs": {
           "oneOf": [
@@ -1197,7 +1292,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1207,7 +1303,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -1220,16 +1317,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "discriminated": {
-          "const": false
+          "const": false,
+          "title": "discriminated"
         },
         "union": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/types.SingleUndiscriminatedUnionTypeSchema"
-          }
+          },
+          "title": "union"
         }
       },
       "required": [
@@ -1252,7 +1352,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "encoding": {
           "oneOf": [
@@ -1262,7 +1363,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "source": {
           "oneOf": [
@@ -1272,7 +1374,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "docs": {
           "oneOf": [
@@ -1282,7 +1385,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1292,7 +1396,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -1305,10 +1410,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "validation": {
           "oneOf": [
@@ -1318,7 +1425,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         }
       },
       "required": [
@@ -1352,7 +1460,9 @@
       "type": "object",
       "properties": {
         "service-name": {
-          "type": "string"
+          "type": "string",
+          "title": "service-name",
+          "description": "The name of the gRPC service."
         }
       },
       "required": [
@@ -1371,7 +1481,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "grpc"
         }
       },
       "additionalProperties": false
@@ -1397,7 +1508,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "docs": {
           "oneOf": [
@@ -1407,10 +1519,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "variable": {
-          "type": "string"
+          "type": "string",
+          "title": "variable"
         }
       },
       "required": [
@@ -1432,7 +1546,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "default": {
           "oneOf": [
@@ -1449,7 +1564,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -1459,7 +1575,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -1469,7 +1586,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -1479,7 +1597,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1489,7 +1608,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -1499,7 +1619,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -1512,7 +1633,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "allow-multiple": {
           "oneOf": [
@@ -1522,7 +1644,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "allow-multiple"
         }
       },
       "required": [
@@ -1544,7 +1667,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "default": {
           "oneOf": [
@@ -1561,7 +1685,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -1571,7 +1696,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -1581,7 +1707,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -1591,7 +1718,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1601,7 +1729,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -1611,7 +1740,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -1624,7 +1754,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "env": {
           "oneOf": [
@@ -1634,7 +1765,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "env"
         }
       },
       "required": [
@@ -1666,10 +1798,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -1681,7 +1815,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "default": {
           "oneOf": [
@@ -1698,7 +1833,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "default"
         },
         "encoding": {
           "oneOf": [
@@ -1708,7 +1844,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "encoding"
         },
         "validation": {
           "oneOf": [
@@ -1718,7 +1855,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "validation"
         },
         "docs": {
           "oneOf": [
@@ -1728,7 +1866,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -1738,7 +1877,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "name": {
           "oneOf": [
@@ -1748,7 +1888,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "audiences": {
           "oneOf": [
@@ -1761,7 +1902,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "content-type": {
           "oneOf": [
@@ -1771,7 +1913,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "content-type"
         }
       },
       "required": [
@@ -1800,7 +1943,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extends"
         },
         "extra-properties": {
           "oneOf": [
@@ -1810,7 +1954,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extra-properties"
         },
         "properties": {
           "oneOf": [
@@ -1823,7 +1968,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "properties"
         }
       },
       "additionalProperties": false
@@ -1852,7 +1998,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -1862,7 +2009,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "content-type": {
           "oneOf": [
@@ -1872,7 +2020,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "content-type"
         },
         "query-parameters": {
           "oneOf": [
@@ -1885,7 +2034,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "query-parameters"
         },
         "headers": {
           "oneOf": [
@@ -1898,7 +2048,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "body": {
           "oneOf": [
@@ -1908,7 +2059,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "body"
         }
       },
       "additionalProperties": false
@@ -1934,10 +2086,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "property": {
           "oneOf": [
@@ -1947,7 +2101,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "property"
         },
         "status-code": {
           "oneOf": [
@@ -1957,7 +2112,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "status-code"
         }
       },
       "required": [
@@ -1993,10 +2149,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "format": {
           "oneOf": [
@@ -2006,7 +2164,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "format"
         },
         "terminator": {
           "oneOf": [
@@ -2016,7 +2175,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "terminator"
         }
       },
       "required": [
@@ -2045,10 +2205,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "error": {
-          "type": "string"
+          "type": "string",
+          "title": "error"
         }
       },
       "required": [
@@ -2093,7 +2255,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "error"
         },
         "body": {
           "oneOf": [
@@ -2103,7 +2266,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "body"
         }
       },
       "additionalProperties": false
@@ -2115,7 +2279,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
-          }
+          },
+          "title": "stream"
         }
       },
       "required": [
@@ -2127,7 +2292,8 @@
       "type": "object",
       "properties": {
         "event": {
-          "type": "string"
+          "type": "string",
+          "title": "event"
         },
         "data": {
           "oneOf": [
@@ -2137,7 +2303,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "data"
         }
       },
       "required": [
@@ -2152,7 +2319,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/examples.ExampleSseEventSchema"
-          }
+          },
+          "title": "stream"
         }
       },
       "required": [
@@ -2207,7 +2375,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "name": {
           "oneOf": [
@@ -2217,13 +2386,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "sdk": {
-          "$ref": "#/definitions/examples.SupportedSdkLanguageSchema"
+          "$ref": "#/definitions/examples.SupportedSdkLanguageSchema",
+          "title": "sdk"
         },
         "code": {
-          "type": "string"
+          "type": "string",
+          "title": "code"
         }
       },
       "required": [
@@ -2243,7 +2415,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "name": {
           "oneOf": [
@@ -2253,13 +2426,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "language": {
-          "type": "string"
+          "type": "string",
+          "title": "language"
         },
         "code": {
-          "type": "string"
+          "type": "string",
+          "title": "code"
         },
         "install": {
           "oneOf": [
@@ -2269,7 +2445,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "install"
         }
       },
       "required": [
@@ -2299,7 +2476,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -2309,7 +2487,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "id": {
           "oneOf": [
@@ -2319,7 +2498,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "id"
         },
         "path-parameters": {
           "oneOf": [
@@ -2332,7 +2512,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "path-parameters"
         },
         "query-parameters": {
           "oneOf": [
@@ -2345,7 +2526,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "query-parameters"
         },
         "headers": {
           "oneOf": [
@@ -2358,7 +2540,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "request": {
           "oneOf": [
@@ -2368,7 +2551,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "request"
         },
         "response": {
           "oneOf": [
@@ -2378,7 +2562,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "response"
         },
         "code-samples": {
           "oneOf": [
@@ -2391,7 +2576,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "code-samples"
         }
       },
       "additionalProperties": false
@@ -2400,13 +2586,19 @@
       "type": "object",
       "properties": {
         "cursor": {
-          "type": "string"
+          "type": "string",
+          "title": "cursor",
+          "description": "The path to the request property for the cursor."
         },
         "next_cursor": {
-          "type": "string"
+          "type": "string",
+          "title": "next_cursor",
+          "description": "The path to the response property for the next cursor."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "title": "results",
+          "description": "The path to the response property for the page elements."
         }
       },
       "required": [
@@ -2420,10 +2612,14 @@
       "type": "object",
       "properties": {
         "offset": {
-          "type": "string"
+          "type": "string",
+          "title": "offset",
+          "description": "The path to the request property for the page offset."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "title": "results",
+          "description": "The path to the response property for the page elements."
         },
         "step": {
           "oneOf": [
@@ -2433,7 +2629,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "step",
+          "description": "The path to the request property for the page step."
         },
         "has-next-page": {
           "oneOf": [
@@ -2443,7 +2641,9 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "has-next-page",
+          "description": "The path to the response property indicating next page presence."
         }
       },
       "required": [
@@ -2483,7 +2683,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "docs": {
           "oneOf": [
@@ -2493,7 +2694,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -2503,7 +2705,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -2516,7 +2719,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "method": {
           "oneOf": [
@@ -2526,7 +2730,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "method"
         },
         "base-path": {
           "oneOf": [
@@ -2536,10 +2741,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "base-path"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "path"
         },
         "url": {
           "oneOf": [
@@ -2549,7 +2756,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "url"
         },
         "path-parameters": {
           "oneOf": [
@@ -2562,7 +2770,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "path-parameters"
         },
         "auth": {
           "oneOf": [
@@ -2572,7 +2781,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "auth"
         },
         "idempotent": {
           "oneOf": [
@@ -2582,7 +2792,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "idempotent"
         },
         "stream-condition": {
           "oneOf": [
@@ -2592,7 +2803,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "stream-condition"
         },
         "request": {
           "oneOf": [
@@ -2602,7 +2814,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "request"
         },
         "response": {
           "oneOf": [
@@ -2612,7 +2825,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "response"
         },
         "response-stream": {
           "oneOf": [
@@ -2622,7 +2836,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "response-stream"
         },
         "errors": {
           "oneOf": [
@@ -2632,7 +2847,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "errors"
         },
         "examples": {
           "oneOf": [
@@ -2645,7 +2861,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         },
         "pagination": {
           "oneOf": [
@@ -2655,7 +2872,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "pagination"
         }
       },
       "required": [
@@ -2674,7 +2892,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -2687,7 +2906,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "display-name": {
           "oneOf": [
@@ -2697,10 +2917,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "auth": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "auth"
         },
         "url": {
           "oneOf": [
@@ -2710,10 +2932,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "url"
         },
         "base-path": {
-          "type": "string"
+          "type": "string",
+          "title": "base-path"
         },
         "path-parameters": {
           "oneOf": [
@@ -2726,7 +2950,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "path-parameters"
         },
         "idempotent": {
           "oneOf": [
@@ -2736,7 +2961,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "idempotent"
         },
         "headers": {
           "oneOf": [
@@ -2749,7 +2975,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "transport": {
           "oneOf": [
@@ -2759,7 +2986,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "transport"
         },
         "source": {
           "oneOf": [
@@ -2769,13 +2997,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "source"
         },
         "endpoints": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/service.HttpEndpointSchema"
-          }
+          },
+          "title": "endpoints"
         }
       },
       "required": [
@@ -2796,10 +3026,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "status-code": {
-          "type": "integer"
+          "type": "integer",
+          "title": "status-code"
         },
         "type": {
           "oneOf": [
@@ -2809,7 +3041,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "type"
         },
         "examples": {
           "oneOf": [
@@ -2822,7 +3055,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         }
       },
       "required": [
@@ -2848,10 +3082,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -2863,7 +3099,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "extends": {
           "oneOf": [
@@ -2873,7 +3110,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extends"
         },
         "properties": {
           "oneOf": [
@@ -2886,7 +3124,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "properties"
         }
       },
       "required": [
@@ -2918,7 +3157,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -2928,7 +3168,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "id": {
           "oneOf": [
@@ -2938,10 +3179,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "id"
         },
         "payload": {
-          "$ref": "#/definitions/examples.ExampleTypeReferenceSchema"
+          "$ref": "#/definitions/examples.ExampleTypeReferenceSchema",
+          "title": "payload"
         }
       },
       "required": [
@@ -2960,7 +3203,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -2973,7 +3217,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "docs": {
           "oneOf": [
@@ -2983,7 +3228,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "display-name": {
           "oneOf": [
@@ -2993,10 +3239,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "method": {
-          "$ref": "#/definitions/webhooks.WebhookMethodSchema"
+          "$ref": "#/definitions/webhooks.WebhookMethodSchema",
+          "title": "method"
         },
         "headers": {
           "oneOf": [
@@ -3009,10 +3257,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "payload": {
-          "$ref": "#/definitions/webhooks.WebhookPayloadSchema"
+          "$ref": "#/definitions/webhooks.WebhookPayloadSchema",
+          "title": "payload"
         },
         "examples": {
           "oneOf": [
@@ -3025,7 +3275,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         }
       },
       "required": [
@@ -3052,10 +3303,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         }
       },
       "required": [
@@ -3067,7 +3320,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "extends": {
           "oneOf": [
@@ -3077,7 +3331,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "extends"
         },
         "properties": {
           "oneOf": [
@@ -3090,7 +3345,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "properties"
         }
       },
       "required": [
@@ -3122,7 +3378,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -3132,7 +3389,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -3145,7 +3403,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "display-name": {
           "oneOf": [
@@ -3155,13 +3414,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "origin": {
-          "$ref": "#/definitions/websocket.WebSocketOrigin"
+          "$ref": "#/definitions/websocket.WebSocketOrigin",
+          "title": "origin"
         },
         "body": {
-          "$ref": "#/definitions/websocket.WebSocketChannelMessageBodySchema"
+          "$ref": "#/definitions/websocket.WebSocketChannelMessageBodySchema",
+          "title": "body"
         }
       },
       "required": [
@@ -3174,7 +3436,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "title": "type"
         },
         "body": {
           "type": [
@@ -3184,7 +3447,8 @@
             "object",
             "array",
             "null"
-          ]
+          ],
+          "title": "body"
         }
       },
       "required": [
@@ -3204,7 +3468,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "name"
         },
         "docs": {
           "oneOf": [
@@ -3214,7 +3479,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "path-parameters": {
           "oneOf": [
@@ -3227,7 +3493,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "path-parameters"
         },
         "query-parameters": {
           "oneOf": [
@@ -3240,7 +3507,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "query-parameters"
         },
         "headers": {
           "oneOf": [
@@ -3253,13 +3521,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "messages": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/examples.ExampleWebSocketMessage"
-          }
+          },
+          "title": "messages"
         }
       },
       "required": [
@@ -3278,7 +3548,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "docs"
         },
         "availability": {
           "oneOf": [
@@ -3288,7 +3559,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "availability"
         },
         "audiences": {
           "oneOf": [
@@ -3301,7 +3573,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "audiences"
         },
         "display-name": {
           "oneOf": [
@@ -3311,13 +3584,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "display-name"
         },
         "auth": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "auth"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "path"
         },
         "headers": {
           "oneOf": [
@@ -3330,7 +3606,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "headers"
         },
         "path-parameters": {
           "oneOf": [
@@ -3343,7 +3620,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "path-parameters"
         },
         "query-parameters": {
           "oneOf": [
@@ -3356,7 +3634,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "query-parameters"
         },
         "messages": {
           "oneOf": [
@@ -3369,7 +3648,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "messages"
         },
         "examples": {
           "oneOf": [
@@ -3382,7 +3662,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "examples"
         }
       },
       "required": [
