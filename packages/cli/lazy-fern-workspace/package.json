@@ -43,15 +43,15 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/conjure-to-fern": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "axios": "^1.7.7",
     "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "object-hash": "^3.0.0",
-    "tar": "^6.2.1",
+    "tar": "^7.4.3",
     "tmp-promise": "^3.0.3",
-    "uuid": "^9.0.1",
+    "uuid": "^11.0.3",
     "zod": "^3.22.3"
   },
   "devDependencies": {
