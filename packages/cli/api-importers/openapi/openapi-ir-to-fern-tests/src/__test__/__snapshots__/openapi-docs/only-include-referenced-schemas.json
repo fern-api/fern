@@ -3930,7 +3930,6 @@
           "conversations": "conversations.yml",
           "customObjectInstances": "customObjectInstances.yml",
           "dataAttributes": "dataAttributes.yml",
-          "dataEvents": "dataEvents.yml",
           "helpCenter": "helpCenter.yml",
           "news": "news.yml",
           "notes": "notes.yml",
@@ -5178,36 +5177,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContactSubscriptionTypes": {
-            "docs": "An object containing Subscription Types meta data about the SubscriptionTypes that a contact has.",
-            "properties": {
-              "data": {
-                "docs": "This object represents the subscriptions attached to a contact.",
-                "type": "optional<list<AddressableList>>",
-              },
-              "has_more": {
-                "docs": "Whether there's more Addressable Objects to be viewed. If true, use the url to view all",
-                "type": "optional<boolean>",
-              },
-              "total_count": {
-                "docs": "Int representing the total number of subscription types attached to this contact",
-                "type": "optional<integer>",
-              },
-              "url": {
-                "docs": "Url to get more subscription type resources for this contact",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "uri",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContactTags": {
             "docs": "An object containing tags meta data about the tags that a contact has. Up to 10 will be displayed here. Use the url to get more.",
             "properties": {
@@ -5761,22 +5730,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "CreateTicketReplyWithCommentRequest": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "type": "ContactReplyTicketRequest",
-              },
-              {
-                "type": "AdminReplyTicketRequest",
-              },
-            ],
-          },
           "CreateTicketTypeRequest": {
             "docs": "The request payload for creating a ticket type.
   You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)
@@ -5929,36 +5882,6 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "openapi": "../openapi.yml",
             },
           },
-          "DataEventList": {
-            "docs": "This will return a list of data events for the App.",
-            "properties": {
-              "events": {
-                "docs": "A list of data events",
-                "type": "optional<list<dataEvents.DataEvent>>",
-              },
-              "pages": {
-                "docs": "Pagination",
-                "type": "optional<DataEventListPages>",
-              },
-              "type": {
-                "docs": "The type of the object",
-                "type": "optional<literal<"event.list">>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DataEventListPages": {
-            "docs": "Pagination",
-            "properties": {
-              "next": "optional<string>",
-              "since": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "DataEventSummary": {
             "docs": "This will return a summary of data events for the App.",
             "properties": {
@@ -6008,118 +5931,6 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               },
               "name": {
                 "docs": "The name of the event",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DataExportCsv": {
-            "docs": "A CSV output file",
-            "properties": {
-              "company_id": {
-                "docs": "The company ID of the user in relation to the message that was sent. Will return -1 if no company is present.",
-                "type": "optional<string>",
-              },
-              "content_id": {
-                "docs": "The specific content that was received. In an A/B test each version has its own Content ID.",
-                "type": "optional<string>",
-              },
-              "content_title": {
-                "docs": "The title of the content you see in your Intercom workspace.",
-                "type": "optional<string>",
-              },
-              "content_type": {
-                "docs": "Email, Chat, Post etc.",
-                "type": "optional<string>",
-              },
-              "email": {
-                "docs": "The users email who was sent the message.",
-                "type": "optional<string>",
-              },
-              "first_click": {
-                "docs": "The first time the series the user clicked on a link within this message.",
-                "type": "optional<integer>",
-              },
-              "first_completion": {
-                "docs": "The first time a user completed this message if the content was able to be completed e.g. Tours, Surveys.",
-                "type": "optional<integer>",
-              },
-              "first_dismisall": {
-                "docs": "The first time the series the user dismissed this message.",
-                "type": "optional<integer>",
-              },
-              "first_goal_success": {
-                "docs": "The first time the user met this messages associated goal if one exists.",
-                "type": "optional<integer>",
-              },
-              "first_hard_bounce": {
-                "docs": "The first time this message hard bounced for this user",
-                "type": "optional<integer>",
-              },
-              "first_open": {
-                "docs": "The first time the user opened this message.",
-                "type": "optional<integer>",
-              },
-              "first_reply": {
-                "docs": "The first time a user replied to this message if the content was able to receive replies.",
-                "type": "optional<integer>",
-              },
-              "first_series_completion": {
-                "docs": "The first time the series this message was a part of was completed by the user.",
-                "type": "optional<integer>",
-              },
-              "first_series_disengagement": {
-                "docs": "The first time the series this message was a part of was disengaged by the user.",
-                "type": "optional<integer>",
-              },
-              "first_series_exit": {
-                "docs": "The first time the series this message was a part of was exited by the user.",
-                "type": "optional<integer>",
-              },
-              "first_unsubscribe": {
-                "docs": "The first time the user unsubscribed from this message.",
-                "type": "optional<integer>",
-              },
-              "name": {
-                "docs": "The full name of the user receiving the message",
-                "type": "optional<string>",
-              },
-              "node_id": {
-                "docs": "The id of the series node that this ruleset is associated with. Each block in a series has a corresponding node_id.",
-                "type": "optional<string>",
-              },
-              "receipt_id": {
-                "docs": "ID for this receipt. Will be included with any related stats in other files to identify this specific delivery of a message.",
-                "type": "optional<string>",
-              },
-              "received_at": {
-                "docs": "Timestamp for when the receipt was recorded.",
-                "type": "optional<integer>",
-              },
-              "ruleset_id": {
-                "docs": "The id of the message.",
-                "type": "optional<string>",
-              },
-              "ruleset_version_id": {
-                "docs": "As you edit content we record new versions. This ID can help you determine which version of a piece of content that was received.",
-                "type": "optional<string>",
-              },
-              "series_id": {
-                "docs": "The id of the series that this content is part of. Will return -1 if not part of a series.",
-                "type": "optional<string>",
-              },
-              "series_title": {
-                "docs": "The title of the series that this content is part of.",
-                "type": "optional<string>",
-              },
-              "user_external_id": {
-                "docs": "The external_user_id of the user who was sent the message",
-                "type": "optional<string>",
-              },
-              "user_id": {
-                "docs": "The user_id of the user who was sent the message.",
                 "type": "optional<string>",
               },
             },
@@ -6476,84 +6287,6 @@ A "cursor" or pointer is used to keep track of the current position in the resul
                 "type": "optional<GroupContent>",
               },
             },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "IntercomVersion": {
-            "default": "2.11",
-            "docs": "Intercom API version.</br>By default, it's equal to the version set in the app package.",
-            "enum": [
-              {
-                "name": "One0",
-                "value": "1.0",
-              },
-              {
-                "name": "One1",
-                "value": "1.1",
-              },
-              {
-                "name": "One2",
-                "value": "1.2",
-              },
-              {
-                "name": "One3",
-                "value": "1.3",
-              },
-              {
-                "name": "One4",
-                "value": "1.4",
-              },
-              {
-                "name": "Two0",
-                "value": "2.0",
-              },
-              {
-                "name": "Two1",
-                "value": "2.1",
-              },
-              {
-                "name": "Two2",
-                "value": "2.2",
-              },
-              {
-                "name": "Two3",
-                "value": "2.3",
-              },
-              {
-                "name": "Two4",
-                "value": "2.4",
-              },
-              {
-                "name": "Two5",
-                "value": "2.5",
-              },
-              {
-                "name": "Two6",
-                "value": "2.6",
-              },
-              {
-                "name": "Two7",
-                "value": "2.7",
-              },
-              {
-                "name": "Two8",
-                "value": "2.8",
-              },
-              {
-                "name": "Two9",
-                "value": "2.9",
-              },
-              {
-                "name": "Two10",
-                "value": "2.10",
-              },
-              {
-                "name": "Two11",
-                "value": "2.11",
-              },
-              "Unstable",
-            ],
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7913,26 +7646,6 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
               "type": {
                 "docs": "The type of the object",
                 "type": "optional<literal<"company.list">>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "VisitorDeletedObject": {
-            "docs": "Response returned when an object is deleted",
-            "properties": {
-              "id": {
-                "docs": "The unique identifier for the visitor which is given by Intercom.",
-                "type": "optional<string>",
-              },
-              "type": {
-                "docs": "The type of object which was deleted",
-                "type": "optional<literal<"visitor">>",
-              },
-              "user_id": {
-                "docs": "Automatically generated identifier for the Visitor.",
-                "type": "optional<string>",
               },
             },
             "source": {
@@ -11245,31 +10958,6 @@ types:
         docs: A list of social profiles objects associated with the contact.
     source:
       openapi: ../openapi.yml
-  ContactSubscriptionTypes:
-    docs: >-
-      An object containing Subscription Types meta data about the
-      SubscriptionTypes that a contact has.
-    properties:
-      data:
-        type: optional<list<AddressableList>>
-        docs: This object represents the subscriptions attached to a contact.
-      url:
-        type: optional<string>
-        docs: Url to get more subscription type resources for this contact
-        validation:
-          format: uri
-      total_count:
-        type: optional<integer>
-        docs: >-
-          Int representing the total number of subscription types attached to
-          this contact
-      has_more:
-        type: optional<boolean>
-        docs: >-
-          Whether there's more Addressable Objects to be viewed. If true, use
-          the url to view all
-    source:
-      openapi: ../openapi.yml
   ContactTags:
     docs: >-
       An object containing tags meta data about the tags that a contact has. Up
@@ -11756,13 +11444,6 @@ types:
         type: optional<CustomAttributes>
     source:
       openapi: ../openapi.yml
-  CreateTicketReplyWithCommentRequest:
-    discriminated: false
-    union:
-      - type: ContactReplyTicketRequest
-      - type: AdminReplyTicketRequest
-    source:
-      openapi: ../openapi.yml
   CreateTicketTypeRequestCategory:
     enum:
       - Customer
@@ -11874,27 +11555,6 @@ types:
         docs: A list of data attributes
     source:
       openapi: ../openapi.yml
-  DataEventListPages:
-    docs: Pagination
-    properties:
-      next: optional<string>
-      since: optional<string>
-    source:
-      openapi: ../openapi.yml
-  DataEventList:
-    docs: This will return a list of data events for the App.
-    properties:
-      type:
-        type: optional<literal<"event.list">>
-        docs: The type of the object
-      events:
-        type: optional<list<dataEvents.DataEvent>>
-        docs: A list of data events
-      pages:
-        type: optional<DataEventListPages>
-        docs: Pagination
-    source:
-      openapi: ../openapi.yml
   DataEventSummary:
     docs: This will return a summary of data events for the App.
     properties:
@@ -11933,115 +11593,6 @@ types:
       description:
         type: optional<string>
         docs: The description of the event
-    source:
-      openapi: ../openapi.yml
-  DataExportCsv:
-    docs: A CSV output file
-    properties:
-      user_id:
-        type: optional<string>
-        docs: The user_id of the user who was sent the message.
-      user_external_id:
-        type: optional<string>
-        docs: The external_user_id of the user who was sent the message
-      company_id:
-        type: optional<string>
-        docs: >-
-          The company ID of the user in relation to the message that was sent.
-          Will return -1 if no company is present.
-      email:
-        type: optional<string>
-        docs: The users email who was sent the message.
-      name:
-        type: optional<string>
-        docs: The full name of the user receiving the message
-      ruleset_id:
-        type: optional<string>
-        docs: The id of the message.
-      content_id:
-        type: optional<string>
-        docs: >-
-          The specific content that was received. In an A/B test each version
-          has its own Content ID.
-      content_type:
-        type: optional<string>
-        docs: Email, Chat, Post etc.
-      content_title:
-        type: optional<string>
-        docs: The title of the content you see in your Intercom workspace.
-      ruleset_version_id:
-        type: optional<string>
-        docs: >-
-          As you edit content we record new versions. This ID can help you
-          determine which version of a piece of content that was received.
-      receipt_id:
-        type: optional<string>
-        docs: >-
-          ID for this receipt. Will be included with any related stats in other
-          files to identify this specific delivery of a message.
-      received_at:
-        type: optional<integer>
-        docs: Timestamp for when the receipt was recorded.
-      series_id:
-        type: optional<string>
-        docs: >-
-          The id of the series that this content is part of. Will return -1 if
-          not part of a series.
-      series_title:
-        type: optional<string>
-        docs: The title of the series that this content is part of.
-      node_id:
-        type: optional<string>
-        docs: >-
-          The id of the series node that this ruleset is associated with. Each
-          block in a series has a corresponding node_id.
-      first_reply:
-        type: optional<integer>
-        docs: >-
-          The first time a user replied to this message if the content was able
-          to receive replies.
-      first_completion:
-        type: optional<integer>
-        docs: >-
-          The first time a user completed this message if the content was able
-          to be completed e.g. Tours, Surveys.
-      first_series_completion:
-        type: optional<integer>
-        docs: >-
-          The first time the series this message was a part of was completed by
-          the user.
-      first_series_disengagement:
-        type: optional<integer>
-        docs: >-
-          The first time the series this message was a part of was disengaged by
-          the user.
-      first_series_exit:
-        type: optional<integer>
-        docs: >-
-          The first time the series this message was a part of was exited by the
-          user.
-      first_goal_success:
-        type: optional<integer>
-        docs: >-
-          The first time the user met this messages associated goal if one
-          exists.
-      first_open:
-        type: optional<integer>
-        docs: The first time the user opened this message.
-      first_click:
-        type: optional<integer>
-        docs: >-
-          The first time the series the user clicked on a link within this
-          message.
-      first_dismisall:
-        type: optional<integer>
-        docs: The first time the series the user dismissed this message.
-      first_unsubscribe:
-        type: optional<integer>
-        docs: The first time the user unsubscribed from this message.
-      first_hard_bounce:
-        type: optional<integer>
-        docs: The first time this message hard bounced for this user
     source:
       openapi: ../openapi.yml
   DeletedArticleObject:
@@ -12297,49 +11848,6 @@ types:
       zh-TW:
         type: optional<GroupContent>
         docs: The content of the group in Chinese (Taiwan)
-    source:
-      openapi: ../openapi.yml
-  IntercomVersion:
-    enum:
-      - value: '1.0'
-        name: One0
-      - value: '1.1'
-        name: One1
-      - value: '1.2'
-        name: One2
-      - value: '1.3'
-        name: One3
-      - value: '1.4'
-        name: One4
-      - value: '2.0'
-        name: Two0
-      - value: '2.1'
-        name: Two1
-      - value: '2.2'
-        name: Two2
-      - value: '2.3'
-        name: Two3
-      - value: '2.4'
-        name: Two4
-      - value: '2.5'
-        name: Two5
-      - value: '2.6'
-        name: Two6
-      - value: '2.7'
-        name: Two7
-      - value: '2.8'
-        name: Two8
-      - value: '2.9'
-        name: Two9
-      - value: '2.10'
-        name: Two10
-      - value: '2.11'
-        name: Two11
-      - Unstable
-    docs: >-
-      Intercom API version.</br>By default, it's equal to the version set in the
-      app package.
-    default: '2.11'
     source:
       openapi: ../openapi.yml
   LinkedObjectType:
@@ -13418,20 +12926,6 @@ types:
         docs: Identifies if this visitor has do not track enabled.
     source:
       openapi: ../openapi.yml
-  VisitorDeletedObject:
-    docs: Response returned when an object is deleted
-    properties:
-      id:
-        type: optional<string>
-        docs: The unique identifier for the visitor which is given by Intercom.
-      type:
-        type: optional<literal<"visitor">>
-        docs: The type of object which was deleted
-      user_id:
-        type: optional<string>
-        docs: Automatically generated identifier for the Visitor.
-    source:
-      openapi: ../openapi.yml
 imports:
   admins: admins.yml
   articles: articles.yml
@@ -13443,7 +12937,6 @@ imports:
   conversations: conversations.yml
   customObjectInstances: customObjectInstances.yml
   dataAttributes: dataAttributes.yml
-  dataEvents: dataEvents.yml
   news: news.yml
   notes: notes.yml
   subscriptionTypes: subscriptionTypes.yml
@@ -36425,46 +35918,6 @@ You can optionally define the result page size as well with the `per_page` param
               "openapi": "../openapi.yml",
             },
           },
-          "DataEvent": {
-            "docs": "Data events are used to notify Intercom of changes to your data.",
-            "properties": {
-              "created_at": {
-                "docs": "The time the event occurred as a UTC Unix timestamp",
-                "type": "integer",
-              },
-              "email": {
-                "docs": "An email address for your user. An email should only be used where your application uses email to uniquely identify users.",
-                "type": "optional<string>",
-              },
-              "event_name": {
-                "docs": "The name of the event that occurred. This is presented to your App's admins when filtering and creating segments - a good event name is typically a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
-                "type": "string",
-              },
-              "id": {
-                "docs": "Your identifier for a lead or a user.",
-                "type": "optional<string>",
-              },
-              "intercom_user_id": {
-                "docs": "The Intercom identifier for the user.",
-                "type": "optional<string>",
-              },
-              "metadata": {
-                "docs": "Optional metadata about the event.",
-                "type": "optional<map<string, string>>",
-              },
-              "type": {
-                "docs": "The type of the object",
-                "type": "optional<literal<"event">>",
-              },
-              "user_id": {
-                "docs": "Your identifier for the user.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "LisDataEventsRequestFilter": {
             "discriminated": false,
             "docs": undefined,
@@ -36559,41 +36012,6 @@ You can optionally define the result page size as well with the `per_page` param
       last:
         type: optional<integer>
         docs: The last time the event was sent
-    source:
-      openapi: ../openapi.yml
-  DataEvent:
-    docs: Data events are used to notify Intercom of changes to your data.
-    properties:
-      type:
-        type: optional<literal<"event">>
-        docs: The type of the object
-      event_name:
-        type: string
-        docs: >-
-          The name of the event that occurred. This is presented to your App's
-          admins when filtering and creating segments - a good event name is
-          typically a past tense 'verb-noun' combination, to improve
-          readability, for example `updated-plan`.
-      created_at:
-        type: integer
-        docs: The time the event occurred as a UTC Unix timestamp
-      user_id:
-        type: optional<string>
-        docs: Your identifier for the user.
-      id:
-        type: optional<string>
-        docs: Your identifier for a lead or a user.
-      intercom_user_id:
-        type: optional<string>
-        docs: The Intercom identifier for the user.
-      email:
-        type: optional<string>
-        docs: >-
-          An email address for your user. An email should only be used where
-          your application uses email to uniquely identify users.
-      metadata:
-        type: optional<map<string, string>>
-        docs: Optional metadata about the event.
     source:
       openapi: ../openapi.yml
 imports:

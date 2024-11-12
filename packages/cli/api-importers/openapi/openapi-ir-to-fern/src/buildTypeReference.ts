@@ -58,6 +58,9 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
+    if (context.onlyIncludeReferencedSchemas && context.isInEndpoint()) {
+        context.markSchemaAsReferenced(schema, namespace);
+    }
     switch (schema.type) {
         case "primitive": {
             return buildPrimitiveTypeReference(schema);
@@ -401,10 +404,6 @@ export function buildReferenceTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
-    if (context.onlyIncludeReferencedSchemas && context.isInEndpoint()) {
-        context.markSchemaAsReferenced(schema.schema);
-    }
-
     const resolvedSchema = context.getSchema(schema.schema, namespace);
     if (resolvedSchema == null) {
         return "unknown";

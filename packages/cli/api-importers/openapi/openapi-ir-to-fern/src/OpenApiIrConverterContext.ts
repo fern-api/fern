@@ -1,6 +1,14 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId, HttpMethod } from "@fern-api/openapi-ir";
+import {
+    OpenApiIntermediateRepresentation,
+    Schema,
+    SchemaId,
+    HttpMethod,
+    ObjectSchema,
+    OneOfSchema
+} from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
@@ -139,12 +147,6 @@ export class OpenApiIrConverterContext {
         }
     }
 
-    public markSchemaAsReferenced(id: SchemaId): void {
-        if (this.referencedSchemaIds != null) {
-            this.referencedSchemaIds.add(id);
-        }
-    }
-
     public getReferencedSchemaIds(): SchemaId[] | undefined {
         if (this.referencedSchemaIds == null) {
             return undefined;
@@ -156,7 +158,6 @@ export class OpenApiIrConverterContext {
         if (namespace == null) {
             return this.ir.groupedSchemas.rootSchemas[id];
         }
-
         return this.ir.groupedSchemas.namespacedSchemas[namespace]?.[id];
     }
 
@@ -242,5 +243,81 @@ export class OpenApiIrConverterContext {
      */
     public unsetInRequest(): void {
         this.inRequest = false;
+    }
+
+    /**
+     * Marks a schema as referenced.
+     */
+    public markSchemaAsReferenced(schema: Schema, namespace: string | undefined): void {
+        switch (schema.type) {
+            case "primitive":
+                return;
+            case "object":
+                this.markObjectSchemaAsReferenced(schema, namespace);
+                return;
+            case "array":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "map":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "optional":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "reference":
+                this.markSchemaIdAsReferenced(schema.schema, namespace);
+                return;
+            case "oneOf":
+                this.markOneofSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "nullable":
+                this.markSchemaAsReferenced(schema.value, namespace);
+                return;
+            case "enum":
+                return;
+            case "literal":
+                return;
+            case "unknown":
+                return;
+            default:
+                assertNever(schema);
+        }
+    }
+
+    private markObjectSchemaAsReferenced(schema: ObjectSchema, namespace: string | undefined): void {
+        for (const allOf of schema.allOf) {
+            this.markSchemaIdAsReferenced(allOf.schema, namespace);
+        }
+        for (const property of schema.properties) {
+            this.markSchemaAsReferenced(property.schema, namespace);
+        }
+    }
+
+    private markOneofSchemaAsReferenced(schema: OneOfSchema, namespace: string | undefined): void {
+        switch (schema.type) {
+            case "discriminated":
+                for (const oneOf of Object.values(schema.schemas)) {
+                    this.markSchemaAsReferenced(oneOf, namespace);
+                }
+                return;
+            case "undisciminated":
+                for (const oneOf of schema.schemas) {
+                    this.markSchemaAsReferenced(oneOf, namespace);
+                }
+                return;
+            default:
+                assertNever(schema);
+        }
+    }
+
+    private markSchemaIdAsReferenced(id: SchemaId, namespace: string | undefined): void {
+        if (this.referencedSchemaIds != null && !this.referencedSchemaIds.has(id)) {
+            this.referencedSchemaIds.add(id);
+
+            const schema = this.getSchema(id, namespace);
+            if (schema != null) {
+                this.markSchemaAsReferenced(schema, namespace);
+            }
+        }
     }
 }
