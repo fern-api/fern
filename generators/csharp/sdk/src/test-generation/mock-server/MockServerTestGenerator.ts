@@ -10,6 +10,7 @@ import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
+import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -91,6 +92,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
+                const requestContentType = getContentTypeFromRequestBody(this.endpoint);
+                if (requestContentType) {
+                    writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
+                }
+
                 writer.write(
                     `.Using${
                         this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
