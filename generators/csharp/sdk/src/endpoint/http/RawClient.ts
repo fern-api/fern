@@ -85,6 +85,12 @@ export class RawClient {
                 assignment: csharp.codeblock(headerBagReference)
             });
         }
+        if (endpoint.requestBody && "contentType" in endpoint.requestBody && endpoint.requestBody.contentType) {
+            arguments_.push({
+                name: "ContentType",
+                assignment: csharp.codeblock(`"${endpoint.requestBody.contentType}"`)
+            });
+        }
         arguments_.push({
             name: "Options",
             assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())

@@ -91,6 +91,14 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
+                if (
+                    this.endpoint.requestBody &&
+                    "contentType" in this.endpoint.requestBody &&
+                    this.endpoint.requestBody.contentType
+                ) {
+                    writer.write(`.WithHeader("Content-Type", "${this.endpoint.requestBody.contentType}")`);
+                }
+
                 writer.write(
                     `.Using${
                         this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
