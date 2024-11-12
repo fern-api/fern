@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "methodName": {
-      "type": "string"
+      "type": "string",
+      "title": "methodName"
     },
     "signature": {
-      "$ref": "#/definitions/v2.problem.NonVoidFunctionSignature"
+      "$ref": "#/definitions/v2.problem.NonVoidFunctionSignature",
+      "title": "signature"
     }
   },
   "required": [
@@ -96,7 +98,8 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -106,7 +109,9 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "isFixedLength",
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [
@@ -120,10 +125,12 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "keyType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             }
           },
           "required": [
@@ -168,13 +175,16 @@
       "type": "object",
       "properties": {
         "parameterId": {
-          "$ref": "#/definitions/v2.problem.ParameterId"
+          "$ref": "#/definitions/v2.problem.ParameterId",
+          "title": "parameterId"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "variableType": {
-          "$ref": "#/definitions/commons.VariableType"
+          "$ref": "#/definitions/commons.VariableType",
+          "title": "variableType"
         }
       },
       "required": [
@@ -191,10 +201,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.problem.Parameter"
-          }
+          },
+          "title": "parameters"
         },
         "returnType": {
-          "$ref": "#/definitions/commons.VariableType"
+          "$ref": "#/definitions/commons.VariableType",
+          "title": "returnType"
         }
       },
       "required": [

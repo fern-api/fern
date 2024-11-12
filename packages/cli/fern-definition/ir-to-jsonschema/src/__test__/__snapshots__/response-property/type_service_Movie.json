@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "title": "id"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     }
   },
   "required": [

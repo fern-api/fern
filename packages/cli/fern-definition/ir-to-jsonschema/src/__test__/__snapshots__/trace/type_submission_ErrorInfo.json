@@ -20,7 +20,8 @@
           "const": "compileError"
         },
         "message": {
-          "type": "string"
+          "type": "string",
+          "title": "message"
         }
       },
       "required": [
@@ -34,7 +35,8 @@
           "const": "runtimeError"
         },
         "message": {
-          "type": "string"
+          "type": "string",
+          "title": "message"
         }
       },
       "required": [
@@ -48,7 +50,8 @@
           "const": "internalError"
         },
         "exceptionInfo": {
-          "$ref": "#/definitions/submission.ExceptionInfo"
+          "$ref": "#/definitions/submission.ExceptionInfo",
+          "title": "exceptionInfo"
         }
       },
       "required": [
@@ -62,13 +65,16 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string"
+          "type": "string",
+          "title": "exceptionType"
         },
         "exceptionMessage": {
-          "type": "string"
+          "type": "string",
+          "title": "exceptionMessage"
         },
         "exceptionStacktrace": {
-          "type": "string"
+          "type": "string",
+          "title": "exceptionStacktrace"
         }
       },
       "required": [

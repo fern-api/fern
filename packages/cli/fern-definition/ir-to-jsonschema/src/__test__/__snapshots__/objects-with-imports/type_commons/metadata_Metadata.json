@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "title": "id"
     },
     "data": {
       "oneOf": [
@@ -15,7 +16,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "data"
     }
   },
   "required": [

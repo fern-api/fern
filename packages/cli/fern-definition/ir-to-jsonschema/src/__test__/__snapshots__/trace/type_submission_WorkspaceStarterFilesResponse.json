@@ -5,7 +5,8 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/submission.WorkspaceFiles"
-      }
+      },
+      "title": "files"
     }
   },
   "required": [
@@ -17,10 +18,12 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         }
       },
       "required": [
@@ -33,13 +36,15 @@
       "type": "object",
       "properties": {
         "mainFile": {
-          "$ref": "#/definitions/commons.FileInfo"
+          "$ref": "#/definitions/commons.FileInfo",
+          "title": "mainFile"
         },
         "readOnlyFiles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/commons.FileInfo"
-          }
+          },
+          "title": "readOnlyFiles"
         }
       },
       "required": [

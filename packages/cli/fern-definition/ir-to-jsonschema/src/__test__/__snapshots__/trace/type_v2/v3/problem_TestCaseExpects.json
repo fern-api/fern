@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "expectedStdout"
     }
   },
   "additionalProperties": false,

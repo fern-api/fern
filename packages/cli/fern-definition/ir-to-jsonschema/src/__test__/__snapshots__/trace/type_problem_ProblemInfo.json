@@ -2,43 +2,53 @@
   "type": "object",
   "properties": {
     "problemId": {
-      "$ref": "#/definitions/commons.ProblemId"
+      "$ref": "#/definitions/commons.ProblemId",
+      "title": "problemId"
     },
     "problemDescription": {
-      "$ref": "#/definitions/problem.ProblemDescription"
+      "$ref": "#/definitions/problem.ProblemDescription",
+      "title": "problemDescription"
     },
     "problemName": {
-      "type": "string"
+      "type": "string",
+      "title": "problemName"
     },
     "problemVersion": {
-      "type": "integer"
+      "type": "integer",
+      "title": "problemVersion"
     },
     "files": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/problem.ProblemFiles"
-      }
+      },
+      "title": "files"
     },
     "inputParams": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/problem.VariableTypeAndName"
-      }
+      },
+      "title": "inputParams"
     },
     "outputType": {
-      "$ref": "#/definitions/commons.VariableType"
+      "$ref": "#/definitions/commons.VariableType",
+      "title": "outputType"
     },
     "testcases": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.TestCaseWithExpectedResult"
-      }
+      },
+      "title": "testcases"
     },
     "methodName": {
-      "type": "string"
+      "type": "string",
+      "title": "methodName"
     },
     "supportsCustomTestCases": {
-      "type": "boolean"
+      "type": "boolean",
+      "title": "supportsCustomTestCases"
     }
   },
   "required": [
@@ -62,10 +72,12 @@
       "type": "object",
       "properties": {
         "key": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "key"
         },
         "value": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "value"
         }
       },
       "required": [
@@ -81,10 +93,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "right": {
           "oneOf": [
@@ -94,7 +108,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "right"
         },
         "left": {
           "oneOf": [
@@ -104,7 +119,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "left"
         }
       },
       "required": [
@@ -117,10 +133,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -130,7 +148,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         }
       },
       "required": [
@@ -143,10 +162,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -156,7 +177,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         },
         "prev": {
           "oneOf": [
@@ -166,7 +188,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "prev"
         }
       },
       "required": [
@@ -273,7 +296,8 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/commons.KeyValuePair"
-              }
+              },
+              "title": "keyValuePairs"
             }
           },
           "required": [
@@ -310,13 +334,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "root"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.BinaryTreeNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -337,13 +363,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -364,13 +392,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -454,7 +484,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/problem.ProblemDescriptionBoard"
-          }
+          },
+          "title": "boards"
         }
       },
       "required": [
@@ -466,10 +497,12 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         }
       },
       "required": [
@@ -482,13 +515,15 @@
       "type": "object",
       "properties": {
         "solutionFile": {
-          "$ref": "#/definitions/commons.FileInfo"
+          "$ref": "#/definitions/commons.FileInfo",
+          "title": "solutionFile"
         },
         "readOnlyFiles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/commons.FileInfo"
-          }
+          },
+          "title": "readOnlyFiles"
         }
       },
       "required": [
@@ -576,7 +611,8 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -586,7 +622,9 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "isFixedLength",
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [
@@ -600,10 +638,12 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "keyType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             }
           },
           "required": [
@@ -648,10 +688,12 @@
       "type": "object",
       "properties": {
         "variableType": {
-          "$ref": "#/definitions/commons.VariableType"
+          "$ref": "#/definitions/commons.VariableType",
+          "title": "variableType"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [
@@ -664,13 +706,15 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         },
         "params": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/commons.VariableValue"
-          }
+          },
+          "title": "params"
         }
       },
       "required": [
@@ -683,10 +727,12 @@
       "type": "object",
       "properties": {
         "testCase": {
-          "$ref": "#/definitions/commons.TestCase"
+          "$ref": "#/definitions/commons.TestCase",
+          "title": "testCase"
         },
         "expectedResult": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "expectedResult"
         }
       },
       "required": [

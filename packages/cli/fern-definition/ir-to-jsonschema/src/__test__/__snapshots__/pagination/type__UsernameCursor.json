@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "cursor": {
-      "$ref": "#/definitions/UsernamePage"
+      "$ref": "#/definitions/UsernamePage",
+      "title": "cursor"
     }
   },
   "required": [
@@ -21,13 +22,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "after"
         },
         "data": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "title": "data"
         }
       },
       "required": [

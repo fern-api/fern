@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     },
     "problems": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.ProblemId"
-      }
+      },
+      "title": "problems",
+      "description": "The problems that make up the playlist."
     }
   },
   "required": [

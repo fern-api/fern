@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "title": "id"
     },
     "label": {
       "oneOf": [
@@ -12,7 +13,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "label"
     },
     "metadata": {
       "oneOf": [
@@ -22,7 +24,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "metadata"
     }
   },
   "required": [
@@ -34,7 +37,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         },
         "data": {
           "oneOf": [
@@ -47,7 +51,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "data"
         }
       },
       "required": [

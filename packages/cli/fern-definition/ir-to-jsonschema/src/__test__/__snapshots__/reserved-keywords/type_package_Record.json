@@ -5,10 +5,12 @@
       "type": "object",
       "additionalProperties": {
         "type": "string"
-      }
+      },
+      "title": "foo"
     },
     "3d": {
-      "type": "integer"
+      "type": "integer",
+      "title": "3d"
     }
   },
   "required": [

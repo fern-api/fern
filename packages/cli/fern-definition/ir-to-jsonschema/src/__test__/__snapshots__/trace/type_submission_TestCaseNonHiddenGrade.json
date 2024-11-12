@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "passed": {
-      "type": "boolean"
+      "type": "boolean",
+      "title": "passed"
     },
     "actualResult": {
       "oneOf": [
@@ -12,7 +13,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "actualResult"
     },
     "exception": {
       "oneOf": [
@@ -22,10 +24,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "exception"
     },
     "stdout": {
-      "type": "string"
+      "type": "string",
+      "title": "stdout"
     }
   },
   "required": [
@@ -38,10 +42,12 @@
       "type": "object",
       "properties": {
         "key": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "key"
         },
         "value": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "value"
         }
       },
       "required": [
@@ -57,10 +63,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "right": {
           "oneOf": [
@@ -70,7 +78,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "right"
         },
         "left": {
           "oneOf": [
@@ -80,7 +89,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "left"
         }
       },
       "required": [
@@ -93,10 +103,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -106,7 +118,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         }
       },
       "required": [
@@ -119,10 +132,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -132,7 +147,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         },
         "prev": {
           "oneOf": [
@@ -142,7 +158,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "prev"
         }
       },
       "required": [
@@ -249,7 +266,8 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/commons.KeyValuePair"
-              }
+              },
+              "title": "keyValuePairs"
             }
           },
           "required": [
@@ -286,13 +304,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "root"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.BinaryTreeNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -313,13 +333,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -340,13 +362,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -387,13 +411,16 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string"
+              "type": "string",
+              "title": "exceptionType"
             },
             "exceptionMessage": {
-              "type": "string"
+              "type": "string",
+              "title": "exceptionMessage"
             },
             "exceptionStacktrace": {
-              "type": "string"
+              "type": "string",
+              "title": "exceptionStacktrace"
             }
           },
           "required": [

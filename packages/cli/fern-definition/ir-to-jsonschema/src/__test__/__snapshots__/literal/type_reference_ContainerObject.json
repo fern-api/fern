@@ -5,7 +5,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/reference.NestedObjectWithLiterals"
-      }
+      },
+      "title": "nestedObjects"
     }
   },
   "required": [
@@ -17,13 +18,16 @@
       "type": "object",
       "properties": {
         "literal1": {
-          "const": "literal1"
+          "const": "literal1",
+          "title": "literal1"
         },
         "literal2": {
-          "const": "literal2"
+          "const": "literal2",
+          "title": "literal2"
         },
         "strProp": {
-          "type": "string"
+          "type": "string",
+          "title": "strProp"
         }
       },
       "required": [

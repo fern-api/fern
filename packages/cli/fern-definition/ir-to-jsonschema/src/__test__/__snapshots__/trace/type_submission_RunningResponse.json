@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission.SubmissionId"
+      "$ref": "#/definitions/submission.SubmissionId",
+      "title": "submissionId"
     },
     "state": {
-      "$ref": "#/definitions/submission.RunningSubmissionState"
+      "$ref": "#/definitions/submission.RunningSubmissionState",
+      "title": "state"
     }
   },
   "required": [

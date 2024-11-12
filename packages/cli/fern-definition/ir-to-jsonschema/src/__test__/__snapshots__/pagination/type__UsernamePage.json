@@ -9,13 +9,15 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "after"
     },
     "data": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "title": "data"
     }
   },
   "required": [

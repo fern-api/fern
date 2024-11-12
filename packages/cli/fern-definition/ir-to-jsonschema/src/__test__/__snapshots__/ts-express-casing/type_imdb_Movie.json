@@ -2,13 +2,17 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/imdb.MovieId"
+      "$ref": "#/definitions/imdb.MovieId",
+      "title": "id"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "title": "title"
     },
     "rating": {
-      "type": "number"
+      "type": "number",
+      "title": "rating",
+      "description": "The rating scale is one to five stars"
     }
   },
   "required": [

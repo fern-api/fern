@@ -5,13 +5,16 @@
       "type": "object",
       "additionalProperties": {
         "type": "string"
-      }
+      },
+      "title": "metadata"
     },
     "docs": {
-      "type": "string"
+      "type": "string",
+      "title": "docs"
     },
     "data": {
-      "$ref": "#/definitions/service.Movie"
+      "$ref": "#/definitions/service.Movie",
+      "title": "data"
     }
   },
   "required": [
@@ -25,10 +28,12 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [

@@ -2,19 +2,22 @@
   "type": "object",
   "properties": {
     "userName": {
-      "type": "string"
+      "type": "string",
+      "title": "userName"
     },
     "metadata_tags": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "title": "metadata_tags"
     },
     "EXTRA_PROPERTIES": {
       "type": "object",
       "additionalProperties": {
         "type": "string"
-      }
+      },
+      "title": "EXTRA_PROPERTIES"
     }
   },
   "required": [

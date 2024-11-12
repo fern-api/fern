@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "nodeId": {
-      "$ref": "#/definitions/commons.NodeId"
+      "$ref": "#/definitions/commons.NodeId",
+      "title": "nodeId"
     },
     "fullList": {
-      "$ref": "#/definitions/commons.SinglyLinkedListValue"
+      "$ref": "#/definitions/commons.SinglyLinkedListValue",
+      "title": "fullList"
     }
   },
   "required": [
@@ -21,10 +23,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -34,7 +38,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         }
       },
       "required": [
@@ -54,13 +59,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "head"
         },
         "nodes": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
-          }
+          },
+          "title": "nodes"
         }
       },
       "required": [

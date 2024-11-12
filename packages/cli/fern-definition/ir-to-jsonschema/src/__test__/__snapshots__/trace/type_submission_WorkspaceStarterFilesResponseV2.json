@@ -5,7 +5,8 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/v2.problem.Files"
-      }
+      },
+      "title": "filesByLanguage"
     }
   },
   "required": [
@@ -17,16 +18,20 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "directory": {
-          "type": "string"
+          "type": "string",
+          "title": "directory"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         },
         "editable": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "editable"
         }
       },
       "required": [
@@ -44,7 +49,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.problem.FileInfoV2"
-          }
+          },
+          "title": "files"
         }
       },
       "required": [

@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "offset"
     }
   },
   "additionalProperties": false,

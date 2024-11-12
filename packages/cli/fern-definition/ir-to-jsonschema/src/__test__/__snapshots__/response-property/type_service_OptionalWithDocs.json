@@ -12,7 +12,8 @@
       "type": "object",
       "properties": {
         "docs": {
-          "type": "string"
+          "type": "string",
+          "title": "docs"
         }
       },
       "required": [

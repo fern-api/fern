@@ -10,7 +10,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "units"
     }
   },
   "additionalProperties": false,

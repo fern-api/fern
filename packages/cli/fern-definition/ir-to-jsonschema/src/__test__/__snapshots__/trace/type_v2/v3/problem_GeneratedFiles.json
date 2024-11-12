@@ -5,19 +5,22 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/v2.v3.problem.Files"
-      }
+      },
+      "title": "generatedTestCaseFiles"
     },
     "generatedTemplateFiles": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/v2.v3.problem.Files"
-      }
+      },
+      "title": "generatedTemplateFiles"
     },
     "other": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/v2.v3.problem.Files"
-      }
+      },
+      "title": "other"
     }
   },
   "required": [
@@ -31,16 +34,20 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "directory": {
-          "type": "string"
+          "type": "string",
+          "title": "directory"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         },
         "editable": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "editable"
         }
       },
       "required": [
@@ -58,7 +65,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.v3.problem.FileInfoV2"
-          }
+          },
+          "title": "files"
         }
       },
       "required": [

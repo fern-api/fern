@@ -12,7 +12,8 @@
       "type": "object",
       "properties": {
         "data": {
-          "type": "string"
+          "type": "string",
+          "title": "data"
         }
       },
       "required": [

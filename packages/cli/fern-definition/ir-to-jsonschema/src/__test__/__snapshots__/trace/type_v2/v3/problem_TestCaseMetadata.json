@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/v2.v3.problem.TestCaseId"
+      "$ref": "#/definitions/v2.v3.problem.TestCaseId",
+      "title": "id"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     },
     "hidden": {
-      "type": "boolean"
+      "type": "boolean",
+      "title": "hidden"
     }
   },
   "required": [

@@ -9,10 +9,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "template"
     },
     "testCase": {
-      "$ref": "#/definitions/v2.v3.problem.TestCaseV2"
+      "$ref": "#/definitions/v2.v3.problem.TestCaseV2",
+      "title": "testCase"
     }
   },
   "required": [
@@ -76,7 +78,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescriptionBoard"
-          }
+          },
+          "title": "boards"
         }
       },
       "required": [
@@ -163,7 +166,8 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -173,7 +177,9 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "isFixedLength",
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [
@@ -187,10 +193,12 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "keyType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             }
           },
           "required": [
@@ -235,13 +243,16 @@
       "type": "object",
       "properties": {
         "parameterId": {
-          "$ref": "#/definitions/v2.v3.problem.ParameterId"
+          "$ref": "#/definitions/v2.v3.problem.ParameterId",
+          "title": "parameterId"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "variableType": {
-          "$ref": "#/definitions/commons.VariableType"
+          "$ref": "#/definitions/commons.VariableType",
+          "title": "variableType"
         }
       },
       "required": [
@@ -258,10 +269,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.v3.problem.Parameter"
-          }
+          },
+          "title": "parameters"
         },
         "returnType": {
-          "$ref": "#/definitions/commons.VariableType"
+          "$ref": "#/definitions/commons.VariableType",
+          "title": "returnType"
         }
       },
       "required": [
@@ -274,7 +287,8 @@
       "type": "object",
       "properties": {
         "impl": {
-          "type": "string"
+          "type": "string",
+          "title": "impl"
         },
         "imports": {
           "oneOf": [
@@ -284,7 +298,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "imports"
         }
       },
       "required": [
@@ -299,7 +314,8 @@
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/v2.v3.problem.FunctionImplementation"
-          }
+          },
+          "title": "codeByLanguage"
         }
       },
       "required": [
@@ -311,10 +327,12 @@
       "type": "object",
       "properties": {
         "signature": {
-          "$ref": "#/definitions/v2.v3.problem.NonVoidFunctionSignature"
+          "$ref": "#/definitions/v2.v3.problem.NonVoidFunctionSignature",
+          "title": "signature"
         },
         "code": {
-          "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages"
+          "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages",
+          "title": "code"
         }
       },
       "required": [
@@ -344,7 +362,8 @@
               "const": "deepEquality"
             },
             "expectedValueParameterId": {
-              "$ref": "#/definitions/v2.v3.problem.ParameterId"
+              "$ref": "#/definitions/v2.v3.problem.ParameterId",
+              "title": "expectedValueParameterId"
             }
           },
           "required": [
@@ -361,10 +380,12 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/v2.v3.problem.Parameter"
-              }
+              },
+              "title": "additionalParameters"
             },
             "code": {
-              "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages"
+              "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages",
+              "title": "code"
             }
           },
           "required": [
@@ -396,10 +417,12 @@
               "const": "withActualResult"
             },
             "getActualResult": {
-              "$ref": "#/definitions/v2.v3.problem.NonVoidFunctionDefinition"
+              "$ref": "#/definitions/v2.v3.problem.NonVoidFunctionDefinition",
+              "title": "getActualResult"
             },
             "assertCorrectnessCheck": {
-              "$ref": "#/definitions/v2.v3.problem.AssertCorrectnessCheck"
+              "$ref": "#/definitions/v2.v3.problem.AssertCorrectnessCheck",
+              "title": "assertCorrectnessCheck"
             }
           },
           "required": [
@@ -417,10 +440,12 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/v2.v3.problem.Parameter"
-              }
+              },
+              "title": "parameters"
             },
             "code": {
-              "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages"
+              "$ref": "#/definitions/v2.v3.problem.FunctionImplementationForMultipleLanguages",
+              "title": "code"
             }
           },
           "required": [
@@ -435,10 +460,12 @@
       "type": "object",
       "properties": {
         "description": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription",
+          "title": "description"
         },
         "function": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseFunction"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseFunction",
+          "title": "function"
         }
       },
       "required": [
@@ -451,13 +478,16 @@
       "type": "object",
       "properties": {
         "templateId": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseTemplateId"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseTemplateId",
+          "title": "templateId"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "implementation": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementation"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementation",
+          "title": "implementation"
         }
       },
       "required": [
@@ -474,13 +504,16 @@
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseId"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseId",
+          "title": "id"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "hidden": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "hidden"
         }
       },
       "required": [
@@ -524,10 +557,12 @@
               "const": "implementation"
             },
             "description": {
-              "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription"
+              "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription",
+              "title": "description"
             },
             "function": {
-              "$ref": "#/definitions/v2.v3.problem.TestCaseFunction"
+              "$ref": "#/definitions/v2.v3.problem.TestCaseFunction",
+              "title": "function"
             }
           },
           "required": [
@@ -542,10 +577,12 @@
       "type": "object",
       "properties": {
         "key": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "key"
         },
         "value": {
-          "$ref": "#/definitions/commons.VariableValue"
+          "$ref": "#/definitions/commons.VariableValue",
+          "title": "value"
         }
       },
       "required": [
@@ -561,10 +598,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "right": {
           "oneOf": [
@@ -574,7 +613,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "right"
         },
         "left": {
           "oneOf": [
@@ -584,7 +624,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "left"
         }
       },
       "required": [
@@ -597,10 +638,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -610,7 +653,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         }
       },
       "required": [
@@ -623,10 +667,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "next": {
           "oneOf": [
@@ -636,7 +682,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "next"
         },
         "prev": {
           "oneOf": [
@@ -646,7 +693,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "prev"
         }
       },
       "required": [
@@ -753,7 +801,8 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/commons.KeyValuePair"
-              }
+              },
+              "title": "keyValuePairs"
             }
           },
           "required": [
@@ -790,13 +839,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "root"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.BinaryTreeNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -817,13 +868,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -844,13 +897,15 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "head"
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
-              }
+              },
+              "title": "nodes"
             }
           },
           "required": [
@@ -881,7 +936,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "expectedStdout"
         }
       },
       "additionalProperties": false
@@ -890,16 +946,19 @@
       "type": "object",
       "properties": {
         "metadata": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseMetadata"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseMetadata",
+          "title": "metadata"
         },
         "implementation": {
-          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationReference"
+          "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationReference",
+          "title": "implementation"
         },
         "arguments": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/commons.VariableValue"
-          }
+          },
+          "title": "arguments"
         },
         "expects": {
           "oneOf": [
@@ -909,7 +968,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "expects"
         }
       },
       "required": [

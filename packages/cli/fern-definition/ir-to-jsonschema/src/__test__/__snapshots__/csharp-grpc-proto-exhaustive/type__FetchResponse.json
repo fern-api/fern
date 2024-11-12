@@ -12,7 +12,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "columns"
     },
     "namespace": {
       "oneOf": [
@@ -22,7 +23,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "namespace"
     },
     "usage": {
       "oneOf": [
@@ -32,7 +34,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "usage"
     }
   },
   "additionalProperties": false,
@@ -81,13 +84,15 @@
           "items": {
             "type": "integer",
             "minimum": 0
-          }
+          },
+          "title": "indices"
         },
         "values": {
           "type": "array",
           "items": {
             "type": "number"
-          }
+          },
+          "title": "values"
         }
       },
       "required": [
@@ -100,13 +105,15 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         },
         "values": {
           "type": "array",
           "items": {
             "type": "number"
-          }
+          },
+          "title": "values"
         },
         "metadata": {
           "oneOf": [
@@ -116,7 +123,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "metadata"
         },
         "indexedData": {
           "oneOf": [
@@ -126,7 +134,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "indexedData"
         }
       },
       "required": [
@@ -147,7 +156,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "units"
         }
       },
       "additionalProperties": false

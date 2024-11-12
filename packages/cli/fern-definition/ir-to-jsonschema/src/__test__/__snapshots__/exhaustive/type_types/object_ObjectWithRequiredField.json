@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "string": {
-      "type": "string"
+      "type": "string",
+      "title": "string"
     }
   },
   "required": [

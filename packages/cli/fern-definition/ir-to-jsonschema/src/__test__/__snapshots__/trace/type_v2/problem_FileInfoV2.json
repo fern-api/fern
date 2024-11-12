@@ -2,16 +2,20 @@
   "type": "object",
   "properties": {
     "filename": {
-      "type": "string"
+      "type": "string",
+      "title": "filename"
     },
     "directory": {
-      "type": "string"
+      "type": "string",
+      "title": "directory"
     },
     "contents": {
-      "type": "string"
+      "type": "string",
+      "title": "contents"
     },
     "editable": {
-      "type": "boolean"
+      "type": "boolean",
+      "title": "editable"
     }
   },
   "required": [

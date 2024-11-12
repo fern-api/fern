@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "id"
     }
   },
   "additionalProperties": false,

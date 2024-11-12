@@ -9,13 +9,15 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "root"
     },
     "nodes": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/commons.BinaryTreeNodeValue"
-      }
+      },
+      "title": "nodes"
     }
   },
   "required": [
@@ -30,10 +32,12 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId"
+          "$ref": "#/definitions/commons.NodeId",
+          "title": "nodeId"
         },
         "val": {
-          "type": "number"
+          "type": "number",
+          "title": "val"
         },
         "right": {
           "oneOf": [
@@ -43,7 +47,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "right"
         },
         "left": {
           "oneOf": [
@@ -53,7 +58,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "left"
         }
       },
       "required": [

@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "username"
     },
     "email": {
       "oneOf": [
@@ -19,7 +20,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "email"
     },
     "age": {
       "oneOf": [
@@ -30,7 +32,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "age"
     },
     "weight": {
       "oneOf": [
@@ -40,7 +43,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "weight"
     },
     "metadata": {
       "oneOf": [
@@ -50,7 +54,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "metadata"
     }
   },
   "additionalProperties": false,

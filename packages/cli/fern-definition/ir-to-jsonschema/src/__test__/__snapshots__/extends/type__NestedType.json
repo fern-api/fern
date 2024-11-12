@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "raw": {
-      "type": "string"
+      "type": "string",
+      "title": "raw"
     },
     "docs": {
-      "type": "string"
+      "type": "string",
+      "title": "docs"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     }
   },
   "required": [

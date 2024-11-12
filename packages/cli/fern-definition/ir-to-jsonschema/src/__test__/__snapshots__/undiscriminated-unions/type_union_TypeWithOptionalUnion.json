@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "myUnion"
     }
   },
   "additionalProperties": false,

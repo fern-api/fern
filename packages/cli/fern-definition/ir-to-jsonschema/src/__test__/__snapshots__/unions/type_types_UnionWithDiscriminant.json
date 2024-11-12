@@ -45,7 +45,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [
@@ -57,7 +58,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [

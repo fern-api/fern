@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "nodeId": {
-      "$ref": "#/definitions/commons.NodeId"
+      "$ref": "#/definitions/commons.NodeId",
+      "title": "nodeId"
     },
     "val": {
-      "type": "number"
+      "type": "number",
+      "title": "val"
     },
     "next": {
       "oneOf": [
@@ -15,7 +17,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "next"
     },
     "prev": {
       "oneOf": [
@@ -25,7 +28,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "prev"
     }
   },
   "required": [

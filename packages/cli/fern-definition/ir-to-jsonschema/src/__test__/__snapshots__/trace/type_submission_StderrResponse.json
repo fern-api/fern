@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission.SubmissionId"
+      "$ref": "#/definitions/submission.SubmissionId",
+      "title": "submissionId"
     },
     "stderr": {
-      "type": "string"
+      "type": "string",
+      "title": "stderr"
     }
   },
   "required": [

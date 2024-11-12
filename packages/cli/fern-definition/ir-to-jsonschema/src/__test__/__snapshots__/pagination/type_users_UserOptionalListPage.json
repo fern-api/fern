@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "data": {
-      "$ref": "#/definitions/users.UserOptionalListContainer"
+      "$ref": "#/definitions/users.UserOptionalListContainer",
+      "title": "data"
     },
     "next": {
       "oneOf": [
@@ -13,7 +14,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "next"
     }
   },
   "required": [
@@ -25,10 +27,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "title": "id"
         }
       },
       "required": [
@@ -51,7 +55,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "users"
         }
       },
       "additionalProperties": false

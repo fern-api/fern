@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "filename": {
-      "type": "string"
+      "type": "string",
+      "title": "filename"
     },
     "contents": {
-      "type": "string"
+      "type": "string",
+      "title": "contents"
     }
   },
   "required": [

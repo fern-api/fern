@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "traceResponsesSize": {
-      "type": "integer"
+      "type": "integer",
+      "title": "traceResponsesSize"
     }
   },
   "required": [

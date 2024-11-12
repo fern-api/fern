@@ -15,10 +15,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         }
       },
       "required": [
@@ -31,10 +33,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         }
       },
       "required": [
@@ -47,10 +51,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "actorOrActressId": {
-          "type": "string"
+          "type": "string",
+          "title": "actorOrActressId"
         }
       },
       "required": [

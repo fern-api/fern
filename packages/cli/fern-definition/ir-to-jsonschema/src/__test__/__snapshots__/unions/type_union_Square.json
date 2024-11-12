@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "length": {
-      "type": "number"
+      "type": "number",
+      "title": "length"
     }
   },
   "required": [

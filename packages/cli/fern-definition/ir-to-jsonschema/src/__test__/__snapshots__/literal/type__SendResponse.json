@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "message": {
-      "type": "string"
+      "type": "string",
+      "title": "message"
     },
     "status": {
-      "type": "integer"
+      "type": "integer",
+      "title": "status"
     },
     "success": {
-      "const": true
+      "const": true,
+      "title": "success"
     }
   },
   "required": [

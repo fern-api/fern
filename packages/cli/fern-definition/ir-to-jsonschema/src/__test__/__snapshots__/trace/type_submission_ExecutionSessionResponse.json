@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "sessionId": {
-      "type": "string"
+      "type": "string",
+      "title": "sessionId"
     },
     "executionSessionUrl": {
       "oneOf": [
@@ -12,13 +13,16 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "executionSessionUrl"
     },
     "language": {
-      "$ref": "#/definitions/commons.Language"
+      "$ref": "#/definitions/commons.Language",
+      "title": "language"
     },
     "status": {
-      "$ref": "#/definitions/submission.ExecutionSessionStatus"
+      "$ref": "#/definitions/submission.ExecutionSessionStatus",
+      "title": "status"
     }
   },
   "required": [

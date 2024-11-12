@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "Name": {
-      "type": "string"
+      "type": "string",
+      "title": "Name"
     },
     "NestedUser": {
-      "$ref": "#/definitions/service.User"
+      "$ref": "#/definitions/service.User",
+      "title": "NestedUser"
     }
   },
   "required": [
@@ -18,19 +20,22 @@
       "type": "object",
       "properties": {
         "userName": {
-          "type": "string"
+          "type": "string",
+          "title": "userName"
         },
         "metadata_tags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "title": "metadata_tags"
         },
         "EXTRA_PROPERTIES": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "title": "EXTRA_PROPERTIES"
         }
       },
       "required": [

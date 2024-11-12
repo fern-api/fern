@@ -5,7 +5,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/users.User"
-      }
+      },
+      "title": "users"
     }
   },
   "required": [
@@ -17,10 +18,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "title": "id"
         }
       },
       "required": [

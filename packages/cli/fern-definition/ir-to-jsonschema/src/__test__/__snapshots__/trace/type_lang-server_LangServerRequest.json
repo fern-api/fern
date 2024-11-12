@@ -9,7 +9,8 @@
         "object",
         "array",
         "null"
-      ]
+      ],
+      "title": "request"
     }
   },
   "required": [

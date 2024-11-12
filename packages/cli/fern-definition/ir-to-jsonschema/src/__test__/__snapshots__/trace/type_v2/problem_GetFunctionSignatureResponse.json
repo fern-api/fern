@@ -5,7 +5,8 @@
       "type": "object",
       "additionalProperties": {
         "type": "string"
-      }
+      },
+      "title": "functionByLanguage"
     }
   },
   "required": [

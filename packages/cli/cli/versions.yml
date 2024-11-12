@@ -1,3 +1,10 @@
+- changelogEntry: 
+    - summary: |
+        - Added support for property `description`s when exporting to JSON Schema
+        - Added support for property `title`s when exporting to JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc39
 - changelogEntry:
     - summary: |
         The OpenAPI importer now supports respecting readonly properties in schemas. When enabled, readonly properties will be excluded from request bodies for 

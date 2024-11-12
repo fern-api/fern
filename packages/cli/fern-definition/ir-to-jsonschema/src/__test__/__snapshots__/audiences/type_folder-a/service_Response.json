@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "foo"
     }
   },
   "additionalProperties": false,
@@ -19,7 +20,8 @@
       "properties": {
         "bar_property": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "title": "bar_property"
         }
       },
       "required": [
@@ -38,7 +40,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "foo"
         }
       },
       "additionalProperties": false

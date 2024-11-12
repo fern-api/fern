@@ -2,7 +2,9 @@
   "type": "object",
   "properties": {
     "page": {
-      "type": "integer"
+      "type": "integer",
+      "title": "page",
+      "description": "The current page"
     },
     "next": {
       "oneOf": [
@@ -12,13 +14,16 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "next"
     },
     "per_page": {
-      "type": "integer"
+      "type": "integer",
+      "title": "per_page"
     },
     "total_page": {
-      "type": "integer"
+      "type": "integer",
+      "title": "total_page"
     }
   },
   "required": [
@@ -32,10 +37,12 @@
       "type": "object",
       "properties": {
         "page": {
-          "type": "integer"
+          "type": "integer",
+          "title": "page"
         },
         "starting_after": {
-          "type": "string"
+          "type": "string",
+          "title": "starting_after"
         }
       },
       "required": [

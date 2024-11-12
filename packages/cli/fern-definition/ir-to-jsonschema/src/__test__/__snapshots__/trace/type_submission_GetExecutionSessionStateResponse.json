@@ -5,7 +5,8 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/submission.ExecutionSessionState"
-      }
+      },
+      "title": "states"
     },
     "numWarmingInstances": {
       "oneOf": [
@@ -15,13 +16,15 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "numWarmingInstances"
     },
     "warmingSessionIds": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "title": "warmingSessionIds"
     }
   },
   "required": [
@@ -60,13 +63,17 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "lastTimeContacted"
         },
         "sessionId": {
-          "type": "string"
+          "type": "string",
+          "title": "sessionId",
+          "description": "The auto-generated session id. Formatted as a uuid."
         },
         "isWarmInstance": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "isWarmInstance"
         },
         "awsTaskId": {
           "oneOf": [
@@ -76,13 +83,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "awsTaskId"
         },
         "language": {
-          "$ref": "#/definitions/commons.Language"
+          "$ref": "#/definitions/commons.Language",
+          "title": "language"
         },
         "status": {
-          "$ref": "#/definitions/submission.ExecutionSessionStatus"
+          "$ref": "#/definitions/submission.ExecutionSessionStatus",
+          "title": "status"
         }
       },
       "required": [

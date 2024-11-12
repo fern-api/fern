@@ -2,13 +2,15 @@
   "type": "object",
   "properties": {
     "file": {
-      "$ref": "#/definitions/v2.v3.problem.FileInfoV2"
+      "$ref": "#/definitions/v2.v3.problem.FileInfoV2",
+      "title": "file"
     },
     "relatedTypes": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.VariableType"
-      }
+      },
+      "title": "relatedTypes"
     }
   },
   "required": [
@@ -21,16 +23,20 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "directory": {
-          "type": "string"
+          "type": "string",
+          "title": "directory"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         },
         "editable": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "editable"
         }
       },
       "required": [
@@ -120,7 +126,8 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -130,7 +137,9 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "isFixedLength",
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [
@@ -144,10 +153,12 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "keyType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             }
           },
           "required": [

@@ -5,7 +5,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/v2.problem.TestCaseImplementationDescriptionBoard"
-      }
+      },
+      "title": "boards"
     }
   },
   "required": [

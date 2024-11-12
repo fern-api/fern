@@ -2,16 +2,20 @@
   "type": "object",
   "properties": {
     "prompt": {
-      "const": "You are a helpful assistant"
+      "const": "You are a helpful assistant",
+      "title": "prompt"
     },
     "query": {
-      "type": "string"
+      "type": "string",
+      "title": "query"
     },
     "stream": {
-      "const": false
+      "const": false,
+      "title": "stream"
     },
     "context": {
-      "$ref": "#/definitions/reference.SomeLiteral"
+      "$ref": "#/definitions/reference.SomeLiteral",
+      "title": "context"
     },
     "maybeContext": {
       "oneOf": [
@@ -21,10 +25,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "maybeContext"
     },
     "containerObject": {
-      "$ref": "#/definitions/reference.ContainerObject"
+      "$ref": "#/definitions/reference.ContainerObject",
+      "title": "containerObject"
     }
   },
   "required": [
@@ -43,13 +49,16 @@
       "type": "object",
       "properties": {
         "literal1": {
-          "const": "literal1"
+          "const": "literal1",
+          "title": "literal1"
         },
         "literal2": {
-          "const": "literal2"
+          "const": "literal2",
+          "title": "literal2"
         },
         "strProp": {
-          "type": "string"
+          "type": "string",
+          "title": "strProp"
         }
       },
       "required": [
@@ -66,7 +75,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/reference.NestedObjectWithLiterals"
-          }
+          },
+          "title": "nestedObjects"
         }
       },
       "required": [

@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "impl": {
-      "type": "string"
+      "type": "string",
+      "title": "impl"
     },
     "imports": {
       "oneOf": [
@@ -12,7 +13,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "imports"
     }
   },
   "required": [

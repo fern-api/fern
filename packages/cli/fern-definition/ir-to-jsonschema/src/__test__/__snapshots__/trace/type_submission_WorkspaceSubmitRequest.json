@@ -2,16 +2,19 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission.SubmissionId"
+      "$ref": "#/definitions/submission.SubmissionId",
+      "title": "submissionId"
     },
     "language": {
-      "$ref": "#/definitions/commons.Language"
+      "$ref": "#/definitions/commons.Language",
+      "title": "language"
     },
     "submissionFiles": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/submission.SubmissionFileInfo"
-      }
+      },
+      "title": "submissionFiles"
     },
     "userId": {
       "oneOf": [
@@ -21,7 +24,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "userId"
     }
   },
   "required": [
@@ -47,13 +51,16 @@
       "type": "object",
       "properties": {
         "directory": {
-          "type": "string"
+          "type": "string",
+          "title": "directory"
         },
         "filename": {
-          "type": "string"
+          "type": "string",
+          "title": "filename"
         },
         "contents": {
-          "type": "string"
+          "type": "string",
+          "title": "contents"
         }
       },
       "required": [

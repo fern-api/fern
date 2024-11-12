@@ -2,20 +2,24 @@
   "type": "object",
   "properties": {
     "problemId": {
-      "$ref": "#/definitions/commons.ProblemId"
+      "$ref": "#/definitions/commons.ProblemId",
+      "title": "problemId"
     },
     "problemName": {
-      "type": "string"
+      "type": "string",
+      "title": "problemName"
     },
     "problemVersion": {
-      "type": "integer"
+      "type": "integer",
+      "title": "problemVersion"
     },
     "variableTypes": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.VariableType"
       },
-      "uniqueItems": true
+      "uniqueItems": true,
+      "title": "variableTypes"
     }
   },
   "required": [
@@ -108,7 +112,8 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -118,7 +123,9 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "title": "isFixedLength",
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [
@@ -132,10 +139,12 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "keyType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType"
+              "$ref": "#/definitions/commons.VariableType",
+              "title": "valueType"
             }
           },
           "required": [

@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/Id"
+      "$ref": "#/definitions/Id",
+      "title": "id"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     },
     "age": {
-      "type": "integer"
+      "type": "integer",
+      "title": "age"
     }
   },
   "required": [

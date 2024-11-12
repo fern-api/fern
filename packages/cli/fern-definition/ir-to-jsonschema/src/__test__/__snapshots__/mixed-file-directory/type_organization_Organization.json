@@ -2,16 +2,19 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/Id"
+      "$ref": "#/definitions/Id",
+      "title": "id"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     },
     "users": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/user.User"
-      }
+      },
+      "title": "users"
     }
   },
   "required": [
@@ -28,13 +31,16 @@
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/Id"
+          "$ref": "#/definitions/Id",
+          "title": "id"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "age": {
-          "type": "integer"
+          "type": "integer",
+          "title": "age"
         }
       },
       "required": [

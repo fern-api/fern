@@ -9,10 +9,12 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "stringifiedType"
     },
     "stringifiedValue": {
-      "type": "string"
+      "type": "string",
+      "title": "stringifiedValue"
     }
   },
   "required": [

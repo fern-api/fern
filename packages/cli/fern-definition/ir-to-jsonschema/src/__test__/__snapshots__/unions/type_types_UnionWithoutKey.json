@@ -19,7 +19,8 @@
           "const": "foo"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [
@@ -33,7 +34,8 @@
           "const": "bar"
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         }
       },
       "required": [

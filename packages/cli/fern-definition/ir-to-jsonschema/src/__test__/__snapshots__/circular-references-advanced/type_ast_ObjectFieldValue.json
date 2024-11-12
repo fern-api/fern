@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "name": {
-      "$ref": "#/definitions/ast.FieldName"
+      "$ref": "#/definitions/ast.FieldName",
+      "title": "name"
     },
     "value": {
-      "$ref": "#/definitions/ast.FieldValue"
+      "$ref": "#/definitions/ast.FieldValue",
+      "title": "value"
     }
   },
   "required": [

@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/TypeId"
+      "$ref": "#/definitions/TypeId",
+      "title": "id"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "title": "name"
     }
   },
   "required": [

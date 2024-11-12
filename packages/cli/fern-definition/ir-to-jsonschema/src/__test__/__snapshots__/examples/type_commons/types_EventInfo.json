@@ -19,7 +19,8 @@
           "const": "metadata"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "title": "id"
         },
         "data": {
           "oneOf": [
@@ -32,7 +33,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "data"
         },
         "jsonString": {
           "oneOf": [
@@ -42,7 +44,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "jsonString"
         }
       },
       "required": [

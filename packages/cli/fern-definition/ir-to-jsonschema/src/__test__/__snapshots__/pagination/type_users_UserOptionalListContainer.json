@@ -12,7 +12,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "title": "users"
     }
   },
   "additionalProperties": false,
@@ -21,10 +22,12 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "name"
         },
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "title": "id"
         }
       },
       "required": [
