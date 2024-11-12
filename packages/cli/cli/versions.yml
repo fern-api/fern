@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fixed bug in the Conjure importer where query parameters were overwritten during endpoint parameter parsing.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc40
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now supports correlating request and response examples by name. When an example name is shared 
         between a request body and response, they will be paired together in the generated Fern definition.
       type: fix
