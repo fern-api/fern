@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/Id",
-      "title": "id"
+      "$ref": "#/definitions/Id"
     },
     "value": {
       "type": [
@@ -13,8 +12,7 @@
         "object",
         "array",
         "null"
-      ],
-      "title": "value"
+      ]
     }
   },
   "required": [

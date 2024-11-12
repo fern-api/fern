@@ -2,20 +2,16 @@
   "type": "object",
   "properties": {
     "templateId": {
-      "$ref": "#/definitions/v2.v3.problem.TestCaseTemplateId",
-      "title": "templateId"
+      "$ref": "#/definitions/v2.v3.problem.TestCaseTemplateId"
     },
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "description": {
-      "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription",
-      "title": "description"
+      "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription"
     },
     "expectedValueParameterId": {
-      "$ref": "#/definitions/v2.v3.problem.ParameterId",
-      "title": "expectedValueParameterId"
+      "$ref": "#/definitions/v2.v3.problem.ParameterId"
     }
   },
   "required": [
@@ -82,8 +78,7 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescriptionBoard"
-          },
-          "title": "boards"
+          }
         }
       },
       "required": [

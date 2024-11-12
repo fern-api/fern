@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "size": {
-      "type": "integer",
-      "title": "size"
+      "type": "integer"
     }
   },
   "required": [

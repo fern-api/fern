@@ -5,8 +5,7 @@
       "type": "array",
       "items": {
         "type": "number"
-      },
-      "title": "values"
+      }
     },
     "topK": {
       "oneOf": [
@@ -17,8 +16,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "topK"
+      ]
     },
     "namespace": {
       "oneOf": [
@@ -28,8 +26,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "namespace"
+      ]
     },
     "filter": {
       "oneOf": [
@@ -39,8 +36,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "filter"
+      ]
     },
     "indexedData": {
       "oneOf": [
@@ -50,8 +46,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "indexedData"
+      ]
     }
   },
   "required": [
@@ -103,15 +98,13 @@
           "items": {
             "type": "integer",
             "minimum": 0
-          },
-          "title": "indices"
+          }
         },
         "values": {
           "type": "array",
           "items": {
             "type": "number"
-          },
-          "title": "values"
+          }
         }
       },
       "required": [

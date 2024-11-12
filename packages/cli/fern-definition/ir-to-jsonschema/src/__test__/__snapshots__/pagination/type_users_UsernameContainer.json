@@ -5,8 +5,7 @@
       "type": "array",
       "items": {
         "type": "string"
-      },
-      "title": "results"
+      }
     }
   },
   "required": [

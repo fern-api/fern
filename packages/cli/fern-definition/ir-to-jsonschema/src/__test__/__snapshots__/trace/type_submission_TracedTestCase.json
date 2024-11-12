@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "result": {
-      "$ref": "#/definitions/submission.TestCaseResultWithStdout",
-      "title": "result"
+      "$ref": "#/definitions/submission.TestCaseResultWithStdout"
     },
     "traceResponsesSize": {
-      "type": "integer",
-      "title": "traceResponsesSize"
+      "type": "integer"
     }
   },
   "required": [
@@ -20,12 +18,10 @@
       "type": "object",
       "properties": {
         "key": {
-          "$ref": "#/definitions/commons.VariableValue",
-          "title": "key"
+          "$ref": "#/definitions/commons.VariableValue"
         },
         "value": {
-          "$ref": "#/definitions/commons.VariableValue",
-          "title": "value"
+          "$ref": "#/definitions/commons.VariableValue"
         }
       },
       "required": [
@@ -41,12 +37,10 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId",
-          "title": "nodeId"
+          "$ref": "#/definitions/commons.NodeId"
         },
         "val": {
-          "type": "number",
-          "title": "val"
+          "type": "number"
         },
         "right": {
           "oneOf": [
@@ -56,8 +50,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "right"
+          ]
         },
         "left": {
           "oneOf": [
@@ -67,8 +60,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "left"
+          ]
         }
       },
       "required": [
@@ -81,12 +73,10 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId",
-          "title": "nodeId"
+          "$ref": "#/definitions/commons.NodeId"
         },
         "val": {
-          "type": "number",
-          "title": "val"
+          "type": "number"
         },
         "next": {
           "oneOf": [
@@ -96,8 +86,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "next"
+          ]
         }
       },
       "required": [
@@ -110,12 +99,10 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId",
-          "title": "nodeId"
+          "$ref": "#/definitions/commons.NodeId"
         },
         "val": {
-          "type": "number",
-          "title": "val"
+          "type": "number"
         },
         "next": {
           "oneOf": [
@@ -125,8 +112,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "next"
+          ]
         },
         "prev": {
           "oneOf": [
@@ -136,8 +122,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "prev"
+          ]
         }
       },
       "required": [
@@ -244,8 +229,7 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/commons.KeyValuePair"
-              },
-              "title": "keyValuePairs"
+              }
             }
           },
           "required": [
@@ -282,15 +266,13 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "root"
+              ]
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.BinaryTreeNodeValue"
-              },
-              "title": "nodes"
+              }
             }
           },
           "required": [
@@ -311,15 +293,13 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "head"
+              ]
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.SinglyLinkedListNodeValue"
-              },
-              "title": "nodes"
+              }
             }
           },
           "required": [
@@ -340,15 +320,13 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "head"
+              ]
             },
             "nodes": {
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
-              },
-              "title": "nodes"
+              }
             }
           },
           "required": [
@@ -389,16 +367,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -455,16 +430,13 @@
               "const": "exception"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -493,16 +465,13 @@
       "type": "object",
       "properties": {
         "expectedResult": {
-          "$ref": "#/definitions/commons.VariableValue",
-          "title": "expectedResult"
+          "$ref": "#/definitions/commons.VariableValue"
         },
         "actualResult": {
-          "$ref": "#/definitions/submission.ActualResult",
-          "title": "actualResult"
+          "$ref": "#/definitions/submission.ActualResult"
         },
         "passed": {
-          "type": "boolean",
-          "title": "passed"
+          "type": "boolean"
         }
       },
       "required": [
@@ -516,12 +485,10 @@
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/submission.TestCaseResult",
-          "title": "result"
+          "$ref": "#/definitions/submission.TestCaseResult"
         },
         "stdout": {
-          "type": "string",
-          "title": "stdout"
+          "type": "string"
         }
       },
       "required": [

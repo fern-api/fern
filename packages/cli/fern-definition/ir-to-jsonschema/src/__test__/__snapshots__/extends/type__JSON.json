@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "docs": {
-      "type": "string",
-      "title": "docs"
+      "type": "string"
     },
     "raw": {
-      "type": "string",
-      "title": "raw"
+      "type": "string"
     }
   },
   "required": [

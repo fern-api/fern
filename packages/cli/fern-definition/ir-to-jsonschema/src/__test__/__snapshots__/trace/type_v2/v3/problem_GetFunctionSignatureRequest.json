@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "functionSignature": {
-      "$ref": "#/definitions/v2.v3.problem.FunctionSignature",
-      "title": "functionSignature"
+      "$ref": "#/definitions/v2.v3.problem.FunctionSignature"
     }
   },
   "required": [
@@ -93,8 +92,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -105,7 +103,6 @@
                   "type": "null"
                 }
               ],
-              "title": "isFixedLength",
               "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
@@ -120,12 +117,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "keyType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [
@@ -170,16 +165,13 @@
       "type": "object",
       "properties": {
         "parameterId": {
-          "$ref": "#/definitions/v2.v3.problem.ParameterId",
-          "title": "parameterId"
+          "$ref": "#/definitions/v2.v3.problem.ParameterId"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "variableType": {
-          "$ref": "#/definitions/commons.VariableType",
-          "title": "variableType"
+          "$ref": "#/definitions/commons.VariableType"
         }
       },
       "required": [
@@ -214,8 +206,7 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/v2.v3.problem.Parameter"
-              },
-              "title": "parameters"
+              }
             }
           },
           "required": [
@@ -232,12 +223,10 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/v2.v3.problem.Parameter"
-              },
-              "title": "parameters"
+              }
             },
             "returnType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "returnType"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [
@@ -255,12 +244,10 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/v2.v3.problem.Parameter"
-              },
-              "title": "parameters"
+              }
             },
             "actualResultType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "actualResultType"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

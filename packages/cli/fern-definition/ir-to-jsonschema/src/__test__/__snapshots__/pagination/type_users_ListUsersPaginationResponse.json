@@ -9,8 +9,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "hasNextPage"
+      ]
     },
     "page": {
       "oneOf": [
@@ -20,20 +19,17 @@
         {
           "type": "null"
         }
-      ],
-      "title": "page"
+      ]
     },
     "total_count": {
       "type": "integer",
-      "title": "total_count",
       "description": "The totall number of /users"
     },
     "data": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/users.User"
-      },
-      "title": "data"
+      }
     }
   },
   "required": [
@@ -46,12 +42,10 @@
       "type": "object",
       "properties": {
         "page": {
-          "type": "integer",
-          "title": "page"
+          "type": "integer"
         },
         "starting_after": {
-          "type": "string",
-          "title": "starting_after"
+          "type": "string"
         }
       },
       "required": [
@@ -65,7 +59,6 @@
       "properties": {
         "page": {
           "type": "integer",
-          "title": "page",
           "description": "The current page"
         },
         "next": {
@@ -76,16 +69,13 @@
             {
               "type": "null"
             }
-          ],
-          "title": "next"
+          ]
         },
         "per_page": {
-          "type": "integer",
-          "title": "per_page"
+          "type": "integer"
         },
         "total_page": {
-          "type": "integer",
-          "title": "total_page"
+          "type": "integer"
         }
       },
       "required": [
@@ -99,12 +89,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "id": {
-          "type": "integer",
-          "title": "id"
+          "type": "integer"
         }
       },
       "required": [

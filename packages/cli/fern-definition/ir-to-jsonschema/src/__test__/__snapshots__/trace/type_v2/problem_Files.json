@@ -5,8 +5,7 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/v2.problem.FileInfoV2"
-      },
-      "title": "files"
+      }
     }
   },
   "required": [
@@ -18,20 +17,16 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string",
-          "title": "filename"
+          "type": "string"
         },
         "directory": {
-          "type": "string",
-          "title": "directory"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         },
         "editable": {
-          "type": "boolean",
-          "title": "editable"
+          "type": "boolean"
         }
       },
       "required": [

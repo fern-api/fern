@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "expectedValueParameterId": {
-      "$ref": "#/definitions/v2.v3.problem.ParameterId",
-      "title": "expectedValueParameterId"
+      "$ref": "#/definitions/v2.v3.problem.ParameterId"
     }
   },
   "required": [

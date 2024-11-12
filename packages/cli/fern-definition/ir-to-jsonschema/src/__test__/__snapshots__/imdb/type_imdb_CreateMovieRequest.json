@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "title": {
-      "type": "string",
-      "title": "title"
+      "type": "string"
     },
     "rating": {
-      "type": "number",
-      "title": "rating"
+      "type": "number"
     }
   },
   "required": [

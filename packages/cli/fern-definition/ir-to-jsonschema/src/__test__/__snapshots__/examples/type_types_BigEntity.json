@@ -9,8 +9,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "castMember"
+      ]
     },
     "extendedMovie": {
       "oneOf": [
@@ -20,8 +19,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "extendedMovie"
+      ]
     },
     "entity": {
       "oneOf": [
@@ -31,8 +29,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "entity"
+      ]
     },
     "metadata": {
       "oneOf": [
@@ -42,8 +39,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "metadata"
+      ]
     },
     "commonMetadata": {
       "oneOf": [
@@ -53,8 +49,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "commonMetadata"
+      ]
     },
     "eventInfo": {
       "oneOf": [
@@ -64,8 +59,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "eventInfo"
+      ]
     },
     "data": {
       "oneOf": [
@@ -75,8 +69,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "data"
+      ]
     },
     "migration": {
       "oneOf": [
@@ -86,8 +79,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "migration"
+      ]
     },
     "exception": {
       "oneOf": [
@@ -97,8 +89,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "exception"
+      ]
     },
     "test": {
       "oneOf": [
@@ -108,8 +99,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "test"
+      ]
     },
     "node": {
       "oneOf": [
@@ -119,8 +109,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "node"
+      ]
     },
     "directory": {
       "oneOf": [
@@ -130,8 +119,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "directory"
+      ]
     },
     "moment": {
       "oneOf": [
@@ -141,8 +129,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "moment"
+      ]
     }
   },
   "additionalProperties": false,
@@ -151,12 +138,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         }
       },
       "required": [
@@ -169,12 +154,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         }
       },
       "required": [
@@ -187,12 +170,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "actorOrActressId": {
-          "type": "string",
-          "title": "actorOrActressId"
+          "type": "string"
         }
       },
       "required": [
@@ -224,8 +205,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "$ref": "#/definitions/types.MovieId",
-          "title": "id"
+          "$ref": "#/definitions/types.MovieId"
         },
         "prequel": {
           "oneOf": [
@@ -235,29 +215,23 @@
             {
               "type": "null"
             }
-          ],
-          "title": "prequel"
+          ]
         },
         "title": {
-          "type": "string",
-          "title": "title"
+          "type": "string"
         },
         "from": {
-          "type": "string",
-          "title": "from"
+          "type": "string"
         },
         "rating": {
           "type": "number",
-          "title": "rating",
           "description": "The rating scale is one to five stars"
         },
         "type": {
-          "const": "movie",
-          "title": "type"
+          "const": "movie"
         },
         "tag": {
-          "$ref": "#/definitions/commons.types.Tag",
-          "title": "tag"
+          "$ref": "#/definitions/commons.types.Tag"
         },
         "book": {
           "oneOf": [
@@ -267,8 +241,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "book"
+          ]
         },
         "metadata": {
           "type": "object",
@@ -281,19 +254,16 @@
               "array",
               "null"
             ]
-          },
-          "title": "metadata"
+          }
         },
         "revenue": {
-          "type": "integer",
-          "title": "revenue"
+          "type": "integer"
         },
         "cast": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "cast"
+          }
         }
       },
       "required": [
@@ -338,12 +308,10 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/Type",
-          "title": "type"
+          "$ref": "#/definitions/Type"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         }
       },
       "required": [
@@ -399,8 +367,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "data": {
           "oneOf": [
@@ -413,8 +380,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "data"
+          ]
         },
         "jsonString": {
           "oneOf": [
@@ -424,8 +390,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "jsonString"
+          ]
         }
       },
       "required": [
@@ -454,8 +419,7 @@
               "const": "metadata"
             },
             "id": {
-              "type": "string",
-              "title": "id"
+              "type": "string"
             },
             "data": {
               "oneOf": [
@@ -468,8 +432,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "data"
+              ]
             },
             "jsonString": {
               "oneOf": [
@@ -479,8 +442,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "jsonString"
+              ]
             }
           },
           "required": [
@@ -559,12 +521,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "status": {
-          "$ref": "#/definitions/types.MigrationStatus",
-          "title": "status"
+          "$ref": "#/definitions/types.MigrationStatus"
         }
       },
       "required": [
@@ -594,16 +554,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -682,8 +639,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "nodes"
+          ]
         }
       },
       "additionalProperties": false
@@ -692,8 +648,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "nodes": {
           "oneOf": [
@@ -706,8 +661,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "nodes"
+          ]
         },
         "trees": {
           "oneOf": [
@@ -720,8 +674,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "trees"
+          ]
         }
       },
       "required": [
@@ -733,12 +686,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         }
       },
       "required": [
@@ -751,8 +702,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "files": {
           "oneOf": [
@@ -765,8 +715,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "files"
+          ]
         },
         "directories": {
           "oneOf": [
@@ -779,8 +728,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "directories"
+          ]
         }
       },
       "required": [
@@ -793,18 +741,15 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "uuid",
-          "title": "id"
+          "format": "uuid"
         },
         "date": {
           "type": "string",
-          "format": "date",
-          "title": "date"
+          "format": "date"
         },
         "datetime": {
           "type": "string",
-          "format": "date-time",
-          "title": "datetime"
+          "format": "date-time"
         }
       },
       "required": [

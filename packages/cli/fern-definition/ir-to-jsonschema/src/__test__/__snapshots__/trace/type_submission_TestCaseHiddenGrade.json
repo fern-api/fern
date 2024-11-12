@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "passed": {
-      "type": "boolean",
-      "title": "passed"
+      "type": "boolean"
     }
   },
   "required": [

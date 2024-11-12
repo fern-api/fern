@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "nestedLiteral": {
-      "$ref": "#/definitions/inlined.ANestedLiteral",
-      "title": "nestedLiteral"
+      "$ref": "#/definitions/inlined.ANestedLiteral"
     }
   },
   "required": [
@@ -15,8 +14,7 @@
       "type": "object",
       "properties": {
         "myLiteral": {
-          "const": "How super cool",
-          "title": "myLiteral"
+          "const": "How super cool"
         }
       },
       "required": [

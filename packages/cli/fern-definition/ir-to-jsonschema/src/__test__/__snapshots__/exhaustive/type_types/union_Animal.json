@@ -19,12 +19,10 @@
           "const": "dog"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "likesToWoof": {
-          "type": "boolean",
-          "title": "likesToWoof"
+          "type": "boolean"
         }
       },
       "required": [
@@ -39,12 +37,10 @@
           "const": "cat"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "likesToMeow": {
-          "type": "boolean",
-          "title": "likesToMeow"
+          "type": "boolean"
         }
       },
       "required": [

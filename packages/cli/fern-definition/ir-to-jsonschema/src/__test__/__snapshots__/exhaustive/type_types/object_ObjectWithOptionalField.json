@@ -10,7 +10,6 @@
           "type": "null"
         }
       ],
-      "title": "string",
       "description": "This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered."
     },
     "integer": {
@@ -21,8 +20,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "integer"
+      ]
     },
     "long": {
       "oneOf": [
@@ -32,8 +30,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "long"
+      ]
     },
     "double": {
       "oneOf": [
@@ -43,8 +40,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "double"
+      ]
     },
     "bool": {
       "oneOf": [
@@ -54,8 +50,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "bool"
+      ]
     },
     "datetime": {
       "oneOf": [
@@ -66,8 +61,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "datetime"
+      ]
     },
     "date": {
       "oneOf": [
@@ -78,8 +72,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "date"
+      ]
     },
     "uuid": {
       "oneOf": [
@@ -90,8 +83,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "uuid"
+      ]
     },
     "base64": {
       "oneOf": [
@@ -102,8 +94,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "base64"
+      ]
     },
     "list": {
       "oneOf": [
@@ -116,8 +107,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "list"
+      ]
     },
     "set": {
       "oneOf": [
@@ -131,8 +121,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "set"
+      ]
     },
     "map": {
       "oneOf": [
@@ -145,8 +134,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "map"
+      ]
     },
     "bigint": {
       "oneOf": [
@@ -157,8 +145,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "bigint"
+      ]
     }
   },
   "additionalProperties": false,

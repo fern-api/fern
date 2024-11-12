@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "radius": {
-      "type": "number",
-      "title": "radius"
+      "type": "number"
     }
   },
   "required": [

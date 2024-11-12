@@ -46,8 +46,7 @@
           "const": "foo"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         }
       },
       "required": [

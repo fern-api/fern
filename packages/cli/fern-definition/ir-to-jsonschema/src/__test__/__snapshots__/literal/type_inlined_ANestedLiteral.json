@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "myLiteral": {
-      "const": "How super cool",
-      "title": "myLiteral"
+      "const": "How super cool"
     }
   },
   "required": [

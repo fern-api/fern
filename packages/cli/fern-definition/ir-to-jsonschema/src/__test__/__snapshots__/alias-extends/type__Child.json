@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "parent": {
-      "type": "string",
-      "title": "parent"
+      "type": "string"
     },
     "child": {
-      "type": "string",
-      "title": "child"
+      "type": "string"
     }
   },
   "required": [

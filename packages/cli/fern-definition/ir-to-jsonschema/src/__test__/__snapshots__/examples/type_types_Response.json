@@ -9,15 +9,13 @@
         "object",
         "array",
         "null"
-      ],
-      "title": "response"
+      ]
     },
     "identifiers": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Identifier"
-      },
-      "title": "identifiers"
+      }
     }
   },
   "required": [
@@ -55,16 +53,13 @@
       "type": "object",
       "properties": {
         "type": {
-          "$ref": "#/definitions/Type",
-          "title": "type"
+          "$ref": "#/definitions/Type"
         },
         "value": {
-          "type": "string",
-          "title": "value"
+          "type": "string"
         },
         "label": {
-          "type": "string",
-          "title": "label"
+          "type": "string"
         }
       },
       "required": [

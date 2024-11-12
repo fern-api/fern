@@ -2,66 +2,54 @@
   "type": "object",
   "properties": {
     "one": {
-      "type": "integer",
-      "title": "one"
+      "type": "integer"
     },
     "two": {
-      "type": "number",
-      "title": "two"
+      "type": "number"
     },
     "three": {
-      "type": "string",
-      "title": "three"
+      "type": "string"
     },
     "four": {
-      "type": "boolean",
-      "title": "four"
+      "type": "boolean"
     },
     "five": {
-      "type": "integer",
-      "title": "five"
+      "type": "integer"
     },
     "six": {
       "type": "string",
-      "format": "date-time",
-      "title": "six"
+      "format": "date-time"
     },
     "seven": {
       "type": "string",
-      "format": "date",
-      "title": "seven"
+      "format": "date"
     },
     "eight": {
       "type": "string",
-      "format": "uuid",
-      "title": "eight"
+      "format": "uuid"
     },
     "nine": {
       "type": "string",
-      "contentEncoding": "base64",
-      "title": "nine"
+      "contentEncoding": "base64"
     },
     "ten": {
       "type": "array",
       "items": {
         "type": "integer"
-      },
-      "title": "ten"
+      }
     },
     "eleven": {
       "type": "array",
       "items": {
         "type": "number"
       },
-      "uniqueItems": true,
-      "title": "eleven"
+      "uniqueItems": true
     },
     "twelve": {
       "type": "object",
       "additionalProperties": {
         "type": "boolean"
-      },
-      "title": "twelve"
+      }
     },
     "thirteen": {
       "oneOf": [
@@ -71,8 +59,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "thirteen"
+      ]
     },
     "fourteen": {
       "type": [
@@ -82,8 +69,7 @@
         "object",
         "array",
         "null"
-      ],
-      "title": "fourteen"
+      ]
     },
     "fifteen": {
       "type": "array",
@@ -92,8 +78,7 @@
         "items": {
           "type": "integer"
         }
-      },
-      "title": "fifteen"
+      }
     },
     "sixteen": {
       "type": "array",
@@ -102,8 +87,7 @@
         "additionalProperties": {
           "type": "integer"
         }
-      },
-      "title": "sixteen"
+      }
     },
     "seventeen": {
       "type": "array",
@@ -117,35 +101,28 @@
             "type": "null"
           }
         ]
-      },
-      "title": "seventeen"
+      }
     },
     "eighteen": {
-      "const": "eighteen",
-      "title": "eighteen"
+      "const": "eighteen"
     },
     "nineteen": {
-      "$ref": "#/definitions/Name",
-      "title": "nineteen"
+      "$ref": "#/definitions/Name"
     },
     "twenty": {
       "type": "integer",
-      "minimum": 0,
-      "title": "twenty"
+      "minimum": 0
     },
     "twentyone": {
       "type": "integer",
-      "minimum": 0,
-      "title": "twentyone"
+      "minimum": 0
     },
     "twentytwo": {
-      "type": "number",
-      "title": "twentytwo"
+      "type": "number"
     },
     "twentythree": {
       "type": "string",
-      "pattern": "^-?[0-9]+$",
-      "title": "twentythree"
+      "pattern": "^-?[0-9]+$"
     }
   },
   "required": [
@@ -178,12 +155,10 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "value": {
-          "type": "string",
-          "title": "value"
+          "type": "string"
         }
       },
       "required": [

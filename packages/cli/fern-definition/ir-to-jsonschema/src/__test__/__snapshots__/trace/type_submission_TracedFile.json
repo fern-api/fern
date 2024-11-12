@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "filename": {
-      "type": "string",
-      "title": "filename"
+      "type": "string"
     },
     "directory": {
-      "type": "string",
-      "title": "directory"
+      "type": "string"
     }
   },
   "required": [

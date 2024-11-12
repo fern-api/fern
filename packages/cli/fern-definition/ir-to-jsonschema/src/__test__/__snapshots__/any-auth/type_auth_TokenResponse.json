@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "access_token": {
-      "type": "string",
-      "title": "access_token"
+      "type": "string"
     },
     "expires_in": {
-      "type": "integer",
-      "title": "expires_in"
+      "type": "integer"
     },
     "refresh_token": {
       "oneOf": [
@@ -17,8 +15,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "refresh_token"
+      ]
     }
   },
   "required": [

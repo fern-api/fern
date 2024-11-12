@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission.SubmissionId",
-      "title": "submissionId"
+      "$ref": "#/definitions/submission.SubmissionId"
     },
     "errorInfo": {
-      "$ref": "#/definitions/submission.ErrorInfo",
-      "title": "errorInfo"
+      "$ref": "#/definitions/submission.ErrorInfo"
     }
   },
   "required": [
@@ -24,16 +22,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [
@@ -65,8 +60,7 @@
               "const": "compileError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -80,8 +74,7 @@
               "const": "runtimeError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -95,8 +88,7 @@
               "const": "internalError"
             },
             "exceptionInfo": {
-              "$ref": "#/definitions/submission.ExceptionInfo",
-              "title": "exceptionInfo"
+              "$ref": "#/definitions/submission.ExceptionInfo"
             }
           },
           "required": [

@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "numStackFrames": {
-      "type": "integer",
-      "title": "numStackFrames"
+      "type": "integer"
     },
     "topStackFrameMethodName": {
-      "type": "string",
-      "title": "topStackFrameMethodName"
+      "type": "string"
     }
   },
   "required": [

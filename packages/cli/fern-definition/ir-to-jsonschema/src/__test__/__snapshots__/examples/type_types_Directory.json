@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "files": {
       "oneOf": [
@@ -16,8 +15,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "files"
+      ]
     },
     "directories": {
       "oneOf": [
@@ -30,8 +28,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "directories"
+      ]
     }
   },
   "required": [
@@ -43,12 +40,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         }
       },
       "required": [
@@ -61,8 +56,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "files": {
           "oneOf": [
@@ -75,8 +69,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "files"
+          ]
         },
         "directories": {
           "oneOf": [
@@ -89,8 +82,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "directories"
+          ]
         }
       },
       "required": [

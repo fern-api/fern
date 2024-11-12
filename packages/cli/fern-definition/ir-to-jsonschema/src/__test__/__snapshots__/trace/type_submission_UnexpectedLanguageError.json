@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "expectedLanguage": {
-      "$ref": "#/definitions/commons.Language",
-      "title": "expectedLanguage"
+      "$ref": "#/definitions/commons.Language"
     },
     "actualLanguage": {
-      "$ref": "#/definitions/commons.Language",
-      "title": "actualLanguage"
+      "$ref": "#/definitions/commons.Language"
     }
   },
   "required": [

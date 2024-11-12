@@ -18,16 +18,13 @@
           "const": "generic"
         },
         "message": {
-          "type": "string",
-          "title": "message"
+          "type": "string"
         },
         "type": {
-          "type": "string",
-          "title": "type"
+          "type": "string"
         },
         "stacktrace": {
-          "type": "string",
-          "title": "stacktrace"
+          "type": "string"
         }
       },
       "required": [

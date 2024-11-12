@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "delta": {
-      "type": "string",
-      "title": "delta"
+      "type": "string"
     },
     "tokens": {
       "oneOf": [
@@ -13,8 +12,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "tokens"
+      ]
     }
   },
   "required": [

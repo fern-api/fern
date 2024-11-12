@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "request": {
-      "$ref": "#/definitions/submission.SubmissionRequest",
-      "title": "request"
+      "$ref": "#/definitions/submission.SubmissionRequest"
     },
     "cause": {
-      "$ref": "#/definitions/submission.InvalidRequestCause",
-      "title": "cause"
+      "$ref": "#/definitions/submission.InvalidRequestCause"
     }
   },
   "required": [
@@ -35,16 +33,13 @@
       "type": "object",
       "properties": {
         "directory": {
-          "type": "string",
-          "title": "directory"
+          "type": "string"
         },
         "filename": {
-          "type": "string",
-          "title": "filename"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         }
       },
       "required": [
@@ -78,8 +73,7 @@
               "const": "initializeProblemRequest"
             },
             "problemId": {
-              "$ref": "#/definitions/commons.ProblemId",
-              "title": "problemId"
+              "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
               "oneOf": [
@@ -89,8 +83,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "problemVersion"
+              ]
             }
           },
           "required": [
@@ -114,23 +107,19 @@
               "const": "submitV2"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission.SubmissionId",
-              "title": "submissionId"
+              "$ref": "#/definitions/submission.SubmissionId"
             },
             "language": {
-              "$ref": "#/definitions/commons.Language",
-              "title": "language"
+              "$ref": "#/definitions/commons.Language"
             },
             "submissionFiles": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/submission.SubmissionFileInfo"
-              },
-              "title": "submissionFiles"
+              }
             },
             "problemId": {
-              "$ref": "#/definitions/commons.ProblemId",
-              "title": "problemId"
+              "$ref": "#/definitions/commons.ProblemId"
             },
             "problemVersion": {
               "oneOf": [
@@ -140,8 +129,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "problemVersion"
+              ]
             },
             "userId": {
               "oneOf": [
@@ -151,8 +139,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "userId"
+              ]
             }
           },
           "required": [
@@ -169,19 +156,16 @@
               "const": "workspaceSubmit"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission.SubmissionId",
-              "title": "submissionId"
+              "$ref": "#/definitions/submission.SubmissionId"
             },
             "language": {
-              "$ref": "#/definitions/commons.Language",
-              "title": "language"
+              "$ref": "#/definitions/commons.Language"
             },
             "submissionFiles": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/submission.SubmissionFileInfo"
-              },
-              "title": "submissionFiles"
+              }
             },
             "userId": {
               "oneOf": [
@@ -191,8 +175,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "userId"
+              ]
             }
           },
           "required": [
@@ -208,8 +191,7 @@
               "const": "stop"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission.SubmissionId",
-              "title": "submissionId"
+              "$ref": "#/definitions/submission.SubmissionId"
             }
           },
           "required": [
@@ -241,8 +223,7 @@
               "const": "submissionIdNotFound"
             },
             "missingSubmissionId": {
-              "$ref": "#/definitions/submission.SubmissionId",
-              "title": "missingSubmissionId"
+              "$ref": "#/definitions/submission.SubmissionId"
             }
           },
           "required": [
@@ -256,12 +237,10 @@
               "const": "customTestCasesUnsupported"
             },
             "problemId": {
-              "$ref": "#/definitions/commons.ProblemId",
-              "title": "problemId"
+              "$ref": "#/definitions/commons.ProblemId"
             },
             "submissionId": {
-              "$ref": "#/definitions/submission.SubmissionId",
-              "title": "submissionId"
+              "$ref": "#/definitions/submission.SubmissionId"
             }
           },
           "required": [
@@ -276,12 +255,10 @@
               "const": "unexpectedLanguage"
             },
             "expectedLanguage": {
-              "$ref": "#/definitions/commons.Language",
-              "title": "expectedLanguage"
+              "$ref": "#/definitions/commons.Language"
             },
             "actualLanguage": {
-              "$ref": "#/definitions/commons.Language",
-              "title": "actualLanguage"
+              "$ref": "#/definitions/commons.Language"
             }
           },
           "required": [

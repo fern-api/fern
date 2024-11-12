@@ -6,15 +6,13 @@
       "items": {
         "type": "integer",
         "minimum": 0
-      },
-      "title": "indices"
+      }
     },
     "values": {
       "type": "array",
       "items": {
         "type": "number"
-      },
-      "title": "values"
+      }
     }
   },
   "required": [

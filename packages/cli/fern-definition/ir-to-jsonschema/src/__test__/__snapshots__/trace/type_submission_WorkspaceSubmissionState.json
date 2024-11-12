@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "status": {
-      "$ref": "#/definitions/submission.WorkspaceSubmissionStatus",
-      "title": "status"
+      "$ref": "#/definitions/submission.WorkspaceSubmissionStatus"
     }
   },
   "required": [
@@ -15,16 +14,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [
@@ -56,8 +52,7 @@
               "const": "compileError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -71,8 +66,7 @@
               "const": "runtimeError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -86,8 +80,7 @@
               "const": "internalError"
             },
             "exceptionInfo": {
-              "$ref": "#/definitions/submission.ExceptionInfo",
-              "title": "exceptionInfo"
+              "$ref": "#/definitions/submission.ExceptionInfo"
             }
           },
           "required": [
@@ -128,16 +121,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -226,8 +216,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exceptionV2"
+              ]
             },
             "exception": {
               "oneOf": [
@@ -237,12 +226,10 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exception"
+              ]
             },
             "stdout": {
-              "type": "string",
-              "title": "stdout"
+              "type": "string"
             }
           },
           "required": [
@@ -263,8 +250,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exceptionV2"
+              ]
             },
             "exception": {
               "oneOf": [
@@ -274,12 +260,10 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exception"
+              ]
             },
             "stdout": {
-              "type": "string",
-              "title": "stdout"
+              "type": "string"
             }
           },
           "required": [

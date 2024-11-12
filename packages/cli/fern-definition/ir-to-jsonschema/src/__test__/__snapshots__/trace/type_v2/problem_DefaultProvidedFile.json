@@ -2,15 +2,13 @@
   "type": "object",
   "properties": {
     "file": {
-      "$ref": "#/definitions/v2.problem.FileInfoV2",
-      "title": "file"
+      "$ref": "#/definitions/v2.problem.FileInfoV2"
     },
     "relatedTypes": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commons.VariableType"
-      },
-      "title": "relatedTypes"
+      }
     }
   },
   "required": [
@@ -23,20 +21,16 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string",
-          "title": "filename"
+          "type": "string"
         },
         "directory": {
-          "type": "string",
-          "title": "directory"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         },
         "editable": {
-          "type": "boolean",
-          "title": "editable"
+          "type": "boolean"
         }
       },
       "required": [
@@ -126,8 +120,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -138,7 +131,6 @@
                   "type": "null"
                 }
               ],
-              "title": "isFixedLength",
               "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
@@ -153,12 +145,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "keyType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

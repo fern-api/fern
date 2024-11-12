@@ -5,8 +5,7 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/submission.WorkspaceSubmissionUpdate"
-      },
-      "title": "updates"
+      }
     }
   },
   "required": [
@@ -45,16 +44,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -80,16 +76,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [
@@ -121,8 +114,7 @@
               "const": "compileError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -136,8 +128,7 @@
               "const": "runtimeError"
             },
             "message": {
-              "type": "string",
-              "title": "message"
+              "type": "string"
             }
           },
           "required": [
@@ -151,8 +142,7 @@
               "const": "internalError"
             },
             "exceptionInfo": {
-              "$ref": "#/definitions/submission.ExceptionInfo",
-              "title": "exceptionInfo"
+              "$ref": "#/definitions/submission.ExceptionInfo"
             }
           },
           "required": [
@@ -208,8 +198,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exceptionV2"
+              ]
             },
             "exception": {
               "oneOf": [
@@ -219,12 +208,10 @@
                 {
                   "type": "null"
                 }
-              ],
-              "title": "exception"
+              ]
             },
             "stdout": {
-              "type": "string",
-              "title": "stdout"
+              "type": "string"
             }
           },
           "required": [
@@ -258,8 +245,7 @@
               "const": "tracedV2"
             },
             "traceResponsesSize": {
-              "type": "integer",
-              "title": "traceResponsesSize"
+              "type": "integer"
             }
           },
           "required": [
@@ -297,12 +283,10 @@
       "properties": {
         "updateTime": {
           "type": "string",
-          "format": "date-time",
-          "title": "updateTime"
+          "format": "date-time"
         },
         "updateInfo": {
-          "$ref": "#/definitions/submission.WorkspaceSubmissionUpdateInfo",
-          "title": "updateInfo"
+          "$ref": "#/definitions/submission.WorkspaceSubmissionUpdateInfo"
         }
       },
       "required": [

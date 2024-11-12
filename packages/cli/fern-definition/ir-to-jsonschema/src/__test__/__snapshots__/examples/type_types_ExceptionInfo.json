@@ -2,16 +2,13 @@
   "type": "object",
   "properties": {
     "exceptionType": {
-      "type": "string",
-      "title": "exceptionType"
+      "type": "string"
     },
     "exceptionMessage": {
-      "type": "string",
-      "title": "exceptionMessage"
+      "type": "string"
     },
     "exceptionStacktrace": {
-      "type": "string",
-      "title": "exceptionStacktrace"
+      "type": "string"
     }
   },
   "required": [

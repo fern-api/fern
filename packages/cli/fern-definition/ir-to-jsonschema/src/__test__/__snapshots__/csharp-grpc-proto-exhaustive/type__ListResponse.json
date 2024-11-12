@@ -12,8 +12,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "columns"
+      ]
     },
     "pagination": {
       "oneOf": [
@@ -23,8 +22,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "pagination"
+      ]
     },
     "namespace": {
       "oneOf": [
@@ -34,8 +32,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "namespace"
+      ]
     },
     "usage": {
       "oneOf": [
@@ -45,8 +42,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "usage"
+      ]
     }
   },
   "additionalProperties": false,
@@ -62,8 +58,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "id"
+          ]
         }
       },
       "additionalProperties": false
@@ -79,8 +74,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "next"
+          ]
         }
       },
       "additionalProperties": false
@@ -97,8 +91,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "units"
+          ]
         }
       },
       "additionalProperties": false

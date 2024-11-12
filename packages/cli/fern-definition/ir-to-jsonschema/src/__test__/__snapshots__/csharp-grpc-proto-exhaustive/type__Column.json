@@ -2,15 +2,13 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string",
-      "title": "id"
+      "type": "string"
     },
     "values": {
       "type": "array",
       "items": {
         "type": "number"
-      },
-      "title": "values"
+      }
     },
     "metadata": {
       "oneOf": [
@@ -20,8 +18,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "metadata"
+      ]
     },
     "indexedData": {
       "oneOf": [
@@ -31,8 +28,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "indexedData"
+      ]
     }
   },
   "required": [
@@ -85,15 +81,13 @@
           "items": {
             "type": "integer",
             "minimum": 0
-          },
-          "title": "indices"
+          }
         },
         "values": {
           "type": "array",
           "items": {
             "type": "number"
-          },
-          "title": "values"
+          }
         }
       },
       "required": [

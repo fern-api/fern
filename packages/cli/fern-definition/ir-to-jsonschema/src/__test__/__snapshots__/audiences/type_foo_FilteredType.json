@@ -9,12 +9,10 @@
         {
           "type": "null"
         }
-      ],
-      "title": "public_property"
+      ]
     },
     "private_property": {
-      "type": "integer",
-      "title": "private_property"
+      "type": "integer"
     }
   },
   "required": [

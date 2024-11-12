@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "missingSubmissionId": {
-      "$ref": "#/definitions/submission.SubmissionId",
-      "title": "missingSubmissionId"
+      "$ref": "#/definitions/submission.SubmissionId"
     }
   },
   "required": [

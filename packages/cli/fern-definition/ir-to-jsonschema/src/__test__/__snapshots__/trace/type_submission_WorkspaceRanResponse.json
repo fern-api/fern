@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "submissionId": {
-      "$ref": "#/definitions/submission.SubmissionId",
-      "title": "submissionId"
+      "$ref": "#/definitions/submission.SubmissionId"
     },
     "runDetails": {
-      "$ref": "#/definitions/submission.WorkspaceRunDetails",
-      "title": "runDetails"
+      "$ref": "#/definitions/submission.WorkspaceRunDetails"
     }
   },
   "required": [
@@ -41,16 +39,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -76,16 +71,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [
@@ -106,8 +98,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "exceptionV2"
+          ]
         },
         "exception": {
           "oneOf": [
@@ -117,12 +108,10 @@
             {
               "type": "null"
             }
-          ],
-          "title": "exception"
+          ]
         },
         "stdout": {
-          "type": "string",
-          "title": "stdout"
+          "type": "string"
         }
       },
       "required": [

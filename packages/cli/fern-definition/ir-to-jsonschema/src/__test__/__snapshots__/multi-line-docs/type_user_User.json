@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string",
-      "title": "id"
+      "type": "string"
     },
     "name": {
       "type": "string",
-      "title": "name",
       "description": "The user's name. This name is unique to each user. A few examples are included below:\n\n- Alice\n- Bob\n- Charlie"
     },
     "age": {
@@ -19,7 +17,6 @@
           "type": "null"
         }
       ],
-      "title": "age",
       "description": "The user's age."
     }
   },

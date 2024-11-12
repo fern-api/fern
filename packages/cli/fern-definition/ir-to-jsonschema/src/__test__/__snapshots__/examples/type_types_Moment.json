@@ -3,18 +3,15 @@
   "properties": {
     "id": {
       "type": "string",
-      "format": "uuid",
-      "title": "id"
+      "format": "uuid"
     },
     "date": {
       "type": "string",
-      "format": "date",
-      "title": "date"
+      "format": "date"
     },
     "datetime": {
       "type": "string",
-      "format": "date-time",
-      "title": "datetime"
+      "format": "date-time"
     }
   },
   "required": [

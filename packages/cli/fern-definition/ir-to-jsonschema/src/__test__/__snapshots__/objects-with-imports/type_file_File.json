@@ -2,16 +2,13 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "contents": {
-      "type": "string",
-      "title": "contents"
+      "type": "string"
     },
     "info": {
-      "$ref": "#/definitions/file.FileInfo",
-      "title": "info"
+      "$ref": "#/definitions/file.FileInfo"
     }
   },
   "required": [

@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "page": {
-      "type": "integer",
-      "title": "page"
+      "type": "integer"
     },
     "starting_after": {
-      "type": "string",
-      "title": "starting_after"
+      "type": "string"
     }
   },
   "required": [

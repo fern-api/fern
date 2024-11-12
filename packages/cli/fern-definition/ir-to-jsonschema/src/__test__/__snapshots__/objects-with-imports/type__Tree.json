@@ -12,8 +12,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "nodes"
+      ]
     }
   },
   "additionalProperties": false,
@@ -22,8 +21,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "data": {
           "oneOf": [
@@ -36,8 +34,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "data"
+          ]
         }
       },
       "required": [
@@ -49,8 +46,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "label": {
           "oneOf": [
@@ -60,8 +56,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "label"
+          ]
         },
         "metadata": {
           "oneOf": [
@@ -71,8 +66,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "metadata"
+          ]
         }
       },
       "required": [

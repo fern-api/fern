@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "data": {
-      "$ref": "#/definitions/users.UserListContainer",
-      "title": "data"
+      "$ref": "#/definitions/users.UserListContainer"
     },
     "next": {
       "oneOf": [
@@ -14,12 +13,10 @@
         {
           "type": "null"
         }
-      ],
-      "title": "next"
+      ]
     },
     "total_count": {
       "type": "integer",
-      "title": "total_count",
       "description": "The totall number of /users"
     }
   },
@@ -33,12 +30,10 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "id": {
-          "type": "integer",
-          "title": "id"
+          "type": "integer"
         }
       },
       "required": [
@@ -54,8 +49,7 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/users.User"
-          },
-          "title": "users"
+          }
         }
       },
       "required": [

@@ -12,8 +12,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "namespaces"
+      ]
     },
     "dimension": {
       "oneOf": [
@@ -24,8 +23,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "dimension"
+      ]
     },
     "fullness": {
       "oneOf": [
@@ -35,8 +33,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "fullness"
+      ]
     },
     "totalCount": {
       "oneOf": [
@@ -47,8 +44,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "totalCount"
+      ]
     }
   },
   "additionalProperties": false,
@@ -65,8 +61,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "count"
+          ]
         }
       },
       "additionalProperties": false

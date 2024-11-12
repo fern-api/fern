@@ -19,8 +19,7 @@
           "const": "circle"
         },
         "radius": {
-          "type": "number",
-          "title": "radius"
+          "type": "number"
         }
       },
       "required": [
@@ -34,8 +33,7 @@
           "const": "square"
         },
         "length": {
-          "type": "number",
-          "title": "length"
+          "type": "number"
         }
       },
       "required": [

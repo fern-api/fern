@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "problemVersion": {
-      "type": "integer",
-      "title": "problemVersion"
+      "type": "integer"
     }
   },
   "required": [

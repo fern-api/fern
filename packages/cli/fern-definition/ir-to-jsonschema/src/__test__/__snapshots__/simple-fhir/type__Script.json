@@ -2,27 +2,22 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string",
-      "title": "id"
+      "type": "string"
     },
     "related_resources": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/ResourceList"
-      },
-      "title": "related_resources"
+      }
     },
     "memo": {
-      "$ref": "#/definitions/Memo",
-      "title": "memo"
+      "$ref": "#/definitions/Memo"
     },
     "resource_type": {
-      "const": "Script",
-      "title": "resource_type"
+      "const": "Script"
     },
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     }
   },
   "required": [
@@ -38,8 +33,7 @@
       "type": "object",
       "properties": {
         "description": {
-          "type": "string",
-          "title": "description"
+          "type": "string"
         },
         "account": {
           "oneOf": [
@@ -49,8 +43,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "account"
+          ]
         }
       },
       "required": [
@@ -62,27 +55,22 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "related_resources": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ResourceList"
-          },
-          "title": "related_resources"
+          }
         },
         "memo": {
-          "$ref": "#/definitions/Memo",
-          "title": "memo"
+          "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Script",
-          "title": "resource_type"
+          "const": "Script"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         }
       },
       "required": [
@@ -98,34 +86,28 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "related_resources": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ResourceList"
-          },
-          "title": "related_resources"
+          }
         },
         "memo": {
-          "$ref": "#/definitions/Memo",
-          "title": "memo"
+          "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Patient",
-          "title": "resource_type"
+          "const": "Patient"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "scripts": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Script"
-          },
-          "title": "scripts"
+          }
         }
       },
       "required": [
@@ -142,27 +124,22 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "related_resources": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ResourceList"
-          },
-          "title": "related_resources"
+          }
         },
         "memo": {
-          "$ref": "#/definitions/Memo",
-          "title": "memo"
+          "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Practitioner",
-          "title": "resource_type"
+          "const": "Practitioner"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         }
       },
       "required": [
@@ -178,27 +155,22 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "id"
+          "type": "string"
         },
         "related_resources": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ResourceList"
-          },
-          "title": "related_resources"
+          }
         },
         "memo": {
-          "$ref": "#/definitions/Memo",
-          "title": "memo"
+          "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Account",
-          "title": "resource_type"
+          "const": "Account"
         },
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "patient": {
           "oneOf": [
@@ -208,8 +180,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "patient"
+          ]
         },
         "practitioner": {
           "oneOf": [
@@ -219,8 +190,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "practitioner"
+          ]
         }
       },
       "required": [

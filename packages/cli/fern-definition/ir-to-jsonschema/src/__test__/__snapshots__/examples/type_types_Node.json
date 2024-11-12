@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "nodes": {
       "oneOf": [
@@ -16,8 +15,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "nodes"
+      ]
     },
     "trees": {
       "oneOf": [
@@ -30,8 +28,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "trees"
+      ]
     }
   },
   "required": [
@@ -53,8 +50,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "nodes"
+          ]
         }
       },
       "additionalProperties": false
@@ -63,8 +59,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string",
-          "title": "name"
+          "type": "string"
         },
         "nodes": {
           "oneOf": [
@@ -77,8 +72,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "nodes"
+          ]
         },
         "trees": {
           "oneOf": [
@@ -91,8 +85,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "trees"
+          ]
         }
       },
       "required": [

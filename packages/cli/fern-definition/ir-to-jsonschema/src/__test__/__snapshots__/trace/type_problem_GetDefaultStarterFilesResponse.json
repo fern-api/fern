@@ -5,8 +5,7 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/problem.ProblemFiles"
-      },
-      "title": "files"
+      }
     }
   },
   "required": [
@@ -18,12 +17,10 @@
       "type": "object",
       "properties": {
         "filename": {
-          "type": "string",
-          "title": "filename"
+          "type": "string"
         },
         "contents": {
-          "type": "string",
-          "title": "contents"
+          "type": "string"
         }
       },
       "required": [
@@ -36,15 +33,13 @@
       "type": "object",
       "properties": {
         "solutionFile": {
-          "$ref": "#/definitions/commons.FileInfo",
-          "title": "solutionFile"
+          "$ref": "#/definitions/commons.FileInfo"
         },
         "readOnlyFiles": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/commons.FileInfo"
-          },
-          "title": "readOnlyFiles"
+          }
         }
       },
       "required": [

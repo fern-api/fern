@@ -3,8 +3,7 @@
   "properties": {
     "bar_property": {
       "type": "string",
-      "format": "uuid",
-      "title": "bar_property"
+      "format": "uuid"
     }
   },
   "required": [

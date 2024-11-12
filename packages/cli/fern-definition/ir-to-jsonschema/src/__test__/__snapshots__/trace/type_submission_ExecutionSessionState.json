@@ -9,17 +9,14 @@
         {
           "type": "null"
         }
-      ],
-      "title": "lastTimeContacted"
+      ]
     },
     "sessionId": {
       "type": "string",
-      "title": "sessionId",
       "description": "The auto-generated session id. Formatted as a uuid."
     },
     "isWarmInstance": {
-      "type": "boolean",
-      "title": "isWarmInstance"
+      "type": "boolean"
     },
     "awsTaskId": {
       "oneOf": [
@@ -29,16 +26,13 @@
         {
           "type": "null"
         }
-      ],
-      "title": "awsTaskId"
+      ]
     },
     "language": {
-      "$ref": "#/definitions/commons.Language",
-      "title": "language"
+      "$ref": "#/definitions/commons.Language"
     },
     "status": {
-      "$ref": "#/definitions/submission.ExecutionSessionStatus",
-      "title": "status"
+      "$ref": "#/definitions/submission.ExecutionSessionStatus"
     }
   },
   "required": [

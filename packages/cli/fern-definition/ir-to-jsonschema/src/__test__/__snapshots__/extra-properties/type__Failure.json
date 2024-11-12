@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "status": {
-      "const": "failure",
-      "title": "status"
+      "const": "failure"
     }
   },
   "required": [

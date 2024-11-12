@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "valueType": {
-      "$ref": "#/definitions/commons.VariableType",
-      "title": "valueType"
+      "$ref": "#/definitions/commons.VariableType"
     },
     "isFixedLength": {
       "oneOf": [
@@ -14,7 +13,6 @@
           "type": "null"
         }
       ],
-      "title": "isFixedLength",
       "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
     }
   },
@@ -102,8 +100,7 @@
               "const": "listType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "isFixedLength": {
               "oneOf": [
@@ -114,7 +111,6 @@
                   "type": "null"
                 }
               ],
-              "title": "isFixedLength",
               "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
@@ -129,12 +125,10 @@
               "const": "mapType"
             },
             "keyType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "keyType"
+              "$ref": "#/definitions/commons.VariableType"
             },
             "valueType": {
-              "$ref": "#/definitions/commons.VariableType",
-              "title": "valueType"
+              "$ref": "#/definitions/commons.VariableType"
             }
           },
           "required": [

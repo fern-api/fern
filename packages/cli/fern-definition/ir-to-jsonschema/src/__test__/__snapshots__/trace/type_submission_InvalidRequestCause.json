@@ -20,8 +20,7 @@
           "const": "submissionIdNotFound"
         },
         "missingSubmissionId": {
-          "$ref": "#/definitions/submission.SubmissionId",
-          "title": "missingSubmissionId"
+          "$ref": "#/definitions/submission.SubmissionId"
         }
       },
       "required": [
@@ -35,12 +34,10 @@
           "const": "customTestCasesUnsupported"
         },
         "problemId": {
-          "$ref": "#/definitions/commons.ProblemId",
-          "title": "problemId"
+          "$ref": "#/definitions/commons.ProblemId"
         },
         "submissionId": {
-          "$ref": "#/definitions/submission.SubmissionId",
-          "title": "submissionId"
+          "$ref": "#/definitions/submission.SubmissionId"
         }
       },
       "required": [
@@ -55,12 +52,10 @@
           "const": "unexpectedLanguage"
         },
         "expectedLanguage": {
-          "$ref": "#/definitions/commons.Language",
-          "title": "expectedLanguage"
+          "$ref": "#/definitions/commons.Language"
         },
         "actualLanguage": {
-          "$ref": "#/definitions/commons.Language",
-          "title": "actualLanguage"
+          "$ref": "#/definitions/commons.Language"
         }
       },
       "required": [

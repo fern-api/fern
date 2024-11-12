@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "$ref": "#/definitions/types.MovieId",
-      "title": "id"
+      "$ref": "#/definitions/types.MovieId"
     },
     "prequel": {
       "oneOf": [
@@ -13,29 +12,23 @@
         {
           "type": "null"
         }
-      ],
-      "title": "prequel"
+      ]
     },
     "title": {
-      "type": "string",
-      "title": "title"
+      "type": "string"
     },
     "from": {
-      "type": "string",
-      "title": "from"
+      "type": "string"
     },
     "rating": {
       "type": "number",
-      "title": "rating",
       "description": "The rating scale is one to five stars"
     },
     "type": {
-      "const": "movie",
-      "title": "type"
+      "const": "movie"
     },
     "tag": {
-      "$ref": "#/definitions/commons.types.Tag",
-      "title": "tag"
+      "$ref": "#/definitions/commons.types.Tag"
     },
     "book": {
       "oneOf": [
@@ -45,8 +38,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "book"
+      ]
     },
     "metadata": {
       "type": "object",
@@ -59,19 +51,16 @@
           "array",
           "null"
         ]
-      },
-      "title": "metadata"
+      }
     },
     "revenue": {
-      "type": "integer",
-      "title": "revenue"
+      "type": "integer"
     },
     "cast": {
       "type": "array",
       "items": {
         "type": "string"
-      },
-      "title": "cast"
+      }
     }
   },
   "required": [

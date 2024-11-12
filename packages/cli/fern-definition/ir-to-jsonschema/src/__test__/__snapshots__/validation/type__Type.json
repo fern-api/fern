@@ -2,20 +2,16 @@
   "type": "object",
   "properties": {
     "decimal": {
-      "type": "number",
-      "title": "decimal"
+      "type": "number"
     },
     "even": {
-      "type": "integer",
-      "title": "even"
+      "type": "integer"
     },
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "shape": {
-      "$ref": "#/definitions/Shape",
-      "title": "shape"
+      "$ref": "#/definitions/Shape"
     }
   },
   "required": [

@@ -9,15 +9,13 @@
         {
           "type": "null"
         }
-      ],
-      "title": "head"
+      ]
     },
     "nodes": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/commons.DoublyLinkedListNodeValue"
-      },
-      "title": "nodes"
+      }
     }
   },
   "required": [
@@ -32,12 +30,10 @@
       "type": "object",
       "properties": {
         "nodeId": {
-          "$ref": "#/definitions/commons.NodeId",
-          "title": "nodeId"
+          "$ref": "#/definitions/commons.NodeId"
         },
         "val": {
-          "type": "number",
-          "title": "val"
+          "type": "number"
         },
         "next": {
           "oneOf": [
@@ -47,8 +43,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "next"
+          ]
         },
         "prev": {
           "oneOf": [
@@ -58,8 +53,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "prev"
+          ]
         }
       },
       "required": [

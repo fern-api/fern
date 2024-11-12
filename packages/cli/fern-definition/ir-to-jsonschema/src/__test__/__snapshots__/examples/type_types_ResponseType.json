@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "#/definitions/Type",
-      "title": "type"
+      "$ref": "#/definitions/Type"
     }
   },
   "required": [

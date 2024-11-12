@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "message": {
-      "type": "string",
-      "title": "message"
+      "type": "string"
     }
   },
   "required": [

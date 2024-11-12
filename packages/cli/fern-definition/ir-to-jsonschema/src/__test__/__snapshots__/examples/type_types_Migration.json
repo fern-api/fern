@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "title": "name"
+      "type": "string"
     },
     "status": {
-      "$ref": "#/definitions/types.MigrationStatus",
-      "title": "status"
+      "$ref": "#/definitions/types.MigrationStatus"
     }
   },
   "required": [

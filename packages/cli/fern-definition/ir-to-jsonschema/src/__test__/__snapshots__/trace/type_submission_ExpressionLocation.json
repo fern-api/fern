@@ -2,12 +2,10 @@
   "type": "object",
   "properties": {
     "start": {
-      "type": "integer",
-      "title": "start"
+      "type": "integer"
     },
     "offset": {
-      "type": "integer",
-      "title": "offset"
+      "type": "integer"
     }
   },
   "required": [

@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "exceptionInfo": {
-      "$ref": "#/definitions/submission.ExceptionInfo",
-      "title": "exceptionInfo"
+      "$ref": "#/definitions/submission.ExceptionInfo"
     }
   },
   "required": [
@@ -15,16 +14,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [

@@ -8,8 +8,7 @@
         "additionalProperties": {
           "type": "string"
         }
-      },
-      "title": "map"
+      }
     }
   },
   "required": [

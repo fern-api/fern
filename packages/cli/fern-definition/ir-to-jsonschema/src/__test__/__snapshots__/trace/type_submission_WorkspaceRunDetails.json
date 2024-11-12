@@ -9,8 +9,7 @@
         {
           "type": "null"
         }
-      ],
-      "title": "exceptionV2"
+      ]
     },
     "exception": {
       "oneOf": [
@@ -20,12 +19,10 @@
         {
           "type": "null"
         }
-      ],
-      "title": "exception"
+      ]
     },
     "stdout": {
-      "type": "string",
-      "title": "stdout"
+      "type": "string"
     }
   },
   "required": [
@@ -54,16 +51,13 @@
               "const": "generic"
             },
             "exceptionType": {
-              "type": "string",
-              "title": "exceptionType"
+              "type": "string"
             },
             "exceptionMessage": {
-              "type": "string",
-              "title": "exceptionMessage"
+              "type": "string"
             },
             "exceptionStacktrace": {
-              "type": "string",
-              "title": "exceptionStacktrace"
+              "type": "string"
             }
           },
           "required": [
@@ -89,16 +83,13 @@
       "type": "object",
       "properties": {
         "exceptionType": {
-          "type": "string",
-          "title": "exceptionType"
+          "type": "string"
         },
         "exceptionMessage": {
-          "type": "string",
-          "title": "exceptionMessage"
+          "type": "string"
         },
         "exceptionStacktrace": {
-          "type": "string",
-          "title": "exceptionStacktrace"
+          "type": "string"
         }
       },
       "required": [

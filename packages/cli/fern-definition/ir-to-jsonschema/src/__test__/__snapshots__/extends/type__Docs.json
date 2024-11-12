@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "docs": {
-      "type": "string",
-      "title": "docs"
+      "type": "string"
     }
   },
   "required": [
