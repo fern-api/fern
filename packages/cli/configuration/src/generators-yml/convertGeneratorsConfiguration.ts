@@ -95,6 +95,7 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
+                    onlyIncludeEndpointReferencedSchemas: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
                     objectQueryParameters: undefined,
@@ -119,7 +120,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
                     objectQueryParameters: undefined,
-                    respectReadonlySchemas: undefined
+                    respectReadonlySchemas: undefined,
+                    onlyIncludeEndpointReferencedSchemas: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -140,7 +142,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseOptionalAdditionalProperties: undefined,
                             coerceEnumsToLiterals: undefined,
                             objectQueryParameters: undefined,
-                            respectReadonlySchemas: undefined
+                            respectReadonlySchemas: undefined,
+                            onlyIncludeEndpointReferencedSchemas: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -161,7 +164,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseOptionalAdditionalProperties: undefined,
                             coerceEnumsToLiterals: undefined,
                             objectQueryParameters: undefined,
-                            respectReadonlySchemas: undefined
+                            respectReadonlySchemas: undefined,
+                            onlyIncludeEndpointReferencedSchemas: undefined
                         }
                     });
                 } else {
@@ -177,6 +181,8 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
+                            onlyIncludeEndpointReferencedSchemas:
+                                definition.settings?.["only-include-endpoint-referenced-schemas"],
                             shouldUseOptionalAdditionalProperties: undefined,
                             coerceEnumsToLiterals: undefined,
                             objectQueryParameters: undefined,
@@ -198,6 +204,8 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
+                    onlyIncludeEndpointReferencedSchemas:
+                        apiConfiguration.settings?.["only-include-endpoint-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
                     objectQueryParameters: undefined,
@@ -223,6 +231,7 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    onlyIncludeEndpointReferencedSchemas: settings?.["only-include-endpoint-referenced-schemas"],
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
@@ -242,6 +251,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    onlyIncludeEndpointReferencedSchemas:
+                        openapi.settings?.["only-include-endpoint-referenced-schemas"],
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
@@ -264,6 +275,7 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: settings?.["message-naming"],
+                    onlyIncludeEndpointReferencedSchemas: settings?.["only-include-endpoint-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: undefined,
                     coerceEnumsToLiterals: undefined,
                     objectQueryParameters: undefined,
@@ -330,6 +342,7 @@ async function parseApiConfigurationV2Schema({
                     shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
+                    onlyIncludeEndpointReferencedSchemas: spec.settings?.["only-include-endpoint-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
                     coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
                     objectQueryParameters: spec.settings?.["object-query-parameters"],

@@ -401,11 +401,15 @@ export function buildReferenceTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
-    const resolvedSchema = context.getSchema(schema.schema, namespace);
+    if (context.onlyIncludeEndpointReferencedSchemas && context.isInEndpoint()) {
+        context.markSchemaAsReferenced(schema.schema);
+    }
 
+    const resolvedSchema = context.getSchema(schema.schema, namespace);
     if (resolvedSchema == null) {
         return "unknown";
     }
+
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);

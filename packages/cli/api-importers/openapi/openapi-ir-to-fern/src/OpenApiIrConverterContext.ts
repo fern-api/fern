@@ -36,6 +36,11 @@ export interface OpenApiIrConverterContextOpts {
      * If true, the converter will respect readonly properties in OpenAPI schemas.
      */
     respectReadonlySchemas: boolean;
+
+    /**
+     * If true, the converter will only include schemas referenced by endpoints.
+     */
+    onlyIncludeEndpointReferencedSchemas: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -49,15 +54,33 @@ export class OpenApiIrConverterContext {
     public detectGlobalHeaders: boolean;
     public objectQueryParameters: boolean;
     public respectReadonlySchemas: boolean;
+    public onlyIncludeEndpointReferencedSchemas: boolean;
+
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
+
+    /**
+     * The set of referenced schema ids to include in the generated definition.
+     * If this value is undefined, _all_ schemaIds should be treated as referenced,
+     * and included in the generated definition.
+     */
+    private referencedSchemaIds: Set<SchemaId> | undefined;
+
+    /**
+     * Whether the current schema being processed is part of an endpoint.
+     * This is used to determine whether certain properties should be included
+     * in the generated definition (e.g. endpoint tree-shaking).
+     */
+    private inEndpoint = false;
+
     /**
      * The current endpoint method being processed. This is used to determine
      * whether certain properties should be included in the generated definition
      * (e.g. readonly properties are excluded for POST/PUT endpoints).
      */
     private endpointMethod: HttpMethod | undefined;
+
     /**
      * Whether the current schema being processed is part of a request body.
      * This is used to determine whether certain properties should be included
@@ -74,7 +97,8 @@ export class OpenApiIrConverterContext {
         globalHeaderOverrides,
         authOverrides,
         objectQueryParameters,
-        respectReadonlySchemas
+        respectReadonlySchemas,
+        onlyIncludeEndpointReferencedSchemas
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -90,6 +114,8 @@ export class OpenApiIrConverterContext {
         this.globalHeaderOverrides = globalHeaderOverrides;
         this.objectQueryParameters = objectQueryParameters;
         this.respectReadonlySchemas = respectReadonlySchemas;
+        this.onlyIncludeEndpointReferencedSchemas = onlyIncludeEndpointReferencedSchemas;
+        this.referencedSchemaIds = onlyIncludeEndpointReferencedSchemas ? new Set() : undefined;
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {
@@ -111,6 +137,19 @@ export class OpenApiIrConverterContext {
                 }
             }
         }
+    }
+
+    public markSchemaAsReferenced(id: SchemaId): void {
+        if (this.referencedSchemaIds != null) {
+            this.referencedSchemaIds.add(id);
+        }
+    }
+
+    public getReferencedSchemaIds(): SchemaId[] | undefined {
+        if (this.referencedSchemaIds == null) {
+            return undefined;
+        }
+        return Array.from(this.referencedSchemaIds);
     }
 
     public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
@@ -161,6 +200,27 @@ export class OpenApiIrConverterContext {
      */
     public unsetEndpointMethod(): void {
         this.endpointMethod = undefined;
+    }
+
+    /**
+     * Returns whether we're currently processing an endpoint
+     */
+    public isInEndpoint(): boolean {
+        return this.inEndpoint;
+    }
+
+    /**
+     * Sets that we're currently processing a request
+     */
+    public setInEndpoint(): void {
+        this.inEndpoint = true;
+    }
+
+    /**
+     * Unsets that we're currently processing a request
+     */
+    public unsetInEndpoint(): void {
+        this.inEndpoint = false;
     }
 
     /**

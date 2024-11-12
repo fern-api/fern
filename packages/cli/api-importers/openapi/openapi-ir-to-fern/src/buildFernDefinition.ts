@@ -71,13 +71,37 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
-    const { schemaIdsToExclude, sdkGroups } = buildServices(context);
+
+    const convertedServices = buildServices(context);
+    const sdkGroups = convertedServices.sdkGroups;
+    let schemaIdsToExclude = convertedServices.schemaIdsToExclude;
+
     buildWebhooks(context);
 
     // Add Channels
     for (const channel of context.ir.channel) {
         const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
+    }
+
+    const allSchemaIds = new Set(Object.keys(context.ir.groupedSchemas.rootSchemas));
+    for (const schemas of Object.values(context.ir.groupedSchemas.namespacedSchemas)) {
+        for (const schemaId of Object.keys(schemas)) {
+            allSchemaIds.add(schemaId);
+        }
+    }
+
+    const referencedSchemaIds = context.getReferencedSchemaIds();
+    if (referencedSchemaIds != null) {
+        // If we're restricting to only referenced schemas, we need to
+        // exclude all schemas that aren't referenced.
+        const schemaIdsToExcludeSet = new Set<string>(schemaIdsToExclude);
+        for (const schemaId of allSchemaIds) {
+            if (!referencedSchemaIds.includes(schemaId)) {
+                schemaIdsToExcludeSet.add(schemaId);
+            }
+        }
+        schemaIdsToExclude = Array.from(schemaIdsToExcludeSet);
     }
 
     // Add Schemas

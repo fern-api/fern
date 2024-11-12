@@ -4,10 +4,12 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
-export function buildServices(context: OpenApiIrConverterContext): {
+export interface ConvertedServicesResponse {
     schemaIdsToExclude: string[];
     sdkGroups: Set<string>;
-} {
+}
+
+export function buildServices(context: OpenApiIrConverterContext): ConvertedServicesResponse {
     const sdkGroups = new Set<string>();
     const { endpoints, tags } = context.ir;
     let schemaIdsToExclude: string[] = [];
@@ -33,6 +35,7 @@ export function buildServices(context: OpenApiIrConverterContext): {
         }
         const irTag = tag == null ? undefined : tags.tagsById[tag];
 
+        context.setInEndpoint();
         context.setEndpointMethod(endpoint.method);
         const convertedEndpoint = buildEndpoint({
             context,
@@ -40,6 +43,7 @@ export function buildServices(context: OpenApiIrConverterContext): {
             declarationFile: file
         });
         context.unsetEndpointMethod();
+        context.unsetInEndpoint();
 
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
