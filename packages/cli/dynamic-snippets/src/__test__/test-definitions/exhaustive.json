@@ -3249,6 +3249,296 @@
                 "type": "json"
             }
         },
+        "endpoint_endpoints/content-type.postJsonPatchContentType": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "postJsonPatchContentType",
+                    "camelCase": {
+                        "unsafeName": "postJSONPatchContentType",
+                        "safeName": "postJSONPatchContentType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_json_patch_content_type",
+                        "safeName": "post_json_patch_content_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_JSON_PATCH_CONTENT_TYPE",
+                        "safeName": "POST_JSON_PATCH_CONTENT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostJSONPatchContentType",
+                        "safeName": "PostJSONPatchContentType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "content-type",
+                            "camelCase": {
+                                "unsafeName": "contentType",
+                                "safeName": "contentType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "content_type",
+                                "safeName": "content_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONTENT_TYPE",
+                                "safeName": "CONTENT_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ContentType",
+                                "safeName": "ContentType"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "content-type",
+                        "camelCase": {
+                            "unsafeName": "contentType",
+                            "safeName": "contentType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "content_type",
+                            "safeName": "content_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONTENT_TYPE",
+                            "safeName": "CONTENT_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ContentType",
+                            "safeName": "ContentType"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/foo/bar"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "_type": "named",
+                        "value": "type_types/object:ObjectWithOptionalField"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "postJsonPatchContentWithCharsetType",
+                    "camelCase": {
+                        "unsafeName": "postJSONPatchContentWithCharsetType",
+                        "safeName": "postJSONPatchContentWithCharsetType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_json_patch_content_with_charset_type",
+                        "safeName": "post_json_patch_content_with_charset_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_JSON_PATCH_CONTENT_WITH_CHARSET_TYPE",
+                        "safeName": "POST_JSON_PATCH_CONTENT_WITH_CHARSET_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostJSONPatchContentWithCharsetType",
+                        "safeName": "PostJSONPatchContentWithCharsetType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "content-type",
+                            "camelCase": {
+                                "unsafeName": "contentType",
+                                "safeName": "contentType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "content_type",
+                                "safeName": "content_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONTENT_TYPE",
+                                "safeName": "CONTENT_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ContentType",
+                                "safeName": "ContentType"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "content-type",
+                        "camelCase": {
+                            "unsafeName": "contentType",
+                            "safeName": "contentType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "content_type",
+                            "safeName": "content_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONTENT_TYPE",
+                            "safeName": "CONTENT_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ContentType",
+                            "safeName": "ContentType"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/foo/baz"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "_type": "named",
+                        "value": "type_types/object:ObjectWithOptionalField"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            }
+        },
         "endpoint_endpoints/enum.getAndReturnEnum": {
             "auth": {
                 "type": "bearer",
