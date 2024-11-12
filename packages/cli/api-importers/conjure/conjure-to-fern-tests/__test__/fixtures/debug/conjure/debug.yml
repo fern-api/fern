@@ -3,7 +3,7 @@ types:
     default-package: com.birch.debug.service
 
 services:
-  Service:
+  DebugService:
     name: Generic debug service
     package: com.birch.debug.service
     base-path: /debug
