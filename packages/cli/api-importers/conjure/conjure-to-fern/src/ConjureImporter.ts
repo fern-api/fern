@@ -172,7 +172,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             if (!endpoint.request) {
                                 endpoint.request = {};
                             } else if (typeof endpoint.request === "string") {
-                                endpoint.request = { body: "" };
+                                endpoint.request = { body: endpoint.request };
                             }
                             endpoint.request.body = argDeclaration === "binary" ? "bytes" : argDeclaration;
                         } else {
