@@ -1,4 +1,10 @@
 - changelogEntry:
+    - summary: Fixes bug introduced in 0.45.0-rc33 where version slugs were not being generated correctly.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc41
+
+- changelogEntry:
     - summary: |
         Fixed bug in the Conjure importer where query parameters were overwritten during endpoint parameter parsing.
       type: fix
