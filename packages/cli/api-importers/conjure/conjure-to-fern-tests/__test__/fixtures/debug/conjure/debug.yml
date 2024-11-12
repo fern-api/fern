@@ -1,0 +1,47 @@
+types:
+  definitions:
+    default-package: com.birch.debug.service
+
+services:
+  DebugService:
+    name: Generic debug service
+    package: com.birch.debug.service
+    base-path: /debug
+    endpoints:
+
+      debugEndpointAlpha:
+        docs: Test endpoint alpha.
+        http: GET /debug-endpoint-alpha
+        auth: header
+        args:
+          param1: string
+          param2: string
+        returns: string
+
+      debugEndpointBeta:
+        docs: Test endpoint beta.
+        http: GET /debug-endpoint-beta/{param1}
+        args:
+          param1:
+            type: string
+            param-type: path
+          param2:
+            type: string
+            param-type: query
+        returns: string
+
+      debugEndpointGamma:
+        docs: Test endpoint gamma.
+        http: POST /debug-endpoint-beta/{param1}/test
+        args:
+          param1:
+            type: string
+            param-type: path
+          param2:
+            type: string
+            param-type: query
+          param3:
+            type: string
+            param-type: query
+          body: binary
+        returns: string

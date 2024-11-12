@@ -1,5 +1,6 @@
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Container;
+using SeedExhaustive.Endpoints.ContentType;
 using SeedExhaustive.Endpoints.Enum;
 using SeedExhaustive.Endpoints.HttpMethods;
 using SeedExhaustive.Endpoints.Object;
@@ -19,6 +20,7 @@ public partial class EndpointsClient
     {
         _client = client;
         Container = new ContainerClient(_client);
+        ContentType = new ContentTypeClient(_client);
         Enum = new EnumClient(_client);
         HttpMethods = new HttpMethodsClient(_client);
         Object = new ObjectClient(_client);
@@ -28,6 +30,8 @@ public partial class EndpointsClient
     }
 
     public ContainerClient Container { get; }
+
+    public ContentTypeClient ContentType { get; }
 
     public EnumClient Enum { get; }
 

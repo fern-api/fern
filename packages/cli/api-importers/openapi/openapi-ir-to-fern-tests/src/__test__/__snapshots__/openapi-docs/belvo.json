@@ -37753,10 +37753,8 @@ docs: >-
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                       "customer": "customer",
                       "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
                         "country": "BRA",
-                        "number": "45722-0",
+                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                       },
                       "holder": {
                         "information": {
@@ -37790,133 +37788,6 @@ docs: >-
                         "terminal_id": 123,
                       },
                     },
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Info)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Key)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "country": "BRA",
-                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PSE)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                   },
                   "response": {
                     "body": {
@@ -38615,9 +38486,7 @@ service:
               institution: f512d996-583a-4a91-8b5b-eba2e103b068
               details:
                 country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
+                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
               holder:
                 type: BUSINESS
                 information:
@@ -38637,100 +38506,6 @@ service:
             number: '12343453245633'
             metadata:
               internal_reference_id: GGq73487w2
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Info)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Key)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PSE)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
           response:
             body:
               id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
@@ -39185,12 +38960,12 @@ docs: >-
                       "country": "BRA",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
+                      "customer_type": "BUSINESS",
+                      "email": "finance@musicabrazil.br",
                       "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
+                      "identifier": "00.000.000/0001-91",
+                      "identifier_type": "CNPJ",
+                      "name": "Music Production Brazil",
                       "phone": "3210-9876",
                     },
                   },
@@ -39206,84 +38981,6 @@ docs: >-
                     "identifier_type": "CC",
                     "name": "Carlos Vives",
                     "phone": "3210-9876",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Business",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "BUSINESS",
-                      "email": "finance@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "00.000.000/0001-91",
-                      "identifier_type": "CNPJ",
-                      "name": "Music Production Brazil",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "PSE Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
                   },
                   "response": {
                     "body": {
@@ -39932,12 +39629,12 @@ service:
               id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
               created_at: '2022-02-09T08:45:50Z'
               created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
+              customer_type: BUSINESS
+              name: Music Production Brazil
               country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
+              email: finance@musicabrazil.br
+              identifier: 00.000.000/0001-91
+              identifier_type: CNPJ
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
         - name: PSE Individual
@@ -39950,69 +39647,6 @@ service:
             identifier_type: CC
             address: Calle Carlos Vives 432, 80300 Bogota
             phone: 3210-9876
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Business
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: BUSINESS
-              name: Music Production Brazil
-              country: BRA
-              email: finance@musicabrazil.br
-              identifier: 00.000.000/0001-91
-              identifier_type: CNPJ
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: PSE Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
           response:
             body:
               id: 0110c70a-5faf-4d72-94b6-307473e86af7

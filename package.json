@@ -4,6 +4,11 @@
   "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
+  "engines": {
+    "npm": "please-use-pnpm",
+    "pnpm": ">= 9.0.0",
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "clean": "pnpm -r clean",
     "compile": "pnpm -r --no-bail compile",

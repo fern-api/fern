@@ -453,7 +453,7 @@ export class DocsDefinitionResolver {
         isDefault: boolean
     ): Promise<FernNavigation.V1.VersionNode> {
         const id = this.#idgen.get(version.version);
-        const slug = parentSlug.setVersionSlug(version.version);
+        const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version));
         const child =
             version.navigation.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, version.navigation.items, slug)

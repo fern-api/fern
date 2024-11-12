@@ -5,26 +5,22 @@ import { ModulePath } from "./core/types";
 
 export declare namespace PythonFile {
     interface Args {
-        /* The name of the Python module that this file belongs to*/
-        moduleName: string;
         /* The path of the Python file relative to the module */
         path: ModulePath;
-        /* The name of the Python file */
-        name: string;
+        /* Whether or not this represents the root of a Python module */
+        isInitFile?: boolean;
     }
 }
 
 export class PythonFile extends AstNode {
-    public readonly moduleName: string;
     public readonly path: ModulePath;
-    public readonly name: string;
+    public readonly isInitFile: boolean;
     private readonly statements: AstNode[] = [];
 
-    constructor({ moduleName, path, name }: PythonFile.Args) {
+    constructor({ path, isInitFile = false }: PythonFile.Args) {
         super();
-        this.moduleName = moduleName;
         this.path = path;
-        this.name = name;
+        this.isInitFile = isInitFile;
     }
 
     public addStatement(statement: AstNode): void {
@@ -79,7 +75,7 @@ export class PythonFile extends AstNode {
 
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
-            if (refModulePath[0] === this.moduleName) {
+            if (refModulePath[0] === this.path[0]) {
                 // Relativize the import
                 // Calculate the common prefix length
                 let commonPrefixLength = 0;
@@ -92,7 +88,12 @@ export class PythonFile extends AstNode {
                 }
 
                 // Calculate the number of levels to go up
-                const levelsUp = this.path.length - commonPrefixLength;
+                let levelsUp = this.path.length - commonPrefixLength;
+
+                // If this is an __init__.py file, then we must go one more level up.
+                if (this.isInitFile) {
+                    levelsUp++;
+                }
 
                 // Build the relative import path
                 let relativePath = levelsUp > 0 ? ".".repeat(levelsUp) : ".";
