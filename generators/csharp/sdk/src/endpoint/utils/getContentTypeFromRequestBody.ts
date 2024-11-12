@@ -1,7 +1,9 @@
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-export const getContentTypeFromRequestBody = (endpoint: HttpEndpoint): string | undefined => {
-    if (!endpoint.requestBody) {return undefined;}
+export function getContentTypeFromRequestBody(endpoint: HttpEndpoint): string | undefined {
+    if (!endpoint.requestBody) {
+        return undefined;
+    }
     return endpoint.requestBody._visit<string | undefined>({
         inlinedRequestBody: (body) => body.contentType,
         reference: (body) => body.contentType,
@@ -11,4 +13,4 @@ export const getContentTypeFromRequestBody = (endpoint: HttpEndpoint): string | 
             throw new Error(`Unexpected request body type: ${body.type}`);
         }
     });
-};
+}
