@@ -1,0 +1,18 @@
+
+types:
+  Response:
+    properties:
+      fooWithDocs: 
+        type: string
+        docs: A foo property that should show doc comments.
+      fooNoDocs: 
+        type: string
+      fooLongDocs: 
+        type: string
+        docs: |
+          A foo property that should show doc comments.
+          There should be a line break in between these two sentences.
+      fooDocsOnComplexType: 
+        type: optional<list<string>>
+        docs: Doc comments should be at the right level of indentation.
+
