@@ -40,7 +40,7 @@ export interface OpenApiIrConverterContextOpts {
     /**
      * If true, the converter will only include schemas referenced by endpoints.
      */
-    onlyIncludeEndpointReferencedSchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export class OpenApiIrConverterContext {
@@ -54,7 +54,7 @@ export class OpenApiIrConverterContext {
     public detectGlobalHeaders: boolean;
     public objectQueryParameters: boolean;
     public respectReadonlySchemas: boolean;
-    public onlyIncludeEndpointReferencedSchemas: boolean;
+    public onlyIncludeReferencedSchemas: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -98,7 +98,7 @@ export class OpenApiIrConverterContext {
         authOverrides,
         objectQueryParameters,
         respectReadonlySchemas,
-        onlyIncludeEndpointReferencedSchemas
+        onlyIncludeReferencedSchemas
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -114,8 +114,8 @@ export class OpenApiIrConverterContext {
         this.globalHeaderOverrides = globalHeaderOverrides;
         this.objectQueryParameters = objectQueryParameters;
         this.respectReadonlySchemas = respectReadonlySchemas;
-        this.onlyIncludeEndpointReferencedSchemas = onlyIncludeEndpointReferencedSchemas;
-        this.referencedSchemaIds = onlyIncludeEndpointReferencedSchemas ? new Set() : undefined;
+        this.onlyIncludeReferencedSchemas = onlyIncludeReferencedSchemas;
+        this.referencedSchemaIds = onlyIncludeReferencedSchemas ? new Set() : undefined;
 
         const schemaByStatusCode: Record<number, Schema> = {};
         if (!this.enableUniqueErrorsPerEndpoint) {

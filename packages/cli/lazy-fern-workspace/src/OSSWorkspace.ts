@@ -66,7 +66,7 @@ export interface SpecImportSettings {
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
-    onlyIncludeEndpointReferencedSchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -114,15 +114,15 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public sources: IdentifiableSource[];
 
     private respectReadonlySchemas: boolean;
-    private onlyIncludeEndpointReferencedSchemas: boolean;
+    private onlyIncludeReferencedSchemas: boolean;
 
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
-        this.onlyIncludeEndpointReferencedSchemas = this.specs.every(
-            (spec) => spec.settings?.onlyIncludeEndpointReferencedSchemas ?? false
+        this.onlyIncludeReferencedSchemas = this.specs.every(
+            (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
         );
     }
 
@@ -145,7 +145,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             optionOverrides: {
                 ...optionOverrides,
                 respectReadonlySchemas: this.respectReadonlySchemas,
-                onlyIncludeEndpointReferencedSchemas: this.onlyIncludeEndpointReferencedSchemas
+                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
             }
         });
     }
@@ -183,7 +183,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
             objectQueryParameters,
             respectReadonlySchemas: this.respectReadonlySchemas,
-            onlyIncludeEndpointReferencedSchemas: this.onlyIncludeEndpointReferencedSchemas
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
         });
 
         return {

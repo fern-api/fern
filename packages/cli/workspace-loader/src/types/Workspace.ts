@@ -68,7 +68,7 @@ export interface SpecImportSettings {
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
-    onlyIncludeEndpointReferencedSchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export interface OpenAPIFile {

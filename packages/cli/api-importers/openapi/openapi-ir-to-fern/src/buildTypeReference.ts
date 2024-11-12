@@ -401,7 +401,7 @@ export function buildReferenceTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
-    if (context.onlyIncludeEndpointReferencedSchemas && context.isInEndpoint()) {
+    if (context.onlyIncludeReferencedSchemas && context.isInEndpoint()) {
         context.markSchemaAsReferenced(schema.schema);
     }
 

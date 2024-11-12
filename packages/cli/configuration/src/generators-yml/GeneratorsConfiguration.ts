@@ -54,7 +54,7 @@ export interface APIDefinitionSettings {
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
-    onlyIncludeEndpointReferencedSchemas: boolean | undefined;
+    onlyIncludeReferencedSchemas: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
