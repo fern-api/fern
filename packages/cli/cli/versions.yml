@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The docs resolver now plumbs roles through to the top-level defintion. This enables segmented search results for docs.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc44
+
+- changelogEntry:
+    - summary: |
         Support non-standard HTTP code 498; Validate `x-fern-examples` during schema parsing.
       type: fix
   irVersion: 53
