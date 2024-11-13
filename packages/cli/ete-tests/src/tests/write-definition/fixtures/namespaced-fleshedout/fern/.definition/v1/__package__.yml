@@ -86,6 +86,11 @@ types:
       data: optional<string>
     source:
       openapi: openapi/cohere.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
   NotFoundErrorBody:
     properties:
       data: optional<string>
@@ -161,6 +166,14 @@ errors:
       - value: {}
     status-code: 500
     type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
+    type: unknown
   NotFoundError:
     docs: >
       This error is returned when a resource is not found. This could be
@@ -235,6 +248,7 @@ service:
         - NotFoundError
         - UnprocessableEntityError
         - TooManyRequestsError
+        - InvalidTokenError
         - ClientClosedRequestError
         - InternalServerError
         - NotImplementedError

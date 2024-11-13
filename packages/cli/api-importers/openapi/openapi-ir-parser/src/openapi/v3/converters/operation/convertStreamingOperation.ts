@@ -222,7 +222,6 @@ export function isStreamingExample(
         unknown: (unknownExample) => {
             const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(unknownExample);
             if (!maybeFernExample.ok) {
-                context.logger.error("Failed to parse example", maybeFernExample.errors.toString());
                 return undefined;
             }
 
