@@ -76,13 +76,17 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     const sdkGroups = convertedServices.sdkGroups;
     let schemaIdsToExclude = convertedServices.schemaIdsToExclude;
 
+    context.setInWebhook();
     buildWebhooks(context);
+    context.unsetInWebhook();
 
     // Add Channels
+    context.setInChannel();
     for (const channel of context.ir.channel) {
         const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
     }
+    context.unsetInChannel();
 
     const allSchemaIds = new Set(Object.keys(context.ir.groupedSchemas.rootSchemas));
     for (const schemas of Object.values(context.ir.groupedSchemas.namespacedSchemas)) {

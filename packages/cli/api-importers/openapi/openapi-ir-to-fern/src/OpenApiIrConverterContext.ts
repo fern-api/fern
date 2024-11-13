@@ -71,16 +71,9 @@ export class OpenApiIrConverterContext {
     /**
      * The set of referenced schema ids to include in the generated definition.
      * If this value is undefined, _all_ schemaIds should be treated as referenced,
-     * and included in the generated definition.
+     * and therefore included in the generated definition.
      */
     private referencedSchemaIds: Set<SchemaId> | undefined;
-
-    /**
-     * Whether the current schema being processed is part of an endpoint.
-     * This is used to determine whether certain properties should be included
-     * in the generated definition (e.g. endpoint tree-shaking).
-     */
-    private inEndpoint = false;
 
     /**
      * The current endpoint method being processed. This is used to determine
@@ -90,11 +83,32 @@ export class OpenApiIrConverterContext {
     private endpointMethod: HttpMethod | undefined;
 
     /**
+     * Whether the current schema being processed is part of an endpoint.
+     * This is used to determine whether certain properties should be included
+     * in the generated definition (e.g. endpoint tree-shaking).
+     */
+    private inEndpoint = false;
+
+    /**
      * Whether the current schema being processed is part of a request body.
      * This is used to determine whether certain properties should be included
      * in the generated definition (e.g. readonly properties are excluded for request bodies).
      */
     private inRequest = false;
+
+    /**
+     * Whether the current schema being processed is part of a webhook.
+     * This is used to determine whether certain properties should be included
+     * in the generated definition (e.g. webhook tree-shaking).
+     */
+    private inWebhook = false;
+
+    /**
+     * Whether the current schema being processed is part of a websocket channel.
+     * This is used to determine whether certain properties should be included
+     * in the generated definition (e.g. channel tree-shaking).
+     */
+    private inChannel = false;
 
     constructor({
         taskContext,
@@ -211,14 +225,14 @@ export class OpenApiIrConverterContext {
     }
 
     /**
-     * Sets that we're currently processing a request
+     * Sets that we're currently processing an endpoint
      */
     public setInEndpoint(): void {
         this.inEndpoint = true;
     }
 
     /**
-     * Unsets that we're currently processing a request
+     * Unsets that we're currently processing an endpoint
      */
     public unsetInEndpoint(): void {
         this.inEndpoint = false;
@@ -243,6 +257,52 @@ export class OpenApiIrConverterContext {
      */
     public unsetInRequest(): void {
         this.inRequest = false;
+    }
+
+    /**
+     * Returns whether we're currently processing a webhook
+     */
+    public isInWebhook(): boolean {
+        return this.inWebhook;
+    }
+
+    /**
+     * Sets that we're currently processing a webhook
+     */
+    public setInWebhook(): void {
+        this.inWebhook = true;
+    }
+
+    /**
+     * Unsets that we're currently processing a webhook
+     */
+    public unsetInWebhook(): void {
+        this.inWebhook = false;
+    }
+
+    /**
+     * Returns whether we're currently processing a channel
+     */
+    public isInChannel(): boolean {
+        return this.inChannel;
+    }
+
+    /**
+     * Sets that we're currently processing a channel
+     */
+    public setInChannel(): void {
+        this.inChannel = true;
+    }
+
+    /**
+     * Unsets that we're currently processing a channel
+     */
+    public unsetInChannel(): void {
+        this.inChannel = false;
+    }
+
+    public shouldMarkSchemaAsReferenced(): boolean {
+        return this.onlyIncludeReferencedSchemas && (this.inEndpoint || this.inWebhook || this.inChannel);
     }
 
     /**
