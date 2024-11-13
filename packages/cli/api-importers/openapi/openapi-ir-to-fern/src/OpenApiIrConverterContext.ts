@@ -12,6 +12,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
+import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -83,32 +84,11 @@ export class OpenApiIrConverterContext {
     private endpointMethod: HttpMethod | undefined;
 
     /**
-     * Whether the current schema being processed is part of an endpoint.
-     * This is used to determine whether certain properties should be included
-     * in the generated definition (e.g. endpoint tree-shaking).
+     * Tracks the state in which a schema is being processed (e.g. endpoint, channel, webhook,
+     * request). It's possible that a schema is being processed in multiple states (e.g. an
+     * endpoint and a request).
      */
-    private inEndpoint = false;
-
-    /**
-     * Whether the current schema being processed is part of a request body.
-     * This is used to determine whether certain properties should be included
-     * in the generated definition (e.g. readonly properties are excluded for request bodies).
-     */
-    private inRequest = false;
-
-    /**
-     * Whether the current schema being processed is part of a webhook.
-     * This is used to determine whether certain properties should be included
-     * in the generated definition (e.g. webhook tree-shaking).
-     */
-    private inWebhook = false;
-
-    /**
-     * Whether the current schema being processed is part of a websocket channel.
-     * This is used to determine whether certain properties should be included
-     * in the generated definition (e.g. channel tree-shaking).
-     */
-    private inChannel = false;
+    private state: Set<State> = new Set();
 
     constructor({
         taskContext,
@@ -218,91 +198,28 @@ export class OpenApiIrConverterContext {
     }
 
     /**
-     * Returns whether we're currently processing an endpoint
+     * Returns whether we're currently processing the given state.
      */
-    public isInEndpoint(): boolean {
-        return this.inEndpoint;
+    public isInState(state: State): boolean {
+        return this.state.has(state);
     }
 
     /**
-     * Sets that we're currently processing an endpoint
+     * Sets that we're currently processing the given state.
      */
-    public setInEndpoint(): void {
-        this.inEndpoint = true;
+    public setInState(state: State): void {
+        this.state.add(state);
     }
 
     /**
-     * Unsets that we're currently processing an endpoint
+     * Unsets that we're currently processing the given state.
      */
-    public unsetInEndpoint(): void {
-        this.inEndpoint = false;
-    }
-
-    /**
-     * Returns whether we're currently processing a request
-     */
-    public isInRequest(): boolean {
-        return this.inRequest;
-    }
-
-    /**
-     * Sets that we're currently processing a request
-     */
-    public setInRequest(): void {
-        this.inRequest = true;
-    }
-
-    /**
-     * Unsets that we're currently processing a request
-     */
-    public unsetInRequest(): void {
-        this.inRequest = false;
-    }
-
-    /**
-     * Returns whether we're currently processing a webhook
-     */
-    public isInWebhook(): boolean {
-        return this.inWebhook;
-    }
-
-    /**
-     * Sets that we're currently processing a webhook
-     */
-    public setInWebhook(): void {
-        this.inWebhook = true;
-    }
-
-    /**
-     * Unsets that we're currently processing a webhook
-     */
-    public unsetInWebhook(): void {
-        this.inWebhook = false;
-    }
-
-    /**
-     * Returns whether we're currently processing a channel
-     */
-    public isInChannel(): boolean {
-        return this.inChannel;
-    }
-
-    /**
-     * Sets that we're currently processing a channel
-     */
-    public setInChannel(): void {
-        this.inChannel = true;
-    }
-
-    /**
-     * Unsets that we're currently processing a channel
-     */
-    public unsetInChannel(): void {
-        this.inChannel = false;
+    public unsetInState(state: State): void {
+        this.state.delete(state);
     }
 
     public shouldMarkSchemaAsReferenced(): boolean {
-        return this.onlyIncludeReferencedSchemas && (this.inEndpoint || this.inWebhook || this.inChannel);
+        return this.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook);
     }
 
     /**
@@ -379,5 +296,9 @@ export class OpenApiIrConverterContext {
                 this.markSchemaAsReferenced(schema, namespace);
             }
         }
+    }
+
+    private isInAnyState(...states: State[]): boolean {
+        return states.some((state) => this.isInState(state));
     }
 }

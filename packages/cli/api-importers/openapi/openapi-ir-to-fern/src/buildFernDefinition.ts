@@ -16,6 +16,7 @@ import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { Schema } from "@fern-api/openapi-ir";
+import { State } from "./State";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
@@ -76,17 +77,17 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     const sdkGroups = convertedServices.sdkGroups;
     let schemaIdsToExclude = convertedServices.schemaIdsToExclude;
 
-    context.setInWebhook();
+    context.setInState(State.Webhook);
     buildWebhooks(context);
-    context.unsetInWebhook();
+    context.unsetInState(State.Webhook);
 
     // Add Channels
-    context.setInChannel();
+    context.setInState(State.Channel);
     for (const channel of context.ir.channel) {
         const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
     }
-    context.unsetInChannel();
+    context.unsetInState(State.Channel);
 
     const allSchemaIds = new Set(Object.keys(context.ir.groupedSchemas.rootSchemas));
     for (const schemas of Object.values(context.ir.groupedSchemas.namespacedSchemas)) {

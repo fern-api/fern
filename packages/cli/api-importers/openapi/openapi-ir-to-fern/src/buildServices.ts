@@ -1,6 +1,7 @@
 import { FernOpenapiIr } from "@fern-api/openapi-ir";
 import { buildEndpoint } from "./buildEndpoint";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
@@ -35,7 +36,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
         }
         const irTag = tag == null ? undefined : tags.tagsById[tag];
 
-        context.setInEndpoint();
+        context.setInState(State.Endpoint);
         context.setEndpointMethod(endpoint.method);
         const convertedEndpoint = buildEndpoint({
             context,
@@ -43,7 +44,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
             declarationFile: file
         });
         context.unsetEndpointMethod();
-        context.unsetInEndpoint();
+        context.unsetInState(State.Endpoint);
 
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
