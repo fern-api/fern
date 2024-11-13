@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.4
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update shared http_client.py to remove omitted entries during file upload requests.
+
 - version: 4.3.3
   irVersion: 53
   changelogEntry:
