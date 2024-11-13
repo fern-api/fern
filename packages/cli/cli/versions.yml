@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support non-standard HTTP code 498; Validate `x-fern-examples` during schema parsing.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc43
+
+- changelogEntry:
+    - summary: |
         Log error message logging when encountering doc errors during preview server initiation.
       type: fix
   irVersion: 53
