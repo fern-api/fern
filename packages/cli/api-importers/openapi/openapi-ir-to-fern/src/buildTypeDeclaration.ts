@@ -31,6 +31,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { State } from "./State";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -88,7 +89,7 @@ export function buildObjectTypeDeclaration({
     namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     const shouldSkipReadonly =
-        context.isInRequest() &&
+        context.isInState(State.Request) &&
         context.respectReadonlySchemas &&
         (context.getEndpointMethod() === "POST" ||
             context.getEndpointMethod() === "PUT" ||

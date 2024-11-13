@@ -15,6 +15,8 @@ export interface ParseOpenAPIOptions {
     cooerceEnumsToLiterals: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
+    /* Whether or not to only include endpoint referenced schemas */
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -24,5 +26,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     audiences: undefined,
     optionalAdditionalProperties: true,
     cooerceEnumsToLiterals: true,
-    respectReadonlySchemas: false
+    respectReadonlySchemas: false,
+    onlyIncludeReferencedSchemas: false
 };

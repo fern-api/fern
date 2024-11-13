@@ -135,6 +135,9 @@ types:
       message-naming:
         type: optional<MessageNamingSettingsSchema>
         docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
+      only-include-referenced-schemas:
+        type: optional<boolean>
+        docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
   
   UnionSettingsSchema:
     enum: 
@@ -222,6 +225,9 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      only-include-referenced-schemas:
+        type: optional<boolean>
+        docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
 
   OpenAPISpecSchema:
     properties:

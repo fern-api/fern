@@ -10,4 +10,6 @@ export interface OpenApiSettingsSchema {
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
+    /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
+    "only-include-referenced-schemas"?: boolean;
 }

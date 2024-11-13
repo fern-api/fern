@@ -17,6 +17,7 @@ import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getT
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { State } from "./State";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -124,7 +125,7 @@ export function buildEndpoint({
     }
 
     if (endpoint.request != null) {
-        context.setInRequest();
+        context.setInState(State.Request);
         const convertedRequest = getRequest({
             endpoint,
             context,
@@ -140,7 +141,7 @@ export function buildEndpoint({
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
-        context.unsetInRequest();
+        context.unsetInState(State.Request);
     } else {
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;

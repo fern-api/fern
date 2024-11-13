@@ -66,6 +66,7 @@ export interface SpecImportSettings {
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -113,12 +114,16 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public sources: IdentifiableSource[];
 
     private respectReadonlySchemas: boolean;
+    private onlyIncludeReferencedSchemas: boolean;
 
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
+        this.onlyIncludeReferencedSchemas = this.specs.every(
+            (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
+        );
     }
 
     public async getOpenAPIIr(
@@ -139,7 +144,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             optionOverrides: {
                 ...optionOverrides,
-                respectReadonlySchemas: this.respectReadonlySchemas
+                respectReadonlySchemas: this.respectReadonlySchemas,
+                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
             }
         });
     }
@@ -176,7 +182,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
             detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
             objectQueryParameters,
-            respectReadonlySchemas: this.respectReadonlySchemas
+            respectReadonlySchemas: this.respectReadonlySchemas,
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
         });
 
         return {
