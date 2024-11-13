@@ -75,7 +75,6 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     const convertedServices = buildServices(context);
     const sdkGroups = convertedServices.sdkGroups;
-    let schemaIdsToExclude = convertedServices.schemaIdsToExclude;
 
     context.setInState(State.Webhook);
     buildWebhooks(context);
@@ -89,27 +88,11 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     }
     context.unsetInState(State.Channel);
 
-    const allSchemaIds = new Set(Object.keys(context.ir.groupedSchemas.rootSchemas));
-    for (const schemas of Object.values(context.ir.groupedSchemas.namespacedSchemas)) {
-        for (const schemaId of Object.keys(schemas)) {
-            allSchemaIds.add(schemaId);
-        }
-    }
-
-    const referencedSchemaIds = context.getReferencedSchemaIds();
-    if (referencedSchemaIds != null) {
-        // If we're restricting to only referenced schemas, we need to
-        // exclude all schemas that aren't referenced.
-        const schemaIdsToExcludeSet = new Set<string>(schemaIdsToExclude);
-        for (const schemaId of allSchemaIds) {
-            if (!referencedSchemaIds.includes(schemaId)) {
-                schemaIdsToExcludeSet.add(schemaId);
-            }
-        }
-        schemaIdsToExclude = Array.from(schemaIdsToExcludeSet);
-    }
-
     // Add Schemas
+    const schemaIdsToExclude = getSchemaIdsToExclude({
+        context,
+        schemaIdsToExcludeFromServices: convertedServices.schemaIdsToExclude
+    });
     addSchemas({ schemas: context.ir.groupedSchemas.rootSchemas, schemaIdsToExclude, namespace: undefined, context });
     for (const [namespace, schemas] of Object.entries(context.ir.groupedSchemas.namespacedSchemas)) {
         addSchemas({ schemas, schemaIdsToExclude, namespace, context });
@@ -127,4 +110,35 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     }
 
     return context.builder.build();
+}
+
+function getSchemaIdsToExclude({
+    context,
+    schemaIdsToExcludeFromServices
+}: {
+    context: OpenApiIrConverterContext;
+    schemaIdsToExcludeFromServices: string[];
+}): string[] {
+    const referencedSchemaIds = context.getReferencedSchemaIds();
+    if (referencedSchemaIds == null) {
+        // No further filtering is required; we can return the
+        // excluded schemas as-is.
+        return schemaIdsToExcludeFromServices;
+    }
+
+    // Retrieve all the schema IDs, then exclude all the schemas that
+    // aren't explicitly referenced.
+    const allSchemaIds = new Set([
+        ...Object.keys(context.ir.groupedSchemas.rootSchemas),
+        ...Object.values(context.ir.groupedSchemas.namespacedSchemas).flatMap((schemas) => Object.keys(schemas))
+    ]);
+
+    const schemaIdsToExcludeSet = new Set<string>(schemaIdsToExcludeFromServices);
+    for (const schemaId of allSchemaIds) {
+        if (!referencedSchemaIds.includes(schemaId)) {
+            schemaIdsToExcludeSet.add(schemaId);
+        }
+    }
+
+    return Array.from(schemaIdsToExcludeSet);
 }
