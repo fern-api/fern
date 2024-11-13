@@ -304,6 +304,121 @@ await client.Endpoints.Container.GetAndReturnOptionalAsync(
 </dl>
 </details>
 
+## Endpoints ContentType
+<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentTypeAsync</a>(ObjectWithOptionalField { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
+    new ObjectWithOptionalField
+    {
+        String = "string",
+        Integer = 1,
+        Long = 1000000,
+        Double = 1.1,
+        Bool = true,
+        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        Date = new DateOnly(2023, 1, 15),
+        Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Base64 = "SGVsbG8gd29ybGQh",
+        List = new List<string>() { "list", "list" },
+        Set = new HashSet<string>() { "set" },
+        Map = new Dictionary<int, string>() { { 1, "map" } },
+        Bigint = "1000000",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.ContentType.<a href="/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs">PostJsonPatchContentWithCharsetTypeAsync</a>(ObjectWithOptionalField { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
+    new ObjectWithOptionalField
+    {
+        String = "string",
+        Integer = 1,
+        Long = 1000000,
+        Double = 1.1,
+        Bool = true,
+        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        Date = new DateOnly(2023, 1, 15),
+        Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Base64 = "SGVsbG8gd29ybGQh",
+        List = new List<string>() { "list", "list" },
+        Set = new HashSet<string>() { "set" },
+        Map = new Dictionary<int, string>() { { 1, "map" } },
+        Bigint = "1000000",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Enum
 <details><summary><code>client.Endpoints.Enum.<a href="/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs">GetAndReturnEnumAsync</a>(WeatherReport { ... }) -> WeatherReport</code></summary>
 <dl>

@@ -414,7 +414,7 @@ function consolidateRequestResponseExamples(
         for (let idx = 0; idx < responseExamples.length; idx++) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const [responseId, responseExample] = responseExamples[idx]!;
-            if (responseId != null || visitedResponseIdx.has(idx)) {
+            if (responseId == null || visitedResponseIdx.has(idx)) {
                 continue;
             }
             if (requestId === responseId) {
@@ -443,7 +443,6 @@ function consolidateRequestResponseExamples(
         if (visitedResponseIdx.has(idx)) {
             continue;
         }
-
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const [responseId, responseExample] = responseExamples[idx]!;
 

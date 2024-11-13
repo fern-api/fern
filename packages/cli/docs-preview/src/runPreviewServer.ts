@@ -139,8 +139,9 @@ export async function runPreviewServer({
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
             if (err instanceof Error) {
+                context.logger.error(err.message);
                 if (err instanceof Error && err.stack) {
-                    context.logger.debug(`${err.message}\n${err.stack}`);
+                    context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
             return docsDefinition;

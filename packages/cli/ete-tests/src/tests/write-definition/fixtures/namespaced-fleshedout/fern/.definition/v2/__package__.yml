@@ -24,6 +24,11 @@ types:
       data: optional<string>
     source:
       openapi: openapi/cohere-v2.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
   NotFoundErrorBody:
     properties:
       data: optional<string>
@@ -98,6 +103,14 @@ errors:
     examples:
       - value: {}
     status-code: 500
+    type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
     type: unknown
   NotFoundError:
     docs: >

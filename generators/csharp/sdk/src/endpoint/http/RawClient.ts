@@ -2,6 +2,7 @@ import { Arguments } from "@fern-api/generator-commons";
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
 
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes";
@@ -83,6 +84,13 @@ export class RawClient {
             arguments_.push({
                 name: "Headers",
                 assignment: csharp.codeblock(headerBagReference)
+            });
+        }
+        const requestContentType = getContentTypeFromRequestBody(endpoint);
+        if (requestContentType) {
+            arguments_.push({
+                name: "ContentType",
+                assignment: csharp.codeblock(`"${requestContentType}"`)
             });
         }
         arguments_.push({

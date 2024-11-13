@@ -221,6 +221,9 @@ navigation:
               - changelog: ./pages/changelogs/java-sdk
                 title: Java
                 slug: java
+              - changelog: ./pages/changelogs/php-sdk
+                title: PHP
+                slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
                 slug: ruby

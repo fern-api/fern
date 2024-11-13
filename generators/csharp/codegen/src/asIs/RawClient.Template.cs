@@ -1,6 +1,7 @@
 using System.Text;
 using System.Threading;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace <%= namespace%>;
 
@@ -27,66 +28,66 @@ internal class RawClient(ClientOptions clientOptions)
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
-    public async Task<ApiResponse> MakeRequestAsync(
-        BaseApiRequest request,
-        CancellationToken cancellationToken = default
-    )
-    {
-        // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        var timeout = request.Options?.Timeout ?? Options.Timeout;
-        cts.CancelAfter(timeout);
+public async Task<ApiResponse> MakeRequestAsync(
+    BaseApiRequest request,
+    CancellationToken cancellationToken = default
+)
+{
+    // Apply the request timeout.
+    var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+    var timeout = request.Options?.Timeout ?? Options.Timeout;
+    cts.CancelAfter(timeout);
 
-        // Send the request.
-        return await SendWithRetriesAsync(
-            request,
-            cts.Token
-        );
+    // Send the request.
+    return await SendWithRetriesAsync(
+        request,
+        cts.Token
+    );
+}
+
+public record BaseApiRequest
+{
+    public required string BaseUrl { get; init; }
+
+    public required HttpMethod Method { get; init; }
+
+    public required string Path { get; init; }
+
+    public string? ContentType { get; init; }
+
+    public Dictionary<string, object> Query { get; init; } = new();
+
+    public Headers Headers { get; init; } = new();
+
+    public RequestOptions? Options { get; init; }
+}
+
+/// <summary>
+/// The request object to be sent for streaming uploads.
+/// </summary>
+public record StreamApiRequest : BaseApiRequest
+{
+    public Stream? Body { get; init; }
+}
+
+/// <summary>
+/// The request object to be sent for JSON APIs.
+/// </summary>
+public record JsonApiRequest : BaseApiRequest
+{
+    public object? Body { get; init; }
+}
+
+/// <summary>
+/// The response object returned from the API.
+/// </summary>
+public record ApiResponse
+{
+    public required int StatusCode { get; init; }
+
+    public required HttpResponseMessage Raw { get; init; }
     }
 
-    public record BaseApiRequest
-    {
-        public required string BaseUrl { get; init; }
-
-        public required HttpMethod Method { get; init; }
-
-        public required string Path { get; init; }
-
-        public string? ContentType { get; init; }
-
-        public Dictionary<string, object> Query { get; init; } = new();
-
-        public Headers Headers { get; init; } = new();
-
-        public RequestOptions? Options { get; init; }
-    }
-
-    /// <summary>
-    /// The request object to be sent for streaming uploads.
-    /// </summary>
-    public record StreamApiRequest : BaseApiRequest
-    {
-        public Stream? Body { get; init; }
-    }
-
-    /// <summary>
-    /// The request object to be sent for JSON APIs.
-    /// </summary>
-    public record JsonApiRequest : BaseApiRequest
-    {
-        public object? Body { get; init; }
-    }
-
-    /// <summary>
-    /// The response object returned from the API.
-    /// </summary>
-    public record ApiResponse
-    {
-        public required int StatusCode { get; init; }
-
-        public required HttpResponseMessage Raw { get; init; }
-    }
- 
     private async Task<ApiResponse> SendWithRetriesAsync(
         BaseApiRequest request,
         CancellationToken cancellationToken
@@ -122,24 +123,24 @@ internal class RawClient(ClientOptions clientOptions)
         {
             // Add the request body to the request.
             case JsonApiRequest jsonRequest:
-            {
-                if (jsonRequest.Body != null)
                 {
-                    httpRequest.Content = new StringContent(
-                        JsonUtils.Serialize(jsonRequest.Body),
-                        Encoding.UTF8,
-                        "application/json"
-                    );
+                    if (jsonRequest.Body != null)
+                    {
+                        httpRequest.Content = new StringContent(
+                            JsonUtils.Serialize(jsonRequest.Body),
+                            Encoding.UTF8,
+                            "application/json"
+                        );
+                    }
+                    break;
                 }
-                break;
-            }
             case StreamApiRequest { Body: not null } streamRequest:
                 httpRequest.Content = new StreamContent(streamRequest.Body);
                 break;
         }
         if (request.ContentType != null)
         {
-            request.Headers.Add("Content-Type", request.ContentType);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(request.ContentType);
         }
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
