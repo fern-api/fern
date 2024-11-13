@@ -364,7 +364,8 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             authed: undefined,
             viewers: undefined,
-            orphaned: undefined
+            orphaned: undefined,
+            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role))
         };
     }
 
