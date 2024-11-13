@@ -67,6 +67,13 @@ export function buildQueryParameter({
         queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
+    if (typeof typeReference.value === "object" && "type" in typeReference.value) {
+        const detailedSchema = typeReference.value as RawSchemas.TypeReferenceDetailedSchema;
+        if (detailedSchema.validation !== undefined) {
+            queryParameterSchema.validation = detailedSchema.validation;
+        }
+    }
+
     return queryParameterSchema;
 }
 
