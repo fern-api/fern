@@ -31,6 +31,7 @@ public class BaseMockServerTest
         Client = new SeedIdempotencyHeadersClient("TOKEN");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        IdempotentRequestOptions = new IdempotentRequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]

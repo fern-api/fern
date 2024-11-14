@@ -122,6 +122,16 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
                         })
                     );
+
+                    if (this.context.hasIdempotencyHeaders()) {
+                        writer.writeLine("IdempotentRequestOptions = ");
+                        writer.writeNodeStatement(
+                            new csharp.ClassInstantiation({
+                                classReference: this.context.getIdempotentRequestOptionsClassReference(),
+                                arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+                            })
+                        );
+                    }
                 }),
                 isAsync: false,
                 parameters: [],
