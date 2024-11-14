@@ -8,6 +8,8 @@ import (
 	core "github.com/unknown/fern/core"
 )
 
+type MyAlias = interface{}
+
 type MyObject struct {
 	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
 

@@ -4418,12 +4418,12 @@
             "service_imdb": [
                 "type_imdb:MovieId",
                 "type_imdb:Movie",
-                "type_imdb:CreateMovieRequest"
+                "type_imdb:CreateMovieRequest",
+                "type_imdb:Cast",
+                "type_imdb:Name"
             ]
         },
         "sharedTypes": [
-            "type_imdb:Cast",
-            "type_imdb:Name",
             "type_webhooks:User"
         ]
     },

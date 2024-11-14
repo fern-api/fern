@@ -117,11 +117,10 @@ exports[`migrateFromV48ToV47 > remove-all-pagination 1`] = `
     },
   },
   "serviceTypeReferenceInfo": {
-    "sharedTypes": [
-      "type_service:User",
-    ],
+    "sharedTypes": [],
     "typesReferencedOnlyByService": {
       "service_service": [
+        "type_service:User",
         "type_service:ListUsersResponse",
       ],
     },
@@ -1583,11 +1582,10 @@ exports[`migrateFromV48ToV47 > simple 1`] = `
     },
   },
   "serviceTypeReferenceInfo": {
-    "sharedTypes": [
-      "type_service:User",
-    ],
+    "sharedTypes": [],
     "typesReferencedOnlyByService": {
       "service_service": [
+        "type_service:User",
         "type_service:ListUsersResponse",
       ],
     },

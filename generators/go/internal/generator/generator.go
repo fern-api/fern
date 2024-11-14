@@ -17,6 +17,9 @@ import (
 )
 
 const (
+	// sharedTypesFilename is the filename for the shared types file.
+	sharedTypesFilename = "types.go"
+
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
 
@@ -1357,7 +1360,15 @@ func fileInfoToTypes(
 				continue
 			}
 			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint, Service: irService})
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					ID:           irEndpoint.Name.OriginalName,
+					FernFilepath: irService.Name.FernFilepath,
+					Endpoint:     irEndpoint,
+					Service:      irService,
+				},
+			)
 		}
 	}
 	if irServiceTypeReferenceInfo == nil {
@@ -1365,35 +1376,30 @@ func fileInfoToTypes(
 		// to the file-per-type naming convention.
 		for _, irType := range irTypes {
 			fileInfo := fileInfoForType(rootPackageName, irType.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irType.Name.TypeId, FernFilepath: irType.Name.FernFilepath, TypeDeclaration: irType})
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					ID:              irType.Name.TypeId,
+					FernFilepath:    irType.Name.FernFilepath,
+					TypeDeclaration: irType,
+				},
+			)
 		}
 	} else {
-		directories := make(map[fernir.TypeId][]string)
-		for irTypeId, irType := range irTypes {
-			var elements []string
-			for _, packageName := range irType.Name.FernFilepath.PackagePath {
-				elements = append(elements, strings.ToLower(packageName.CamelCase.SafeName))
-			}
-			directories[irTypeId] = elements
-		}
 		sharedTypes := irServiceTypeReferenceInfo.SharedTypes
 		if typeIds, ok := irServiceTypeReferenceInfo.TypesReferencedOnlyByService["service_"]; ok {
 			// The root service types should be included alongside the other shared types.
 			sharedTypes = append(sharedTypes, typeIds...)
 		}
-		for _, sharedTypeId := range sharedTypes {
-			typeDeclaration, ok := irTypes[sharedTypeId]
+		for _, typeId := range sharedTypes {
+			typeDeclaration, ok := irTypes[typeId]
 			if !ok {
 				// Should be unreachable.
-				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", sharedTypeId)
+				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
 			}
-			fileInfo := fileInfo{
-				filename:    "types.go",
-				packageName: rootPackageName,
-			}
-			if directory := directories[sharedTypeId]; len(directory) > 0 {
-				fileInfo.filename = filepath.Join(append(directory, fileInfo.filename)...)
-				fileInfo.packageName = directory[len(directory)-1]
+			fileInfo := fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath)
+			if isReservedFilename(filepath.Base(fileInfo.filename)) {
+				fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), sharedTypesFilename)
 			}
 			result[fileInfo] = append(
 				result[fileInfo],
@@ -1414,56 +1420,18 @@ func fileInfoToTypes(
 				// Should be unreachable.
 				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced service %q which doesn't exist", serviceId)
 			}
-			fernFilepath := service.Name.FernFilepath
-			var basename string
-			if service.Name.FernFilepath.File != nil {
-				basename = fernFilepath.File.SnakeCase.UnsafeName
-			} else {
-				basename = fernFilepath.PackagePath[len(fernFilepath.PackagePath)-1].SnakeCase.UnsafeName
-			}
-			var packages []string
-			for _, packageName := range fernFilepath.PackagePath {
-				packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-			}
-			servicePackageName := rootPackageName
-			if len(packages) > 0 {
-				servicePackageName = packages[len(packages)-1]
-			}
-			serviceFileInfo := fileInfo{
-				filename:    filepath.Join(append(packages, fmt.Sprintf("%s.go", basename))...),
-				packageName: servicePackageName,
-			}
 			for _, typeId := range typeIds {
 				typeDeclaration, ok := irTypes[typeId]
 				if !ok {
 					// Should be unreachable.
 					return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
 				}
-				typeFilename := "types.go"
-				typePackageName := rootPackageName
-				if directory := directories[typeId]; len(directory) > 0 {
-					typeFilename = filepath.Join(append(directory, typeFilename)...)
-					typePackageName = directory[len(directory)-1]
+				fileInfo := fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath)
+				if shouldSetFileInfoToMatchService(typeDeclaration.Name.FernFilepath, service.Name.FernFilepath) {
+					fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), service.Name.FernFilepath.File.SnakeCase.UnsafeName+".go")
 				}
-				if servicePackageName != typePackageName {
-					// There is only one service referencing this type, but it still
-					// belongs in the package where it was defined.
-					typeFileInfo := fileInfo{
-						filename:    typeFilename,
-						packageName: typePackageName,
-					}
-					result[typeFileInfo] = append(
-						result[typeFileInfo],
-						&typeToGenerate{
-							ID:              typeId,
-							FernFilepath:    typeDeclaration.Name.FernFilepath,
-							TypeDeclaration: typeDeclaration,
-						},
-					)
-					continue
-				}
-				result[serviceFileInfo] = append(
-					result[serviceFileInfo],
+				result[fileInfo] = append(
+					result[fileInfo],
 					&typeToGenerate{
 						ID:              typeDeclaration.Name.TypeId,
 						FernFilepath:    typeDeclaration.Name.FernFilepath,
@@ -1478,6 +1446,36 @@ func fileInfoToTypes(
 		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].ID < result[fileInfo][j].ID })
 	}
 	return result, nil
+}
+
+func shouldSetFileInfoToMatchService(
+	typeFernFilepath *fernir.FernFilepath,
+	serviceFernFilepath *fernir.FernFilepath,
+) bool {
+	if serviceFernFilepath.File == nil || typeFernFilepath.File != nil {
+		// If the service is a root client or the type is already defined
+		// in a particular non-root package, we can leave it as-is.
+		return false
+	}
+	if !packagePathIsEqual(typeFernFilepath, serviceFernFilepath) {
+		// We only want to set the file info if the type is defined in the
+		// same package as the service.
+		return false
+	}
+	filename := serviceFernFilepath.File.SnakeCase.UnsafeName
+	return !isReservedFilename(filename)
+}
+
+func packagePathIsEqual(a, b *fernir.FernFilepath) bool {
+	if len(a.PackagePath) != len(b.PackagePath) {
+		return false
+	}
+	for i := range a.PackagePath {
+		if a.PackagePath[i].CamelCase.SafeName != b.PackagePath[i].CamelCase.SafeName {
+			return false
+		}
+	}
+	return true
 }
 
 func fileInfoToErrors(
@@ -1613,6 +1611,19 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 		}
 	}
 	return false
+}
+
+func isReservedFilename(filename string) bool {
+	_, ok := reservedFilenames[filename]
+	return ok
+}
+
+var reservedFilenames = map[string]struct{}{
+	"environments.go": struct{}{},
+	"errors.go":       struct{}{},
+	"file_param.go":   struct{}{},
+	"optional.go":     struct{}{},
+	"pointer.go":      struct{}{},
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

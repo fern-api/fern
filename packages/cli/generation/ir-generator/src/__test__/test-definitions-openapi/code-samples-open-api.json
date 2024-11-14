@@ -1883,12 +1883,11 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
-                "type_:TelemetryResponse"
+                "type_:TelemetryResponse",
+                "type_:TelemetryData"
             ]
         },
-        "sharedTypes": [
-            "type_:TelemetryData"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

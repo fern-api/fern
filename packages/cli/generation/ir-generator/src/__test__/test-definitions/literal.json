@@ -11657,18 +11657,18 @@
         "typesReferencedOnlyByService": {
             "service_inlined": [
                 "type_inlined:SomeAliasedLiteral",
-                "type_inlined:ATopLevelLiteral"
+                "type_inlined:ATopLevelLiteral",
+                "type_inlined:ANestedLiteral"
             ],
             "service_reference": [
-                "type_reference:SendRequest"
+                "type_reference:SendRequest",
+                "type_reference:ContainerObject",
+                "type_reference:NestedObjectWithLiterals",
+                "type_reference:SomeLiteral"
             ]
         },
         "sharedTypes": [
-            "type_:SendResponse",
-            "type_inlined:ANestedLiteral",
-            "type_reference:ContainerObject",
-            "type_reference:NestedObjectWithLiterals",
-            "type_reference:SomeLiteral"
+            "type_:SendResponse"
         ]
     },
     "webhookGroups": {},
