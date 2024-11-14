@@ -43,7 +43,9 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                         const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
                         const isString = type.internalType.type === "string";
                         const toString = isString ? "" : ".ToString()";
-                        const nullConditionalOperator = !isString && type.isNullableType() ? "?" : "";
+                        // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
+                        // unless the type is optional
+                        const nullConditionalOperator = !isString && type.isOptional() ? "?" : "";
                         writer.writeLine(
                             `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                         );

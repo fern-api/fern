@@ -40,136 +40,112 @@ type InternalType =
 
 interface Integer {
     type: "int";
-    nullable: false;
 }
 
 interface Long {
     type: "long";
-    nullable: false;
 }
 
 interface Uint {
     type: "uint";
-    nullable: false;
 }
 
 interface Ulong {
     type: "ulong";
-    nullable: false;
 }
 
 interface String_ {
     type: "string";
-    nullable: true;
 }
 
 interface Boolean_ {
     type: "bool";
-    nullable: false;
 }
 
 interface Float {
     type: "float";
-    nullable: false;
 }
 
 interface Double {
     type: "double";
-    nullable: false;
 }
 
 interface Date {
     type: "date";
-    nullable: false;
 }
 
 interface DateTime {
     type: "dateTime";
-    nullable: false;
 }
 
 interface Uuid {
     type: "uuid";
-    nullable: false;
 }
 
 interface Object_ {
     type: "object";
-    nullable: true;
 }
 
 interface Array_ {
     type: "array";
     value: Type;
-    nullable: true;
 }
 
 interface ListType {
     type: "listType";
     value: Type;
-    nullable: true;
 }
 
 interface List {
     type: "list";
     value: Type;
-    nullable: true;
 }
 
 interface Set {
     type: "set";
     value: Type;
-    nullable: true;
 }
 
 interface Map {
     type: "map";
     keyType: Type;
     valueType: Type;
-    nullable: true;
 }
 
 interface KeyValuePair {
     type: "keyValuePair";
     keyType: Type;
     valueType: Type;
-    nullable: true;
 }
 
 interface Optional {
     type: "optional";
     value: Type;
-    nullable: true;
 }
 
 interface Reference {
     type: "reference";
     value: ClassReference;
-    nullable: false;
 }
 
 interface CoreReference {
     type: "coreReference";
     value: CoreClassReference;
-    nullable: false;
 }
 
 interface OneOf {
     type: "oneOf";
     memberValues: Type[];
-    nullable: true;
 }
 
 interface OneOfBase {
     type: "oneOfBase";
     memberValues: Type[];
-    nullable: true;
 }
 
 interface StringEnum {
     type: "stringEnum";
     value: ClassReference;
-    nullable: true;
 }
 
 /* A C# parameter to a method */
@@ -369,127 +345,104 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
-    public isNullableType(): boolean {
-        if (this.isOptional()) {
-            return true;
-        }
-        return this.internalType.nullable;
-    }
-
     /* Static factory methods for creating a Type */
     public static string(): Type {
         return new this({
-            type: "string",
-            nullable: true
+            type: "string"
         });
     }
 
     public static boolean(): Type {
         return new this({
-            type: "bool",
-            nullable: false
+            type: "bool"
         });
     }
 
     public static integer(): Type {
         return new this({
-            type: "int",
-            nullable: false
+            type: "int"
         });
     }
 
     public static long(): Type {
         return new this({
-            type: "long",
-            nullable: false
+            type: "long"
         });
     }
 
     public static uint(): Type {
         return new this({
-            type: "uint",
-            nullable: false
+            type: "uint"
         });
     }
 
     public static ulong(): Type {
         return new this({
-            type: "ulong",
-            nullable: false
+            type: "ulong"
         });
     }
 
     public static float(): Type {
         return new this({
-            type: "float",
-            nullable: false
+            type: "float"
         });
     }
 
     public static double(): Type {
         return new this({
-            type: "double",
-            nullable: false
+            type: "double"
         });
     }
 
     public static date(): Type {
         return new this({
-            type: "date",
-            nullable: false
+            type: "date"
         });
     }
 
     public static dateTime(): Type {
         return new this({
-            type: "dateTime",
-            nullable: false
+            type: "dateTime"
         });
     }
 
     public static uuid(): Type {
         return new this({
-            type: "uuid",
-            nullable: false
+            type: "uuid"
         });
     }
 
     public static object(): Type {
         return new this({
-            type: "object",
-            nullable: true
+            type: "object"
         });
     }
 
     public static array(value: Type): Type {
         return new this({
             type: "array",
-            value,
-            nullable: true
+            value
         });
     }
 
     public static listType(value: Type): Type {
         return new this({
             type: "listType",
-            value,
-            nullable: true
+            value
         });
     }
 
     public static list(value: Type): Type {
         return new this({
             type: "list",
-            value,
-            nullable: true
+            value
         });
     }
 
     public static set(value: Type): Type {
         return new this({
             type: "set",
-            value,
-            nullable: true
+            value
         });
     }
 
@@ -497,8 +450,7 @@ export class Type extends AstNode {
         return new this({
             type: "map",
             keyType,
-            valueType,
-            nullable: true
+            valueType
         });
     }
 
@@ -506,56 +458,49 @@ export class Type extends AstNode {
         return new this({
             type: "keyValuePair",
             keyType,
-            valueType,
-            nullable: true
+            valueType
         });
     }
 
     public static optional(value: Type): Type {
         return new this({
             type: "optional",
-            value,
-            nullable: true
+            value
         });
     }
 
     public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
-            value,
-            nullable: false
+            value
         });
     }
 
     public static coreClass(value: CoreClassReference): Type {
         return new this({
             type: "coreReference",
-            value,
-            nullable: false
+            value
         });
     }
 
     public static oneOf(memberValues: Type[]): Type {
         return new this({
             type: "oneOf",
-            memberValues,
-            nullable: true
+            memberValues
         });
     }
 
     public static oneOfBase(memberValues: Type[]): Type {
         return new this({
             type: "oneOfBase",
-            memberValues,
-            nullable: true
+            memberValues
         });
     }
 
     public static stringEnum(value: ClassReference): Type {
         return new this({
             type: "stringEnum",
-            value,
-            nullable: true
+            value
         });
     }
 
