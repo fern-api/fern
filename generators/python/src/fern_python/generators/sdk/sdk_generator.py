@@ -154,9 +154,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
-        ] = None
+        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
+            None
+        )
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
@@ -285,10 +285,13 @@ class SdkGenerator(AbstractGenerator):
                         project=project,
                         generated_root_client=generated_root_client,
                     )
-                except Exception:
+                except Exception as e:
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate README.md with exception {e}; this is OK",
+                            )
                         )
                     )
 
@@ -605,9 +608,9 @@ __version__ = metadata.version("{project._project_config.package_name}")
         contents = generator_cli.generate_readme(
             snippets=snippets,
             github_repo_url=project._github_output_mode.repo_url if project._github_output_mode is not None else None,
-            github_installation_token=project._github_output_mode.installation_token
-            if project._github_output_mode is not None
-            else None,
+            github_installation_token=(
+                project._github_output_mode.installation_token if project._github_output_mode is not None else None
+            ),
             pagination_enabled=context.generator_config.generate_paginated_clients,
             generated_root_client=generated_root_client,
         )
