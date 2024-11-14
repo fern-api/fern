@@ -290,7 +290,7 @@ class SdkGenerator(AbstractGenerator):
                         GeneratorUpdate.factory.log(
                             LogUpdate(
                                 level=LogLevel.DEBUG,
-                                message=f"Failed to generate README.md with exception {e}; this is OK",
+                                message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
                             )
                         )
                     )
@@ -302,10 +302,13 @@ class SdkGenerator(AbstractGenerator):
                         snippets=snippets,
                         project=project,
                     )
-                except Exception:
+                except Exception as e:
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
+                            ),
                         )
                     )
 
