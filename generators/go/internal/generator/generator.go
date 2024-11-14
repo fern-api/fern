@@ -479,6 +479,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
 		files = append(files, newRetrierFile(g.coordinator))
+		files = append(files, newRetrierTestFile(g.coordinator))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
@@ -1072,6 +1073,14 @@ func newRetrierFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/retrier.go",
 		[]byte(retrierFile),
+	)
+}
+
+func newRetrierTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/retrier_test.go",
+		[]byte(retrierTestFile),
 	)
 }
 
