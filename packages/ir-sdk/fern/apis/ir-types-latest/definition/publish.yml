@@ -28,6 +28,10 @@ types:
       workspaceId: string
       collectionId: optional<string>
 
+  WithVersion: 
+    properties: 
+      version: string
+
   JavaPublishTarget:
     union:
       ossrh:
@@ -38,6 +42,7 @@ types:
         docs: Publish directly to Maven Central
 
   OssrhPublishTarget:
+    extends: WithVersion
     properties:
       groupId: string
       artifactId: string
@@ -45,6 +50,7 @@ types:
       password: string
 
   CentralPublishTarget:
+    extends: WithVersion
     properties:
       groupId: string
       artifactId: string
