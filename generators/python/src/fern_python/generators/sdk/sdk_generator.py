@@ -154,9 +154,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
-            None
-        )
+        base_environment: Optional[
+            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
+        ] = None
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
