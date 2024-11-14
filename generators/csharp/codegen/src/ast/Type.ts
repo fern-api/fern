@@ -370,7 +370,9 @@ export class Type extends AstNode {
     }
 
     public isNullableType(): boolean {
-        if (this.isOptional()) {return true;}
+        if (this.isOptional()) {
+            return true;
+        }
         return this.internalType.nullable;
     }
 
