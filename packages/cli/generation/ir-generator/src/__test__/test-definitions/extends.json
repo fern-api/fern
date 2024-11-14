@@ -1658,12 +1658,12 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
-                "type_:ExampleType"
+                "type_:ExampleType",
+                "type_:Docs"
             ]
         },
         "sharedTypes": [
             "type_:NestedType",
-            "type_:Docs",
             "type_:JSON"
         ]
     },

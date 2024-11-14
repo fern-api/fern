@@ -122,6 +122,55 @@ func (u *UsernameCursor) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+type UsernamePage struct {
+	After *string  `json:"after,omitempty" url:"after,omitempty"`
+	Data  []string `json:"data,omitempty" url:"data,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UsernamePage) GetAfter() *string {
+	if u == nil {
+		return nil
+	}
+	return u.After
+}
+
+func (u *UsernamePage) GetData() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UsernamePage) UnmarshalJSON(data []byte) error {
+	type unmarshaler UsernamePage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UsernamePage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *UsernamePage) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 type ListUsersExtendedOptionalListResponse struct {
 	Data *UserOptionalListContainer `json:"data,omitempty" url:"data,omitempty"`
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
@@ -304,6 +353,55 @@ func (l *ListUsersPaginationResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type NextPage struct {
+	Page          int    `json:"page" url:"page"`
+	StartingAfter string `json:"starting_after" url:"starting_after"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *NextPage) GetPage() int {
+	if n == nil {
+		return 0
+	}
+	return n.Page
+}
+
+func (n *NextPage) GetStartingAfter() string {
+	if n == nil {
+		return ""
+	}
+	return n.StartingAfter
+}
+
+func (n *NextPage) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NextPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler NextPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NextPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
+}
+
+func (n *NextPage) String() string {
+	if value, err := core.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
 type Order string
 
 const (
@@ -324,6 +422,301 @@ func NewOrderFromString(s string) (Order, error) {
 
 func (o Order) Ptr() *Order {
 	return &o
+}
+
+type Page struct {
+	// The current page
+	Page      int       `json:"page" url:"page"`
+	Next      *NextPage `json:"next,omitempty" url:"next,omitempty"`
+	PerPage   int       `json:"per_page" url:"per_page"`
+	TotalPage int       `json:"total_page" url:"total_page"`
+
+	extraProperties map[string]interface{}
+}
+
+func (p *Page) GetPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.Page
+}
+
+func (p *Page) GetNext() *NextPage {
+	if p == nil {
+		return nil
+	}
+	return p.Next
+}
+
+func (p *Page) GetPerPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.PerPage
+}
+
+func (p *Page) GetTotalPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.TotalPage
+}
+
+func (p *Page) GetExtraProperties() map[string]interface{} {
+	return p.extraProperties
+}
+
+func (p *Page) UnmarshalJSON(data []byte) error {
+	type unmarshaler Page
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Page(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+
+	return nil
+}
+
+func (p *Page) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+type User struct {
+	Name string `json:"name" url:"name"`
+	Id   int    `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetId() int {
+	if u == nil {
+		return 0
+	}
+	return u.Id
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *User) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserListContainer struct {
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UserListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
+}
+
+func (u *UserListContainer) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserListContainer) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserListContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserListContainer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *UserListContainer) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserOptionalListContainer struct {
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UserOptionalListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
+}
+
+func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserOptionalListContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListContainer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *UserOptionalListContainer) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserOptionalListPage struct {
+	Data *UserOptionalListContainer `json:"data,omitempty" url:"data,omitempty"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UserOptionalListPage) GetData() *UserOptionalListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserOptionalListPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
+}
+
+func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserOptionalListPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *UserOptionalListPage) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserPage struct {
+	Data *UserListContainer `json:"data,omitempty" url:"data,omitempty"`
+	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UserPage) GetData() *UserListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
+}
+
+func (u *UserPage) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
+}
+
+func (u *UserPage) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UsernameContainer struct {

@@ -1059,14 +1059,13 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
-                "type_:GetExampleResponse"
+                "type_:NotFound",
+                "type_:GetExampleResponse",
+                "type_:Schema1",
+                "type_:Schema2"
             ]
         },
-        "sharedTypes": [
-            "type_:NotFound",
-            "type_:Schema1",
-            "type_:Schema2"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

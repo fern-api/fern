@@ -118,12 +118,11 @@ exports[`migrateFromV53ToV52 > simple 1`] = `
     },
   },
   "serviceTypeReferenceInfo": {
-    "sharedTypes": [
-      "type_service:User",
-    ],
+    "sharedTypes": [],
     "typesReferencedOnlyByService": {
       "service_service": [
         "type_service:UserType",
+        "type_service:User",
         "type_service:ListUsersResponse",
       ],
     },

@@ -5,3 +5,5 @@ package file
 type GetFileRequest struct {
 	XFileApiVersion string `json:"-" url:"-"`
 }
+
+type Filename = string

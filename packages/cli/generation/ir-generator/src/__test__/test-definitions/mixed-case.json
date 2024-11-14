@@ -6725,14 +6725,14 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
+                "type_service:Organization",
+                "type_service:User",
+                "type_service:ResourceStatus",
                 "type_service:Resource"
             ]
         },
         "sharedTypes": [
-            "type_service:Organization",
-            "type_service:User",
-            "type_service:NestedUser",
-            "type_service:ResourceStatus"
+            "type_service:NestedUser"
         ]
     },
     "webhookGroups": {},
