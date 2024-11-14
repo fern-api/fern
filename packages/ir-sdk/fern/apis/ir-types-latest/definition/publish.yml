@@ -27,3 +27,30 @@ types:
       apiKey: string
       workspaceId: string
       collectionId: optional<string>
+
+  JavaPublishTarget:
+    union:
+      ossrh:
+        type: OssrhPublishTarget
+        docs: Publish to Maven Central's staging repository (OSSRH)
+      central:
+        type: CentralPublishTarget
+        docs: Publish directly to Maven Central
+
+  OssrhPublishTarget:
+    properties:
+      groupId: string
+      artifactId: string
+      version: string
+      username: string
+      password: string
+
+  CentralPublishTarget:
+    properties:
+      groupId: string
+      artifactId: string
+      version: string
+      username: string
+      password: string
+      gpgKey: string
+      gpgPassphrase: string
