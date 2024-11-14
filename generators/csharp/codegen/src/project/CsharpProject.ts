@@ -362,6 +362,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             replaceTemplate({
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                 namespace
             })
         );
@@ -375,6 +376,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             replaceTemplate({
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                 namespace: this.context.getTestUtilsNamespace()
             })
         );
@@ -397,14 +399,17 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 function replaceTemplate({
     contents,
     grpc,
+    idempotencyHeaders,
     namespace
 }: {
     contents: string;
     grpc: boolean;
+    idempotencyHeaders: boolean;
     namespace: string;
 }): string {
     return template(contents)({
         grpc,
+        idempotencyHeaders,
         namespace
     });
 }
