@@ -215,6 +215,10 @@ class ReadmeSnippetBuilder:
             return []
 
     def _build_custom_client_snippets(self) -> str:
+        def _client_writer(writer: AST.NodeWriter) -> None:
+            writer.write("client = ")
+            writer.write_node(client_instantiation, should_write_as_snippet=False)
+
         try:
             client_instantiation = AST.ClassInstantiation(
                 class_=self._root_client.sync_client.class_reference,
@@ -235,16 +239,12 @@ class ReadmeSnippetBuilder:
                 ],
             )
 
-            def _client_writer(writer: AST.NodeWriter) -> None:
-                writer.write("client = ")
-                writer.write_node(client_instantiation, should_write_as_snippet=False)
-
             client_instantiation_str = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer)))
 
             return client_instantiation_str
         except Exception as e:
             print(f"Failed to generage custom client snippets with exception {e}")
-            return []
+            return ""
 
     def _build_streaming_snippets(self) -> List[str]:
         try:
