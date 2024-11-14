@@ -69,6 +69,20 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             })
         );
 
+        if (this.context.hasIdempotencyHeaders()) {
+            class_.addField(
+                csharp.field({
+                    access: csharp.Access.Protected,
+                    name: "IdempotentRequestOptions",
+                    static_: true,
+                    type: csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
+                    get: true,
+                    initializer: csharp.codeblock("null!"),
+                    set: true
+                })
+            );
+        }
+
         class_.addMethod(
             csharp.method({
                 name: "GlobalSetup",

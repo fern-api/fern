@@ -1,0 +1,69 @@
+import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
+
+export const IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME = "IdempotentRequestOptions";
+
+export class IdempotentRequestOptionsGenerator extends FileGenerator<
+    CSharpFile,
+    SdkCustomConfigSchema,
+    SdkGeneratorContext
+> {
+    private baseOptionsGenerator: BaseOptionsGenerator;
+
+    constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
+        super(context);
+
+        this.baseOptionsGenerator = baseOptionsGenerator;
+    }
+
+    public doGenerate(): CSharpFile {
+        const class_ = csharp.class_({
+            ...this.context.getIdempotentRequestOptionsClassReference(),
+            partial: true,
+            access: csharp.Access.Public,
+            interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()]
+        });
+        class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
+        class_.addFields(this.baseOptionsGenerator.getIdepotentRequestOptionFields());
+        class_.addMethod(
+            csharp.method({
+                name: "GetIdempotencyHeaders",
+                parameters: [],
+                return_: csharp.Type.reference(this.context.getHeadersClassReference()),
+                interfaceReference: this.context.getIdempotentRequestOptionsInterfaceClassReference(),
+                type: csharp.MethodType.INSTANCE,
+                body: csharp.codeblock((writer) => {
+                    writer.writeLine("return new Headers(new Dictionary<string, string>");
+                    writer.writeLine("{");
+                    writer.indent();
+                    for (const header of this.context.getIdempotencyHeaders()) {
+                        // TODO: find a way to check if a header is nullable, and add nullable check
+                        writer.writeLine(
+                            `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}.ToString(),`
+                        );
+                    }
+                    writer.dedent();
+                    writer.writeTextStatement("})");
+                })
+            })
+        );
+        return new CSharpFile({
+            clazz: class_,
+            directory: this.context.getPublicCoreDirectory(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getPublicCoreNamespace(),
+            customConfig: this.context.customConfig
+        });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
+            RelativeFilePath.of(`${IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME}.cs`)
+        );
+    }
+}
