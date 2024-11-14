@@ -41,7 +41,10 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                     writer.indent();
                     for (const header of this.context.getIdempotencyHeaders()) {
                         const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-                        const isString = type.internalType.type === "string";
+                        const isString =
+                            type.internalType.type === "string" ||
+                            (type.internalType.type === "optional" &&
+                                type.internalType.value.internalType.type === "string");
                         const toString = isString ? "" : ".ToString()";
                         // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
                         // unless the type is optional

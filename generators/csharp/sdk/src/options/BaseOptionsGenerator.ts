@@ -136,7 +136,8 @@ export class BaseOptionsGenerator {
                 name: header.name.name.pascalCase.safeName,
                 get: true,
                 init: true,
-                type: this.context.csharpTypeMapper.convert({ reference: header.valueType })
+                type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
+                summary: header.docs
             })
         );
     }
