@@ -41,7 +41,6 @@ types:
     properties:
       groupId: string
       artifactId: string
-      version: string
       username: string
       password: string
 
@@ -49,7 +48,6 @@ types:
     properties:
       groupId: string
       artifactId: string
-      version: string
       username: string
       password: string
       gpgKey: string
