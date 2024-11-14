@@ -40,9 +40,12 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                     writer.writeLine("{");
                     writer.indent();
                     for (const header of this.context.getIdempotencyHeaders()) {
-                        // TODO: find a way to check if a header is nullable, and add nullable check
+                        const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+                        const isString = type.internalType.type === "string";
+                        const toString = isString ? "" : ".ToString()";
+                        const nullConditionalOperator = !isString && type.isNullableType() ? "?" : "";
                         writer.writeLine(
-                            `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}.ToString(),`
+                            `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                         );
                     }
                     writer.dedent();

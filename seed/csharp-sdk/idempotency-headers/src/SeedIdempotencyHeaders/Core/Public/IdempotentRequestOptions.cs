@@ -42,7 +42,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
         return new Headers(
             new Dictionary<string, string>
             {
-                ["Idempotency-Key"] = IdempotencyKey.ToString(),
+                ["Idempotency-Key"] = IdempotencyKey,
                 ["Idempotency-Expiration"] = IdempotencyExpiration.ToString(),
             }
         );
