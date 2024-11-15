@@ -64,7 +64,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     const url = createRequestUrl(args.url, args.queryParameters);
-    const requestBody: BodyInit | undefined = await getRequestBody({
+    let requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType === "json" ? "json" : "other",
     });
@@ -86,7 +86,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ),
             args.maxRetries
         );
-        const responseBody = await getResponseBody(response, args.responseType);
+        let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
             return {

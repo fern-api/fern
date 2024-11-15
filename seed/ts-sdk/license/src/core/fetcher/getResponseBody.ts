@@ -15,7 +15,7 @@ export async function getResponseBody(response: Response, responseType?: string)
         const text = await response.text();
         if (text.length > 0) {
             try {
-                const responseBody = JSON.parse(text);
+                let responseBody = JSON.parse(text);
                 return responseBody;
             } catch (err) {
                 return {

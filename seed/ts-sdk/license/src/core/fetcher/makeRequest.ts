@@ -25,9 +25,9 @@ export const makeRequest = async (
     if (abortSignal != null) {
         signals.push(abortSignal);
     }
-    const newSignals = anySignal(signals);
+    let newSignals = anySignal(signals);
     const response = await fetchFn(url, {
-        method,
+        method: method,
         headers,
         body: requestBody,
         signal: newSignals,
