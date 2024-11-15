@@ -37,7 +37,7 @@ export function validateTypeReferenceExample({
     file,
     workspace,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -46,7 +46,7 @@ export function validateTypeReferenceExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
     if (depth > MAX_RECURSION_DEPTH) {
         // This comment never reaches the user and serves as a termination condition for the recursion.

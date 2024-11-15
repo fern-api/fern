@@ -19,7 +19,7 @@ export function validateUnionExample({
     file,
     workspace,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -29,7 +29,7 @@ export function validateUnionExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");

@@ -19,7 +19,7 @@ export function validateTypeExample({
     example,
     workspace,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -29,9 +29,8 @@ export function validateTypeExample({
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
-    // console.log("validateTypeExample", typeDeclaration);
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
             return validateAliasExample({

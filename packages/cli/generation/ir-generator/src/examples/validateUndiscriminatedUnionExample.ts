@@ -14,7 +14,7 @@ export function validateUndiscriminatedUnionExample({
     file,
     workspace,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     rawUnion: RawSchemas.UndiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -23,7 +23,7 @@ export function validateUndiscriminatedUnionExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
     const violations: ExampleViolation[] = [];
     for (const member of rawUnion.union) {

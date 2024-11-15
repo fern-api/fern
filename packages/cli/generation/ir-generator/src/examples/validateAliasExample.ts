@@ -14,7 +14,7 @@ export function validateAliasExample({
     exampleResolver,
     workspace,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -23,7 +23,7 @@ export function validateAliasExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
     return validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,

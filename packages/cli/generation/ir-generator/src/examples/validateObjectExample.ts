@@ -20,7 +20,7 @@ export function validateObjectExample({
     workspace,
     example,
     breadcrumbs,
-    depth = 0
+    depth
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -32,7 +32,7 @@ export function validateObjectExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
-    depth?: number;
+    depth: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
