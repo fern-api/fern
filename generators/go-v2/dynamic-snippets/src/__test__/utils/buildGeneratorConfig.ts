@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { BaseGoCustomConfigSchema } from "@fern-api/go-codegen";
+import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,

@@ -107,9 +107,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.completions.stream(request_options={
-    "max_retries": 1
-})
-```
+        "max_retries": 1
+    })
+    ```
 
 ### Timeouts
 
@@ -117,7 +117,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedServerSentEvents
+    from seed import SeedServerSentEvents
 
 client = SeedServerSentEvents(
     ...,
@@ -125,11 +125,11 @@ client = SeedServerSentEvents(
 )
 
 
-# Override timeout for a specific method
-client.completions.stream(request_options={
-    "timeout_in_seconds": 1
-})
-```
+    # Override timeout for a specific method
+    client.completions.stream(request_options={
+        "timeout_in_seconds": 1
+    })
+    ```
 
 ### Custom Client
 

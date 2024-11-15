@@ -93,10 +93,17 @@ export class RawClient {
                 assignment: csharp.codeblock(`"${requestContentType}"`)
             });
         }
-        arguments_.push({
-            name: "Options",
-            assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
-        });
+        if (endpoint.idempotent) {
+            arguments_.push({
+                name: "Options",
+                assignment: csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
+            });
+        } else {
+            arguments_.push({
+                name: "Options",
+                assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
+            });
+        }
         let apiRequest = csharp.instantiateClass({
             arguments_,
             classReference: csharp.classReference({
