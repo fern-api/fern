@@ -196,19 +196,16 @@ class GeneratorCli:
         github_installation_token: Optional[str] = None,
     ) -> Optional[generatorcli.readme.Remote]:
         if github_repo_url is not None and github_installation_token is not None:
-            return generatorcli.readme.Remote.factory.github(
-                generatorcli.readme.GithubRemote(
-                    repo_url=github_repo_url,
-                    installation_token=github_installation_token,
-                ),
+            return generatorcli.readme.Remote(
+                type="github",
+                repo_url=github_repo_url,
+                installation_token=github_installation_token,
             )
         return None
 
     def _get_language_info(self) -> generatorcli.readme.LanguageInfo:
-        return generatorcli.readme.LanguageInfo.factory.python(
-            generatorcli.readme.PythonInfo(
-                publish_info=generatorcli.readme.PypiPublishInfo(package_name=self._package_name)
-            )
+        return generatorcli.readme.LanguageInfo_Python(
+            publish_info=generatorcli.readme.PypiPublishInfo(package_name=self._package_name),
         )
 
     def _get_feature_config_filepath(self) -> str:
