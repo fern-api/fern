@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { go } from "@fern-api/go-codegen";
+import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";

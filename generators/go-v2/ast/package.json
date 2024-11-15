@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/go-dynamic-snippets",
+  "name": "@fern-api/go-ast",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/go-v2/dynamic-snippets"
+    "directory": "generators/go-v2/ast"
   },
   "files": [
     "lib"
@@ -24,22 +24,18 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "dist": "pnpm compile && node build.cjs"
+    "depcheck": "depcheck"
   },
-  "devDependencies": {
+  "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-snippets": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-api/go-ast": "workspace:*",
-    "@fern-api/go-formatter": "workspace:*",
-    "@fern-api/ir-generator": "workspace:*",
-    "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/project-loader": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/ir-sdk": "^53.19.0",
+    "zod": "^3.22.3"
+  },
+  "devDependencies": {
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "^53.19.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
@@ -47,8 +43,8 @@
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "tsup": "^8.3.5",
     "typescript": "4.6.4",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.4",
+    "zod": "^3.22.3"
   }
 }

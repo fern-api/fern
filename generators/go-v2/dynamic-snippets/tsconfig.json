@@ -13,7 +13,7 @@
     { "path": "../../../packages/cli/workspace-loader" },
     { "path": "../../../packages/ir-sdk" },
     { "path": "../../commons" },
-    { "path": "../codegen" },
+    { "path": "../ast" },
     { "path": "../formatter" }
   ]
 }
