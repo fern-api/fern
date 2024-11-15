@@ -36,5 +36,5 @@ jobs:
           #   cache-from: type=gha
           #   cache-to: type=gha,mode=min
           push: true
-          labels: version=0.9.0-rc1
-          tags: fernapi/fern-ruby-sdk:0.9.0-rc1
+          labels: version=0.9.0-rc2
+          tags: fernapi/fern-ruby-sdk:0.9.0-rc2

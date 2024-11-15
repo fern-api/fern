@@ -625,27 +625,34 @@ export function generateService(
             name: "initialize",
             invocationName: "new",
             // Initialize each subpackage
-            functionBody: Array.from(subpackages.entries()).map(([spName, sp]) => {
-                const subpackageClassVariable = new Variable({
-                    name: getSubpackagePropertyNameFromIr(spName),
-                    type: sp.classReference,
-                    variableType: VariableType.INSTANCE
-                });
-                return new Expression({
-                    leftSide: subpackageClassVariable,
-                    rightSide:
-                        sp.initializer !== undefined
-                            ? new FunctionInvocation({
-                                  onObject: sp.classReference,
-                                  baseFunction: sp.initializer,
-                                  arguments_: sp.initializer.parameters.map((param) =>
-                                      param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
-                                  )
-                              })
-                            : sp.classReference,
+            functionBody: [
+                new Expression({
+                    leftSide: requestClientProperty.toVariable(),
+                    rightSide: requestClientProperty.name,
                     isAssignment: true
-                });
-            }),
+                }),
+                ...Array.from(subpackages.entries()).map(([spName, sp]) => {
+                    const subpackageClassVariable = new Variable({
+                        name: getSubpackagePropertyNameFromIr(spName),
+                        type: sp.classReference,
+                        variableType: VariableType.INSTANCE
+                    });
+                    return new Expression({
+                        leftSide: subpackageClassVariable,
+                        rightSide:
+                            sp.initializer !== undefined
+                                ? new FunctionInvocation({
+                                      onObject: sp.classReference,
+                                      baseFunction: sp.initializer,
+                                      arguments_: sp.initializer.parameters.map((param) =>
+                                          param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
+                                      )
+                                  })
+                                : sp.classReference,
+                        isAssignment: true
+                    });
+                })
+            ],
             parameters: [requestClientProperty.toParameter({})],
             returnValue: syncClassReference,
             documentation: subpackage.docs
@@ -690,27 +697,34 @@ export function generateService(
             name: "initialize",
             invocationName: "new",
             // Initialize each subpackage
-            functionBody: Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
-                const subpackageClassVariable = new Variable({
-                    name: getSubpackagePropertyNameFromIr(spName),
-                    type: sp.classReference,
-                    variableType: VariableType.INSTANCE
-                });
-                return new Expression({
-                    leftSide: subpackageClassVariable,
-                    rightSide:
-                        sp.initializer !== undefined
-                            ? new FunctionInvocation({
-                                  onObject: sp.classReference,
-                                  baseFunction: sp.initializer,
-                                  arguments_: sp.initializer.parameters.map((param) =>
-                                      param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
-                                  )
-                              })
-                            : sp.classReference,
+            functionBody: [
+                new Expression({
+                    leftSide: requestClientProperty.toVariable(),
+                    rightSide: requestClientProperty.name,
                     isAssignment: true
-                });
-            }),
+                }),
+                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
+                    const subpackageClassVariable = new Variable({
+                        name: getSubpackagePropertyNameFromIr(spName),
+                        type: sp.classReference,
+                        variableType: VariableType.INSTANCE
+                    });
+                    return new Expression({
+                        leftSide: subpackageClassVariable,
+                        rightSide:
+                            sp.initializer !== undefined
+                                ? new FunctionInvocation({
+                                      onObject: sp.classReference,
+                                      baseFunction: sp.initializer,
+                                      arguments_: sp.initializer.parameters.map((param) =>
+                                          param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
+                                      )
+                                  })
+                                : sp.classReference,
+                        isAssignment: true
+                    });
+                })
+            ],
             parameters: [requestClientProperty.toParameter({})],
             returnValue: asyncClassReference,
             documentation: subpackage.docs
