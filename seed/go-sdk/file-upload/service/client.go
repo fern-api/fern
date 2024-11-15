@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 	option "github.com/file-upload/fern/option"
 	io "io"
 	http "net/http"
@@ -14,7 +15,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -22,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,9 +53,9 @@ func (c *Client) Post(
 	}
 	endpointURL := baseURL
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
@@ -118,7 +119,7 @@ func (c *Client) Post(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -150,9 +151,9 @@ func (c *Client) JustFile(
 	}
 	endpointURL := baseURL + "/just-file"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
@@ -163,7 +164,7 @@ func (c *Client) JustFile(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -196,7 +197,7 @@ func (c *Client) JustFileWithQueryParams(
 	}
 	endpointURL := baseURL + "/just-file-with-query-params"
 
-	queryParams, err := core.QueryValues(request)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return err
 	}
@@ -204,9 +205,9 @@ func (c *Client) JustFileWithQueryParams(
 		endpointURL += "?" + queryParams.Encode()
 	}
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return err
 	}
@@ -217,7 +218,7 @@ func (c *Client) JustFileWithQueryParams(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -250,20 +251,20 @@ func (c *Client) WithContentType(
 	}
 	endpointURL := baseURL + "/with-content-type"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	fileContentType := "application/octet-stream"
-	if contentTyped, ok := file.(core.ContentTyped); ok {
+	if contentTyped, ok := file.(internal.ContentTyped); ok {
 		fileContentType = contentTyped.ContentType()
 	}
-	if err := writer.WriteFile("file", file, core.WithMultipartContentType(fileContentType)); err != nil {
+	if err := writer.WriteFile("file", file, internal.WithMultipartContentType(fileContentType)); err != nil {
 		return err
 	}
 	if err := writer.WriteField("foo", fmt.Sprintf("%v", request.Foo)); err != nil {
 		return err
 	}
-	if err := writer.WriteJSON("bar", request.Bar, core.WithMultipartContentType("application/json")); err != nil {
+	if err := writer.WriteJSON("bar", request.Bar, internal.WithMultipartContentType("application/json")); err != nil {
 		return err
 	}
 	if err := writer.Close(); err != nil {
@@ -273,7 +274,7 @@ func (c *Client) WithContentType(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

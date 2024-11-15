@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/model/builtin/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/builtin/fixtures/internal"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -180,11 +180,11 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Nineteen *core.DateTime `json:"nineteen,omitempty"`
-		Twenty   *core.Date     `json:"twenty,omitempty"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Nineteen *internal.DateTime `json:"nineteen,omitempty"`
+		Twenty   *internal.Date     `json:"twenty,omitempty"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -201,7 +201,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	}
 	t.eighteen = unmarshaler.Eighteen
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
+	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
 		return err
 	}
@@ -214,24 +214,24 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Nineteen *core.DateTime `json:"nineteen,omitempty"`
-		Twenty   *core.Date     `json:"twenty,omitempty"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Nineteen *internal.DateTime `json:"nineteen,omitempty"`
+		Twenty   *internal.Date     `json:"twenty,omitempty"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed:    embed(*t),
-		Six:      core.NewDateTime(t.Six),
-		Seven:    core.NewDate(t.Seven),
-		Nineteen: core.NewOptionalDateTime(t.Nineteen),
-		Twenty:   core.NewOptionalDate(t.Twenty),
+		Six:      internal.NewDateTime(t.Six),
+		Seven:    internal.NewDate(t.Seven),
+		Nineteen: internal.NewOptionalDateTime(t.Nineteen),
+		Twenty:   internal.NewOptionalDate(t.Twenty),
 		Eighteen: "fern",
 	}
 	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

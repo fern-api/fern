@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-core/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-core/fixtures/internal"
 )
 
 type WithAuthToken struct {
@@ -34,7 +34,7 @@ func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithAuthToken(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
 
 func (w *WithAuthToken) String() string {
 	if len(w._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)

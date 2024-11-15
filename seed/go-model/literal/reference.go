@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
 
 type ContainerObject struct {
@@ -33,7 +33,7 @@ func (c *ContainerObject) UnmarshalJSON(data []byte) error {
 	}
 	*c = ContainerObject(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (c *ContainerObject) UnmarshalJSON(data []byte) error {
 }
 
 func (c *ContainerObject) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -98,7 +98,7 @@ func (n *NestedObjectWithLiterals) UnmarshalJSON(data []byte) error {
 	}
 	n.literal2 = unmarshaler.Literal2
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n, "literal1", "literal2")
+	extraProperties, err := internal.ExtractExtraProperties(data, *n, "literal1", "literal2")
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (n *NestedObjectWithLiterals) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithLiterals) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -187,7 +187,7 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 	}
 	s.stream = unmarshaler.Stream
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "prompt", "stream")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "prompt", "stream")
 	if err != nil {
 		return err
 	}
@@ -211,7 +211,7 @@ func (s *SendRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendRequest) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

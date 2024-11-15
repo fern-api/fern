@@ -5,7 +5,7 @@ package objectswithimports
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type File struct {
@@ -49,7 +49,7 @@ func (f *File) UnmarshalJSON(data []byte) error {
 	}
 	*f = File(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -59,7 +59,7 @@ func (f *File) UnmarshalJSON(data []byte) error {
 }
 
 func (f *File) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

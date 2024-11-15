@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type Movie struct {
@@ -41,7 +41,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 }
 
 func (m *Movie) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

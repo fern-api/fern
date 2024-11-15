@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	core "sdk/core"
+	internal "sdk/internal"
 	time "time"
 )
 
@@ -51,7 +51,7 @@ func (d *DeclaredErrorName) UnmarshalJSON(data []byte) error {
 	}
 	*d = DeclaredErrorName(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func (d *DeclaredErrorName) UnmarshalJSON(data []byte) error {
 }
 
 func (d *DeclaredErrorName) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -124,7 +124,7 @@ func (e *ErrorDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*e = ErrorDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (e *ErrorDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ErrorDeclaration) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -208,7 +208,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "property":
-		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
+		return internal.MarshalJSONWithExtraProperty(e.Property, "type", "property")
 	case "statusCode":
 		var marshaler = struct {
 			Type       string      `json:"type"`
@@ -270,7 +270,7 @@ func (a *AliasTypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*a = AliasTypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -280,7 +280,7 @@ func (a *AliasTypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (a *AliasTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -425,7 +425,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "map":
-		return core.MarshalJSONWithExtraProperty(c.Map, "_type", "map")
+		return internal.MarshalJSONWithExtraProperty(c.Map, "_type", "map")
 	case "optional":
 		var marshaler = struct {
 			Type     string         `json:"_type"`
@@ -522,7 +522,7 @@ func (d *DeclaredTypeName) UnmarshalJSON(data []byte) error {
 	}
 	*d = DeclaredTypeName(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -532,7 +532,7 @@ func (d *DeclaredTypeName) UnmarshalJSON(data []byte) error {
 }
 
 func (d *DeclaredTypeName) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -563,7 +563,7 @@ func (e *EnumTypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*e = EnumTypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -573,7 +573,7 @@ func (e *EnumTypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (e *EnumTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -620,7 +620,7 @@ func (e *EnumValue) UnmarshalJSON(data []byte) error {
 	}
 	*e = EnumValue(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -630,7 +630,7 @@ func (e *EnumValue) UnmarshalJSON(data []byte) error {
 }
 
 func (e *EnumValue) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -661,7 +661,7 @@ func (e *ExampleAliasType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleAliasType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -671,7 +671,7 @@ func (e *ExampleAliasType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleAliasType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -874,7 +874,7 @@ func (e *ExampleEnumType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleEnumType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -884,7 +884,7 @@ func (e *ExampleEnumType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleEnumType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -923,7 +923,7 @@ func (e *ExampleKeyValuePair) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleKeyValuePair(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -933,7 +933,7 @@ func (e *ExampleKeyValuePair) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleKeyValuePair) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -972,7 +972,7 @@ func (e *ExampleNamedType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleNamedType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -982,7 +982,7 @@ func (e *ExampleNamedType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleNamedType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1031,7 +1031,7 @@ func (e *ExampleObjectProperty) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleObjectProperty(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -1041,7 +1041,7 @@ func (e *ExampleObjectProperty) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleObjectProperty) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1072,7 +1072,7 @@ func (e *ExampleObjectType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleObjectType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -1082,7 +1082,7 @@ func (e *ExampleObjectType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleObjectType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1249,7 +1249,7 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.Long = valueUnmarshaler.Long
 	case "datetime":
 		var valueUnmarshaler struct {
-			Datetime *core.DateTime `json:"datetime"`
+			Datetime *internal.DateTime `json:"datetime"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -1257,7 +1257,7 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.Datetime = valueUnmarshaler.Datetime.Time()
 	case "date":
 		var valueUnmarshaler struct {
-			Date *core.Date `json:"date" format:"date"`
+			Date *internal.Date `json:"date" format:"date"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -1326,20 +1326,20 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "datetime":
 		var marshaler = struct {
-			Type     string         `json:"type"`
-			Datetime *core.DateTime `json:"datetime"`
+			Type     string             `json:"type"`
+			Datetime *internal.DateTime `json:"datetime"`
 		}{
 			Type:     "datetime",
-			Datetime: core.NewDateTime(e.Datetime),
+			Datetime: internal.NewDateTime(e.Datetime),
 		}
 		return json.Marshal(marshaler)
 	case "date":
 		var marshaler = struct {
-			Type string     `json:"type"`
-			Date *core.Date `json:"date" format:"date"`
+			Type string         `json:"type"`
+			Date *internal.Date `json:"date" format:"date"`
 		}{
 			Type: "date",
-			Date: core.NewDate(e.Date),
+			Date: internal.NewDate(e.Date),
 		}
 		return json.Marshal(marshaler)
 	case "uuid":
@@ -1421,7 +1421,7 @@ func (e *ExampleSingleUnionType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleSingleUnionType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -1431,7 +1431,7 @@ func (e *ExampleSingleUnionType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleSingleUnionType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1523,9 +1523,9 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "samePropertiesAsObject":
-		return core.MarshalJSONWithExtraProperty(e.SamePropertiesAsObject, "type", "samePropertiesAsObject")
+		return internal.MarshalJSONWithExtraProperty(e.SamePropertiesAsObject, "type", "samePropertiesAsObject")
 	case "singleProperty":
-		return core.MarshalJSONWithExtraProperty(e.SingleProperty, "type", "singleProperty")
+		return internal.MarshalJSONWithExtraProperty(e.SingleProperty, "type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			Type         string      `json:"type"`
@@ -1606,7 +1606,7 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -1616,7 +1616,7 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1655,7 +1655,7 @@ func (e *ExampleTypeReference) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleTypeReference(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -1665,7 +1665,7 @@ func (e *ExampleTypeReference) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleTypeReference) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -1808,7 +1808,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(e.Named, "type", "named")
+		return internal.MarshalJSONWithExtraProperty(e.Named, "type", "named")
 	}
 }
 
@@ -1938,13 +1938,13 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
-		return core.MarshalJSONWithExtraProperty(e.Alias, "type", "alias")
+		return internal.MarshalJSONWithExtraProperty(e.Alias, "type", "alias")
 	case "enum":
-		return core.MarshalJSONWithExtraProperty(e.Enum, "type", "enum")
+		return internal.MarshalJSONWithExtraProperty(e.Enum, "type", "enum")
 	case "object":
-		return core.MarshalJSONWithExtraProperty(e.Object, "type", "object")
+		return internal.MarshalJSONWithExtraProperty(e.Object, "type", "object")
 	case "union":
-		return core.MarshalJSONWithExtraProperty(e.Union, "type", "union")
+		return internal.MarshalJSONWithExtraProperty(e.Union, "type", "union")
 	}
 }
 
@@ -2079,7 +2079,7 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 	}
 	*m = MapType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -2089,7 +2089,7 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 }
 
 func (m *MapType) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -2144,7 +2144,7 @@ func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectProperty(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -2154,7 +2154,7 @@ func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectProperty) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -2194,7 +2194,7 @@ func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectTypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -2204,7 +2204,7 @@ func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -2287,7 +2287,7 @@ func (r *ResolvedNamedType) UnmarshalJSON(data []byte) error {
 	}
 	*r = ResolvedNamedType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -2297,7 +2297,7 @@ func (r *ResolvedNamedType) UnmarshalJSON(data []byte) error {
 }
 
 func (r *ResolvedNamedType) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -2420,7 +2420,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(r.Named, "_type", "named")
+		return internal.MarshalJSONWithExtraProperty(r.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`
@@ -2533,7 +2533,7 @@ func (s *SingleUnionType) UnmarshalJSON(data []byte) error {
 	}
 	*s = SingleUnionType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -2543,7 +2543,7 @@ func (s *SingleUnionType) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SingleUnionType) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -2635,9 +2635,9 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
-		return core.MarshalJSONWithExtraProperty(s.SamePropertiesAsObject, "_type", "samePropertiesAsObject")
+		return internal.MarshalJSONWithExtraProperty(s.SamePropertiesAsObject, "_type", "samePropertiesAsObject")
 	case "singleProperty":
-		return core.MarshalJSONWithExtraProperty(s.SingleProperty, "_type", "singleProperty")
+		return internal.MarshalJSONWithExtraProperty(s.SingleProperty, "_type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			PropertiesType string      `json:"_type"`
@@ -2702,7 +2702,7 @@ func (s *SingleUnionTypeProperty) UnmarshalJSON(data []byte) error {
 	}
 	*s = SingleUnionTypeProperty(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -2712,7 +2712,7 @@ func (s *SingleUnionTypeProperty) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SingleUnionTypeProperty) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -2840,15 +2840,15 @@ func (t Type) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
-		return core.MarshalJSONWithExtraProperty(t.Alias, "_type", "alias")
+		return internal.MarshalJSONWithExtraProperty(t.Alias, "_type", "alias")
 	case "enum":
-		return core.MarshalJSONWithExtraProperty(t.Enum, "_type", "enum")
+		return internal.MarshalJSONWithExtraProperty(t.Enum, "_type", "enum")
 	case "object":
-		return core.MarshalJSONWithExtraProperty(t.Object, "_type", "object")
+		return internal.MarshalJSONWithExtraProperty(t.Object, "_type", "object")
 	case "union":
-		return core.MarshalJSONWithExtraProperty(t.Union, "_type", "union")
+		return internal.MarshalJSONWithExtraProperty(t.Union, "_type", "union")
 	case "undiscriminatedUnion":
-		return core.MarshalJSONWithExtraProperty(t.UndiscriminatedUnion, "_type", "undiscriminatedUnion")
+		return internal.MarshalJSONWithExtraProperty(t.UndiscriminatedUnion, "_type", "undiscriminatedUnion")
 	}
 }
 
@@ -2944,7 +2944,7 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*t = TypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -2954,7 +2954,7 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (t *TypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
@@ -3077,7 +3077,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		return core.MarshalJSONWithExtraProperty(t.Named, "_type", "named")
+		return internal.MarshalJSONWithExtraProperty(t.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`
@@ -3154,7 +3154,7 @@ func (u *UndiscriminatedUnionMember) UnmarshalJSON(data []byte) error {
 	}
 	*u = UndiscriminatedUnionMember(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -3164,7 +3164,7 @@ func (u *UndiscriminatedUnionMember) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UndiscriminatedUnionMember) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -3195,7 +3195,7 @@ func (u *UndiscriminatedUnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*u = UndiscriminatedUnionTypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -3205,7 +3205,7 @@ func (u *UndiscriminatedUnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UndiscriminatedUnionTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -3261,7 +3261,7 @@ func (u *UnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*u = UnionTypeDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -3271,7 +3271,7 @@ func (u *UnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UnionTypeDeclaration) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

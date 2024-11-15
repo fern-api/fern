@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
 
 type SendResponse struct {
@@ -56,7 +56,7 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 	}
 	s.success = unmarshaler.Success
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "success")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "success")
 	if err != nil {
 		return err
 	}
@@ -80,11 +80,11 @@ func (s *SendResponse) MarshalJSON() ([]byte, error) {
 
 func (s *SendResponse) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

@@ -4,6 +4,7 @@ package client
 
 import (
 	core "github.com/idempotency-headers/fern/core"
+	internal "github.com/idempotency-headers/fern/internal"
 	option "github.com/idempotency-headers/fern/option"
 	payment "github.com/idempotency-headers/fern/payment"
 	http "net/http"
@@ -11,7 +12,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Payment *payment.Client
@@ -21,8 +22,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

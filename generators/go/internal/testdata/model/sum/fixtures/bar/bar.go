@@ -5,7 +5,7 @@ package bar
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/example/organization/core"
+	internal "github.com/example/organization/internal"
 )
 
 type Bar struct {
@@ -33,7 +33,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	}
 	*b = Bar(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Bar) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)

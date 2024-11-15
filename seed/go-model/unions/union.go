@@ -5,7 +5,7 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/unions/fern/core"
+	internal "github.com/unions/fern/internal"
 )
 
 type Circle struct {
@@ -33,7 +33,7 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 	}
 	*c = Circle(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 }
 
 func (c *Circle) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -74,7 +74,7 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 	}
 	*g = GetShapeRequest(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *g)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
 	}
@@ -84,7 +84,7 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 }
 
 func (g *GetShapeRequest) String() string {
-	if value, err := core.StringifyJSON(g); err == nil {
+	if value, err := internal.StringifyJSON(g); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
@@ -168,9 +168,9 @@ func (s Shape) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "circle":
-		return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	case "square":
-		return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
 	}
 }
 
@@ -215,7 +215,7 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 	}
 	*s = Square(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -225,7 +225,7 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 }
 
 func (s *Square) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

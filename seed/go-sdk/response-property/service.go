@@ -5,7 +5,7 @@ package responseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/response-property/fern/core"
+	internal "github.com/response-property/fern/internal"
 )
 
 type OptionalStringResponse = *StringResponse
@@ -36,7 +36,7 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 	}
 	*s = StringResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -48,11 +48,11 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 
 func (s *StringResponse) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -84,7 +84,7 @@ func (w *WithMetadata) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithMetadata(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -96,11 +96,11 @@ func (w *WithMetadata) UnmarshalJSON(data []byte) error {
 
 func (w *WithMetadata) String() string {
 	if len(w._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
@@ -140,7 +140,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -152,11 +152,11 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 
 func (m *Movie) String() string {
 	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(m._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -206,7 +206,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	}
 	*r = Response(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -218,11 +218,11 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 
 func (r *Response) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -254,7 +254,7 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithDocs(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -266,11 +266,11 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 
 func (w *WithDocs) String() string {
 	if len(w._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
