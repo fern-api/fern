@@ -1,6 +1,7 @@
 - changelogEntry:
     - summary: |
-        Minor typo fix & support piping query parameter validation into fern definition generation
+        Update the IR's `ServiceTypeReferenceInfo` to include all transitive types
+        referenced by a service.
       type: fix
   irVersion: 53
   version: 0.45.0-rc44

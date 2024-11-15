@@ -55,6 +55,7 @@ export interface ErrorNode {
 
 export interface EndpointNode {
     endpointId: EndpointId;
+    serviceId: ServiceId;
     referencedErrors: Set<ErrorId>;
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;

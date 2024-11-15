@@ -4833,7 +4833,9 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_union": [
-                "type_union:Shape"
+                "type_union:Shape",
+                "type_union:Circle",
+                "type_union:Square"
             ]
         },
         "sharedTypes": [
@@ -4849,9 +4851,7 @@
             "type_types:UnionWithSingleElement",
             "type_types:Foo",
             "type_types:Bar",
-            "type_union:GetShapeRequest",
-            "type_union:Circle",
-            "type_union:Square"
+            "type_union:GetShapeRequest"
         ]
     },
     "webhookGroups": {},

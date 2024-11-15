@@ -24,7 +24,7 @@ public partial class PaymentClient
     /// </example>
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
-        RequestOptions? options = null,
+        IdempotentRequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {

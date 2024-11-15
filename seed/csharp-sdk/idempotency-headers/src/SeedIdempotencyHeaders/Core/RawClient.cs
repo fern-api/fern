@@ -48,7 +48,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         public Headers Headers { get; init; } = new();
 
-        public RequestOptions? Options { get; init; }
+        public IRequestOptions? Options { get; init; }
     }
 
     /// <summary>
@@ -136,6 +136,12 @@ internal class RawClient(ClientOptions clientOptions)
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+
+        if (request.Options is IIdempotentRequestOptions idempotentRequest)
+        {
+            SetHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+        }
+
         return httpRequest;
     }
 

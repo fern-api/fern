@@ -86,9 +86,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.get_account(request_options={
-    "max_retries": 1
-})
-```
+        "max_retries": 1
+    })
+    ```
 
 ### Timeouts
 
@@ -96,7 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedApi
+    from seed import SeedApi
 
 client = SeedApi(
     ...,
@@ -104,11 +104,11 @@ client = SeedApi(
 )
 
 
-# Override timeout for a specific method
-client.get_account(request_options={
-    "timeout_in_seconds": 1
-})
-```
+    # Override timeout for a specific method
+    client.get_account(request_options={
+        "timeout_in_seconds": 1
+    })
+    ```
 
 ### Custom Client
 

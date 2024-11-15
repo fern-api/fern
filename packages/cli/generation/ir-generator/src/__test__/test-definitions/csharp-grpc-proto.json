@@ -3047,13 +3047,15 @@
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
-        "typesReferencedOnlyByService": {},
-        "sharedTypes": [
-            "type_:Metadata",
-            "type_:CreateResponse",
-            "type_:UserModel",
-            "type_:MetadataValue"
-        ]
+        "typesReferencedOnlyByService": {
+            "service_userservice": [
+                "type_:CreateResponse",
+                "type_:UserModel",
+                "type_:Metadata",
+                "type_:MetadataValue"
+            ]
+        },
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

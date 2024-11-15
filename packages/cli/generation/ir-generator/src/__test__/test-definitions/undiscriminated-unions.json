@@ -3321,13 +3321,13 @@
         "typesReferencedOnlyByService": {
             "service_union": [
                 "type_union:MyUnion",
-                "type_union:Metadata"
+                "type_union:Metadata",
+                "type_union:Key",
+                "type_union:KeyType"
             ]
         },
         "sharedTypes": [
-            "type_union:TypeWithOptionalUnion",
-            "type_union:Key",
-            "type_union:KeyType"
+            "type_union:TypeWithOptionalUnion"
         ]
     },
     "webhookGroups": {},

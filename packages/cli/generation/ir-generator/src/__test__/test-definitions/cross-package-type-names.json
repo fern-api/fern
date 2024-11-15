@@ -4818,19 +4818,19 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
+            "service_foo": [
+                "type_commons:Imported",
+                "type_foo:ImportingType",
+                "type_foo:OptionalString"
+            ],
             "service_folder-a/service": [
                 "type_folder-a/service:Response"
             ],
             "service_folder-d/service": [
                 "type_folder-d/service:Response"
-            ],
-            "service_foo": [
-                "type_foo:ImportingType",
-                "type_foo:OptionalString"
             ]
         },
         "sharedTypes": [
-            "type_commons:Imported",
             "type_folder-b/common:Foo",
             "type_folder-c/common:Foo"
         ]
