@@ -12,7 +12,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get; init; } = SeedApiEnvironment.Default;
+    public string BaseUrl { get; init; } = "";
 
     /// <summary>
     /// The http client used to make requests.
@@ -52,6 +52,5 @@ public partial class ClientOptions
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
         };
-        ;
     }
 }

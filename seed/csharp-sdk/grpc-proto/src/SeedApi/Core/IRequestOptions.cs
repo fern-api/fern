@@ -1,12 +1,11 @@
 using System;
 using System.Net.Http;
-using SeedApi.Core;
 
 #nullable enable
 
-namespace SeedApi;
+namespace SeedApi.Core;
 
-public partial class RequestOptions : IRequestOptions
+internal interface IRequestOptions
 {
     /// <summary>
     /// The Base URL for the API.
@@ -19,6 +18,11 @@ public partial class RequestOptions : IRequestOptions
     public HttpClient? HttpClient { get; init; }
 
     /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; }
+
+    /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public int? MaxRetries { get; init; }
@@ -27,9 +31,4 @@ public partial class RequestOptions : IRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
-
-    /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
 }
