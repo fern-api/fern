@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures/internal"
 )
 
 type Request struct {
@@ -34,7 +34,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	}
 	*r = Request(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 
 func (r *Request) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

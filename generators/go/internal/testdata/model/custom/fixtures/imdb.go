@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/model/custom/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/custom/fixtures/internal"
 	uuid "github.com/google/uuid"
 )
 
@@ -35,7 +35,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	}
 	*b = Bar(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Bar) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -85,7 +85,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 }
 
 func (f *Foo) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/internal"
 )
 
 type OrganizationNotFoundErrorBody struct {
@@ -34,7 +34,7 @@ func (o *OrganizationNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 	}
 	*o = OrganizationNotFoundErrorBody(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (o *OrganizationNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 
 func (o *OrganizationNotFoundErrorBody) String() string {
 	if len(o._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(o._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -82,7 +82,7 @@ func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserNotFoundErrorBody(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -94,11 +94,11 @@ func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 
 func (u *UserNotFoundErrorBody) String() string {
 	if len(u._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

@@ -5,7 +5,7 @@ package aliasextends
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/alias-extends/fern/core"
+	internal "github.com/alias-extends/fern/internal"
 )
 
 type AliasType = *Parent
@@ -43,7 +43,7 @@ func (c *Child) UnmarshalJSON(data []byte) error {
 	}
 	*c = Child(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func (c *Child) UnmarshalJSON(data []byte) error {
 }
 
 func (c *Child) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -84,7 +84,7 @@ func (p *Parent) UnmarshalJSON(data []byte) error {
 	}
 	*p = Parent(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (p *Parent) UnmarshalJSON(data []byte) error {
 }
 
 func (p *Parent) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)

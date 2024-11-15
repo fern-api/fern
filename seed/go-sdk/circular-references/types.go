@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/circular-references/fern/core"
+	internal "github.com/circular-references/fern/internal"
 )
 
 type ImportingA struct {
@@ -34,7 +34,7 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 	}
 	*i = ImportingA(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 
 func (i *ImportingA) String() string {
 	if len(i._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(i._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(i._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -82,7 +82,7 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 	}
 	*r = RootType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -94,11 +94,11 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 
 func (r *RootType) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/option"
 	io "io"
 	http "net/http"
@@ -14,7 +15,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -22,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,10 +50,10 @@ func (c *Client) Upload(
 	}
 	endpointURL := baseURL + "/file/upload"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
@@ -69,7 +70,7 @@ func (c *Client) Upload(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -102,10 +103,10 @@ func (c *Client) UploadSimple(
 	}
 	endpointURL := baseURL + "/file/upload-simple"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
@@ -116,7 +117,7 @@ func (c *Client) UploadSimple(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -151,10 +152,10 @@ func (c *Client) UploadMultiple(
 	}
 	endpointURL := baseURL + "/file/upload-multi"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
-	writer := core.NewMultipartWriter()
+	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
@@ -173,7 +174,7 @@ func (c *Client) UploadMultiple(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

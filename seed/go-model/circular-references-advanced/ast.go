@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/circular-references-advanced/fern/core"
+	internal "github.com/circular-references-advanced/fern/internal"
 )
 
 type ContainerValue struct {
@@ -217,7 +217,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "object_value":
-		return core.MarshalJSONWithExtraProperty(f.ObjectValue, "type", "object_value")
+		return internal.MarshalJSONWithExtraProperty(f.ObjectValue, "type", "object_value")
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`
@@ -283,7 +283,7 @@ func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectFieldValue(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -293,7 +293,7 @@ func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectFieldValue) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -315,7 +315,7 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectValue(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -325,7 +325,7 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectValue) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

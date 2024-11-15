@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	fern "github.com/objects-with-imports/fern"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Directory struct {
@@ -50,7 +50,7 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 	}
 	*d = Directory(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 }
 
 func (d *Directory) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)

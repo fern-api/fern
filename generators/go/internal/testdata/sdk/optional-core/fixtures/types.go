@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/optional-core/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/optional-core/fixtures/internal"
 )
 
 type Optional struct {
@@ -34,7 +34,7 @@ func (o *Optional) UnmarshalJSON(data []byte) error {
 	}
 	*o = Optional(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (o *Optional) UnmarshalJSON(data []byte) error {
 
 func (o *Optional) String() string {
 	if len(o._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(o._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

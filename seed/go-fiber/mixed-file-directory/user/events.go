@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
-	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type ListUserEventsRequest struct {
@@ -47,7 +47,7 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 	}
 	*e = Event(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 }
 
 func (e *Event) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)

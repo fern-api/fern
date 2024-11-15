@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type Availability struct {
@@ -41,7 +41,7 @@ func (a *Availability) UnmarshalJSON(data []byte) error {
 	}
 	*a = Availability(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (a *Availability) UnmarshalJSON(data []byte) error {
 }
 
 func (a *Availability) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -118,7 +118,7 @@ func (d *Declaration) UnmarshalJSON(data []byte) error {
 	}
 	*d = Declaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -128,7 +128,7 @@ func (d *Declaration) UnmarshalJSON(data []byte) error {
 }
 
 func (d *Declaration) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -177,7 +177,7 @@ func (f *FernFilepath) UnmarshalJSON(data []byte) error {
 	}
 	*f = FernFilepath(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -187,7 +187,7 @@ func (f *FernFilepath) UnmarshalJSON(data []byte) error {
 }
 
 func (f *FernFilepath) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -250,7 +250,7 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 	}
 	*n = Name(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -260,7 +260,7 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 }
 
 func (n *Name) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -299,7 +299,7 @@ func (n *NameAndWireValue) UnmarshalJSON(data []byte) error {
 	}
 	*n = NameAndWireValue(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -309,7 +309,7 @@ func (n *NameAndWireValue) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NameAndWireValue) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -350,7 +350,7 @@ func (s *SafeAndUnsafeString) UnmarshalJSON(data []byte) error {
 	}
 	*s = SafeAndUnsafeString(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -360,7 +360,7 @@ func (s *SafeAndUnsafeString) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SafeAndUnsafeString) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -397,7 +397,7 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithDocs(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -407,7 +407,7 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 }
 
 func (w *WithDocs) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
@@ -438,7 +438,7 @@ func (w *WithJsonExample) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithJsonExample(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -448,7 +448,7 @@ func (w *WithJsonExample) UnmarshalJSON(data []byte) error {
 }
 
 func (w *WithJsonExample) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)

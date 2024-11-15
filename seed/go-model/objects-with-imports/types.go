@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Node struct {
@@ -50,7 +50,7 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 	}
 	*n = Node(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 }
 
 func (n *Node) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -91,7 +91,7 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 	}
 	*t = Tree(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -101,7 +101,7 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 }
 
 func (t *Tree) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

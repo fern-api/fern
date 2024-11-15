@@ -5,7 +5,7 @@ package folderc
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/cross-package-type-names/fern/core"
+	internal "github.com/cross-package-type-names/fern/internal"
 	uuid "github.com/google/uuid"
 )
 
@@ -35,7 +35,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -47,11 +47,11 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 
 func (f *Foo) String() string {
 	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

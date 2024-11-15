@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures"
-	core "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/internal"
 )
 
 type Foo struct {
@@ -34,7 +34,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 }
 
 func (f *Foo) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

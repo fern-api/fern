@@ -17,6 +17,10 @@ import (
 )
 
 const (
+	// embeddedCoreImportPath is the import path for the core package
+	// used in the embedded files.
+	embeddedCoreImportPath = "github.com/fern-api/fern-go/internal/generator/sdk/core"
+
 	// sharedTypesFilename is the filename for the shared types file.
 	sharedTypesFilename = "types.go"
 
@@ -470,22 +474,26 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalFile(g.coordinator))
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
-		files = append(files, newCoreFile(g.coordinator))
-		files = append(files, newCoreTestFile(g.coordinator))
+		files = append(files, newApiErrorFile(g.coordinator))
+		files = append(files, newCallerFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newCallerTestFile(g.coordinator, g.config.ImportPath))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newHttpCoreFile(g.coordinator))
+		files = append(files, newHttpInternalFile(g.coordinator))
 		files = append(files, newMultipartFile(g.coordinator))
 		files = append(files, newMultipartTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
-		files = append(files, newRetrierFile(g.coordinator))
-		files = append(files, newRetrierTestFile(g.coordinator))
+		files = append(files, newRetrierFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newRetrierTestFile(g.coordinator, g.config.ImportPath))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
+			files = append(files, newStreamerFile(g.coordinator, g.config.ImportPath))
 		}
 		if generatedPagination {
-			files = append(files, newPagerFile(g.coordinator))
 			files = append(files, newPageFile(g.coordinator))
+			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
 		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
 		if err != nil {
@@ -996,26 +1004,52 @@ func newClientTestFile(
 	return f.File()
 }
 
-func newCoreFile(coordinator *coordinator.Client) *File {
+func newApiErrorFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/core.go",
-		[]byte(coreFile),
+		"core/api_error.go",
+		[]byte(apiErrorFile),
 	)
 }
 
-func newCoreTestFile(coordinator *coordinator.Client) *File {
+func newCallerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(callerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/core_test.go",
-		[]byte(coreTestFile),
+		"internal/caller.go",
+		[]byte(content),
+	)
+}
+
+func newCallerTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(callerTestFile, baseImportPath)
+	return NewFile(
+		coordinator,
+		"internal/caller_test.go",
+		[]byte(content),
+	)
+}
+
+func newHttpCoreFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/http.go",
+		[]byte(httpCoreFile),
+	)
+}
+
+func newHttpInternalFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/http.go",
+		[]byte(httpInternalFile),
 	)
 }
 
 func newMultipartFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/multipart.go",
+		"internal/multipart.go",
 		[]byte(multipartFile),
 	)
 }
@@ -1023,7 +1057,7 @@ func newMultipartFile(coordinator *coordinator.Client) *File {
 func newMultipartTestFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/multipart_test.go",
+		"internal/multipart_test.go",
 		[]byte(multipartTestFile),
 	)
 }
@@ -1044,11 +1078,12 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newPagerFile(coordinator *coordinator.Client) *File {
+func newPagerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(pagerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/pager.go",
-		[]byte(pagerFile),
+		"internal/pager.go",
+		[]byte(content),
 	)
 }
 
@@ -1068,26 +1103,37 @@ func newStreamFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newRetrierFile(coordinator *coordinator.Client) *File {
+func newStreamerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(streamerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/retrier.go",
-		[]byte(retrierFile),
+		"internal/streamer.go",
+		[]byte(content),
 	)
 }
 
-func newRetrierTestFile(coordinator *coordinator.Client) *File {
+func newRetrierFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(retrierFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/retrier_test.go",
-		[]byte(retrierTestFile),
+		"internal/retrier.go",
+		[]byte(content),
+	)
+}
+
+func newRetrierTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(retrierTestFile, baseImportPath)
+	return NewFile(
+		coordinator,
+		"internal/retrier_test.go",
+		[]byte(content),
 	)
 }
 
 func newQueryFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/query.go",
+		"internal/query.go",
 		[]byte(queryFile),
 	)
 }
@@ -1095,7 +1141,7 @@ func newQueryFile(coordinator *coordinator.Client) *File {
 func newQueryTestFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/query_test.go",
+		"internal/query_test.go",
 		[]byte(queryTestFile),
 	)
 }
@@ -1103,7 +1149,7 @@ func newQueryTestFile(coordinator *coordinator.Client) *File {
 func newStringerFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/stringer.go",
+		"internal/stringer.go",
 		[]byte(stringerFile),
 	)
 }
@@ -1111,7 +1157,7 @@ func newStringerFile(coordinator *coordinator.Client) *File {
 func newTimeFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/time.go",
+		"internal/time.go",
 		[]byte(timeFile),
 	)
 }
@@ -1119,7 +1165,7 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/extra_properties.go",
+		"internal/extra_properties.go",
 		[]byte(extraPropertiesFile),
 	)
 }
@@ -1127,8 +1173,17 @@ func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
 func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/extra_properties_test.go",
+		"internal/extra_properties_test.go",
 		[]byte(extraPropertiesTestFile),
+	)
+}
+
+func replaceCoreImportPath(content string, baseImportPath string) string {
+	return strings.Replace(
+		content,
+		embeddedCoreImportPath,
+		filepath.Join(baseImportPath, "core"),
+		1,
 	)
 }
 

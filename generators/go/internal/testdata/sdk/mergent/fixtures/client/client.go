@@ -9,6 +9,7 @@ import (
 	errors "errors"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/option"
 	io "io"
 	http "net/http"
@@ -16,7 +17,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -24,8 +25,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,12 +50,12 @@ func (c *Client) GetTasks(
 	}
 	endpointURL := baseURL + "/tasks"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -86,7 +87,7 @@ func (c *Client) PostTasks(
 	}
 	endpointURL := baseURL + "/tasks"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -117,7 +118,7 @@ func (c *Client) PostTasks(
 	var response *fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -150,9 +151,9 @@ func (c *Client) GetTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
+	endpointURL := internal.EncodeURL(baseURL+"/tasks/%v", taskId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -176,7 +177,7 @@ func (c *Client) GetTasksTaskId(
 	var response *fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -209,9 +210,9 @@ func (c *Client) PatchTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
+	endpointURL := internal.EncodeURL(baseURL+"/tasks/%v", taskId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -249,7 +250,7 @@ func (c *Client) PatchTasksTaskId(
 	var response *fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			MaxAttempts:     options.MaxAttempts,
@@ -282,9 +283,9 @@ func (c *Client) DeleteTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
+	endpointURL := internal.EncodeURL(baseURL+"/tasks/%v", taskId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -307,7 +308,7 @@ func (c *Client) DeleteTasksTaskId(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodDelete,
 			MaxAttempts:     options.MaxAttempts,
@@ -339,9 +340,9 @@ func (c *Client) PostTasksTaskIdRun(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/tasks/%v/run", taskId)
+	endpointURL := internal.EncodeURL(baseURL+"/tasks/%v/run", taskId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -372,7 +373,7 @@ func (c *Client) PostTasksTaskIdRun(
 	var response *fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -409,7 +410,7 @@ func (c *Client) PostTasksBatchCreate(
 	}
 	endpointURL := baseURL + "/tasks/batch-create"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -454,7 +455,7 @@ func (c *Client) PostTasksBatchCreate(
 	var response []*fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -492,7 +493,7 @@ func (c *Client) PostTasksBatchDelete(
 	}
 	endpointURL := baseURL + "/tasks/batch-delete"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -522,7 +523,7 @@ func (c *Client) PostTasksBatchDelete(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -554,12 +555,12 @@ func (c *Client) GetSchedules(
 	}
 	endpointURL := baseURL + "/schedules"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Schedule
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -591,7 +592,7 @@ func (c *Client) PostSchedules(
 	}
 	endpointURL := baseURL + "/schedules"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -615,7 +616,7 @@ func (c *Client) PostSchedules(
 	var response *fixtures.Schedule
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -648,9 +649,9 @@ func (c *Client) GetSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
+	endpointURL := internal.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -674,7 +675,7 @@ func (c *Client) GetSchedulesScheduleId(
 	var response *fixtures.Schedule
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -707,9 +708,9 @@ func (c *Client) PatchSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
+	endpointURL := internal.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -740,7 +741,7 @@ func (c *Client) PatchSchedulesScheduleId(
 	var response *fixtures.Schedule
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			MaxAttempts:     options.MaxAttempts,
@@ -773,9 +774,9 @@ func (c *Client) DeleteSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
+	endpointURL := internal.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -798,7 +799,7 @@ func (c *Client) DeleteSchedulesScheduleId(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodDelete,
 			MaxAttempts:     options.MaxAttempts,
@@ -829,9 +830,9 @@ func (c *Client) GetSchedulesScheduleIdTasks(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/schedules/%v/tasks", scheduleId)
+	endpointURL := internal.EncodeURL(baseURL+"/schedules/%v/tasks", scheduleId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -855,7 +856,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(
 	var response []*fixtures.Task
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
