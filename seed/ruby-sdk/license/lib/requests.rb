@@ -4,7 +4,7 @@ require "faraday"
 require "faraday/retry"
 require "async/http/faraday"
 
-module SeedApiClient
+module SeedLicenseClient
   class RequestClient
     # @return [Faraday]
     attr_reader :conn
@@ -14,7 +14,7 @@ module SeedApiClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return [SeedApiClient::RequestClient]
+    # @return [SeedLicenseClient::RequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @conn = Faraday.new do |faraday|
@@ -25,7 +25,7 @@ module SeedApiClient
       end
     end
 
-    # @param request_options [SeedApiClient::RequestOptions]
+    # @param request_options [SeedLicenseClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
@@ -33,11 +33,7 @@ module SeedApiClient
 
     # @return [Hash{String => String}]
     def get_headers
-      {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_grpc_proto_exhaustive",
-        "X-Fern-SDK-Version": "0.0.1"
-      }
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_license", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 
@@ -50,7 +46,7 @@ module SeedApiClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return [SeedApiClient::AsyncRequestClient]
+    # @return [SeedLicenseClient::AsyncRequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @conn = Faraday.new do |faraday|
@@ -62,7 +58,7 @@ module SeedApiClient
       end
     end
 
-    # @param request_options [SeedApiClient::RequestOptions]
+    # @param request_options [SeedLicenseClient::RequestOptions]
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
@@ -70,11 +66,7 @@ module SeedApiClient
 
     # @return [Hash{String => String}]
     def get_headers
-      {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_grpc_proto_exhaustive",
-        "X-Fern-SDK-Version": "0.0.1"
-      }
+      { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_license", "X-Fern-SDK-Version": "0.0.1" }
     end
   end
 
@@ -97,7 +89,7 @@ module SeedApiClient
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [SeedApiClient::RequestOptions]
+    # @return [SeedLicenseClient::RequestOptions]
     def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
@@ -127,7 +119,7 @@ module SeedApiClient
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [SeedApiClient::IdempotencyRequestOptions]
+    # @return [SeedLicenseClient::IdempotencyRequestOptions]
     def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
