@@ -62,6 +62,9 @@ var (
 	//go:embed sdk/core/retrier.go
 	retrierFile string
 
+	//go:embed sdk/core/retrier_test.go
+	retrierTestFile string
+
 	//go:embed sdk/core/query.go
 	queryFile string
 
