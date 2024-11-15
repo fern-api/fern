@@ -166,6 +166,10 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
+    public addMethods(methods: Method[]): void {
+        methods.forEach((method) => this.addMethod(method));
+    }
+
     public addNestedClass(subClass: Class): void {
         this.nestedClasses.push(subClass);
     }

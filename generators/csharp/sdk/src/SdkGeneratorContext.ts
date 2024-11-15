@@ -134,6 +134,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer,
+            AsIsFiles.Page,
+            AsIsFiles.Pager,
             AsIsFiles.RawClient
         ];
         if (this.hasGrpcEndpoints()) {
@@ -432,6 +434,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${endpoint.name.pascalCase.safeName}Async`;
     }
 
+    public getEndpointPagerMethodName(endpoint: HttpEndpoint): string {
+        return `${endpoint.name.pascalCase.safeName}PagerAsync`;
+    }
+
     public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint): boolean {
         return service.transport?.type === "grpc" && endpoint.transport?.type !== "http";
     }
@@ -456,6 +462,46 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
+    }
+
+    public getPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "Pager",
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference({
+        requestType,
+        responseType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        responseType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OffsetPager",
+            generics: [requestType, responseType, itemType]
+        });
+    }
+
+    public getCursorPagerClassReference({
+        requestType,
+        responseType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        responseType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "CursorPager",
+            generics: [requestType, responseType, itemType]
+        });
     }
 
     public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
