@@ -508,33 +508,37 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getOffsetPagerClassReference({
         requestType,
+        requestOptionsType,
         responseType,
         itemType
     }: {
         requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
         responseType: csharp.Type;
         itemType: csharp.Type;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: "OffsetPager",
-            generics: [requestType, responseType, itemType]
+            generics: [requestType, requestOptionsType, responseType, itemType]
         });
     }
 
     public getCursorPagerClassReference({
         requestType,
+        requestOptionsType,
         responseType,
         itemType
     }: {
         requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
         responseType: csharp.Type;
         itemType: csharp.Type;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: "CursorPager",
-            generics: [requestType, responseType, itemType]
+            generics: [requestType, requestOptionsType, responseType, itemType]
         });
     }
 

@@ -83,6 +83,19 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithCursorPaginationPagerAsync(
+    ///     new ListUsersCursorPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         PerPage = 1,
+    ///         Order = Order.Asc,
+    ///         StartingAfter = "starting_after",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithCursorPaginationPagerAsync(
         ListUsersCursorPaginationRequest request,
         RequestOptions? options = null
@@ -90,6 +103,7 @@ public partial class UsersClient
     {
         var pager = new CursorPager<
             ListUsersCursorPaginationRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -150,6 +164,13 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithBodyCursorPaginationPagerAsync(
+    ///     new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithBodyCursorPaginationPagerAsync(
         ListUsersBodyCursorPaginationRequest request,
         RequestOptions? options = null
@@ -157,6 +178,7 @@ public partial class UsersClient
     {
         var pager = new CursorPager<
             ListUsersBodyCursorPaginationRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -240,6 +262,19 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithOffsetPaginationPagerAsync(
+    ///     new ListUsersOffsetPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         PerPage = 1,
+    ///         Order = Order.Asc,
+    ///         StartingAfter = "starting_after",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithOffsetPaginationPagerAsync(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null
@@ -247,6 +282,7 @@ public partial class UsersClient
     {
         var pager = new OffsetPager<
             ListUsersOffsetPaginationRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -309,6 +345,13 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithBodyOffsetPaginationPagerAsync(
+    ///     new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithBodyOffsetPaginationPagerAsync(
         ListUsersBodyOffsetPaginationRequest request,
         RequestOptions? options = null
@@ -316,6 +359,7 @@ public partial class UsersClient
     {
         var pager = new OffsetPager<
             ListUsersBodyOffsetPaginationRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -396,6 +440,18 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithOffsetStepPaginationPagerAsync(
+    ///     new ListUsersOffsetStepPaginationRequest
+    ///     {
+    ///         Page = 1,
+    ///         Limit = 1,
+    ///         Order = Order.Asc,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithOffsetStepPaginationPagerAsync(
         ListUsersOffsetStepPaginationRequest request,
         RequestOptions? options = null
@@ -403,6 +459,7 @@ public partial class UsersClient
     {
         var pager = new OffsetPager<
             ListUsersOffsetStepPaginationRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -483,6 +540,18 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithOffsetPaginationHasNextPagePagerAsync(
+    ///     new ListWithOffsetPaginationHasNextPageRequest
+    ///     {
+    ///         Page = 1,
+    ///         Limit = 1,
+    ///         Order = Order.Asc,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithOffsetPaginationHasNextPagePagerAsync(
         ListWithOffsetPaginationHasNextPageRequest request,
         RequestOptions? options = null
@@ -490,6 +559,7 @@ public partial class UsersClient
     {
         var pager = new OffsetPager<
             ListWithOffsetPaginationHasNextPageRequest,
+            RequestOptions?,
             ListUsersPaginationResponse,
             User
         >(
@@ -557,12 +627,24 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithExtendedResultsPagerAsync(
+    ///     new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithExtendedResultsPagerAsync(
         ListUsersExtendedRequest request,
         RequestOptions? options = null
     )
     {
-        var pager = new CursorPager<ListUsersExtendedRequest, ListUsersExtendedResponse, User>(
+        var pager = new CursorPager<
+            ListUsersExtendedRequest,
+            RequestOptions?,
+            ListUsersExtendedResponse,
+            User
+        >(
             request,
             options,
             ListWithExtendedResultsAsync,
@@ -625,6 +707,13 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithExtendedResultsAndOptionalDataPagerAsync(
+    ///     new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    /// );
+    /// </code>
+    /// </example>
     public Pager<User> ListWithExtendedResultsAndOptionalDataPagerAsync(
         ListUsersExtendedRequestForOptionalData request,
         RequestOptions? options = null
@@ -632,6 +721,7 @@ public partial class UsersClient
     {
         var pager = new CursorPager<
             ListUsersExtendedRequestForOptionalData,
+            RequestOptions?,
             ListUsersExtendedOptionalListResponse,
             User
         >(
@@ -697,12 +787,17 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListUsernamesPagerAsync(new ListUsernamesRequest { StartingAfter = "starting_after" });
+    /// </code>
+    /// </example>
     public Pager<string> ListUsernamesPagerAsync(
         ListUsernamesRequest request,
         RequestOptions? options = null
     )
     {
-        var pager = new CursorPager<ListUsernamesRequest, UsernameCursor, string>(
+        var pager = new CursorPager<ListUsernamesRequest, RequestOptions?, UsernameCursor, string>(
             request,
             options,
             ListUsernamesAsync,
@@ -763,12 +858,22 @@ public partial class UsersClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// client.Users.ListWithGlobalConfigPagerAsync(new ListWithGlobalConfigRequest { Offset = 1 });
+    /// </code>
+    /// </example>
     public Pager<string> ListWithGlobalConfigPagerAsync(
         ListWithGlobalConfigRequest request,
         RequestOptions? options = null
     )
     {
-        var pager = new OffsetPager<ListWithGlobalConfigRequest, UsernameContainer, string>(
+        var pager = new OffsetPager<
+            ListWithGlobalConfigRequest,
+            RequestOptions?,
+            UsernameContainer,
+            string
+        >(
             request,
             options,
             ListWithGlobalConfigAsync,

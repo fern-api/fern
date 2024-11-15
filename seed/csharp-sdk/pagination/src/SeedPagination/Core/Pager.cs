@@ -43,10 +43,10 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     }
 }
 
-internal sealed class OffsetPager<TRequest, TResponse, TItem> : Pager<TItem>
+internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TItem> : Pager<TItem>
 {
     private readonly TRequest _request;
-    private readonly RequestOptions? _options;
+    private readonly TRequestOptions? _options;
     private readonly GetNextPage _getNextPage;
     private readonly GetOffset _getOffset;
     private readonly SetOffset _setOffset;
@@ -56,7 +56,7 @@ internal sealed class OffsetPager<TRequest, TResponse, TItem> : Pager<TItem>
 
     internal delegate Task<TResponse> GetNextPage(
         TRequest request,
-        RequestOptions? options,
+        TRequestOptions? options,
         CancellationToken cancellationToken
     );
     internal delegate int GetOffset(TRequest request);
@@ -67,7 +67,7 @@ internal sealed class OffsetPager<TRequest, TResponse, TItem> : Pager<TItem>
 
     internal OffsetPager(
         TRequest request,
-        RequestOptions? options,
+        TRequestOptions? options,
         GetNextPage getNextPage,
         GetOffset getOffset,
         SetOffset setOffset,
@@ -119,10 +119,10 @@ internal sealed class OffsetPager<TRequest, TResponse, TItem> : Pager<TItem>
     }
 }
 
-internal sealed class CursorPager<TRequest, TResponse, TItem> : Pager<TItem>
+internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TItem> : Pager<TItem>
 {
     private readonly TRequest _request;
-    private readonly RequestOptions? _options;
+    private readonly TRequestOptions? _options;
     private readonly GetNextPage _getNextPage;
     private readonly SetCursor _setCursor;
     private readonly GetNextCursor _getNextCursor;
@@ -130,16 +130,18 @@ internal sealed class CursorPager<TRequest, TResponse, TItem> : Pager<TItem>
 
     internal delegate Task<TResponse> GetNextPage(
         TRequest request,
-        RequestOptions? options,
+        TRequestOptions? options,
         CancellationToken cancellationToken
     );
+
+    // TODO: validate assumption that cursor is always a string
     internal delegate void SetCursor(TRequest request, string cursor);
     internal delegate string? GetNextCursor(TResponse response);
     internal delegate IReadOnlyList<TItem>? GetItems(TResponse response);
 
     internal CursorPager(
         TRequest request,
-        RequestOptions? options,
+        TRequestOptions? options,
         GetNextPage getNextPage,
         SetCursor setCursor,
         GetNextCursor getNextCursor,

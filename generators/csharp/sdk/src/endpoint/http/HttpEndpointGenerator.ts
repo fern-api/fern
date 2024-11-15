@@ -5,6 +5,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { getRequestOptionsParameter } from "../utils/requestOptions";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -38,25 +39,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): csharp.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        if (endpoint.idempotent) {
-            parameters.push(
-                csharp.parameter({
-                    type: csharp.Type.optional(
-                        csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference())
-                    ),
-                    name: this.context.getRequestOptionsParameterName(),
-                    initializer: "null"
-                })
-            );
-        } else {
-            parameters.push(
-                csharp.parameter({
-                    type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
-                    name: this.context.getIdempotentRequestOptionsParameterName(),
-                    initializer: "null"
-                })
-            );
-        }
+        parameters.push(getRequestOptionsParameter({ context: this.context, endpoint }));
         parameters.push(
             csharp.parameter({
                 type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
@@ -128,6 +111,34 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parseDatetimes: boolean;
     }): csharp.MethodInvocation | undefined {
         return this.generateEndpointSnippet({
+            example,
+            endpoint,
+            clientVariableName,
+            serviceId,
+            additionalEndParameters: requestOptions != null ? [requestOptions] : [],
+            getResult,
+            parseDatetimes
+        });
+    }
+
+    public generateHttpPagerEndpointSnippet({
+        example,
+        endpoint,
+        clientVariableName,
+        serviceId,
+        requestOptions,
+        getResult,
+        parseDatetimes
+    }: {
+        example: ExampleEndpointCall;
+        endpoint: HttpEndpoint;
+        clientVariableName: string;
+        serviceId: ServiceId;
+        requestOptions?: csharp.CodeBlock;
+        getResult?: boolean;
+        parseDatetimes: boolean;
+    }): csharp.MethodInvocation | undefined {
+        return this.generatePagerEndpointSnippet({
             example,
             endpoint,
             clientVariableName,

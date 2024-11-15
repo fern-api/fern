@@ -36,23 +36,47 @@ function getEndpointReferencesForService({
             endpoint,
             example: context.getExampleEndpointCallOrThrow(endpoint)
         });
-        if (singleEndpointSnippet == null) {
-            continue;
-        }
-        const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
-            serviceId,
-            endpoint
-        });
-        result.push(
-            getEndpointReference({
-                context,
+        const singlePagerEndpointSnippet = endpoint.pagination
+            ? context.snippetGenerator.generateSingleEndpointSnippet({
+                  serviceId,
+                  endpoint,
+                  example: context.getExampleEndpointCallOrThrow(endpoint),
+                  generatePagerSnippet: true
+              })
+            : undefined;
+        if (singleEndpointSnippet != null) {
+            const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
-                service,
-                endpoint,
-                endpointSignatureInfo,
-                singleEndpointSnippet
-            })
-        );
+                endpoint
+            });
+            result.push(
+                getEndpointReference({
+                    context,
+                    serviceId,
+                    service,
+                    endpoint,
+                    endpointSignatureInfo,
+                    singleEndpointSnippet
+                })
+            );
+        }
+        if (singlePagerEndpointSnippet != null) {
+            const endpointSignatureInfo = context.endpointGenerator.getPagerEndpointSignatureInfo({
+                serviceId,
+                endpoint
+            });
+            result.push(
+                getEndpointReference({
+                    context,
+                    serviceId,
+                    service,
+                    endpoint,
+                    endpointSignatureInfo,
+                    singleEndpointSnippet: singlePagerEndpointSnippet,
+                    isPager: true
+                })
+            );
+        }
     }
     return result;
 }
@@ -63,7 +87,8 @@ function getEndpointReference({
     service,
     endpoint,
     endpointSignatureInfo,
-    singleEndpointSnippet
+    singleEndpointSnippet,
+    isPager = false
 }: {
     context: SdkGeneratorContext;
     serviceId: ServiceId;
@@ -71,6 +96,7 @@ function getEndpointReference({
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
     singleEndpointSnippet: SingleEndpointSnippet;
+    isPager?: boolean;
 }): FernGeneratorCli.EndpointReference {
     return {
         title: {
@@ -79,7 +105,9 @@ function getEndpointReference({
                     text: context.getAccessFromRootClient(service.name.fernFilepath) + "."
                 },
                 {
-                    text: context.getEndpointMethodName(endpoint),
+                    text: isPager
+                        ? context.getEndpointPagerMethodName(endpoint)
+                        : context.getEndpointMethodName(endpoint),
                     location: {
                         path: getServiceFilepath({ context, serviceId, service })
                     }

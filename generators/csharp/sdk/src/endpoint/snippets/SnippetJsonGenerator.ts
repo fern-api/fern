@@ -40,21 +40,24 @@ export class SnippetJsonGenerator {
         const endpoints: FernGeneratorExec.Endpoint[] = [];
         for (const [_, service] of Object.entries(this.context.ir.services)) {
             for (const httpEndpoint of service.endpoints) {
-                for (const endpointSnippet of this.getSnippetsForEndpoint(httpEndpoint.id)) {
-                    const csharpSnippet = getCsharpSnippet(endpointSnippet);
-                    const endpoint: Endpoint = {
-                        exampleIdentifier: endpointSnippet?.exampleIdentifier,
-                        id: {
-                            path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(httpEndpoint)),
-                            method: httpEndpoint.method,
-                            identifierOverride: httpEndpoint.id
-                        },
-                        // TODO: Use csharp type when available
-                        snippet: FernGeneratorExec.EndpointSnippet.typescript({
-                            client: csharpSnippet
-                        })
-                    };
-                    endpoints.push(endpoint);
+                const endpointIds = [httpEndpoint.id, this.context.snippetGenerator.getPagerSnippetId(httpEndpoint.id)];
+                for (const id of endpointIds) {
+                    for (const endpointSnippet of this.getSnippetsForEndpoint(id)) {
+                        const csharpSnippet = getCsharpSnippet(endpointSnippet);
+                        const endpoint: Endpoint = {
+                            exampleIdentifier: endpointSnippet?.exampleIdentifier,
+                            id: {
+                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(httpEndpoint)),
+                                method: httpEndpoint.method,
+                                identifierOverride: id
+                            },
+                            // TODO: Use csharp type when available
+                            snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                                client: csharpSnippet
+                            })
+                        };
+                        endpoints.push(endpoint);
+                    }
                 }
             }
         }
