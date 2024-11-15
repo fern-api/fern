@@ -79,8 +79,6 @@ export function validateTypeExample({
             });
         },
         undiscriminatedUnion: (rawUnion) => {
-            // console.log("validateUndiscriminatedUnionExample");
-            // console.log("validateUndiscriminatedUnionExample with Union", JSON.stringify(rawUnion, null, 2));
             return validateUndiscriminatedUnionExample({
                 rawUnion,
                 example,
