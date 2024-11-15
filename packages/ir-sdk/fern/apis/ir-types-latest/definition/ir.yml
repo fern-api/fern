@@ -60,6 +60,7 @@ types:
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
+      retryConfig: optional<RetryConfig>
 
   ReadmeConfig:
     docs: |
@@ -80,6 +81,22 @@ types:
           If specified, configures the list of endpoints to associate
           with each feature.
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+
+  RetryConfig:
+    docs: |
+      The configuration used to generate the default retry policy.
+    properties:
+      statusCodes:
+        docs: |
+          The status codes to retry on. Note that this is typed as an integer
+          so that users can configure arbitrary, non-standard HTTP status codes.
+
+          In general, this is usually just:
+            - 408 (Timeout)
+            - 429 (TooManyRequests)
+            - 500 (InternalServerError)
+        type: list<integer>
+
   SourceConfig:
     properties: 
       sources:
