@@ -27,6 +27,8 @@ const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA
 
 const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
+const MAX_RECURSION_DEPTH = 16;
+
 export function validateTypeReferenceExample({
     rawTypeReference,
     example,
@@ -34,7 +36,8 @@ export function validateTypeReferenceExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth = 0
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -43,7 +46,17 @@ export function validateTypeReferenceExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth?: number;
 }): ExampleViolation[] {
+    if (depth > MAX_RECURSION_DEPTH) {
+        // This comment never reaches the user and serves as a termination condition for the recursion.
+        return [
+            {
+                message: "Example is too deeply nested. This may indicate a circular reference."
+            }
+        ];
+    }
+
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
         // expected type with the referenced type
@@ -107,7 +120,8 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     workspace,
-                    breadcrumbs
+                    breadcrumbs,
+                    depth: depth + 1
                 });
             },
             map: ({ keyType, valueType }) => {
@@ -122,7 +136,8 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, exampleKey]
+                        breadcrumbs: [...breadcrumbs, exampleKey],
+                        depth: depth + 1
                     }),
                     ...validateTypeReferenceExample({
                         rawTypeReference: valueType,
@@ -131,7 +146,8 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, exampleKey]
+                        breadcrumbs: [...breadcrumbs, exampleKey],
+                        depth: depth + 1
                     })
                 ]);
             },
@@ -147,7 +163,8 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, `${idx}`]
+                        breadcrumbs: [...breadcrumbs, `${idx}`],
+                        depth: depth + 1
                     })
                 );
             },
@@ -176,7 +193,8 @@ export function validateTypeReferenceExample({
                         exampleResolver,
                         file,
                         workspace,
-                        breadcrumbs: [...breadcrumbs, `${idx}`]
+                        breadcrumbs: [...breadcrumbs, `${idx}`],
+                        depth: depth + 1
                     })
                 );
             },
@@ -191,7 +209,8 @@ export function validateTypeReferenceExample({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs
+                    breadcrumbs,
+                    depth: depth + 1
                 });
             },
             unknown: () => {

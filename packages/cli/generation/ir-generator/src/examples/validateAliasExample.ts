@@ -13,7 +13,8 @@ export function validateAliasExample({
     typeResolver,
     exampleResolver,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth = 0
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -22,6 +23,7 @@ export function validateAliasExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth?: number;
 }): ExampleViolation[] {
     return validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
@@ -30,6 +32,7 @@ export function validateAliasExample({
         typeResolver,
         exampleResolver,
         workspace,
-        breadcrumbs
+        breadcrumbs,
+        depth: depth + 1
     });
 }

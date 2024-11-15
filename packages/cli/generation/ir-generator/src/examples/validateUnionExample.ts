@@ -18,7 +18,8 @@ export function validateUnionExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth = 0
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -28,6 +29,7 @@ export function validateUnionExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth?: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -78,7 +80,8 @@ export function validateUnionExample({
             typeResolver,
             exampleResolver,
             workspace,
-            breadcrumbs
+            breadcrumbs,
+            depth: depth + 1
         });
         if (basePropertyViolations.length > 0) {
             return basePropertyViolations;
@@ -117,7 +120,8 @@ export function validateUnionExample({
             typeResolver,
             exampleResolver,
             workspace,
-            breadcrumbs
+            breadcrumbs,
+            depth: depth + 1
         });
     }
 
@@ -147,7 +151,8 @@ export function validateUnionExample({
                 exampleResolver,
                 file,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth: depth + 1
             })
         );
     }

@@ -18,7 +18,8 @@ export function validateTypeExample({
     exampleResolver,
     example,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth = 0
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -28,7 +29,9 @@ export function validateTypeExample({
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth?: number;
 }): ExampleViolation[] {
+    // console.log("validateTypeExample", typeDeclaration);
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
             return validateAliasExample({
@@ -38,7 +41,8 @@ export function validateTypeExample({
                 exampleResolver,
                 example,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         enum: (rawEnum) => {
@@ -58,7 +62,8 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -70,10 +75,13 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         undiscriminatedUnion: (rawUnion) => {
+            // console.log("validateUndiscriminatedUnionExample");
+            // console.log("validateUndiscriminatedUnionExample with Union", JSON.stringify(rawUnion, null, 2));
             return validateUndiscriminatedUnionExample({
                 rawUnion,
                 example,
@@ -81,7 +89,8 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         }
     });

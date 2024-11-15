@@ -19,7 +19,8 @@ export function validateObjectExample({
     exampleResolver,
     workspace,
     example,
-    breadcrumbs
+    breadcrumbs,
+    depth = 0
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -31,6 +32,7 @@ export function validateObjectExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth?: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -100,7 +102,8 @@ export function validateObjectExample({
                     workspace,
                     typeResolver,
                     exampleResolver,
-                    breadcrumbs: [...breadcrumbs, `${exampleKey}`]
+                    breadcrumbs: [...breadcrumbs, `${exampleKey}`],
+                    depth: depth + 1
                 })
             );
         }
