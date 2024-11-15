@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add `test_generator_cli.py`; upgrade to use latest cli version and compatibility.
+
 - version: 4.3.5
   irVersion: 53
   changelogEntry:
