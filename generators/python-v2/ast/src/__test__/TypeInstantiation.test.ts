@@ -42,12 +42,24 @@ describe("TypeInstantiation", () => {
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should render a string containing newline characters", async () => {
+        it("should render a string containing escaped newline characters", async () => {
             TypeInstantiation.str("\n\n####\n\n").write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });
 
-        it("should render a string containing newline characters and quotes", async () => {
+        it("should render a multiline string", async () => {
+            TypeInstantiation.str("\n\n####\n\n", { multiline: true }).write(writer);
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should render a multiline string containing escaped quotes", async () => {
+            TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"', { multiline: true }).write(
+                writer
+            );
+            expect(await writer.toStringFormatted()).toMatchSnapshot();
+        });
+
+        it("should render a string containing escaped newline characters and quotes", async () => {
             TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"').write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
         });

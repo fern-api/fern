@@ -112,7 +112,7 @@ describe("class", () => {
             python.field({
                 name: "multiline_string",
                 type: python.Type.str(),
-                initializer: python.TypeInstantiation.str("Hello\nWorld")
+                initializer: python.TypeInstantiation.str("Hello\nWorld", { multiline: true })
             })
         );
 
