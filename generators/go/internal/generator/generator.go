@@ -126,7 +126,7 @@ func New(config *Config, coordinator *coordinator.Client) (*Generator, error) {
 func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	ir, err := readIR(g.config.IRFilepath)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read IR: %w", err)
 	}
 	return g.generate(ir, mode)
 }
@@ -192,7 +192,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
 				if typeImportPath != referencedImportPath {
 					return nil, fmt.Errorf(
-						"%s referneces %s from another package, but a generator import path was not specified",
+						"%s references %s from another package, but a generator import path was not specified",
 						typeDeclaration.Name.TypeId,
 						referencedType.TypeId,
 					)
@@ -204,7 +204,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	rootPackageName := getRootPackageName(ir, g.config.PackageName)
 	cycleInfo, err := cycleInfoFromIR(ir, g.config.ImportPath)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to cycle info from IR: %w", err)
 	}
 	if cycleInfo != nil {
 		for _, leafType := range cycleInfo.LeafTypes {
@@ -325,11 +325,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ModuleConfig,
 			g.config.Version,
 		); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to write request options definition: %w", err)
 		}
 		file, err := writer.File()
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 		}
 		files = append(files, file)
 		if ir.Environments != nil {
@@ -348,11 +348,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			)
 			generatedEnvironment, err = writer.WriteEnvironments(ir.Environments, useCore)
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to write environments: %w", err)
 			}
 			file, err = writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 		}
@@ -371,11 +371,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		)
 		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to write request options: %w", err)
 		}
 		file, err = writer.File()
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 		}
 		files = append(files, file)
 		rootClientInstantiation = generatedClientInstantiation(
@@ -398,11 +398,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.coordinator,
 			)
 			if err := writer.WriteIdempotentRequestOptionsDefinition(ir.IdempotencyHeaders); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to write idempotent request options definition: %w", err)
 			}
 			file, err = writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 			fileInfo = fileInfoForIdempotentRequestOptions()
@@ -418,11 +418,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.coordinator,
 			)
 			if err := writer.WriteIdempotentRequestOptions(ir.IdempotencyHeaders); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to write idempotent request options: %w", err)
 			}
 			file, err = writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 		}
@@ -441,11 +441,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.coordinator,
 			)
 			if err = writer.WriteLegacyClientOptions(ir.Auth, ir.Headers, ir.IdempotencyHeaders); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to write legacy client options: %w", err)
 			}
 			file, err = writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 		}
@@ -464,11 +464,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		)
 		if g.config.EnableExplicitNull {
 			if err := writer.WriteOptionalHelpers(useCore); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to write optional helpers: %w", err)
 			}
 			file, err = writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 			files = append(files, newOptionalFile(g.coordinator))
@@ -497,7 +497,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to create new client test file: %w", err)
 		}
 		files = append(files, clientTestFile)
 		// Generate the error types, if any.
@@ -515,12 +515,12 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			)
 			for _, irError := range irErrors {
 				if err := writer.WriteError(irError); err != nil {
-					return nil, err
+					return nil, fmt.Errorf("failed to write error type: %w", err)
 				}
 			}
 			file, err := writer.File()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to open new writer.File: %w", err)
 			}
 			files = append(files, file)
 		}
@@ -545,7 +545,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					ir.RootPackage.FernFilepath,
 				)
 				if err != nil {
-					return nil, err
+					return nil, fmt.Errorf("failed to generate service: %w", err)
 				}
 				files = append(files, file)
 
@@ -560,7 +560,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					rootClientInstantiation,
 				)
 				if err != nil {
-					return nil, err
+					return nil, fmt.Errorf("failed to generate root service without endpoints: %w", err)
 				}
 				files = append(files, file)
 
@@ -597,7 +597,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					subpackageToGenerate.OriginalFernFilepath,
 				)
 				if err != nil {
-					return nil, err
+					return nil, fmt.Errorf("failed to generate service without endpoints: %w", err)
 				}
 				files = append(files, file)
 				continue
@@ -611,7 +611,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				subpackageToGenerate.OriginalFernFilepath,
 			)
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to generate service: %w", err)
 			}
 			files = append(files, file)
 
@@ -622,7 +622,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// Write the snippets, if any.
 	if g.config.SnippetFilepath != "" {
 		if err := maybeWriteSnippets(g.coordinator, generatedRootClient, g.config.SnippetFilepath); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to write snippets: %w", err)
 		}
 	}
 	// Finally, generate the go.mod file, if needed.
@@ -633,13 +633,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints || generatedPagination
 		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to create new go.mod file: %w", err)
 		}
 		files = append(files, file)
 
 		if g.config.IncludeReadme && generatedRootClient.Instantiation != nil {
 			if err := g.generateReadme(generatedRootClient, generatedGoVersion); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to generate readme: %w", err)
 			}
 			files = append(files, file)
 		}
