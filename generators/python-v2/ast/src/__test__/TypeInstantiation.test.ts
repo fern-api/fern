@@ -36,6 +36,11 @@ describe("TypeInstantiation", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("block_str", async () => {
+        TypeInstantiation.blockStr("This is a sentence").write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
     it("bytes", async () => {
         TypeInstantiation.bytes("world").write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
