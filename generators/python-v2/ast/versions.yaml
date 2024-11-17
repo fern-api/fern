@@ -1,3 +1,9 @@
+- version: 0.0.9
+  createdAt: '2024-11-17'
+  changelogEntry:
+    - type: internal
+      summary: Block string support.
+  irVersion: 33
 - version: 0.0.8
   createdAt: '2024-11-10'
   changelogEntry:
