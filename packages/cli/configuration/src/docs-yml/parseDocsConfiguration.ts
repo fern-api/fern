@@ -730,8 +730,6 @@ function parsePageConfig(
         slug: item.slug,
         icon: item.icon,
         hidden: item.hidden,
-        // TODO: implement noindex
-        noindex: undefined,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned
     };

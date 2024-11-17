@@ -222,7 +222,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
-        version: 53.18.0
+        version: 53.19.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -271,7 +271,7 @@ importers:
         version: link:../../commons
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
-        version: 53.18.0
+        version: 53.19.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -337,7 +337,7 @@ importers:
         version: 0.0.898
       '@fern-fern/ir-sdk':
         specifier: ^53.18.0
-        version: 53.18.0
+        version: 53.19.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -1044,7 +1044,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1098,7 +1098,7 @@ importers:
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.4
         version: 3.23.8
@@ -4253,14 +4253,32 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       mdast-util-from-markdown:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.0.2
+        version: 2.0.2
+      mdast-util-gfm:
+        specifier: ^3.0.0
+        version: 3.0.0
+      mdast-util-math:
+        specifier: ^3.0.0
+        version: 3.0.0
       mdast-util-mdx:
         specifier: ^3.0.0
         version: 3.0.0
+      micromark-extension-gfm:
+        specifier: ^3.0.0
+        version: 3.0.0
+      micromark-extension-math:
+        specifier: ^3.1.0
+        version: 3.1.0
       micromark-extension-mdx:
         specifier: ^2.1.0
         version: 2.1.0
+      micromark-extension-mdxjs:
+        specifier: ^3.0.0
+        version: 3.0.0
+      ts-essentials:
+        specifier: ^10.0.3
+        version: 10.0.3(typescript@4.6.4)
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -4268,6 +4286,9 @@ importers:
       '@types/diff':
         specifier: ^5.2.1
         version: 5.2.1
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
@@ -6054,12 +6075,21 @@ importers:
       '@fern-api/docs-markdown-utils':
         specifier: workspace:*
         version: link:../../docs-markdown-utils
+      '@fern-api/docs-resolver':
+        specifier: workspace:*
+        version: link:../../docs-resolver
+      '@fern-api/fdr-sdk':
+        specifier: 0.122.1-a24810378
+        version: 0.122.1-a24810378(typescript@4.6.4)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
@@ -6075,18 +6105,30 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       chardet:
         specifier: ^2.0.0
         version: 2.0.0
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       file-type:
         specifier: ^19.0.0
         version: 19.0.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
+      mdast-util-to-hast:
+        specifier: ^13.2.0
+        version: 13.2.0
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.2.57)(react@18.2.0)
+      path-to-regexp:
+        specifier: 6.3.0
+        version: 6.3.0
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
@@ -6102,10 +6144,19 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       zod:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -6115,6 +6166,9 @@ importers:
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18
+      '@types/unist':
+        specifier: ^3.0.3
+        version: 3.0.3
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -7582,6 +7636,9 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
+  '@fern-api/fdr-sdk@0.122.1-a24810378':
+    resolution: {integrity: sha512-2S3RoKRnZPI0Ln1Mu/OpsV8xTASxe/L4aAHRQ5LrMHA47PA6ycml+C+h7XqiKoQYRN2MWmrGgV8pfnH67CM6Ww==}
+
   '@fern-api/fdr-sdk@0.123.0-c32499d0e':
     resolution: {integrity: sha512-y/e4V/BnhWYrBWgXM7uhuMLwlK+ZEUh5xCoigKiRwFV5ZiWRPQBXmIt8ylTh5JPuiD42NhtnWlAYcy67uAD87Q==}
 
@@ -7590,6 +7647,9 @@ packages:
 
   '@fern-api/template-resolver@0.7.5':
     resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
+
+  '@fern-api/ui-core-utils@0.122.1-a24810378':
+    resolution: {integrity: sha512-qA6C2zjOpn91qX3n752Hco6b5yYpLhb3c4mDYN3KPUL4Nw2WazvVBkYOd1cCmYUeBaP01oYPhqEASuFokMt9xA==}
 
   '@fern-api/ui-core-utils@0.123.0-c32499d0e':
     resolution: {integrity: sha512-5Z9dG1F7r8KqJciubz6TB9wTbK345+KaKXNOx0m8mGhcXj7cgw8tZYcPPBaQeEWRvAkanY9rErPNIrXLunxdGQ==}
@@ -7626,9 +7686,6 @@ packages:
 
   '@fern-fern/ir-sdk@53.15.0':
     resolution: {integrity: sha512-3ouCapVwfv9KAjgLLCAgGmt0A/GyXgZxtmEB5hVE31BVGHdEmGyoYKxtZy+EYULhZXFXZww5sekphKdAGGY0cg==}
-
-  '@fern-fern/ir-sdk@53.18.0':
-    resolution: {integrity: sha512-KXHiAn8wjL9VIjjR9z8fXso0O2oaCMUSy9BSYRiGjEOmbIBUhplxSXjM3wSEXQ19hiPpsRYJTCCjnaZVP0OVrw==}
 
   '@fern-fern/ir-sdk@53.19.0':
     resolution: {integrity: sha512-mIi1S+fIc/+KnkvnFqJ+ZTXQkz4hdukkXSebx9VF9wRU78S4W1qEIX6Y7EqRz9/PFKrebe6SKXw+mn+hNqAWLA==}
@@ -8224,6 +8281,9 @@ packages:
   '@types/mdast@4.0.3':
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
 
+  '@types/mdast@4.0.4':
+    resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
+
   '@types/mdx@2.0.7':
     resolution: {integrity: sha512-BG4tyr+4amr3WsSEmHn/fXPqaCba/AYZ7dsaQTiavihQunHSIxk+uAtqsjvicNpyHN6cm+B9RVrUOtW9VzIKHw==}
 
@@ -8351,6 +8411,9 @@ packages:
 
   '@types/unist@3.0.2':
     resolution: {integrity: sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==}
+
+  '@types/unist@3.0.3':
+    resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
   '@types/url-join@4.0.1':
     resolution: {integrity: sha512-wDXw9LEEUHyV+7UWy7U315nrJGJ7p1BzaCxDpEoLr789Dk1WDVMMlf3iBfbG2F8NdWnYyFbtTxUn2ZNbm1Q4LQ==}
@@ -9634,8 +9697,8 @@ packages:
     resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
     engines: {node: '>= 0.4'}
 
-  es-toolkit@1.26.0:
-    resolution: {integrity: sha512-gg6ZaI4eTwzkQGkdEG+t4b4VH2mTxodBQ2KvyTKAQFIag3Vvxoq3XZ1ie4ijIQmVxiipL2+dZLDMkh1VIvAFyg==}
+  es-toolkit@1.26.1:
+    resolution: {integrity: sha512-E3H14lHWk8JpupVpIRA1gfNF4r953abHTFW+X1Rp7zl7eG37ksuthfEA4FinyVF/Y807vzzfQS1nubeZk2LTVA==}
 
   es6-promise@3.3.1:
     resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
@@ -11111,8 +11174,8 @@ packages:
   mdast-util-find-and-replace@3.0.1:
     resolution: {integrity: sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==}
 
-  mdast-util-from-markdown@2.0.1:
-    resolution: {integrity: sha512-aJEUyzZ6TzlsX2s5B4Of7lN7EQtAxvtradMMglCQDyaTFgse6CmtmdJ15ElnVRlCg1vpNyVtbem0PWzlNieZsA==}
+  mdast-util-from-markdown@2.0.2:
+    resolution: {integrity: sha512-uZhTV/8NBuw0WHkPTrCqDOl0zVe1BIng5ZtHoDk49ME1qqcjYmmLmOf0gELgcRMxN4w2iuIeVso5/6QymSrgmA==}
 
   mdast-util-gfm-autolink-literal@2.0.0:
     resolution: {integrity: sha512-FyzMsduZZHSc3i0Px3PQcBT4WJY/X/RCtEJKuybiC6sjPqLv7h1yqAkmILZtuxMSsUyaLUWNp71+vQH2zqp5cg==}
@@ -11694,6 +11757,9 @@ packages:
 
   path-to-regexp@0.1.10:
     resolution: {integrity: sha512-7lf7qcQidTku0Gu3YDPc8DJ1q7OOucfa/BSsIwjuh56VU7katFvuM8hULfkwB3Fns/rsVF7PwPKVw1sl5KQS9w==}
+
+  path-to-regexp@6.3.0:
+    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -12795,8 +12861,8 @@ packages:
     peerDependencies:
       typescript: '>=4.2.0'
 
-  ts-essentials@10.0.1:
-    resolution: {integrity: sha512-HPH+H2bkkO8FkMDau+hFvv7KYozzned9Zr1Urn7rRPXMF4mZmCKOq+u4AI1AAW+2bofIOXTuSdKo9drQuni2dQ==}
+  ts-essentials@10.0.3:
+    resolution: {integrity: sha512-/FrVAZ76JLTWxJOERk04fm8hYENDo0PWSP3YLQKxevLwWtxemGcl5JJEzN4iqfDlRve0ckyfFaOBu4xbNH/wZw==}
     peerDependencies:
       typescript: '>=4.5.0'
     peerDependenciesMeta:
@@ -13581,7 +13647,7 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/helper-compilation-targets': 7.25.7
       '@babel/helper-plugin-utils': 7.25.7
-      debug: 4.3.6
+      debug: 4.3.7
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -14583,12 +14649,12 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.123.0-c32499d0e(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.122.1-a24810378(typescript@4.6.4)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.123.0-c32499d0e
+      '@fern-api/ui-core-utils': 0.122.1-a24810378
       '@ungap/structured-clone': 1.2.0
       dayjs: 1.11.11
-      es-toolkit: 1.26.0
+      es-toolkit: 1.26.1
       fast-deep-equal: 3.1.3
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -14597,7 +14663,27 @@ snapshots:
       qs: 6.12.0
       tinycolor2: 1.6.0
       title: 3.5.3
-      ts-essentials: 10.0.1(typescript@4.6.4)
+      ts-essentials: 10.0.3(typescript@4.6.4)
+      url-join: 5.0.0
+    transitivePeerDependencies:
+      - encoding
+      - typescript
+
+  '@fern-api/fdr-sdk@0.123.0-c32499d0e(typescript@4.6.4)':
+    dependencies:
+      '@fern-api/ui-core-utils': 0.123.0-c32499d0e
+      '@ungap/structured-clone': 1.2.0
+      dayjs: 1.11.11
+      es-toolkit: 1.26.1
+      fast-deep-equal: 3.1.3
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0
+      qs: 6.12.0
+      tinycolor2: 1.6.0
+      title: 3.5.3
+      ts-essentials: 10.0.3(typescript@4.6.4)
       url-join: 5.0.0
     transitivePeerDependencies:
       - encoding
@@ -14618,6 +14704,12 @@ snapshots:
   '@fern-api/template-resolver@0.7.5':
     dependencies:
       prettier: 3.3.3
+
+  '@fern-api/ui-core-utils@0.122.1-a24810378':
+    dependencies:
+      strip-ansi: 7.1.0
+      title: 3.5.3
+      ua-parser-js: 1.0.37
 
   '@fern-api/ui-core-utils@0.123.0-c32499d0e':
     dependencies:
@@ -14705,8 +14797,6 @@ snapshots:
   '@fern-fern/ir-sdk@39.0.0': {}
 
   '@fern-fern/ir-sdk@53.15.0': {}
-
-  '@fern-fern/ir-sdk@53.18.0': {}
 
   '@fern-fern/ir-sdk@53.19.0': {}
 
@@ -15339,7 +15429,7 @@ snapshots:
 
   '@types/hast@3.0.4':
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   '@types/inquirer@9.0.7':
     dependencies:
@@ -15402,6 +15492,10 @@ snapshots:
   '@types/lodash@4.17.4': {}
 
   '@types/mdast@4.0.3':
+    dependencies:
+      '@types/unist': 3.0.3
+
+  '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.2
 
@@ -15526,6 +15620,8 @@ snapshots:
 
   '@types/unist@3.0.2': {}
 
+  '@types/unist@3.0.3': {}
+
   '@types/url-join@4.0.1': {}
 
   '@types/uuid@9.0.8': {}
@@ -15622,7 +15718,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.30.5
       '@typescript-eslint/visitor-keys': 5.30.5
-      debug: 4.3.6
+      debug: 4.3.7
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.6.3
@@ -15636,7 +15732,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.32.0
       '@typescript-eslint/visitor-keys': 5.32.0
-      debug: 4.3.6
+      debug: 4.3.7
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.6.3
@@ -15650,7 +15746,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.20.0
       '@typescript-eslint/visitor-keys': 6.20.0
-      debug: 4.3.6
+      debug: 4.3.7
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -15981,7 +16077,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.6
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -17039,7 +17135,7 @@ snapshots:
       is-date-object: 1.0.5
       is-symbol: 1.0.4
 
-  es-toolkit@1.26.0: {}
+  es-toolkit@1.26.1: {}
 
   es6-promise@3.3.1: {}
 
@@ -17318,7 +17414,7 @@ snapshots:
   estree-util-visit@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.0
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   estree-walker@2.0.2: {}
 
@@ -17800,7 +17896,7 @@ snapshots:
   hast-util-from-parse5@8.0.1:
     dependencies:
       '@types/hast': 3.0.4
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       devlop: 1.1.0
       hastscript: 8.0.0
       property-information: 6.3.0
@@ -17841,7 +17937,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
       '@types/hast': 3.0.4
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       comma-separated-tokens: 2.0.3
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
@@ -17860,7 +17956,7 @@ snapshots:
   hast-util-to-text@4.0.2:
     dependencies:
       '@types/hast': 3.0.4
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       hast-util-is-element: 3.0.0
       unist-util-find-after: 5.0.0
 
@@ -17906,7 +18002,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.6
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -17915,7 +18011,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.6
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -18195,7 +18291,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.6
+      debug: 4.3.7
       istanbul-lib-coverage: 3.2.0
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -18898,15 +18994,15 @@ snapshots:
 
   mdast-util-find-and-replace@3.0.1:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       escape-string-regexp: 5.0.0
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
-  mdast-util-from-markdown@2.0.1:
+  mdast-util-from-markdown@2.0.2:
     dependencies:
-      '@types/mdast': 4.0.3
-      '@types/unist': 3.0.2
+      '@types/mdast': 4.0.4
+      '@types/unist': 3.0.3
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       mdast-util-to-string: 4.0.0
@@ -18922,7 +19018,7 @@ snapshots:
 
   mdast-util-gfm-autolink-literal@2.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       ccount: 2.0.1
       devlop: 1.1.0
       mdast-util-find-and-replace: 3.0.1
@@ -18930,9 +19026,9 @@ snapshots:
 
   mdast-util-gfm-footnote@2.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
       micromark-util-normalize-identifier: 2.0.0
     transitivePeerDependencies:
@@ -18940,34 +19036,34 @@ snapshots:
 
   mdast-util-gfm-strikethrough@2.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
-      mdast-util-from-markdown: 2.0.1
+      '@types/mdast': 4.0.4
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
   mdast-util-gfm-table@2.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
       markdown-table: 3.0.3
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
   mdast-util-gfm-task-list-item@2.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
   mdast-util-gfm@3.0.0:
     dependencies:
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-gfm-autolink-literal: 2.0.0
       mdast-util-gfm-footnote: 2.0.0
       mdast-util-gfm-strikethrough: 2.0.0
@@ -18980,10 +19076,10 @@ snapshots:
   mdast-util-math@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
       longest-streak: 3.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
       unist-util-remove-position: 5.0.0
     transitivePeerDependencies:
@@ -18993,9 +19089,9 @@ snapshots:
     dependencies:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
@@ -19004,11 +19100,11 @@ snapshots:
     dependencies:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
-      '@types/unist': 3.0.2
+      '@types/mdast': 4.0.4
+      '@types/unist': 3.0.3
       ccount: 2.0.1
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
       parse-entities: 4.0.1
       stringify-entities: 4.0.3
@@ -19020,7 +19116,7 @@ snapshots:
 
   mdast-util-mdx@3.0.0:
     dependencies:
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-mdx-expression: 2.0.0
       mdast-util-mdx-jsx: 3.1.2
       mdast-util-mdxjs-esm: 2.0.1
@@ -19032,22 +19128,22 @@ snapshots:
     dependencies:
       '@types/estree-jsx': 1.0.0
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
   mdast-util-phrasing@4.1.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       unist-util-is: 6.0.0
 
   mdast-util-to-hast@13.2.0:
     dependencies:
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       '@ungap/structured-clone': 1.2.0
       devlop: 1.1.0
       micromark-util-sanitize-uri: 2.0.0
@@ -19058,8 +19154,8 @@ snapshots:
 
   mdast-util-to-markdown@2.1.0:
     dependencies:
-      '@types/mdast': 4.0.3
-      '@types/unist': 3.0.2
+      '@types/mdast': 4.0.4
+      '@types/unist': 3.0.3
       longest-streak: 3.1.0
       mdast-util-phrasing: 4.1.0
       mdast-util-to-string: 4.0.0
@@ -19069,7 +19165,7 @@ snapshots:
 
   mdast-util-to-string@4.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
 
   mdn-data@2.0.30: {}
 
@@ -19193,7 +19289,7 @@ snapshots:
 
   micromark-extension-mdx-expression@3.0.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       devlop: 1.1.0
       micromark-factory-mdx-expression: 2.0.1
       micromark-factory-space: 2.0.0
@@ -19205,7 +19301,7 @@ snapshots:
   micromark-extension-mdx-jsx@3.0.0:
     dependencies:
       '@types/acorn': 4.0.6
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       micromark-factory-mdx-expression: 2.0.1
@@ -19330,7 +19426,7 @@ snapshots:
     dependencies:
       '@types/acorn': 4.0.6
       '@types/estree': 1.0.6
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       devlop: 1.1.0
       estree-util-visit: 2.0.0
       micromark-util-symbol: 2.0.0
@@ -19367,7 +19463,7 @@ snapshots:
   micromark@4.0.0:
     dependencies:
       '@types/debug': 4.1.8
-      debug: 4.3.6
+      debug: 4.3.7
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.1
@@ -19805,6 +19901,8 @@ snapshots:
 
   path-to-regexp@0.1.10: {}
 
+  path-to-regexp@6.3.0: {}
+
   path-type@4.0.0: {}
 
   pathe@1.1.2: {}
@@ -20194,8 +20292,8 @@ snapshots:
 
   remark-parse@11.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
-      mdast-util-from-markdown: 2.0.1
+      '@types/mdast': 4.0.4
+      mdast-util-from-markdown: 2.0.2
       micromark-util-types: 2.0.0
       unified: 11.0.5
     transitivePeerDependencies:
@@ -20204,14 +20302,14 @@ snapshots:
   remark-rehype@11.1.0:
     dependencies:
       '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       mdast-util-to-hast: 13.2.0
       unified: 11.0.5
       vfile: 6.0.2
 
   remark-stringify@11.0.0:
     dependencies:
-      '@types/mdast': 4.0.3
+      '@types/mdast': 4.0.4
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.5
 
@@ -21070,7 +21168,7 @@ snapshots:
     dependencies:
       typescript: 4.6.4
 
-  ts-essentials@10.0.1(typescript@4.6.4):
+  ts-essentials@10.0.3(typescript@4.6.4):
     optionalDependencies:
       typescript: 4.6.4
 
@@ -21282,7 +21380,7 @@ snapshots:
 
   unified@11.0.5:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       bail: 2.0.2
       devlop: 1.1.0
       extend: 3.0.2
@@ -21292,7 +21390,7 @@ snapshots:
 
   unist-util-find-after@5.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-is: 6.0.0
 
   unist-util-is@5.2.1:
@@ -21301,19 +21399,19 @@ snapshots:
 
   unist-util-is@6.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   unist-util-position-from-estree@2.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   unist-util-position@5.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   unist-util-remove-position@5.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-visit: 5.0.0
 
   unist-util-remove@3.1.1:
@@ -21324,7 +21422,7 @@ snapshots:
 
   unist-util-stringify-position@4.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   unist-util-visit-parents@5.1.3:
     dependencies:
@@ -21333,12 +21431,12 @@ snapshots:
 
   unist-util-visit-parents@6.0.1:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-is: 6.0.0
 
   unist-util-visit@5.0.0:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
@@ -21400,7 +21498,7 @@ snapshots:
 
   vfile-location@5.0.3:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       vfile: 6.0.2
 
   vfile-matter@5.0.0:
@@ -21410,12 +21508,12 @@ snapshots:
 
   vfile-message@4.0.2:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-stringify-position: 4.0.0
 
   vfile@6.0.2:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 

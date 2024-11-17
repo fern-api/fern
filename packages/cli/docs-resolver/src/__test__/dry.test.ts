@@ -21,7 +21,7 @@ it.skip("converts to api reference node", async () => {
     const resolver = new DocsDefinitionResolver(
         "domain",
         docsWorkspace,
-        [],
+        (_id) => undefined,
         context,
         undefined,
         async (_files) => [],

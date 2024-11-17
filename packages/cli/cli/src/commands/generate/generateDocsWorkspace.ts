@@ -48,18 +48,9 @@ export async function generateDocsWorkspace({
             loadAPIWorkspace: project.loadAPIWorkspace
         });
 
-        const fernWorkspaces = await Promise.all(
-            project.apiWorkspaces.map(async (workspace) => {
-                return workspace.toFernWorkspace(
-                    { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
-                );
-            })
-        );
-
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
-            fernWorkspaces,
+            loadAPIWorkspace: project.loadAPIWorkspace,
             docsWorkspace,
             context,
             token,

@@ -33,7 +33,13 @@ export class ApiReferenceNodeConverter {
         private workspace: FernWorkspace,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
-        private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
+        private markdownFilesToFrontmatter: Map<
+            AbsoluteFilePath,
+            {
+                slug?: string;
+                noindex?: boolean;
+            }
+        >,
         idgen: NodeIdGenerator
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
@@ -51,7 +57,7 @@ export class ApiReferenceNodeConverter {
         // the overview page markdown could contain a full slug, which would be used as the base slug for the API section.
         const maybeFullSlug =
             this.apiSection.overviewAbsolutePath != null
-                ? this.markdownFilesToFullSlugs.get(this.apiSection.overviewAbsolutePath)
+                ? this.markdownFilesToFrontmatter.get(this.apiSection.overviewAbsolutePath)?.slug
                 : undefined;
 
         this.#slug = parentSlug.apply({
@@ -79,7 +85,7 @@ export class ApiReferenceNodeConverter {
     public get(): FernNavigation.V1.ApiReferenceNode {
         const pointsTo = FernNavigation.V1.followRedirects(this.#children);
         const changelogNodeConverter = new ChangelogNodeConverter(
-            this.markdownFilesToFullSlugs,
+            this.markdownFilesToFrontmatter,
             this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
@@ -103,7 +109,10 @@ export class ApiReferenceNodeConverter {
             children: this.#children,
             availability: undefined,
             pointsTo,
-            noindex: undefined,
+            noindex:
+                this.apiSection.overviewAbsolutePath != null
+                    ? this.markdownFilesToFrontmatter.get(this.apiSection.overviewAbsolutePath)?.noindex
+                    : undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
             authed: undefined,
             viewers: this.apiSection.viewers,
@@ -148,7 +157,7 @@ export class ApiReferenceNodeConverter {
     ): FernNavigation.V1.PageNode {
         const pageId = FernNavigation.V1.PageId(this.toRelativeFilepath(page.absolutePath));
         const pageSlug = parentSlug.apply({
-            fullSlug: this.markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
+            fullSlug: this.markdownFilesToFrontmatter.get(page.absolutePath)?.slug?.split("/"),
             urlSlug: page.slug ?? kebabCase(page.title)
         });
         return {
@@ -159,7 +168,7 @@ export class ApiReferenceNodeConverter {
             slug: pageSlug.get(),
             icon: page.icon,
             hidden: page.hidden,
-            noindex: page.noindex,
+            noindex: this.markdownFilesToFrontmatter.get(page.absolutePath)?.noindex,
             authed: undefined,
             viewers: page.viewers,
             orphaned: page.orphaned
@@ -176,7 +185,9 @@ export class ApiReferenceNodeConverter {
                 : undefined;
 
         const maybeFullSlug =
-            pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
+            pkg.overviewAbsolutePath != null
+                ? this.markdownFilesToFrontmatter.get(pkg.overviewAbsolutePath)?.slug
+                : undefined;
 
         const subpackage = this.#holder.getSubpackageByIdOrLocator(pkg.package);
 
@@ -219,7 +230,10 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined,
+                noindex:
+                    pkg.overviewAbsolutePath != null
+                        ? this.markdownFilesToFrontmatter.get(pkg.overviewAbsolutePath)?.noindex
+                        : undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
                 viewers: pkg.viewers,
@@ -248,7 +262,10 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined,
+                noindex:
+                    pkg.overviewAbsolutePath != null
+                        ? this.markdownFilesToFrontmatter.get(pkg.overviewAbsolutePath)?.noindex
+                        : undefined,
                 playground: this.#convertPlaygroundSettings(pkg.playground),
                 authed: undefined,
                 viewers: pkg.viewers,
@@ -268,7 +285,7 @@ export class ApiReferenceNodeConverter {
 
         const maybeFullSlug =
             section.overviewAbsolutePath != null
-                ? this.markdownFilesToFullSlugs.get(section.overviewAbsolutePath)
+                ? this.markdownFilesToFrontmatter.get(section.overviewAbsolutePath)?.slug
                 : undefined;
 
         const nodeId = this.#idgen.get(overviewPageId ?? maybeFullSlug ?? parentSlug.get());
@@ -315,7 +332,10 @@ export class ApiReferenceNodeConverter {
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
-            noindex: undefined,
+            noindex:
+                section.overviewAbsolutePath != null
+                    ? this.markdownFilesToFrontmatter.get(section.overviewAbsolutePath)?.noindex
+                    : undefined,
             playground: this.#convertPlaygroundSettings(section.playground),
             authed: undefined,
             viewers: section.viewers,

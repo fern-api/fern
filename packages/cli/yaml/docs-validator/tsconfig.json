@@ -11,6 +11,7 @@
     { "path": "../../task-context" },
     { "path": "../../workspace-loader" },
     { "path": "../../project-loader" },
-    { "path": "../../fern-definition/schema" }
+    { "path": "../../fern-definition/schema" },
+    { "path": "../../docs-resolver" }
   ]
 }

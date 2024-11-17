@@ -4,7 +4,7 @@ import { vi } from "vitest";
 import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
-const absolutePathToMdx = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
+const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
 const context = createMockTaskContext();
 
 describe("replaceReferencedMarkdown", () => {
@@ -17,7 +17,7 @@ describe("replaceReferencedMarkdown", () => {
         const result = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
-            absolutePathToMdx,
+            absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
@@ -46,7 +46,7 @@ describe("replaceReferencedMarkdown", () => {
         const result = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
-            absolutePathToMdx,
+            absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 throw new Error(`Unexpected filepath: ${filepath}`);
@@ -71,7 +71,7 @@ describe("replaceReferencedMarkdown", () => {
         await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
-            absolutePathToMdx,
+            absolutePathToMarkdownFile,
             context,
             markdownLoader
         });

@@ -27,7 +27,13 @@ const RESERVED_OVERVIEW_PAGE_NAMES = ["summary", "index", "overview"];
 
 export class ChangelogNodeConverter {
     public constructor(
-        private markdownToFullSlug: Map<AbsoluteFilePath, string>,
+        private markdownToFrontmatter: Map<
+            AbsoluteFilePath,
+            {
+                slug?: string;
+                noindex?: boolean;
+            }
+        >,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator
@@ -66,7 +72,10 @@ export class ChangelogNodeConverter {
         }
 
         const slug = opts.parentSlug.apply({
-            fullSlug: overviewPagePath != null ? this.markdownToFullSlug.get(overviewPagePath)?.split("/") : undefined,
+            fullSlug:
+                overviewPagePath != null
+                    ? this.markdownToFrontmatter.get(overviewPagePath)?.slug?.split("/")
+                    : undefined,
             skipUrlSlug: false, // changelog pages should always have a url slug
             urlSlug: opts.slug ?? kebabCase(title)
         });
@@ -80,7 +89,7 @@ export class ChangelogNodeConverter {
                 title: date.format("MMMM D, YYYY"),
                 slug: slug
                     .apply({
-                        fullSlug: this.markdownToFullSlug.get(item.absoluteFilepath)?.split("/"),
+                        fullSlug: this.markdownToFrontmatter.get(item.absoluteFilepath)?.slug?.split("/"),
                         // TODO: the url slug should be the markdown filename name, minus the extension
                         urlSlug: date.format("YYYY/M/D")
                     })
@@ -89,7 +98,7 @@ export class ChangelogNodeConverter {
                 hidden: undefined,
                 date: item.date.toISOString(),
                 pageId: item.pageId,
-                noindex: undefined,
+                noindex: this.markdownToFrontmatter.get(item.absoluteFilepath)?.noindex,
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined
@@ -111,7 +120,7 @@ export class ChangelogNodeConverter {
             hidden: opts.hidden,
             children: changelogYears,
             overviewPageId,
-            noindex: undefined,
+            noindex: overviewPagePath != null ? this.markdownToFrontmatter.get(overviewPagePath)?.noindex : undefined,
             authed: undefined,
             viewers: opts.viewers,
             orphaned: opts.orphaned
