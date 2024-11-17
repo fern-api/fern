@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import { Container } from "../resources/container/client/Client";
+import { ContentType } from "../resources/contentType/client/Client";
 import { Enum } from "../resources/enum/client/Client";
 import { HttpMethods } from "../resources/httpMethods/client/Client";
 import { Object_ } from "../resources/object/client/Client";
@@ -34,6 +35,12 @@ export class Endpoints {
 
     public get container(): Container {
         return (this._container ??= new Container(this._options));
+    }
+
+    protected _contentType: ContentType | undefined;
+
+    public get contentType(): ContentType {
+        return (this._contentType ??= new ContentType(this._options));
     }
 
     protected _enum: Enum | undefined;
