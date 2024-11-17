@@ -191,7 +191,7 @@ func removeUnusedImports(filename string, buf []byte) ([]byte, error) {
 				}
 				badSrc += fmt.Sprintf("%"+fmt.Sprint(maxLineDigitCount)+"d: %s\n", i+1, line)
 				if i == badLine-1 {
-					badSrc += strings.Repeat(" ", badLineCharIdx+1) + "^\n"
+					badSrc += strings.Repeat(" ", badLineCharIdx+maxLineDigitCount+1) + "^\n"
 				}
 			}
 		}
