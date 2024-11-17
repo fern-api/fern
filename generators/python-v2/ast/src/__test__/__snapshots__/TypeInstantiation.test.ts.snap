@@ -55,6 +55,13 @@ exports[`TypeInstantiation > str 1`] = `
 "
 `;
 
+exports[`TypeInstantiation > block_str 1`] = `
+""""\
+This is a sentence\
+"""
+"
+`;
+
 exports[`TypeInstantiation > tuple 1`] = `
 "(1, "two", True)
 "

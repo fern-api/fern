@@ -4,7 +4,7 @@ import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { Reference } from "./Reference";
 
-type InternalTypeInstantiation = Int | Float | Bool | Str | Bytes | List | Set | Tuple | Dict | None | Uuid;
+type InternalTypeInstantiation = Int | Float | Bool | Str | BlockStr | Bytes | List | Set | Tuple | Dict | None | Uuid;
 
 interface Int {
     type: "int";
@@ -23,6 +23,11 @@ interface Bool {
 
 interface Str {
     type: "str";
+    value: string;
+}
+
+interface BlockStr {
+    type: "block_str";
     value: string;
 }
 
@@ -86,6 +91,10 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "str", value });
     }
 
+    public static blockStr(value: string): TypeInstantiation {
+        return new this({ type: "block_str", value });
+    }
+
     public static bytes(value: string): TypeInstantiation {
         return new this({ type: "bytes", value });
     }
@@ -145,6 +154,11 @@ export class TypeInstantiation extends AstNode {
             case "str":
                 writer.write(`"${this.internalType.value}"`);
                 break;
+            case "block_str": {
+                const suffix = this.internalType.value.endsWith("\n") ? "\\" : "\n";
+                writer.write(`"""\\\n${this.internalType.value}${suffix}"""`);
+                break;
+            }
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;
