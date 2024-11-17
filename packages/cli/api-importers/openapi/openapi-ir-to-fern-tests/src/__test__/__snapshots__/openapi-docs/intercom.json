@@ -26453,6 +26453,13 @@ You can optionally request the result page size and the cursor to start after to
                   "per_page": {
                     "docs": "How many results per page",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 150,
+                      "min": undefined,
+                      "multipleOf": undefined,
+                    },
                   },
                   "starting_after": {
                     "docs": "String used to get the next page of conversations.",
@@ -30005,6 +30012,8 @@ service:
           per_page:
             type: optional<integer>
             docs: How many results per page
+            validation:
+              max: 150
           starting_after:
             type: optional<string>
             docs: String used to get the next page of conversations.

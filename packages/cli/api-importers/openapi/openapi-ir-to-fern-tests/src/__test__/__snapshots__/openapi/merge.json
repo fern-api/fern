@@ -12070,6 +12070,12 @@ service:
                   "personal_email": {
                     "docs": "If provided, will only return Employees with this personal email",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "email",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
@@ -12106,6 +12112,12 @@ service:
                   "work_email": {
                     "docs": "If provided, will only return Employees with this work email",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "email",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "work_location_id": {
                     "docs": "If provided, will only return employees for this location.",
@@ -15750,6 +15762,8 @@ service:
           personal_email:
             type: optional<string>
             docs: If provided, will only return Employees with this personal email
+            validation:
+              format: email
           remote_fields:
             type: optional<EmployeesListRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
@@ -15785,6 +15799,8 @@ service:
           work_email:
             type: optional<string>
             docs: If provided, will only return Employees with this work email
+            validation:
+              format: email
           work_location_id:
             type: optional<string>
             docs: If provided, will only return employees for this location.

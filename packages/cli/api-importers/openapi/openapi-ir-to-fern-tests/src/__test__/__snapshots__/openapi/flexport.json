@@ -8389,10 +8389,24 @@ errors:
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -9368,11 +9382,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<BookingsIndexRequestSort>
             docs: Sort results by the specified field.
@@ -11012,10 +11031,24 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -11209,11 +11242,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           direction:
             type: optional<BookingLineItemIndexRequestDirection>
             docs: Set sort order. Allows "asc" (ascending) or "desc"  (descending)
@@ -12110,10 +12148,24 @@ docs: Endpoints relating to Carbon Calculations
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -12570,11 +12622,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: The unique id for the shipment.
@@ -13301,10 +13358,24 @@ docs: Endpoints relating to Commercial Invoice objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -13745,11 +13816,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the company.
@@ -14188,10 +14264,24 @@ docs: Endpoints relating to Company objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -14582,11 +14672,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the company entity
@@ -14993,10 +15088,24 @@ docs: Endpoints relating to CompanyEntity objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -15276,11 +15385,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.company_ref:
             type: optional<string>
             docs: The ref for the company.
@@ -15617,10 +15731,24 @@ docs: Endpoints relating to Contact objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -15827,11 +15955,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<integer>
             docs: >-
@@ -16093,10 +16226,24 @@ docs: Endpoints relating to Container objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -16255,11 +16402,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.leg.id:
             type: optional<integer>
             docs: >-
@@ -16421,10 +16573,24 @@ docs: Endpoints relating to ContainerLeg objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -16577,11 +16743,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: The unique id for the shipment.
@@ -16830,10 +17001,24 @@ docs: Endpoints relating to Customs Entry objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -17015,11 +17200,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: Filters the list for documents that belong to the given shipment
@@ -18016,10 +18206,24 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -18423,11 +18627,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<literal<"due_date">>
             docs: Sort results by the specified field.
@@ -19004,10 +19213,24 @@ docs: Endpoints relating to Invoice objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -19427,11 +19650,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the location.
@@ -19841,10 +20069,24 @@ docs: Endpoints relating to Location objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -19945,11 +20187,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.port_type:
             type: optional<PortsIndexRequestFPortType>
             docs: Filter by the type of port. Ports can have more than one type
@@ -21452,10 +21699,24 @@ docs: Endpoints relating to Product objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field (only `id` is supported at this time)",
@@ -22009,11 +22270,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<literal<"id">>
             docs: >-
@@ -22937,10 +23203,24 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -23247,11 +23527,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           direction:
             type: optional<PurchaseOrderLineItemIndexRequestDirection>
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
@@ -23959,10 +24244,24 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -24930,11 +25229,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<ShipmentIndexRequestSort>
             docs: Sort results by the specified field.
@@ -26076,10 +26380,24 @@ docs: Endpoints relating to Shipment objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -26389,11 +26707,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<integer>
             docs: Only return legs for the shipment specified by this id.

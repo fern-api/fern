@@ -3271,6 +3271,12 @@ Log.d("TAG", file.toString())
                   "file_id": {
                     "docs": "File's unique ID.",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "pub_key": "root.ProjectPublicKeyType",
                 },
@@ -4287,6 +4293,12 @@ Log.d("TAG", status.toString())
                   "token": {
                     "docs": "Token returned by the `/from_url/` endpoint that identifies a request to fetch/upload a file from a URL.",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -6278,6 +6290,8 @@ service:
             docs: >-
               Token returned by the `/from_url/` endpoint that identifies a
               request to fetch/upload a file from a URL.
+            validation:
+              format: uuid
       response:
         docs: |
           Request was processed successfully.
@@ -6809,6 +6823,8 @@ service:
           file_id:
             type: string
             docs: File's unique ID.
+            validation:
+              format: uuid
       response:
         docs: File information was retrieved successfully.
         type: root.FileUploadInfo

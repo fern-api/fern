@@ -18577,10 +18577,23 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -18781,11 +18794,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskForwarder
@@ -19405,6 +19423,12 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "name": {
                     "docs": "Filter tasks by name. Supports partial matches.",
@@ -19413,6 +19437,13 @@ service:
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -19658,14 +19689,33 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "task_revision_id": {
                     "docs": "The specific Task Revision to reference.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -20239,11 +20289,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTask
@@ -20695,14 +20750,21 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
           task_revision_id:
             type: optional<string>
             docs: The specific Task Revision to reference.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskRun

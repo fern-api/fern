@@ -4960,6 +4960,12 @@ Used to list documents. Optionally filter on supported fields.
                   "document_index_id": {
                     "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": {
                     "docs": "Number of results to return per page.",
@@ -5096,6 +5102,8 @@ service:
               Filter down to only those documents that are included in the
               specified index. You may provide either the Vellum-generated ID or
               the unique name of the index specified upon initial creation.
+            validation:
+              format: uuid
           limit:
             type: optional<integer>
             docs: Number of results to return per page.
