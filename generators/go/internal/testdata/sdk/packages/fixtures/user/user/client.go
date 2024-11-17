@@ -6,6 +6,7 @@ import (
 	context "context"
 	config "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/config"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	user "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	http "net/http"
@@ -13,7 +14,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -21,8 +22,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -47,12 +48,12 @@ func (c *Client) Create(
 	}
 	endpointURL := baseURL + "/users"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*user.User
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -84,12 +85,12 @@ func (c *Client) List(
 	}
 	endpointURL := baseURL + "/users"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*user.User
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -121,12 +122,12 @@ func (c *Client) Update(
 	}
 	endpointURL := baseURL + "/users/update"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

@@ -95,8 +95,11 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
+                    onlyIncludeReferencedSchemas: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -115,7 +118,10 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined,
+                    onlyIncludeReferencedSchemas: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -134,7 +140,10 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined,
+                            onlyIncludeReferencedSchemas: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -153,7 +162,10 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                             asyncApiMessageNaming: undefined,
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined,
+                            onlyIncludeReferencedSchemas: undefined
                         }
                     });
                 } else {
@@ -169,8 +181,11 @@ async function parseAPIConfigurationToApiLocations(
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
                             asyncApiMessageNaming: definition.settings?.["message-naming"],
+                            onlyIncludeReferencedSchemas: definition.settings?.["only-include-referenced-schemas"],
                             shouldUseOptionalAdditionalProperties: undefined,
-                            coerceEnumsToLiterals: undefined
+                            coerceEnumsToLiterals: undefined,
+                            objectQueryParameters: undefined,
+                            respectReadonlySchemas: undefined
                         }
                     });
                 }
@@ -188,8 +203,11 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
                     asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
+                    onlyIncludeReferencedSchemas: apiConfiguration.settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -211,9 +229,12 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         } else if (openapi != null) {
@@ -228,9 +249,12 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    onlyIncludeReferencedSchemas: openapi.settings?.["only-include-referenced-schemas"],
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -248,8 +272,11 @@ async function parseAPIConfigurationToApiLocations(
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
                     asyncApiMessageNaming: settings?.["message-naming"],
+                    onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: undefined,
-                    coerceEnumsToLiterals: undefined
+                    coerceEnumsToLiterals: undefined,
+                    objectQueryParameters: undefined,
+                    respectReadonlySchemas: undefined
                 }
             });
         }
@@ -312,8 +339,11 @@ async function parseApiConfigurationV2Schema({
                     shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
+                    onlyIncludeReferencedSchemas: spec.settings?.["only-include-referenced-schemas"],
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true,
-                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"]
+                    coerceEnumsToLiterals: spec.settings?.["coerce-enums-to-literals"],
+                    objectQueryParameters: spec.settings?.["object-query-parameters"],
+                    respectReadonlySchemas: spec.settings?.["respect-readonly-schemas"]
                 }
             };
             if (spec.namespace == null) {

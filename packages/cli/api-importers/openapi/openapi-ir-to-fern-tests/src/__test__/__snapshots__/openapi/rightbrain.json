@@ -7605,6 +7605,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -7637,6 +7642,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -7918,6 +7929,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -7928,6 +7944,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -8374,6 +8393,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -8406,6 +8430,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -8688,6 +8718,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -8698,6 +8733,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -9148,6 +9186,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -9180,6 +9223,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -9462,6 +9511,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -9472,6 +9526,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -9922,6 +9979,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -9954,6 +10016,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -10236,6 +10304,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -10246,6 +10319,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -10695,6 +10771,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -10727,6 +10808,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -11009,6 +11096,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -11019,6 +11111,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -11468,6 +11563,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -11500,6 +11600,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -11782,6 +11888,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -11792,6 +11903,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -12242,6 +12356,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -12274,6 +12393,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -12556,6 +12681,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -12566,6 +12696,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id

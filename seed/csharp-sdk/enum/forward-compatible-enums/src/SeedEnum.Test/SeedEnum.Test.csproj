@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedEnum\SeedEnum.csproj" />
+        <ProjectReference Include="..\SeedEnum\SeedEnum.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedEnum.Test.Custom.props" Condition="Exists('SeedEnum.Test.Custom.props')" />
 </Project>

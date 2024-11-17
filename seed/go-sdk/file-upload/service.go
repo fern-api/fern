@@ -5,7 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 )
 
 type JustFileWithQueryParamsRequet struct {
@@ -36,6 +36,13 @@ type MyObject struct {
 	_rawJSON        json.RawMessage
 }
 
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
+}
+
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -48,7 +55,7 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 	}
 	*m = MyObject(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -60,11 +67,11 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 
 func (m *MyObject) String() string {
 	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(m._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

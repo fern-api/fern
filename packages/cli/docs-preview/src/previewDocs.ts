@@ -1,4 +1,5 @@
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+
 import {
     APIV1Read,
     APIV1Write,
@@ -105,7 +106,7 @@ class ReferencedAPICollector {
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
-        playgroundConfig?: DocsV1Read.PlaygroundConfig;
+        playgroundConfig?: { oauth?: boolean };
     }): APIDefinitionID {
         try {
             const id = uuidv4();

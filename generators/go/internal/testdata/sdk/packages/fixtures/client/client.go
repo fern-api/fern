@@ -10,6 +10,7 @@ import (
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures"
 	configclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/config/client"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	organizationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/client"
 	userclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/client"
@@ -19,7 +20,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	User         *userclient.Client
@@ -31,8 +32,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -59,12 +60,12 @@ func (c *Client) GetFoo(
 	}
 	endpointURL := baseURL + "/foo"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -96,7 +97,7 @@ func (c *Client) PostFoo(
 	}
 	endpointURL := baseURL + "/foo"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -127,7 +128,7 @@ func (c *Client) PostFoo(
 	var response *fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

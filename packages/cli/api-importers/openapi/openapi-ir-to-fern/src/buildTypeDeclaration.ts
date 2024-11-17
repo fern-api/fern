@@ -31,7 +31,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { noop } from "lodash-es";
+import { State } from "./State";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -88,9 +88,25 @@ export function buildObjectTypeDeclaration({
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
 }): ConvertedTypeDeclaration {
+    const shouldSkipReadonly =
+        context.isInState(State.Request) &&
+        context.respectReadonlySchemas &&
+        (context.getEndpointMethod() === "POST" ||
+            context.getEndpointMethod() === "PUT" ||
+            context.getEndpointMethod() === "PATCH");
+
+    let readOnlyPropertyPresent = false;
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
+        if (property.readonly) {
+            readOnlyPropertyPresent = true;
+        }
+
+        if (shouldSkipReadonly && property.readonly) {
+            continue;
+        }
+
         if (Object.keys(property.conflict).length > 0) {
             const parentHasIdentiticalProperty = Object.entries(property.conflict).every(([_, conflict]) => {
                 return !conflict.differentSchema;
@@ -220,8 +236,9 @@ export function buildObjectTypeDeclaration({
         objectTypeDeclaration.source = convertToSourceSchema(schema.source);
     }
 
+    const name = schema.nameOverride ?? schema.generatedName;
     return {
-        name: schema.nameOverride ?? schema.generatedName,
+        name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
         schema: objectTypeDeclaration
     };
 }

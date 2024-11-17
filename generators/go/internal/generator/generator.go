@@ -17,6 +17,13 @@ import (
 )
 
 const (
+	// embeddedCoreImportPath is the import path for the core package
+	// used in the embedded files.
+	embeddedCoreImportPath = "github.com/fern-api/fern-go/internal/generator/sdk/core"
+
+	// sharedTypesFilename is the filename for the shared types file.
+	sharedTypesFilename = "types.go"
+
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
 
@@ -467,18 +474,26 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalFile(g.coordinator))
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
-		files = append(files, newCoreFile(g.coordinator))
-		files = append(files, newCoreTestFile(g.coordinator))
+		files = append(files, newApiErrorFile(g.coordinator))
+		files = append(files, newCallerFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newCallerTestFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newHttpCoreFile(g.coordinator))
+		files = append(files, newHttpInternalFile(g.coordinator))
+		files = append(files, newMultipartFile(g.coordinator))
+		files = append(files, newMultipartTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
-		files = append(files, newRetrierFile(g.coordinator))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		files = append(files, newRetrierFile(g.coordinator, g.config.ImportPath))
+		files = append(files, newRetrierTestFile(g.coordinator, g.config.ImportPath))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
+			files = append(files, newStreamerFile(g.coordinator, g.config.ImportPath))
 		}
 		if generatedPagination {
-			files = append(files, newPagerFile(g.coordinator))
 			files = append(files, newPageFile(g.coordinator))
+			files = append(files, newPagerFile(g.coordinator, g.config.ImportPath))
 		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
 		if err != nil {
@@ -924,6 +939,52 @@ func newPointerFile(coordinator *coordinator.Client, rootPackageName string, gen
 	)
 }
 
+// newFileParamFile returns a *File containing the FileParam helper type
+// for multipart file uploads.
+//
+// In general, this file is deposited at the root of the SDK so that users can
+// access the helpers alongside the rest of the top-level definitions. However,
+// if any naming conflict exists between the generated types, this file is
+// deposited in the core package.
+func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// First determine whether or not we need to generate the type in the
+	// core package.
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/file_param.go",
+			[]byte(fileParamFile),
+		)
+	}
+	// We're going to generate the pointers at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "file_param.go"
+	if _, ok := generatedNames["FileParam"]; ok {
+		filename = "_file_param.go"
+	}
+	// Finally, we need to replace the package declaration so that it matches
+	// the root package declaration of the generated SDK.
+	content := strings.Replace(
+		fileParamFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
 func newClientTestFile(
 	baseImportPath string,
 	coordinator *coordinator.Client,
@@ -943,19 +1004,61 @@ func newClientTestFile(
 	return f.File()
 }
 
-func newCoreFile(coordinator *coordinator.Client) *File {
+func newApiErrorFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/core.go",
-		[]byte(coreFile),
+		"core/api_error.go",
+		[]byte(apiErrorFile),
 	)
 }
 
-func newCoreTestFile(coordinator *coordinator.Client) *File {
+func newCallerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(callerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/core_test.go",
-		[]byte(coreTestFile),
+		"internal/caller.go",
+		[]byte(content),
+	)
+}
+
+func newCallerTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(callerTestFile, baseImportPath)
+	return NewFile(
+		coordinator,
+		"internal/caller_test.go",
+		[]byte(content),
+	)
+}
+
+func newHttpCoreFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/http.go",
+		[]byte(httpCoreFile),
+	)
+}
+
+func newHttpInternalFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/http.go",
+		[]byte(httpInternalFile),
+	)
+}
+
+func newMultipartFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/multipart.go",
+		[]byte(multipartFile),
+	)
+}
+
+func newMultipartTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/multipart_test.go",
+		[]byte(multipartTestFile),
 	)
 }
 
@@ -975,11 +1078,12 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newPagerFile(coordinator *coordinator.Client) *File {
+func newPagerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(pagerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/pager.go",
-		[]byte(pagerFile),
+		"internal/pager.go",
+		[]byte(content),
 	)
 }
 
@@ -999,18 +1103,37 @@ func newStreamFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newRetrierFile(coordinator *coordinator.Client) *File {
+func newStreamerFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(streamerFile, baseImportPath)
 	return NewFile(
 		coordinator,
-		"core/retrier.go",
-		[]byte(retrierFile),
+		"internal/streamer.go",
+		[]byte(content),
+	)
+}
+
+func newRetrierFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(retrierFile, baseImportPath)
+	return NewFile(
+		coordinator,
+		"internal/retrier.go",
+		[]byte(content),
+	)
+}
+
+func newRetrierTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+	content := replaceCoreImportPath(retrierTestFile, baseImportPath)
+	return NewFile(
+		coordinator,
+		"internal/retrier_test.go",
+		[]byte(content),
 	)
 }
 
 func newQueryFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/query.go",
+		"internal/query.go",
 		[]byte(queryFile),
 	)
 }
@@ -1018,7 +1141,7 @@ func newQueryFile(coordinator *coordinator.Client) *File {
 func newQueryTestFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/query_test.go",
+		"internal/query_test.go",
 		[]byte(queryTestFile),
 	)
 }
@@ -1026,7 +1149,7 @@ func newQueryTestFile(coordinator *coordinator.Client) *File {
 func newStringerFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/stringer.go",
+		"internal/stringer.go",
 		[]byte(stringerFile),
 	)
 }
@@ -1034,7 +1157,7 @@ func newStringerFile(coordinator *coordinator.Client) *File {
 func newTimeFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/time.go",
+		"internal/time.go",
 		[]byte(timeFile),
 	)
 }
@@ -1042,7 +1165,7 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/extra_properties.go",
+		"internal/extra_properties.go",
 		[]byte(extraPropertiesFile),
 	)
 }
@@ -1050,8 +1173,17 @@ func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
 func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/extra_properties_test.go",
+		"internal/extra_properties_test.go",
 		[]byte(extraPropertiesTestFile),
+	)
+}
+
+func replaceCoreImportPath(content string, baseImportPath string) string {
+	return strings.Replace(
+		content,
+		embeddedCoreImportPath,
+		filepath.Join(baseImportPath, "core"),
+		1,
 	)
 }
 
@@ -1292,7 +1424,15 @@ func fileInfoToTypes(
 				continue
 			}
 			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint, Service: irService})
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					ID:           irEndpoint.Name.OriginalName,
+					FernFilepath: irService.Name.FernFilepath,
+					Endpoint:     irEndpoint,
+					Service:      irService,
+				},
+			)
 		}
 	}
 	if irServiceTypeReferenceInfo == nil {
@@ -1300,35 +1440,30 @@ func fileInfoToTypes(
 		// to the file-per-type naming convention.
 		for _, irType := range irTypes {
 			fileInfo := fileInfoForType(rootPackageName, irType.Name.FernFilepath)
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irType.Name.TypeId, FernFilepath: irType.Name.FernFilepath, TypeDeclaration: irType})
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					ID:              irType.Name.TypeId,
+					FernFilepath:    irType.Name.FernFilepath,
+					TypeDeclaration: irType,
+				},
+			)
 		}
 	} else {
-		directories := make(map[fernir.TypeId][]string)
-		for irTypeId, irType := range irTypes {
-			var elements []string
-			for _, packageName := range irType.Name.FernFilepath.PackagePath {
-				elements = append(elements, strings.ToLower(packageName.CamelCase.SafeName))
-			}
-			directories[irTypeId] = elements
-		}
 		sharedTypes := irServiceTypeReferenceInfo.SharedTypes
 		if typeIds, ok := irServiceTypeReferenceInfo.TypesReferencedOnlyByService["service_"]; ok {
 			// The root service types should be included alongside the other shared types.
 			sharedTypes = append(sharedTypes, typeIds...)
 		}
-		for _, sharedTypeId := range sharedTypes {
-			typeDeclaration, ok := irTypes[sharedTypeId]
+		for _, typeId := range sharedTypes {
+			typeDeclaration, ok := irTypes[typeId]
 			if !ok {
 				// Should be unreachable.
-				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", sharedTypeId)
+				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
 			}
-			fileInfo := fileInfo{
-				filename:    "types.go",
-				packageName: rootPackageName,
-			}
-			if directory := directories[sharedTypeId]; len(directory) > 0 {
-				fileInfo.filename = filepath.Join(append(directory, fileInfo.filename)...)
-				fileInfo.packageName = directory[len(directory)-1]
+			fileInfo := fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath)
+			if isReservedFilename(filepath.Base(fileInfo.filename)) {
+				fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), sharedTypesFilename)
 			}
 			result[fileInfo] = append(
 				result[fileInfo],
@@ -1349,56 +1484,18 @@ func fileInfoToTypes(
 				// Should be unreachable.
 				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced service %q which doesn't exist", serviceId)
 			}
-			fernFilepath := service.Name.FernFilepath
-			var basename string
-			if service.Name.FernFilepath.File != nil {
-				basename = fernFilepath.File.SnakeCase.UnsafeName
-			} else {
-				basename = fernFilepath.PackagePath[len(fernFilepath.PackagePath)-1].SnakeCase.UnsafeName
-			}
-			var packages []string
-			for _, packageName := range fernFilepath.PackagePath {
-				packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-			}
-			servicePackageName := rootPackageName
-			if len(packages) > 0 {
-				servicePackageName = packages[len(packages)-1]
-			}
-			serviceFileInfo := fileInfo{
-				filename:    filepath.Join(append(packages, fmt.Sprintf("%s.go", basename))...),
-				packageName: servicePackageName,
-			}
 			for _, typeId := range typeIds {
 				typeDeclaration, ok := irTypes[typeId]
 				if !ok {
 					// Should be unreachable.
 					return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
 				}
-				typeFilename := "types.go"
-				typePackageName := rootPackageName
-				if directory := directories[typeId]; len(directory) > 0 {
-					typeFilename = filepath.Join(append(directory, typeFilename)...)
-					typePackageName = directory[len(directory)-1]
+				fileInfo := fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath)
+				if shouldSetFileInfoToMatchService(typeDeclaration.Name.FernFilepath, service.Name.FernFilepath) {
+					fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), service.Name.FernFilepath.File.SnakeCase.UnsafeName+".go")
 				}
-				if servicePackageName != typePackageName {
-					// There is only one service referencing this type, but it still
-					// belongs in the package where it was defined.
-					typeFileInfo := fileInfo{
-						filename:    typeFilename,
-						packageName: typePackageName,
-					}
-					result[typeFileInfo] = append(
-						result[typeFileInfo],
-						&typeToGenerate{
-							ID:              typeId,
-							FernFilepath:    typeDeclaration.Name.FernFilepath,
-							TypeDeclaration: typeDeclaration,
-						},
-					)
-					continue
-				}
-				result[serviceFileInfo] = append(
-					result[serviceFileInfo],
+				result[fileInfo] = append(
+					result[fileInfo],
 					&typeToGenerate{
 						ID:              typeDeclaration.Name.TypeId,
 						FernFilepath:    typeDeclaration.Name.FernFilepath,
@@ -1413,6 +1510,36 @@ func fileInfoToTypes(
 		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].ID < result[fileInfo][j].ID })
 	}
 	return result, nil
+}
+
+func shouldSetFileInfoToMatchService(
+	typeFernFilepath *fernir.FernFilepath,
+	serviceFernFilepath *fernir.FernFilepath,
+) bool {
+	if serviceFernFilepath.File == nil || typeFernFilepath.File != nil {
+		// If the service is a root client or the type is already defined
+		// in a particular non-root package, we can leave it as-is.
+		return false
+	}
+	if !packagePathIsEqual(typeFernFilepath, serviceFernFilepath) {
+		// We only want to set the file info if the type is defined in the
+		// same package as the service.
+		return false
+	}
+	filename := serviceFernFilepath.File.SnakeCase.UnsafeName
+	return !isReservedFilename(filename)
+}
+
+func packagePathIsEqual(a, b *fernir.FernFilepath) bool {
+	if len(a.PackagePath) != len(b.PackagePath) {
+		return false
+	}
+	for i := range a.PackagePath {
+		if a.PackagePath[i].CamelCase.SafeName != b.PackagePath[i].CamelCase.SafeName {
+			return false
+		}
+	}
+	return true
 }
 
 func fileInfoToErrors(
@@ -1454,15 +1581,10 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 // zeroValueForTypeReference returns the zero value for the given type reference.
 func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
-		switch typeReference.Container.Literal.Type {
-		case "string":
-			return `""`
-		case "boolean":
-			return "false"
-		}
+		return zeroValueForLiteral(typeReference.Container.Literal)
 	}
-	if typeReference.Primitive != "" {
-		return zeroValueForPrimitive(typeReference.Primitive)
+	if typeReference.Primitive != nil {
+		return zeroValueForPrimitive(typeReference.Primitive.V1)
 	}
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
@@ -1476,17 +1598,29 @@ func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir
 	return "nil"
 }
 
-func zeroValueForPrimitive(primitive fernir.PrimitiveType) string {
-	switch primitive {
-	case fernir.PrimitiveTypeString:
+func zeroValueForLiteral(literal *fernir.Literal) string {
+	switch literal.Type {
+	case "string":
 		return `""`
-	case fernir.PrimitiveTypeInteger, fernir.PrimitiveTypeDouble, fernir.PrimitiveTypeLong:
-		return "0"
-	case fernir.PrimitiveTypeBoolean:
+	case "boolean":
 		return "false"
-	case fernir.PrimitiveTypeDateTime, fernir.PrimitiveTypeDate:
+	}
+	return "nil"
+}
+
+func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
+	switch primitive {
+	case fernir.PrimitiveTypeV1String, fernir.PrimitiveTypeV1BigInteger:
+		return `""`
+	case fernir.PrimitiveTypeV1Integer, fernir.PrimitiveTypeV1Long, fernir.PrimitiveTypeV1Uint, fernir.PrimitiveTypeV1Uint64, fernir.PrimitiveTypeV1Float, fernir.PrimitiveTypeV1Double:
+		return "0"
+	case fernir.PrimitiveTypeV1Boolean:
+		return "false"
+	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case fernir.PrimitiveTypeUuid, fernir.PrimitiveTypeBase64:
+	case fernir.PrimitiveTypeV1Uuid:
+		return "uuid.UUID{}"
+	case fernir.PrimitiveTypeV1Base64:
 		return "nil"
 	}
 	return "nil"
@@ -1543,6 +1677,19 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 	return false
 }
 
+func isReservedFilename(filename string) bool {
+	_, ok := reservedFilenames[filename]
+	return ok
+}
+
+var reservedFilenames = map[string]struct{}{
+	"environments.go": struct{}{},
+	"errors.go":       struct{}{},
+	"file_param.go":   struct{}{},
+	"optional.go":     struct{}{},
+	"pointer.go":      struct{}{},
+}
+
 // pointerFunctionNames enumerates all of the pointer function names.
 var pointerFunctionNames = map[string]struct{}{
 	"Bool":       struct{}{},
@@ -1565,6 +1712,7 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uint64":     struct{}{},
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
+	// TODO: Add support for BigInteger.
 }
 
 // valueOf dereferences the given value, or returns the zero value if nil.

@@ -5658,15 +5658,14 @@
             "service_service": [
                 "type_:StringResponse",
                 "type_:OptionalStringResponse",
+                "type_:WithMetadata",
+                "type_service:WithDocs",
                 "type_service:OptionalWithDocs",
+                "type_service:Movie",
                 "type_service:Response"
             ]
         },
-        "sharedTypes": [
-            "type_:WithMetadata",
-            "type_service:WithDocs",
-            "type_service:Movie"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

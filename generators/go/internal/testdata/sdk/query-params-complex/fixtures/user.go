@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-complex/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-complex/fixtures/internal"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -29,6 +29,20 @@ type User struct {
 	_rawJSON        json.RawMessage
 }
 
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetTags() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Tags
+}
+
 func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -41,7 +55,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	*u = User(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -53,11 +67,11 @@ func (u *User) UnmarshalJSON(data []byte) error {
 
 func (u *User) String() string {
 	if len(u._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

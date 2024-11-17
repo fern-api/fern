@@ -2,23 +2,12 @@
     "endpoints": [
         {
             "id": {
-                "path": "/foo",
-                "method": "POST",
-                "identifierOverride": "endpoint_dataservice.foo"
-            },
-            "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.foo",
-                "type": "ruby"
-            }
-        },
-        {
-            "id": {
                 "path": "/data",
                 "method": "POST",
                 "identifierOverride": "endpoint_dataservice.upload"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.upload(columns: [{ id: \"id\", values: [1.1] }])",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.upload(columns: [{ id: \"id\", values: [1.1] }])",
                 "type": "ruby"
             }
         },
@@ -29,7 +18,7 @@
                 "identifierOverride": "endpoint_dataservice.delete"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.delete",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.delete",
                 "type": "ruby"
             }
         },
@@ -40,7 +29,7 @@
                 "identifierOverride": "endpoint_dataservice.describe"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.describe",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.describe",
                 "type": "ruby"
             }
         },
@@ -51,7 +40,7 @@
                 "identifierOverride": "endpoint_dataservice.fetch"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.fetch",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.fetch",
                 "type": "ruby"
             }
         },
@@ -62,7 +51,7 @@
                 "identifierOverride": "endpoint_dataservice.list"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.list",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.list",
                 "type": "ruby"
             }
         },
@@ -73,7 +62,7 @@
                 "identifierOverride": "endpoint_dataservice.query"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.query(top_k: 1)",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.query(top_k: 1)",
                 "type": "ruby"
             }
         },
@@ -84,18 +73,7 @@
                 "identifierOverride": "endpoint_dataservice.update"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.update(id: \"id\")",
-                "type": "ruby"
-            }
-        },
-        {
-            "id": {
-                "path": "/foo",
-                "method": "POST",
-                "identifierOverride": "endpoint_dataservice.foo"
-            },
-            "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.foo",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.update(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -106,7 +84,7 @@
                 "identifierOverride": "endpoint_dataservice.upload"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.upload(columns: [{ id: \"id\", values: [1.1] }])",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.upload(columns: [{ id: \"id\", values: [1.1] }])",
                 "type": "ruby"
             }
         },
@@ -117,7 +95,7 @@
                 "identifierOverride": "endpoint_dataservice.delete"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.delete",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.delete",
                 "type": "ruby"
             }
         },
@@ -128,7 +106,7 @@
                 "identifierOverride": "endpoint_dataservice.describe"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.describe",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.describe",
                 "type": "ruby"
             }
         },
@@ -139,7 +117,7 @@
                 "identifierOverride": "endpoint_dataservice.fetch"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.fetch",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.fetch",
                 "type": "ruby"
             }
         },
@@ -150,7 +128,7 @@
                 "identifierOverride": "endpoint_dataservice.list"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.list",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.list",
                 "type": "ruby"
             }
         },
@@ -161,7 +139,7 @@
                 "identifierOverride": "endpoint_dataservice.query"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.query(top_k: 1)",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.query(top_k: 1)",
                 "type": "ruby"
             }
         },
@@ -172,7 +150,7 @@
                 "identifierOverride": "endpoint_dataservice.update"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedApiClient::Environment::DEFAULT,\n  api_key: \"YOUR_API_KEY\"\n)\napi.dataservice.update(id: \"id\")",
+                "client": "require \"fern_grpc_proto_exhaustive\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.dataservice.update(id: \"id\")",
                 "type": "ruby"
             }
         }

@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedMultiUrlEnvironmentNoDefault\SeedMultiUrlEnvironmentNoDefault.csproj" />
+        <ProjectReference Include="..\SeedMultiUrlEnvironmentNoDefault\SeedMultiUrlEnvironmentNoDefault.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedMultiUrlEnvironmentNoDefault.Test.Custom.props" Condition="Exists('SeedMultiUrlEnvironmentNoDefault.Test.Custom.props')" />
 </Project>

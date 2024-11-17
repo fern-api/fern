@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/pointer-core/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/pointer-core/fixtures/internal"
 )
 
 type String struct {
@@ -13,6 +13,13 @@ type String struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (s *String) GetValue() string {
+	if s == nil {
+		return ""
+	}
+	return s.Value
 }
 
 func (s *String) GetExtraProperties() map[string]interface{} {
@@ -27,7 +34,7 @@ func (s *String) UnmarshalJSON(data []byte) error {
 	}
 	*s = String(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -39,11 +46,11 @@ func (s *String) UnmarshalJSON(data []byte) error {
 
 func (s *String) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

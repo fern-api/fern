@@ -87,18 +87,14 @@ export class ObjectGenerator {
 
         class_.add(this.getConfigClass());
 
-        const module = this.context.getModulePathForId(this.typeId);
+        const path = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
-        const file = python.file({
-            moduleName: module.join("."),
-            path: ["test"],
-            name: filename
-        });
+        const file = python.file({ path });
         file.addStatement(class_);
 
         return new WriteablePythonFile({
             contents: file,
-            directory: RelativeFilePath.of(module.join("/")),
+            directory: RelativeFilePath.of(path.join("/")),
             filename
         });
     }

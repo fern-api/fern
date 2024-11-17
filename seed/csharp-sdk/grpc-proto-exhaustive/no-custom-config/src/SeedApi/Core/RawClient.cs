@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 
@@ -54,7 +55,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         public Headers Headers { get; init; } = new();
 
-        public RequestOptions? Options { get; init; }
+        public IRequestOptions? Options { get; init; }
     }
 
     /// <summary>
@@ -135,11 +136,14 @@ internal class RawClient(ClientOptions clientOptions)
         }
         if (request.ContentType != null)
         {
-            request.Headers.Add("Content-Type", request.ContentType);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
+                request.ContentType
+            );
         }
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+
         return httpRequest;
     }
 

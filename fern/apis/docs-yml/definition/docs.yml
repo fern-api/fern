@@ -43,7 +43,7 @@ types:
   SegmentConfig:
     properties:
       write-key: string
-  
+
   FullStoryAnalyticsConfig:
     properties:
       org-id: string
@@ -106,20 +106,24 @@ types:
   # HeapConfig:
   #   properties:
   #     app-id: string
-      
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
-      analytics: 
+      analytics:
         type: optional<AnalyticsConfig>
         docs: |
           The `analytics` object allows you to configure analytics for your docs site.
           Currently, only Segment is supported.
 
       announcement: optional<AnnouncementConfig>
+
+      roles:
+        docs: Global list of roles that can be used to filter the navigation and content based on the user's session.
+        type: optional<list<RoleId>>
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
@@ -157,6 +161,7 @@ types:
   TabId: string
 
   TabConfig:
+    extends: WithPermissions
     properties:
       display-name: string
       icon: optional<string>
@@ -189,14 +194,10 @@ types:
     properties:
       url: string
       "custom-domain": optional<CustomDomain>
-      audiences:
-        type: optional<AudiencesConfig>
-        availability: in-development
       private:
         type: optional<boolean>
-        docs: |
-          If `private` is set to true, Fern will protect the docs site with SSO.
-        availability: in-development
+        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
+        availability: deprecated 
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -227,32 +228,9 @@ types:
         docs: |
           @default: `main`
 
-  AudiencesConfig:
-    discriminated: false
-    docs: |
-      Restricts the API endpoints and webhooks that are included in the docs site.
-      If `audiences` is not set, only entities marked as "external" will be included.
-    union:
-      - string
-      - list<string>
-      # - AudiencesRuleConfig
-
-  # AudiencesRuleConfig:
-  #   properties:
-  #     include:
-  #       type: optional<list<string>>
-  #       docs: |
-  #         If `include` is set, only entities that match the given audiences will be included in the site.
-  #     exclude:
-  #       type: optional<list<string>>
-  #       docs: |
-  #         If `exclude` is set, entities that match the given audiences will be excluded from the site.
-  #     exclude-no-audience:
-  #       type: optional<boolean>
-  #       docs: |
-  #         If `exclude-no-audience` is set to true, entities that do not have an audience will be excluded from the site.
 
   VersionConfig:
+    extends: WithPermissions
     properties:
       display-name: string
       path:
@@ -449,6 +427,30 @@ types:
       - fixed
       - static
 
+  AudienceId:
+    type: string
+    docs: ID of audience which is used to filter the API spec.
+
+  RoleId:
+    type: string
+    docs: ID of role which is used to filter the content shown in Fern Docs.
+
+  Role:
+    docs: |
+      Audience can either be a string or list of strings
+      i.e. `audience: internal` or `audience: [internal, beta]`
+    discriminated: false
+    union:
+      - RoleId
+      - list<RoleId>
+
+  WithPermissions:
+    properties:
+      viewers: optional<Role>
+      orphaned:
+        type: optional<boolean>
+        docs: When `orphaned` is set to `true`, the roles will not inherit from parents.
+
   FontConfig:
     properties:
       name:
@@ -525,6 +527,7 @@ types:
           @default: `normal`.
 
   PageConfiguration:
+    extends: WithPermissions
     properties:
       page: string
       path: string
@@ -533,6 +536,7 @@ types:
       hidden: optional<boolean>
 
   ChangelogConfiguration:
+    extends: WithPermissions
     properties:
       changelog: ChangelogFolderRelativePath
       title: optional<string> # defaults to "Changelog"
@@ -542,6 +546,7 @@ types:
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
   SectionConfiguration:
+    extends: WithPermissions
     properties:
       section: string
       path:
@@ -556,12 +561,13 @@ types:
       skip-slug: optional<boolean>
 
   ApiReferenceConfiguration:
+    extends: WithPermissions
     properties:
       api: string
       "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
-      audiences: optional<list<string>>
+      audiences: optional<list<AudienceId>>
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
@@ -611,6 +617,7 @@ types:
       - LinkConfiguration
 
   ApiReferenceSectionConfiguration:
+    extends: WithPermissions
     properties:
       section:
         type: string
@@ -638,6 +645,7 @@ types:
       - ApiReferencePackageConfigurationWithOptions
 
   ApiReferencePackageConfigurationWithOptions:
+    extends: WithPermissions
     properties:
       title: optional<string>
       summary:
@@ -654,6 +662,7 @@ types:
         docs: Settings for the api playground that is applied only to descendants of this api package.
 
   ApiReferenceEndpointConfiguration:
+    extends: WithPermissions
     properties:
       endpoint: string
       title: optional<string>
@@ -974,6 +983,10 @@ types:
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
       button: optional<PlaygroundButtonSettings>
       oauth: optional<boolean>
+      "limit-websocket-messages-per-connection":
+        type: optional<integer>
+        docs: |
+          The maximum number of websocket messages per connection in the playground.
 
   PlaygroundButtonSettings:
     properties:
@@ -984,4 +997,3 @@ types:
       message:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
-

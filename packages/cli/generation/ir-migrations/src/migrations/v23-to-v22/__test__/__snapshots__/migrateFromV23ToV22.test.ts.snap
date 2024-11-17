@@ -1722,17 +1722,24 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
   },
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
-      "type_types/object:ObjectWithRequiredField",
-      "type_types/enum:WeatherReport",
-      "type_types/object:ObjectWithOptionalField",
-      "type_types/object:NestedObjectWithOptionalField",
-      "type_types/object:NestedObjectWithRequiredField",
-      "type_types/union:Animal",
       "type_general-errors:BadObjectRequestInfo",
-      "type_types/union:Dog",
-      "type_types/union:Cat",
+      "type_types/object:ObjectWithOptionalField",
+      "type_types/object:ObjectWithRequiredField",
     ],
-    "typesReferencedOnlyByService": {},
+    "typesReferencedOnlyByService": {
+      "service_endpoints/enum": [
+        "type_types/enum:WeatherReport",
+      ],
+      "service_endpoints/object": [
+        "type_types/object:NestedObjectWithOptionalField",
+        "type_types/object:NestedObjectWithRequiredField",
+      ],
+      "service_endpoints/union": [
+        "type_types/union:Animal",
+        "type_types/union:Dog",
+        "type_types/union:Cat",
+      ],
+    },
   },
   "services": {
     "service_endpoints/container": {

@@ -76,7 +76,8 @@ function validateBodyResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return {
                         severity: "error",
@@ -122,7 +123,8 @@ function validateBodyResponse({
                         exampleResolver,
                         file: errorDeclaration.file,
                         workspace,
-                        breadcrumbs: ["response", "body"]
+                        breadcrumbs: ["response", "body"],
+                        depth: 0
                     }).map((val): RuleViolation => {
                         return { severity: "error", message: val.message };
                     })
@@ -177,7 +179,8 @@ function validateStreamResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })
@@ -228,7 +231,8 @@ function validateSseResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ["response", "body"]
+                    breadcrumbs: ["response", "body"],
+                    depth: 0
                 }).map((val): RuleViolation => {
                     return { severity: "error", message: val.message };
                 })

@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "container/client"
+require_relative "content_type/client"
 require_relative "enum/client"
 require_relative "http_methods/client"
 require_relative "object/client"
@@ -14,6 +15,8 @@ module SeedExhaustiveClient
     class Client
       # @return [SeedExhaustiveClient::Endpoints::ContainerClient]
       attr_reader :container
+      # @return [SeedExhaustiveClient::Endpoints::ContentTypeClient]
+      attr_reader :content_type
       # @return [SeedExhaustiveClient::Endpoints::EnumClient]
       attr_reader :enum
       # @return [SeedExhaustiveClient::Endpoints::HttpMethodsClient]
@@ -31,6 +34,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Endpoints::Client]
       def initialize(request_client:)
         @container = SeedExhaustiveClient::Endpoints::ContainerClient.new(request_client: request_client)
+        @content_type = SeedExhaustiveClient::Endpoints::ContentTypeClient.new(request_client: request_client)
         @enum = SeedExhaustiveClient::Endpoints::EnumClient.new(request_client: request_client)
         @http_methods = SeedExhaustiveClient::Endpoints::HttpMethodsClient.new(request_client: request_client)
         @object = SeedExhaustiveClient::Endpoints::ObjectClient.new(request_client: request_client)
@@ -43,6 +47,8 @@ module SeedExhaustiveClient
     class AsyncClient
       # @return [SeedExhaustiveClient::Endpoints::AsyncContainerClient]
       attr_reader :container
+      # @return [SeedExhaustiveClient::Endpoints::AsyncContentTypeClient]
+      attr_reader :content_type
       # @return [SeedExhaustiveClient::Endpoints::AsyncEnumClient]
       attr_reader :enum
       # @return [SeedExhaustiveClient::Endpoints::AsyncHttpMethodsClient]
@@ -60,6 +66,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Endpoints::AsyncClient]
       def initialize(request_client:)
         @container = SeedExhaustiveClient::Endpoints::AsyncContainerClient.new(request_client: request_client)
+        @content_type = SeedExhaustiveClient::Endpoints::AsyncContentTypeClient.new(request_client: request_client)
         @enum = SeedExhaustiveClient::Endpoints::AsyncEnumClient.new(request_client: request_client)
         @http_methods = SeedExhaustiveClient::Endpoints::AsyncHttpMethodsClient.new(request_client: request_client)
         @object = SeedExhaustiveClient::Endpoints::AsyncObjectClient.new(request_client: request_client)

@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
 
 type SendResponse struct {
@@ -16,12 +16,26 @@ type SendResponse struct {
 	extraProperties map[string]interface{}
 }
 
-func (s *SendResponse) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
+func (s *SendResponse) GetMessage() string {
+	if s == nil {
+		return ""
+	}
+	return s.Message
+}
+
+func (s *SendResponse) GetStatus() int {
+	if s == nil {
+		return 0
+	}
+	return s.Status
 }
 
 func (s *SendResponse) Success() bool {
 	return s.success
+}
+
+func (s *SendResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendResponse) UnmarshalJSON(data []byte) error {
@@ -41,7 +55,7 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 	}
 	s.success = unmarshaler.Success
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "success")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "success")
 	if err != nil {
 		return err
 	}
@@ -63,175 +77,8 @@ func (s *SendResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
 }
-
-type ANestedLiteral struct {
-	myLiteral string
-
-	extraProperties map[string]interface{}
-}
-
-func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
-func (a *ANestedLiteral) MyLiteral() string {
-	return a.myLiteral
-}
-
-func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
-	type embed ANestedLiteral
-	var unmarshaler = struct {
-		embed
-		MyLiteral string `json:"myLiteral"`
-	}{
-		embed: embed(*a),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*a = ANestedLiteral(unmarshaler.embed)
-	if unmarshaler.MyLiteral != "How super cool" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
-	}
-	a.myLiteral = unmarshaler.MyLiteral
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "myLiteral")
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-
-	return nil
-}
-
-func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
-	type embed ANestedLiteral
-	var marshaler = struct {
-		embed
-		MyLiteral string `json:"myLiteral"`
-	}{
-		embed:     embed(*a),
-		MyLiteral: "How super cool",
-	}
-	return json.Marshal(marshaler)
-}
-
-func (a *ANestedLiteral) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", a)
-}
-
-type ContainerObject struct {
-	NestedObjects []*NestedObjectWithLiterals `json:"nestedObjects,omitempty" url:"nestedObjects,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *ContainerObject) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *ContainerObject) UnmarshalJSON(data []byte) error {
-	type unmarshaler ContainerObject
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ContainerObject(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-
-	return nil
-}
-
-func (c *ContainerObject) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
-type NestedObjectWithLiterals struct {
-	StrProp  string `json:"strProp" url:"strProp"`
-	literal1 string
-	literal2 string
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NestedObjectWithLiterals) Literal1() string {
-	return n.literal1
-}
-
-func (n *NestedObjectWithLiterals) Literal2() string {
-	return n.literal2
-}
-
-func (n *NestedObjectWithLiterals) UnmarshalJSON(data []byte) error {
-	type embed NestedObjectWithLiterals
-	var unmarshaler = struct {
-		embed
-		Literal1 string `json:"literal1"`
-		Literal2 string `json:"literal2"`
-	}{
-		embed: embed(*n),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*n = NestedObjectWithLiterals(unmarshaler.embed)
-	if unmarshaler.Literal1 != "literal1" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", n, "literal1", unmarshaler.Literal1)
-	}
-	n.literal1 = unmarshaler.Literal1
-	if unmarshaler.Literal2 != "literal2" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", n, "literal2", unmarshaler.Literal2)
-	}
-	n.literal2 = unmarshaler.Literal2
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n, "literal1", "literal2")
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-
-	return nil
-}
-
-func (n *NestedObjectWithLiterals) MarshalJSON() ([]byte, error) {
-	type embed NestedObjectWithLiterals
-	var marshaler = struct {
-		embed
-		Literal1 string `json:"literal1"`
-		Literal2 string `json:"literal2"`
-	}{
-		embed:    embed(*n),
-		Literal1: "literal1",
-		Literal2: "literal2",
-	}
-	return json.Marshal(marshaler)
-}
-
-func (n *NestedObjectWithLiterals) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type SomeLiteral = string

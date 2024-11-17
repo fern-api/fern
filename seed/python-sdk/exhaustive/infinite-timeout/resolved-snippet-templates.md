@@ -100,6 +100,60 @@ client.endpoints.container.get_and_return_optional(
 from seed import SeedExhaustive
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.content_type.post_json_patch_content_type(
+	string="string",
+	integer=1,
+	long_=1000000,
+	double=1.1,
+	bool_=true,
+	datetime="2024-01-15T09:30:00Z",
+	date="2023-01-15",
+	uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+	base_64="SGVsbG8gd29ybGQh",
+	list_=[
+		"list",
+		"list"
+	],
+	map_={
+		"1": "map"
+	},
+	bigint="1000000"
+)
+ 
+```                        
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.content_type.post_json_patch_content_with_charset_type(
+	string="string",
+	integer=1,
+	long_=1000000,
+	double=1.1,
+	bool_=true,
+	datetime="2024-01-15T09:30:00Z",
+	date="2023-01-15",
+	uuid_="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+	base_64="SGVsbG8gd29ybGQh",
+	list_=[
+		"list",
+		"list"
+	],
+	map_={
+		"1": "map"
+	},
+	bigint="1000000"
+)
+ 
+```                        
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 undefined
  
 ```                        

@@ -20,6 +20,12 @@ World"""
 "
 `;
 
+exports[`class > class with generic parent reference 1`] = `
+"class MyClass(MyParentClass[MyParentType]):
+    pass
+"
+`;
+
 exports[`class > fields with annotation and initializer 1`] = `
 "class Car:
     color: str = "red"

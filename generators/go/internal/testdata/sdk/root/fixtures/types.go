@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/internal"
 )
 
 type Bar struct {
@@ -20,6 +20,48 @@ type Bar struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Bar) GetId() *Id {
+	if b == nil {
+		return nil
+	}
+	return b.Id
+}
+
+func (b *Bar) GetName() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Name
+}
+
+func (b *Bar) GetList() *string {
+	if b == nil {
+		return nil
+	}
+	return b.List
+}
+
+func (b *Bar) GetType() *FooType {
+	if b == nil {
+		return nil
+	}
+	return b.Type
+}
+
+func (b *Bar) GetRequest() *Request {
+	if b == nil {
+		return nil
+	}
+	return b.Request
+}
+
+func (b *Bar) GetDelay() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Delay
+}
+
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -32,7 +74,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	}
 	*b = Bar(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -44,11 +86,11 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 
 func (b *Bar) String() string {
 	if len(b._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -68,6 +110,41 @@ type Baz struct {
 	_rawJSON        json.RawMessage
 }
 
+func (b *Baz) GetId() *Id {
+	if b == nil {
+		return nil
+	}
+	return b.Id
+}
+
+func (b *Baz) GetName() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Name
+}
+
+func (b *Baz) GetList() *string {
+	if b == nil {
+		return nil
+	}
+	return b.List
+}
+
+func (b *Baz) GetDescription() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Description
+}
+
+func (b *Baz) GetHasDocs() *string {
+	if b == nil {
+		return nil
+	}
+	return b.HasDocs
+}
+
 func (b *Baz) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -80,7 +157,7 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 	}
 	*b = Baz(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -92,11 +169,11 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 
 func (b *Baz) String() string {
 	if len(b._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -108,6 +185,20 @@ type Error struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (e *Error) GetMessage() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+func (e *Error) GetRecursive() []*Error {
+	if e == nil {
+		return nil
+	}
+	return e.Recursive
 }
 
 func (e *Error) GetExtraProperties() map[string]interface{} {
@@ -122,7 +213,7 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	}
 	*e = Error(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -134,11 +225,11 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 
 func (e *Error) String() string {
 	if len(e._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(e._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -156,6 +247,48 @@ type Foo struct {
 	_rawJSON        json.RawMessage
 }
 
+func (f *Foo) GetId() *Id {
+	if f == nil {
+		return nil
+	}
+	return f.Id
+}
+
+func (f *Foo) GetName() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Name
+}
+
+func (f *Foo) GetList() *string {
+	if f == nil {
+		return nil
+	}
+	return f.List
+}
+
+func (f *Foo) GetType() *FooType {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *Foo) GetRequest() *Request {
+	if f == nil {
+		return nil
+	}
+	return f.Request
+}
+
+func (f *Foo) GetDelay() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Delay
+}
+
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -168,7 +301,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -180,11 +313,11 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 
 func (f *Foo) String() string {
 	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -229,6 +362,34 @@ type Request struct {
 	_rawJSON        json.RawMessage
 }
 
+func (r *Request) GetUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.Url
+}
+
+func (r *Request) GetHeaders() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Headers
+}
+
+func (r *Request) GetBody() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Body
+}
+
+func (r *Request) GetUnknown() interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Unknown
+}
+
 func (r *Request) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -241,7 +402,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	}
 	*r = Request(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -253,11 +414,11 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 
 func (r *Request) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

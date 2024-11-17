@@ -5,7 +5,7 @@ package queryparameters
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/query-parameters/fern/core"
+	internal "github.com/query-parameters/fern/internal"
 )
 
 type NestedUser struct {
@@ -13,6 +13,20 @@ type NestedUser struct {
 	User *User  `json:"user,omitempty" url:"user,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NestedUser) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NestedUser) GetUser() *User {
+	if n == nil {
+		return nil
+	}
+	return n.User
 }
 
 func (n *NestedUser) GetExtraProperties() map[string]interface{} {
@@ -27,7 +41,7 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	}
 	*n = NestedUser(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -37,7 +51,7 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NestedUser) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -48,6 +62,20 @@ type User struct {
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetTags() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Tags
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -62,7 +90,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	*u = User(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -72,7 +100,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

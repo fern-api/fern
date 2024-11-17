@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedServerSentEvents\SeedServerSentEvents.csproj" />
+        <ProjectReference Include="..\SeedServerSentEvents\SeedServerSentEvents.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedServerSentEvents.Test.Custom.props" Condition="Exists('SeedServerSentEvents.Test.Custom.props')" />
 </Project>

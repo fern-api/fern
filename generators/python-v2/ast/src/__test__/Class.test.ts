@@ -104,6 +104,28 @@ describe("class", () => {
         expect(await writer.toStringFormatted()).toMatchSnapshot();
     });
 
+    it("class with generic parent reference", async () => {
+        const clazz = python.class_({
+            name: "MyClass",
+            extends_: [
+                python.reference({
+                    name: "MyParentClass",
+                    modulePath: ["base"],
+                    genericTypes: [
+                        python.reference({
+                            name: "MyParentType",
+                            modulePath: ["models"]
+                        })
+                    ]
+                })
+            ]
+        });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+
+        expect(clazz.getReferences().length).toBe(2);
+    });
+
     it("class with de-indented multi-line string", async () => {
         const clazz = python.class_({
             name: "MyClass"

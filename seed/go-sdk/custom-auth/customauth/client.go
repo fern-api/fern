@@ -9,6 +9,7 @@ import (
 	errors "errors"
 	fern "github.com/custom-auth/fern"
 	core "github.com/custom-auth/fern/core"
+	internal "github.com/custom-auth/fern/internal"
 	option "github.com/custom-auth/fern/option"
 	io "io"
 	http "net/http"
@@ -16,7 +17,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -24,8 +25,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -50,7 +51,7 @@ func (c *Client) GetWithCustomAuth(
 	}
 	endpointURL := baseURL + "/custom-auth"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -74,7 +75,7 @@ func (c *Client) GetWithCustomAuth(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -108,7 +109,7 @@ func (c *Client) PostWithCustomAuth(
 	}
 	endpointURL := baseURL + "/custom-auth"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -139,7 +140,7 @@ func (c *Client) PostWithCustomAuth(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

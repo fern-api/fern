@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Node struct {
@@ -16,6 +16,27 @@ type Node struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (n *Node) GetId() string {
+	if n == nil {
+		return ""
+	}
+	return n.Id
+}
+
+func (n *Node) GetLabel() *string {
+	if n == nil {
+		return nil
+	}
+	return n.Label
+}
+
+func (n *Node) GetMetadata() *commons.Metadata {
+	if n == nil {
+		return nil
+	}
+	return n.Metadata
 }
 
 func (n *Node) GetExtraProperties() map[string]interface{} {
@@ -30,7 +51,7 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 	}
 	*n = Node(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -42,11 +63,11 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 
 func (n *Node) String() string {
 	if len(n._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(n._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -57,6 +78,13 @@ type Tree struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (t *Tree) GetNodes() []*Node {
+	if t == nil {
+		return nil
+	}
+	return t.Nodes
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {
@@ -71,7 +99,7 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 	}
 	*t = Tree(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -83,79 +111,12 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 
 func (t *Tree) String() string {
 	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(t._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
-}
-
-type File struct {
-	Name     string   `json:"name" url:"name"`
-	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info" url:"info"`
-
-	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
-}
-
-func (f *File) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *File) UnmarshalJSON(data []byte) error {
-	type unmarshaler File
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = File(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (f *File) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileInfo string
-
-const (
-	// A regular file (e.g. foo.txt).
-	FileInfoRegular FileInfo = "REGULAR"
-	// A directory (e.g. foo/).
-	FileInfoDirectory FileInfo = "DIRECTORY"
-)
-
-func NewFileInfoFromString(s string) (FileInfo, error) {
-	switch s {
-	case "REGULAR":
-		return FileInfoRegular, nil
-	case "DIRECTORY":
-		return FileInfoDirectory, nil
-	}
-	var t FileInfo
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FileInfo) Ptr() *FileInfo {
-	return &f
 }
