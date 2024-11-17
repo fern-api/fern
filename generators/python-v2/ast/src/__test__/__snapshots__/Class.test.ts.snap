@@ -16,7 +16,7 @@ class MyDataClass:
 exports[`class > class with de-indented multi-line string 1`] = `
 "class MyClass:
     multiline_string: str = """Hello
-    World"""
+World"""
 "
 `;
 
