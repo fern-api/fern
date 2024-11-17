@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type ErrorDiscriminationByPropertyStrategy struct {
@@ -41,7 +41,7 @@ func (e *ErrorDiscriminationByPropertyStrategy) UnmarshalJSON(data []byte) error
 	}
 	*e = ErrorDiscriminationByPropertyStrategy(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (e *ErrorDiscriminationByPropertyStrategy) UnmarshalJSON(data []byte) error
 }
 
 func (e *ErrorDiscriminationByPropertyStrategy) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -134,7 +134,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "property":
-		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
+		return internal.MarshalJSONWithExtraProperty(e.Property, "type", "property")
 	}
 }
 
@@ -312,7 +312,7 @@ func (i *IntermediateRepresentation) UnmarshalJSON(data []byte) error {
 	}
 	*i = IntermediateRepresentation(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -322,7 +322,7 @@ func (i *IntermediateRepresentation) UnmarshalJSON(data []byte) error {
 }
 
 func (i *IntermediateRepresentation) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -401,7 +401,7 @@ func (p *Package) UnmarshalJSON(data []byte) error {
 	}
 	*p = Package(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -411,7 +411,7 @@ func (p *Package) UnmarshalJSON(data []byte) error {
 }
 
 func (p *Package) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -458,7 +458,7 @@ func (p *PlatformHeaders) UnmarshalJSON(data []byte) error {
 	}
 	*p = PlatformHeaders(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -468,7 +468,7 @@ func (p *PlatformHeaders) UnmarshalJSON(data []byte) error {
 }
 
 func (p *PlatformHeaders) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -515,7 +515,7 @@ func (s *SdkConfig) UnmarshalJSON(data []byte) error {
 	}
 	*s = SdkConfig(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -525,7 +525,7 @@ func (s *SdkConfig) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SdkConfig) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -612,7 +612,7 @@ func (s *Subpackage) UnmarshalJSON(data []byte) error {
 	}
 	*s = Subpackage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -622,7 +622,7 @@ func (s *Subpackage) UnmarshalJSON(data []byte) error {
 }
 
 func (s *Subpackage) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

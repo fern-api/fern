@@ -5,7 +5,7 @@ package audiences
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/audiences/fern/core"
+	internal "github.com/audiences/fern/internal"
 )
 
 type FindRequest struct {
@@ -48,7 +48,7 @@ func (f *FilteredType) UnmarshalJSON(data []byte) error {
 	}
 	*f = FilteredType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -60,11 +60,11 @@ func (f *FilteredType) UnmarshalJSON(data []byte) error {
 
 func (f *FilteredType) String() string {
 	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -96,7 +96,7 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	}
 	*i = ImportingType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -108,11 +108,11 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 
 func (i *ImportingType) String() string {
 	if len(i._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(i._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(i._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)

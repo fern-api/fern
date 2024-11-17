@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type EnvironmentBaseUrlId = string
@@ -43,7 +43,7 @@ func (e *EnvironmentBaseUrlWithId) UnmarshalJSON(data []byte) error {
 	}
 	*e = EnvironmentBaseUrlWithId(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func (e *EnvironmentBaseUrlWithId) UnmarshalJSON(data []byte) error {
 }
 
 func (e *EnvironmentBaseUrlWithId) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -131,9 +131,9 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
-		return core.MarshalJSONWithExtraProperty(e.SingleBaseUrl, "type", "singleBaseUrl")
+		return internal.MarshalJSONWithExtraProperty(e.SingleBaseUrl, "type", "singleBaseUrl")
 	case "multipleBaseUrls":
-		return core.MarshalJSONWithExtraProperty(e.MultipleBaseUrls, "type", "multipleBaseUrls")
+		return internal.MarshalJSONWithExtraProperty(e.MultipleBaseUrls, "type", "multipleBaseUrls")
 	}
 }
 
@@ -186,7 +186,7 @@ func (e *EnvironmentsConfig) UnmarshalJSON(data []byte) error {
 	}
 	*e = EnvironmentsConfig(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -196,7 +196,7 @@ func (e *EnvironmentsConfig) UnmarshalJSON(data []byte) error {
 }
 
 func (e *EnvironmentsConfig) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -251,7 +251,7 @@ func (m *MultipleBaseUrlsEnvironment) UnmarshalJSON(data []byte) error {
 	}
 	*m = MultipleBaseUrlsEnvironment(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -261,7 +261,7 @@ func (m *MultipleBaseUrlsEnvironment) UnmarshalJSON(data []byte) error {
 }
 
 func (m *MultipleBaseUrlsEnvironment) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -300,7 +300,7 @@ func (m *MultipleBaseUrlsEnvironments) UnmarshalJSON(data []byte) error {
 	}
 	*m = MultipleBaseUrlsEnvironments(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -310,7 +310,7 @@ func (m *MultipleBaseUrlsEnvironments) UnmarshalJSON(data []byte) error {
 }
 
 func (m *MultipleBaseUrlsEnvironments) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -365,7 +365,7 @@ func (s *SingleBaseUrlEnvironment) UnmarshalJSON(data []byte) error {
 	}
 	*s = SingleBaseUrlEnvironment(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -375,7 +375,7 @@ func (s *SingleBaseUrlEnvironment) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SingleBaseUrlEnvironment) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -406,7 +406,7 @@ func (s *SingleBaseUrlEnvironments) UnmarshalJSON(data []byte) error {
 	}
 	*s = SingleBaseUrlEnvironments(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -416,7 +416,7 @@ func (s *SingleBaseUrlEnvironments) UnmarshalJSON(data []byte) error {
 }
 
 func (s *SingleBaseUrlEnvironments) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

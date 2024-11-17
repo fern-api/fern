@@ -5,7 +5,7 @@ package notification
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 )
 
 type Notification struct {
@@ -42,7 +42,7 @@ func (n *Notification) UnmarshalJSON(data []byte) error {
 	}
 	*n = Notification(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -54,11 +54,11 @@ func (n *Notification) UnmarshalJSON(data []byte) error {
 
 func (n *Notification) String() string {
 	if len(n._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(n._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)

@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	//go:embed model/core/stringer.go
+	//go:embed model/internal/stringer.go
 	stringerFile string
 
-	//go:embed model/core/time.go
+	//go:embed model/internal/time.go
 	timeFile string
 )
 
@@ -261,7 +261,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		}
 		t.writer.P("}")
 		if object.ExtraProperties {
-			t.writer.P("return core.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+			t.writer.P("return internal.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
 		} else {
 			t.writer.P("return json.Marshal(marshaler)")
 		}
@@ -273,12 +273,12 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
 	if t.includeRawJSON {
 		t.writer.P("if len(", receiver, "._rawJSON) > 0 {")
-		t.writer.P("if value, err := core.StringifyJSON(", receiver, "._rawJSON); err == nil {")
+		t.writer.P("if value, err := internal.StringifyJSON(", receiver, "._rawJSON); err == nil {")
 		t.writer.P("return value")
 		t.writer.P("}")
 		t.writer.P("}")
 	}
-	t.writer.P("if value, err := core.StringifyJSON(", receiver, "); err == nil {")
+	t.writer.P("if value, err := internal.StringifyJSON(", receiver, "); err == nil {")
 	t.writer.P("return value")
 	t.writer.P("}")
 	t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
@@ -515,7 +515,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 		if unionType.Shape.PropertiesType == "samePropertiesAsObject" {
 			t.writer.P(
-				"return core.MarshalJSONWithExtraProperty(",
+				"return internal.MarshalJSONWithExtraProperty(",
 				receiver,
 				".",
 				unionType.DiscriminantValue.Name.PascalCase.UnsafeName+", ",
@@ -1466,7 +1466,7 @@ func writeExtractExtraProperties(
 		}
 		exclude = ", " + exclude
 	}
-	f.P("extraProperties, err := core.ExtractExtraProperties(data, *", receiver, exclude, ")")
+	f.P("extraProperties, err := internal.ExtractExtraProperties(data, *", receiver, exclude, ")")
 	f.P("if err != nil {")
 	f.P("return err")
 	f.P("}")
@@ -1800,13 +1800,13 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, isOptional bool) *date {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
 		var (
-			typeDeclaration = "*core.Date"
-			constructor     = "core.NewDate"
+			typeDeclaration = "*internal.Date"
+			constructor     = "internal.NewDate"
 			timeMethod      = "Time()"
 			structTag       = fmt.Sprintf("`json:%q`", name.WireValue)
 		)
 		if isOptional {
-			constructor = "core.NewOptionalDate"
+			constructor = "internal.NewOptionalDate"
 			timeMethod = "TimePtr()"
 			structTag = fmt.Sprintf("`json:\"%s,omitempty\"`", name.WireValue)
 		}
@@ -1822,13 +1822,13 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 	}
 	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
 		var (
-			typeDeclaration = "*core.DateTime"
-			constructor     = "core.NewDateTime"
+			typeDeclaration = "*internal.DateTime"
+			constructor     = "internal.NewDateTime"
 			timeMethod      = "Time()"
 			structTag       = fmt.Sprintf("`json:%q`", name.WireValue)
 		)
 		if isOptional {
-			constructor = "core.NewOptionalDateTime"
+			constructor = "internal.NewOptionalDateTime"
 			timeMethod = "TimePtr()"
 			structTag = fmt.Sprintf("`json:\"%s,omitempty\"`", name.WireValue)
 		}
@@ -1855,12 +1855,12 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
 		var (
-			typeDeclaration = "*core.Date"
-			constructor     = "core.NewDate"
+			typeDeclaration = "*internal.Date"
+			constructor     = "internal.NewDate"
 			timeMethod      = "Time()"
 		)
 		if isOptional {
-			constructor = "core.NewOptionalDate"
+			constructor = "internal.NewOptionalDate"
 			timeMethod = "TimePtr()"
 		}
 		return &date{
@@ -1873,12 +1873,12 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 	}
 	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
 		var (
-			typeDeclaration = "*core.DateTime"
-			constructor     = "core.NewDateTime"
+			typeDeclaration = "*internal.DateTime"
+			constructor     = "internal.NewDateTime"
 			timeMethod      = "Time()"
 		)
 		if isOptional {
-			constructor = "core.NewOptionalDateTime"
+			constructor = "internal.NewOptionalDateTime"
 			timeMethod = "TimePtr()"
 		}
 		return &date{

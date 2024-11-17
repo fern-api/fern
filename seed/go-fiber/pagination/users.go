@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	core "github.com/pagination/fern/core"
+	internal "github.com/pagination/fern/internal"
 )
 
 type ListUsernamesRequest struct {
@@ -106,7 +106,7 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 	}
 	*u = UsernameCursor(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -116,7 +116,7 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UsernameCursor) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -155,7 +155,7 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 	}
 	*u = UsernamePage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -165,7 +165,7 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UsernamePage) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -213,7 +213,7 @@ func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error
 	}
 	*l = ListUsersExtendedOptionalListResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
@@ -223,7 +223,7 @@ func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error
 }
 
 func (l *ListUsersExtendedOptionalListResponse) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -271,7 +271,7 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 	}
 	*l = ListUsersExtendedResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
@@ -281,7 +281,7 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (l *ListUsersExtendedResponse) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -337,7 +337,7 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 	}
 	*l = ListUsersPaginationResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
@@ -347,7 +347,7 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (l *ListUsersPaginationResponse) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -386,7 +386,7 @@ func (n *NextPage) UnmarshalJSON(data []byte) error {
 	}
 	*n = NextPage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -396,7 +396,7 @@ func (n *NextPage) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NextPage) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -474,7 +474,7 @@ func (p *Page) UnmarshalJSON(data []byte) error {
 	}
 	*p = Page(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -484,7 +484,7 @@ func (p *Page) UnmarshalJSON(data []byte) error {
 }
 
 func (p *Page) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -523,7 +523,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	*u = User(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -533,7 +533,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -564,7 +564,7 @@ func (u *UserListContainer) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserListContainer(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -574,7 +574,7 @@ func (u *UserListContainer) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UserListContainer) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -605,7 +605,7 @@ func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserOptionalListContainer(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -615,7 +615,7 @@ func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UserOptionalListContainer) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -654,7 +654,7 @@ func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserOptionalListPage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -664,7 +664,7 @@ func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UserOptionalListPage) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -703,7 +703,7 @@ func (u *UserPage) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserPage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -713,7 +713,7 @@ func (u *UserPage) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UserPage) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -744,7 +744,7 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 	}
 	*u = UsernameContainer(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -754,7 +754,7 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UsernameContainer) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -785,7 +785,7 @@ func (w *WithCursor) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithCursor(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -795,7 +795,7 @@ func (w *WithCursor) UnmarshalJSON(data []byte) error {
 }
 
 func (w *WithCursor) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)
@@ -826,7 +826,7 @@ func (w *WithPage) UnmarshalJSON(data []byte) error {
 	}
 	*w = WithPage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
@@ -836,7 +836,7 @@ func (w *WithPage) UnmarshalJSON(data []byte) error {
 }
 
 func (w *WithPage) String() string {
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)

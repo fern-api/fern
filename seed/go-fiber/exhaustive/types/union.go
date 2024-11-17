@@ -5,7 +5,7 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/exhaustive/fern/core"
+	internal "github.com/exhaustive/fern/internal"
 )
 
 type Animal struct {
@@ -76,9 +76,9 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Animal, a)
 	case "dog":
-		return core.MarshalJSONWithExtraProperty(a.Dog, "animal", "dog")
+		return internal.MarshalJSONWithExtraProperty(a.Dog, "animal", "dog")
 	case "cat":
-		return core.MarshalJSONWithExtraProperty(a.Cat, "animal", "cat")
+		return internal.MarshalJSONWithExtraProperty(a.Cat, "animal", "cat")
 	}
 }
 
@@ -131,7 +131,7 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 	}
 	*c = Cat(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -141,7 +141,7 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 }
 
 func (c *Cat) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -180,7 +180,7 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 	}
 	*d = Dog(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -190,7 +190,7 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 }
 
 func (d *Dog) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)

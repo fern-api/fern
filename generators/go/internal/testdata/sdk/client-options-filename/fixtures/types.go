@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-filename/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-filename/fixtures/internal"
 )
 
 type ClientOptions struct {
@@ -34,7 +34,7 @@ func (c *ClientOptions) UnmarshalJSON(data []byte) error {
 	}
 	*c = ClientOptions(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (c *ClientOptions) UnmarshalJSON(data []byte) error {
 
 func (c *ClientOptions) String() string {
 	if len(c._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(c._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)

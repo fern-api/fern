@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	core "sdk/core"
+	internal "sdk/internal"
 	time "time"
 )
 
@@ -95,8 +95,8 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six   *core.DateTime `json:"six"`
-		Seven *core.Date     `json:"seven"`
+		Six   *internal.DateTime `json:"six"`
+		Seven *internal.Date     `json:"seven"`
 	}{
 		embed: embed(*t),
 	}
@@ -107,7 +107,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -120,18 +120,18 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Six   *core.DateTime `json:"six"`
-		Seven *core.Date     `json:"seven"`
+		Six   *internal.DateTime `json:"six"`
+		Seven *internal.Date     `json:"seven"`
 	}{
 		embed: embed(*t),
-		Six:   core.NewDateTime(t.Six),
-		Seven: core.NewDate(t.Seven),
+		Six:   internal.NewDateTime(t.Six),
+		Seven: internal.NewDate(t.Seven),
 	}
 	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

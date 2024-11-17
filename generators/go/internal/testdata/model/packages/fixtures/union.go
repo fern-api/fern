@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	bar "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/bar"
-	core "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/internal"
 )
 
 type Union struct {
@@ -117,7 +117,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
-		return core.MarshalJSONWithExtraProperty(u.Value, "type", "value")
+		return internal.MarshalJSONWithExtraProperty(u.Value, "type", "value")
 	case "anotherValue":
 		var marshaler = struct {
 			Type         string `json:"type"`
@@ -128,7 +128,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "bar":
-		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	case "anotherBar":
 		var marshaler = struct {
 			Type       string   `json:"type"`

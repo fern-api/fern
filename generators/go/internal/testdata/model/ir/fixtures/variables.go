@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type VariableDeclaration struct {
@@ -57,7 +57,7 @@ func (v *VariableDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	*v = VariableDeclaration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *v)
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (v *VariableDeclaration) UnmarshalJSON(data []byte) error {
 }
 
 func (v *VariableDeclaration) String() string {
-	if value, err := core.StringifyJSON(v); err == nil {
+	if value, err := internal.StringifyJSON(v); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", v)

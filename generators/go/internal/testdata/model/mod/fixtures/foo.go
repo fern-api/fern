@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	bar "github.com/example/organization/bar"
-	core "github.com/example/organization/core"
+	internal "github.com/example/organization/internal"
 )
 
 type Foo struct {
@@ -42,7 +42,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 }
 
 func (f *Foo) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

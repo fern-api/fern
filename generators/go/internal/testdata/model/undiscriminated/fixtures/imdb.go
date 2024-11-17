@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures/internal"
 	time "time"
 )
 
@@ -129,7 +129,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	}
 	*b = Bar(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -139,7 +139,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Bar) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -170,7 +170,7 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 	}
 	*b = Baz(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -180,7 +180,7 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Baz) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -211,7 +211,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -221,7 +221,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 }
 
 func (f *Foo) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -622,13 +622,13 @@ func (u *UnionWithOptionalTime) GetDateTimeOptional() *time.Time {
 }
 
 func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
-	var valueDateOptional *core.Date
+	var valueDateOptional *internal.Date
 	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
 		u.typ = "DateOptional"
 		u.DateOptional = valueDateOptional.TimePtr()
 		return nil
 	}
-	var valueDateTimeOptional *core.DateTime
+	var valueDateTimeOptional *internal.DateTime
 	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
 		u.typ = "DateTimeOptional"
 		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
@@ -639,10 +639,10 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 
 func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 	if u.typ == "DateOptional" || u.DateOptional != nil {
-		return json.Marshal(core.NewOptionalDate(u.DateOptional))
+		return json.Marshal(internal.NewOptionalDate(u.DateOptional))
 	}
 	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
-		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
+		return json.Marshal(internal.NewOptionalDateTime(u.DateTimeOptional))
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
@@ -734,25 +734,25 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		u.Integer = valueInteger
 		return nil
 	}
-	var valueDate *core.Date
+	var valueDate *internal.Date
 	if err := json.Unmarshal(data, &valueDate); err == nil {
 		u.typ = "Date"
 		u.Date = valueDate.Time()
 		return nil
 	}
-	var valueDateTime *core.DateTime
+	var valueDateTime *internal.DateTime
 	if err := json.Unmarshal(data, &valueDateTime); err == nil {
 		u.typ = "DateTime"
 		u.DateTime = valueDateTime.Time()
 		return nil
 	}
-	var valueDateOptional *core.Date
+	var valueDateOptional *internal.Date
 	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
 		u.typ = "DateOptional"
 		u.DateOptional = valueDateOptional.TimePtr()
 		return nil
 	}
-	var valueDateTimeOptional *core.DateTime
+	var valueDateTimeOptional *internal.DateTime
 	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
 		u.typ = "DateTimeOptional"
 		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
@@ -766,16 +766,16 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Integer)
 	}
 	if u.typ == "Date" || !u.Date.IsZero() {
-		return json.Marshal(core.NewDate(u.Date))
+		return json.Marshal(internal.NewDate(u.Date))
 	}
 	if u.typ == "DateTime" || !u.DateTime.IsZero() {
-		return json.Marshal(core.NewDateTime(u.DateTime))
+		return json.Marshal(internal.NewDateTime(u.DateTime))
 	}
 	if u.typ == "DateOptional" || u.DateOptional != nil {
-		return json.Marshal(core.NewOptionalDate(u.DateOptional))
+		return json.Marshal(internal.NewOptionalDate(u.DateOptional))
 	}
 	if u.typ == "DateTimeOptional" || u.DateTimeOptional != nil {
-		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
+		return json.Marshal(internal.NewOptionalDateTime(u.DateTimeOptional))
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }

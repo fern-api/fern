@@ -5,7 +5,7 @@ package mixedcase
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/mixed-case/fern/core"
+	internal "github.com/mixed-case/fern/internal"
 	time "time"
 )
 
@@ -47,7 +47,7 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	}
 	*n = NestedUser(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NestedUser) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -88,7 +88,7 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	}
 	*o = Organization(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 }
 
 func (o *Organization) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -182,9 +182,9 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", r.ResourceType, r)
 	case "user":
-		return core.MarshalJSONWithExtraProperty(r.User, "resource_type", "user")
+		return internal.MarshalJSONWithExtraProperty(r.User, "resource_type", "user")
 	case "Organization":
-		return core.MarshalJSONWithExtraProperty(r.Organization, "resource_type", "Organization")
+		return internal.MarshalJSONWithExtraProperty(r.Organization, "resource_type", "Organization")
 	}
 }
 
@@ -267,7 +267,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	*u = User(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -277,7 +277,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

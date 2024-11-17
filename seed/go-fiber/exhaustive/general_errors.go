@@ -5,7 +5,7 @@ package exhaustive
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/exhaustive/fern/core"
+	internal "github.com/exhaustive/fern/internal"
 )
 
 type BadObjectRequestInfo struct {
@@ -33,7 +33,7 @@ func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 	}
 	*b = BadObjectRequestInfo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 }
 
 func (b *BadObjectRequestInfo) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)

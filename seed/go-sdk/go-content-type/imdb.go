@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/go-content-type/fern/core"
+	internal "github.com/go-content-type/fern/internal"
 )
 
 type CreateMovieRequest struct {
@@ -42,7 +42,7 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	}
 	*c = CreateMovieRequest(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -54,11 +54,11 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 
 func (c *CreateMovieRequest) String() string {
 	if len(c._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(c._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
