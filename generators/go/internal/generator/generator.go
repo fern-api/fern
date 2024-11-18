@@ -132,7 +132,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 }
 
 func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootPackageName string) ([]*File, error) {
-	fileInfoToTypes, err := fileInfoToTypes(rootPackageName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo)
+	fileInfoToTypes, err := fileInfoToTypes(rootPackageName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo, g.config.InlineFileProperties)
 	if err != nil {
 		return nil, err
 	}
@@ -144,6 +144,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.ImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -167,6 +168,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 						typeToGenerate.Service.Headers,
 						ir.IdempotencyHeaders,
 						g.config.EnableExplicitNull,
+						g.config.InlineFileProperties,
 					); err != nil {
 						return nil, err
 					}
@@ -251,6 +253,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			"",
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -270,6 +273,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			"",
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			nil,
 			nil,
@@ -312,6 +316,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -341,6 +346,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
+				g.config.InlineFileProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -364,6 +370,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -392,6 +399,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
+				g.config.InlineFileProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -412,6 +420,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
+				g.config.InlineFileProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -435,6 +444,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
+				g.config.InlineFileProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -457,6 +467,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			g.config.Whitelabel,
 			g.config.AlwaysSendRequiredProperties,
+			g.config.InlineFileProperties,
 			g.config.UnionVersion,
 			ir.Types,
 			ir.Errors,
@@ -480,13 +491,15 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
-		files = append(files, newMultipartFile(g.coordinator))
-		files = append(files, newMultipartTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
 		files = append(files, newRetrierFile(g.coordinator, g.config.ImportPath))
 		files = append(files, newRetrierTestFile(g.coordinator, g.config.ImportPath))
+		if needsFileUploadHelpers(ir) {
+			files = append(files, newMultipartFile(g.coordinator))
+			files = append(files, newMultipartTestFile(g.coordinator))
+		}
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 			files = append(files, newStreamerFile(g.coordinator, g.config.ImportPath))
@@ -508,6 +521,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				g.config.Whitelabel,
 				g.config.AlwaysSendRequiredProperties,
+				g.config.InlineFileProperties,
 				g.config.UnionVersion,
 				ir.Types,
 				ir.Errors,
@@ -661,6 +675,7 @@ func (g *Generator) generateService(
 		g.config.ImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
+		g.config.InlineFileProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -677,6 +692,7 @@ func (g *Generator) generateService(
 		ir.ErrorDiscriminationStrategy,
 		originalFernFilepath,
 		rootClientInstantiation,
+		g.config.InlineFileProperties,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -705,6 +721,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
+		g.config.InlineFileProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -721,6 +738,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.ErrorDiscriminationStrategy,
 		originalFernFilepath,
 		rootClientInstantiation,
+		g.config.InlineFileProperties,
 	); err != nil {
 		return nil, err
 	}
@@ -743,6 +761,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ImportPath,
 		g.config.Whitelabel,
 		g.config.AlwaysSendRequiredProperties,
+		g.config.InlineFileProperties,
 		g.config.UnionVersion,
 		ir.Types,
 		ir.Errors,
@@ -759,6 +778,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.ErrorDiscriminationStrategy,
 		fernFilepath,
 		rootClientInstantiation,
+		g.config.InlineFileProperties,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -993,6 +1013,7 @@ func newClientTestFile(
 		"client/client_test.go",
 		"client",
 		baseImportPath,
+		false,
 		false,
 		false,
 		UnionVersionUnspecified,
@@ -1352,12 +1373,12 @@ func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]s
 }
 
 // shouldSkipRequestType returns true if the request type should not be generated.
-func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint) bool {
+func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, inlineFileProperties bool) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
 		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
 	}
-	return !needsRequestParameter(irEndpoint)
+	return !needsRequestParameter(irEndpoint, inlineFileProperties)
 }
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least
@@ -1370,6 +1391,22 @@ func fileUploadHasBodyProperties(fileUpload *fernir.FileUploadRequest) bool {
 	// in order for us to generate the in-lined request type.
 	for _, property := range fileUpload.Properties {
 		if property.BodyProperty != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// fileUploadHasFileProperties returns true if the file upload request has at least
+// one file property.
+func fileUploadHasFileProperties(fileUpload *fernir.FileUploadRequest) bool {
+	if fileUpload == nil {
+		return false
+	}
+	// If this request is a file upload, there must be at least one body property
+	// in order for us to generate the in-lined request type.
+	for _, property := range fileUpload.Properties {
+		if property.File != nil {
 			return true
 		}
 	}
@@ -1416,11 +1453,12 @@ func fileInfoToTypes(
 	irTypes map[fernir.TypeId]*fernir.TypeDeclaration,
 	irServices map[fernir.ServiceId]*fernir.HttpService,
 	irServiceTypeReferenceInfo *fernir.ServiceTypeReferenceInfo,
+	inlineFileProperties bool,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 	for _, irService := range irServices {
 		for _, irEndpoint := range irService.Endpoints {
-			if shouldSkipRequestType(irEndpoint) {
+			if shouldSkipRequestType(irEndpoint, inlineFileProperties) {
 				continue
 			}
 			fileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
@@ -1670,6 +1708,18 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 	for _, irService := range ir.Services {
 		for _, irEndpoint := range irService.Endpoints {
 			if irEndpoint.Pagination != nil {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// needsFileUploadHelpers returns true if at least endpoint specifies a file upload.
+func needsFileUploadHelpers(ir *fernir.IntermediateRepresentation) bool {
+	for _, irService := range ir.Services {
+		for _, irEndpoint := range irService.Endpoints {
+			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 				return true
 			}
 		}

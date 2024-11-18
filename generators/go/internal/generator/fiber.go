@@ -70,7 +70,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 		}
 		return nil
 	}
-	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, false /* inlineFileProperties */)
 	if err != nil {
 		return err
 	}
