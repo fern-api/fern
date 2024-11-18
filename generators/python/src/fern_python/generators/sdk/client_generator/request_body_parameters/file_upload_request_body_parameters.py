@@ -175,7 +175,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             writer.write_node(
                                 self._context.core_utilities.with_content_type(
                                     AST.Expression(
-                                        f'file={file_property_as_union.key.wire_value}, content_type="{file_property_as_union.content_type}"'
+                                        f'file={file_property_as_union.key.wire_value}, default_content_type="{file_property_as_union.content_type}"'
                                     )
                                 )
                             )
