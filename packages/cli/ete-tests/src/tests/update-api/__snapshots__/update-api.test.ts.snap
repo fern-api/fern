@@ -1148,27 +1148,37 @@ exports[`fern api update > fern api update 1`] = `
           "type": {
             "type": "string",
             "description": "A URI reference that identifies the problem type",
-            "example": "https://example.com/probs/out-of-credit"
+            "examples": [
+              "https://example.com/probs/out-of-credit"
+            ]
           },
           "title": {
             "type": "string",
             "description": "A short, human-readable summary of the problem type",
-            "example": "You do not have enough credit."
+            "examples": [
+              "You do not have enough credit."
+            ]
           },
           "detail": {
             "type": "string",
             "description": "A human-readable explanation specific to this occurrence of the problem",
-            "example": "Your current balance is 30, but that costs 50."
+            "examples": [
+              "Your current balance is 30, but that costs 50."
+            ]
           },
           "instance": {
             "type": "string",
             "description": "A URI reference that identifies the specific occurrence of the problem",
-            "example": "/account/12345/msgs/abc"
+            "examples": [
+              "/account/12345/msgs/abc"
+            ]
           },
           "status": {
             "type": "integer",
             "description": "The HTTP status code",
-            "example": 400
+            "examples": [
+              400
+            ]
           }
         }
       },

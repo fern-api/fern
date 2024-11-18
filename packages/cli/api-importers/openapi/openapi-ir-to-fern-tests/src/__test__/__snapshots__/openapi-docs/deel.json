@@ -21064,6 +21064,13 @@ service:
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 200,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results with given number of records.",
@@ -21107,6 +21114,9 @@ service:
           limit:
             type: optional<double>
             docs: Return a page of results with given number of records.
+            validation:
+              min: 1
+              max: 200
       response:
         docs: Successful operation.
         type: root.PeopleContainer
@@ -23792,6 +23802,13 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 10,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "order_direction": {
                     "docs": "Order direction of results; ascending or descending.",
@@ -24151,6 +24168,9 @@ service:
           limit:
             type: optional<double>
             docs: Return a page of results with given number of records.
+            validation:
+              min: 1
+              max: 10
           order_direction:
             type: optional<root.SortDirEnum>
             docs: Order direction of results; ascending or descending.
@@ -25697,6 +25717,13 @@ docs: API end-points related to HRIS data.
                   "limit": {
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 99,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
@@ -25835,6 +25862,13 @@ docs: API end-points related to HRIS data.
                   "limit": {
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 99,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
@@ -25991,6 +26025,9 @@ service:
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
+            validation:
+              min: 1
+              max: 99
           offset:
             type: optional<long>
             docs: >-
@@ -26107,6 +26144,9 @@ service:
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
+            validation:
+              min: 1
+              max: 99
           offset:
             type: optional<long>
             docs: >-
