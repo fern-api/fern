@@ -898,6 +898,7 @@ func (f *fileWriter) WriteClient(
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
+	inlineFileProperties bool,
 ) (*GeneratedClient, error) {
 	var (
 		clientName = "Client"
@@ -911,7 +912,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, serviceHeaders, idempotencyHeaders, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, serviceHeaders, idempotencyHeaders, inlineFileProperties, receiver)
 		if err != nil {
 			return nil, err
 		}
@@ -1141,11 +1142,6 @@ func (f *fileWriter) WriteClient(
 			f.P()
 		}
 
-		// Prepare a response variable.
-		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
-			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
-		}
-
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
 			f.P("writer := internal.NewMultipartWriter()")
 			for _, fileProperty := range endpoint.FileProperties {
@@ -1153,20 +1149,13 @@ func (f *fileWriter) WriteClient(
 				if err != nil {
 					return nil, err
 				}
-				var (
-					fileVariable            = filePropertyInfo.Key.Name.CamelCase.SafeName
-					contentTypeVariableName = filePropertyInfo.Key.Name.CamelCase.SafeName + "ContentType"
-				)
+				fileVariable := getFileVariableName(endpoint, filePropertyInfo, inlineFileProperties)
 				if filePropertyInfo.IsArray {
 					// We don't care whether the file array is optional or not; the range
 					// handles that for us.
 					f.P("for _, f := range ", fileVariable, "{")
 					if filePropertyInfo.ContentType != "" {
-						f.P(contentTypeVariableName, " := \"", filePropertyInfo.ContentType, "\"")
-						f.P("if contentTyped, ok := f.(internal.ContentTyped); ok {")
-						f.P(contentTypeVariableName, " = contentTyped.ContentType()")
-						f.P("}")
-						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, internal.WithMultipartContentType(", contentTypeVariableName, ")); err != nil {")
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
 						f.P("return ", endpoint.ErrorReturnValues)
 						f.P("}")
 					} else {
@@ -1180,11 +1169,7 @@ func (f *fileWriter) WriteClient(
 						f.P("if ", fileVariable, " != nil {")
 					}
 					if filePropertyInfo.ContentType != "" {
-						f.P(contentTypeVariableName, " := \"", filePropertyInfo.ContentType, "\"")
-						f.P("if contentTyped, ok := ", fileVariable, ".(internal.ContentTyped); ok {")
-						f.P(contentTypeVariableName, " = contentTyped.ContentType()")
-						f.P("}")
-						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", internal.WithMultipartContentType(", contentTypeVariableName, ")); err != nil {")
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
 						f.P("return ", endpoint.ErrorReturnValues)
 						f.P("}")
 					} else {
@@ -1218,7 +1203,7 @@ func (f *fileWriter) WriteClient(
 					if valueTypeFormat.IsPrimitive {
 						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, field, ")); err != nil {")
 					} else if fileBodyProperty.ContentType != nil {
-						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, internal.WithMultipartContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, internal.WithDefaultContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
 					} else {
 						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, "); err != nil {")
 					}
@@ -1245,6 +1230,11 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
 			f.P()
+		}
+
+		// Prepare a response variable.
+		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
 		// Issue the request.
@@ -1435,6 +1425,18 @@ func (f *fileWriter) WriteClient(
 		irEndpoints,
 		rootClientInstantiation,
 	)
+}
+
+func getFileVariableName(
+	endpoint *endpoint,
+	filePropertyInfo *filePropertyInfo,
+	inlineFileProperties bool,
+) string {
+	if inlineFileProperties {
+		// The file property is part of the in-lined request type.
+		return endpoint.RequestParameterName + "." + filePropertyInfo.Key.Name.PascalCase.UnsafeName
+	}
+	return filePropertyInfo.Key.Name.CamelCase.SafeName
 }
 
 type streamingInfo struct {
@@ -1899,7 +1901,7 @@ func getEndpointParameters(
 		)
 	}
 
-	if !shouldSkipRequestType(endpoint) {
+	if !shouldSkipRequestType(endpoint, f.inlineFileProperties) {
 		fields = append(
 			fields,
 			exampleRequestBodyToFields(f, endpoint, example.Request)...,
@@ -2137,6 +2139,7 @@ func (f *fileWriter) endpointFromIR(
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
+	inlineFileProperties bool,
 	receiver string,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
@@ -2204,18 +2207,21 @@ func (f *fileWriter) endpointFromIR(
 				if err != nil {
 					return nil, err
 				}
-				parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
-				parameterType := "io.Reader"
-				if filePropertyInfo.IsArray {
-					parameterType = "[]io.Reader"
-				}
-				signatureParameters = append(
-					signatureParameters,
-					&signatureParameter{
-						parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
-					},
-				)
 				fileProperties = append(fileProperties, fileUploadProperty.File)
+
+				if !inlineFileProperties {
+					parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
+					parameterType := "io.Reader"
+					if filePropertyInfo.IsArray {
+						parameterType = "[]io.Reader"
+					}
+					signatureParameters = append(
+						signatureParameters,
+						&signatureParameter{
+							parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
+						},
+					)
+				}
 			}
 			if fileUploadProperty.BodyProperty != nil {
 				fileBodyProperties = append(fileBodyProperties, fileUploadProperty.BodyProperty)
@@ -2234,7 +2240,7 @@ func (f *fileWriter) endpointFromIR(
 		headers                   = []*ir.HttpHeader{}
 	)
 	if irEndpoint.SdkRequest != nil {
-		if needsRequestParameter(irEndpoint) {
+		if needsRequestParameter(irEndpoint, inlineFileProperties) {
 			var requestType string
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
@@ -2584,6 +2590,7 @@ func (f *fileWriter) WriteRequestType(
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	includeGenericOptionals bool,
+	inlineFileProperties bool,
 ) error {
 	var (
 		// At this point, we've already verified that the given endpoint's request
@@ -2644,7 +2651,7 @@ func (f *fileWriter) WriteRequestType(
 		}
 		return nil
 	}
-	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, inlineFileProperties)
 	if err != nil {
 		return err
 	}
@@ -2961,6 +2968,7 @@ func requestBodyToFieldDeclaration(
 	importPath string,
 	bodyField string,
 	includeGenericOptionals bool,
+	inlineFileProperties bool,
 ) (*requestBody, error) {
 	visitor := &requestBodyVisitor{
 		bodyField:               bodyField,
@@ -2970,6 +2978,7 @@ func requestBodyToFieldDeclaration(
 		types:                   writer.types,
 		writer:                  writer,
 		includeGenericOptionals: includeGenericOptionals,
+		inlineFileProperties:    inlineFileProperties,
 	}
 	if err := body.Accept(visitor); err != nil {
 		return nil, err
@@ -2995,6 +3004,7 @@ type requestBodyVisitor struct {
 
 	// Configurable
 	includeGenericOptionals bool
+	inlineFileProperties    bool
 }
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
@@ -3030,17 +3040,39 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 }
 
 func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
-	var bodyProperties []*ir.FileUploadBodyProperty
+	var (
+		bodyProperties []*ir.FileUploadBodyProperty
+		fileProperties []*ir.FileProperty
+	)
 	for _, property := range fileUpload.Properties {
 		if bodyProperty := property.BodyProperty; bodyProperty != nil {
 			bodyProperties = append(bodyProperties, bodyProperty)
 		}
+		if r.inlineFileProperties {
+			// File properties are only part of the in-lined request if explicitly
+			// configured.
+			if fileProperty := property.File; fileProperty != nil {
+				fileProperties = append(fileProperties, fileProperty)
+			}
+		}
 	}
-	if len(bodyProperties) == 0 {
+	if len(bodyProperties) == 0 && len(fileProperties) == 0 {
 		// We only want to create a separate request type if the file upload request
-		// has any body properties that aren't the file itself. The file is specified
-		// as a positional parameter.
+		// has any properties. By default, the file parameter is not part of the
+		// in-lined request type.
 		return nil
+	}
+	for _, fileProperty := range fileProperties {
+		filePropertyInfo, err := filePropertyToInfo(fileProperty)
+		if err != nil {
+			return err
+		}
+		parameterName := filePropertyInfo.Key.Name.PascalCase.UnsafeName
+		parameterType := "io.Reader"
+		if filePropertyInfo.IsArray {
+			parameterType = "[]io.Reader"
+		}
+		r.writer.P(parameterName, " ", parameterType, " `json:\"-\" url:\"-\"`")
 	}
 	typeVisitor := &typeVisitor{
 		typeName:       fileUpload.Name.PascalCase.UnsafeName,
@@ -3260,7 +3292,7 @@ func typeReferenceFromStreamingResponse(
 
 // needsRequestParameter returns true if the endpoint needs a request parameter in its
 // function signature.
-func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
+func needsRequestParameter(endpoint *ir.HttpEndpoint, inlineFileProperties bool) bool {
 	if endpoint.SdkRequest == nil {
 		return false
 	}
@@ -3271,7 +3303,9 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 		return true
 	}
 	if endpoint.RequestBody != nil {
-		return endpoint.RequestBody.FileUpload == nil || fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload)
+		return endpoint.RequestBody.FileUpload == nil ||
+			fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload) ||
+			(inlineFileProperties && fileUploadHasFileProperties(endpoint.RequestBody.FileUpload))
 	}
 	return true
 }

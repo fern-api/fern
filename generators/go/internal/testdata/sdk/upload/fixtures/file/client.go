@@ -52,7 +52,6 @@ func (c *Client) Upload(
 
 	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	var response string
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
@@ -68,6 +67,7 @@ func (c *Client) Upload(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -105,7 +105,6 @@ func (c *Client) UploadSimple(
 
 	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	var response string
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
@@ -115,6 +114,7 @@ func (c *Client) UploadSimple(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -154,7 +154,6 @@ func (c *Client) UploadMultiple(
 
 	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
-	var response string
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
@@ -172,6 +171,7 @@ func (c *Client) UploadMultiple(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
