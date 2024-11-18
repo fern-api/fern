@@ -152,7 +152,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 )
                                 writer.write_line(f', "{property_as_union.content_type}")}}')
                                 writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
-                                writer.write_line("else {},")
+                                writer.write_line("else {}")
                             writer.write_line("),")
                         else:
                             writer.write(f'"{property_as_union.name.wire_value}": (None, ')

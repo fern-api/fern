@@ -987,6 +987,36 @@
                             "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from seed.service import MyObject"
+                            ],
+                            "isOptional": true,
+                            "templateString": "foobar=MyObject(\n\t\t$FERN_INPUT\n\t)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "foo=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "foobar.foo",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n\t\t",
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -1062,6 +1092,36 @@
                                                 {
                                                     "location": "BODY",
                                                     "path": "bar.foo",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [
+                                    "from seed.service import MyObject"
+                                ],
+                                "isOptional": true,
+                                "templateString": "foobar=MyObject(\n\t\t$FERN_INPUT\n\t)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "foo=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "foobar.foo",
                                                     "type": "payload"
                                                 }
                                             ],
