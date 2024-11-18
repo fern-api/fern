@@ -86,9 +86,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.ec_2.boot_instance(..., request_options={
-    "max_retries": 1
-})
-```
+        "max_retries": 1
+    })
+    ```
 
 ### Timeouts
 
@@ -96,7 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedMultiUrlEnvironment
+    from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
     ...,
@@ -104,11 +104,11 @@ client = SeedMultiUrlEnvironment(
 )
 
 
-# Override timeout for a specific method
-client.ec_2.boot_instance(..., request_options={
-    "timeout_in_seconds": 1
-})
-```
+    # Override timeout for a specific method
+    client.ec_2.boot_instance(..., request_options={
+        "timeout_in_seconds": 1
+    })
+    ```
 
 ### Custom Client
 

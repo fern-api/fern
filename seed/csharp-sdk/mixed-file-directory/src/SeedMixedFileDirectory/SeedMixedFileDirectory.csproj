@@ -8,6 +8,8 @@
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
         <Version>0.0.1</Version>
+        <AssemblyVersion>$(Version)</AssemblyVersion>
+        <FileVersion>$(Version)</FileVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/mixed-file-directory/fern</PackageProjectUrl>
     </PropertyGroup>
@@ -34,7 +36,7 @@
     <ItemGroup>
         <PackageReference Include="OneOf" Version="3.0.263" />
         <PackageReference Include="OneOf.Extended" Version="3.0.263" />
-        <PackageReference Include="System.Text.Json" Version="8.0.4" />
+        <PackageReference Include="System.Text.Json" Version="8.0.5" />
     </ItemGroup>
 
     <ItemGroup>
@@ -47,4 +49,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
+    <Import Project="SeedMixedFileDirectory.Custom.props" Condition="Exists('SeedMixedFileDirectory.Custom.props')" />
 </Project>

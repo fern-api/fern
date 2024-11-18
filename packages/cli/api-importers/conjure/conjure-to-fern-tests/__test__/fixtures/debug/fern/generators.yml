@@ -1,0 +1,11 @@
+api: 
+  specs: 
+    conjure: ../conjure
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.39.3
+        output:
+          location: local-file-system
+          path: ../sdks/typescript

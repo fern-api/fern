@@ -9,6 +9,7 @@ import (
 	errors "errors"
 	fern "github.com/basic-auth-environment-variables/fern"
 	core "github.com/basic-auth-environment-variables/fern/core"
+	internal "github.com/basic-auth-environment-variables/fern/internal"
 	option "github.com/basic-auth-environment-variables/fern/option"
 	io "io"
 	http "net/http"
@@ -17,7 +18,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -31,8 +32,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -57,7 +58,7 @@ func (c *Client) GetWithBasicAuth(
 	}
 	endpointURL := baseURL + "/basic-auth"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -81,7 +82,7 @@ func (c *Client) GetWithBasicAuth(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -115,7 +116,7 @@ func (c *Client) PostWithBasicAuth(
 	}
 	endpointURL := baseURL + "/basic-auth"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -146,7 +147,7 @@ func (c *Client) PostWithBasicAuth(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

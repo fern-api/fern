@@ -1,12 +1,12 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-codegen";
+import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
-import { go } from "@fern-api/go-codegen";
+import { go } from "@fern-api/go-ast";
 import path from "path";
 import { ErrorReporter, Severity } from "./ErrorReporter";
 

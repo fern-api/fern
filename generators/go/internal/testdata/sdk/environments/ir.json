@@ -1,4 +1,6 @@
 {
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
     "apiName": {
         "originalName": "api",
         "camelCase": {
@@ -121,6 +123,10 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -128,6 +134,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -140,11 +147,13 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

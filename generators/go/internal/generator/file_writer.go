@@ -33,6 +33,7 @@ type fileWriter struct {
 	baseImportPath               string
 	whitelabel                   bool
 	alwaysSendRequiredProperties bool
+	inlineFileProperties         bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
 	types                        map[ir.TypeId]*ir.TypeDeclaration
@@ -49,6 +50,7 @@ func newFileWriter(
 	baseImportPath string,
 	whitelabel bool,
 	alwaysSendRequiredProperties bool,
+	inlineFileProperties bool,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -80,6 +82,7 @@ func newFileWriter(
 	// Add an import to the core utilities package generated for
 	// the SDK.
 	scope.AddImport(path.Join(baseImportPath, "core"))
+	scope.AddImport(path.Join(baseImportPath, "internal"))
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
 	return &fileWriter{
@@ -88,6 +91,7 @@ func newFileWriter(
 		baseImportPath:               baseImportPath,
 		whitelabel:                   whitelabel,
 		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		inlineFileProperties:         inlineFileProperties,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
 		types:                        types,
@@ -124,6 +128,7 @@ func (f *fileWriter) File() (*File, error) {
 
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
+		fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 		return nil, err
 	}
 
@@ -162,6 +167,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.baseImportPath,
 		f.whitelabel,
 		f.alwaysSendRequiredProperties,
+		f.inlineFileProperties,
 		f.unionVersion,
 		f.types,
 		f.errors,

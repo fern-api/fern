@@ -24401,6 +24401,13 @@ You can optionally request the result page size and the cursor to start after to
                   "per_page": {
                     "docs": "How many results per page",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 150,
+                      "min": undefined,
+                      "multipleOf": undefined,
+                    },
                   },
                   "starting_after": {
                     "docs": "String used to get the next page of conversations.",
@@ -24666,7 +24673,7 @@ You can optionally request the result page size and the cursor to start after to
                         "contacts": [
                           {
                             "external_id": "70",
-                            "id": "667d60fd8a68186f43bafdfb",
+                            "id": "667d60ff8a68186f43bafdfc",
                             "type": "contact",
                           },
                         ],
@@ -24687,19 +24694,18 @@ You can optionally request the result page size and the cursor to start after to
                               },
                             ],
                             "author": {
-                              "email": "admin189@email.com",
-                              "id": "991267608",
-                              "name": "Ciaran189 Lee",
+                              "email": "admin190@email.com",
+                              "id": "991267610",
+                              "name": "Ciaran190 Lee",
                               "type": "admin",
                             },
-                            "body": "<p>Goodbye :)</p>",
-                            "created_at": 1719492862,
-                            "id": "102",
-                            "notified_at": 1719492862,
-                            "part_type": "close",
+                            "created_at": 1719492864,
+                            "id": "103",
+                            "notified_at": 1719492864,
+                            "part_type": "snoozed",
                             "redacted": false,
                             "type": "conversation_part",
-                            "updated_at": 1719492862,
+                            "updated_at": 1719492864,
                           },
                         ],
                         "total_count": 1,
@@ -24719,7 +24725,7 @@ You can optionally request the result page size and the cursor to start after to
                           "type": "contact",
                         },
                       },
-                      "created_at": 1719492862,
+                      "created_at": 1719492864,
                       "custom_attributes": {
                         "key": "value",
                       },
@@ -24728,7 +24734,7 @@ You can optionally request the result page size and the cursor to start after to
                         "type": "conversation",
                         "url": "https://developers.intercom.com/",
                       },
-                      "id": "394",
+                      "id": "395",
                       "linked_objects": {
                         "data": [
                           {
@@ -24739,7 +24745,7 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 0,
                         "type": "list",
                       },
-                      "open": false,
+                      "open": true,
                       "priority": "not_priority",
                       "read": false,
                       "sla_applied": {
@@ -24747,7 +24753,7 @@ You can optionally request the result page size and the cursor to start after to
                         "sla_status": "hit",
                         "type": "conversation_sla_summary",
                       },
-                      "snoozed_until": 1663597260,
+                      "snoozed_until": 1719496464,
                       "source": {
                         "attachments": [
                           {
@@ -24761,20 +24767,20 @@ You can optionally request the result page size and the cursor to start after to
                           },
                         ],
                         "author": {
-                          "email": "admin189@email.com",
-                          "id": "991267608",
-                          "name": "Ciaran189 Lee",
+                          "email": "admin190@email.com",
+                          "id": "991267610",
+                          "name": "Ciaran190 Lee",
                           "type": "admin",
                         },
                         "body": "<p>this is the message body</p>",
                         "delivered_as": "admin_initiated",
-                        "id": "403918276",
+                        "id": "403918277",
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
                         "url": "url",
                       },
-                      "state": "closed",
+                      "state": "snoozed",
                       "statistics": {
                         "count_assignments": 1,
                         "count_conversation_parts": 1,
@@ -24818,7 +24824,7 @@ You can optionally request the result page size and the cursor to start after to
                       },
                       "title": "Conversation Title",
                       "type": "conversation",
-                      "updated_at": 1719492862,
+                      "updated_at": 1719492864,
                       "waiting_since": 1663597260,
                     },
                   },
@@ -24861,8 +24867,8 @@ You can optionally request the result page size and the cursor to start after to
                       "contacts": {
                         "contacts": [
                           {
-                            "external_id": "70",
-                            "id": "667d60fd8a68186f43bafdfb",
+                            "external_id": "74",
+                            "id": "667d61038a68186f43bafe01",
                             "type": "contact",
                           },
                         ],
@@ -24883,19 +24889,18 @@ You can optionally request the result page size and the cursor to start after to
                               },
                             ],
                             "author": {
-                              "email": "admin189@email.com",
-                              "id": "991267608",
-                              "name": "Ciaran189 Lee",
+                              "email": "admin191@email.com",
+                              "id": "991267612",
+                              "name": "Ciaran191 Lee",
                               "type": "admin",
                             },
-                            "body": "<p>Goodbye :)</p>",
-                            "created_at": 1719492862,
-                            "id": "102",
-                            "notified_at": 1719492862,
-                            "part_type": "close",
+                            "created_at": 1719492873,
+                            "id": "105",
+                            "notified_at": 1719492873,
+                            "part_type": "open",
                             "redacted": false,
                             "type": "conversation_part",
-                            "updated_at": 1719492862,
+                            "updated_at": 1719492873,
                           },
                         ],
                         "total_count": 1,
@@ -24915,7 +24920,7 @@ You can optionally request the result page size and the cursor to start after to
                           "type": "contact",
                         },
                       },
-                      "created_at": 1719492862,
+                      "created_at": 1719492863,
                       "custom_attributes": {
                         "key": "value",
                       },
@@ -24924,7 +24929,7 @@ You can optionally request the result page size and the cursor to start after to
                         "type": "conversation",
                         "url": "https://developers.intercom.com/",
                       },
-                      "id": "394",
+                      "id": "400",
                       "linked_objects": {
                         "data": [
                           {
@@ -24935,9 +24940,9 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 0,
                         "type": "list",
                       },
-                      "open": false,
+                      "open": true,
                       "priority": "not_priority",
-                      "read": false,
+                      "read": true,
                       "sla_applied": {
                         "sla_name": "",
                         "sla_status": "hit",
@@ -24957,20 +24962,20 @@ You can optionally request the result page size and the cursor to start after to
                           },
                         ],
                         "author": {
-                          "email": "admin189@email.com",
-                          "id": "991267608",
-                          "name": "Ciaran189 Lee",
+                          "email": "admin191@email.com",
+                          "id": "991267612",
+                          "name": "Ciaran191 Lee",
                           "type": "admin",
                         },
                         "body": "<p>this is the message body</p>",
                         "delivered_as": "admin_initiated",
-                        "id": "403918276",
+                        "id": "403918278",
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
                         "url": "url",
                       },
-                      "state": "closed",
+                      "state": "open",
                       "statistics": {
                         "count_assignments": 1,
                         "count_conversation_parts": 1,
@@ -25012,9 +25017,9 @@ You can optionally request the result page size and the cursor to start after to
                         ],
                         "type": "admin.list",
                       },
-                      "title": "Conversation Title",
+                      "title": "",
                       "type": "conversation",
-                      "updated_at": 1719492862,
+                      "updated_at": 1719492873,
                       "waiting_since": 1663597260,
                     },
                   },
@@ -25033,7 +25038,7 @@ You can optionally request the result page size and the cursor to start after to
                   },
                   "response": {
                     "body": {
-                      "admin_assignee_id": 0,
+                      "admin_assignee_id": 991267615,
                       "ai_agent": {
                         "content_sources": {
                           "content_sources": [
@@ -25058,7 +25063,7 @@ You can optionally request the result page size and the cursor to start after to
                         "contacts": [
                           {
                             "external_id": "70",
-                            "id": "667d60fd8a68186f43bafdfb",
+                            "id": "667d610a8a68186f43bafe05",
                             "type": "contact",
                           },
                         ],
@@ -25067,6 +25072,10 @@ You can optionally request the result page size and the cursor to start after to
                       "conversation_parts": {
                         "conversation_parts": [
                           {
+                            "assigned_to": {
+                              "id": "991267615",
+                              "type": "admin",
+                            },
                             "attachments": [
                               {
                                 "content_type": "image/png",
@@ -25079,19 +25088,18 @@ You can optionally request the result page size and the cursor to start after to
                               },
                             ],
                             "author": {
-                              "email": "admin189@email.com",
-                              "id": "991267608",
-                              "name": "Ciaran189 Lee",
+                              "email": "admin193@email.com",
+                              "id": "991267615",
+                              "name": "Ciaran193 Lee",
                               "type": "admin",
                             },
-                            "body": "<p>Goodbye :)</p>",
-                            "created_at": 1719492862,
-                            "id": "102",
-                            "notified_at": 1719492862,
-                            "part_type": "close",
+                            "created_at": 1719492875,
+                            "id": "106",
+                            "notified_at": 1719492875,
+                            "part_type": "assign_and_reopen",
                             "redacted": false,
                             "type": "conversation_part",
-                            "updated_at": 1719492862,
+                            "updated_at": 1719492875,
                           },
                         ],
                         "total_count": 1,
@@ -25111,7 +25119,7 @@ You can optionally request the result page size and the cursor to start after to
                           "type": "contact",
                         },
                       },
-                      "created_at": 1719492862,
+                      "created_at": 1719492874,
                       "custom_attributes": {
                         "key": "value",
                       },
@@ -25120,7 +25128,7 @@ You can optionally request the result page size and the cursor to start after to
                         "type": "conversation",
                         "url": "https://developers.intercom.com/",
                       },
-                      "id": "394",
+                      "id": "405",
                       "linked_objects": {
                         "data": [
                           {
@@ -25131,7 +25139,7 @@ You can optionally request the result page size and the cursor to start after to
                         "total_count": 0,
                         "type": "list",
                       },
-                      "open": false,
+                      "open": true,
                       "priority": "not_priority",
                       "read": false,
                       "sla_applied": {
@@ -25153,20 +25161,20 @@ You can optionally request the result page size and the cursor to start after to
                           },
                         ],
                         "author": {
-                          "email": "admin189@email.com",
-                          "id": "991267608",
-                          "name": "Ciaran189 Lee",
+                          "email": "admin193@email.com",
+                          "id": "991267615",
+                          "name": "Ciaran193 Lee",
                           "type": "admin",
                         },
                         "body": "<p>this is the message body</p>",
                         "delivered_as": "admin_initiated",
-                        "id": "403918276",
+                        "id": "403918281",
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
                         "url": "url",
                       },
-                      "state": "closed",
+                      "state": "open",
                       "statistics": {
                         "count_assignments": 1,
                         "count_conversation_parts": 1,
@@ -25210,7 +25218,7 @@ You can optionally request the result page size and the cursor to start after to
                       },
                       "title": "Conversation Title",
                       "type": "conversation",
-                      "updated_at": 1719492862,
+                      "updated_at": 1719492875,
                       "waiting_since": 1663597260,
                     },
                   },
@@ -25407,791 +25415,6 @@ You can optionally request the result page size and the cursor to start after to
                       "title": "Conversation Title",
                       "type": "conversation",
                       "updated_at": 1719492862,
-                      "waiting_since": 1663597260,
-                    },
-                  },
-                },
-                {
-                  "name": "Close a conversation",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
-                    "type": "admin",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d60fd8a68186f43bafdfb",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "admin189@email.com",
-                              "id": "991267608",
-                              "name": "Ciaran189 Lee",
-                              "type": "admin",
-                            },
-                            "body": "<p>Goodbye :)</p>",
-                            "created_at": 1719492862,
-                            "id": "102",
-                            "notified_at": 1719492862,
-                            "part_type": "close",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492862,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492862,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "394",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": false,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin189@email.com",
-                          "id": "991267608",
-                          "name": "Ciaran189 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918276",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492862,
-                      "waiting_since": 1663597260,
-                    },
-                  },
-                },
-                {
-                  "name": "Snooze a conversation",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
-                    "type": "admin",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d60ff8a68186f43bafdfc",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "admin190@email.com",
-                              "id": "991267610",
-                              "name": "Ciaran190 Lee",
-                              "type": "admin",
-                            },
-                            "created_at": 1719492864,
-                            "id": "103",
-                            "notified_at": 1719492864,
-                            "part_type": "snoozed",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492864,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492864,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "395",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": true,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1719496464,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin190@email.com",
-                          "id": "991267610",
-                          "name": "Ciaran190 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918277",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "snoozed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492864,
-                      "waiting_since": 1663597260,
-                    },
-                  },
-                },
-                {
-                  "name": "Open a conversation",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
-                    "type": "admin",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "74",
-                            "id": "667d61038a68186f43bafe01",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "admin191@email.com",
-                              "id": "991267612",
-                              "name": "Ciaran191 Lee",
-                              "type": "admin",
-                            },
-                            "created_at": 1719492873,
-                            "id": "105",
-                            "notified_at": 1719492873,
-                            "part_type": "open",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492873,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492863,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "400",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": true,
-                      "priority": "not_priority",
-                      "read": true,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin191@email.com",
-                          "id": "991267612",
-                          "name": "Ciaran191 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918278",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "",
-                      "type": "conversation",
-                      "updated_at": 1719492873,
-                      "waiting_since": 1663597260,
-                    },
-                  },
-                },
-                {
-                  "name": "Assign a conversation",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "admin_id": "12345",
-                    "assignee_id": "4324241",
-                    "body": "Goodbye :)",
-                    "message_type": "assignment",
-                    "type": "admin",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 991267615,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d610a8a68186f43bafe05",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "assigned_to": {
-                              "id": "991267615",
-                              "type": "admin",
-                            },
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "admin193@email.com",
-                              "id": "991267615",
-                              "name": "Ciaran193 Lee",
-                              "type": "admin",
-                            },
-                            "created_at": 1719492875,
-                            "id": "106",
-                            "notified_at": 1719492875,
-                            "part_type": "assign_and_reopen",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492875,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492874,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "405",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": true,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin193@email.com",
-                          "id": "991267615",
-                          "name": "Ciaran193 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918281",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492875,
                       "waiting_since": 1663597260,
                     },
                   },
@@ -26874,7 +26097,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "contacts": [
                           {
                             "external_id": "70",
-                            "id": "667d60f18a68186f43bafdf4",
+                            "id": "667d60f38a68186f43bafdf5",
                             "type": "contact",
                           },
                         ],
@@ -26895,19 +26118,30 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                               },
                             ],
                             "author": {
-                              "email": "joe@bloggs.com",
-                              "id": "667d60f18a68186f43bafdf4",
-                              "name": "Joe Bloggs",
-                              "type": "user",
+                              "email": "admin183@email.com",
+                              "id": "991267596",
+                              "name": "Ciaran183 Lee",
+                              "type": "admin",
                             },
-                            "body": "<p>Thanks again :)</p>",
-                            "created_at": 1719492850,
-                            "id": "99",
-                            "notified_at": 1719492850,
-                            "part_type": "open",
+                            "body": "<h2>An Unordered HTML List</h2>
+<ul>
+<li>Coffee</li>
+<li>Tea</li>
+<li>Milk</li>
+</ul>
+<h2>An Ordered HTML List</h2>
+<ol>
+<li>Coffee</li>
+<li>Tea</li>
+<li>Milk</li>
+</ol>",
+                            "created_at": 1719492853,
+                            "id": "100",
+                            "notified_at": 1719492853,
+                            "part_type": "note",
                             "redacted": false,
                             "type": "conversation_part",
-                            "updated_at": 1719492850,
+                            "updated_at": 1719492853,
                           },
                         ],
                         "total_count": 1,
@@ -26927,16 +26161,16 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                           "type": "contact",
                         },
                       },
-                      "created_at": 1719492849,
+                      "created_at": 1719492852,
                       "custom_attributes": {
                         "key": "value",
                       },
                       "first_contact_reply": {
-                        "created_at": 1719492850,
+                        "created_at": 1663597223,
                         "type": "conversation",
                         "url": "https://developers.intercom.com/",
                       },
-                      "id": "387",
+                      "id": "388",
                       "linked_objects": {
                         "data": [
                           {
@@ -26947,7 +26181,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "total_count": 0,
                         "type": "list",
                       },
-                      "open": true,
+                      "open": false,
                       "priority": "not_priority",
                       "read": false,
                       "sla_applied": {
@@ -26969,20 +26203,20 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                           },
                         ],
                         "author": {
-                          "email": "admin182@email.com",
-                          "id": "991267594",
-                          "name": "Ciaran182 Lee",
+                          "email": "admin183@email.com",
+                          "id": "991267596",
+                          "name": "Ciaran183 Lee",
                           "type": "admin",
                         },
                         "body": "<p>this is the message body</p>",
                         "delivered_as": "admin_initiated",
-                        "id": "403918269",
+                        "id": "403918270",
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
                         "url": "url",
                       },
-                      "state": "open",
+                      "state": "closed",
                       "statistics": {
                         "count_assignments": 1,
                         "count_conversation_parts": 1,
@@ -27026,8 +26260,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       },
                       "title": "Conversation Title",
                       "type": "conversation",
-                      "updated_at": 1719492850,
-                      "waiting_since": 1719492850,
+                      "updated_at": 1719492853,
+                      "waiting_since": 1663597260,
                     },
                   },
                 },
@@ -27069,7 +26303,7 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                         "contacts": [
                           {
                             "external_id": "70",
-                            "id": "667d60f18a68186f43bafdf4",
+                            "id": "667d60f78a68186f43bafdf7",
                             "type": "contact",
                           },
                         ],
@@ -27091,18 +26325,18 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                             ],
                             "author": {
                               "email": "joe@bloggs.com",
-                              "id": "667d60f18a68186f43bafdf4",
+                              "id": "667d60f78a68186f43bafdf7",
                               "name": "Joe Bloggs",
                               "type": "user",
                             },
                             "body": "<p>Thanks again :)</p>",
-                            "created_at": 1719492850,
-                            "id": "99",
-                            "notified_at": 1719492850,
+                            "created_at": 1719492856,
+                            "id": "101",
+                            "notified_at": 1719492856,
                             "part_type": "open",
                             "redacted": false,
                             "type": "conversation_part",
-                            "updated_at": 1719492850,
+                            "updated_at": 1719492856,
                           },
                         ],
                         "total_count": 1,
@@ -27122,16 +26356,16 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                           "type": "contact",
                         },
                       },
-                      "created_at": 1719492849,
+                      "created_at": 1719492855,
                       "custom_attributes": {
                         "key": "value",
                       },
                       "first_contact_reply": {
-                        "created_at": 1719492850,
+                        "created_at": 1719492856,
                         "type": "conversation",
                         "url": "https://developers.intercom.com/",
                       },
-                      "id": "387",
+                      "id": "390",
                       "linked_objects": {
                         "data": [
                           {
@@ -27164,14 +26398,14 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                           },
                         ],
                         "author": {
-                          "email": "admin182@email.com",
-                          "id": "991267594",
-                          "name": "Ciaran182 Lee",
+                          "email": "admin185@email.com",
+                          "id": "991267600",
+                          "name": "Ciaran185 Lee",
                           "type": "admin",
                         },
                         "body": "<p>this is the message body</p>",
                         "delivered_as": "admin_initiated",
-                        "id": "403918269",
+                        "id": "403918272",
                         "redacted": false,
                         "subject": "",
                         "type": "conversation",
@@ -27221,8 +26455,8 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       },
                       "title": "Conversation Title",
                       "type": "conversation",
-                      "updated_at": 1719492850,
-                      "waiting_since": 1719492850,
+                      "updated_at": 1719492856,
+                      "waiting_since": 1719492856,
                     },
                   },
                 },
@@ -27418,602 +26652,6 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                       "type": "conversation",
                       "updated_at": 1719492850,
                       "waiting_since": 1719492850,
-                    },
-                  },
-                },
-                {
-                  "name": "User reply",
-                  "path-parameters": {
-                    "id": "123 or "last"",
-                  },
-                  "request": {
-                    "body": "Thanks again :)",
-                    "intercom_user_id": "667d60f18a68186f43bafdf4",
-                    "message_type": "comment",
-                    "type": "user",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d60f18a68186f43bafdf4",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "joe@bloggs.com",
-                              "id": "667d60f18a68186f43bafdf4",
-                              "name": "Joe Bloggs",
-                              "type": "user",
-                            },
-                            "body": "<p>Thanks again :)</p>",
-                            "created_at": 1719492850,
-                            "id": "99",
-                            "notified_at": 1719492850,
-                            "part_type": "open",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492850,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492849,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1719492850,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "387",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": true,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin182@email.com",
-                          "id": "991267594",
-                          "name": "Ciaran182 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918269",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492850,
-                      "waiting_since": 1719492850,
-                    },
-                  },
-                },
-                {
-                  "name": "Admin note reply",
-                  "path-parameters": {
-                    "id": "123 or "last"",
-                  },
-                  "request": {
-                    "body": "Thanks again :)",
-                    "intercom_user_id": "667d60f18a68186f43bafdf4",
-                    "message_type": "comment",
-                    "type": "user",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d60f38a68186f43bafdf5",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "admin183@email.com",
-                              "id": "991267596",
-                              "name": "Ciaran183 Lee",
-                              "type": "admin",
-                            },
-                            "body": "<h2>An Unordered HTML List</h2>
-<ul>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ul>
-<h2>An Ordered HTML List</h2>
-<ol>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ol>",
-                            "created_at": 1719492853,
-                            "id": "100",
-                            "notified_at": 1719492853,
-                            "part_type": "note",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492853,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492852,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1663597223,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "388",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": false,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin183@email.com",
-                          "id": "991267596",
-                          "name": "Ciaran183 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918270",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "closed",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492853,
-                      "waiting_since": 1663597260,
-                    },
-                  },
-                },
-                {
-                  "name": "User last conversation reply",
-                  "path-parameters": {
-                    "id": "123 or "last"",
-                  },
-                  "request": {
-                    "body": "Thanks again :)",
-                    "intercom_user_id": "667d60f18a68186f43bafdf4",
-                    "message_type": "comment",
-                    "type": "user",
-                  },
-                  "response": {
-                    "body": {
-                      "admin_assignee_id": 0,
-                      "ai_agent": {
-                        "content_sources": {
-                          "content_sources": [
-                            {
-                              "locale": "en",
-                              "title": "My internal content snippet",
-                              "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
-                            },
-                          ],
-                          "total_count": 1,
-                          "type": "content_source.list",
-                        },
-                        "last_answer_type": "ai_answer",
-                        "rating": 4,
-                        "rating_remark": "Very helpful!",
-                        "resolution_state": "assumed_resolution",
-                        "source_title": "My AI Workflow",
-                        "source_type": "essentials_plan_setup",
-                      },
-                      "ai_agent_participated": false,
-                      "contacts": {
-                        "contacts": [
-                          {
-                            "external_id": "70",
-                            "id": "667d60f78a68186f43bafdf7",
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "contact.list",
-                      },
-                      "conversation_parts": {
-                        "conversation_parts": [
-                          {
-                            "attachments": [
-                              {
-                                "content_type": "image/png",
-                                "filesize": 100,
-                                "height": 100,
-                                "name": "example.png",
-                                "type": "upload",
-                                "url": "https://picsum.photos/200/300",
-                                "width": 100,
-                              },
-                            ],
-                            "author": {
-                              "email": "joe@bloggs.com",
-                              "id": "667d60f78a68186f43bafdf7",
-                              "name": "Joe Bloggs",
-                              "type": "user",
-                            },
-                            "body": "<p>Thanks again :)</p>",
-                            "created_at": 1719492856,
-                            "id": "101",
-                            "notified_at": 1719492856,
-                            "part_type": "open",
-                            "redacted": false,
-                            "type": "conversation_part",
-                            "updated_at": 1719492856,
-                          },
-                        ],
-                        "total_count": 1,
-                        "type": "conversation_part.list",
-                      },
-                      "conversation_rating": {
-                        "contact": {
-                          "external_id": "f3b87a2e09d514c6c2e79b9a",
-                          "id": "5ba682d23d7cf92bef87bfd4",
-                          "type": "contact",
-                        },
-                        "created_at": 1671028894,
-                        "rating": 5,
-                        "remark": "",
-                        "teammate": {
-                          "id": "1a2b3c",
-                          "type": "contact",
-                        },
-                      },
-                      "created_at": 1719492855,
-                      "custom_attributes": {
-                        "key": "value",
-                      },
-                      "first_contact_reply": {
-                        "created_at": 1719492856,
-                        "type": "conversation",
-                        "url": "https://developers.intercom.com/",
-                      },
-                      "id": "390",
-                      "linked_objects": {
-                        "data": [
-                          {
-                            "id": "7583",
-                          },
-                        ],
-                        "has_more": false,
-                        "total_count": 0,
-                        "type": "list",
-                      },
-                      "open": true,
-                      "priority": "not_priority",
-                      "read": false,
-                      "sla_applied": {
-                        "sla_name": "",
-                        "sla_status": "hit",
-                        "type": "conversation_sla_summary",
-                      },
-                      "snoozed_until": 1663597260,
-                      "source": {
-                        "attachments": [
-                          {
-                            "content_type": "image/png",
-                            "filesize": 100,
-                            "height": 100,
-                            "name": "example.png",
-                            "type": "upload",
-                            "url": "https://picsum.photos/200/300",
-                            "width": 100,
-                          },
-                        ],
-                        "author": {
-                          "email": "admin185@email.com",
-                          "id": "991267600",
-                          "name": "Ciaran185 Lee",
-                          "type": "admin",
-                        },
-                        "body": "<p>this is the message body</p>",
-                        "delivered_as": "admin_initiated",
-                        "id": "403918272",
-                        "redacted": false,
-                        "subject": "",
-                        "type": "conversation",
-                        "url": "url",
-                      },
-                      "state": "open",
-                      "statistics": {
-                        "count_assignments": 1,
-                        "count_conversation_parts": 1,
-                        "count_reopens": 1,
-                        "first_admin_reply_at": 1663597233,
-                        "first_assignment_at": 1663597233,
-                        "first_close_at": 1663597233,
-                        "first_contact_reply_at": 1663597233,
-                        "last_admin_reply_at": 1663597233,
-                        "last_assignment_admin_reply_at": 1663597233,
-                        "last_assignment_at": 1663597233,
-                        "last_close_at": 1663597233,
-                        "last_closed_by_id": "c3po",
-                        "last_contact_reply_at": 1663597233,
-                        "median_time_to_reply": 2310,
-                        "time_to_admin_reply": 2310,
-                        "time_to_assignment": 2310,
-                        "time_to_first_close": 2310,
-                        "time_to_last_close": 2310,
-                        "type": "conversation_statistics",
-                      },
-                      "tags": {
-                        "tags": [
-                          {
-                            "applied_at": 1663597223,
-                            "id": "123456",
-                            "name": "Test tag",
-                            "type": "tag",
-                          },
-                        ],
-                        "type": "tag.list",
-                      },
-                      "team_assignee_id": "5017691",
-                      "teammates": {
-                        "teammates": [
-                          {
-                            "type": "contact",
-                          },
-                        ],
-                        "type": "admin.list",
-                      },
-                      "title": "Conversation Title",
-                      "type": "conversation",
-                      "updated_at": 1719492856,
-                      "waiting_since": 1719492856,
                     },
                   },
                 },
@@ -29322,6 +27960,8 @@ service:
           per_page:
             type: optional<integer>
             docs: How many results per page
+            validation:
+              max: 150
           starting_after:
             type: optional<string>
             docs: String used to get the next page of conversations.
@@ -30630,598 +29270,6 @@ service:
           response:
             body:
               type: conversation
-              id: '387'
-              title: Conversation Title
-              created_at: 1719492849
-              updated_at: 1719492850
-              waiting_since: 1719492850
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918269'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267594'
-                  name: Ciaran182 Lee
-                  email: admin182@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60f18a68186f43bafdf4
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1719492850
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '99'
-                    part_type: open
-                    body: <p>Thanks again :)</p>
-                    created_at: 1719492850
-                    updated_at: 1719492850
-                    notified_at: 1719492850
-                    author:
-                      type: user
-                      id: 667d60f18a68186f43bafdf4
-                      name: Joe Bloggs
-                      email: joe@bloggs.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: User last conversation reply
-          path-parameters:
-            id: 123 or "last"
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d60f78a68186f43bafdf7
-          response:
-            body:
-              type: conversation
-              id: '387'
-              title: Conversation Title
-              created_at: 1719492849
-              updated_at: 1719492850
-              waiting_since: 1719492850
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918269'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267594'
-                  name: Ciaran182 Lee
-                  email: admin182@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60f18a68186f43bafdf4
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1719492850
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '99'
-                    part_type: open
-                    body: <p>Thanks again :)</p>
-                    created_at: 1719492850
-                    updated_at: 1719492850
-                    notified_at: 1719492850
-                    author:
-                      type: user
-                      id: 667d60f18a68186f43bafdf4
-                      name: Joe Bloggs
-                      email: joe@bloggs.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Not found
-          path-parameters:
-            id: 123 or "last"
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d60f98a68186f43bafdf8
-          response:
-            body:
-              type: conversation
-              id: '387'
-              title: Conversation Title
-              created_at: 1719492849
-              updated_at: 1719492850
-              waiting_since: 1719492850
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918269'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267594'
-                  name: Ciaran182 Lee
-                  email: admin182@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60f18a68186f43bafdf4
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1719492850
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '99'
-                    part_type: open
-                    body: <p>Thanks again :)</p>
-                    created_at: 1719492850
-                    updated_at: 1719492850
-                    notified_at: 1719492850
-                    author:
-                      type: user
-                      id: 667d60f18a68186f43bafdf4
-                      name: Joe Bloggs
-                      email: joe@bloggs.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: User reply
-          path-parameters:
-            id: 123 or "last"
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d60f18a68186f43bafdf4
-          response:
-            body:
-              type: conversation
-              id: '387'
-              title: Conversation Title
-              created_at: 1719492849
-              updated_at: 1719492850
-              waiting_since: 1719492850
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918269'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267594'
-                  name: Ciaran182 Lee
-                  email: admin182@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60f18a68186f43bafdf4
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1719492850
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '99'
-                    part_type: open
-                    body: <p>Thanks again :)</p>
-                    created_at: 1719492850
-                    updated_at: 1719492850
-                    notified_at: 1719492850
-                    author:
-                      type: user
-                      id: 667d60f18a68186f43bafdf4
-                      name: Joe Bloggs
-                      email: joe@bloggs.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Admin note reply
-          path-parameters:
-            id: 123 or "last"
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d60f18a68186f43bafdf4
-          response:
-            body:
-              type: conversation
               id: '388'
               title: Conversation Title
               created_at: 1719492852
@@ -31378,7 +29426,7 @@ service:
             message_type: comment
             type: user
             body: Thanks again :)
-            intercom_user_id: 667d60f18a68186f43bafdf4
+            intercom_user_id: 667d60f78a68186f43bafdf7
           response:
             body:
               type: conversation
@@ -31486,6 +29534,154 @@ service:
                     author:
                       type: user
                       id: 667d60f78a68186f43bafdf7
+                      name: Joe Bloggs
+                      email: joe@bloggs.com
+                    attachments:
+                      - type: upload
+                        name: example.png
+                        url: https://picsum.photos/200/300
+                        content_type: image/png
+                        filesize: 100
+                        width: 100
+                        height: 100
+                    redacted: false
+                total_count: 1
+              linked_objects:
+                type: list
+                total_count: 0
+                has_more: false
+                data:
+                  - id: '7583'
+              ai_agent_participated: false
+              ai_agent:
+                source_type: essentials_plan_setup
+                source_title: My AI Workflow
+                last_answer_type: ai_answer
+                resolution_state: assumed_resolution
+                rating: 4
+                rating_remark: Very helpful!
+                content_sources:
+                  type: content_source.list
+                  total_count: 1
+                  content_sources:
+                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
+                      title: My internal content snippet
+                      locale: en
+        - name: Not found
+          path-parameters:
+            id: 123 or "last"
+          request:
+            message_type: comment
+            type: user
+            body: Thanks again :)
+            intercom_user_id: 667d60f98a68186f43bafdf8
+          response:
+            body:
+              type: conversation
+              id: '387'
+              title: Conversation Title
+              created_at: 1719492849
+              updated_at: 1719492850
+              waiting_since: 1719492850
+              snoozed_until: 1663597260
+              open: true
+              state: open
+              read: false
+              priority: not_priority
+              admin_assignee_id: 0
+              team_assignee_id: '5017691'
+              tags:
+                type: tag.list
+                tags:
+                  - type: tag
+                    id: '123456'
+                    name: Test tag
+                    applied_at: 1663597223
+              conversation_rating:
+                rating: 5
+                remark: ''
+                created_at: 1671028894
+                contact:
+                  type: contact
+                  id: 5ba682d23d7cf92bef87bfd4
+                  external_id: f3b87a2e09d514c6c2e79b9a
+                teammate:
+                  type: contact
+                  id: 1a2b3c
+              source:
+                type: conversation
+                id: '403918269'
+                delivered_as: admin_initiated
+                subject: ''
+                body: <p>this is the message body</p>
+                author:
+                  type: admin
+                  id: '991267594'
+                  name: Ciaran182 Lee
+                  email: admin182@email.com
+                attachments:
+                  - type: upload
+                    name: example.png
+                    url: https://picsum.photos/200/300
+                    content_type: image/png
+                    filesize: 100
+                    width: 100
+                    height: 100
+                url: url
+                redacted: false
+              contacts:
+                type: contact.list
+                contacts:
+                  - type: contact
+                    id: 667d60f18a68186f43bafdf4
+                    external_id: '70'
+              teammates:
+                type: admin.list
+                teammates:
+                  - type: contact
+              custom_attributes:
+                key: value
+              first_contact_reply:
+                created_at: 1719492850
+                type: conversation
+                url: https://developers.intercom.com/
+              sla_applied:
+                type: conversation_sla_summary
+                sla_name: ''
+                sla_status: hit
+              statistics:
+                type: conversation_statistics
+                time_to_assignment: 2310
+                time_to_admin_reply: 2310
+                time_to_first_close: 2310
+                time_to_last_close: 2310
+                median_time_to_reply: 2310
+                first_contact_reply_at: 1663597233
+                first_assignment_at: 1663597233
+                first_admin_reply_at: 1663597233
+                first_close_at: 1663597233
+                last_assignment_at: 1663597233
+                last_assignment_admin_reply_at: 1663597233
+                last_contact_reply_at: 1663597233
+                last_admin_reply_at: 1663597233
+                last_close_at: 1663597233
+                last_closed_by_id: c3po
+                count_reopens: 1
+                count_assignments: 1
+                count_conversation_parts: 1
+              conversation_parts:
+                type: conversation_part.list
+                conversation_parts:
+                  - type: conversation_part
+                    id: '99'
+                    part_type: open
+                    body: <p>Thanks again :)</p>
+                    created_at: 1719492850
+                    updated_at: 1719492850
+                    notified_at: 1719492850
+                    author:
+                      type: user
+                      id: 667d60f18a68186f43bafdf4
                       name: Joe Bloggs
                       email: joe@bloggs.com
                     attachments:
@@ -31708,14 +29904,14 @@ service:
           response:
             body:
               type: conversation
-              id: '394'
+              id: '395'
               title: Conversation Title
-              created_at: 1719492862
-              updated_at: 1719492862
+              created_at: 1719492864
+              updated_at: 1719492864
               waiting_since: 1663597260
-              snoozed_until: 1663597260
-              open: false
-              state: closed
+              snoozed_until: 1719496464
+              open: true
+              state: snoozed
               read: false
               priority: not_priority
               admin_assignee_id: 0
@@ -31740,15 +29936,15 @@ service:
                   id: 1a2b3c
               source:
                 type: conversation
-                id: '403918276'
+                id: '403918277'
                 delivered_as: admin_initiated
                 subject: ''
                 body: <p>this is the message body</p>
                 author:
                   type: admin
-                  id: '991267608'
-                  name: Ciaran189 Lee
-                  email: admin189@email.com
+                  id: '991267610'
+                  name: Ciaran190 Lee
+                  email: admin190@email.com
                 attachments:
                   - type: upload
                     name: example.png
@@ -31763,7 +29959,7 @@ service:
                 type: contact.list
                 contacts:
                   - type: contact
-                    id: 667d60fd8a68186f43bafdfb
+                    id: 667d60ff8a68186f43bafdfc
                     external_id: '70'
               teammates:
                 type: admin.list
@@ -31803,17 +29999,16 @@ service:
                 type: conversation_part.list
                 conversation_parts:
                   - type: conversation_part
-                    id: '102'
-                    part_type: close
-                    body: <p>Goodbye :)</p>
-                    created_at: 1719492862
-                    updated_at: 1719492862
-                    notified_at: 1719492862
+                    id: '103'
+                    part_type: snoozed
+                    created_at: 1719492864
+                    updated_at: 1719492864
+                    notified_at: 1719492864
                     author:
                       type: admin
-                      id: '991267608'
-                      name: Ciaran189 Lee
-                      email: admin189@email.com
+                      id: '991267610'
+                      name: Ciaran190 Lee
+                      email: admin190@email.com
                     attachments:
                       - type: upload
                         name: example.png
@@ -31857,15 +30052,15 @@ service:
           response:
             body:
               type: conversation
-              id: '394'
-              title: Conversation Title
-              created_at: 1719492862
-              updated_at: 1719492862
+              id: '400'
+              title: ''
+              created_at: 1719492863
+              updated_at: 1719492873
               waiting_since: 1663597260
               snoozed_until: 1663597260
-              open: false
-              state: closed
-              read: false
+              open: true
+              state: open
+              read: true
               priority: not_priority
               admin_assignee_id: 0
               team_assignee_id: '5017691'
@@ -31889,15 +30084,15 @@ service:
                   id: 1a2b3c
               source:
                 type: conversation
-                id: '403918276'
+                id: '403918278'
                 delivered_as: admin_initiated
                 subject: ''
                 body: <p>this is the message body</p>
                 author:
                   type: admin
-                  id: '991267608'
-                  name: Ciaran189 Lee
-                  email: admin189@email.com
+                  id: '991267612'
+                  name: Ciaran191 Lee
+                  email: admin191@email.com
                 attachments:
                   - type: upload
                     name: example.png
@@ -31912,8 +30107,8 @@ service:
                 type: contact.list
                 contacts:
                   - type: contact
-                    id: 667d60fd8a68186f43bafdfb
-                    external_id: '70'
+                    id: 667d61038a68186f43bafe01
+                    external_id: '74'
               teammates:
                 type: admin.list
                 teammates:
@@ -31952,17 +30147,16 @@ service:
                 type: conversation_part.list
                 conversation_parts:
                   - type: conversation_part
-                    id: '102'
-                    part_type: close
-                    body: <p>Goodbye :)</p>
-                    created_at: 1719492862
-                    updated_at: 1719492862
-                    notified_at: 1719492862
+                    id: '105'
+                    part_type: open
+                    created_at: 1719492873
+                    updated_at: 1719492873
+                    notified_at: 1719492873
                     author:
                       type: admin
-                      id: '991267608'
-                      name: Ciaran189 Lee
-                      email: admin189@email.com
+                      id: '991267612'
+                      name: Ciaran191 Lee
+                      email: admin191@email.com
                     attachments:
                       - type: upload
                         name: example.png
@@ -32006,17 +30200,17 @@ service:
           response:
             body:
               type: conversation
-              id: '394'
+              id: '405'
               title: Conversation Title
-              created_at: 1719492862
-              updated_at: 1719492862
+              created_at: 1719492874
+              updated_at: 1719492875
               waiting_since: 1663597260
               snoozed_until: 1663597260
-              open: false
-              state: closed
+              open: true
+              state: open
               read: false
               priority: not_priority
-              admin_assignee_id: 0
+              admin_assignee_id: 991267615
               team_assignee_id: '5017691'
               tags:
                 type: tag.list
@@ -32038,15 +30232,15 @@ service:
                   id: 1a2b3c
               source:
                 type: conversation
-                id: '403918276'
+                id: '403918281'
                 delivered_as: admin_initiated
                 subject: ''
                 body: <p>this is the message body</p>
                 author:
                   type: admin
-                  id: '991267608'
-                  name: Ciaran189 Lee
-                  email: admin189@email.com
+                  id: '991267615'
+                  name: Ciaran193 Lee
+                  email: admin193@email.com
                 attachments:
                   - type: upload
                     name: example.png
@@ -32061,7 +30255,7 @@ service:
                 type: contact.list
                 contacts:
                   - type: contact
-                    id: 667d60fd8a68186f43bafdfb
+                    id: 667d610a8a68186f43bafe05
                     external_id: '70'
               teammates:
                 type: admin.list
@@ -32101,17 +30295,19 @@ service:
                 type: conversation_part.list
                 conversation_parts:
                   - type: conversation_part
-                    id: '102'
-                    part_type: close
-                    body: <p>Goodbye :)</p>
-                    created_at: 1719492862
-                    updated_at: 1719492862
-                    notified_at: 1719492862
+                    id: '106'
+                    part_type: assign_and_reopen
+                    created_at: 1719492875
+                    updated_at: 1719492875
+                    notified_at: 1719492875
+                    assigned_to:
+                      type: admin
+                      id: '991267615'
                     author:
                       type: admin
-                      id: '991267608'
-                      name: Ciaran189 Lee
-                      email: admin189@email.com
+                      id: '991267615'
+                      name: Ciaran193 Lee
+                      email: admin193@email.com
                     attachments:
                       - type: upload
                         name: example.png
@@ -32261,602 +30457,6 @@ service:
                       id: '991267608'
                       name: Ciaran189 Lee
                       email: admin189@email.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Close a conversation
-          path-parameters:
-            id: '123'
-          request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
-          response:
-            body:
-              type: conversation
-              id: '394'
-              title: Conversation Title
-              created_at: 1719492862
-              updated_at: 1719492862
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
-              open: false
-              state: closed
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918276'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267608'
-                  name: Ciaran189 Lee
-                  email: admin189@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60fd8a68186f43bafdfb
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '102'
-                    part_type: close
-                    body: <p>Goodbye :)</p>
-                    created_at: 1719492862
-                    updated_at: 1719492862
-                    notified_at: 1719492862
-                    author:
-                      type: admin
-                      id: '991267608'
-                      name: Ciaran189 Lee
-                      email: admin189@email.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Snooze a conversation
-          path-parameters:
-            id: '123'
-          request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
-          response:
-            body:
-              type: conversation
-              id: '395'
-              title: Conversation Title
-              created_at: 1719492864
-              updated_at: 1719492864
-              waiting_since: 1663597260
-              snoozed_until: 1719496464
-              open: true
-              state: snoozed
-              read: false
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918277'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267610'
-                  name: Ciaran190 Lee
-                  email: admin190@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d60ff8a68186f43bafdfc
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '103'
-                    part_type: snoozed
-                    created_at: 1719492864
-                    updated_at: 1719492864
-                    notified_at: 1719492864
-                    author:
-                      type: admin
-                      id: '991267610'
-                      name: Ciaran190 Lee
-                      email: admin190@email.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Open a conversation
-          path-parameters:
-            id: '123'
-          request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
-          response:
-            body:
-              type: conversation
-              id: '400'
-              title: ''
-              created_at: 1719492863
-              updated_at: 1719492873
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: true
-              priority: not_priority
-              admin_assignee_id: 0
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918278'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267612'
-                  name: Ciaran191 Lee
-                  email: admin191@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d61038a68186f43bafe01
-                    external_id: '74'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '105'
-                    part_type: open
-                    created_at: 1719492873
-                    updated_at: 1719492873
-                    notified_at: 1719492873
-                    author:
-                      type: admin
-                      id: '991267612'
-                      name: Ciaran191 Lee
-                      email: admin191@email.com
-                    attachments:
-                      - type: upload
-                        name: example.png
-                        url: https://picsum.photos/200/300
-                        content_type: image/png
-                        filesize: 100
-                        width: 100
-                        height: 100
-                    redacted: false
-                total_count: 1
-              linked_objects:
-                type: list
-                total_count: 0
-                has_more: false
-                data:
-                  - id: '7583'
-              ai_agent_participated: false
-              ai_agent:
-                source_type: essentials_plan_setup
-                source_title: My AI Workflow
-                last_answer_type: ai_answer
-                resolution_state: assumed_resolution
-                rating: 4
-                rating_remark: Very helpful!
-                content_sources:
-                  type: content_source.list
-                  total_count: 1
-                  content_sources:
-                    - url: /fin-ai-agent/content?content=content_snippet&id=3234924
-                      title: My internal content snippet
-                      locale: en
-        - name: Assign a conversation
-          path-parameters:
-            id: '123'
-          request:
-            message_type: assignment
-            type: admin
-            admin_id: '12345'
-            assignee_id: '4324241'
-            body: Goodbye :)
-          response:
-            body:
-              type: conversation
-              id: '405'
-              title: Conversation Title
-              created_at: 1719492874
-              updated_at: 1719492875
-              waiting_since: 1663597260
-              snoozed_until: 1663597260
-              open: true
-              state: open
-              read: false
-              priority: not_priority
-              admin_assignee_id: 991267615
-              team_assignee_id: '5017691'
-              tags:
-                type: tag.list
-                tags:
-                  - type: tag
-                    id: '123456'
-                    name: Test tag
-                    applied_at: 1663597223
-              conversation_rating:
-                rating: 5
-                remark: ''
-                created_at: 1671028894
-                contact:
-                  type: contact
-                  id: 5ba682d23d7cf92bef87bfd4
-                  external_id: f3b87a2e09d514c6c2e79b9a
-                teammate:
-                  type: contact
-                  id: 1a2b3c
-              source:
-                type: conversation
-                id: '403918281'
-                delivered_as: admin_initiated
-                subject: ''
-                body: <p>this is the message body</p>
-                author:
-                  type: admin
-                  id: '991267615'
-                  name: Ciaran193 Lee
-                  email: admin193@email.com
-                attachments:
-                  - type: upload
-                    name: example.png
-                    url: https://picsum.photos/200/300
-                    content_type: image/png
-                    filesize: 100
-                    width: 100
-                    height: 100
-                url: url
-                redacted: false
-              contacts:
-                type: contact.list
-                contacts:
-                  - type: contact
-                    id: 667d610a8a68186f43bafe05
-                    external_id: '70'
-              teammates:
-                type: admin.list
-                teammates:
-                  - type: contact
-              custom_attributes:
-                key: value
-              first_contact_reply:
-                created_at: 1663597223
-                type: conversation
-                url: https://developers.intercom.com/
-              sla_applied:
-                type: conversation_sla_summary
-                sla_name: ''
-                sla_status: hit
-              statistics:
-                type: conversation_statistics
-                time_to_assignment: 2310
-                time_to_admin_reply: 2310
-                time_to_first_close: 2310
-                time_to_last_close: 2310
-                median_time_to_reply: 2310
-                first_contact_reply_at: 1663597233
-                first_assignment_at: 1663597233
-                first_admin_reply_at: 1663597233
-                first_close_at: 1663597233
-                last_assignment_at: 1663597233
-                last_assignment_admin_reply_at: 1663597233
-                last_contact_reply_at: 1663597233
-                last_admin_reply_at: 1663597233
-                last_close_at: 1663597233
-                last_closed_by_id: c3po
-                count_reopens: 1
-                count_assignments: 1
-                count_conversation_parts: 1
-              conversation_parts:
-                type: conversation_part.list
-                conversation_parts:
-                  - type: conversation_part
-                    id: '106'
-                    part_type: assign_and_reopen
-                    created_at: 1719492875
-                    updated_at: 1719492875
-                    notified_at: 1719492875
-                    assigned_to:
-                      type: admin
-                      id: '991267615'
-                    author:
-                      type: admin
-                      id: '991267615'
-                      name: Ciaran193 Lee
-                      email: admin193@email.com
                     attachments:
                       - type: upload
                         name: example.png
@@ -40429,9 +38029,9 @@ This will return the Message model that has been created.
                   "response": {
                     "body": {
                       "body": "heyy",
-                      "conversation_id": "476",
-                      "created_at": 1719492969,
-                      "id": "403918316",
+                      "conversation_id": "477",
+                      "created_at": 1719492971,
+                      "id": "403918317",
                       "message_type": "inapp",
                       "subject": "Greetings",
                       "type": "user_message",
@@ -40455,12 +38055,12 @@ This will return the Message model that has been created.
                   "response": {
                     "body": {
                       "body": "heyy",
-                      "conversation_id": "476",
-                      "created_at": 1719492969,
-                      "id": "403918316",
+                      "conversation_id": "64619700005570",
+                      "created_at": 1719492972,
+                      "id": "15",
                       "message_type": "inapp",
-                      "subject": "Greetings",
-                      "type": "user_message",
+                      "subject": "heyy",
+                      "type": "admin_message",
                     },
                   },
                 },
@@ -40539,72 +38139,6 @@ This will return the Message model that has been created.
                       "message_type": "inapp",
                       "subject": "Greetings",
                       "type": "user_message",
-                    },
-                  },
-                },
-                {
-                  "name": "user message created",
-                  "request": {
-                    "body": "heyy",
-                    "from": {
-                      "id": "667d61698a68186f43bafe50",
-                      "type": "user",
-                    },
-                    "referer": "https://twitter.com/bob",
-                  },
-                  "response": {
-                    "body": {
-                      "body": "heyy",
-                      "conversation_id": "476",
-                      "created_at": 1719492969,
-                      "id": "403918316",
-                      "message_type": "inapp",
-                      "subject": "Greetings",
-                      "type": "user_message",
-                    },
-                  },
-                },
-                {
-                  "name": "lead message created",
-                  "request": {
-                    "body": "heyy",
-                    "from": {
-                      "id": "667d61698a68186f43bafe50",
-                      "type": "user",
-                    },
-                    "referer": "https://twitter.com/bob",
-                  },
-                  "response": {
-                    "body": {
-                      "body": "heyy",
-                      "conversation_id": "477",
-                      "created_at": 1719492971,
-                      "id": "403918317",
-                      "message_type": "inapp",
-                      "subject": "Greetings",
-                      "type": "user_message",
-                    },
-                  },
-                },
-                {
-                  "name": "admin message created",
-                  "request": {
-                    "body": "heyy",
-                    "from": {
-                      "id": "667d61698a68186f43bafe50",
-                      "type": "user",
-                    },
-                    "referer": "https://twitter.com/bob",
-                  },
-                  "response": {
-                    "body": {
-                      "body": "heyy",
-                      "conversation_id": "64619700005570",
-                      "created_at": 1719492972,
-                      "id": "15",
-                      "message_type": "inapp",
-                      "subject": "heyy",
-                      "type": "admin_message",
                     },
                   },
                 },
@@ -40755,12 +38289,12 @@ service:
           response:
             body:
               type: user_message
-              id: '403918316'
-              created_at: 1719492969
+              id: '403918317'
+              created_at: 1719492971
               subject: Greetings
               body: heyy
               message_type: inapp
-              conversation_id: '476'
+              conversation_id: '477'
         - name: admin message created
           request:
             from:
@@ -40773,13 +38307,13 @@ service:
             body: heyy
           response:
             body:
-              type: user_message
-              id: '403918316'
-              created_at: 1719492969
-              subject: Greetings
+              type: admin_message
+              id: '15'
+              created_at: 1719492972
+              subject: heyy
               body: heyy
               message_type: inapp
-              conversation_id: '476'
+              conversation_id: '64619700005570'
         - name: No body supplied for message
           request:
             from:
@@ -40837,54 +38371,6 @@ service:
               body: heyy
               message_type: inapp
               conversation_id: '476'
-        - name: user message created
-          request:
-            from:
-              type: user
-              id: 667d61698a68186f43bafe50
-            body: heyy
-            referer: https://twitter.com/bob
-          response:
-            body:
-              type: user_message
-              id: '403918316'
-              created_at: 1719492969
-              subject: Greetings
-              body: heyy
-              message_type: inapp
-              conversation_id: '476'
-        - name: lead message created
-          request:
-            from:
-              type: user
-              id: 667d61698a68186f43bafe50
-            body: heyy
-            referer: https://twitter.com/bob
-          response:
-            body:
-              type: user_message
-              id: '403918317'
-              created_at: 1719492971
-              subject: Greetings
-              body: heyy
-              message_type: inapp
-              conversation_id: '477'
-        - name: admin message created
-          request:
-            from:
-              type: user
-              id: 667d61698a68186f43bafe50
-            body: heyy
-            referer: https://twitter.com/bob
-          response:
-            body:
-              type: admin_message
-              id: '15'
-              created_at: 1719492972
-              subject: heyy
-              body: heyy
-              message_type: inapp
-              conversation_id: '64619700005570'
   source:
     openapi: ../openapi.yml
   display-name: Messages
@@ -47029,29 +44515,18 @@ docs: Everything about your ticket types
                         },
                       ],
                       "author": {
-                        "email": "admin375@email.com",
-                        "id": "991267829",
-                        "name": "Ciaran375 Lee",
+                        "email": "admin379@email.com",
+                        "id": "991267834",
+                        "name": "Ciaran379 Lee",
                         "type": "admin",
                       },
-                      "body": "<h2>An Unordered HTML List</h2>
-<ul>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ul>
-<h2>An Ordered HTML List</h2>
-<ol>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ol>",
-                      "created_at": 1719493024,
-                      "id": "122",
-                      "part_type": "note",
+                      "body": "<p>Okay!</p>",
+                      "created_at": 1719493029,
+                      "id": "124",
+                      "part_type": "quick_reply",
                       "redacted": false,
                       "type": "ticket_part",
-                      "updated_at": 1719493024,
+                      "updated_at": 1719493029,
                     },
                   },
                 },
@@ -47103,97 +44578,6 @@ docs: Everything about your ticket types
                       "redacted": false,
                       "type": "ticket_part",
                       "updated_at": 1719493024,
-                    },
-                  },
-                },
-                {
-                  "name": "Admin note reply",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "body": "Thanks again :)",
-                    "intercom_user_id": "667d619d8a68186f43bafe82",
-                    "message_type": "comment",
-                    "type": "user",
-                  },
-                  "response": {
-                    "body": {
-                      "attachments": [
-                        {
-                          "content_type": "image/png",
-                          "filesize": 100,
-                          "height": 100,
-                          "name": "example.png",
-                          "type": "upload",
-                          "url": "https://picsum.photos/200/300",
-                          "width": 100,
-                        },
-                      ],
-                      "author": {
-                        "email": "admin375@email.com",
-                        "id": "991267829",
-                        "name": "Ciaran375 Lee",
-                        "type": "admin",
-                      },
-                      "body": "<h2>An Unordered HTML List</h2>
-<ul>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ul>
-<h2>An Ordered HTML List</h2>
-<ol>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
-</ol>",
-                      "created_at": 1719493024,
-                      "id": "122",
-                      "part_type": "note",
-                      "redacted": false,
-                      "type": "ticket_part",
-                      "updated_at": 1719493024,
-                    },
-                  },
-                },
-                {
-                  "name": "Admin quick_reply reply",
-                  "path-parameters": {
-                    "id": "123",
-                  },
-                  "request": {
-                    "body": "Thanks again :)",
-                    "intercom_user_id": "667d619d8a68186f43bafe82",
-                    "message_type": "comment",
-                    "type": "user",
-                  },
-                  "response": {
-                    "body": {
-                      "attachments": [
-                        {
-                          "content_type": "image/png",
-                          "filesize": 100,
-                          "height": 100,
-                          "name": "example.png",
-                          "type": "upload",
-                          "url": "https://picsum.photos/200/300",
-                          "width": 100,
-                        },
-                      ],
-                      "author": {
-                        "email": "admin379@email.com",
-                        "id": "991267834",
-                        "name": "Ciaran379 Lee",
-                        "type": "admin",
-                      },
-                      "body": "<p>Okay!</p>",
-                      "created_at": 1719493029,
-                      "id": "124",
-                      "part_type": "quick_reply",
-                      "redacted": false,
-                      "type": "ticket_part",
-                      "updated_at": 1719493029,
                     },
                   },
                 },
@@ -48973,28 +46357,16 @@ service:
           response:
             body:
               type: ticket_part
-              id: '122'
-              part_type: note
-              body: |-
-                <h2>An Unordered HTML List</h2>
-                <ul>
-                <li>Coffee</li>
-                <li>Tea</li>
-                <li>Milk</li>
-                </ul>
-                <h2>An Ordered HTML List</h2>
-                <ol>
-                <li>Coffee</li>
-                <li>Tea</li>
-                <li>Milk</li>
-                </ol>
-              created_at: 1719493024
-              updated_at: 1719493024
+              id: '124'
+              part_type: quick_reply
+              body: <p>Okay!</p>
+              created_at: 1719493029
+              updated_at: 1719493029
               author:
                 type: admin
-                id: '991267829'
-                name: Ciaran375 Lee
-                email: admin375@email.com
+                id: '991267834'
+                name: Ciaran379 Lee
+                email: admin379@email.com
               attachments:
                 - type: upload
                   name: example.png
@@ -49037,78 +46409,6 @@ service:
                 id: '991267829'
                 name: Ciaran375 Lee
                 email: admin375@email.com
-              attachments:
-                - type: upload
-                  name: example.png
-                  url: https://picsum.photos/200/300
-                  content_type: image/png
-                  filesize: 100
-                  width: 100
-                  height: 100
-              redacted: false
-        - name: Admin note reply
-          path-parameters:
-            id: '123'
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d619d8a68186f43bafe82
-          response:
-            body:
-              type: ticket_part
-              id: '122'
-              part_type: note
-              body: |-
-                <h2>An Unordered HTML List</h2>
-                <ul>
-                <li>Coffee</li>
-                <li>Tea</li>
-                <li>Milk</li>
-                </ul>
-                <h2>An Ordered HTML List</h2>
-                <ol>
-                <li>Coffee</li>
-                <li>Tea</li>
-                <li>Milk</li>
-                </ol>
-              created_at: 1719493024
-              updated_at: 1719493024
-              author:
-                type: admin
-                id: '991267829'
-                name: Ciaran375 Lee
-                email: admin375@email.com
-              attachments:
-                - type: upload
-                  name: example.png
-                  url: https://picsum.photos/200/300
-                  content_type: image/png
-                  filesize: 100
-                  width: 100
-                  height: 100
-              redacted: false
-        - name: Admin quick_reply reply
-          path-parameters:
-            id: '123'
-          request:
-            message_type: comment
-            type: user
-            body: Thanks again :)
-            intercom_user_id: 667d619d8a68186f43bafe82
-          response:
-            body:
-              type: ticket_part
-              id: '124'
-              part_type: quick_reply
-              body: <p>Okay!</p>
-              created_at: 1719493029
-              updated_at: 1719493029
-              author:
-                type: admin
-                id: '991267834'
-                name: Ciaran379 Lee
-                email: admin379@email.com
               attachments:
                 - type: upload
                   name: example.png

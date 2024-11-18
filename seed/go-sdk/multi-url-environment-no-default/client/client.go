@@ -5,6 +5,7 @@ package client
 import (
 	core "github.com/multi-url-environment-no-default/fern/core"
 	ec2 "github.com/multi-url-environment-no-default/fern/ec2"
+	internal "github.com/multi-url-environment-no-default/fern/internal"
 	option "github.com/multi-url-environment-no-default/fern/option"
 	s3 "github.com/multi-url-environment-no-default/fern/s3"
 	http "net/http"
@@ -12,7 +13,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Ec2 *ec2.Client
@@ -23,8 +24,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

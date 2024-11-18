@@ -38,13 +38,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): csharp.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        parameters.push(
-            csharp.parameter({
-                type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
-                name: this.context.getRequestOptionsParameterName(),
-                initializer: "null"
-            })
-        );
+        if (endpoint.idempotent) {
+            parameters.push(
+                csharp.parameter({
+                    type: csharp.Type.optional(
+                        csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference())
+                    ),
+                    name: this.context.getRequestOptionsParameterName(),
+                    initializer: "null"
+                })
+            );
+        } else {
+            parameters.push(
+                csharp.parameter({
+                    type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
+                    name: this.context.getIdempotentRequestOptionsParameterName(),
+                    initializer: "null"
+                })
+            );
+        }
         parameters.push(
             csharp.parameter({
                 type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),

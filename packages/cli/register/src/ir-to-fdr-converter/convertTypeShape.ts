@@ -65,7 +65,9 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                 {
                                     samePropertiesAsObject: (extension) => ({
                                         extends: [FdrCjsSdk.TypeId(extension.typeId)],
-                                        properties: baseProperties
+                                        properties: baseProperties,
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     singleProperty: (singleProperty) => ({
                                         extends: [],
@@ -77,11 +79,15 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                                 availability: undefined
                                             },
                                             ...baseProperties
-                                        ]
+                                        ],
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     noProperties: () => ({
                                         extends: [],
-                                        properties: baseProperties
+                                        properties: baseProperties,
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     _other: () => {
                                         throw new Error(

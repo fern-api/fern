@@ -25,9 +25,18 @@ import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
-import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
+import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import {
+    IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+    IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import {
+    REQUEST_OPTIONS_INTERFACE_NAME,
+    REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/RequestOptionsInterfaceGenerator";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
@@ -415,8 +424,33 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getRequestOptionsInterfaceReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getIdempotentRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getIdempotentRequestOptionsInterfaceClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getRequestOptionsParameterName(): string {
         return REQUEST_OPTIONS_PARAMETER_NAME;
+    }
+
+    public getIdempotentRequestOptionsParameterName(): string {
+        return IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME;
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
@@ -430,6 +464,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
+    }
+
+    public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint): boolean {
+        return service.transport?.type === "grpc" && endpoint.transport?.type !== "http";
     }
 
     public getExtraDependencies(): Record<string, string> {

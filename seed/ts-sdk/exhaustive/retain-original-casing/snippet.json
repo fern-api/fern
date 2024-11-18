@@ -79,6 +79,28 @@
         },
         {
             "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.contentType.postJsonPatchContentType({\n    string: \"string\",\n    integer: 1,\n    long: 1000000,\n    double: 1.1,\n    bool: true,\n    datetime: \"2024-01-15T09:30:00Z\",\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: \"1000000\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.contentType.postJsonPatchContentWithCharsetType({\n    string: \"string\",\n    integer: 1,\n    long: 1000000,\n    double: 1.1,\n    bool: true,\n    datetime: \"2024-01-15T09:30:00Z\",\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: \"1000000\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/enum",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"

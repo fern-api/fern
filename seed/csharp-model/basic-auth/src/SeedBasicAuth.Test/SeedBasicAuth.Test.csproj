@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedBasicAuth\SeedBasicAuth.csproj" />
+        <ProjectReference Include="..\SeedBasicAuth\SeedBasicAuth.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedBasicAuth.Test.Custom.props" Condition="Exists('SeedBasicAuth.Test.Custom.props')" />
 </Project>

@@ -32,5 +32,7 @@ export enum AsIsFiles {
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
     UsingCs = "Using.cs",
-    Extensions = "Extensions.cs"
+    Extensions = "Extensions.cs",
+    CustomProps = "Custom.props.Template",
+    TestCustomProps = "Test.Custom.props.Template"
 }

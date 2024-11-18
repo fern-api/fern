@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedBearerTokenEnvironmentVariable\SeedBearerTokenEnvironmentVariable.csproj" />
+        <ProjectReference Include="..\SeedBearerTokenEnvironmentVariable\SeedBearerTokenEnvironmentVariable.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedBearerTokenEnvironmentVariable.Test.Custom.props" Condition="Exists('SeedBearerTokenEnvironmentVariable.Test.Custom.props')" />
 </Project>

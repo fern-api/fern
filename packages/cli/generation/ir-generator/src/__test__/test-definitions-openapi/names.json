@@ -3203,12 +3203,11 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_telemetry": [
-                "type_telemetry:TelemetryGetTelemetryDataResponse"
+                "type_telemetry:TelemetryGetTelemetryDataResponse",
+                "type_infra/telemetry:TelemetryData"
             ]
         },
-        "sharedTypes": [
-            "type_infra/telemetry:TelemetryData"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

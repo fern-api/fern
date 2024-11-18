@@ -9,4 +9,6 @@ export interface PlaygroundSettings {
     environments?: string[];
     button?: FernDocsConfig.PlaygroundButtonSettings;
     oauth?: boolean;
+    /** The maximum number of websocket messages per connection in the playground. */
+    limitWebsocketMessagesPerConnection?: number;
 }

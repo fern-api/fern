@@ -1,5 +1,5 @@
 import { AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
-import { go } from "@fern-api/go-codegen";
+import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
@@ -10,16 +10,6 @@ const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
-
-// TODO(amckinney): Use the latest DynamicSnippets.EndpointSnippetResponse type directly when available.
-interface EndpointSnippetResponse extends DynamicSnippets.EndpointSnippetResponse {
-    errors:
-        | {
-              severity: "CRITICAL" | "WARNING";
-              message: string;
-          }[]
-        | undefined;
-}
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
     private formatter: AbstractFormatter | undefined;
@@ -37,7 +27,9 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         this.formatter = formatter;
     }
 
-    public async generate(request: DynamicSnippets.EndpointSnippetRequest): Promise<EndpointSnippetResponse> {
+    public async generate(
+        request: DynamicSnippets.EndpointSnippetRequest
+    ): Promise<DynamicSnippets.EndpointSnippetResponse> {
         const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
         if (endpoints.length === 0) {
             throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);

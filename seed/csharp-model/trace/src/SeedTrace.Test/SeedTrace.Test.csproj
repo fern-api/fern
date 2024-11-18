@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedTrace\SeedTrace.csproj" />
+        <ProjectReference Include="..\SeedTrace\SeedTrace.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedTrace.Test.Custom.props" Condition="Exists('SeedTrace.Test.Custom.props')" />
 </Project>

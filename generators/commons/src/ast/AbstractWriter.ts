@@ -38,7 +38,10 @@ export class AbstractWriter {
      * @param text
      */
     public writeNoIndent(text: string): void {
-        this.writeInternal(text);
+        const currIndentLevel = this.indentLevel;
+        this.indentLevel = 0;
+        this.write(text);
+        this.indentLevel = currIndentLevel;
     }
 
     /**

@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "test": "vitest --run",
     "test:update": "vitest --run -u",

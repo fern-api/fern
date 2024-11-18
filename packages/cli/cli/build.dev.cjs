@@ -39,7 +39,8 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
-                bin: { "fern-dev": "cli.cjs" }
+                bin: { "fern-dev": "cli.cjs" },
+                noExternal: ['punycode']
             },
             undefined,
             2

@@ -2122,6 +2122,146 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.ContentType.PostJSONPatchContentType(
+		context.TODO(),
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<token>",
+		),
+	)
+	client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+		context.TODO(),
+		&types.ObjectWithOptionalField{
+			String: acme.String(
+				"string",
+			),
+			Integer: acme.Int(
+				1,
+			),
+			Long: acme.Int64(
+				1000000,
+			),
+			Double: acme.Float64(
+				1.1,
+			),
+			Bool: acme.Bool(
+				true,
+			),
+			Datetime: acme.Time(
+				acme.MustParseDateTime(
+					"2024-01-15T09:30:00Z",
+				),
+			),
+			Date: acme.Time(
+				acme.MustParseDateTime(
+					"2023-01-15",
+				),
+			),
+			UUID: acme.UUID(
+				uuid.MustParse(
+					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				),
+			),
+			Base64: []byte("SGVsbG8gd29ybGQh"),
+			List: []string{
+				"list",
+				"list",
+			},
+			Set: []string{
+				"set",
+			},
+			Map: map[int]string{
+				1: "map",
+			},
+			Bigint: acme.String(
+				"1000000",
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 	types "github.com/acme/acme-go/types"
@@ -3499,6 +3639,23 @@ func do() {
 	client.Imdb.GetMovie(
 		context.TODO(),
 		"movieId",
+	)
+}
+"
+`;
+
+exports[`test definitions > license 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Get(
+		context.TODO(),
 	)
 }
 "
