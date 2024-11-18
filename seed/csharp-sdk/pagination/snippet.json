@@ -53,6 +53,18 @@
             "example_identifier": null,
             "id": {
                 "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyLongOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithBodyLongOffsetPaginationAsync(\n    new ListUsersBodyLongOffsetPaginationRequest\n    {\n        Pagination = new WithLongPage { Page = 1000000 },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithOffsetStepPagination"
             },

@@ -86,18 +86,16 @@ export abstract class AbstractEndpointGenerator {
 
     protected getPaginationItemType(endpoint: HttpEndpoint) {
         this.assertHasPagination(endpoint);
-        let listItemType = this.context.csharpTypeMapper.convert({
+        const listItemType = this.context.csharpTypeMapper.convert({
             reference: endpoint.pagination._visit({
                 offset: (pagination) => pagination.results.property.valueType,
                 cursor: (pagination) => pagination.results.property.valueType,
                 _other: (pagination) => {
                     throw new Error(`Unsupported pagination type: ${pagination.type}`);
                 }
-            })
+            }),
+            unboxOptionals: true
         });
-        if (listItemType.internalType.type === "optional") {
-            listItemType = listItemType.internalType.value;
-        }
 
         if (listItemType.internalType.type !== "list") {
             throw new Error(

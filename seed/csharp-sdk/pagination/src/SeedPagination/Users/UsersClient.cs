@@ -38,6 +38,7 @@ public partial class UsersClient
             ListUsersCursorPaginationRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            string,
             User
         >(
             request,
@@ -47,8 +48,8 @@ public partial class UsersClient
             {
                 request.StartingAfter = cursor;
             },
-            response => response.Page.Next.StartingAfter,
-            response => response.Data?.ToList()
+            response => response?.Page?.Next?.StartingAfter,
+            response => response?.Data?.ToList()
         );
         return pager;
     }
@@ -69,6 +70,7 @@ public partial class UsersClient
             ListUsersBodyCursorPaginationRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            string,
             User
         >(
             request,
@@ -76,10 +78,11 @@ public partial class UsersClient
             ListWithBodyCursorPaginationAsync,
             (request, cursor) =>
             {
+                request.Pagination ??= new();
                 request.Pagination.Cursor = cursor;
             },
-            response => response.Page.Next.StartingAfter,
-            response => response.Data?.ToList()
+            response => response?.Page?.Next?.StartingAfter,
+            response => response?.Data?.ToList()
         );
         return pager;
     }
@@ -106,19 +109,21 @@ public partial class UsersClient
             ListUsersOffsetPaginationRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            int?,
+            object,
             User
         >(
             request,
             options,
             ListWithOffsetPaginationAsync,
-            request => request.Page ?? 0,
+            request => request?.Page ?? 0,
             (request, offset) =>
             {
                 request.Page = offset;
             },
-            _ => null,
-            response => response.Data?.ToList(),
-            _ => null
+            null,
+            response => response?.Data?.ToList(),
+            null
         );
         return pager;
     }
@@ -139,19 +144,61 @@ public partial class UsersClient
             ListUsersBodyOffsetPaginationRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            int?,
+            object,
             User
         >(
             request,
             options,
             ListWithBodyOffsetPaginationAsync,
-            request => request.Pagination.Page ?? 0,
+            request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
             {
+                request.Pagination ??= new();
                 request.Pagination.Page = offset;
             },
-            _ => null,
-            response => response.Data?.ToList(),
-            _ => null
+            null,
+            response => response?.Data?.ToList(),
+            null
+        );
+        return pager;
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.Users.ListWithBodyLongOffsetPaginationAsync(
+    ///     new ListUsersBodyLongOffsetPaginationRequest
+    ///     {
+    ///         Pagination = new WithLongPage { Page = 1000000 },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public Pager<User> ListWithBodyLongOffsetPaginationAsync(
+        ListUsersBodyLongOffsetPaginationRequest request,
+        RequestOptions? options = null
+    )
+    {
+        var pager = new OffsetPager<
+            ListUsersBodyLongOffsetPaginationRequest,
+            RequestOptions?,
+            ListUsersPaginationResponse,
+            long?,
+            object,
+            User
+        >(
+            request,
+            options,
+            ListWithBodyLongOffsetPaginationAsync,
+            request => request?.Pagination?.Page ?? 0,
+            (request, offset) =>
+            {
+                request.Pagination ??= new();
+                request.Pagination.Page = offset;
+            },
+            null,
+            response => response?.Data?.ToList(),
+            null
         );
         return pager;
     }
@@ -177,19 +224,21 @@ public partial class UsersClient
             ListUsersOffsetStepPaginationRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            int?,
+            int?,
             User
         >(
             request,
             options,
             ListWithOffsetStepPaginationAsync,
-            request => request.Page ?? 0,
+            request => request?.Page ?? 0,
             (request, offset) =>
             {
                 request.Page = offset;
             },
-            request => request.Limit,
-            response => response.Data?.ToList(),
-            _ => null
+            request => request?.Limit,
+            response => response?.Data?.ToList(),
+            null
         );
         return pager;
     }
@@ -215,19 +264,21 @@ public partial class UsersClient
             ListWithOffsetPaginationHasNextPageRequest,
             RequestOptions?,
             ListUsersPaginationResponse,
+            int?,
+            int?,
             User
         >(
             request,
             options,
             ListWithOffsetPaginationHasNextPageAsync,
-            request => request.Page ?? 0,
+            request => request?.Page ?? 0,
             (request, offset) =>
             {
                 request.Page = offset;
             },
-            request => request.Limit,
-            response => response.Data?.ToList(),
-            response => response.HasNextPage
+            request => request?.Limit,
+            response => response?.Data?.ToList(),
+            response => response?.HasNextPage
         );
         return pager;
     }
@@ -248,6 +299,7 @@ public partial class UsersClient
             ListUsersExtendedRequest,
             RequestOptions?,
             ListUsersExtendedResponse,
+            string?,
             User
         >(
             request,
@@ -257,8 +309,8 @@ public partial class UsersClient
             {
                 request.Cursor = cursor;
             },
-            response => response.Next,
-            response => response.Data.Users?.ToList()
+            response => response?.Next,
+            response => response?.Data?.Users?.ToList()
         );
         return pager;
     }
@@ -279,6 +331,7 @@ public partial class UsersClient
             ListUsersExtendedRequestForOptionalData,
             RequestOptions?,
             ListUsersExtendedOptionalListResponse,
+            string?,
             User
         >(
             request,
@@ -288,8 +341,8 @@ public partial class UsersClient
             {
                 request.Cursor = cursor;
             },
-            response => response.Next,
-            response => response.Data.Users?.ToList()
+            response => response?.Next,
+            response => response?.Data?.Users?.ToList()
         );
         return pager;
     }
@@ -306,7 +359,13 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var pager = new CursorPager<ListUsernamesRequest, RequestOptions?, UsernameCursor, string>(
+        var pager = new CursorPager<
+            ListUsernamesRequest,
+            RequestOptions?,
+            UsernameCursor,
+            string?,
+            string
+        >(
             request,
             options,
             ListUsernamesAsync,
@@ -314,8 +373,8 @@ public partial class UsersClient
             {
                 request.StartingAfter = cursor;
             },
-            response => response.Cursor.After,
-            response => response.Cursor.Data?.ToList()
+            response => response?.Cursor?.After,
+            response => response?.Cursor?.Data?.ToList()
         );
         return pager;
     }
@@ -334,19 +393,21 @@ public partial class UsersClient
             ListWithGlobalConfigRequest,
             RequestOptions?,
             UsernameContainer,
+            int?,
+            object,
             string
         >(
             request,
             options,
             ListWithGlobalConfigAsync,
-            request => request.Offset ?? 0,
+            request => request?.Offset ?? 0,
             (request, offset) =>
             {
                 request.Offset = offset;
             },
-            _ => null,
-            response => response.Results?.ToList(),
-            _ => null
+            null,
+            response => response?.Results?.ToList(),
+            null
         );
         return pager;
     }
@@ -498,6 +559,43 @@ public partial class UsersClient
 
     internal async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/users",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPaginationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    internal async Task<ListUsersPaginationResponse> ListWithBodyLongOffsetPaginationAsync(
+        ListUsersBodyLongOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

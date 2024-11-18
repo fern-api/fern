@@ -351,10 +351,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 endpoint.pagination?._visit({
                     offset: (pagination) => {
+                        const offsetType = this.context.csharpTypeMapper.convert({
+                            reference: pagination.page.property.valueType
+                        });
+                        // use specified type or fallback to int
+                        const stepType = pagination.step
+                            ? this.context.csharpTypeMapper.convert({
+                                  reference: pagination.step?.property.valueType
+                              })
+                            : csharp.Type.object();
                         const offsetPagerClassReference = this.context.getOffsetPagerClassReference({
                             requestType: requestParam.type,
                             requestOptionsType,
                             responseType: unpagedEndpointResponseType,
+                            offsetType,
+                            stepType,
                             itemType
                         });
                         writer.write("var pager = new ");
@@ -364,30 +375,42 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(`${requestParam.name},`);
                         writer.writeLine(`${optionsParamName},`);
                         writer.writeLine(`${unpagedEndpointMethodName},`);
-                        writer.writeLine(`request => request.${this.dotAccess(pagination.page)} ?? 0,`);
-                        writer.writeLine(
-                            `(request, offset) => { request.${this.dotAccess(pagination.page)} = offset; },`
-                        );
+                        writer.writeLine(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0,`);
+
+                        writer.writeLine("(request, offset) => {");
+                        writer.indent();
+                        this.initializeNestedObjects(writer, "request", pagination.page);
+                        writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = offset`);
+                        writer.dedent();
+                        writer.writeLine("},");
+
                         if (pagination.step) {
-                            writer.writeLine(`request => request.${this.dotAccess(pagination.step)},`);
+                            writer.writeLine(`request => ${this.nullableDotGet("request", pagination.step)},`);
                         } else {
-                            writer.writeLine("_ => null,");
+                            writer.writeLine("null,");
                         }
-                        writer.writeLine(`response => response.${this.dotAccess(pagination.results)}?.ToList(),`);
+                        writer.writeLine(
+                            `response => ${this.nullableDotGet("response", pagination.results)}?.ToList(),`
+                        );
                         if (pagination.hasNextPage) {
-                            writer.writeLine(`response => response.${this.dotAccess(pagination.hasNextPage)}`);
+                            writer.writeLine(`response => ${this.nullableDotGet("response", pagination.hasNextPage)}`);
                         } else {
-                            writer.writeLine("_ => null");
+                            writer.writeLine("null");
                         }
                         writer.dedent();
                         writer.writeTextStatement(")");
                         writer.writeTextStatement("return pager");
                     },
                     cursor: (pagination) => {
+                        const cursorType = this.context.csharpTypeMapper.convert({
+                            reference: pagination.next.property.valueType
+                        });
+
                         const cursorPagerClassReference = this.context.getCursorPagerClassReference({
                             requestType: requestParam.type,
                             requestOptionsType,
                             responseType: unpagedEndpointResponseType,
+                            cursorType,
                             itemType
                         });
                         writer.write("var pager = new ");
@@ -397,11 +420,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(`${requestParam.name},`);
                         writer.writeLine(`${optionsParamName},`);
                         writer.writeLine(`${unpagedEndpointMethodName},`);
+
+                        writer.writeLine("(request, cursor) => {");
+                        writer.indent();
+                        this.initializeNestedObjects(writer, "request", pagination.page);
+                        writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = cursor`);
+                        writer.dedent();
+                        writer.writeLine("},");
+
+                        writer.writeLine(`response => ${this.nullableDotGet("response", pagination.next)},`);
                         writer.writeLine(
-                            `(request, cursor) => { request.${this.dotAccess(pagination.page)} = cursor; },`
+                            `response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`
                         );
-                        writer.writeLine(`response => response.${this.dotAccess(pagination.next)},`);
-                        writer.writeLine(`response => response.${this.dotAccess(pagination.results)}?.ToList()`);
                         writer.dedent();
                         writer.writeTextStatement(")");
                         writer.writeTextStatement("return pager");
@@ -415,12 +445,37 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private dotAccess({ property, propertyPath }: RequestProperty | ResponseProperty): string {
+    private initializeNestedObjects(writer: csharp.Writer, variableName: string, { propertyPath }: RequestProperty) {
         if (!propertyPath || propertyPath.length === 0) {
-            return `${property.name.name.pascalCase.safeName}`;
+            return;
         }
 
-        return `${propertyPath.map((val) => val.pascalCase.safeName).join(".")}.${
+        for (let i = 0; i < propertyPath.length; i++) {
+            const propertyPathPart = propertyPath.slice(0, i + 1);
+            writer.writeTextStatement(
+                `${variableName}.${propertyPathPart.map((val) => val.pascalCase.safeName).join(".")} ??= new ()`
+            );
+        }
+    }
+
+    private dotGet(variableName: string, { property, propertyPath }: RequestProperty | ResponseProperty): string {
+        if (!propertyPath || propertyPath.length === 0) {
+            return `${variableName}.${property.name.name.pascalCase.safeName}`;
+        }
+        return `${variableName}.${propertyPath.map((val) => val.pascalCase.safeName).join(".")}.${
+            property.name.name.pascalCase.safeName
+        }`;
+    }
+
+    private nullableDotGet(
+        variableName: string,
+        { property, propertyPath }: RequestProperty | ResponseProperty
+    ): string {
+        if (!propertyPath || propertyPath.length === 0) {
+            return `${variableName}?.${property.name.name.pascalCase.safeName}`;
+        }
+
+        return `${variableName}?.${propertyPath.map((val) => val.pascalCase.safeName).join("?.")}?.${
             property.name.name.pascalCase.safeName
         }`;
     }

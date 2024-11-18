@@ -16,7 +16,9 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     /// <returns>
     /// An async sequence of <see cref="Page{TItem}"/>s.
     /// </returns>
-    public abstract IAsyncEnumerable<Page<TItem>> AsPagesAsync(CancellationToken cancellationToken = default);
+    public abstract IAsyncEnumerable<Page<TItem>> AsPagesAsync(
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Enumerate the values in the collection asynchronously.  This may
@@ -27,7 +29,9 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     /// enumerating asynchronously.
     /// </param>
     /// <returns>An async sequence of values.</returns>
-    public virtual async IAsyncEnumerator<TItem> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public virtual async IAsyncEnumerator<TItem> GetAsyncEnumerator(
+        CancellationToken cancellationToken = default
+    )
     {
         await foreach (var page in AsPagesAsync(cancellationToken).ConfigureAwait(false))
         {
@@ -39,22 +43,32 @@ public abstract class Pager<TItem> : IAsyncEnumerable<TItem>
     }
 }
 
-internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TItem> : Pager<TItem>
+internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>
+    : Pager<TItem>
 {
-    private readonly TRequest _request;
+    private TRequest _request;
     private readonly TRequestOptions? _options;
     private readonly GetNextPage _getNextPage;
     private readonly GetOffset _getOffset;
     private readonly SetOffset _setOffset;
-    private readonly GetStep _getStep;
+    private readonly GetStep? _getStep;
     private readonly GetItems _getItems;
-    private readonly HasNextPage _hasNextPage;
+    private readonly HasNextPage? _hasNextPage;
 
-    internal delegate Task<TResponse> GetNextPage(TRequest request, TRequestOptions? options, CancellationToken cancellationToken);
-    internal delegate int GetOffset(TRequest request);
-    internal delegate void SetOffset(TRequest request, int offset);
-    internal delegate int? GetStep(TRequest request);
+    internal delegate Task<TResponse> GetNextPage(
+        TRequest request,
+        TRequestOptions? options,
+        CancellationToken cancellationToken
+    );
+
+    internal delegate TOffset GetOffset(TRequest request);
+
+    internal delegate void SetOffset(TRequest request, TOffset offset);
+
+    internal delegate TStep GetStep(TRequest request);
+
     internal delegate IReadOnlyList<TItem>? GetItems(TResponse response);
+
     internal delegate bool? HasNextPage(TResponse response);
 
     internal OffsetPager(
@@ -63,10 +77,10 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TItem> :
         GetNextPage getNextPage,
         GetOffset getOffset,
         SetOffset setOffset,
-        GetStep getStep,
+        GetStep? getStep,
         GetItems getItems,
-        HasNextPage hasNextPage
-        )
+        HasNextPage? hasNextPage
+    )
     {
         _request = request;
         _options = options;
@@ -78,18 +92,26 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TItem> :
         _hasNextPage = hasNextPage;
     }
 
-    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
-        var hasStep = _getStep(_request) is not null;
+        var hasStep = false;
+        if(_getStep is not null)
+        {
+            hasStep = _getStep(_request) is not null;
+        }
         var offset = _getOffset(_request);
+        var longOffset = Convert.ToInt64(offset);
         bool hasNextPage;
         do
         {
-            var response = await _getNextPage(_request, _options, cancellationToken).ConfigureAwait(false);
+            var response = await _getNextPage(_request, _options, cancellationToken)
+                .ConfigureAwait(false);
             var items = _getItems(response);
             var itemCount = items?.Count ?? 0;
-            hasNextPage = _hasNextPage(response) ?? itemCount > 0;
-            if (items != null)
+            hasNextPage = _hasNextPage?.Invoke(response) ?? itemCount > 0;
+            if (items is not null)
             {
                 yield return new Page<TItem>(items);
             }
@@ -97,30 +119,51 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TItem> :
             // If there is a step, we need to increment the offset by the number of items
             if (hasStep)
             {
-                offset += items?.Count ?? 1;
+                longOffset += items?.Count ?? 1;
             }
             else
             {
-                offset += 1;
+                longOffset++;
             }
-            _setOffset(_request, offset);
+
+            // ensure there's a request object to set the offset on
+            _request ??= Activator.CreateInstance<TRequest>();
+            switch (offset)
+            {
+                case int:
+                    // safely cast long to int
+                    _setOffset(_request, (TOffset)(object)(int)longOffset);
+                    break;
+                case long:
+                    _setOffset(_request, (TOffset)(object)longOffset);
+                    break;
+                default:
+                    throw new InvalidOperationException("Offset must be int or long");
+            }
         } while (hasNextPage);
     }
 }
 
-internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TItem> : Pager<TItem>
+internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor, TItem>
+    : Pager<TItem>
 {
-    private readonly TRequest _request;
+    private TRequest _request;
     private readonly TRequestOptions? _options;
     private readonly GetNextPage _getNextPage;
     private readonly SetCursor _setCursor;
     private readonly GetNextCursor _getNextCursor;
     private readonly GetItems _getItems;
 
-    internal delegate Task<TResponse> GetNextPage(TRequest request, TRequestOptions? options, CancellationToken cancellationToken);
-    // TODO: validate assumption that cursor is always a string
-    internal delegate void SetCursor(TRequest request, string cursor);
-    internal delegate string? GetNextCursor(TResponse response);
+    internal delegate Task<TResponse> GetNextPage(
+        TRequest request,
+        TRequestOptions? options,
+        CancellationToken cancellationToken
+    );
+
+    internal delegate void SetCursor(TRequest request, TCursor cursor);
+
+    internal delegate TCursor? GetNextCursor(TResponse response);
+
     internal delegate IReadOnlyList<TItem>? GetItems(TResponse response);
 
     internal CursorPager(
@@ -140,11 +183,14 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TItem> :
         _getItems = getItems;
     }
 
-    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public override async IAsyncEnumerable<Page<TItem>> AsPagesAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
         do
         {
-            var response = await _getNextPage(_request, _options, cancellationToken).ConfigureAwait(false);
+            var response = await _getNextPage(_request, _options, cancellationToken)
+                .ConfigureAwait(false);
             var items = _getItems(response);
             var nextCursor = _getNextCursor(response);
             if (items != null)
@@ -156,6 +202,9 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TItem> :
             {
                 break;
             }
+
+            // ensure there's a request object to set the cursor on
+            _request ??= Activator.CreateInstance<TRequest>();
             _setCursor(_request, nextCursor);
         } while (true);
     }
