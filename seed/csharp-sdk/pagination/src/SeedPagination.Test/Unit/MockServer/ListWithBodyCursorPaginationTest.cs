@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
 
 #nullable enable
 
@@ -64,16 +61,17 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Users.ListWithBodyCursorPaginationAsync(
+        var pager = Client.Users.ListWithBodyCursorPaginationAsync(
             new ListUsersBodyCursorPaginationRequest
             {
                 Pagination = new WithCursor { Cursor = "cursor" },
             },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        await foreach (var item in pager)
+        {
+            Assert.That(item, Is.Not.Null);
+            break; // Only check the first item
+        }
     }
 }

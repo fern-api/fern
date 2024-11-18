@@ -129,29 +129,44 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                if (responseSupported) {
-                    writer.write("var response = ");
-                } else {
-                    writer.write("Assert.DoesNotThrowAsync(async () => ");
-                }
-                writer.writeNode(endpointSnippet);
-                if (!responseSupported) {
-                    writer.write(")");
-                }
-                writer.write(";");
-
-                if (responseSupported) {
+                if (this.endpoint.pagination) {
+                    writer.write("var pager = ");
+                    writer.writeNode(endpointSnippet);
+                    writer.write(";");
                     writer.newLine();
-                    if (responseBodyType === "json") {
-                        writer.addReference(this.context.getFluentAssetionsJsonClassReference());
-                        writer.writeNode(this.context.getJTokenClassReference());
-                        writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
-                        writer.writeNode(this.context.getJTokenClassReference());
-                        writer.write(".Parse(");
-                        writer.writeNode(this.context.getJsonUtilsClassReference());
-                        writer.writeTextStatement(".Serialize(response)))");
-                    } else if (responseBodyType === "text") {
-                        writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
+                    writer.write("await foreach (var item in pager)");
+                    writer.newLine();
+                    writer.write("{");
+                    writer.newLine();
+                    writer.indent();
+
+                    writer.writeTextStatement("Assert.That(item, Is.Not.Null)");
+                    writer.write("break; // Only check the first item");
+
+                    writer.dedent();
+                    writer.newLine();
+                    writer.write("}");
+                } else {
+                    if (responseSupported) {
+                        writer.write("var response = ");
+                        writer.writeNode(endpointSnippet);
+                        writer.write(";");
+                        writer.newLine();
+                        if (responseBodyType === "json") {
+                            writer.addReference(this.context.getFluentAssetionsJsonClassReference());
+                            writer.writeNode(this.context.getJTokenClassReference());
+                            writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
+                            writer.writeNode(this.context.getJTokenClassReference());
+                            writer.write(".Parse(");
+                            writer.writeNode(this.context.getJsonUtilsClassReference());
+                            writer.writeTextStatement(".Serialize(response)))");
+                        } else if (responseBodyType === "text") {
+                            writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
+                        }
+                    } else {
+                        writer.write("Assert.DoesNotThrowAsync(async () => ");
+                        writer.writeNode(endpointSnippet);
+                        writer.write(");");
                     }
                 }
             });
