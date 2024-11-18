@@ -527,6 +527,9 @@ navigation:
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
+          - page: Mintlify
+            slug: mintlify
+            path: ./pages/docs/comparison/mintlify.mdx
 
   - tab: cli-api
     layout:
