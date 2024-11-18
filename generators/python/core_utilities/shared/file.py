@@ -42,7 +42,10 @@ def convert_file_dict_to_httpx_tuples(
 
 
 def with_content_type(*, file: File, default_content_type: str) -> File:
-    """ """
+    """
+    This function resolves to the file's content type, if provided, and defaults
+    to the default_content_type value if not.
+    """
     if isinstance(file, tuple):
         if len(file) == 2:
             filename, content = cast(Tuple[Optional[str], FileContent], file)  # type: ignore
