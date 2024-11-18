@@ -15,7 +15,7 @@ import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { getRequestOptionsParameter, getRequestOptionsParamNameForEndpoint } from "../utils/requestOptions";
 
-export declare namespace EndpointGenerator {
+export declare namespace HttpPagerEndpointGenerator {
     export interface Args {
         /** the reference to the client */
         clientReference: string;
