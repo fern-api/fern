@@ -5,13 +5,14 @@ package client
 import (
 	core "github.com/grpc-proto-exhaustive/fern/core"
 	dataservice "github.com/grpc-proto-exhaustive/fern/dataservice"
+	internal "github.com/grpc-proto-exhaustive/fern/internal"
 	option "github.com/grpc-proto-exhaustive/fern/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Dataservice *dataservice.Client
@@ -21,8 +22,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
