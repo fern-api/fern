@@ -80,12 +80,12 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     await _request.append(
                         "optionalMetadata",
                         typeof _item === "string" ? _item : JSON.stringify(_item)
                     );
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {
@@ -292,6 +292,10 @@ export class Service {
         await _request.appendFile("file", file);
         await _request.append("foo", request.foo);
         await _request.append("bar", JSON.stringify(request.bar));
+        if (request.foobar != null) {
+            await _request.append("foobar", JSON.stringify(request.foobar));
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),

@@ -60,7 +60,12 @@ class AbstractServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def with_content_type(
-        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject
+        self,
+        *,
+        file: fastapi.UploadFile,
+        foo: str,
+        bar: MyObject,
+        foobar: typing.Optional[MyObject] = None,
     ) -> None: ...
 
     """
@@ -307,6 +312,8 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "foo":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "bar":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "foobar":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
