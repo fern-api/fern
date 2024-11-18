@@ -51,7 +51,7 @@
     "object-hash": "^3.0.0",
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
-    "uuid": "^9.0.1",
+    "uuid": "^11.0.3",
     "zod": "^3.22.3"
   },
   "devDependencies": {

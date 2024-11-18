@@ -35,16 +35,16 @@
     "axios": "^1.7.7",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
-    "inquirer": "^9.2.23",
-    "open": "^8.4.0",
-    "qs": "6.12.1"
+    "inquirer": "^12.1.0",
+    "open": "^10.1.0",
+    "qs": "6.13.1"
   },
   "devDependencies": {
     "@types/boxen": "^3.0.1",
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.12",
     "@types/node": "18.7.18",
-    "@types/qs": "6.9.15",
+    "@types/qs": "6.9.17",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",
