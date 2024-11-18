@@ -13,8 +13,6 @@ import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 import { ExampleEndpointCallSchema } from "../../examples/types/ExampleEndpointCallSchema";
 import { Pagination } from "./Pagination";
-import { ServiceTransport } from "./ServiceTransport";
-import { SourceSchema } from "../../source/types/SourceSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 import { ResponseError } from "./ResponseError";
@@ -38,8 +36,6 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         errors: ResponseErrorsSchema.optional(),
         examples: core.serialization.list(ExampleEndpointCallSchema).optional(),
         pagination: Pagination.optional(),
-        transport: ServiceTransport.optional(),
-        source: SourceSchema.optional(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
@@ -60,7 +56,5 @@ export declare namespace HttpEndpointSchema {
         errors?: ResponseErrorsSchema.Raw | null;
         examples?: ExampleEndpointCallSchema.Raw[] | null;
         pagination?: Pagination.Raw | null;
-        transport?: ServiceTransport.Raw | null;
-        source?: SourceSchema.Raw | null;
     }
 }

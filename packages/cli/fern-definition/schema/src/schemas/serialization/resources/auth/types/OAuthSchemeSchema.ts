@@ -22,6 +22,7 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "token-prefix": core.serialization.string().optional(),
         "get-token": OAuthGetTokenEndpointSchema,
         "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
+        "header-key": core.serialization.string().optional(),
     })
     .extend(WithDocsSchema);
 
@@ -35,5 +36,6 @@ export declare namespace OAuthSchemeSchema {
         "token-prefix"?: string | null;
         "get-token": OAuthGetTokenEndpointSchema.Raw;
         "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
+        "header-key"?: string | null;
     }
 }

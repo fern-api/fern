@@ -88,6 +88,7 @@ types:
       token-prefix: optional<string>
       get-token: OAuthGetTokenEndpointSchema
       refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      header-key: optional<string>
   
   OAuthGetTokenEndpointSchema: 
     properties: 

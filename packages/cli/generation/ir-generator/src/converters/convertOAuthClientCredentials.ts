@@ -44,6 +44,7 @@ export async function convertOAuthClientCredentials({
         clientIdEnvVar: oauthScheme["client-id-env"],
         clientSecretEnvVar: oauthScheme["client-secret-env"],
         tokenPrefix: oauthScheme["token-prefix"],
+        headerKey: oauthScheme["header-key"],
         scopes: oauthScheme.scopes,
         tokenEndpoint: oauthTokenEndpoint,
         refreshEndpoint
