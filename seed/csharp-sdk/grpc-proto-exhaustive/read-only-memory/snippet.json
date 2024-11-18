@@ -4,25 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/foo",
-                "method": "POST",
-                "identifier_override": "endpoint_dataservice.foo"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.FooAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/data",
                 "method": "POST",
                 "identifier_override": "endpoint_dataservice.upload"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<Column>()\n        {\n            new Column { Id = \"id\", Values = new[] { 1.1f } },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<Column>()\n        {\n            new Column { Id = \"id\", Values = new[] { 1.1f } },\n        },\n    }\n);\n"
             }
         },
         {
@@ -34,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.DeleteAsync(new DeleteRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DeleteAsync(new DeleteRequest());\n"
             }
         },
         {
@@ -46,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.DescribeAsync(new DescribeRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DescribeAsync(new DescribeRequest());\n"
             }
         },
         {
@@ -58,7 +46,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.FetchAsync(new FetchRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.FetchAsync(new FetchRequest());\n"
             }
         },
         {
@@ -70,7 +58,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.ListAsync(new ListRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.ListAsync(new ListRequest());\n"
             }
         },
         {
@@ -82,7 +70,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });\n"
             }
         },
         {
@@ -94,7 +82,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Dataservice.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
             }
         }
     ]

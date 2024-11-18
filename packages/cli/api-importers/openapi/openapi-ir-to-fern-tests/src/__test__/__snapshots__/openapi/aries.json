@@ -11886,10 +11886,22 @@ docs: Simple messaging
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                   "my_label": {
                     "docs": "Label for connection",
@@ -11955,6 +11967,12 @@ docs: Simple messaging
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                 },
               },
@@ -12431,14 +12449,32 @@ docs: Simple messaging
                   "invitation_key": {
                     "docs": "invitation key",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$",
+                    },
                   },
                   "invitation_msg_id": {
                     "docs": "Identifier of the associated Invitation Mesage",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "my_did": {
                     "docs": "My DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "state": {
                     "docs": "Connection state",
@@ -12447,10 +12483,22 @@ docs: Simple messaging
                   "their_did": {
                     "docs": "Their DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "their_public_did": {
                     "docs": "Their Public DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "their_role": {
                     "docs": "Their role in the connection protocol",
@@ -12571,6 +12619,12 @@ docs: Simple messaging
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                 },
               },
@@ -12797,21 +12851,35 @@ service:
           invitation_key:
             type: optional<string>
             docs: invitation key
+            validation:
+              pattern: >-
+                ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$
           invitation_msg_id:
             type: optional<string>
             docs: Identifier of the associated Invitation Mesage
+            validation:
+              format: uuid
           my_did:
             type: optional<string>
             docs: My DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           state:
             type: optional<GetMatchingConnectionsRequestState>
             docs: Connection state
           their_did:
             type: optional<string>
             docs: Their DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           their_public_did:
             type: optional<string>
             docs: Their Public DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           their_role:
             type: optional<GetMatchingConnectionsRequestTheirRole>
             docs: Their role in the connection protocol
@@ -13046,6 +13114,9 @@ service:
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
         body:
           properties:
             '@id':
@@ -13188,9 +13259,15 @@ service:
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
             type: optional<string>
             docs: Label for connection
@@ -13239,6 +13316,9 @@ service:
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
       response:
         docs: ''
         type: root.ConnRecord
@@ -13409,18 +13489,42 @@ docs: Connection management
                   "cred_def_id": {
                     "docs": "Credential definition id",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$",
+                    },
                   },
                   "issuer_did": {
                     "docs": "Issuer DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$",
+                    },
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "schema_name": {
                     "docs": "Schema name",
@@ -13429,6 +13533,12 @@ docs: Connection management
                   "schema_version": {
                     "docs": "Schema version",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9.]+$",
+                    },
                   },
                 },
               },
@@ -13776,21 +13886,35 @@ service:
           cred_def_id:
             type: optional<string>
             docs: Credential definition id
+            validation:
+              pattern: >-
+                ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           issuer_did:
             type: optional<string>
             docs: Issuer DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_id:
             type: optional<string>
             docs: Schema identifier
+            validation:
+              pattern: >-
+                ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$
           schema_issuer_did:
             type: optional<string>
             docs: Schema issuer DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_name:
             type: optional<string>
             docs: Schema name
           schema_version:
             type: optional<string>
             docs: Schema version
+            validation:
+              pattern: ^[0-9.]+$
       response:
         docs: ''
         type: root.CredentialDefinitionsCreatedResult
@@ -14090,14 +14214,32 @@ docs: Credential definition operations
                   "count": {
                     "docs": "Maximum number to retrieve",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[1-9][0-9]*$",
+                    },
                   },
                   "start": {
                     "docs": "Start index",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                   "wql": {
                     "docs": "(JSON) WQL query",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^{.*}$",
+                    },
                   },
                 },
               },
@@ -14140,10 +14282,22 @@ docs: Credential definition operations
                   "from": {
                     "docs": "Earliest epoch of revocation status interval of interest",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                   "to": {
                     "docs": "Latest epoch of revocation status interval of interest",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                 },
               },
@@ -14359,14 +14513,32 @@ docs: Credential definition operations
                   "count": {
                     "docs": "Maximum number to retrieve",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[1-9][0-9]*$",
+                    },
                   },
                   "start": {
                     "docs": "Start index",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                   "wql": {
                     "docs": "(JSON) WQL query",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^{.*}$",
+                    },
                   },
                 },
               },
@@ -14428,9 +14600,13 @@ service:
           from:
             type: optional<string>
             docs: Earliest epoch of revocation status interval of interest
+            validation:
+              pattern: ^[0-9]*$
           to:
             type: optional<string>
             docs: Latest epoch of revocation status interval of interest
+            validation:
+              pattern: ^[0-9]*$
       response:
         docs: ''
         type: root.CredRevokedResult
@@ -14559,12 +14735,18 @@ service:
           count:
             type: optional<string>
             docs: Maximum number to retrieve
+            validation:
+              pattern: ^[1-9][0-9]*$
           start:
             type: optional<string>
             docs: Start index
+            validation:
+              pattern: ^[0-9]*$
           wql:
             type: optional<string>
             docs: (JSON) WQL query
+            validation:
+              pattern: ^{.*}$
       response:
         docs: ''
         type: root.CredInfoList
@@ -14601,12 +14783,18 @@ service:
           count:
             type: optional<string>
             docs: Maximum number to retrieve
+            validation:
+              pattern: ^[1-9][0-9]*$
           start:
             type: optional<string>
             docs: Start index
+            validation:
+              pattern: ^[0-9]*$
           wql:
             type: optional<string>
             docs: (JSON) WQL query
+            validation:
+              pattern: ^{.*}$
         body:
           properties:
             contexts:
@@ -14770,6 +14958,12 @@ docs: Holder credential management
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                   "my_label": {
                     "docs": "Label for connection request",
@@ -14835,10 +15029,22 @@ docs: Holder credential management
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                 },
               },
@@ -14898,10 +15104,22 @@ docs: Holder credential management
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                   "my_label": {
                     "docs": "Label for connection request",
@@ -14910,6 +15128,12 @@ docs: Holder credential management
                   "their_public_did": {
                     "docs": "Qualified public DID to which to request connection",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$",
+                    },
                   },
                   "use_public_did": {
                     "docs": "Use public DID for this connection",
@@ -15026,10 +15250,22 @@ docs: Holder credential management
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$",
+                    },
                   },
                 },
               },
@@ -15066,15 +15302,24 @@ service:
           their_public_did:
             type: string
             docs: Qualified public DID to which to request connection
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$
           alias:
             type: optional<string>
             docs: Alias for connection
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
             type: optional<string>
             docs: Label for connection request
@@ -15128,9 +15373,15 @@ service:
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
         body:
           properties:
             '@id':
@@ -15212,6 +15463,9 @@ service:
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
             type: optional<string>
             docs: Label for connection request
@@ -15260,9 +15514,15 @@ service:
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
             type: optional<string>
             docs: My URL endpoint
+            validation:
+              pattern: >-
+                ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
       response:
         docs: ''
         type: root.ConnRecord
@@ -17921,6 +18181,12 @@ docs: Introduction of known parties
                   "connection_id": {
                     "docs": "Connection identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Role assigned in credential exchange",
@@ -17933,6 +18199,12 @@ docs: Introduction of known parties
                   "thread_id": {
                     "docs": "Thread identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -19848,6 +20120,8 @@ service:
           connection_id:
             type: optional<string>
             docs: Connection identifier
+            validation:
+              format: uuid
           role:
             type: optional<GetMatchingCredExRecordsRequestRole>
             docs: Role assigned in credential exchange
@@ -19857,6 +20131,8 @@ service:
           thread_id:
             type: optional<string>
             docs: Thread identifier
+            validation:
+              format: uuid
       response:
         docs: ''
         type: root.V10CredentialExchangeListResult
@@ -22557,6 +22833,12 @@ types:
                   "connection_id": {
                     "docs": "Connection identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Role assigned in credential exchange",
@@ -22569,6 +22851,12 @@ types:
                   "thread_id": {
                     "docs": "Thread identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -25126,6 +25414,8 @@ service:
           connection_id:
             type: optional<string>
             docs: Connection identifier
+            validation:
+              format: uuid
           role:
             type: optional<GetMatchingCredExRecordsV2RequestRole>
             docs: Role assigned in credential exchange
@@ -25135,6 +25425,8 @@ service:
           thread_id:
             type: optional<string>
             docs: Thread identifier
+            validation:
+              format: uuid
       response:
         docs: ''
         type: root.V20CredExRecordListResult
@@ -27399,6 +27691,12 @@ docs: Sign and verify json-ld data
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                 },
               },
@@ -27435,6 +27733,12 @@ docs: Sign and verify json-ld data
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                 },
               },
@@ -27510,6 +27814,12 @@ docs: Sign and verify json-ld data
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "endpoint_type": {
                     "docs": "Endpoint type of interest (default 'Endpoint')",
@@ -27662,6 +27972,12 @@ docs: Sign and verify json-ld data
                   "did": {
                     "docs": "DID to register",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "role": {
                     "docs": "Role",
@@ -27670,6 +27986,12 @@ docs: Sign and verify json-ld data
                   "verkey": {
                     "docs": "Verification key",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$",
+                    },
                   },
                 },
               },
@@ -27771,6 +28093,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           endpoint_type:
             type: optional<GetPublishedDidEndpointRequestEndpointType>
             docs: Endpoint type of interest (default 'Endpoint')
@@ -27796,6 +28121,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
       response:
         docs: ''
         type: root.GetDIDVerkeyResponse
@@ -27818,6 +28146,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
       response:
         docs: ''
         type: root.GetNymRoleResponse
@@ -27878,9 +28209,15 @@ service:
           did:
             type: string
             docs: DID to register
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           verkey:
             type: string
             docs: Verification key
+            validation:
+              pattern: >-
+                ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$
           alias:
             type: optional<string>
             docs: Alias
@@ -28263,6 +28600,12 @@ docs: Interaction with ledger
                   "conn_id": {
                     "docs": "Connection identifier (optional)",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
@@ -28343,6 +28686,12 @@ docs: Interaction with ledger
                   "conn_id": {
                     "docs": "Connection identifier (optional)",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "mediator_terms": {
                     "allow-multiple": true,
@@ -28898,6 +29247,8 @@ service:
           conn_id:
             type: optional<string>
             docs: Connection identifier (optional)
+            validation:
+              format: uuid
           role:
             type: optional<GetKeylistsRequestRole>
             docs: >-
@@ -29071,6 +29422,8 @@ service:
           conn_id:
             type: optional<string>
             docs: Connection identifier (optional)
+            validation:
+              format: uuid
           mediator_terms:
             type: optional<string>
             allow-multiple: true
@@ -30464,6 +30817,12 @@ docs: Multitenant wallet management
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "use_existing_connection": {
                     "docs": "Use an existing connection, if possible",
@@ -30662,6 +31021,9 @@ service:
           mediation_id:
             type: optional<string>
             docs: Identifier for active mediation record to be used
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           use_existing_connection:
             type: optional<boolean>
             docs: Use an existing connection, if possible
@@ -31334,6 +31696,12 @@ docs: Out-of-band connections
                   "connection_id": {
                     "docs": "Connection identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Role assigned in presentation exchange",
@@ -31346,6 +31714,12 @@ docs: Out-of-band connections
                   "thread_id": {
                     "docs": "Thread identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -31407,10 +31781,22 @@ docs: Out-of-band connections
                   "count": {
                     "docs": "Maximum number to retrieve",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[1-9][0-9]*$",
+                    },
                   },
                   "extra_query": {
                     "docs": "(JSON) object mapping referents to extra WQL queries",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$",
+                    },
                   },
                   "referent": {
                     "docs": "Proof request referents of interest, comma-separated",
@@ -31419,6 +31805,12 @@ docs: Out-of-band connections
                   "start": {
                     "docs": "Start index",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                 },
               },
@@ -32890,6 +33282,8 @@ service:
           connection_id:
             type: optional<string>
             docs: Connection identifier
+            validation:
+              format: uuid
           role:
             type: optional<GetMatchingPresExRecordsRequestRole>
             docs: Role assigned in presentation exchange
@@ -32899,6 +33293,8 @@ service:
           thread_id:
             type: optional<string>
             docs: Thread identifier
+            validation:
+              format: uuid
       response:
         docs: ''
         type: root.V10PresentationExchangeList
@@ -33223,15 +33619,21 @@ service:
           count:
             type: optional<string>
             docs: Maximum number to retrieve
+            validation:
+              pattern: ^[1-9][0-9]*$
           extra_query:
             type: optional<string>
             docs: (JSON) object mapping referents to extra WQL queries
+            validation:
+              pattern: ^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$
           referent:
             type: optional<string>
             docs: Proof request referents of interest, comma-separated
           start:
             type: optional<string>
             docs: Start index
+            validation:
+              pattern: ^[0-9]*$
       response:
         docs: ''
         type: list<root.IndyCredPrecis>
@@ -34501,6 +34903,12 @@ types:
                   "connection_id": {
                     "docs": "Connection identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Role assigned in presentation exchange",
@@ -34513,6 +34921,12 @@ types:
                   "thread_id": {
                     "docs": "Thread identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -34574,10 +34988,22 @@ types:
                   "count": {
                     "docs": "Maximum number to retrieve",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[1-9][0-9]*$",
+                    },
                   },
                   "extra_query": {
                     "docs": "(JSON) object mapping referents to extra WQL queries",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$",
+                    },
                   },
                   "referent": {
                     "docs": "Proof request referents of interest, comma-separated",
@@ -34586,6 +35012,12 @@ types:
                   "start": {
                     "docs": "Start index",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9]*$",
+                    },
                   },
                 },
               },
@@ -35933,6 +36365,8 @@ service:
           connection_id:
             type: optional<string>
             docs: Connection identifier
+            validation:
+              format: uuid
           role:
             type: optional<GetMatchingPresExRecordsV2RequestRole>
             docs: Role assigned in presentation exchange
@@ -35942,6 +36376,8 @@ service:
           thread_id:
             type: optional<string>
             docs: Thread identifier
+            validation:
+              format: uuid
       response:
         docs: ''
         type: root.V20PresExRecordList
@@ -36255,15 +36691,21 @@ service:
           count:
             type: optional<string>
             docs: Maximum number to retrieve
+            validation:
+              pattern: ^[1-9][0-9]*$
           extra_query:
             type: optional<string>
             docs: (JSON) object mapping referents to extra WQL queries
+            validation:
+              pattern: ^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$
           referent:
             type: optional<string>
             docs: Proof request referents of interest, comma-separated
           start:
             type: optional<string>
             docs: Start index
+            validation:
+              pattern: ^[0-9]*$
       response:
         docs: ''
         type: list<root.IndyCredPrecis>
@@ -37262,10 +37704,22 @@ docs: did resolver interface.
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$",
+                    },
                   },
                   "rev_reg_id": {
                     "docs": "Revocation registry identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)",
+                    },
                   },
                 },
               },
@@ -37414,6 +37868,12 @@ docs: did resolver interface.
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$",
+                    },
                   },
                   "state": {
                     "docs": "Revocation registry state",
@@ -37461,14 +37921,32 @@ docs: did resolver interface.
                   "cred_ex_id": {
                     "docs": "Credential exchange identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    },
                   },
                   "cred_rev_id": {
                     "docs": "Credential revocation identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[1-9][0-9]*$",
+                    },
                   },
                   "rev_reg_id": {
                     "docs": "Revocation registry identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)",
+                    },
                   },
                 },
               },
@@ -38503,12 +38981,20 @@ service:
           cred_ex_id:
             type: optional<string>
             docs: Credential exchange identifier
+            validation:
+              pattern: >-
+                [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           cred_rev_id:
             type: optional<string>
             docs: Credential revocation identifier
+            validation:
+              pattern: ^[1-9][0-9]*$
           rev_reg_id:
             type: optional<string>
             docs: Revocation registry identifier
+            validation:
+              pattern: >-
+                ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)
       response:
         docs: ''
         type: root.CredRevRecordResult
@@ -38590,6 +39076,9 @@ service:
           cred_def_id:
             type: optional<string>
             docs: Credential definition identifier
+            validation:
+              pattern: >-
+                ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           state:
             type: optional<GetCreatedRegistriesRequestState>
             docs: Revocation registry state
@@ -38617,9 +39106,15 @@ service:
           cred_def_id:
             type: optional<string>
             docs: Credential definition identifier
+            validation:
+              pattern: >-
+                ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           rev_reg_id:
             type: optional<string>
             docs: Revocation registry identifier
+            validation:
+              pattern: >-
+                ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)
       response:
         docs: ''
         type: root.TailsDeleteResponse
@@ -39245,10 +39740,22 @@ types:
                   "schema_id": {
                     "docs": "Schema identifier",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$",
+                    },
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "schema_name": {
                     "docs": "Schema name",
@@ -39257,6 +39764,12 @@ types:
                   "schema_version": {
                     "docs": "Schema version",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[0-9.]+$",
+                    },
                   },
                 },
               },
@@ -39571,15 +40084,23 @@ service:
           schema_id:
             type: optional<string>
             docs: Schema identifier
+            validation:
+              pattern: >-
+                ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$
           schema_issuer_did:
             type: optional<string>
             docs: Schema issuer DID
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_name:
             type: optional<string>
             docs: Schema name
           schema_version:
             type: optional<string>
             docs: Schema version
+            validation:
+              pattern: ^[0-9.]+$
       response:
         docs: ''
         type: root.SchemasCreatedResult
@@ -40150,6 +40671,12 @@ docs: Trust-ping over connection
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                 },
               },
@@ -40198,6 +40725,12 @@ docs: Trust-ping over connection
                   "did": {
                     "docs": "DID of interest",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$",
+                    },
                   },
                   "key_type": {
                     "docs": "Key type to query for.",
@@ -40214,6 +40747,12 @@ docs: Trust-ping over connection
                   "verkey": {
                     "docs": "Verification key of interest",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$",
+                    },
                   },
                 },
               },
@@ -40280,6 +40819,12 @@ docs: Trust-ping over connection
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                 },
               },
@@ -40402,6 +40947,12 @@ docs: Trust-ping over connection
                   "did": {
                     "docs": "DID of interest",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
+                    },
                   },
                   "mediation_id": {
                     "docs": "Mediation identifier",
@@ -40513,6 +41064,9 @@ service:
           did:
             type: optional<string>
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$
           key_type:
             type: optional<GetDidsRequestKeyType>
             docs: Key type to query for.
@@ -40527,6 +41081,9 @@ service:
           verkey:
             type: optional<string>
             docs: Verification key of interest
+            validation:
+              pattern: >-
+                ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$
       response:
         docs: ''
         type: root.DIDList
@@ -40596,6 +41153,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
       response:
         docs: ''
         type: root.WalletModuleResponse
@@ -40637,6 +41197,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           conn_id:
             type: optional<string>
             docs: Connection identifier
@@ -40673,6 +41236,9 @@ service:
           did:
             type: string
             docs: DID of interest
+            validation:
+              pattern: >-
+                ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
       response:
         docs: ''
         type: root.DIDEndpoint

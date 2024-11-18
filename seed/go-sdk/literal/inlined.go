@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
 
 type SendLiteralsInlinedRequest struct {
@@ -85,7 +85,7 @@ func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
 	}
 	a.myLiteral = unmarshaler.MyLiteral
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "myLiteral")
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "myLiteral")
 	if err != nil {
 		return err
 	}
@@ -109,11 +109,11 @@ func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
 
 func (a *ANestedLiteral) String() string {
 	if len(a._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(a._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(a._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -145,7 +145,7 @@ func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
 	}
 	*a = ATopLevelLiteral(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -157,11 +157,11 @@ func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
 
 func (a *ATopLevelLiteral) String() string {
 	if len(a._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(a._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(a._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)

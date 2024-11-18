@@ -67,6 +67,12 @@ export function buildQueryParameter({
         queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
+    if (isRawTypeReferenceDetailedSchema(typeReference.value)) {
+        if (typeReference.value.validation !== undefined) {
+            queryParameterSchema.validation = typeReference.value.validation;
+        }
+    }
+
     return queryParameterSchema;
 }
 
@@ -424,4 +430,10 @@ function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primit
         primitive?.type === "primitive" &&
         array.value.schema.type === primitive.schema.type
     );
+}
+
+function isRawTypeReferenceDetailedSchema(
+    rawTypeReference: RawSchemas.TypeReferenceSchema
+): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
+    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
 }

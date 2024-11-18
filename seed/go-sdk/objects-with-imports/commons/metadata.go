@@ -5,7 +5,7 @@ package commons
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Metadata struct {
@@ -42,7 +42,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	}
 	*m = Metadata(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -54,11 +54,11 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 
 func (m *Metadata) String() string {
 	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(m._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

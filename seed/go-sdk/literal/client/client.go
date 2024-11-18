@@ -6,6 +6,7 @@ import (
 	core "github.com/literal/fern/core"
 	headers "github.com/literal/fern/headers"
 	inlined "github.com/literal/fern/inlined"
+	internal "github.com/literal/fern/internal"
 	option "github.com/literal/fern/option"
 	path "github.com/literal/fern/path"
 	query "github.com/literal/fern/query"
@@ -15,7 +16,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Headers   *headers.Client
@@ -29,8 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

@@ -5,7 +5,7 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/unions-go/core"
+	internal "github.com/fern-api/unions-go/internal"
 )
 
 type Circle struct {
@@ -34,7 +34,7 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 	}
 	*c = Circle(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 
 func (c *Circle) String() string {
 	if len(c._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(c._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -82,7 +82,7 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 	}
 	*g = GetShapeRequest(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *g)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
 	}
@@ -94,11 +94,11 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 
 func (g *GetShapeRequest) String() string {
 	if len(g._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(g._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(g._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(g); err == nil {
+	if value, err := internal.StringifyJSON(g); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
@@ -171,10 +171,10 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 
 func (s Shape) MarshalJSON() ([]byte, error) {
 	if s.Circle != nil {
-		return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	}
 	if s.Square != nil {
-		return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -220,7 +220,7 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 	}
 	*s = Square(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -232,11 +232,11 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 
 func (s *Square) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

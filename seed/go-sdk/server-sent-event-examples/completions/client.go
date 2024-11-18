@@ -6,13 +6,14 @@ import (
 	context "context"
 	fern "github.com/server-sent-event-examples/fern"
 	core "github.com/server-sent-event-examples/fern/core"
+	internal "github.com/server-sent-event-examples/fern/internal"
 	option "github.com/server-sent-event-examples/fern/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -46,16 +47,16 @@ func (c *Client) Stream(
 	}
 	endpointURL := baseURL + "/stream"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Accept", "text/event-stream")
 
-	streamer := core.NewStreamer[fern.StreamedCompletion](c.caller)
+	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
 	return streamer.Stream(
 		ctx,
-		&core.StreamParams{
+		&internal.StreamParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			Prefix:          core.DefaultSSEDataPrefix,
+			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      "[[DONE]]",
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,

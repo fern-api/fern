@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	core "github.com/object/fern/core"
+	internal "github.com/object/fern/internal"
 	time "time"
 )
 
@@ -43,7 +43,7 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 	}
 	*n = Name(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 }
 
 func (n *Name) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -254,9 +254,9 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -271,7 +271,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	}
 	t.eighteen = unmarshaler.Eighteen
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
+	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
 		return err
 	}
@@ -284,20 +284,20 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed:    embed(*t),
-		Six:      core.NewDateTime(t.Six),
-		Seven:    core.NewDate(t.Seven),
+		Six:      internal.NewDateTime(t.Six),
+		Seven:    internal.NewDate(t.Seven),
 		Eighteen: "eighteen",
 	}
 	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

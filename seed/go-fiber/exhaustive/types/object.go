@@ -5,7 +5,7 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/exhaustive/fern/core"
+	internal "github.com/exhaustive/fern/internal"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -35,7 +35,7 @@ func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
 	}
 	*d = DoubleOptional(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
 }
 
 func (d *DoubleOptional) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -84,7 +84,7 @@ func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	}
 	*n = NestedObjectWithOptionalField(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NestedObjectWithOptionalField) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -133,7 +133,7 @@ func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	}
 	*n = NestedObjectWithRequiredField(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NestedObjectWithRequiredField) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -174,7 +174,7 @@ func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectWithMapOfMap(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -184,7 +184,7 @@ func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectWithMapOfMap) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -308,8 +308,8 @@ func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	type embed ObjectWithOptionalField
 	var unmarshaler = struct {
 		embed
-		Datetime *core.DateTime `json:"datetime,omitempty"`
-		Date     *core.Date     `json:"date,omitempty"`
+		Datetime *internal.DateTime `json:"datetime,omitempty"`
+		Date     *internal.Date     `json:"date,omitempty"`
 	}{
 		embed: embed(*o),
 	}
@@ -320,7 +320,7 @@ func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	o.Datetime = unmarshaler.Datetime.TimePtr()
 	o.Date = unmarshaler.Date.TimePtr()
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -333,18 +333,18 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 	type embed ObjectWithOptionalField
 	var marshaler = struct {
 		embed
-		Datetime *core.DateTime `json:"datetime,omitempty"`
-		Date     *core.Date     `json:"date,omitempty"`
+		Datetime *internal.DateTime `json:"datetime,omitempty"`
+		Date     *internal.Date     `json:"date,omitempty"`
 	}{
 		embed:    embed(*o),
-		Datetime: core.NewOptionalDateTime(o.Datetime),
-		Date:     core.NewOptionalDate(o.Date),
+		Datetime: internal.NewOptionalDateTime(o.Datetime),
+		Date:     internal.NewOptionalDate(o.Date),
 	}
 	return json.Marshal(marshaler)
 }
 
 func (o *ObjectWithOptionalField) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
@@ -375,7 +375,7 @@ func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectWithRequiredField(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -385,7 +385,7 @@ func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 }
 
 func (o *ObjectWithRequiredField) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

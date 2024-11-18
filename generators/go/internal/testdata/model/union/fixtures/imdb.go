@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/model/union/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/model/union/fixtures/internal"
 	time "time"
 )
 
@@ -34,7 +34,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	}
 	*b = Bar(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Bar) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -81,7 +81,7 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 	}
 	b.extended = unmarshaler.Extended
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b, "extended")
+	extraProperties, err := internal.ExtractExtraProperties(data, *b, "extended")
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (b *Baz) MarshalJSON() ([]byte, error) {
 }
 
 func (b *Baz) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -134,7 +134,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	}
 	*f = Foo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -144,7 +144,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 }
 
 func (f *Foo) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -526,7 +526,7 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "date":
 		var valueUnmarshaler struct {
-			Date *core.Date `json:"value,omitempty" format:"date"`
+			Date *internal.Date `json:"value,omitempty" format:"date"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -534,7 +534,7 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 		u.Date = valueUnmarshaler.Date.TimePtr()
 	case "dateimte":
 		var valueUnmarshaler struct {
-			Dateimte *core.DateTime `json:"value,omitempty"`
+			Dateimte *internal.DateTime `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -550,20 +550,20 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "date":
 		var marshaler = struct {
-			Type string     `json:"type"`
-			Date *core.Date `json:"value,omitempty" format:"date"`
+			Type string         `json:"type"`
+			Date *internal.Date `json:"value,omitempty" format:"date"`
 		}{
 			Type: "date",
-			Date: core.NewOptionalDate(u.Date),
+			Date: internal.NewOptionalDate(u.Date),
 		}
 		return json.Marshal(marshaler)
 	case "dateimte":
 		var marshaler = struct {
-			Type     string         `json:"type"`
-			Dateimte *core.DateTime `json:"value,omitempty"`
+			Type     string             `json:"type"`
+			Dateimte *internal.DateTime `json:"value,omitempty"`
 		}{
 			Type:     "dateimte",
-			Dateimte: core.NewOptionalDateTime(u.Dateimte),
+			Dateimte: internal.NewOptionalDateTime(u.Dateimte),
 		}
 		return json.Marshal(marshaler)
 	}
@@ -762,7 +762,7 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		u.Value = valueUnmarshaler.Value
 	case "date":
 		var valueUnmarshaler struct {
-			Date *core.Date `json:"value" format:"date"`
+			Date *internal.Date `json:"value" format:"date"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -770,7 +770,7 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		u.Date = valueUnmarshaler.Date.Time()
 	case "datetime":
 		var valueUnmarshaler struct {
-			Datetime *core.DateTime `json:"value"`
+			Datetime *internal.DateTime `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -795,20 +795,20 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "date":
 		var marshaler = struct {
-			Type string     `json:"type"`
-			Date *core.Date `json:"value" format:"date"`
+			Type string         `json:"type"`
+			Date *internal.Date `json:"value" format:"date"`
 		}{
 			Type: "date",
-			Date: core.NewDate(u.Date),
+			Date: internal.NewDate(u.Date),
 		}
 		return json.Marshal(marshaler)
 	case "datetime":
 		var marshaler = struct {
-			Type     string         `json:"type"`
-			Datetime *core.DateTime `json:"value"`
+			Type     string             `json:"type"`
+			Datetime *internal.DateTime `json:"value"`
 		}{
 			Type:     "datetime",
-			Datetime: core.NewDateTime(u.Datetime),
+			Datetime: internal.NewDateTime(u.Datetime),
 		}
 		return json.Marshal(marshaler)
 	}
@@ -901,7 +901,7 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "unknown":
 		var marshaler = struct {
 			Type    string      `json:"type"`
@@ -999,9 +999,9 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "bar":
-		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 }
 

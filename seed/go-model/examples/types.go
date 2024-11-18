@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/examples/fern/commons"
-	core "github.com/examples/fern/core"
+	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -99,7 +99,7 @@ func (i *Identifier) UnmarshalJSON(data []byte) error {
 	}
 	*i = Identifier(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (i *Identifier) UnmarshalJSON(data []byte) error {
 }
 
 func (i *Identifier) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -218,7 +218,7 @@ func (a *Actor) UnmarshalJSON(data []byte) error {
 	}
 	*a = Actor(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -228,7 +228,7 @@ func (a *Actor) UnmarshalJSON(data []byte) error {
 }
 
 func (a *Actor) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -267,7 +267,7 @@ func (a *Actress) UnmarshalJSON(data []byte) error {
 	}
 	*a = Actress(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -277,7 +277,7 @@ func (a *Actress) UnmarshalJSON(data []byte) error {
 }
 
 func (a *Actress) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -404,7 +404,7 @@ func (b *BigEntity) UnmarshalJSON(data []byte) error {
 	}
 	*b = BigEntity(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -414,7 +414,7 @@ func (b *BigEntity) UnmarshalJSON(data []byte) error {
 }
 
 func (b *BigEntity) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -556,7 +556,7 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 	}
 	*d = Directory(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -566,7 +566,7 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 }
 
 func (d *Directory) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -605,7 +605,7 @@ func (e *Entity) UnmarshalJSON(data []byte) error {
 	}
 	*e = Entity(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -615,7 +615,7 @@ func (e *Entity) UnmarshalJSON(data []byte) error {
 }
 
 func (e *Entity) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -689,7 +689,7 @@ func (e Exception) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "generic":
-		return core.MarshalJSONWithExtraProperty(e.Generic, "type", "generic")
+		return internal.MarshalJSONWithExtraProperty(e.Generic, "type", "generic")
 	case "timeout":
 		var marshaler = struct {
 			Type    string      `json:"type"`
@@ -759,7 +759,7 @@ func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExceptionInfo(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -769,7 +769,7 @@ func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExceptionInfo) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -887,7 +887,7 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	}
 	e.type_ = unmarshaler.Type
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e, "type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -909,7 +909,7 @@ func (e *ExtendedMovie) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExtendedMovie) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -948,7 +948,7 @@ func (f *File) UnmarshalJSON(data []byte) error {
 	}
 	*f = File(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -958,7 +958,7 @@ func (f *File) UnmarshalJSON(data []byte) error {
 }
 
 func (f *File) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -1133,7 +1133,7 @@ func (m *Migration) UnmarshalJSON(data []byte) error {
 	}
 	*m = Migration(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -1143,7 +1143,7 @@ func (m *Migration) UnmarshalJSON(data []byte) error {
 }
 
 func (m *Migration) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -1213,8 +1213,8 @@ func (m *Moment) UnmarshalJSON(data []byte) error {
 	type embed Moment
 	var unmarshaler = struct {
 		embed
-		Date     *core.Date     `json:"date"`
-		Datetime *core.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
+		Datetime *internal.DateTime `json:"datetime"`
 	}{
 		embed: embed(*m),
 	}
@@ -1225,7 +1225,7 @@ func (m *Moment) UnmarshalJSON(data []byte) error {
 	m.Date = unmarshaler.Date.Time()
 	m.Datetime = unmarshaler.Datetime.Time()
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -1238,18 +1238,18 @@ func (m *Moment) MarshalJSON() ([]byte, error) {
 	type embed Moment
 	var marshaler = struct {
 		embed
-		Date     *core.Date     `json:"date"`
-		Datetime *core.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
+		Datetime *internal.DateTime `json:"datetime"`
 	}{
 		embed:    embed(*m),
-		Date:     core.NewDate(m.Date),
-		Datetime: core.NewDateTime(m.Datetime),
+		Date:     internal.NewDate(m.Date),
+		Datetime: internal.NewDateTime(m.Datetime),
 	}
 	return json.Marshal(marshaler)
 }
 
 func (m *Moment) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -1359,7 +1359,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	m.type_ = unmarshaler.Type
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m, "type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *m, "type")
 	if err != nil {
 		return err
 	}
@@ -1381,7 +1381,7 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Movie) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -1430,7 +1430,7 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 	}
 	*n = Node(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -1440,7 +1440,7 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 }
 
 func (n *Node) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -1471,7 +1471,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	}
 	*r = Request(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -1481,7 +1481,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 }
 
 func (r *Request) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -1520,7 +1520,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	}
 	*r = Response(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -1530,7 +1530,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 }
 
 func (r *Response) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -1561,7 +1561,7 @@ func (r *ResponseType) UnmarshalJSON(data []byte) error {
 	}
 	*r = ResponseType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -1571,7 +1571,7 @@ func (r *ResponseType) UnmarshalJSON(data []byte) error {
 }
 
 func (r *ResponseType) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -1610,7 +1610,7 @@ func (s *StuntDouble) UnmarshalJSON(data []byte) error {
 	}
 	*s = StuntDouble(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -1620,7 +1620,7 @@ func (s *StuntDouble) UnmarshalJSON(data []byte) error {
 }
 
 func (s *StuntDouble) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -1759,7 +1759,7 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 	}
 	*t = Tree(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -1769,7 +1769,7 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 }
 
 func (t *Tree) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

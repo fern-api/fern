@@ -24,6 +24,9 @@ interface Bool {
 interface Str {
     type: "str";
     value: string;
+    config?: {
+        multiline?: boolean;
+    };
 }
 
 interface Bytes {
@@ -82,8 +85,8 @@ export class TypeInstantiation extends AstNode {
         return new this({ type: "bool", value });
     }
 
-    public static str(value: string): TypeInstantiation {
-        return new this({ type: "str", value });
+    public static str(value: string, config = { multiline: false }): TypeInstantiation {
+        return new this({ type: "str", value, config });
     }
 
     public static bytes(value: string): TypeInstantiation {
@@ -143,7 +146,13 @@ export class TypeInstantiation extends AstNode {
                 }
                 break;
             case "str":
-                writer.write(`"${this.internalType.value}"`);
+                if (this.internalType.config?.multiline) {
+                    this.writeStringWithTripleQuotes({ writer, value: this.internalType.value });
+                } else {
+                    writer.write(
+                        `"${this.escapeString(this.internalType.value, { doubleQuote: true, newline: true })}"`
+                    );
+                }
                 break;
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
@@ -199,6 +208,30 @@ export class TypeInstantiation extends AstNode {
             default:
                 assertNever(this.internalType);
         }
+    }
+
+    private writeStringWithTripleQuotes({ writer, value }: { writer: Writer; value: string }): void {
+        writer.write('"""');
+        const parts = value.split("\n");
+        const head = parts[0] + "\n";
+        const tail = parts.slice(1).join("\n");
+        writer.write(this.escapeString(head));
+        writer.writeNoIndent(this.escapeString(tail));
+        writer.write('"""');
+    }
+
+    private escapeString(
+        value: string,
+        config: { doubleQuote?: boolean; newline?: boolean } = { doubleQuote: true, newline: false }
+    ): string {
+        let escapedValue = value;
+        if (config.doubleQuote) {
+            escapedValue = escapedValue.replaceAll('"', '\\"');
+        }
+        if (config.newline) {
+            escapedValue = escapedValue.replaceAll("\n", "\\n");
+        }
+        return escapedValue;
     }
 }
 

@@ -83,12 +83,16 @@ service:
           destination:
             docs: The ID of the destination station
             type: string
+            validation:
+              format: uuid
           dogs:
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
             docs: The ID of the origin station
             type: string
+            validation:
+              format: uuid
       response:
         docs: A list of available train trips
         type: GetTripsResponse

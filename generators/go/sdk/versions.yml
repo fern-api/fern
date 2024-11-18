@@ -1,3 +1,22 @@
+- version: 0.31.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Updates the retrier to stop retrying on `409 Conflict` HTTP status codes by default.
+  irVersion: 53
+- version: 0.31.2
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Add an `internal` package, which now contains the internal functionality
+        previously included in the `core` package (e.g. `core.Caller` -> `internal.Caller`).
+
+        Although technically a breaking change in terms of the module itself,
+        this change was always the intention, and should have zero impact on users.
+
+        Any `core` type that is meant for public consumption remains in the exported
+        `core` package (e.g. `core.APIError` and `core.RequestOption`).
+  irVersion: 53
 - version: 0.31.1
   changelogEntry:
     - type: internal

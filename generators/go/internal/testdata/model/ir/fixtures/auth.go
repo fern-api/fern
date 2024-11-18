@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type ApiAuth struct {
@@ -49,7 +49,7 @@ func (a *ApiAuth) UnmarshalJSON(data []byte) error {
 	}
 	*a = ApiAuth(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
@@ -59,7 +59,7 @@ func (a *ApiAuth) UnmarshalJSON(data []byte) error {
 }
 
 func (a *ApiAuth) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -151,11 +151,11 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
-		return core.MarshalJSONWithExtraProperty(a.Bearer, "_type", "bearer")
+		return internal.MarshalJSONWithExtraProperty(a.Bearer, "_type", "bearer")
 	case "basic":
-		return core.MarshalJSONWithExtraProperty(a.Basic, "_type", "basic")
+		return internal.MarshalJSONWithExtraProperty(a.Basic, "_type", "basic")
 	case "header":
-		return core.MarshalJSONWithExtraProperty(a.Header, "_type", "header")
+		return internal.MarshalJSONWithExtraProperty(a.Header, "_type", "header")
 	}
 }
 
@@ -241,7 +241,7 @@ func (b *BasicAuthScheme) UnmarshalJSON(data []byte) error {
 	}
 	*b = BasicAuthScheme(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -251,7 +251,7 @@ func (b *BasicAuthScheme) UnmarshalJSON(data []byte) error {
 }
 
 func (b *BasicAuthScheme) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -290,7 +290,7 @@ func (b *BearerAuthScheme) UnmarshalJSON(data []byte) error {
 	}
 	*b = BearerAuthScheme(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
@@ -300,7 +300,7 @@ func (b *BearerAuthScheme) UnmarshalJSON(data []byte) error {
 }
 
 func (b *BearerAuthScheme) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -355,7 +355,7 @@ func (h *HeaderAuthScheme) UnmarshalJSON(data []byte) error {
 	}
 	*h = HeaderAuthScheme(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *h)
+	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
@@ -365,7 +365,7 @@ func (h *HeaderAuthScheme) UnmarshalJSON(data []byte) error {
 }
 
 func (h *HeaderAuthScheme) String() string {
-	if value, err := core.StringifyJSON(h); err == nil {
+	if value, err := internal.StringifyJSON(h); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", h)

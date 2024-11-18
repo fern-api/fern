@@ -6908,10 +6908,24 @@ If the permission is already granted, it is skipped.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "permission": {
                     "docs": "optional permission filter, will only return condition set rules granting this permission",
@@ -7068,9 +7082,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
@@ -7746,10 +7765,24 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -7876,10 +7909,24 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -8004,10 +8051,24 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the condition sets name or key",
@@ -8265,9 +8326,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListConditionSetsResponse
@@ -8741,9 +8807,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
@@ -8840,9 +8911,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
@@ -9280,10 +9356,24 @@ allowed.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -9654,9 +9744,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.EnvironmentRead>
@@ -10229,10 +10324,24 @@ authenticated actor (i.e: human team member or api key).",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -10341,9 +10450,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.OrganizationRead>
@@ -10783,10 +10897,24 @@ Every project is a separate silo, and has its own unique set of environments and
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -10904,9 +11032,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ProjectRead>
@@ -11410,10 +11543,24 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -11561,9 +11708,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceActionGroupRead>
@@ -12148,10 +12300,24 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -12295,9 +12461,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceActionRead>
@@ -12725,10 +12896,24 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -12855,10 +13040,24 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -12984,9 +13183,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
@@ -13164,9 +13368,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       errors:
         - root.DeleteResourceAttributeRequestUnprocessableEntityError
       examples:
@@ -13529,10 +13738,24 @@ and will return the existing instance object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -13662,9 +13885,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceInstanceRead>
@@ -14479,10 +14707,24 @@ This includes any permissions granted to said role.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -14724,9 +14966,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceRoleRead>
@@ -15742,10 +15989,24 @@ A resource may also contain:
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the resources name or key",
@@ -16117,9 +16378,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListResourcesResponse
@@ -16928,10 +17194,24 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "optional role filter, will only return role assignments granting this role.",
@@ -17065,9 +17345,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.RoleAssignmentRead>
@@ -17781,10 +18066,24 @@ This includes any permissions granted to said role.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the roles name or key",
@@ -18043,9 +18342,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListRolesResponse
@@ -18914,10 +19218,24 @@ and will return the existing tenant object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Match users with a specific role",
@@ -19001,10 +19319,24 @@ and will return the existing tenant object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the tenant name or key",
@@ -19168,9 +19500,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
@@ -19245,9 +19582,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListTenantsResponse
@@ -19689,10 +20031,24 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resource_id": "optional<string>",
                 },
@@ -19816,10 +20172,24 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resource_id": "optional<string>",
                 },
@@ -19941,9 +20311,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
@@ -20109,9 +20484,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       errors:
         - root.DeleteUserAttributeRequestUnprocessableEntityError
       examples:
@@ -20620,10 +21000,24 @@ and will return the existing user object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Match users with a specific role",
@@ -20977,9 +21371,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead

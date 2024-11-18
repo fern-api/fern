@@ -80,6 +80,7 @@ func newFileWriter(
 	// Add an import to the core utilities package generated for
 	// the SDK.
 	scope.AddImport(path.Join(baseImportPath, "core"))
+	scope.AddImport(path.Join(baseImportPath, "internal"))
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
 	return &fileWriter{

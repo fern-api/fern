@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "sdk/core"
+	internal "sdk/internal"
 )
 
 type Docs struct {
@@ -33,7 +33,7 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 	}
 	*d = Docs(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 }
 
 func (d *Docs) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -82,7 +82,7 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExampleType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 }
 
 func (e *ExampleType) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -131,7 +131,7 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 	}
 	*j = Json(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
+	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
@@ -141,7 +141,7 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 }
 
 func (j *Json) String() string {
-	if value, err := core.StringifyJSON(j); err == nil {
+	if value, err := internal.StringifyJSON(j); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", j)
@@ -188,7 +188,7 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 	}
 	*n = NestedType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NestedType) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -274,7 +274,7 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
-		return core.MarshalJSONWithExtraProperty(n.One, "type", "one")
+		return internal.MarshalJSONWithExtraProperty(n.One, "type", "one")
 	}
 }
 
@@ -351,7 +351,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "one":
-		return core.MarshalJSONWithExtraProperty(u.One, "type", "one")
+		return internal.MarshalJSONWithExtraProperty(u.One, "type", "one")
 	}
 }
 
