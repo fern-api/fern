@@ -38,7 +38,7 @@
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {
-    "@types/node": "18.7.18",
+    "@types/node": "22.9.0",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
