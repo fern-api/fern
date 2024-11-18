@@ -140,7 +140,9 @@ export abstract class AbstractEndpointGenerator {
     }
 
     protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
-        if (!this.context.config.generatePaginatedClients) {return false;}
+        if (!this.context.config.generatePaginatedClients) {
+            return false;
+        }
         return endpoint.pagination !== undefined;
     }
 
