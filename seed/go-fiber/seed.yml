@@ -1,4 +1,4 @@
-irVersion: v40
+irVersion: v53
 displayName: Fiber
 image: fernapi/fern-go-fiber
 changelogLocation: ../../generators/go/fiber/versions.yml
@@ -47,7 +47,8 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - alias-extends
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - trace
-  - alias-extends

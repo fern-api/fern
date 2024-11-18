@@ -1,18 +1,20 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-codegen";
+import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { TypeInstance } from "../TypeInstance";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
-import { go } from "@fern-api/go-codegen";
+import { go } from "@fern-api/go-ast";
 import path from "path";
+import { ErrorReporter, Severity } from "./ErrorReporter";
 
 export class DynamicSnippetsGeneratorContext {
     public ir: DynamicSnippets.DynamicIntermediateRepresentation;
     public config: FernGeneratorExec.config.GeneratorConfig;
     public customConfig: BaseGoCustomConfigSchema | undefined;
+    public errors: ErrorReporter;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
     public rootImportPath: string;
@@ -29,6 +31,7 @@ export class DynamicSnippetsGeneratorContext {
         this.ir = ir;
         this.config = config;
         this.customConfig = config.customConfig != null ? (config.customConfig as BaseGoCustomConfigSchema) : undefined;
+        this.errors = new ErrorReporter();
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
         this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
@@ -44,19 +47,24 @@ export class DynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
-            const parameter = parameters.find((param) => param.name.wireValue === key);
-            if (parameter == null) {
-                throw this.newParameterNotRecognizedError(key);
+            this.errors.scope(key);
+            try {
+                const parameter = parameters.find((param) => param.name.wireValue === key);
+                if (parameter == null) {
+                    throw this.newParameterNotRecognizedError(key);
+                }
+                // If this query parameter supports allow-multiple, the user-provided values
+                // must be wrapped in an array.
+                const typeInstanceValue =
+                    this.isListTypeReference(parameter.typeReference) && !Array.isArray(value) ? [value] : value;
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value: typeInstanceValue
+                });
+            } finally {
+                this.errors.unscope();
             }
-            // If this query parameter supports allow-multiple, the user-provided values
-            // must be wrapped in an array.
-            const typeInstanceValue =
-                this.isListTypeReference(parameter.typeReference) && !Array.isArray(value) ? [value] : value;
-            instances.push({
-                name: parameter.name.name,
-                typeReference: parameter.typeReference,
-                value: typeInstanceValue
-            });
         }
         return instances;
     }
@@ -72,27 +80,42 @@ export class DynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
-            const parameter = parameters.find((param) => param.name.wireValue === key);
-            if (parameter == null) {
-                if (ignoreMissingParameters) {
-                    // Required for request payloads that include more information than
-                    // just the target parameters (e.g. union base properties).
+            this.errors.scope(key);
+            try {
+                const parameter = parameters.find((param) => param.name.wireValue === key);
+                if (parameter == null) {
+                    if (ignoreMissingParameters) {
+                        // Required for request payloads that include more information than
+                        // just the target parameters (e.g. union base properties).
+                        continue;
+                    }
+                    this.errors.add({
+                        severity: Severity.Critical,
+                        message: this.newParameterNotRecognizedError(key).message
+                    });
                     continue;
                 }
-                throw this.newParameterNotRecognizedError(key);
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            } finally {
+                this.errors.unscope();
             }
-            instances.push({
-                name: parameter.name.name,
-                typeReference: parameter.typeReference,
-                value
-            });
         }
         return instances;
     }
 
-    public getRecordOrThrow(value: unknown): Record<string, unknown> {
+    public getRecord(value: unknown): Record<string, unknown> | undefined {
         if (typeof value !== "object" || Array.isArray(value)) {
-            throw new Error(`Expected object with key, value pairs but got: ${JSON.stringify(value)}`);
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `Expected object with key, value pairs but got: ${
+                    Array.isArray(value) ? "array" : typeof value
+                }`
+            });
+            return undefined;
         }
         if (value == null) {
             return {};
@@ -100,37 +123,54 @@ export class DynamicSnippetsGeneratorContext {
         return value as Record<string, unknown>;
     }
 
-    public resolveNamedTypeOrThrow({ typeId }: { typeId: TypeId }): DynamicSnippets.NamedType {
+    public resolveNamedType({ typeId }: { typeId: TypeId }): DynamicSnippets.NamedType | undefined {
         const namedType = this.ir.types[typeId];
         if (namedType == null) {
-            throw new Error(`Type identified by "${typeId}" could not be found`);
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `Type identified by "${typeId}" could not be found`
+            });
+            return undefined;
         }
         return namedType;
     }
 
-    public resolveDiscriminatedUnionTypeInstanceOrThrow({
+    public resolveDiscriminatedUnionTypeInstance({
         discriminatedUnion,
         value
     }: {
         discriminatedUnion: DynamicSnippets.DiscriminatedUnionType;
         value: unknown;
-    }): DiscriminatedUnionTypeInstance {
-        const record = this.getRecordOrThrow(value);
+    }): DiscriminatedUnionTypeInstance | undefined {
+        const record = this.getRecord(value);
+        if (record == null) {
+            return undefined;
+        }
 
         const discriminantFieldName = discriminatedUnion.discriminant.wireValue;
         const discriminantValue = record[discriminantFieldName];
         if (discriminantValue == null) {
-            throw new Error(
-                `Missing required discriminant field "${discriminantFieldName}" got ${JSON.stringify(value)}`
-            );
+            this.errors.add({
+                severity: Severity.Critical,
+                message: this.newParameterNotRecognizedError(discriminantFieldName).message
+            });
+            return undefined;
         }
         if (typeof discriminantValue !== "string") {
-            throw new Error(`Expected discriminant value to be a string but got: ${JSON.stringify(discriminantValue)}`);
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `Expected discriminant value to be a string but got: ${typeof discriminantValue}`
+            });
+            return undefined;
         }
 
         const singleDiscriminatedUnionType = discriminatedUnion.types[discriminantValue];
         if (singleDiscriminatedUnionType == null) {
-            throw new Error(`No type found for discriminant value "${discriminantValue}"`);
+            this.errors.add({
+                severity: Severity.Critical,
+                message: `No type found for discriminant value "${discriminantValue}"`
+            });
+            return undefined;
         }
 
         // Remove the discriminant from the record so that the value is valid for the type.
@@ -197,7 +237,7 @@ export class DynamicSnippetsGeneratorContext {
             }
         }
         if (endpoints.length === 0) {
-            throw new Error(`Failed to find endpoint identified by "${JSON.stringify(location)}"`);
+            throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
         return endpoints;
     }

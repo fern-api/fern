@@ -22507,6 +22507,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return accounts only for these `link.id`s.",
@@ -22542,6 +22548,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "public_identification_name": {
                     "docs": "Return information only for this type of account ID. For example, CLABE accounts.",
@@ -24608,6 +24621,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -24630,6 +24646,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           balance__available:
             type: optional<string>
             docs: >-
@@ -28201,6 +28219,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return balances only for these `account.id`s.",
@@ -28272,6 +28296,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return balances only for these `link.id`s.",
@@ -28291,6 +28321,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "value_date": {
                     "docs": "Return balances for exactly this date (`YYYY-MM-DD` or full ISO-8601 timestamp).",
@@ -28832,6 +28869,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -28854,6 +28894,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -28862,6 +28904,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return balances only for these `account.id`s.
@@ -29988,10 +30032,8 @@ docs: >-
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                       "customer": "customer",
                       "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
                         "country": "BRA",
-                        "number": "45722-0",
+                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                       },
                       "holder": {
                         "information": {
@@ -30025,133 +30067,6 @@ docs: >-
                         "terminal_id": 123,
                       },
                     },
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Info)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Key)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "country": "BRA",
-                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PSE)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                   },
                   "response": {
                     "body": {
@@ -30850,9 +30765,7 @@ service:
               institution: f512d996-583a-4a91-8b5b-eba2e103b068
               details:
                 country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
+                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
               holder:
                 type: BUSINESS
                 information:
@@ -30872,100 +30785,6 @@ service:
             number: '12343453245633'
             metadata:
               internal_reference_id: GGq73487w2
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Info)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Key)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PSE)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
           response:
             body:
               id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
@@ -31420,12 +31239,12 @@ docs: >-
                       "country": "BRA",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
+                      "customer_type": "BUSINESS",
+                      "email": "finance@musicabrazil.br",
                       "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
+                      "identifier": "00.000.000/0001-91",
+                      "identifier_type": "CNPJ",
+                      "name": "Music Production Brazil",
                       "phone": "3210-9876",
                     },
                   },
@@ -31441,84 +31260,6 @@ docs: >-
                     "identifier_type": "CC",
                     "name": "Carlos Vives",
                     "phone": "3210-9876",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Business",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "BUSINESS",
-                      "email": "finance@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "00.000.000/0001-91",
-                      "identifier_type": "CNPJ",
-                      "name": "Music Production Brazil",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "PSE Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
                   },
                   "response": {
                     "body": {
@@ -32167,12 +31908,12 @@ service:
               id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
               created_at: '2022-02-09T08:45:50Z'
               created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
+              customer_type: BUSINESS
+              name: Music Production Brazil
               country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
+              email: finance@musicabrazil.br
+              identifier: 00.000.000/0001-91
+              identifier_type: CNPJ
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
         - name: PSE Individual
@@ -32185,69 +31926,6 @@ service:
             identifier_type: CC
             address: Calle Carlos Vives 432, 80300 Bogota
             phone: 3210-9876
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Business
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: BUSINESS
-              name: Music Production Brazil
-              country: BRA
-              email: finance@musicabrazil.br
-              identifier: 00.000.000/0001-91
-              identifier_type: CNPJ
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: PSE Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
           response:
             body:
               id: 0110c70a-5faf-4d72-94b6-307473e86af7
@@ -32595,6 +32273,13 @@ At the moment, the employment records resource is available for:
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -32768,6 +32453,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -33833,6 +33521,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return incomes for these `account.id`s.",
@@ -33867,6 +33561,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -34311,6 +34012,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -34333,6 +34037,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return incomes for these `account.id`s.
@@ -35506,6 +35212,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resources__allin": {
                     "docs": "Return institutions that support these resources.",
@@ -35579,6 +35292,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -36394,6 +36110,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": "optional<string>",
                   "omit": {
@@ -36410,6 +36132,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -36801,6 +36530,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -36823,6 +36555,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt: optional<string>
           created_at__gte: optional<string>
           created_at__lt: optional<string>
@@ -39872,6 +39606,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return invoices only for these `link.id`s.",
@@ -39891,6 +39631,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "status": {
                     "docs": "Return invoices with this status. Can be either `Vigente` (valid) or `Cancelado` (cancelled).",
@@ -41384,6 +41131,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -41406,6 +41156,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -45260,6 +45012,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "refresh_rate": {
                     "docs": "Return links with this refresh rate. Choose between `6h`, `12h`, `24h`, `7d`, or `30d`.",
@@ -46001,6 +45760,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -47775,6 +47537,13 @@ Cancun, COL 10447",
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -48141,6 +47910,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -50962,6 +50734,13 @@ types:
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 100. If you enter a value greater than 100, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Return results for one or more payment links that match the description you searched for. 
@@ -51134,6 +50913,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 100. If you enter a value greater than 100, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 100
           created_at:
             type: optional<string>
             docs: Return results only for this date (in `YYYY-MM-DD` format).
@@ -52433,6 +52215,12 @@ docs: >+
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return receivable transactions only for these `account.id`s.",
@@ -52468,6 +52256,12 @@ docs: >+
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -52487,6 +52281,13 @@ docs: >+
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "value_date": {
                     "docs": "Return receivable transactions for exactly this date (`YYYY-MM-DD` or full ISO-8601 timestamp).",
@@ -52689,6 +52490,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -52711,6 +52515,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -52719,6 +52525,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return receivable transactions only for these `account.id`s.
@@ -53531,6 +53339,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account_in": {
                     "docs": "Return recurring expenses for these `accound.id`s.",
@@ -53554,6 +53368,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -53573,6 +53393,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -54055,6 +53882,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -54077,6 +53907,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -54085,6 +53917,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account_in:
             type: optional<string>
             docs: Return recurring expenses for these `accound.id`s.
@@ -55476,6 +55310,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -55495,6 +55335,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -55981,6 +55828,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -56003,6 +55853,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           id:
             type: optional<string>
             docs: Return information for this `risk-insight.id`.
@@ -57613,6 +57465,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -57632,6 +57490,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -57847,6 +57712,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -57869,6 +57737,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -59003,6 +58873,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -59022,6 +58898,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "year": {
                     "docs": "Return tax declarations for this year (`YYYY`).",
@@ -59413,6 +59296,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -59435,6 +59321,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           link__in:
             type: optional<string>
             docs: Return information for these `link.id`s.
@@ -60420,6 +60308,12 @@ client.tax_retentions.list(params: {
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -60439,6 +60333,13 @@ client.tax_retentions.list(params: {
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -60624,6 +60525,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -60646,6 +60550,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -63856,6 +63762,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -63875,6 +63787,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "tipo_declaracion": {
                     "docs": "Return tax returns with this declaration type.",
@@ -65824,6 +65743,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -65846,6 +65768,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -70507,6 +70431,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -70526,6 +70456,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -71008,6 +70945,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -71030,6 +70970,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -73616,6 +73558,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__balance__available": {
                     "docs": "Return transactions that have a `account.balance.available` matching exactly this value.",
@@ -73787,6 +73735,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter as well in order to improve your performance.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "omit": {
                     "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -73802,6 +73756,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "reference": {
                     "docs": "Returns transactions with this institution-assigned reference number.",
@@ -75278,6 +75239,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -75300,6 +75264,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter as well in
               order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -75308,6 +75274,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           account__balance__available:
             type: optional<string>
             docs: >-

@@ -6889,22 +6889,21 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_user/events/metadata": [
-                "type_:Id",
-                "type_user/events/metadata:Metadata"
-            ],
             "service_organization": [
                 "type_organization:Organization",
                 "type_organization:CreateOrganizationRequest"
             ],
-            "service_user": [
-                "type_user:User"
-            ],
             "service_user/events": [
                 "type_user/events:Event"
+            ],
+            "service_user/events/metadata": [
+                "type_user/events/metadata:Metadata"
             ]
         },
-        "sharedTypes": []
+        "sharedTypes": [
+            "type_:Id",
+            "type_user:User"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},

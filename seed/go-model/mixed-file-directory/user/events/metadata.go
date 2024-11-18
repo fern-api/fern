@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
-	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type Metadata struct {
@@ -14,6 +14,20 @@ type Metadata struct {
 	Value interface{} `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *Metadata) GetId() fern.Id {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetValue() interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.Value
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
@@ -28,7 +42,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	}
 	*m = Metadata(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -38,7 +52,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 }
 
 func (m *Metadata) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

@@ -48,7 +48,8 @@ export class Field extends AstNode {
         }
 
         if (this.initializer !== undefined) {
-            writer.write(` = ${this.initializer}`);
+            writer.write(" = ");
+            this.initializer.write(writer);
         }
 
         if (this.docs != null) {

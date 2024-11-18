@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedMultiLineDocs\SeedMultiLineDocs.csproj" />
+        <ProjectReference Include="..\SeedMultiLineDocs\SeedMultiLineDocs.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedMultiLineDocs.Test.Custom.props" Condition="Exists('SeedMultiLineDocs.Test.Custom.props')" />
 </Project>

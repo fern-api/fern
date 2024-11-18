@@ -5,6 +5,7 @@ package tag
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	metrics "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/metrics"
 	http "net/http"
@@ -12,7 +13,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -46,11 +47,11 @@ func (c *Client) PostTag(
 	}
 	endpointURL := baseURL + "/metrics/tag"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

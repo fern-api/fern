@@ -4,6 +4,9 @@ import fastapi
 from .resources.endpoints.resources.container.service.service import (
     AbstractEndpointsContainerService,
 )
+from .resources.endpoints.resources.content_type.service.service import (
+    AbstractEndpointsContentTypeService,
+)
 from .resources.endpoints.resources.enum.service.service import (
     AbstractEndpointsEnumService,
 )
@@ -44,6 +47,7 @@ def register(
     _app: fastapi.FastAPI,
     *,
     endpoints_container: AbstractEndpointsContainerService,
+    endpoints_content_type: AbstractEndpointsContentTypeService,
     endpoints_enum: AbstractEndpointsEnumService,
     endpoints_http_methods: AbstractEndpointsHttpMethodsService,
     endpoints_object: AbstractEndpointsObjectService,
@@ -58,6 +62,9 @@ def register(
 ) -> None:
     _app.include_router(
         __register_service(endpoints_container), dependencies=dependencies
+    )
+    _app.include_router(
+        __register_service(endpoints_content_type), dependencies=dependencies
     )
     _app.include_router(__register_service(endpoints_enum), dependencies=dependencies)
     _app.include_router(

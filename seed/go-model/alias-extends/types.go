@@ -5,7 +5,7 @@ package aliasextends
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/alias-extends/fern/core"
+	internal "github.com/alias-extends/fern/internal"
 )
 
 type AliasType = *Parent
@@ -15,6 +15,20 @@ type Child struct {
 	Child  string `json:"child" url:"child"`
 
 	extraProperties map[string]interface{}
+}
+
+func (c *Child) GetParent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Parent
+}
+
+func (c *Child) GetChild() string {
+	if c == nil {
+		return ""
+	}
+	return c.Child
 }
 
 func (c *Child) GetExtraProperties() map[string]interface{} {
@@ -29,7 +43,7 @@ func (c *Child) UnmarshalJSON(data []byte) error {
 	}
 	*c = Child(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -39,7 +53,7 @@ func (c *Child) UnmarshalJSON(data []byte) error {
 }
 
 func (c *Child) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -49,6 +63,13 @@ type Parent struct {
 	Parent string `json:"parent" url:"parent"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *Parent) GetParent() string {
+	if p == nil {
+		return ""
+	}
+	return p.Parent
 }
 
 func (p *Parent) GetExtraProperties() map[string]interface{} {
@@ -63,7 +84,7 @@ func (p *Parent) UnmarshalJSON(data []byte) error {
 	}
 	*p = Parent(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -73,7 +94,7 @@ func (p *Parent) UnmarshalJSON(data []byte) error {
 }
 
 func (p *Parent) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)

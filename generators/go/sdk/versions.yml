@@ -1,3 +1,76 @@
+- version: 0.31.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Updates the retrier to stop retrying on `409 Conflict` HTTP status codes by default.
+  irVersion: 53
+- version: 0.31.2
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Add an `internal` package, which now contains the internal functionality
+        previously included in the `core` package (e.g. `core.Caller` -> `internal.Caller`).
+
+        Although technically a breaking change in terms of the module itself,
+        this change was always the intention, and should have zero impact on users.
+
+        Any `core` type that is meant for public consumption remains in the exported
+        `core` package (e.g. `core.APIError` and `core.RequestOption`).
+  irVersion: 53
+- version: 0.31.1
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Adds additional tests to confirm the behavior of the `core.Retrier`.
+
+        No functional, user-facing changes are included.
+  irVersion: 53
+- version: 0.31.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Improves type file layout with zero impact on backwards compatibility.
+
+        Shared types are now more accurately placed in the `types.go` file,
+        whereas types referenced by a single service are now placed in a file
+        that matches the service's filename (e.g. user.go).
+  irVersion: 53
+- version: 0.30.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for nil-safe getter methods. Callers can more easily access
+        nested properties by chaining together getter method calls instead of a
+        long series of `!= nil` checks.
+  irVersion: 53
+- version: 0.29.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        All SDKs now include an exported `FileParam` type that can be used to
+        configure the `Content-Type` of file upload properties.
+    - type: fix
+      summary: >-
+        Resolves an issue where multipart/form-data lists were incorrectly serialized
+        as JSON. They are now added as individual parts.
+    - type: internal
+      summary: >-
+        Refactor file upload endpoint generation with the new `core.MultipartWriter`.
+        This significantly improves the aesthetics of the generated code.
+  irVersion: 53
+- version: 0.28.3
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv53.
+  irVersion: 53
+- version: 0.28.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where undiscriminated unions were not round-trippable whenever the
+        union is the zero value of the type (e.g. `0` for `int`).
+  irVersion: 40
 - version: 0.28.1
   changelogEntry:
     - type: fix

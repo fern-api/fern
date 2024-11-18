@@ -67,6 +67,12 @@ export function buildQueryParameter({
         queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
+    if (isRawTypeReferenceDetailedSchema(typeReference.value)) {
+        if (typeReference.value.validation !== undefined) {
+            queryParameterSchema.validation = typeReference.value.validation;
+        }
+    }
+
     return queryParameterSchema;
 }
 
@@ -197,8 +203,17 @@ function getQueryParameterTypeReference({
                     namespace
                 });
             }
-        } else if (resolvedSchema.type === "object") {
-            return undefined;
+        } else if (context.objectQueryParameters) {
+            return {
+                value: buildTypeReference({
+                    schema,
+                    context,
+                    fileContainingReference,
+                    declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                    namespace
+                }),
+                allowMultiple: false
+            };
         }
     }
 
@@ -225,6 +240,17 @@ function getQueryParameterTypeReference({
                         namespace
                     }),
                     allowMultiple: true
+                };
+            } else if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace
+                    }),
+                    allowMultiple: false
                 };
             }
         }
@@ -341,6 +367,18 @@ function getQueryParameterTypeReference({
                 });
             }
         } else if (schema.value.type === "object") {
+            if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace
+                    }),
+                    allowMultiple: false
+                };
+            }
             return undefined;
         }
         return {
@@ -392,4 +430,10 @@ function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primit
         primitive?.type === "primitive" &&
         array.value.schema.type === primitive.schema.type
     );
+}
+
+function isRawTypeReferenceDetailedSchema(
+    rawTypeReference: RawSchemas.TypeReferenceSchema
+): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
+    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
 }

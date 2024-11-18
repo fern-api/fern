@@ -221,6 +221,9 @@ navigation:
               - changelog: ./pages/changelogs/java-sdk
                 title: Java
                 slug: java
+              - changelog: ./pages/changelogs/php-sdk
+                title: PHP
+                slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
                 slug: ruby
@@ -295,17 +298,26 @@ navigation:
           #   icon: fa-regular fa-pro
       - section: Package Managers
         contents:
-          - page: NPM
+          - page: NPM (TypeScript)
             path: ./pages/sdks/integration/npm.mdx
-          - page: PyPI
+          - page: PyPI (Python)
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
-          - page: NuGet
+          - page: NuGet (C#)
             slug: nuget
             path: ./pages/sdks/integration/nuget.mdx
-          - page: Maven Central
+          - page: Pkgsite (Go)
+            slug: pkgsite
+            path: ./pages/sdks/integration/pkgsite.mdx
+          - page: Maven Central (Java)
             slug: maven-central
             path: ./pages/sdks/integration/maven-central.mdx
+          - page: RubyGems (Ruby)
+            slug: rubygems
+            path: ./pages/sdks/integration/rubygems.mdx
+          - page: Packagist (PHP)
+            slug: packagist
+            path: ./pages/sdks/integration/packagist.mdx
 
       - section: Alternatives
         hidden: true
@@ -455,6 +467,9 @@ navigation:
             path: ./pages/fern-docs/content/api-playground.mdx
             icon: fa-regular fa-square-terminal
             contents:
+              - page: Auto-populate API Keys
+                icon: fa-regular fa-key
+                path: ./pages/fern-docs/content/autopopulate-api-key.mdx
               - page: Advanced Configuration
                 icon: fa-regular fa-wrench
                 path: ./pages/fern-docs/content/customize-api-playground.mdx

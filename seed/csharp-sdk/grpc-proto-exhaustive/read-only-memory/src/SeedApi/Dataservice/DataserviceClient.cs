@@ -24,41 +24,6 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.FooAsync();
-    /// </code>
-    /// </example>
-    public async Task<object> FooAsync(
-        GrpcRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        try
-        {
-            var callOptions = _grpc.CreateCallOptions(
-                options ?? new GrpcRequestOptions(),
-                cancellationToken
-            );
-            var call = _dataService.FooAsync(null, callOptions);
-            var response = await call.ConfigureAwait(false);
-            return object.FromProto(response);
-        }
-        catch (RpcException rpc)
-        {
-            var statusCode = (int)rpc.StatusCode;
-            throw new SeedApiApiException(
-                $"Error with gRPC status code {statusCode}",
-                statusCode,
-                rpc.Message
-            );
-        }
-        catch (Exception e)
-        {
-            throw new SeedApiException("Error", e);
-        }
-    }
-
-    /// <example>
-    /// <code>
     /// await client.Dataservice.UploadAsync(
     ///     new UploadRequest
     ///     {

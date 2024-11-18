@@ -20094,6 +20094,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -20126,6 +20131,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -20408,6 +20419,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -20419,6 +20435,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -20883,6 +20902,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -20915,6 +20939,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -21198,6 +21228,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -21209,6 +21244,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -21678,6 +21716,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -21710,6 +21753,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -21993,6 +22042,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -22004,6 +22058,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -22473,6 +22530,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -22505,6 +22567,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -22788,6 +22856,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -22799,6 +22872,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -23267,6 +23343,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -23299,6 +23380,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -23582,6 +23669,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -23593,6 +23685,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -24061,6 +24156,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -24093,6 +24193,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -24376,6 +24482,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -24387,6 +24498,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -24856,6 +24970,11 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
+                  },
                   "response": {
                     "body": {
                       "created": "2024-01-15T09:30:00Z",
@@ -24888,6 +25007,12 @@ service:
                 "connection_id": "string",
                 "org_id": "string",
                 "project_id": "string",
+              },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
               },
               "response": {
                 "docs": "Successful Response",
@@ -25171,6 +25296,11 @@ service:
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -25182,6 +25312,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -31132,10 +31265,23 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -31336,11 +31482,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskForwarder
@@ -31960,6 +32111,12 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "name": {
                     "docs": "Filter tasks by name. Supports partial matches.",
@@ -31968,6 +32125,13 @@ service:
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -32213,14 +32377,33 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "task_revision_id": {
                     "docs": "The specific Task Revision to reference.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -32794,11 +32977,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTask
@@ -33250,14 +33438,21 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
           task_revision_id:
             type: optional<string>
             docs: The specific Task Revision to reference.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskRun

@@ -210,6 +210,25 @@ func TestUndiscriminatedUnion(t *testing.T) {
 	assert.Empty(t, unionWithLiteral.String)
 }
 
+func TestUndiscriminatedUnionRoundTrip(t *testing.T) {
+	testCases := []struct {
+		value []byte
+	}{
+		{value: []byte("0")},
+		{value: []byte(`""`)},
+	}
+	for _, testCase := range testCases {
+		t.Run(string(testCase.value), func(t *testing.T) {
+			union := &undiscriminated.Union{}
+			require.NoError(t, json.Unmarshal(testCase.value, union))
+
+			bytes, err := json.Marshal(union)
+			require.NoError(t, err)
+			assert.Equal(t, string(testCase.value), string(bytes))
+		})
+	}
+}
+
 func TestTime(t *testing.T) {
 	date := time.Date(1994, time.March, 16, 0, 0, 0, 0, time.UTC)
 

@@ -5,8 +5,8 @@ package folderd
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/cross-package-type-names/fern/core"
 	folderb "github.com/cross-package-type-names/fern/folderb"
+	internal "github.com/cross-package-type-names/fern/internal"
 )
 
 type Response struct {
@@ -14,6 +14,13 @@ type Response struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (r *Response) GetFoo() *folderb.Foo {
+	if r == nil {
+		return nil
+	}
+	return r.Foo
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
@@ -28,7 +35,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	}
 	*r = Response(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -40,11 +47,11 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 
 func (r *Response) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

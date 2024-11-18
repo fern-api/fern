@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedExamples\SeedExamples.csproj" />
+        <ProjectReference Include="..\SeedExamples\SeedExamples.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedExamples.Test.Custom.props" Condition="Exists('SeedExamples.Test.Custom.props')" />
 </Project>

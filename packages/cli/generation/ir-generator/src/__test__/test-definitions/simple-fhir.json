@@ -3485,17 +3485,16 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
-                "type_:Account"
+                "type_:Memo",
+                "type_:BaseResource",
+                "type_:ResourceList",
+                "type_:Account",
+                "type_:Patient",
+                "type_:Practitioner",
+                "type_:Script"
             ]
         },
-        "sharedTypes": [
-            "type_:Memo",
-            "type_:BaseResource",
-            "type_:ResourceList",
-            "type_:Patient",
-            "type_:Practitioner",
-            "type_:Script"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

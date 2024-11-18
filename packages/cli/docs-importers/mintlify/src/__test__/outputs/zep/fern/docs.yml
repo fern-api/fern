@@ -1,4 +1,5 @@
-instances: []
+instances:
+  - url: https://zep-documentation.docs.buildwithfern.com
 title: Zep Documentation
 favicon: logo/favicon.png
 logo:

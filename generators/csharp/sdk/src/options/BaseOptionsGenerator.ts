@@ -3,10 +3,23 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const BASE_URL_FIELD_NAME = "BaseUrl";
 export const BASE_URL_SUMMARY = "The Base URL for the API.";
+const BASE_URL_FIELD = csharp.field({
+    access: csharp.Access.Public,
+    name: BASE_URL_FIELD_NAME,
+    get: true,
+    init: true,
+    type: csharp.Type.optional(csharp.Type.string()),
+    summary: BASE_URL_SUMMARY
+});
 
 export interface OptionArgs {
     optional: boolean;
     includeInitializer: boolean;
+}
+export interface HttpHeadersFieldOptionArgs {
+    optional: boolean;
+    includeInitializer: boolean;
+    interfaceReference?: csharp.ClassReference;
 }
 
 export class BaseOptionsGenerator {
@@ -34,15 +47,22 @@ export class BaseOptionsGenerator {
         });
     }
 
-    public getHttpHeadersField(): csharp.Field {
+    public getHttpHeadersField({
+        optional,
+        includeInitializer,
+        interfaceReference
+    }: HttpHeadersFieldOptionArgs): csharp.Field {
+        const headersReference = csharp.Type.reference(this.context.getHeadersClassReference());
         return csharp.field({
-            access: csharp.Access.Internal,
+            // Classes implenting internal interface field cannot have an access modifier
+            access: !interfaceReference ? csharp.Access.Internal : undefined,
             name: "Headers",
             get: true,
             init: true,
-            type: csharp.Type.reference(this.context.getHeadersClassReference()),
-            initializer: csharp.codeblock("new()"),
-            summary: "The http headers sent with the request."
+            type: optional ? csharp.Type.optional(headersReference) : headersReference,
+            initializer: includeInitializer ? csharp.codeblock("new()") : undefined,
+            summary: "The http headers sent with the request.",
+            interfaceReference
         });
     }
 
@@ -75,5 +95,50 @@ export class BaseOptionsGenerator {
             initializer: includeInitializer ? csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
             summary: "The timeout for the request."
         });
+    }
+
+    public getRequestOptionFields(): csharp.Field[] {
+        const optionArgs: OptionArgs = {
+            optional: true,
+            includeInitializer: false
+        };
+        return [
+            BASE_URL_FIELD,
+            this.getHttpClientField(optionArgs),
+            this.getHttpHeadersField({
+                optional: false,
+                includeInitializer: true,
+                interfaceReference: this.context.getRequestOptionsInterfaceReference()
+            }),
+            this.getMaxRetriesField(optionArgs),
+            this.getTimeoutField(optionArgs)
+        ];
+    }
+
+    public getRequestOptionInterfaceFields(): csharp.Field[] {
+        const optionArgs: OptionArgs = {
+            optional: true,
+            includeInitializer: false
+        };
+        return [
+            BASE_URL_FIELD,
+            this.getHttpClientField(optionArgs),
+            this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
+            this.getMaxRetriesField(optionArgs),
+            this.getTimeoutField(optionArgs)
+        ];
+    }
+
+    public getIdepotentRequestOptionFields(): csharp.Field[] {
+        return this.context.getIdempotencyHeaders().map((header) =>
+            csharp.field({
+                access: csharp.Access.Public,
+                name: header.name.name.pascalCase.safeName,
+                get: true,
+                init: true,
+                type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
+                summary: header.docs
+            })
+        );
     }
 }

@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 )
 
 type Organization struct {
@@ -14,6 +14,20 @@ type Organization struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (o *Organization) GetId() string {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
@@ -28,7 +42,7 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	}
 	*o = Organization(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
@@ -40,11 +54,11 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 
 func (o *Organization) String() string {
 	if len(o._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(o._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

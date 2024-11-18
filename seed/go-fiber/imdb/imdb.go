@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/imdb/fern/core"
+	internal "github.com/imdb/fern/internal"
 )
 
 type CreateMovieRequest struct {
@@ -13,6 +13,20 @@ type CreateMovieRequest struct {
 	Rating float64 `json:"rating" url:"rating"`
 
 	extraProperties map[string]interface{}
+}
+
+func (c *CreateMovieRequest) GetTitle() string {
+	if c == nil {
+		return ""
+	}
+	return c.Title
+}
+
+func (c *CreateMovieRequest) GetRating() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Rating
 }
 
 func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
@@ -27,7 +41,7 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 	}
 	*c = CreateMovieRequest(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -37,7 +51,7 @@ func (c *CreateMovieRequest) UnmarshalJSON(data []byte) error {
 }
 
 func (c *CreateMovieRequest) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -52,6 +66,27 @@ type Movie struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *Movie) GetId() MovieId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
+func (m *Movie) GetRating() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Rating
+}
+
 func (m *Movie) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -64,7 +99,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -74,7 +109,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 }
 
 func (m *Movie) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

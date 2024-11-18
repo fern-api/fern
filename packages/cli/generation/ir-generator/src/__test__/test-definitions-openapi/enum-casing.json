@@ -1491,11 +1491,11 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
+                "type_:ExampleResponseStatus",
                 "type_:ExampleResponse"
             ]
         },
         "sharedTypes": [
-            "type_:ExampleResponseStatus",
             "type_:GrantTypeEnum"
         ]
     },

@@ -4,6 +4,7 @@ package api
 
 import (
 	core "acme.io/sdk/core"
+	internal "acme.io/sdk/internal"
 	json "encoding/json"
 	fmt "fmt"
 )
@@ -87,11 +88,66 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 	return json.Marshal("fern")
 }
 
+type Bar struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *Bar) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Bar) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Filter struct {
 	Tag string `json:"tag" url:"tag"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (f *Filter) GetTag() string {
+	if f == nil {
+		return ""
+	}
+	return f.Tag
 }
 
 func (f *Filter) GetExtraProperties() map[string]interface{} {
@@ -106,7 +162,7 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 	}
 	*f = Filter(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -118,11 +174,59 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 
 func (f *Filter) String() string {
 	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type Foo struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetId() string {
+	if f == nil {
+		return ""
+	}
+	return f.Id
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	f._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Foo) String() string {
+	if len(f._rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -133,6 +237,13 @@ type SetNameRequestV3Body struct {
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
+}
+
+func (s *SetNameRequestV3Body) GetUserName() string {
+	if s == nil {
+		return ""
+	}
+	return s.UserName
 }
 
 func (s *SetNameRequestV3Body) GetExtraProperties() map[string]interface{} {
@@ -147,7 +258,7 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 	}
 	*s = SetNameRequestV3Body(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -159,11 +270,11 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 
 func (s *SetNameRequestV3Body) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -181,6 +292,27 @@ func NewUnionFromFoo(value *Foo) *Union {
 
 func NewUnionFromBar(value *Bar) *Union {
 	return &Union{Type: "bar", Bar: value}
+}
+
+func (u *Union) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *Union) GetFoo() *Foo {
+	if u == nil {
+		return nil
+	}
+	return u.Foo
+}
+
+func (u *Union) GetBar() *Bar {
+	if u == nil {
+		return nil
+	}
+	return u.Bar
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {
@@ -216,9 +348,9 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "bar":
-		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 }
 

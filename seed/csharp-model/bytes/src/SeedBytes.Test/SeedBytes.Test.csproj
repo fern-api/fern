@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedBytes\SeedBytes.csproj" />
+        <ProjectReference Include="..\SeedBytes\SeedBytes.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedBytes.Test.Custom.props" Condition="Exists('SeedBytes.Test.Custom.props')" />
 </Project>

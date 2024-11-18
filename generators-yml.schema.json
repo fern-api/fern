@@ -633,6 +633,16 @@
               "type": "null"
             }
           ]
+        },
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1266,6 +1276,36 @@
           ]
         },
         "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "only-include-referenced-schemas": {
           "oneOf": [
             {
               "type": "boolean"

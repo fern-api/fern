@@ -113,3 +113,43 @@ describe("examples", () => {
         expect(response.snippet).toMatchSnapshot();
     });
 });
+
+describe("examples (errors)", () => {
+    it("invalid request body", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("examples.json")),
+            config: buildGeneratorConfig()
+        });
+        const response = await generator.generate({
+            endpoint: {
+                method: "POST",
+                path: "/movie"
+            },
+            auth: AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: {
+                id: "movie-c06a4ad7",
+                prequel: "movie-cv9b914f",
+                title: 42, // invalid
+                from: "Hayao Miyazaki",
+                rating: 8.0,
+                type: "movie",
+                tag: "development",
+                metadata: {
+                    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                    releaseDate: "2023-12-08",
+                    ratings: {
+                        rottenTomatoes: 97,
+                        imdb: 7.6
+                    }
+                },
+                revenue: 1000000
+            }
+        });
+        expect(response.errors).toMatchSnapshot();
+    });
+});

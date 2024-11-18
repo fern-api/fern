@@ -22110,25 +22110,24 @@
         "typesReferencedOnlyByService": {
             "service_users": [
                 "type_:UsernameCursor",
+                "type_:UsernamePage",
                 "type_users:Order",
                 "type_users:WithPage",
                 "type_users:WithCursor",
+                "type_users:UserListContainer",
+                "type_users:UserPage",
+                "type_users:UserOptionalListContainer",
+                "type_users:UserOptionalListPage",
                 "type_users:UsernameContainer",
                 "type_users:ListUsersExtendedResponse",
                 "type_users:ListUsersExtendedOptionalListResponse",
-                "type_users:ListUsersPaginationResponse"
+                "type_users:ListUsersPaginationResponse",
+                "type_users:Page",
+                "type_users:NextPage",
+                "type_users:User"
             ]
         },
-        "sharedTypes": [
-            "type_:UsernamePage",
-            "type_users:UserListContainer",
-            "type_users:UserPage",
-            "type_users:UserOptionalListContainer",
-            "type_users:UserOptionalListPage",
-            "type_users:Page",
-            "type_users:NextPage",
-            "type_users:User"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

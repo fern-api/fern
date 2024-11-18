@@ -1,7 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { go } from "@fern-api/go-codegen";
+import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { Severity } from "./ErrorReporter";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -28,7 +29,10 @@ export class DynamicTypeMapper {
                     this.convert({ typeReference: args.typeReference.value })
                 );
             case "named": {
-                const named = this.context.resolveNamedTypeOrThrow({ typeId: args.typeReference.value });
+                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                if (named == null) {
+                    return this.convertUnknown();
+                }
                 return this.convertNamed({ named });
             }
             case "optional":

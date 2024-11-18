@@ -6,6 +6,62 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.8
+  createdAt: "2024-11-14"
+  changelogEntry:
+    - type: feat
+      summary: Add support for [idempotency headers](https://buildwithfern.com/learn/sdks/features/idempotency-headers).
+  irVersion: 53
+- version: 1.9.7
+  createdAt: "2024-11-12"
+  changelogEntry:
+    - type: feat
+      summary: Set Content-Type header for HTTP requests when specified in the API spec/definition.
+  irVersion: 53
+- version: 1.9.6
+  createdAt: "2024-11-09"
+  changelogEntry:
+    - type: feat
+      summary: Copy the csproj Version as the AssemblyVersion and FileVersion.
+  irVersion: 53
+- version: 1.9.5
+  createdAt: "2024-11-09"
+  changelogEntry:
+    - type: feat
+      summary: Copy the csproj Version as the AssemblyVersion and FileVersion.
+  irVersion: 53
+- version: 1.9.4
+  createdAt: "2024-11-08"
+  changelogEntry:
+    - type: feat
+      summary: Generate a ProjectName.Test.Custom.props file for you to configure any MSBuild properties for your test project.
+    - type: feat
+      summary: Only import ProjectName.Custom.props and ProjectName.Test.Custom.props if the file exists, so you can delete the file if you wish to.
+    - type: fix
+      summary: Do not re-import the .NET SDK inside of ProjectName.Custom.props.
+  irVersion: 53
+- version: 1.9.3
+  createdAt: "2024-11-07"
+  changelogEntry:
+    - type: feat
+      summary: Generate a ProjectName.Custom.props file for you to configure any MSBuild properties for your project.
+    - type: fix
+      summary: Generate the license NuGet properties inside the .csproj file correctly.
+  irVersion: 53
+- version: 1.9.1
+  createdAt: "2024-11-06"
+  changelogEntry:
+    - type: chore
+      summary: >-
+        Update `System.Text.Json` dependency from `8.0.4` to `8.0.5` because a security patch was released to resolve [this vulnerability](https://github.com/advisories/GHSA-8g4q-xg66-9fp4).
+  irVersion: 53
+- version: 1.9.0
+  createdAt: "2024-11-05"
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for calling HTTP endpoints and gRPC endoints within the same service.
+  irVersion: 53
 - version: 1.8.5
   createdAt: "2024-10-30"
   changelogEntry:

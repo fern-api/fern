@@ -43,7 +43,8 @@ export function validateRequest({
                 exampleResolver,
                 workspace,
                 example,
-                breadcrumbs: ["request"]
+                breadcrumbs: ["request"],
+                depth: 0
             }).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })
@@ -57,7 +58,8 @@ export function validateRequest({
                 workspace,
                 typeResolver,
                 exampleResolver,
-                breadcrumbs: ["response", "body"]
+                breadcrumbs: ["response", "body"],
+                depth: 0
             }).map((val): RuleViolation => {
                 return { severity: "error", message: val.message };
             })
