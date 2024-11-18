@@ -148,7 +148,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
-        if (this.config.generatePaginatedClients) {
+        if (this.hasPagination()) {
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
         }
@@ -160,6 +160,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.EnumSerializer);
         }
         return files;
+    }
+
+    public hasPagination() {
+        return this.config.generatePaginatedClients && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 
     public getCoreTestAsIsFiles(): string[] {
