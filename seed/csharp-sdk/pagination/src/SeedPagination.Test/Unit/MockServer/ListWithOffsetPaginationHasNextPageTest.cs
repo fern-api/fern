@@ -58,7 +58,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithOffsetPaginationHasNextPageAsync(
+        var response = Client.Users.ListWithOffsetPaginationHasNextPageAsync(
             new ListWithOffsetPaginationHasNextPageRequest
             {
                 Page = 1,

@@ -5,18 +5,15 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
-import { HttpPagerEndpointGenerator } from "./http/HttpPagerEndpointGenerator";
 import { RawClient } from "./http/RawClient";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;
-    private pager: HttpPagerEndpointGenerator;
     private grpc: GrpcEndpointGenerator;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
         super({ context });
         this.http = new HttpEndpointGenerator({ context });
-        this.pager = new HttpPagerEndpointGenerator({ context });
         this.grpc = new GrpcEndpointGenerator({ context });
     }
 
@@ -35,38 +32,31 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
     }): csharp.Method[] {
-        const methods: csharp.Method[] = [];
-        // If the service is a grpc service, grpcClientInfo will not be null or undefined,
-        // so any endpoint will be generated as a grpc endpoint, unless the transport is overriden by setting type to http
-        if (grpcClientInfo != null && endpoint.transport?.type !== "http") {
-            methods.push(
+        if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
+            return [
                 this.grpc.generate({
                     serviceId,
                     endpoint,
                     rawGrpcClientReference,
                     grpcClientInfo
                 })
-            );
+            ];
         } else {
-            methods.push(
-                this.http.generate({
-                    serviceId,
-                    endpoint,
-                    rawClientReference,
-                    rawClient
-                })
-            );
-            if (endpoint.pagination) {
-                methods.push(
-                    this.pager.generate({
-                        serviceId,
-                        endpoint,
-                        rawClientReference,
-                        rawClient
-                    })
-                );
-            }
+            return this.http.generate({
+                serviceId,
+                endpoint,
+                rawClientReference,
+                rawClient
+            });
         }
-        return methods;
+    }
+
+    private isGrpcEndpoint(
+        grpcClientInfo: GrpcClientInfo | undefined,
+        endpoint: HttpEndpoint
+    ): grpcClientInfo is GrpcClientInfo {
+        // If the service is a grpc service, grpcClientInfo will not be null or undefined,
+        // so any endpoint will be generated as a grpc endpoint, unless the transport is overriden by setting type to http
+        return grpcClientInfo != null && endpoint.transport?.type !== "http";
     }
 }

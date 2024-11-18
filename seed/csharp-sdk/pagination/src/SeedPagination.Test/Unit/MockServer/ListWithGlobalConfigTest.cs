@@ -39,7 +39,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithGlobalConfigAsync(
+        var response = Client.Users.ListWithGlobalConfigAsync(
             new ListWithGlobalConfigRequest { Offset = 1 },
             RequestOptions
         );

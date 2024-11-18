@@ -1,11 +1,5 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import {
-    ExampleEndpointCall,
-    ExampleTypeReference,
-    FernFilepath,
-    HttpEndpoint,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, MOCK_SERVER_TEST_FOLDER } from "../../SdkGeneratorContext";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -121,7 +115,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 }
                 writer.newLine();
 
-                const endpointSnippet = this.endpointGenerator.generateHttpEndpointSnippet({
+                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
                     clientVariableName: "Client",

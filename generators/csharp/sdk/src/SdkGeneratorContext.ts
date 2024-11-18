@@ -143,12 +143,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer,
-            AsIsFiles.Page,
-            AsIsFiles.Pager,
             AsIsFiles.RawClient
         ];
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
+        }
+        if (this.config.generatePaginatedClients) {
+            files.push(AsIsFiles.Page);
+            files.push(AsIsFiles.Pager);
         }
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
@@ -466,10 +468,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
-    }
-
-    public getEndpointPagerMethodName(endpoint: HttpEndpoint): string {
-        return `${endpoint.name.pascalCase.safeName}PagerAsync`;
     }
 
     public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint): boolean {

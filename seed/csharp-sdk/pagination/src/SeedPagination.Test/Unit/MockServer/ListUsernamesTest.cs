@@ -42,7 +42,7 @@ public class ListUsernamesTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListUsernamesAsync(
+        var response = Client.Users.ListUsernamesAsync(
             new ListUsernamesRequest { StartingAfter = "starting_after" },
             RequestOptions
         );

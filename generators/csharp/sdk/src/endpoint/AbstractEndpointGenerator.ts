@@ -7,6 +7,8 @@ import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 
+type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
+
 export abstract class AbstractEndpointGenerator {
     private exampleGenerator: ExampleGenerator;
     protected readonly context: SdkGeneratorContext;
@@ -17,6 +19,18 @@ export abstract class AbstractEndpointGenerator {
     }
 
     public getEndpointSignatureInfo({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+    }): EndpointSignatureInfo {
+        return this.hasPagination(endpoint)
+            ? this.getPagerEndpointSignatureInfo({ serviceId, endpoint })
+            : this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+    }
+
+    protected getUnpagedEndpointSignatureInfo({
         serviceId,
         endpoint
     }: {
@@ -39,7 +53,7 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    public getPagerEndpointSignatureInfo({
+    protected getPagerEndpointSignatureInfo({
         serviceId,
         endpoint
     }: {
@@ -62,10 +76,16 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
+    protected getPagerReturnType(endpoint: HttpEndpoint) {
+        const itemType = this.getPaginationItemType(endpoint);
+        const pager = this.context.getPagerClassReference({
+            itemType
+        });
+        return csharp.Type.reference(pager);
+    }
+
     protected getPaginationItemType(endpoint: HttpEndpoint) {
-        if (!endpoint.pagination) {
-            throw new Error(`Endpoint ${endpoint.name.originalName} is not a pager endpoint`);
-        }
+        this.assertHasPagination(endpoint);
         let listItemType = this.context.csharpTypeMapper.convert({
             reference: endpoint.pagination._visit({
                 offset: (pagination) => pagination.results.property.valueType,
@@ -88,15 +108,7 @@ export abstract class AbstractEndpointGenerator {
         return itemType;
     }
 
-    protected getPagerReturnType(endpoint: HttpEndpoint) {
-        const itemType = this.getPaginationItemType(endpoint);
-        const pager = this.context.getPagerClassReference({
-            itemType
-        });
-        return csharp.Type.reference(pager);
-    }
-
-    private getAllPathParameters({
+    protected getAllPathParameters({
         serviceId,
         endpoint
     }: {
@@ -125,6 +137,18 @@ export abstract class AbstractEndpointGenerator {
             pathParameters,
             pathParameterReferences
         };
+    }
+
+    protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
+        if (!this.context.config.generatePaginatedClients) {return false;}
+        return endpoint.pagination !== undefined;
+    }
+
+    protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
+        if (this.hasPagination(endpoint)) {
+            return;
+        }
+        throw new Error(`Endpoint ${endpoint.name.originalName} is not a pager endpoint`);
     }
 
     protected generateEndpointSnippet({
@@ -178,58 +202,7 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    protected generatePagerEndpointSnippet({
-        example,
-        endpoint,
-        clientVariableName,
-        parseDatetimes,
-        serviceId,
-        additionalEndParameters
-    }: {
-        example: ExampleEndpointCall;
-        endpoint: HttpEndpoint;
-        clientVariableName: string;
-        serviceId: ServiceId;
-        parseDatetimes: boolean;
-        additionalEndParameters?: csharp.CodeBlock[];
-        getResult?: boolean;
-    }): csharp.MethodInvocation | undefined {
-        const service = this.context.ir.services[serviceId];
-        if (service == null) {
-            throw new Error(`Unexpected no service with id ${serviceId}`);
-        }
-        const serviceFilePath = service.name.fernFilepath;
-        const requestBodyType = endpoint.requestBody?.type;
-        // TODO: implement these
-        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
-            return undefined;
-        }
-        const args = this.getNonEndpointArguments(example, parseDatetimes);
-        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
-        if (endpointRequestSnippet != null) {
-            args.push(endpointRequestSnippet);
-        }
-        const on = csharp.codeblock((writer) => {
-            writer.write(`${clientVariableName}`);
-            for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
-            }
-        });
-        for (const endParameter of additionalEndParameters ?? []) {
-            args.push(endParameter);
-        }
-
-        getEndpointReturnType({ context: this.context, endpoint });
-        return new csharp.MethodInvocation({
-            method: this.context.getEndpointPagerMethodName(endpoint),
-            arguments_: args,
-            on,
-            async: false,
-            generics: []
-        });
-    }
-
-    private getEndpointRequestSnippet(
+    protected getEndpointRequestSnippet(
         exampleEndpointCall: ExampleEndpointCall,
         endpoint: HttpEndpoint,
         serviceId: ServiceId,
@@ -266,7 +239,7 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    private getNonEndpointArguments(example: ExampleEndpointCall, parseDatetimes: boolean): csharp.CodeBlock[] {
+    protected getNonEndpointArguments(example: ExampleEndpointCall, parseDatetimes: boolean): csharp.CodeBlock[] {
         const pathParameters = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,

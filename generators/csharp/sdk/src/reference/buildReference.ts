@@ -36,14 +36,6 @@ function getEndpointReferencesForService({
             endpoint,
             example: context.getExampleEndpointCallOrThrow(endpoint)
         });
-        const singlePagerEndpointSnippet = endpoint.pagination
-            ? context.snippetGenerator.generateSingleEndpointSnippet({
-                  serviceId,
-                  endpoint,
-                  example: context.getExampleEndpointCallOrThrow(endpoint),
-                  generatePagerSnippet: true
-              })
-            : undefined;
         if (singleEndpointSnippet != null) {
             const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
@@ -57,23 +49,6 @@ function getEndpointReferencesForService({
                     endpoint,
                     endpointSignatureInfo,
                     singleEndpointSnippet
-                })
-            );
-        }
-        if (singlePagerEndpointSnippet != null) {
-            const endpointSignatureInfo = context.endpointGenerator.getPagerEndpointSignatureInfo({
-                serviceId,
-                endpoint
-            });
-            result.push(
-                getEndpointReference({
-                    context,
-                    serviceId,
-                    service,
-                    endpoint,
-                    endpointSignatureInfo,
-                    singleEndpointSnippet: singlePagerEndpointSnippet,
-                    isPager: true
                 })
             );
         }
@@ -105,9 +80,7 @@ function getEndpointReference({
                     text: context.getAccessFromRootClient(service.name.fernFilepath) + "."
                 },
                 {
-                    text: isPager
-                        ? context.getEndpointPagerMethodName(endpoint)
-                        : context.getEndpointMethodName(endpoint),
+                    text: context.getEndpointMethodName(endpoint),
                     location: {
                         path: getServiceFilepath({ context, serviceId, service })
                     }

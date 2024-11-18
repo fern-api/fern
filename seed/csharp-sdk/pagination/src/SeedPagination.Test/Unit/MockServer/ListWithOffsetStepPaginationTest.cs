@@ -58,7 +58,7 @@ public class ListWithOffsetStepPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithOffsetStepPaginationAsync(
+        var response = Client.Users.ListWithOffsetStepPaginationAsync(
             new ListUsersOffsetStepPaginationRequest
             {
                 Page = 1,

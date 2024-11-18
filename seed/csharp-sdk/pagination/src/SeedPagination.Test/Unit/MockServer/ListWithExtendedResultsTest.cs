@@ -36,7 +36,7 @@ public class ListWithExtendedResultsTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithExtendedResultsAsync(
+        var response = Client.Users.ListWithExtendedResultsAsync(
             new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
             RequestOptions
         );

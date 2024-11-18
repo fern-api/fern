@@ -64,7 +64,7 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithBodyCursorPaginationAsync(
+        var response = Client.Users.ListWithBodyCursorPaginationAsync(
             new ListUsersBodyCursorPaginationRequest
             {
                 Pagination = new WithCursor { Cursor = "cursor" },

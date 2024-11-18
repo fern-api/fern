@@ -64,7 +64,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithBodyOffsetPaginationAsync(
+        var response = Client.Users.ListWithBodyOffsetPaginationAsync(
             new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } },
             RequestOptions
         );
