@@ -631,6 +631,16 @@
               "type": "null"
             }
           ]
+        },
+        "header-key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
