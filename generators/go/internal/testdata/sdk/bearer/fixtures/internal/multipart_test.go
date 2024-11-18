@@ -75,7 +75,7 @@ func TestMultipartWriter(t *testing.T) {
 
 				var opts []WriteMultipartOption
 				if tt.giveContentType != "" {
-					opts = append(opts, WithMultipartContentType(tt.giveContentType))
+					opts = append(opts, WithDefaultContentType(tt.giveContentType))
 				}
 
 				require.NoError(t, w.WriteField(tt.giveField, tt.giveValue, opts...))
@@ -108,12 +108,21 @@ func TestMultipartWriter(t *testing.T) {
 				},
 			},
 			{
-				desc:      "override content type",
+				desc:      "file content type takes precedence",
 				giveField: "file",
 				giveFile: &mockFile{
 					name:        "test.txt",
 					content:     "hello world",
 					contentType: "text/plain",
+				},
+				giveContentType: "application/octet-stream",
+			},
+			{
+				desc:      "default content type",
+				giveField: "file",
+				giveFile: &mockFile{
+					name:    "test.txt",
+					content: "hello world",
 				},
 				giveContentType: "application/octet-stream",
 			},
@@ -125,7 +134,7 @@ func TestMultipartWriter(t *testing.T) {
 
 				var opts []WriteMultipartOption
 				if tt.giveContentType != "" {
-					opts = append(opts, WithMultipartContentType(tt.giveContentType))
+					opts = append(opts, WithDefaultContentType(tt.giveContentType))
 				}
 
 				require.NoError(t, w.WriteFile(tt.giveField, tt.giveFile, opts...))
@@ -154,9 +163,9 @@ func TestMultipartWriter(t *testing.T) {
 				require.NoError(t, err)
 				assert.Equal(t, tt.giveFile.content, string(content))
 
-				expectedContentType := tt.giveContentType
+				expectedContentType := tt.giveFile.contentType
 				if expectedContentType == "" {
-					expectedContentType = tt.giveFile.contentType
+					expectedContentType = tt.giveContentType
 				}
 				if expectedContentType != "" {
 					assert.Equal(t, expectedContentType, file.Header.Get("Content-Type"))

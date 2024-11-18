@@ -23,10 +23,14 @@ type ContentTyped interface {
 // WriteMultipartOption adapts the behavior of the multipart writer.
 type WriteMultipartOption func(*writeMultipartOptions)
 
-// WithMultipartContentType sets the Content-Type for the multipart writer.
-func WithMultipartContentType(contentType string) WriteMultipartOption {
+// WithDefaultContentType sets the default Content-Type for the part
+// written to the MultipartWriter.
+//
+// Note that if the part is a FileParam, the file's Content-Type takes
+// precedence over the value provided here.
+func WithDefaultContentType(contentType string) WriteMultipartOption {
 	return func(options *writeMultipartOptions) {
-		options.contentType = contentType
+		options.defaultContentType = contentType
 	}
 }
 
@@ -62,7 +66,7 @@ func (w *MultipartWriter) WriteFile(
 	opts ...WriteMultipartOption,
 ) error {
 	options := newWriteMultipartOptions(opts...)
-	return w.writeFile(field, file, options.contentType)
+	return w.writeFile(field, file, options.defaultContentType)
 }
 
 // WriteField writes the given value as a form field.
@@ -72,7 +76,7 @@ func (w *MultipartWriter) WriteField(
 	opts ...WriteMultipartOption,
 ) error {
 	options := newWriteMultipartOptions(opts...)
-	return w.writeField(field, value, options.contentType)
+	return w.writeField(field, value, options.defaultContentType)
 }
 
 // WriteJSON writes the given value as a JSON form field.
@@ -109,11 +113,14 @@ func (w *MultipartWriter) writeField(
 func (w *MultipartWriter) writeFile(
 	field string,
 	file io.Reader,
-	contentType string,
+	defaultContentType string,
 ) error {
-	filename := getFilename(file)
-	if contentType == "" {
+	var (
+		filename    = getFilename(file)
 		contentType = getContentType(file)
+	)
+	if contentType == "" {
+		contentType = defaultContentType
 	}
 	part, err := w.newFormPart(field, filename, contentType)
 	if err != nil {
@@ -147,7 +154,7 @@ func (w *MultipartWriter) newFormPart(
 
 // writeMultipartOptions are options used to adapt the behavior of the multipart writer.
 type writeMultipartOptions struct {
-	contentType string
+	defaultContentType string
 }
 
 // newWriteMultipartOptions returns a new write multipart options.

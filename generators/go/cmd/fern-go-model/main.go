@@ -29,6 +29,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		includeReadme,
 		config.Whitelabel,
 		config.AlwaysSendRequiredProperties,
+		config.InlineFileProperties,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,
