@@ -1,3 +1,9 @@
+- version: 0.31.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Updates the retrier to stop retrying on `409 Conflict` HTTP status codes by default.
+  irVersion: 53
 - version: 0.31.2
   changelogEntry:
     - type: internal
