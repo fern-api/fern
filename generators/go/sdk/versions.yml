@@ -13,7 +13,7 @@
         Simplify the generated code from the new `core.MultipartWriter` introduced in 0.29.0
         by refactoring `internal.WithMultipartContentType` as `internal.WithDefaultContentType`.
   irVersion: 53
-- version: 0.31
+- version: 0.31.3
   changelogEntry:
     - type: fix
       summary: >-
