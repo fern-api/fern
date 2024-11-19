@@ -3,8 +3,8 @@
         Docs configuration now lists all the top level roles, and OAuth Client Credential
         configuration is now more expressive.
     type: feat
-    irVersion: 53
-    version: 0.45.0-rc47
+  irVersion: 53
+  version: 0.45.0-rc47
 
 - changelogEntry:
     - summary: |
