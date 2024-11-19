@@ -116,7 +116,6 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
                 yield return new Page<TItem>(items);
             }
 
-            // If there is a step, we need to increment the offset by the number of items
             if (hasStep)
             {
                 longOffset += items?.Count ?? 1;
@@ -126,12 +125,10 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
                 longOffset++;
             }
 
-            // ensure there's a request object to set the offset on
             _request ??= Activator.CreateInstance<TRequest>();
             switch (offset)
             {
                 case int:
-                    // safely cast long to int
                     _setOffset(_request, (TOffset)(object)(int)longOffset);
                     break;
                 case long:
@@ -203,7 +200,6 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
                 break;
             }
 
-            // ensure there's a request object to set the cursor on
             _request ??= Activator.CreateInstance<TRequest>();
             _setCursor(_request, nextCursor);
         } while (true);

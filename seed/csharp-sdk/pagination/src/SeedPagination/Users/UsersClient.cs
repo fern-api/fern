@@ -166,45 +166,6 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListWithBodyLongOffsetPaginationAsync(
-    ///     new ListUsersBodyLongOffsetPaginationRequest
-    ///     {
-    ///         Pagination = new WithLongPage { Page = 1000000 },
-    ///     }
-    /// );
-    /// </code>
-    /// </example>
-    public Pager<User> ListWithBodyLongOffsetPaginationAsync(
-        ListUsersBodyLongOffsetPaginationRequest request,
-        RequestOptions? options = null
-    )
-    {
-        var pager = new OffsetPager<
-            ListUsersBodyLongOffsetPaginationRequest,
-            RequestOptions?,
-            ListUsersPaginationResponse,
-            long?,
-            object,
-            User
-        >(
-            request,
-            options,
-            ListWithBodyLongOffsetPaginationAsync,
-            request => request?.Pagination?.Page ?? 0,
-            (request, offset) =>
-            {
-                request.Pagination ??= new();
-                request.Pagination.Page = offset;
-            },
-            null,
-            response => response?.Data?.ToList(),
-            null
-        );
-        return pager;
-    }
-
-    /// <example>
-    /// <code>
     /// await client.Users.ListWithOffsetStepPaginationAsync(
     ///     new ListUsersOffsetStepPaginationRequest
     ///     {
@@ -559,43 +520,6 @@ public partial class UsersClient
 
     internal async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/users",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedPaginationException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new SeedPaginationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    internal async Task<ListUsersPaginationResponse> ListWithBodyLongOffsetPaginationAsync(
-        ListUsersBodyLongOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -180,51 +180,6 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyLongOffsetPaginationAsync</a>(ListUsersBodyLongOffsetPaginationRequest { ... }) -> Pager<User></code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Users.ListWithBodyLongOffsetPaginationAsync(
-    new ListUsersBodyLongOffsetPaginationRequest
-    {
-        Pagination = new WithLongPage { Page = 1000000 },
-    }
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `ListUsersBodyLongOffsetPaginationRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> Pager<User></code></summary>
 <dl>
 <dd>
