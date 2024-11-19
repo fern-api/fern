@@ -48,7 +48,9 @@ export function convertAuth(
                                   endpointId: FdrCjsSdk.EndpointId(
                                       scheme.configuration.tokenEndpoint.endpointReference.endpointId
                                   ),
-                                  accessTokenLocator: FdrCjsSdk.JqString(tokenPath)
+                                  accessTokenLocator: FdrCjsSdk.JqString(tokenPath),
+                                  headerName: scheme.configuration.tokenHeader,
+                                  tokenPrefix: scheme.configuration.tokenPrefix
                               }
                           }
                       }
