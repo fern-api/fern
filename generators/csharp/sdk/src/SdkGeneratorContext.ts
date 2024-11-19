@@ -162,8 +162,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return files;
     }
 
-    public hasPagination() {
-        return this.config.generatePaginatedClients && this.ir.sdkConfig.hasPaginatedEndpoints;
+    public hasPagination(): boolean {
+        return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 
     public getCoreTestAsIsFiles(): string[] {

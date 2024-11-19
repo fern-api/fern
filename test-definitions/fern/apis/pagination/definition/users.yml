@@ -2,10 +2,6 @@ imports:
   root: __package__.yml
 
 types:
-  Cursor: string
-  IntPage: integer
-  LongPage: long
-
   Order:
     enum:
       - asc
@@ -13,15 +9,11 @@ types:
 
   WithPage:
     properties:
-      page: optional<IntPage>
-
-  WithLongPage:
-    properties:
-      page: optional<LongPage>
+      page: optional<integer>
 
   WithCursor:
     properties:
-      cursor: optional<Cursor>
+      cursor: optional<string>
 
   UserListContainer:
     properties:
@@ -40,7 +32,6 @@ types:
     properties:
       data: UserOptionalListContainer
       next: optional<uuid>
-
   UsernameContainer:
     properties:
       results: list<string>
@@ -62,15 +53,6 @@ types:
         docs: The totall number of /users
 
   ListUsersPaginationResponse:
-    properties:
-      hasNextPage: optional<boolean>
-      page: optional<Page>
-      total_count:
-        type: integer
-        docs: The totall number of /users
-      data: list<User>
-
-  ListUsersLongPaginationResponse:
     properties:
       hasNextPage: optional<boolean>
       page: optional<Page>
@@ -185,24 +167,6 @@ service:
                 The object that contains the offset used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
-
-    listWithBodyLongOffsetPagination:
-      pagination:
-        offset: $request.pagination.page
-        results: $response.data
-      method: POST
-      path: ""
-      request:
-        name: ListUsersBodyLongOffsetPaginationRequest
-        body:
-          properties:
-            pagination:
-              type: optional<WithLongPage>
-              docs: |
-                The object that contains the offset used for pagination
-                in order to fetch the next page of results.
-      response: ListUsersPaginationResponse
-
     listWithOffsetStepPagination:
       pagination:
         offset: $request.page

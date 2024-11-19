@@ -1,7 +1,9 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import {
+    CursorPagination,
     ExampleEndpointCall,
     HttpEndpoint,
+    OffsetPagination,
     RequestProperty,
     ResponseError,
     ResponseProperty,
@@ -12,6 +14,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator";
+import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -346,103 +349,162 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 const unpagedEndpointMethodName = this.context.getEndpointMethodName(endpoint);
                 const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
                 if (!unpagedEndpointResponseType) {
-                    throw new Error("No return type found for endpoint");
+                    throw new Error("Internal error; a response type is required for pagination endpoints");
                 }
 
-                endpoint.pagination?._visit({
-                    offset: (pagination) => {
-                        const offsetType = this.context.csharpTypeMapper.convert({
-                            reference: pagination.page.property.valueType
-                        });
-                        // use specified type or fallback to int
-                        const stepType = pagination.step
-                            ? this.context.csharpTypeMapper.convert({
-                                  reference: pagination.step?.property.valueType
-                              })
-                            : csharp.Type.object();
-                        const offsetPagerClassReference = this.context.getOffsetPagerClassReference({
-                            requestType: requestParam.type,
+                switch (endpoint.pagination.type) {
+                    case "offset":
+                        this.generateOffsetMethodBody({
+                            pagination: endpoint.pagination,
+                            requestParam,
                             requestOptionsType,
-                            responseType: unpagedEndpointResponseType,
-                            offsetType,
-                            stepType,
-                            itemType
+                            unpagedEndpointResponseType,
+                            itemType,
+                            writer,
+                            optionsParamName,
+                            unpagedEndpointMethodName
                         });
-                        writer.write("var pager = new ");
-                        writer.writeNode(offsetPagerClassReference);
-                        writer.write("(");
-                        writer.indent();
-                        writer.writeLine(`${requestParam.name},`);
-                        writer.writeLine(`${optionsParamName},`);
-                        writer.writeLine(`${unpagedEndpointMethodName},`);
-                        writer.writeLine(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0,`);
+                        break;
+                    case "cursor":
+                        this.generateCursorMethodBody({
+                            pagination: endpoint.pagination,
+                            requestParam,
+                            requestOptionsType,
+                            unpagedEndpointResponseType,
+                            itemType,
+                            writer,
+                            optionsParamName,
+                            unpagedEndpointMethodName
+                        });
+                        break;
+                    default:
+                        assertNever(endpoint.pagination);
+                }
+            }),
+            codeExample: snippet?.endpointCall
+        });
+    }
 
+    private generateOffsetMethodBody({
+        pagination,
+        requestParam,
+        requestOptionsType,
+        unpagedEndpointResponseType,
+        itemType,
+        writer,
+        optionsParamName,
+        unpagedEndpointMethodName
+    }: {
+        pagination: OffsetPagination;
+        requestParam: csharp.Parameter;
+        requestOptionsType: csharp.Type;
+        unpagedEndpointResponseType: csharp.Type;
+        itemType: csharp.Type;
+        writer: csharp.Writer;
+        optionsParamName: string;
+        unpagedEndpointMethodName: string;
+    }) {
+        const offsetType = this.context.csharpTypeMapper.convert({
+            reference: pagination.page.property.valueType
+        });
+        // use specified type or fallback to object
+        const stepType = pagination.step
+            ? this.context.csharpTypeMapper.convert({
+                  reference: pagination.step?.property.valueType
+              })
+            : csharp.Type.object();
+        const offsetPagerClassReference = this.context.getOffsetPagerClassReference({
+            requestType: requestParam.type,
+            requestOptionsType,
+            responseType: unpagedEndpointResponseType,
+            offsetType,
+            stepType,
+            itemType
+        });
+        writer.write("var pager = ");
+        writer.writeNodeStatement(
+            csharp.instantiateClass({
+                classReference: offsetPagerClassReference,
+                arguments_: [
+                    csharp.codeblock(requestParam.name),
+                    csharp.codeblock(optionsParamName),
+                    csharp.codeblock(unpagedEndpointMethodName),
+                    csharp.codeblock(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0`),
+                    csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) => {");
                         writer.indent();
                         this.initializeNestedObjects(writer, "request", pagination.page);
                         writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = offset`);
                         writer.dedent();
-                        writer.writeLine("},");
+                        writer.writeLine("}");
+                    }),
+                    csharp.codeblock(
+                        pagination.step ? `request => ${this.nullableDotGet("request", pagination.step)} ?? 0` : "null"
+                    ),
+                    csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`),
+                    csharp.codeblock(
+                        pagination.hasNextPage
+                            ? `response => ${this.nullableDotGet("response", pagination.hasNextPage)}`
+                            : "null"
+                    )
+                ]
+            })
+        );
+        writer.writeTextStatement("return pager");
+    }
 
-                        if (pagination.step) {
-                            writer.writeLine(`request => ${this.nullableDotGet("request", pagination.step)},`);
-                        } else {
-                            writer.writeLine("null,");
-                        }
-                        writer.writeLine(
-                            `response => ${this.nullableDotGet("response", pagination.results)}?.ToList(),`
-                        );
-                        if (pagination.hasNextPage) {
-                            writer.writeLine(`response => ${this.nullableDotGet("response", pagination.hasNextPage)}`);
-                        } else {
-                            writer.writeLine("null");
-                        }
-                        writer.dedent();
-                        writer.writeTextStatement(")");
-                        writer.writeTextStatement("return pager");
-                    },
-                    cursor: (pagination) => {
-                        const cursorType = this.context.csharpTypeMapper.convert({
-                            reference: pagination.next.property.valueType
-                        });
+    private generateCursorMethodBody({
+        pagination,
+        requestParam,
+        requestOptionsType,
+        unpagedEndpointResponseType,
+        itemType,
+        writer,
+        optionsParamName,
+        unpagedEndpointMethodName
+    }: {
+        pagination: CursorPagination;
+        requestParam: csharp.Parameter;
+        requestOptionsType: csharp.Type;
+        unpagedEndpointResponseType: csharp.Type;
+        itemType: csharp.Type;
+        writer: csharp.Writer;
+        optionsParamName: string;
+        unpagedEndpointMethodName: string;
+    }) {
+        const cursorType = this.context.csharpTypeMapper.convert({
+            reference: pagination.next.property.valueType
+        });
 
-                        const cursorPagerClassReference = this.context.getCursorPagerClassReference({
-                            requestType: requestParam.type,
-                            requestOptionsType,
-                            responseType: unpagedEndpointResponseType,
-                            cursorType,
-                            itemType
-                        });
-                        writer.write("var pager = new ");
-                        writer.writeNode(cursorPagerClassReference);
-                        writer.write("(");
-                        writer.indent();
-                        writer.writeLine(`${requestParam.name},`);
-                        writer.writeLine(`${optionsParamName},`);
-                        writer.writeLine(`${unpagedEndpointMethodName},`);
-
+        const cursorPagerClassReference = this.context.getCursorPagerClassReference({
+            requestType: requestParam.type,
+            requestOptionsType,
+            responseType: unpagedEndpointResponseType,
+            cursorType,
+            itemType
+        });
+        writer.write("var pager = ");
+        writer.writeNodeStatement(
+            csharp.instantiateClass({
+                classReference: cursorPagerClassReference,
+                arguments_: [
+                    csharp.codeblock(requestParam.name),
+                    csharp.codeblock(optionsParamName),
+                    csharp.codeblock(unpagedEndpointMethodName),
+                    csharp.codeblock((writer) => {
                         writer.writeLine("(request, cursor) => {");
                         writer.indent();
                         this.initializeNestedObjects(writer, "request", pagination.page);
                         writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = cursor`);
                         writer.dedent();
-                        writer.writeLine("},");
-
-                        writer.writeLine(`response => ${this.nullableDotGet("response", pagination.next)},`);
-                        writer.writeLine(
-                            `response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`
-                        );
-                        writer.dedent();
-                        writer.writeTextStatement(")");
-                        writer.writeTextStatement("return pager");
-                    },
-                    _other: (pagination) => {
-                        throw new Error(`Unsupported pagination type: ${pagination.type}`);
-                    }
-                });
-            }),
-            codeExample: snippet?.endpointCall
-        });
+                        writer.writeLine("}");
+                    }),
+                    csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.next)}`),
+                    csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.results)}?.ToList()`)
+                ]
+            })
+        );
+        writer.writeTextStatement("return pager");
     }
 
     private initializeNestedObjects(writer: csharp.Writer, variableName: string, { propertyPath }: RequestProperty) {
@@ -591,16 +653,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         additionalEndParameters?: csharp.CodeBlock[];
         getResult?: boolean;
     }): csharp.MethodInvocation | undefined {
-        const service = this.context.ir.services[serviceId];
-        if (service == null) {
-            throw new Error(`Unexpected no service with id ${serviceId}`);
-        }
+        const service = this.context.getHttpServiceOrThrow(serviceId);
         const serviceFilePath = service.name.fernFilepath;
-        const requestBodyType = endpoint.requestBody?.type;
-        // TODO: implement these
-        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
-            return undefined;
-        }
         const args = this.getNonEndpointArguments(example, parseDatetimes);
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {

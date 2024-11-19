@@ -236,7 +236,7 @@ public partial class UsersClient
             {
                 request.Page = offset;
             },
-            request => request?.Limit,
+            request => request?.Limit ?? 0,
             response => response?.Data?.ToList(),
             null
         );
@@ -276,7 +276,7 @@ public partial class UsersClient
             {
                 request.Page = offset;
             },
-            request => request?.Limit,
+            request => request?.Limit ?? 0,
             response => response?.Data?.ToList(),
             response => response?.HasNextPage
         );

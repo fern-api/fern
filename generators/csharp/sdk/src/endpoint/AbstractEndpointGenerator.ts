@@ -6,6 +6,7 @@ import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenera
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
+import { assertNever } from "@fern-api/core-utils";
 
 type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 
@@ -87,13 +88,16 @@ export abstract class AbstractEndpointGenerator {
     protected getPaginationItemType(endpoint: HttpEndpoint) {
         this.assertHasPagination(endpoint);
         const listItemType = this.context.csharpTypeMapper.convert({
-            reference: endpoint.pagination._visit({
-                offset: (pagination) => pagination.results.property.valueType,
-                cursor: (pagination) => pagination.results.property.valueType,
-                _other: (pagination) => {
-                    throw new Error(`Unsupported pagination type: ${pagination.type}`);
+            reference: (() => {
+                switch (endpoint.pagination.type) {
+                    case "offset":
+                        return endpoint.pagination.results.property.valueType;
+                    case "cursor":
+                        return endpoint.pagination.results.property.valueType;
+                    default:
+                        assertNever(endpoint.pagination);
                 }
-            }),
+            })(),
             unboxOptionals: true
         });
 
