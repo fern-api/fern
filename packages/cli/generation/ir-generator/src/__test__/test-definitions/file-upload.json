@@ -2011,6 +2011,108 @@
                                 },
                                 "availability": null,
                                 "docs": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "contentType": "application/json",
+                                "name": {
+                                    "name": {
+                                        "originalName": "foobar",
+                                        "camelCase": {
+                                            "unsafeName": "foobar",
+                                            "safeName": "foobar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foobar",
+                                            "safeName": "foobar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOOBAR",
+                                            "safeName": "FOOBAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foobar",
+                                            "safeName": "Foobar"
+                                        }
+                                    },
+                                    "wireValue": "foobar"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "MyObject",
+                                                "camelCase": {
+                                                    "unsafeName": "myObject",
+                                                    "safeName": "myObject"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "my_object",
+                                                    "safeName": "my_object"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "MY_OBJECT",
+                                                    "safeName": "MY_OBJECT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "MyObject",
+                                                    "safeName": "MyObject"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "service",
+                                                        "camelCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "service",
+                                                    "camelCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SERVICE",
+                                                        "safeName": "SERVICE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Service",
+                                                        "safeName": "Service"
+                                                    }
+                                                }
+                                            },
+                                            "typeId": "type_service:MyObject",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
                             }
                         ],
                         "docs": null
