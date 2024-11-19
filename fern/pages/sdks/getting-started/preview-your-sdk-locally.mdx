@@ -1,18 +1,17 @@
 ---
 title: Preview your SDK
-subtitle: Use Fern's CLI tool to preview your SDK locally.
+subtitle: Use Fern's CLI tool to preview your SDK locally. 
 ---
 
-[Once you configure your SDK](/learn/sdks/getting-started/generate-your-first-sdk), you can preview the generated SDK code using Fern's CLI.
+[Once you configure your SDK](/learn/sdks/getting-started/generate-your-first-sdk), you can preview the generated SDK code using Fern's CLI. 
 
-Simply append the `--preview` flag to the command used to generate the SDK and you will see the generated code populated in a `.preview` folder within your `fern` folder.
+Simply append the `--preview` flag to the command used to generate the SDK and you will see the generated code populated in a `.preview` folder within your `fern` folder. 
 
 <Tip title="Custom Code">
-  [If you have added custom code to your SDK](/learn/sdks/capabilities/augment-with-custom-code), `--preview` will
-  preserve those changes.
+[If you have added custom code to your SDK](/learn/sdks/features/augment-with-custom-code), `--preview` will preserve those changes. 
 </Tip>
 
-Here's an example of how you can preview your SDK:
+Here's an example of how you can preview your SDK: 
 
 <Steps>
 ### Generator configuration
@@ -36,13 +35,13 @@ groups:
 
 ### Invoke the Fern CLI
 
-```shell
+```shell 
 fern generate --group python-sdk --preview
 ```
 
 ### Preview your SDK
 
-The resulting folder structure will look like this:
+The resulting folder structure will look like this: 
 
 <Tabs>
 <Tab title="OpenAPI">
