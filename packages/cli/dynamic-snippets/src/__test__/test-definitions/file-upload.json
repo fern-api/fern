@@ -1503,6 +1503,38 @@
                                 "_type": "named",
                                 "value": "type_service:MyObject"
                             }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
+                                    "originalName": "foobar",
+                                    "camelCase": {
+                                        "unsafeName": "foobar",
+                                        "safeName": "foobar"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "foobar",
+                                        "safeName": "foobar"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FOOBAR",
+                                        "safeName": "FOOBAR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Foobar",
+                                        "safeName": "Foobar"
+                                    }
+                                },
+                                "wireValue": "foobar"
+                            },
+                            "typeReference": {
+                                "_type": "optional",
+                                "value": {
+                                    "_type": "named",
+                                    "value": "type_service:MyObject"
+                                }
+                            }
                         }
                     ]
                 }
