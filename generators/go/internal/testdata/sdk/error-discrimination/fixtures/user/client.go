@@ -7,12 +7,13 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
+	io "io"
+	http "net/http"
+
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/option"
-	io "io"
-	http "net/http"
 )
 
 type Client struct {
@@ -41,18 +42,19 @@ func (c *Client) Get(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/%v", id)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
-
+	baseURL := internal.ResolveBaseURL(
+		"",
+		c.baseURL,
+		options.BaseURL,
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v",
+		id,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {

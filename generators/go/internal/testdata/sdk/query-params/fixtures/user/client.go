@@ -5,11 +5,12 @@ package user
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -38,16 +39,12 @@ func (c *Client) GetAllUsers(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		"",
+		c.baseURL,
+		options.BaseURL,
+	)
 	endpointURL := baseURL + "/users/all"
-
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return "", err
@@ -56,8 +53,10 @@ func (c *Client) GetAllUsers(
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string

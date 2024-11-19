@@ -7,12 +7,13 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
+	io "io"
+	http "net/http"
+
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/option"
-	io "io"
-	http "net/http"
 )
 
 type Client struct {
@@ -41,63 +42,35 @@ func (c *Client) Get(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/%v", id)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	errorDecoder := func(statusCode int, body io.Reader) error {
-		raw, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
-		decoder := json.NewDecoder(bytes.NewReader(raw))
-		switch statusCode {
-		case 404:
-			value := new(fixtures.UserNotFoundError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
-			}
-			return value
-		case 501:
-			value := new(fixtures.NotImplementedError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
-			}
-			return value
-		case 418:
-			value := new(fixtures.TeapotError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
-			}
-			return value
-		case 426:
-			value := new(fixtures.UpgradeError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
-			}
-			return value
-		case 400:
-			value := new(fixtures.UntypedError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
-			}
-			return value
-		}
-		return apiError
+	baseURL := internal.ResolveBaseURL(
+		"",
+		c.baseURL,
+		options.BaseURL,
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v",
+		id,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	errorCodes := map[int]func() error{
+		400: func() error {
+			return new(fixtures.UntypedError)
+		},
+		404: func() error {
+			return new(fixtures.UserNotFoundError)
+		},
+		418: func() error {
+			return new(fixtures.TeapotError)
+		},
+		426: func() error {
+			return new(fixtures.UpgradeError)
+		},
+		501: func() error {
+			return new(fixtures.NotImplementedError)
+		},
 	}
 
 	var response string
@@ -112,7 +85,7 @@ func (c *Client) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    errorDecoder,
+			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},
 	); err != nil {
 		return "", err

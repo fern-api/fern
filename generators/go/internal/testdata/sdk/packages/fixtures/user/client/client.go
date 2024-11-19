@@ -4,13 +4,14 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	fixturesuser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	notificationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification/client"
 	useruser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/user"
-	http "net/http"
 )
 
 type Client struct {
@@ -44,17 +45,19 @@ func (c *Client) GetUser(
 	opts ...option.RequestOption,
 ) (*fixturesuser.User, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := "https://api.foo.io/v1"
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/users/%v", user)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	baseURL := internal.ResolveBaseURL(
+		"https://api.foo.io/v1",
+		c.baseURL,
+		options.BaseURL,
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/users/%v",
+		user,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *fixturesuser.User
 	if err := c.caller.Call(
