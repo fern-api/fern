@@ -15,7 +15,6 @@ import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
-import { APIPromiseImpl } from "./api-promise/APIPromiseImpl";
 import { AuthImpl } from "./auth/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
 import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
@@ -28,6 +27,7 @@ import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
+import { PromiseUtilsImpl } from "./promise/PromiseUtilsImpl";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -55,7 +55,7 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            apiPromise: new APIPromiseImpl({ getReferenceToExport })
+            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport })
         };
     }
 

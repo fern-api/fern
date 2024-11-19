@@ -8,7 +8,7 @@ import { Runtime } from "./runtime/Runtime";
 import { StreamUtils } from "./stream-utils/StreamUtils";
 import { Utils } from "./utils/Utils";
 import { Zurg } from "./zurg/Zurg";
-import { APIPromise } from "./api-promise/APIPromise";
+import { PromiseUtils } from "./promise/PromiseUtils";
 
 export interface CoreUtilities {
     zurg: Zurg;
@@ -21,5 +21,5 @@ export interface CoreUtilities {
     runtime: Runtime;
     pagination: Pagination;
     utils: Utils;
-    apiPromise: APIPromise;
+    promiseUtils: PromiseUtils;
 }

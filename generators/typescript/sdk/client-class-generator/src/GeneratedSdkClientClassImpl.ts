@@ -615,15 +615,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
                       )
                     : getTextOfTsNode(
-                          context.coreUtilities.apiPromise._getReferenceToType(signature.returnTypeWithoutPromise)
+                          context.coreUtilities.promiseUtils.APIPromise._getReferenceToType(
+                              signature.returnTypeWithoutPromise
+                          )
                       ),
                 scope: Scope.Public,
-                isAsync: true,
+                isAsync: context.neverThrowErrors, // if not neverThrowErrors we return an `APIPromise`
                 statements: context.neverThrowErrors
                     ? statements.map(getTextOfTsNode)
-                    : [ts.factory.createReturnStatement(context.coreUtilities.apiPromise.from(statements))].map(
-                          getTextOfTsNode
-                      ),
+                    : [
+                          ts.factory.createReturnStatement(
+                              context.coreUtilities.promiseUtils.APIPromise.from(statements)
+                          )
+                      ].map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
@@ -632,7 +636,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
                           )
                         : getTextOfTsNode(
-                              context.coreUtilities.apiPromise._getReferenceToType(overload.returnTypeWithoutPromise)
+                              context.coreUtilities.promiseUtils.APIPromise._getReferenceToType(
+                                  overload.returnTypeWithoutPromise
+                              )
                           )
                 }))
             });

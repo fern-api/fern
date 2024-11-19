@@ -40,8 +40,8 @@ export class Imdb {
      *         rating: 1.1
      *     })
      */
-    public async createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): APIPromise<SeedApi.MovieId> {
-        return APIPromise.from((async () => {
+    public createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): core.APIPromise<SeedApi.MovieId> {
+        return core.APIPromise.from((async () => {
             const _response = await core.fetcher({
                 url: urlJoin(await core.Supplier.get(this._options.environment), "/movies/create-movie"),
                 method: "POST",
@@ -62,7 +62,11 @@ export class Imdb {
                 abortSignal: requestOptions?.abortSignal
             });
             if (_response.ok) {
-                return serializers.MovieId.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+                return {
+                    ok: _response.ok,
+                    body: serializers.MovieId.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }),
+                    headers: _response.headers
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedApiError({
@@ -92,8 +96,8 @@ export class Imdb {
      * @example
      *     await client.imdb.getMovie("movieId")
      */
-    public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): APIPromise<SeedApi.Movie> {
-        return APIPromise.from((async () => {
+    public getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): core.APIPromise<SeedApi.Movie> {
+        return core.APIPromise.from((async () => {
             const _response = await core.fetcher({
                 url: urlJoin(await core.Supplier.get(this._options.environment), `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`),
                 method: "GET",
@@ -113,7 +117,11 @@ export class Imdb {
                 abortSignal: requestOptions?.abortSignal
             });
             if (_response.ok) {
-                return serializers.Movie.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+                return {
+                    ok: _response.ok,
+                    body: serializers.Movie.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }),
+                    headers: _response.headers
+                };
             }
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
