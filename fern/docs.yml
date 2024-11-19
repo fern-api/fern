@@ -235,7 +235,6 @@ navigation:
             path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
           - page: Publish a Public-Facing SDK
             path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
-            hidden: true
       - section: Features
         contents:
           - page: Strongly Typed
