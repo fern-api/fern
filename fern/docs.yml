@@ -41,7 +41,35 @@ css: ./assets/styles.css
 redirects:
   - source: /api-definition/fern/api-yml-reference
     destination: /api-definition/fern/api-yml/overview
-
+  - source: /sdks/features/strongly-typed
+    destination: /sdks/capabilities/strongly-typed
+  - source: /sdks/features/idiomatic-method-names
+    destination: /sdks/capabilities/idiomatic-method-names
+  - source: /sdks/features/schema-validation
+    destination: /sdks/capabilities/schema-validation
+  - source: /sdks/features/discriminated-unions
+    destination: /sdks/capabilities/discriminated-unions
+  - source: /sdks/features/multipart-form-data
+    destination: /sdks/capabilities/multipart-form-data
+  - source: /sdks/features/forward-compatibility
+    destination: /sdks/capabilities/forward-compatibility
+  - source: /sdks/features/publish-to-registries
+    destination: /sdks/capabilities/publish-to-registries
+  - source: /sdks/features/auto-pagination
+    destination: /sdks/capabilities/auto-pagination
+  - source: /sdks/features/server-sent-events
+    destination: /sdks/capabilities/server-sent-events
+  - source: /sdks/features/integration-tests
+    destination: /sdks/capabilities/integration-tests
+  - source: /sdks/features/code-snippets
+    destination: /sdks/capabilities/code-snippets
+  - source: /sdks/features/augment-with-custom-code
+    destination: /sdks/capabilities/augment-with-custom-code
+  - source: /sdks/features/merging-multiple-apis
+    destination: /sdks/capabilities/merging-multiple-apis
+  - source: /sdks/features/websockets
+    destination: /sdks/capabilities/websockets
+    
 navigation:
   - tab: home
     layout:
