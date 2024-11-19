@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.7.18",
+    "@types/node": "22.9.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
