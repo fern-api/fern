@@ -8,6 +8,7 @@ import (
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/bytes/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/bytes/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/bytes/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/bytes/fixtures/option"
 	io "io"
 	http "net/http"
@@ -15,7 +16,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -23,8 +24,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -48,9 +49,9 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/upload/%v", id)
+	endpointURL := internal.EncodeURL(baseURL+"/upload/%v", id)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/custom-format")
 
 	requestBuffer := bytes.NewBuffer(request)
@@ -58,7 +59,7 @@ func (c *Client) Upload(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -90,9 +91,9 @@ func (c *Client) UploadOptional(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/upload/optional/%v", id)
+	endpointURL := internal.EncodeURL(baseURL+"/upload/optional/%v", id)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/custom-format")
 
 	var requestBuffer io.Reader
@@ -103,7 +104,7 @@ func (c *Client) UploadOptional(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -135,9 +136,9 @@ func (c *Client) UploadWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/upload_with_header/%v", id)
+	endpointURL := internal.EncodeURL(baseURL+"/upload_with_header/%v", id)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Upload-File-Size", fmt.Sprintf("%v", request.XUploadFileSize))
 	headers.Set("Content-Type", "application/custom-format")
 
@@ -146,7 +147,7 @@ func (c *Client) UploadWithHeader(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -178,9 +179,9 @@ func (c *Client) UploadOptionalWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/upload_with_header/optional/%v", id)
+	endpointURL := internal.EncodeURL(baseURL+"/upload_with_header/optional/%v", id)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Upload-File-Size", fmt.Sprintf("%v", request.XUploadFileSize))
 	headers.Set("Content-Type", "application/custom-format")
 
@@ -192,7 +193,7 @@ func (c *Client) UploadOptionalWithHeader(
 	var response bool
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

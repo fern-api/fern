@@ -384,7 +384,7 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
 
-  generators/go-v2/codegen:
+  generators/go-v2/ast:
     dependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
@@ -427,6 +427,39 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/go-v2/base:
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.24.0)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   generators/go-v2/dynamic-snippets:
     devDependencies:
       '@fern-api/core-utils':
@@ -444,9 +477,9 @@ importers:
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
-      '@fern-api/go-codegen':
+      '@fern-api/go-ast':
         specifier: workspace:*
-        version: link:../codegen
+        version: link:../ast
       '@fern-api/go-formatter':
         specifier: workspace:*
         version: link:../formatter
@@ -529,6 +562,72 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/go-v2/model:
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.24.0)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/go-v2/sdk:
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.24.0)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/openapi:
     devDependencies:

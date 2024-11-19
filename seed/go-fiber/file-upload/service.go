@@ -5,7 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 )
 
 type JustFileWithQueryParamsRequet struct {
@@ -54,7 +54,7 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 	}
 	*m = MyObject(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 }
 
 func (m *MyObject) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -93,6 +93,7 @@ func (o ObjectType) Ptr() *ObjectType {
 }
 
 type WithContentTypeRequest struct {
-	Foo string    `json:"foo" url:"-"`
-	Bar *MyObject `json:"bar,omitempty" url:"-"`
+	Foo    string    `json:"foo" url:"-"`
+	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+	Foobar *MyObject `json:"foobar,omitempty" url:"-"`
 }

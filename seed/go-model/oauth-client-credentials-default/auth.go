@@ -5,7 +5,7 @@ package oauthclientcredentialsdefault
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/oauth-client-credentials-default/fern/core"
+	internal "github.com/oauth-client-credentials-default/fern/internal"
 )
 
 // An OAuth token response.
@@ -42,7 +42,7 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	}
 	*t = TokenResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (t *TokenResponse) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

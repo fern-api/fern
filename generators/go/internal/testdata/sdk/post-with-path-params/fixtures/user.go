@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/internal"
 	time "time"
 )
 
@@ -29,12 +29,12 @@ func (s *SetNameRequest) MarshalJSON() ([]byte, error) {
 	type embed SetNameRequest
 	var marshaler = struct {
 		embed
-		Date     *core.Date     `json:"date"`
-		Datetime *core.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
+		Datetime *internal.DateTime `json:"datetime"`
 	}{
 		embed:    embed(*s),
-		Date:     core.NewDate(s.Date),
-		Datetime: core.NewDateTime(s.Datetime),
+		Date:     internal.NewDate(s.Date),
+		Datetime: internal.NewDateTime(s.Datetime),
 	}
 	return json.Marshal(marshaler)
 }
@@ -114,6 +114,54 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 	return json.Marshal("fern")
 }
 
+type Bar struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *Bar) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Bar) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Filter struct {
 	Tag string `json:"tag" url:"tag"`
 
@@ -140,7 +188,7 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 	}
 	*f = Filter(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -152,11 +200,59 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 
 func (f *Filter) String() string {
 	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type Foo struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetId() string {
+	if f == nil {
+		return ""
+	}
+	return f.Id
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	f._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Foo) String() string {
+	if len(f._rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -188,7 +284,7 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 	}
 	*s = SetNameRequestV3Body(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -200,11 +296,11 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 
 func (s *SetNameRequestV3Body) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -278,9 +374,9 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	case "bar":
-		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 }
 
@@ -325,12 +421,12 @@ func (u *UpdateRequest) MarshalJSON() ([]byte, error) {
 	type embed UpdateRequest
 	var marshaler = struct {
 		embed
-		OptionalDate     *core.Date     `json:"optionalDate,omitempty"`
-		OptionalDatetime *core.DateTime `json:"optionalDatetime,omitempty"`
+		OptionalDate     *internal.Date     `json:"optionalDate,omitempty"`
+		OptionalDatetime *internal.DateTime `json:"optionalDatetime,omitempty"`
 	}{
 		embed:            embed(*u),
-		OptionalDate:     core.NewOptionalDate(u.OptionalDate),
-		OptionalDatetime: core.NewOptionalDateTime(u.OptionalDatetime),
+		OptionalDate:     internal.NewOptionalDate(u.OptionalDate),
+		OptionalDatetime: internal.NewOptionalDateTime(u.OptionalDatetime),
 	}
 	return json.Marshal(marshaler)
 }

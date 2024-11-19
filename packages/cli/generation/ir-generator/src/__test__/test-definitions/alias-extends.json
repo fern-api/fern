@@ -1135,11 +1135,11 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
-                "type_:AliasType"
+                "type_:AliasType",
+                "type_:Parent"
             ]
         },
         "sharedTypes": [
-            "type_:Parent",
             "type_:Child"
         ]
     },

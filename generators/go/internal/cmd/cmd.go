@@ -56,6 +56,7 @@ type Config struct {
 	IncludeLegacyClientOptions   bool
 	Whitelabel                   bool
 	AlwaysSendRequiredProperties bool
+	InlineFileProperties         bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -200,6 +201,7 @@ func newConfig(configFilename string) (*Config, error) {
 
 	return &Config{
 		DryRun:                       config.DryRun,
+		InlineFileProperties:         customConfig.InlineFileProperties,
 		IncludeLegacyClientOptions:   customConfig.IncludeLegacyClientOptions,
 		EnableExplicitNull:           customConfig.EnableExplicitNull,
 		Organization:                 config.Organization,
@@ -255,6 +257,7 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 
 type customConfig struct {
 	EnableExplicitNull           bool          `json:"enableExplicitNull,omitempty"`
+	InlineFileProperties         bool          `json:"inlineFileProperties,omitempty"`
 	IncludeLegacyClientOptions   bool          `json:"includeLegacyClientOptions,omitempty"`
 	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`

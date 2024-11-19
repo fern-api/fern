@@ -5,7 +5,7 @@ package responseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/response-property/fern/core"
+	internal "github.com/response-property/fern/internal"
 )
 
 type OptionalStringResponse = *StringResponse
@@ -35,7 +35,7 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 	}
 	*s = StringResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -45,10 +45,100 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (s *StringResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+type WithMetadata struct {
+	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithMetadata) GetMetadata() map[string]string {
+	if w == nil {
+		return nil
+	}
+	return w.Metadata
+}
+
+func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithMetadata(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithMetadata) String() string {
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+type Movie struct {
+	Id   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Movie) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetName() string {
+	if m == nil {
+		return ""
+	}
+	return m.Name
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *Movie) UnmarshalJSON(data []byte) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
+}
+
+func (m *Movie) String() string {
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type OptionalWithDocs = *WithDocs
@@ -94,7 +184,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 	}
 	*r = Response(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -104,8 +194,49 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 }
 
 func (r *Response) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+type WithDocs struct {
+	Docs string `json:"docs" url:"docs"`
+
+	extraProperties map[string]interface{}
+}
+
+func (w *WithDocs) GetDocs() string {
+	if w == nil {
+		return ""
+	}
+	return w.Docs
+}
+
+func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithDocs) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithDocs(value)
+
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
+	return nil
+}
+
+func (w *WithDocs) String() string {
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

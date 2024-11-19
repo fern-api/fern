@@ -5,7 +5,7 @@ package crosspackagetypenames
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/cross-package-type-names/fern/core"
+	internal "github.com/cross-package-type-names/fern/internal"
 )
 
 type FindRequest struct {
@@ -39,7 +39,7 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	}
 	*i = ImportingType(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -49,7 +49,7 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 }
 
 func (i *ImportingType) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)

@@ -9,6 +9,7 @@ import (
 	errors "errors"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/internal"
 	nestedclient "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/nested/client"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/option"
 	io "io"
@@ -17,7 +18,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Nested *nestedclient.Client
@@ -27,8 +28,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -53,12 +54,12 @@ func (c *Client) GetFoo(
 	}
 	endpointURL := baseURL + "/foo"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -90,7 +91,7 @@ func (c *Client) PostFoo(
 	}
 	endpointURL := baseURL + "/foo"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -121,7 +122,7 @@ func (c *Client) PostFoo(
 	var response *fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -153,9 +154,9 @@ func (c *Client) GetFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
+	endpointURL := internal.EncodeURL(baseURL+"/foo/%v", fooId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -179,7 +180,7 @@ func (c *Client) GetFooFooId(
 	var response *fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			MaxAttempts:     options.MaxAttempts,
@@ -211,9 +212,9 @@ func (c *Client) PatchFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
+	endpointURL := internal.EncodeURL(baseURL+"/foo/%v", fooId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -251,7 +252,7 @@ func (c *Client) PatchFooFooId(
 	var response *fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			MaxAttempts:     options.MaxAttempts,
@@ -283,9 +284,9 @@ func (c *Client) DeleteFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
+	endpointURL := internal.EncodeURL(baseURL+"/foo/%v", fooId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -308,7 +309,7 @@ func (c *Client) DeleteFooFooId(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodDelete,
 			MaxAttempts:     options.MaxAttempts,
@@ -338,9 +339,9 @@ func (c *Client) PostFooFooIdRun(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := core.EncodeURL(baseURL+"/foo/%v/run", fooId)
+	endpointURL := internal.EncodeURL(baseURL+"/foo/%v/run", fooId)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -371,7 +372,7 @@ func (c *Client) PostFooFooIdRun(
 	var response *fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -404,7 +405,7 @@ func (c *Client) PostFooBatchCreate(
 	}
 	endpointURL := baseURL + "/foo/batch-create"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -449,7 +450,7 @@ func (c *Client) PostFooBatchCreate(
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,
@@ -483,7 +484,7 @@ func (c *Client) PostFooBatchDelete(
 	}
 	endpointURL := baseURL + "/foo/batch-delete"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -513,7 +514,7 @@ func (c *Client) PostFooBatchDelete(
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

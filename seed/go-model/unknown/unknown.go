@@ -5,8 +5,10 @@ package unknownasany
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/unknown/fern/core"
+	internal "github.com/unknown/fern/internal"
 )
+
+type MyAlias = interface{}
 
 type MyObject struct {
 	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
@@ -33,7 +35,7 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 	}
 	*m = MyObject(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
@@ -43,7 +45,7 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 }
 
 func (m *MyObject) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

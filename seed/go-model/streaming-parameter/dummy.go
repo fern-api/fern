@@ -5,7 +5,7 @@ package streaming
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/streaming-parameter/fern/core"
+	internal "github.com/streaming-parameter/fern/internal"
 )
 
 type RegularResponse struct {
@@ -41,7 +41,7 @@ func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 	}
 	*r = RegularResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (r *RegularResponse) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -90,7 +90,7 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 	}
 	*s = StreamResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (s *StreamResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

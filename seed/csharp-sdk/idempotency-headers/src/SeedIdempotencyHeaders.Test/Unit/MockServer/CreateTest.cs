@@ -43,7 +43,7 @@ public class CreateTest : BaseMockServerTest
 
         var response = await Client.Payment.CreateAsync(
             new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd },
-            RequestOptions
+            IdempotentRequestOptions
         );
         JToken
             .Parse(mockResponse)

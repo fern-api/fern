@@ -119,6 +119,11 @@ export class IrGraph {
     }
 
     public getTypesReferencedByService(): Record<TypeId, Set<ServiceId>> {
+        for (const endpoint of Object.values(this.endpoints)) {
+            for (const typeId of endpoint.referencedTypes) {
+                this.markTypeForService(typeId, endpoint.serviceId);
+            }
+        }
         return this.typesReferencedByService;
     }
 
@@ -261,11 +266,9 @@ export class IrGraph {
             referencedErrors.add(IdGenerator.generateErrorId(responseError.error));
             referencedSubpackages.add(responseError.error.fernFilepath);
         });
-        for (const typeId of referencedTypes) {
-            this.markTypeForService(typeId, serviceId);
-        }
         this.endpoints[endpointId] = {
             endpointId,
+            serviceId,
             referencedTypes,
             referencedErrors,
             referencedSubpackages
@@ -462,11 +465,16 @@ export class IrGraph {
     }
 
     private markTypeForService(typeId: TypeId, serviceId: ServiceId): void {
-        const services = this.typesReferencedByService[typeId];
-        if (services == null) {
-            this.typesReferencedByService[typeId] = new Set(serviceId);
-        } else {
-            services.add(serviceId);
+        const types = (this.typesReferencedByService[typeId] ??= new Set());
+        if (types.has(serviceId)) {
+            return;
+        }
+
+        types.add(serviceId);
+
+        const typeNode = this.getTypeNode(typeId);
+        for (const descendantTypeId of typeNode.allDescendants) {
+            this.markTypeForService(descendantTypeId, serviceId);
         }
     }
 

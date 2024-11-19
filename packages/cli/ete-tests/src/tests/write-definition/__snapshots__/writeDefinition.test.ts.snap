@@ -67,6 +67,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -172,6 +174,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -308,6 +312,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: neopetsRoot.Pets
@@ -1462,12 +1468,16 @@ service:
           destination:
             docs: The ID of the destination station
             type: string
+            validation:
+              format: uuid
           dogs:
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
             docs: The ID of the origin station
             type: string
+            validation:
+              format: uuid
       response:
         docs: A list of available train trips
         type: GetTripsResponse
@@ -1603,6 +1613,11 @@ name: api
       data: optional<string>
     source:
       openapi: openapi/cohere.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
   NotFoundErrorBody:
     properties:
       data: optional<string>
@@ -1678,6 +1693,14 @@ errors:
       - value: {}
     status-code: 500
     type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
+    type: unknown
   NotFoundError:
     docs: >
       This error is returned when a resource is not found. This could be
@@ -1752,6 +1775,7 @@ service:
         - NotFoundError
         - UnprocessableEntityError
         - TooManyRequestsError
+        - InvalidTokenError
         - ClientClosedRequestError
         - InternalServerError
         - NotImplementedError
@@ -1988,6 +2012,11 @@ service:
       data: optional<string>
     source:
       openapi: openapi/cohere-v2.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
   NotFoundErrorBody:
     properties:
       data: optional<string>
@@ -2062,6 +2091,14 @@ errors:
     examples:
       - value: {}
     status-code: 500
+    type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
     type: unknown
   NotFoundError:
     docs: >
@@ -2169,6 +2206,7 @@ service:
         - v2Root.NotFoundError
         - v2Root.UnprocessableEntityError
         - v2Root.TooManyRequestsError
+        - v2Root.InvalidTokenError
         - v2Root.ClientClosedRequestError
         - v2Root.InternalServerError
         - v2Root.NotImplementedError

@@ -30,6 +30,8 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets

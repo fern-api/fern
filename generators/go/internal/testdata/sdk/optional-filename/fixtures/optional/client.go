@@ -6,13 +6,14 @@ import (
 	context "context"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/optional-filename/fixtures/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -46,12 +47,12 @@ func (c *Client) Get(
 	}
 	endpointURL := baseURL + "/post"
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			MaxAttempts:     options.MaxAttempts,

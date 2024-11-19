@@ -6531,10 +6531,24 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Datasets to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort_by": {
                     "docs": "Field to sort Datasets by",
@@ -6610,10 +6624,24 @@ By default the deployed version of the Dataset is returned. Use the query parame
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Datapoints to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "version_id": {
                     "docs": "A specific Version ID of the Dataset to retrieve.",
@@ -6822,9 +6850,13 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Datasets to fetch.
+            validation:
+              min: 0
           name:
             type: optional<string>
             docs: Case-insensitive filter for Dataset name.
@@ -7176,9 +7208,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Datapoints to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataDatapointResponse
@@ -7913,10 +7949,24 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Evaluations to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -8250,9 +8300,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Evaluations to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataEvaluationResponse
@@ -9542,6 +9596,13 @@ By default the deployed version of the Evaluator is returned. Use the query para
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Evaluators to fetch.",
@@ -9871,6 +9932,8 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Evaluators to fetch.
@@ -10916,6 +10979,13 @@ You can manually create Logs through the API.
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "If provided, only Logs that contain the provided string in its inputs and output will be returned.",
@@ -10924,6 +10994,13 @@ You can manually create Logs through the API.
                   "size": {
                     "docs": "Page size for pagination. Number of Logs to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "start_date": {
                     "docs": "If provided, only Logs created after the specified date will be returned.",
@@ -10976,9 +11053,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Logs to fetch.
+            validation:
+              min: 0
           version_id:
             type: optional<string>
             docs: >-
@@ -12186,10 +12267,24 @@ By default the deployed version of the Prompt is returned. Use the query paramet
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Prompts to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort_by": {
                     "docs": "Field to sort Prompts by",
@@ -12834,9 +12929,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Prompts to fetch.
+            validation:
+              min: 0
           name:
             type: optional<string>
             docs: Case-insensitive filter for Prompt name.
@@ -14359,10 +14458,24 @@ Log is in, nested within the evaluated Log.
                   "page": {
                     "docs": "Page number for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Sessions to fetch.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "version_id": {
                     "docs": "Unique identifier for Version to return Sessions for. Sessions that contain any Logs associated to this Version will be returned.",
@@ -14503,9 +14616,13 @@ service:
           page:
             type: optional<integer>
             docs: Page number for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Sessions to fetch.
+            validation:
+              min: 0
       response:
         docs: Successful Response
         type: root.PaginatedDataSessionResponse
@@ -15069,6 +15186,13 @@ By default the deployed version of the Tool is returned. Use the query parameter
                   "page": {
                     "docs": "Page offset for pagination.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "size": {
                     "docs": "Page size for pagination. Number of Tools to fetch.",
@@ -15576,6 +15700,8 @@ service:
           page:
             type: optional<integer>
             docs: Page offset for pagination.
+            validation:
+              min: 1
           size:
             type: optional<integer>
             docs: Page size for pagination. Number of Tools to fetch.

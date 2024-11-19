@@ -58,6 +58,9 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
+    if (context.shouldMarkSchemaAsReferenced()) {
+        context.markSchemaAsReferenced(schema, namespace);
+    }
     switch (schema.type) {
         case "primitive": {
             return buildPrimitiveTypeReference(schema);
@@ -402,10 +405,10 @@ export function buildReferenceTypeReference({
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const resolvedSchema = context.getSchema(schema.schema, namespace);
-
     if (resolvedSchema == null) {
         return "unknown";
     }
+
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);

@@ -5,7 +5,7 @@ package serversentevents
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/server-sent-event-examples/fern/core"
+	internal "github.com/server-sent-event-examples/fern/internal"
 )
 
 type StreamCompletionRequest struct {
@@ -45,7 +45,7 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 	}
 	*s = StreamedCompletion(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -55,7 +55,7 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 }
 
 func (s *StreamedCompletion) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

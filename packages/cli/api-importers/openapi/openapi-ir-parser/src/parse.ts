@@ -30,6 +30,7 @@ export interface SpecImportSettings {
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -196,7 +197,11 @@ function getParseOptions({
         respectReadonlySchemas:
             overrides?.respectReadonlySchemas ??
             specSettings?.respectReadonlySchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
+        onlyIncludeReferencedSchemas:
+            overrides?.onlyIncludeReferencedSchemas ??
+            specSettings?.onlyIncludeReferencedSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas
     };
 }
 

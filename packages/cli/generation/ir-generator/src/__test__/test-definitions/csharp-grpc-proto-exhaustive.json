@@ -23728,27 +23728,29 @@
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
-        "typesReferencedOnlyByService": {},
-        "sharedTypes": [
-            "type_:Column",
-            "type_:UploadResponse",
-            "type_:Metadata",
-            "type_:DeleteResponse",
-            "type_:DescribeResponse",
-            "type_:FetchResponse",
-            "type_:ListResponse",
-            "type_:QueryColumn",
-            "type_:IndexedData",
-            "type_:QueryResponse",
-            "type_:UpdateResponse",
-            "type_:ListElement",
-            "type_:NamespaceSummary",
-            "type_:Pagination",
-            "type_:QueryResult",
-            "type_:ScoredColumn",
-            "type_:Usage",
-            "type_:MetadataValue"
-        ]
+        "typesReferencedOnlyByService": {
+            "service_dataservice": [
+                "type_:Column",
+                "type_:DeleteResponse",
+                "type_:DescribeResponse",
+                "type_:FetchResponse",
+                "type_:IndexedData",
+                "type_:ListElement",
+                "type_:ListResponse",
+                "type_:NamespaceSummary",
+                "type_:Pagination",
+                "type_:QueryColumn",
+                "type_:QueryResponse",
+                "type_:QueryResult",
+                "type_:ScoredColumn",
+                "type_:UpdateResponse",
+                "type_:UploadResponse",
+                "type_:Usage",
+                "type_:Metadata",
+                "type_:MetadataValue"
+            ]
+        },
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},

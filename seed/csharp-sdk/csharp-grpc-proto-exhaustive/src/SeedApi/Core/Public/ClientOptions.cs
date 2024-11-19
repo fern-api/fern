@@ -52,6 +52,5 @@ public partial class ClientOptions
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
         };
-        ;
     }
 }

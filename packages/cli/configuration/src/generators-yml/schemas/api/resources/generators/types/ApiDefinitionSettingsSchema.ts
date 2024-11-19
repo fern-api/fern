@@ -11,4 +11,6 @@ export interface ApiDefinitionSettingsSchema {
     unions?: FernDefinition.UnionSettingsSchema;
     /** What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1. */
     "message-naming"?: FernDefinition.MessageNamingSettingsSchema;
+    /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
+    "only-include-referenced-schemas"?: boolean;
 }

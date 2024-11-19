@@ -59,7 +59,7 @@ public record BaseApiRequest
 
     public Headers Headers { get; init; } = new();
 
-    public RequestOptions? Options { get; init; }
+    public IRequestOptions? Options { get; init; }
 }
 
 /// <summary>
@@ -145,6 +145,12 @@ public record ApiResponse
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+<% if (idempotencyHeaders) { %>
+        if (request.Options is IIdempotentRequestOptions idempotentRequest)
+        {
+            SetHeaders(httpRequest, idempotentRequest.GetIdempotencyHeaders());
+        }
+<% } %>
         return httpRequest;
     }
 

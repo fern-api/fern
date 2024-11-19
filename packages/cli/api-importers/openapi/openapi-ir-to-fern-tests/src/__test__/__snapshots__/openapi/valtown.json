@@ -2018,10 +2018,24 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "relationship": {
                     "docs": "Whether to get comments you have received, given, or both",
@@ -2128,10 +2142,24 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -2185,10 +2213,24 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "since": {
                     "docs": "Include items created after this date",
@@ -2783,9 +2825,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: MeLikesResponse
@@ -2829,9 +2876,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           since:
             type: optional<datetime>
             docs: Include items created after this date
@@ -2879,9 +2931,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           since:
             type: optional<datetime>
             docs: Include items created after this date
@@ -2983,14 +3040,34 @@ imports:
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "query": {
                     "docs": "Search query",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 512,
+                      "minLength": 1,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -3047,12 +3124,20 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           query:
             type: string
             docs: Search query
+            validation:
+              minLength: 1
+              maxLength: 512
       response:
         docs: A paginated result set
         type: SearchValsResponse
@@ -3599,10 +3684,24 @@ docs: SQLite
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -3681,9 +3780,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: UsersValsResponse
@@ -4261,10 +4365,24 @@ let you get, create, and run vals.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -4321,10 +4439,24 @@ let you get, create, and run vals.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
@@ -5148,9 +5280,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: ValsListResponse
@@ -5268,9 +5405,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Default Response
         type: root.ExtendedVal

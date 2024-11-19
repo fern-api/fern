@@ -5,7 +5,7 @@ package anyauth
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/any-auth/fern/core"
+	internal "github.com/any-auth/fern/internal"
 )
 
 type User struct {
@@ -41,7 +41,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	*u = User(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

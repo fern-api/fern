@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/internal"
 )
 
 type ScheduleNew struct {
@@ -77,7 +77,7 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	}
 	*e = Error(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
@@ -89,11 +89,11 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 
 func (e *Error) String() string {
 	if len(e._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(e._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -149,7 +149,7 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 	}
 	*r = Request(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
@@ -161,11 +161,11 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 
 func (r *Request) String() string {
 	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -280,7 +280,7 @@ func (s *Schedule) UnmarshalJSON(data []byte) error {
 	}
 	*s = Schedule(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -292,11 +292,11 @@ func (s *Schedule) UnmarshalJSON(data []byte) error {
 
 func (s *Schedule) String() string {
 	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -389,7 +389,7 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 	}
 	*t = Task(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -401,11 +401,11 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 
 func (t *Task) String() string {
 	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(t._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
@@ -498,7 +498,7 @@ func (t *TaskNew) UnmarshalJSON(data []byte) error {
 	}
 	*t = TaskNew(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
@@ -510,11 +510,11 @@ func (t *TaskNew) UnmarshalJSON(data []byte) error {
 
 func (t *TaskNew) String() string {
 	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+		if value, err := internal.StringifyJSON(t._rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
