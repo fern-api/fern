@@ -3,7 +3,7 @@
         The IR handles converting example unions that are aliases.
       type: fix
   irVersion: 53
-  version: 0.45.0-rc45
+  version: 0.45.0-rc46
 
 - changelogEntry:
     - summary: |
