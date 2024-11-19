@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support SDK generation provided comma-delineated content-type values in OpenAPI specs.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc47
+
+- changelogEntry:
+    - summary: |
         The IR handles converting example unions that are aliases.
       type: fix
   irVersion: 53

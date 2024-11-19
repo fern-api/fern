@@ -562,7 +562,8 @@ function getRequest({
                             propertyTypeReference.docs = property.description;
                         }
                         if (property.contentType != null) {
-                            propertyTypeReference["content-type"] = property.contentType;
+                            const contentType = property.contentType.split(",")[0];
+                            propertyTypeReference["content-type"] = contentType;
                         }
                         return [property.key, propertyTypeReference];
                     }
