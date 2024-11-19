@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/grpc-proto-exhaustive/fern/core"
+	internal "github.com/grpc-proto-exhaustive/fern/internal"
 )
 
 type DeleteRequest struct {
@@ -92,7 +92,7 @@ func (c *Column) UnmarshalJSON(data []byte) error {
 	}
 	*c = Column(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -102,7 +102,7 @@ func (c *Column) UnmarshalJSON(data []byte) error {
 }
 
 func (c *Column) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -124,7 +124,7 @@ func (d *DeleteResponse) UnmarshalJSON(data []byte) error {
 	}
 	*d = DeleteResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (d *DeleteResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (d *DeleteResponse) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -189,7 +189,7 @@ func (d *DescribeResponse) UnmarshalJSON(data []byte) error {
 	}
 	*d = DescribeResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
@@ -199,7 +199,7 @@ func (d *DescribeResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (d *DescribeResponse) String() string {
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -246,7 +246,7 @@ func (f *FetchResponse) UnmarshalJSON(data []byte) error {
 	}
 	*f = FetchResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
@@ -256,7 +256,7 @@ func (f *FetchResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (f *FetchResponse) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
@@ -295,7 +295,7 @@ func (i *IndexedData) UnmarshalJSON(data []byte) error {
 	}
 	*i = IndexedData(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
@@ -305,7 +305,7 @@ func (i *IndexedData) UnmarshalJSON(data []byte) error {
 }
 
 func (i *IndexedData) String() string {
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
@@ -336,7 +336,7 @@ func (l *ListElement) UnmarshalJSON(data []byte) error {
 	}
 	*l = ListElement(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
@@ -346,7 +346,7 @@ func (l *ListElement) UnmarshalJSON(data []byte) error {
 }
 
 func (l *ListElement) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -401,7 +401,7 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 	}
 	*l = ListResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
@@ -411,7 +411,7 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (l *ListResponse) String() string {
-	if value, err := core.StringifyJSON(l); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
@@ -607,7 +607,7 @@ func (n *NamespaceSummary) UnmarshalJSON(data []byte) error {
 	}
 	*n = NamespaceSummary(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
@@ -617,7 +617,7 @@ func (n *NamespaceSummary) UnmarshalJSON(data []byte) error {
 }
 
 func (n *NamespaceSummary) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -648,7 +648,7 @@ func (p *Pagination) UnmarshalJSON(data []byte) error {
 	}
 	*p = Pagination(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
@@ -658,7 +658,7 @@ func (p *Pagination) UnmarshalJSON(data []byte) error {
 }
 
 func (p *Pagination) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -721,7 +721,7 @@ func (q *QueryColumn) UnmarshalJSON(data []byte) error {
 	}
 	*q = QueryColumn(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *q)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
@@ -731,7 +731,7 @@ func (q *QueryColumn) UnmarshalJSON(data []byte) error {
 }
 
 func (q *QueryColumn) String() string {
-	if value, err := core.StringifyJSON(q); err == nil {
+	if value, err := internal.StringifyJSON(q); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", q)
@@ -786,7 +786,7 @@ func (q *QueryResponse) UnmarshalJSON(data []byte) error {
 	}
 	*q = QueryResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *q)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
@@ -796,7 +796,7 @@ func (q *QueryResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (q *QueryResponse) String() string {
-	if value, err := core.StringifyJSON(q); err == nil {
+	if value, err := internal.StringifyJSON(q); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", q)
@@ -835,7 +835,7 @@ func (q *QueryResult) UnmarshalJSON(data []byte) error {
 	}
 	*q = QueryResult(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *q)
+	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
@@ -845,7 +845,7 @@ func (q *QueryResult) UnmarshalJSON(data []byte) error {
 }
 
 func (q *QueryResult) String() string {
-	if value, err := core.StringifyJSON(q); err == nil {
+	if value, err := internal.StringifyJSON(q); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", q)
@@ -908,7 +908,7 @@ func (s *ScoredColumn) UnmarshalJSON(data []byte) error {
 	}
 	*s = ScoredColumn(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
@@ -918,7 +918,7 @@ func (s *ScoredColumn) UnmarshalJSON(data []byte) error {
 }
 
 func (s *ScoredColumn) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -940,7 +940,7 @@ func (u *UpdateResponse) UnmarshalJSON(data []byte) error {
 	}
 	*u = UpdateResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -950,7 +950,7 @@ func (u *UpdateResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UpdateResponse) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -981,7 +981,7 @@ func (u *UploadResponse) UnmarshalJSON(data []byte) error {
 	}
 	*u = UploadResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -991,7 +991,7 @@ func (u *UploadResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UploadResponse) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
@@ -1022,7 +1022,7 @@ func (u *Usage) UnmarshalJSON(data []byte) error {
 	}
 	*u = Usage(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -1032,7 +1032,7 @@ func (u *Usage) UnmarshalJSON(data []byte) error {
 }
 
 func (u *Usage) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

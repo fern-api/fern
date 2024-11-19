@@ -256,6 +256,11 @@ func (c *Client) WithContentType(
 	if err := writer.WriteJSON("bar", request.Bar, internal.WithDefaultContentType("application/json")); err != nil {
 		return err
 	}
+	if request.Foobar != nil {
+		if err := writer.WriteJSON("foobar", request.Foobar, internal.WithDefaultContentType("application/json")); err != nil {
+			return err
+		}
+	}
 	if err := writer.Close(); err != nil {
 		return err
 	}

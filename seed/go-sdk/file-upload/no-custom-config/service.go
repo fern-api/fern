@@ -100,6 +100,7 @@ func (o ObjectType) Ptr() *ObjectType {
 }
 
 type WithContentTypeRequest struct {
-	Foo string    `json:"foo" url:"-"`
-	Bar *MyObject `json:"bar,omitempty" url:"-"`
+	Foo    string    `json:"foo" url:"-"`
+	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+	Foobar *MyObject `json:"foobar,omitempty" url:"-"`
 }
