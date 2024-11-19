@@ -69,6 +69,28 @@ redirects:
     destination: /sdks/capabilities/merging-multiple-apis
   - source: /sdks/features/websockets
     destination: /sdks/capabilities/websockets
+  - source: /sdks/introduction/configuration
+    destination: /sdks/introduction/language-support
+  - source: /sdks/getting-started/generate-your-first-sdk
+    destination: /sdks/guides/generate-your-first-sdk
+  - source: /sdks/getting-started/preview-your-sdk-locally
+    destination: /sdks/guides/preview-your-sdk-locally
+  - source: /sdks/publish-sdk/publish-your-sdk
+    destination: /sdks/guides/publish-your-sdk
+  - source: /sdks/package-managers/npm-type-script
+    destination: /sdks/guides/publish-to-package-managers/npm-type-script
+  - source: /sdks/package-managers/pypi
+    destination: /sdks/guides/publish-to-package-managers/
+  - source: /sdks/package-managers/nuget
+    destination: /sdks/guides/publish-to-package-managers/nuget
+  - source: /sdks/package-managers/pkgsite
+    destination: /sdks/guides/publish-to-package-managers/pkgsite
+  - source: /sdks/package-managers/maven-central
+    destination: /sdks/guides/publish-to-package-managers/maven-central
+  - source: /sdks/package-managers/rubygems
+    destination: /sdks/guides/publish-to-package-managers/rubygems
+  - source: /sdks/package-managers/packagist
+    destination: /sdks/guides/publish-to-package-managers/packagist
     
 navigation:
   - tab: home
@@ -255,6 +277,36 @@ navigation:
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
                 slug: ruby
+      - section: Guides
+        contents:
+          - page: Generate your First SDK
+            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+          - page: Preview your SDK Locally
+            path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
+          - page: Publish a Public-Facing SDK
+            path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
+          - section: Publish to package managers
+            contents: 
+              - page: NPM (TypeScript)
+                path: ./pages/sdks/integration/npm.mdx
+              - page: PyPI (Python)
+                slug: pypi
+                path: ./pages/sdks/integration/pypi.mdx
+              - page: NuGet (C#)
+                slug: nuget
+                path: ./pages/sdks/integration/nuget.mdx
+              - page: Pkgsite (Go)
+                slug: pkgsite
+                path: ./pages/sdks/integration/pkgsite.mdx
+              - page: Maven Central (Java)
+                slug: maven-central
+                path: ./pages/sdks/integration/maven-central.mdx
+              - page: RubyGems (Ruby)
+                slug: rubygems
+                path: ./pages/sdks/integration/rubygems.mdx
+              - page: Packagist (PHP)
+                slug: packagist
+                path: ./pages/sdks/integration/packagist.mdx
       - section: Capabilities
         contents:
           - page: Strongly Typed
@@ -319,37 +371,6 @@ navigation:
         contents:
           - page: Configuration
             path: ./pages/sdks/introduction/configuration.mdx
-      - section: Guides
-        contents:
-          - page: Generate your First SDK
-            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
-          - page: Preview your SDK Locally
-            path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
-          - page: Publish a Public-Facing SDK
-            path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
-            hidden: true
-          - section: Publish to package managers
-            contents: 
-              - page: NPM (TypeScript)
-                path: ./pages/sdks/integration/npm.mdx
-              - page: PyPI (Python)
-                slug: pypi
-                path: ./pages/sdks/integration/pypi.mdx
-              - page: NuGet (C#)
-                slug: nuget
-                path: ./pages/sdks/integration/nuget.mdx
-              - page: Pkgsite (Go)
-                slug: pkgsite
-                path: ./pages/sdks/integration/pkgsite.mdx
-              - page: Maven Central (Java)
-                slug: maven-central
-                path: ./pages/sdks/integration/maven-central.mdx
-              - page: RubyGems (Ruby)
-                slug: rubygems
-                path: ./pages/sdks/integration/rubygems.mdx
-              - page: Packagist (PHP)
-                slug: packagist
-                path: ./pages/sdks/integration/packagist.mdx
       - section: Alternatives
         hidden: true
         contents:
