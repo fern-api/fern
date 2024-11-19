@@ -50,7 +50,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             this.generateHttpMethod({ serviceId, endpoint, rawClientReference, rawClient })
         ];
         if (this.hasPagination(endpoint)) {
-            methods.push(this.generateHttpPagerMethod({ serviceId, endpoint, rawClientReference, rawClient }));
+            methods.push(this.generateHttpPagerMethod({ serviceId, endpoint }));
         }
         return methods;
     }
@@ -315,14 +315,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     public generateHttpPagerMethod({
         serviceId,
-        endpoint,
-        rawClientReference,
-        rawClient
+        endpoint
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
-        rawClientReference: string;
-        rawClient: RawClient;
     }): csharp.Method {
         this.assertHasPagination(endpoint);
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
@@ -351,6 +347,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (!unpagedEndpointResponseType) {
                     throw new Error("Internal error; a response type is required for pagination endpoints");
                 }
+
+                writer.writeLine("if (request is not null)");
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("request = request with { };");
+                writer.dedent();
+                writer.writeLine("}");
 
                 switch (endpoint.pagination.type) {
                     case "offset":

@@ -34,6 +34,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new CursorPager<
             ListUsersCursorPaginationRequest,
             RequestOptions?,
@@ -66,6 +70,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new CursorPager<
             ListUsersBodyCursorPaginationRequest,
             RequestOptions?,
@@ -105,6 +113,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new OffsetPager<
             ListUsersOffsetPaginationRequest,
             RequestOptions?,
@@ -140,6 +152,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new OffsetPager<
             ListUsersBodyOffsetPaginationRequest,
             RequestOptions?,
@@ -181,6 +197,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new OffsetPager<
             ListUsersOffsetStepPaginationRequest,
             RequestOptions?,
@@ -221,6 +241,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new OffsetPager<
             ListWithOffsetPaginationHasNextPageRequest,
             RequestOptions?,
@@ -256,6 +280,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new CursorPager<
             ListUsersExtendedRequest,
             RequestOptions?,
@@ -288,6 +316,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new CursorPager<
             ListUsersExtendedRequestForOptionalData,
             RequestOptions?,
@@ -320,6 +352,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new CursorPager<
             ListUsernamesRequest,
             RequestOptions?,
@@ -350,6 +386,10 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
+        if (request is not null)
+        {
+            request = request with { };
+        }
         var pager = new OffsetPager<
             ListWithGlobalConfigRequest,
             RequestOptions?,
