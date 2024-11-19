@@ -386,6 +386,16 @@
             }
           ]
         },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
         },

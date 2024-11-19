@@ -107,7 +107,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -125,7 +125,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
             this.publicCoreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -225,7 +225,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await mkdir(absolutePathToTestProject, { recursive: true });
 
-        const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
+        const testCsProjTemplateContents = (
+            await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
+        ).toString();
         const testCsProjContents = template(testCsProjTemplateContents)({
             projectName: this.name,
             testProjectName
@@ -236,7 +238,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
-            (await readFile(getAsIsFilepath(AsIsFiles.TestCustomProps))).toString()
+            (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
         await loggingExeca(
             this.context.logger,
@@ -352,6 +354,20 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         }
 
         return absolutePathToPublicCoreDirectory;
+    }
+
+    private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace("test/", "").replace(".Template", ""),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace
+            })
+        );
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
