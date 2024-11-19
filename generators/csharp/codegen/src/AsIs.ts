@@ -20,7 +20,7 @@ export const AsIsFiles = {
     Headers: "Headers.Template.cs",
     HeaderValue: "HeaderValue.Template.cs",
     HttpMethodExtensions: "HttpMethodExtensions.cs",
-    JsonConfiguration: "JsonConfiguration.cs",
+    JsonConfiguration: "JsonConfiguration.Template.cs",
     OneOfSerializer: "OneOfSerializer.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",

@@ -1,21 +1,25 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace <%= namespace%>;
+namespace SeedExhaustive.Core;
 
-internal static class JsonOptions
+internal static partial class JsonOptions
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions;
 
     static JsonOptions()
     {
-        JsonSerializerOptions = new JsonSerializerOptions
+        var options = new JsonSerializerOptions
         {
             Converters = { new DateTimeSerializer(), new OneOfSerializer() },
             WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
+
+        ConfigureJsonSerializerOptions(options);
+        JsonSerializerOptions = options;
     }
+
+    static partial void ConfigureJsonSerializerOptions(JsonSerializerOptions defaultOptions);
 }
 
 internal static class JsonUtils
