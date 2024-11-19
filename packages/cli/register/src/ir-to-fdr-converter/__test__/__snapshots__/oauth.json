@@ -1,8 +1,7 @@
 {
   "types": {
-    "type_auth:TokenResponse": {
-      "description": "An OAuth token response.",
-      "name": "TokenResponse",
+    "type_service:ResponseObject": {
+      "name": "ResponseObject",
       "shape": {
         "type": "object",
         "extends": [],
@@ -24,6 +23,15 @@
                 "type": "integer"
               }
             }
+          },
+          {
+            "key": "refresh_token",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
           }
         ],
         "extraProperties": {
@@ -33,26 +41,26 @@
     }
   },
   "subpackages": {
-    "subpackage_auth": {
-      "subpackageId": "subpackage_auth",
-      "name": "auth",
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
-          "id": "getToken",
-          "originalEndpointId": "endpoint_auth.getToken",
-          "name": "Get Token",
+          "id": "auth",
+          "originalEndpointId": "endpoint_service.auth",
+          "name": "Auth",
           "path": {
             "pathParameters": [],
             "parts": [
               {
                 "type": "literal",
-                "value": "/"
+                "value": ""
               },
               {
                 "type": "literal",
-                "value": "/token"
+                "value": "/auth"
               }
             ]
           },
@@ -83,16 +91,6 @@
                         "type": "string"
                       }
                     }
-                  },
-                  {
-                    "key": "grant_type",
-                    "valueType": {
-                      "type": "literal",
-                      "value": {
-                        "type": "stringLiteral",
-                        "value": "client_credentials"
-                      }
-                    }
                   }
                 ]
               }
@@ -103,40 +101,40 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "type_auth:TokenResponse"
+                "value": "type_service:ResponseObject"
               }
             }
           },
           "errorsV2": [],
           "examples": [
             {
-              "path": "/token",
+              "path": "/auth",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "client_id": "client_id",
-                "client_secret": "client_secret",
-                "grant_type": "client_credentials"
+                "client_secret": "client_secret"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "client_id": "client_id",
-                  "client_secret": "client_secret",
-                  "grant_type": "client_credentials"
+                  "client_secret": "client_secret"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "access_token": "access_token",
-                "expires_in": 1
+                "expires_in": 1,
+                "refresh_token": "refresh_token"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "access_token": "access_token",
-                  "expires_in": 1
+                  "expires_in": 1,
+                  "refresh_token": "refresh_token"
                 }
               },
               "codeSamples": []
@@ -147,7 +145,7 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_auth:TokenResponse"
+        "type_service:ResponseObject"
       ],
       "subpackages": []
     }
@@ -158,7 +156,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "subpackage_auth"
+      "subpackage_service"
     ]
   },
   "auth": {
@@ -167,8 +165,10 @@
       "type": "clientCredentials",
       "value": {
         "type": "referencedEndpoint",
-        "endpointId": "endpoint_auth.getToken",
-        "accessTokenLocator": "$.body.access_token"
+        "endpointId": "endpoint_service.auth",
+        "accessTokenLocator": "$.body.access_token",
+        "headerName": "Fern-Authorization",
+        "tokenPrefix": "Fern-Bearer"
       }
     }
   },
