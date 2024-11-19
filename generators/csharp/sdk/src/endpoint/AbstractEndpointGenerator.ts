@@ -106,8 +106,7 @@ export abstract class AbstractEndpointGenerator {
                 `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.internalType.type}.`
             );
         }
-        const itemType = listItemType.internalType.value;
-        return itemType;
+        return listItemType.internalType.value;
     }
 
     protected getAllPathParameters({
@@ -152,7 +151,7 @@ export abstract class AbstractEndpointGenerator {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a pager endpoint`);
+        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({
