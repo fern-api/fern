@@ -619,6 +619,16 @@
             }
           ]
         },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
           "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
         },
@@ -626,16 +636,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/auth.OAuthRefreshTokenEndpointSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "header-key": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"

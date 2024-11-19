@@ -51,6 +51,8 @@ types:
       errors: optional<ResponseErrorsSchema>
       examples: optional<list<examples.ExampleEndpointCallSchema>>
       pagination: optional<Pagination>
+      transport: optional<ServiceTransport>
+      source: optional<source.SourceSchema>
   
   HttpMethodSchema: 
     enum: 

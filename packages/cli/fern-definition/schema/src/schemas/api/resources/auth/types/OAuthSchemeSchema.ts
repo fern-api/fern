@@ -11,7 +11,7 @@ export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     "client-id-env"?: string;
     "client-secret-env"?: string;
     "token-prefix"?: string;
+    "token-header"?: string;
     "get-token": FernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: FernDefinition.OAuthRefreshTokenEndpointSchema;
-    "header-key"?: string;
 }

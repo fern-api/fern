@@ -46,7 +46,7 @@ types:
       clientIdEnvVar: optional<EnvironmentVariable>
       clientSecretEnvVar: optional<EnvironmentVariable>
       tokenPrefix: optional<string>
-      headerKey: optional<string>
+      tokenHeader: optional<string>
       scopes: optional<list<string>>
       tokenEndpoint: OAuthTokenEndpoint
       refreshEndpoint: optional<OAuthRefreshEndpoint>

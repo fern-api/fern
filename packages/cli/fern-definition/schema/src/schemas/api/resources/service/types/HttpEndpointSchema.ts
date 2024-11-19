@@ -19,4 +19,6 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     errors?: FernDefinition.ResponseErrorsSchema;
     examples?: FernDefinition.ExampleEndpointCallSchema[];
     pagination?: FernDefinition.Pagination;
+    transport?: FernDefinition.ServiceTransport;
+    source?: FernDefinition.SourceSchema;
 }

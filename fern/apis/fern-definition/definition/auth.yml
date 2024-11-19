@@ -86,9 +86,9 @@ types:
       client-id-env: optional<string>
       client-secret-env: optional<string>
       token-prefix: optional<string>
+      token-header: optional<string>
       get-token: OAuthGetTokenEndpointSchema
       refresh-token: optional<OAuthRefreshTokenEndpointSchema>
-      header-key: optional<string>
   
   OAuthGetTokenEndpointSchema: 
     properties: 
