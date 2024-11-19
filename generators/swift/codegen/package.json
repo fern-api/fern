@@ -37,7 +37,7 @@
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "esbuild": "^0.24.0",
-    "eslint": "^8.56.0",
+    "eslint": "^9.15.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "4.6.4",

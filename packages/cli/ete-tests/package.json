@@ -45,7 +45,7 @@
     "@types/node": "18.7.18",
     "@types/node-fetch": "2.6.9",
     "depcheck": "^1.4.6",
-    "eslint": "^8.56.0",
+    "eslint": "^9.15.0",
     "form-data": "4.0.0",
     "vitest": "^2.1.4",
     "jest-environment-jsdom": "^29.7.0",

@@ -64,7 +64,7 @@
     "@types/node": "18.7.18",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
-    "eslint": "^8.56.0",
+    "eslint": "^9.15.0",
     "jest-specific-snapshot": "^8.0.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
