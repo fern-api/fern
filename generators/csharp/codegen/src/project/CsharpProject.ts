@@ -225,7 +225,9 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await mkdir(absolutePathToTestProject, { recursive: true });
 
-        const testCsProjTemplateContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateTestCsProj))).toString();
+        const testCsProjTemplateContents = (
+            await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
+        ).toString();
         const testCsProjContents = template(testCsProjTemplateContents)({
             projectName: this.name,
             testProjectName
@@ -236,7 +238,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
-            (await readFile(getAsIsFilepath(AsIsFiles.TestCustomProps))).toString()
+            (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
         await loggingExeca(
             this.context.logger,
@@ -356,8 +358,10 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        filename = filename.replace(".Template", "");
+        filename = path.basename(filename);
         return new File(
-            filename.replace(".Template", ""),
+            filename,
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
