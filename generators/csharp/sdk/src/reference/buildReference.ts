@@ -36,23 +36,22 @@ function getEndpointReferencesForService({
             endpoint,
             example: context.getExampleEndpointCallOrThrow(endpoint)
         });
-        if (singleEndpointSnippet == null) {
-            continue;
-        }
-        const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
-            serviceId,
-            endpoint
-        });
-        result.push(
-            getEndpointReference({
-                context,
+        if (singleEndpointSnippet != null) {
+            const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
-                service,
-                endpoint,
-                endpointSignatureInfo,
-                singleEndpointSnippet
-            })
-        );
+                endpoint
+            });
+            result.push(
+                getEndpointReference({
+                    context,
+                    serviceId,
+                    service,
+                    endpoint,
+                    endpointSignatureInfo,
+                    singleEndpointSnippet
+                })
+            );
+        }
     }
     return result;
 }
@@ -63,7 +62,8 @@ function getEndpointReference({
     service,
     endpoint,
     endpointSignatureInfo,
-    singleEndpointSnippet
+    singleEndpointSnippet,
+    isPager = false
 }: {
     context: SdkGeneratorContext;
     serviceId: ServiceId;
@@ -71,6 +71,7 @@ function getEndpointReference({
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
     singleEndpointSnippet: SingleEndpointSnippet;
+    isPager?: boolean;
 }): FernGeneratorCli.EndpointReference {
     return {
         title: {
