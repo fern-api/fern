@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.3.7
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update multipart endpoint generation to propertly omit optional body parameters.
+
 - version: 4.3.6
   irVersion: 53
   changelogEntry:
