@@ -77,7 +77,7 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    protected getPagerReturnType(endpoint: HttpEndpoint) {
+    protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
         const itemType = this.getPaginationItemType(endpoint);
         const pager = this.context.getPagerClassReference({
             itemType
@@ -85,7 +85,7 @@ export abstract class AbstractEndpointGenerator {
         return csharp.Type.reference(pager);
     }
 
-    protected getPaginationItemType(endpoint: HttpEndpoint) {
+    protected getPaginationItemType(endpoint: HttpEndpoint): csharp.Type {
         this.assertHasPagination(endpoint);
         const listItemType = this.context.csharpTypeMapper.convert({
             reference: (() => {
