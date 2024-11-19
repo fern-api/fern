@@ -4,7 +4,7 @@ using <%= namespace%>.Core;
 namespace <%= namespace%>.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class HasNextPageOffsetTestCase
+public class HasNextPageOffsetTest
 {
     [Test]
     public async Task OffsetPagerShouldWorkWithHasNextPage()

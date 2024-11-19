@@ -1,53 +1,28 @@
 using NUnit.Framework;
-using <%= namespace%>.Core;
+using SeedPagination.Core;
 
-namespace <%= namespace%>.Test.Core.Pagination;
+namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class NoRequestOffsetTestCase
+public class LongOffsetTest
 {
     [Test]
-    public async Task OffsetPagerShouldWorkWithoutRequest()
+    public async Task OffsetPagerShouldWorkWithLongPage()
     {
         var pager = CreatePager();
         await AssertPager(pager);
     }
 
-    public Pager<object> CreatePager()
+    private static Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = ["item1"]
-                }
-            },
-            new()
-            {
-                Data = new()
-                {
-                    Items = []
-                }
-            }
+            new() { Data = new() { Items = ["item1", "item2"] } },
+            new() { Data = new() { Items = ["item1"] } },
+            new() { Data = new() { Items = [] } },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<
-            Request?,
-            object?,
-            Response,
-            int,
-            object?,
-            object
-        >(
-            null,
+        Pager<object> pager = new OffsetPager<Request, object?, Response, long, object?, object>(
+            new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
             {
@@ -67,7 +42,7 @@ public class NoRequestOffsetTestCase
         return pager;
     }
 
-    public async Task AssertPager(Pager<object> pager)
+    private static async Task AssertPager(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;
@@ -91,7 +66,7 @@ public class NoRequestOffsetTestCase
 
     private class Pagination
     {
-        public int Page { get; set; }
+        public long Page { get; set; }
     }
 
     private class Response

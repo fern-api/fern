@@ -4,7 +4,7 @@ using SeedPagination.Core;
 namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class StepPageOffsetPaginationTestCase
+public class StepPageOffsetPaginationTest
 {
     [Test]
     public async Task OffsetPagerShouldWorkWithStep()

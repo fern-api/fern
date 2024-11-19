@@ -1,72 +1,46 @@
 using NUnit.Framework;
-using <%= namespace%>.Core;
+using SeedPagination.Core;
 
-namespace <%= namespace%>.Test.Core.Pagination;
+namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class StringCursorTestCase
+public class GuidCursorTest
 {
     [Test]
-    public async Task CursorPagerShouldWorkWithStringCursor()
+    public async Task CursorPagerShouldWorkWithGuidCursors()
     {
         var pager = CreatePager();
         await AssertPager(pager);
     }
 
-    private const string? Cursor1 = null;
-    private const string Cursor2 = "cursor2";
-    private const string Cursor3 = "cursor3";
-    private string? _cursorCopy;
+    private static readonly Guid? Cursor1 = null;
+    private static readonly Guid Cursor2 = new("00000000-0000-0000-0000-000000000001");
+    private static readonly Guid Cursor3 = new("00000000-0000-0000-0000-000000000001");
+    private Guid? _cursorCopy;
+
     private Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1", "item2"]
-                },
-                Cursor = new ()
-                {
-                    Next = Cursor2
-                }
+                Data = new() { Items = ["item1", "item2"] },
+                Cursor = new() { Next = Cursor2 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = ["item1"]
-                },
-                Cursor = new ()
-                {
-                    Next = Cursor3
-                }
+                Data = new() { Items = ["item1"] },
+                Cursor = new() { Next = Cursor3 },
             },
             new()
             {
-                Data = new()
-                {
-                    Items = []
-                },
-                Cursor = new ()
-                {
-                    Next = null
-                }
-            }
+                Data = new() { Items = [] },
+                Cursor = new() { Next = null },
+            },
         }.GetEnumerator();
         _cursorCopy = Cursor1;
-        Pager<object> pager = new CursorPager<
-            Request,
-            object?,
-            Response,
-            string,
-            object
-        >(
-            new()
-            {
-                Cursor = Cursor1
-            },
+        Pager<object> pager = new CursorPager<Request, object?, Response, Guid?, object>(
+            new() { Cursor = Cursor1 },
             null,
             (_, _, _) =>
             {
@@ -112,7 +86,7 @@ public class StringCursorTestCase
 
     private class Request
     {
-        public required string? Cursor { get; set; }
+        public required Guid? Cursor { get; set; }
     }
 
     private class Response
@@ -128,6 +102,6 @@ public class StringCursorTestCase
 
     private class Cursor
     {
-        public required string? Next { get; set; }
+        public required Guid? Next { get; set; }
     }
 }

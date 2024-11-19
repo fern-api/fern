@@ -39,14 +39,14 @@ export const AsIsFiles = {
         RawClientTests: "test/RawClientTests.Template.cs",
         StringEnumSerializerTests: "test/StringEnumSerializerTests.Template.cs",
         Pagination: [
-            "test/Pagination/GuidCursorTestCase.Template.cs",
-            "test/Pagination/HasNextPageOffsetTestCase.Template.cs",
-            "test/Pagination/IntOffsetTestCase.Template.cs",
-            "test/Pagination/LongOffsetTestCase.Template.cs",
-            "test/Pagination/NoRequestCursorTestCase.Template.cs",
-            "test/Pagination/NoRequestOffsetTestCase.Template.cs",
-            "test/Pagination/StepOffsetTestCase.Template.cs",
-            "test/Pagination/StringCursorTestCase.Template.cs"
+            "test/Pagination/GuidCursorTest.Template.cs",
+            "test/Pagination/HasNextPageOffsetTest.Template.cs",
+            "test/Pagination/IntOffsetTest.Template.cs",
+            "test/Pagination/LongOffsetTest.Template.cs",
+            "test/Pagination/NoRequestCursorTest.Template.cs",
+            "test/Pagination/NoRequestOffsetTest.Template.cs",
+            "test/Pagination/StepOffsetTest.Template.cs",
+            "test/Pagination/StringCursorTest.Template.cs"
         ]
     }
 };

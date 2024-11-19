@@ -4,25 +4,37 @@ using SeedPagination.Core;
 namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class NoRequestOffsetTestCase
+public class HasNextPageOffsetTest
 {
     [Test]
-    public async Task OffsetPagerShouldWorkWithoutRequest()
+    public async Task OffsetPagerShouldWorkWithHasNextPage()
     {
         var pager = CreatePager();
         await AssertPager(pager);
     }
 
-    public Pager<object> CreatePager()
+    private static Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
-            new() { Data = new() { Items = ["item1", "item2"] } },
-            new() { Data = new() { Items = ["item1"] } },
-            new() { Data = new() { Items = [] } },
+            new()
+            {
+                Data = new() { Items = ["item1", "item2"] },
+                HasNext = true,
+            },
+            new()
+            {
+                Data = new() { Items = ["item1", "item2"] },
+                HasNext = true,
+            },
+            new()
+            {
+                Data = new() { Items = ["item1"] },
+                HasNext = false,
+            },
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<Request?, object?, Response, int, object?, object>(
-            null,
+        Pager<object> pager = new OffsetPager<Request, object?, Response, int, object?, object>(
+            new() { Pagination = new() { Page = 1 } },
             null,
             (_, _, _) =>
             {
@@ -37,12 +49,12 @@ public class NoRequestOffsetTestCase
             },
             null,
             response => response?.Data?.Items?.ToList(),
-            null
+            response => response.HasNext
         );
         return pager;
     }
 
-    public async Task AssertPager(Pager<object> pager)
+    private static async Task AssertPager(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;
@@ -55,7 +67,7 @@ public class NoRequestOffsetTestCase
         Assert.Multiple(() =>
         {
             Assert.That(pageCounter, Is.EqualTo(3));
-            Assert.That(itemCounter, Is.EqualTo(3));
+            Assert.That(itemCounter, Is.EqualTo(5));
         });
     }
 
@@ -72,6 +84,7 @@ public class NoRequestOffsetTestCase
     private class Response
     {
         public Data Data { get; set; }
+        public bool HasNext { get; set; }
     }
 
     private class Data

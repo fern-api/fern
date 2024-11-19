@@ -4,7 +4,7 @@ using SeedPagination.Core;
 namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class StringCursorTestCase
+public class StringCursorTest
 {
     [Test]
     public async Task CursorPagerShouldWorkWithStringCursor()

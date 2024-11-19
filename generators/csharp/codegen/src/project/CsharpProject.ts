@@ -107,7 +107,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getCoreTestAsIsFiles()) {
             this.coreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -125,7 +125,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
 
         for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
             this.publicCoreTestFiles.push(
-                await this.createAsIsFile({
+                await this.createAsIsTestFile({
                     filename,
                     namespace: this.context.getNamespace()
                 })
@@ -356,12 +356,24 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         return absolutePathToPublicCoreDirectory;
     }
 
+    private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace("test/", "").replace(".Template", ""),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                namespace
+            })
+        );
+    }
+
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        filename = filename.replace(".Template", "");
-        filename = path.basename(filename);
         return new File(
-            filename,
+            filename.replace(".Template", ""),
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,

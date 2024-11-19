@@ -4,16 +4,16 @@ using <%= namespace%>.Core;
 namespace <%= namespace%>.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class LongOffsetTestCase
+public class NoRequestOffsetTest
 {
     [Test]
-    public async Task OffsetPagerShouldWorkWithLongPage()
+    public async Task OffsetPagerShouldWorkWithoutRequest()
     {
         var pager = CreatePager();
         await AssertPager(pager);
     }
 
-    private static Pager<object> CreatePager()
+    public Pager<object> CreatePager()
     {
         var responses = new List<Response>
         {
@@ -40,20 +40,14 @@ public class LongOffsetTestCase
             }
         }.GetEnumerator();
         Pager<object> pager = new OffsetPager<
-            Request,
+            Request?,
             object?,
             Response,
-            long,
+            int,
             object?,
             object
         >(
-            new()
-            {
-                Pagination = new()
-                {
-                    Page = 1
-                }
-            },
+            null,
             null,
             (_, _, _) =>
             {
@@ -73,7 +67,7 @@ public class LongOffsetTestCase
         return pager;
     }
 
-    private static async Task AssertPager(Pager<object> pager)
+    public async Task AssertPager(Pager<object> pager)
     {
         var pageCounter = 0;
         var itemCounter = 0;
@@ -97,7 +91,7 @@ public class LongOffsetTestCase
 
     private class Pagination
     {
-        public long Page { get; set; }
+        public int Page { get; set; }
     }
 
     private class Response

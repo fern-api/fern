@@ -4,7 +4,7 @@ using SeedPagination.Core;
 namespace SeedPagination.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class IntOffsetTestCase
+public class IntOffsetTest
 {
     [Test]
     public async Task OffsetPagerShouldWorkWithIntPage()

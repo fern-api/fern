@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedPagination.Core;
+using <%= namespace%>.Core;
 
-namespace SeedPagination.Test.Core.Pagination;
+namespace <%= namespace%>.Test.Core.Pagination;
 
 [TestFixture(Category = "Pagination")]
-public class LongOffsetTestCase
+public class LongOffsetTest
 {
     [Test]
     public async Task OffsetPagerShouldWorkWithLongPage()
@@ -17,12 +17,43 @@ public class LongOffsetTestCase
     {
         var responses = new List<Response>
         {
-            new() { Data = new() { Items = ["item1", "item2"] } },
-            new() { Data = new() { Items = ["item1"] } },
-            new() { Data = new() { Items = [] } },
+            new()
+            {
+                Data = new()
+                {
+                    Items = ["item1", "item2"]
+                }
+            },
+            new()
+            {
+                Data = new()
+                {
+                    Items = ["item1"]
+                }
+            },
+            new()
+            {
+                Data = new()
+                {
+                    Items = []
+                }
+            }
         }.GetEnumerator();
-        Pager<object> pager = new OffsetPager<Request, object?, Response, long, object?, object>(
-            new() { Pagination = new() { Page = 1 } },
+        Pager<object> pager = new OffsetPager<
+            Request,
+            object?,
+            Response,
+            long,
+            object?,
+            object
+        >(
+            new()
+            {
+                Pagination = new()
+                {
+                    Page = 1
+                }
+            },
             null,
             (_, _, _) =>
             {
