@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/grpc-proto/fern/core"
+	internal "github.com/grpc-proto/fern/internal"
 )
 
 type CreateRequest struct {
@@ -41,7 +41,7 @@ func (c *CreateResponse) UnmarshalJSON(data []byte) error {
 	}
 	*c = CreateResponse(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (c *CreateResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (c *CreateResponse) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -279,7 +279,7 @@ func (u *UserModel) UnmarshalJSON(data []byte) error {
 	}
 	*u = UserModel(value)
 
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
@@ -289,7 +289,7 @@ func (u *UserModel) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UserModel) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
