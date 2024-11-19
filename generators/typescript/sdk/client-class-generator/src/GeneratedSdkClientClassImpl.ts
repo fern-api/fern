@@ -605,21 +605,35 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isIdempotent = true;
             }
 
+            const statements = endpoint.getStatements(context);
+
             const method = serviceClass.addMethod({
                 name: endpoint.endpoint.name.camelCase.unsafeName,
                 parameters: signature.parameters,
-                returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
-                ),
+                returnType: context.neverThrowErrors
+                    ? getTextOfTsNode(
+                          ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                      )
+                    : getTextOfTsNode(
+                          context.coreUtilities.apiPromise._getReferenceToType(signature.returnTypeWithoutPromise)
+                      ),
                 scope: Scope.Public,
                 isAsync: true,
-                statements: endpoint.getStatements(context).map(getTextOfTsNode),
+                statements: context.neverThrowErrors
+                    ? statements.map(getTextOfTsNode)
+                    : [ts.factory.createReturnStatement(context.coreUtilities.apiPromise.from(statements))].map(
+                          getTextOfTsNode
+                      ),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
-                    returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
-                    )
+                    returnType: context.neverThrowErrors
+                        ? getTextOfTsNode(
+                              ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                          )
+                        : getTextOfTsNode(
+                              context.coreUtilities.apiPromise._getReferenceToType(overload.returnTypeWithoutPromise)
+                          )
                 }))
             });
 

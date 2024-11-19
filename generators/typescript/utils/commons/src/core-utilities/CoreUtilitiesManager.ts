@@ -15,6 +15,7 @@ import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
+import { APIPromiseImpl } from "./api-promise/APIPromiseImpl";
 import { AuthImpl } from "./auth/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
 import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
@@ -53,7 +54,8 @@ export class CoreUtilitiesManager {
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
-            utils: new UtilsImpl({ getReferenceToExport })
+            utils: new UtilsImpl({ getReferenceToExport }),
+            apiPromise: new APIPromiseImpl({ getReferenceToExport })
         };
     }
 
