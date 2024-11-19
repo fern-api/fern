@@ -49,7 +49,7 @@ export function convertAuth(
                                       scheme.configuration.tokenEndpoint.endpointReference.endpointId
                                   ),
                                   accessTokenLocator: FdrCjsSdk.JqString(tokenPath),
-                                  headerKey: scheme.configuration.tokenHeader,
+                                  headerName: scheme.configuration.tokenHeader,
                                   tokenPrefix: scheme.configuration.tokenPrefix
                               }
                           }

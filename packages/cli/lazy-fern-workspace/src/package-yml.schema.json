@@ -2676,6 +2676,26 @@
               "type": "null"
             }
           ]
+        },
+        "transport": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.ServiceTransport"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
