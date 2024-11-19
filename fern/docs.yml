@@ -69,6 +69,9 @@ redirects:
     destination: /sdks/capabilities/merging-multiple-apis
   - source: /sdks/features/websockets
     destination: /sdks/capabilities/websockets
+  - source: /sdks/features/:slug* 
+    destination: sdks/capabilities/:slug*
+    permanent: true
   - source: /sdks/introduction/configuration
     destination: /sdks/introduction/language-support
   - source: /sdks/getting-started/generate-your-first-sdk
@@ -77,21 +80,24 @@ redirects:
     destination: /sdks/guides/preview-your-sdk-locally
   - source: /sdks/publish-sdk/publish-your-sdk
     destination: /sdks/guides/publish-your-sdk
-  - source: /sdks/package-managers/npm-type-script
-    destination: /sdks/guides/publish-to-package-managers/npm-type-script
-  - source: /sdks/package-managers/pypi
-    destination: /sdks/guides/publish-to-package-managers/
-  - source: /sdks/package-managers/nuget
-    destination: /sdks/guides/publish-to-package-managers/nuget
-  - source: /sdks/package-managers/pkgsite
-    destination: /sdks/guides/publish-to-package-managers/pkgsite
-  - source: /sdks/package-managers/maven-central
-    destination: /sdks/guides/publish-to-package-managers/maven-central
-  - source: /sdks/package-managers/rubygems
-    destination: /sdks/guides/publish-to-package-managers/rubygems
-  - source: /sdks/package-managers/packagist
-    destination: /sdks/guides/publish-to-package-managers/packagist
-    
+  - source: /sdks/guides/publish-to-package-managers/npm-type-script
+    destination: /sdks/package-managers/npm-type-script
+  - source: /sdks/guides/publish-to-package-managers/
+    destination: /sdks/package-managers/pypi
+  - source: /sdks/guides/publish-to-package-managers/nuget
+    destination: /sdks/package-managers/nuget
+  - source: /sdks/guides/publish-to-package-managers/pkgsite
+    destination: /sdks/package-managers/pkgsite
+  - source: /sdks/guides/publish-to-package-managers/maven-central
+    destination: /sdks/package-managers/maven-central
+  - source: /sdks/guides/publish-to-package-managers/rubygems
+    destination: /sdks/package-managers/rubygems
+  - source: /sdks/guides/publish-to-package-managers/packagist
+    destination: /sdks/package-managers/packagist
+  - source: /sdks/guides/publish-to-package-managers/:slug* 
+    destination: /sdks/package-managers/:slug*
+    permanent: true  
+
 navigation:
   - tab: home
     layout:
