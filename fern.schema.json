@@ -1874,6 +1874,19 @@
             }
           ]
         },
+        "path-parameters": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/service.HttpPathParameterSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "query-parameters": {
           "oneOf": [
             {

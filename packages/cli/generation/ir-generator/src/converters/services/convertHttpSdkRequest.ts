@@ -129,9 +129,11 @@ export function doesRequestHaveNonBodyProperties({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): boolean {
-    const { headers = {}, "query-parameters": queryParameters = {} } = request;
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request;
 
-    return !areAllHeadersLiteral({ headers, file, typeResolver }) || size(queryParameters) > 0;
+    return (
+        !areAllHeadersLiteral({ headers, file, typeResolver }) || size(pathParameters) > 0 || size(queryParameters) > 0
+    );
 }
 
 function areAllHeadersLiteral({
