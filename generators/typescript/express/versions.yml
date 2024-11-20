@@ -1,5 +1,4 @@
 - changelogEntry:
-
   - summary: Re-release the `0.17.5` version.
     type: feat
   irVersion: 53
