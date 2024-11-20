@@ -1,12 +1,6 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    EndpointId,
-    FeatureId,
-    FernFilepath,
-    HttpEndpoint,
-    SdkRequestWrapper,
-} from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";

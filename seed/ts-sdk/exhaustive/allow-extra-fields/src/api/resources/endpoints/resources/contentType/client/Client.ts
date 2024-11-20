@@ -81,7 +81,11 @@ export class ContentType {
                     abortSignal: requestOptions?.abortSignal,
                 });
                 if (_response.ok) {
-                    return;
+                    return {
+                        ok: _response.ok,
+                        body: undefined,
+                        headers: _response.headers,
+                    };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedExhaustiveError({
@@ -160,7 +164,11 @@ export class ContentType {
                     abortSignal: requestOptions?.abortSignal,
                 });
                 if (_response.ok) {
-                    return;
+                    return {
+                        ok: _response.ok,
+                        body: undefined,
+                        headers: _response.headers,
+                    };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedExhaustiveError({

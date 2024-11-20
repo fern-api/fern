@@ -28,7 +28,7 @@ export class PromiseUtilsImpl extends CoreUtility implements PromiseUtils {
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("core"),
-                        ts.factory.createIdentifier("APIPromise"),
+                        ts.factory.createIdentifier("APIPromise")
                     ),
                     ts.factory.createIdentifier("from")
                 ),
