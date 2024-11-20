@@ -535,7 +535,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             context
         );
-        if (this.getPaginationInfo != null) {
+        if (this.getPaginationInfo(context) != null) {
             return [ts.factory.createReturnStatement(deserializeToResponse)];
         }
         return [this.getSuccessResponse(deserializeToResponse)];
