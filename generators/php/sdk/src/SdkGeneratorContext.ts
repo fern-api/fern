@@ -74,6 +74,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
+        // TODO: Propogate reserved keywords through IR via CasingsGenerator.
+        const reservedKeywords = ["use", "clone", "list"];
+        const unsafeName = endpoint.name.camelCase.unsafeName;
+        if (reservedKeywords.includes(unsafeName)) {
+            return unsafeName;
+        }
         return endpoint.name.camelCase.safeName;
     }
 
