@@ -29,11 +29,11 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
 
 export class GeneratedFileDownloadEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
+    public response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
-    private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
@@ -58,6 +58,9 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    public isPaginated(context: SdkContext): boolean {
+        return false;
     }
 
     public getExample(args: {

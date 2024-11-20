@@ -32,11 +32,11 @@ const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
+    public readonly response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
-    private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
@@ -61,6 +61,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    
+    public isPaginated(context: SdkContext): boolean {
+        return this.response.getPaginationInfo(context) != null;
     }
 
     public getOverloads(): EndpointSignature[] {

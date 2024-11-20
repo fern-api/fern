@@ -391,6 +391,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnResponseIfOk(context: SdkContext): ts.Statement {
+        
         return ts.factory.createIfStatement(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -481,63 +482,64 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     throw new Error(`Unknown response type: ${type}`);
                 }
             });
-            return [
-                this.getSuccessResponse(
-                    context.coreUtilities.streamUtils.Stream._construct({
-                        stream: ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            return [this.getSuccessResponse(context.coreUtilities.streamUtils.Stream._construct({
+                stream: ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                    undefined,
+                    ts.factory.createIdentifier(
+                        context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                    )
+                ),
+                eventShape,
+                signal: getAbortSignalExpression({
+                    abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
+                }),
+                parse: ts.factory.createArrowFunction(
+                    [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
                             undefined,
-                            ts.factory.createIdentifier(
-                                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-                            )
-                        ),
-                        eventShape,
-                        signal: getAbortSignalExpression({
-                            abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
-                        }),
-                        parse: ts.factory.createArrowFunction(
-                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                )
-                            ],
                             undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createReturnStatement(
-                                        context.sdkEndpointTypeSchemas
-                                            .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
-                                            .deserializeStreamData({
-                                                context,
-                                                referenceToRawStreamData: ts.factory.createIdentifier(
-                                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                )
-                                            })
-                                    )
-                                ],
-                                true
-                            )
+                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
                         )
-                    })
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createReturnStatement(
+                                context.sdkEndpointTypeSchemas
+                                    .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
+                                    .deserializeStreamData({
+                                        context,
+                                        referenceToRawStreamData: ts.factory.createIdentifier(
+                                            GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                        )
+                                    })
+                            )
+                        ],
+                        true
+                    )
                 )
+            })) 
+            ];
+        }
+        const deserializeToResponse = generatedEndpointTypeSchemas.deserializeResponse(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+            ),
+            context
+        );
+        if (this.getPaginationInfo != null) {
+            return [
+                ts.factory.createReturnStatement(deserializeToResponse)
             ];
         }
         return [
-            this.getSuccessResponse(
-                generatedEndpointTypeSchemas.deserializeResponse(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                        context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-                    ),
-                    context
-                )
-            )
+            this.getSuccessResponse(deserializeToResponse)
         ];
     }
 
@@ -552,7 +554,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createIdentifier("ok")
                         )
                     ),
-                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier("body"), body),
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier("body"),
+                        body
+                    ),
                     ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier("headers"),
                         ts.factory.createPropertyAccessExpression(
@@ -805,7 +810,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
         return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
-            : [this.getSuccessResponse(ts.factory.createIdentifier("undefined"))];
+            : [ts.factory.createReturnStatement(undefined)];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {

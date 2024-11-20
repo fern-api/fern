@@ -606,28 +606,29 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
 
             const statements = endpoint.getStatements(context);
+            const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
 
             const method = serviceClass.addMethod({
                 name: endpoint.endpoint.name.camelCase.unsafeName,
                 parameters: signature.parameters,
-                returnType: context.neverThrowErrors
+                returnType: returnsAPIPromise
                     ? getTextOfTsNode(
-                          ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
-                      )
-                    : getTextOfTsNode(
                           context.coreUtilities.promiseUtils.APIPromise._getReferenceToType(
                               signature.returnTypeWithoutPromise
                           )
-                      ),
+                      )
+                    : getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                    ),
                 scope: Scope.Public,
-                isAsync: context.neverThrowErrors, // if not neverThrowErrors we return an `APIPromise`
-                statements: context.neverThrowErrors
-                    ? statements.map(getTextOfTsNode)
-                    : [
+                isAsync: !returnsAPIPromise, // if not returnsAPIPromise we return an `APIPromise`
+                statements: returnsAPIPromise
+                    ? [
                           ts.factory.createReturnStatement(
                               context.coreUtilities.promiseUtils.APIPromise.from(statements)
                           )
-                      ].map(getTextOfTsNode),
+                      ].map(getTextOfTsNode)
+                    : statements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
