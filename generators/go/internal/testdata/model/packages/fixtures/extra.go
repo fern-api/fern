@@ -32,13 +32,11 @@ func (v *Value) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*v = Value(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *v)
 	if err != nil {
 		return err
 	}
 	v.extraProperties = extraProperties
-
 	return nil
 }
 

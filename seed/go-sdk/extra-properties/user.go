@@ -39,7 +39,6 @@ func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-
 	return nil
 }
 
@@ -62,7 +61,7 @@ type User struct {
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
-	_rawJSON json.RawMessage
+	rawJSON json.RawMessage
 }
 
 func (u *User) GetName() string {
@@ -87,14 +86,12 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(unmarshaler.embed)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -109,8 +106,8 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}

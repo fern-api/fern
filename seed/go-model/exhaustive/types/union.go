@@ -130,13 +130,11 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = Cat(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -179,13 +177,11 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Dog(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 

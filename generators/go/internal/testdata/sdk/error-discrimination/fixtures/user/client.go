@@ -7,13 +7,12 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	io "io"
-	http "net/http"
-
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/option"
+	io "io"
+	http "net/http"
 )
 
 type Client struct {
@@ -43,9 +42,9 @@ func (c *Client) Get(
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
-		"",
-		c.baseURL,
 		options.BaseURL,
+		c.baseURL,
+		"",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v",
@@ -108,8 +107,8 @@ func (c *Client) Get(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

@@ -4,14 +4,13 @@ package client
 
 import (
 	context "context"
-	http "net/http"
-
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	fixturesuser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	notificationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification/client"
 	useruser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/user"
+	http "net/http"
 )
 
 type Client struct {
@@ -46,9 +45,9 @@ func (c *Client) GetUser(
 ) (*fixturesuser.User, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
-		"https://api.foo.io/v1",
-		c.baseURL,
 		options.BaseURL,
+		c.baseURL,
+		"https://api.foo.io/v1",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
@@ -65,8 +64,8 @@ func (c *Client) GetUser(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

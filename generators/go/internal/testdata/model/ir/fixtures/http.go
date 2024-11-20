@@ -32,13 +32,11 @@ func (d *DeclaredServiceName) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeclaredServiceName(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -155,13 +153,11 @@ func (e *ExampleEndpointCall) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleEndpointCall(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -204,13 +200,11 @@ func (e *ExampleEndpointErrorResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleEndpointErrorResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -245,13 +239,11 @@ func (e *ExampleEndpointSuccessResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleEndpointSuccessResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -294,13 +286,11 @@ func (e *ExampleHeader) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleHeader(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -343,13 +333,11 @@ func (e *ExampleInlinedRequestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleInlinedRequestBody(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -402,13 +390,11 @@ func (e *ExampleInlinedRequestBodyProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleInlinedRequestBodyProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -451,13 +437,11 @@ func (e *ExamplePathParameter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExamplePathParameter(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -500,13 +484,11 @@ func (e *ExampleQueryParameter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleQueryParameter(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -721,13 +703,11 @@ func (f *FileDownloadResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FileDownloadResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -770,13 +750,11 @@ func (f *FileProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FileProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -819,13 +797,11 @@ func (f *FileUploadRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FileUploadRequest(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1102,13 +1078,11 @@ func (h *HttpEndpoint) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpEndpoint(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1167,13 +1141,11 @@ func (h *HttpHeader) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpHeader(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1247,13 +1219,11 @@ func (h *HttpPath) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpPath(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1296,13 +1266,11 @@ func (h *HttpPathPart) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpPathPart(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1458,13 +1426,11 @@ func (h *HttpRequestBodyReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpRequestBodyReference(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1637,13 +1603,11 @@ func (h *HttpService) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HttpService(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1694,13 +1658,11 @@ func (i *InlinedRequestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = InlinedRequestBody(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1751,13 +1713,11 @@ func (i *InlinedRequestBodyProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = InlinedRequestBodyProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1800,13 +1760,11 @@ func (j *JsonResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = JsonResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
 	j.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1857,13 +1815,11 @@ func (m *MaybeStreamingResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MaybeStreamingResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1930,13 +1886,11 @@ func (p *PathParameter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PathParameter(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2028,13 +1982,11 @@ func (q *QueryParameter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*q = QueryParameter(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *q)
 	if err != nil {
 		return err
 	}
 	q.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2077,13 +2029,11 @@ func (r *ResponseError) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = ResponseError(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2128,13 +2078,11 @@ func (s *SdkRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SdkRequest(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2267,13 +2215,11 @@ func (s *SdkRequestWrapper) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SdkRequestWrapper(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2564,13 +2510,11 @@ func (s *StreamingResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamingResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

@@ -33,7 +33,7 @@ type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (m *MyObject) GetFoo() string {
@@ -54,20 +54,18 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
-	m._rawJSON = json.RawMessage(data)
+	m.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (m *MyObject) String() string {
-	if len(m._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(m._rawJSON); err == nil {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
 		}
 	}

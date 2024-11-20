@@ -5,13 +5,12 @@ package file
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	http "net/http"
-
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/option"
+	io "io"
+	http "net/http"
 )
 
 type Client struct {
@@ -42,9 +41,9 @@ func (c *Client) Upload(
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
-		"",
-		c.baseURL,
 		options.BaseURL,
+		c.baseURL,
+		"",
 	)
 	endpointURL := baseURL + "/file/upload"
 	headers := internal.MergeHeaders(
@@ -72,8 +71,8 @@ func (c *Client) Upload(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -92,18 +91,16 @@ func (c *Client) UploadSimple(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/file/upload-simple"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
-
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
@@ -119,8 +116,8 @@ func (c *Client) UploadSimple(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -141,18 +138,16 @@ func (c *Client) UploadMultiple(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/file/upload-multi"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
-
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
@@ -176,8 +171,8 @@ func (c *Client) UploadMultiple(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

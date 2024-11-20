@@ -32,13 +32,11 @@ func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BadObjectRequestInfo(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 

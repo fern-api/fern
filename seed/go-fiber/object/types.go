@@ -42,13 +42,11 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Name(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -270,13 +268,11 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
 	}
 	t.eighteen = unmarshaler.Eighteen
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 

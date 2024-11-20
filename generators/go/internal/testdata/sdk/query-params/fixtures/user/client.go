@@ -5,12 +5,11 @@ package user
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/core"
 	internal "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/option"
+	http "net/http"
 )
 
 type Client struct {
@@ -40,9 +39,9 @@ func (c *Client) GetAllUsers(
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
-		"",
-		c.baseURL,
 		options.BaseURL,
+		c.baseURL,
+		"",
 	)
 	endpointURL := baseURL + "/users/all"
 	queryParams, err := internal.QueryValues(request)
@@ -65,8 +64,8 @@ func (c *Client) GetAllUsers(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

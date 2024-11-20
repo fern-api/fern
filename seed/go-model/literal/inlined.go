@@ -38,13 +38,11 @@ func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
 	}
 	a.myLiteral = unmarshaler.MyLiteral
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a, "myLiteral")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -91,13 +89,11 @@ func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = ATopLevelLiteral(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 

@@ -32,13 +32,11 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = Circle(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -73,13 +71,11 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*g = GetShapeRequest(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
 	}
 	g.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -214,13 +210,11 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Square(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
