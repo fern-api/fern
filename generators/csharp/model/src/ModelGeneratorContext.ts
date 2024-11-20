@@ -51,9 +51,9 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     public getCoreTestAsIsFiles(): string[] {
         const files = [];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.EnumSerializerTests);
+            files.push(AsIsFiles.Test.EnumSerializerTests);
         }
         return files;
     }

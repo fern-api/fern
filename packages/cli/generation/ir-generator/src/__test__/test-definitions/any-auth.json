@@ -95,6 +95,7 @@
                     "clientIdEnvVar": "MY_CLIENT_ID",
                     "clientSecretEnvVar": "MY_CLIENT_SECRET",
                     "tokenPrefix": null,
+                    "tokenHeader": null,
                     "scopes": null,
                     "tokenEndpoint": {
                         "endpointReference": {

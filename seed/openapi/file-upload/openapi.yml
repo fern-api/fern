@@ -149,6 +149,9 @@ paths:
                   type: string
                 bar:
                   $ref: '#/components/schemas/MyObject'
+                foobar:
+                  $ref: '#/components/schemas/MyObject'
+                  nullable: true
 components:
   schemas:
     Id:
