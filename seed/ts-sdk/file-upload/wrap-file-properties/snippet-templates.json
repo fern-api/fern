@@ -709,34 +709,6 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "foobar: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                        "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
-                                        "templateInputs": [
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "foo: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "BODY",
-                                                            "path": "foobar.foo",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
