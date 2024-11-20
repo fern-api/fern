@@ -262,36 +262,42 @@ class EndpointFunctionGenerator:
                 endpoint=self._endpoint,
                 named_parameters=named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
-                snippet=endpoint_snippets[0].snippet
-                if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
-                else None,
+                snippet=(
+                    endpoint_snippets[0].snippet
+                    if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
+                    else None
+                ),
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
                 named_parameters=named_parameters,
                 return_type=self._get_endpoint_return_type(streaming_parameter=streaming_parameter),
             ),
-            body=self._create_endpoint_body_writer(
-                service=self._service,
-                endpoint=self._endpoint,
-                idempotency_headers=self._idempotency_headers,
-                request_body_parameters=self.request_body_parameters,
-                is_async=self._is_async,
-                parameters=unnamed_parameters,
-                named_parameters=named_parameters,
-            )
-            if not is_overloaded
-            else self._create_empty_body_writer(),
-            decorators=[
-                AST.Expression(
-                    AST.Reference(
-                        qualified_name_excluding_import=("overload",),
-                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
-                    )
+            body=(
+                self._create_endpoint_body_writer(
+                    service=self._service,
+                    endpoint=self._endpoint,
+                    idempotency_headers=self._idempotency_headers,
+                    request_body_parameters=self.request_body_parameters,
+                    is_async=self._is_async,
+                    parameters=unnamed_parameters,
+                    named_parameters=named_parameters,
                 )
-            ]
-            if is_overloaded
-            else [],
+                if not is_overloaded
+                else self._create_empty_body_writer()
+            ),
+            decorators=(
+                [
+                    AST.Expression(
+                        AST.Reference(
+                            qualified_name_excluding_import=("overload",),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                        )
+                    )
+                ]
+                if is_overloaded
+                else []
+            ),
         )
         return GeneratedEndpointFunction(
             function=function_declaration,
@@ -372,17 +378,19 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(header.name.name),
                         docs=header.docs,
                         type_hint=header_type_hint,
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{header.env}"')],
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{header.env}"')],
+                                )
                             )
-                        )
-                        if header.env is not None
-                        else None,
+                            if header.env is not None
+                            else None
+                        ),
                     ),
                 )
 
@@ -510,9 +518,9 @@ class EndpointFunctionGenerator:
                 return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,
-                    path=self._get_path_for_endpoint(endpoint=endpoint)
-                    if not is_endpoint_path_empty(endpoint)
-                    else None,
+                    path=(
+                        self._get_path_for_endpoint(endpoint=endpoint) if not is_endpoint_path_empty(endpoint) else None
+                    ),
                     url=self._get_environment_as_str(endpoint=endpoint),
                     method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint, parent_writer=writer),
@@ -1165,6 +1173,12 @@ class EndpointFunctionGenerator:
         if endpoint.idempotent:
             ir_headers += idempotency_headers
 
+        if endpoint.request_body is not None:
+            unioned_value = endpoint.request_body.get_as_union()
+            if isinstance(unioned_value, ir_types.InlinedRequestBody):
+                if unioned_value.content_type is not None:
+                    headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
+
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
@@ -1443,9 +1457,11 @@ class EndpointFunctionSnippetGenerator:
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=self.path_parameter_names[path_parameter.name],
                         # If there's no value put a None in place as path parameters are unnamed and cannot be skipped
-                        value=path_parameter_value
-                        if path_parameter_value is not None
-                        else AST.Expression(AST.TypeHint.none()),
+                        value=(
+                            path_parameter_value
+                            if path_parameter_value is not None
+                            else AST.Expression(AST.TypeHint.none())
+                        ),
                     ),
                 )
 
