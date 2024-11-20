@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganization"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getOrganization(\"organizationId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"userId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getOrganizationUser(\"organizationId\", \"userId\");\n"
+            }
+        }
+    ],
+    "types": {}
+}
