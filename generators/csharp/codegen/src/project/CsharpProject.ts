@@ -365,8 +365,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                namespace
             })
         );
     }
@@ -380,8 +379,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                namespace
             })
         );
     }
@@ -395,8 +393,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getTestUtilsNamespace(),
-                customConfig: this.context.customConfig
+                namespace: this.context.getTestUtilsNamespace()
             })
         );
     }
@@ -419,20 +416,17 @@ function replaceTemplate({
     contents,
     grpc,
     idempotencyHeaders,
-    namespace,
-    customConfig
+    namespace
 }: {
     contents: string;
     grpc: boolean;
     idempotencyHeaders: boolean;
     namespace: string;
-    customConfig: BaseCsharpCustomConfigSchema;
 }): string {
     return template(contents)({
         grpc,
         idempotencyHeaders,
-        namespace,
-        customConfig
+        namespace
     });
 }
 

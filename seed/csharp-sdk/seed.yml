@@ -84,9 +84,6 @@ fixtures:
     - customConfig:
         generate-error-types: false
       outputFolder: no-generate-error-types
-    - customConfig:
-        serialize-null-properties: true
-      outputFolder: serialize-null-properties
   optional:
     - customConfig:
         simplify-object-dictionaries: false

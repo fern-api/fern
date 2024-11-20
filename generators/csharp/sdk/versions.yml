@@ -7,15 +7,11 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 - version: 1.9.10
-  createdAt: "2024-11-19"
+  createdAt: "2024-11-20"
   changelogEntry:
     - type: feat
       summary: |
         Add partial `JsonOptions.ConfigureJsonSerializerOptions` method to allow SDK maintainers to configure the `JsonSerializerOptions` used by the SDK.
-    - type: feat
-      summary: |
-        Add generator configuration to control whether properties with `null` values should be serialized to JSON.
-        Set `serialize-null-properties` to `true` to serialize properties with `null` values. The default value is `false`.
   irVersion: 53
 - version: 1.9.9
   createdAt: "2024-11-19"

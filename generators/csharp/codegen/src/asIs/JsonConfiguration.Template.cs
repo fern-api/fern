@@ -12,11 +12,9 @@ internal static partial class JsonOptions
         var options = new JsonSerializerOptions
         {
             Converters = { new DateTimeSerializer(), new OneOfSerializer() },
-            WriteIndented = true
+            WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
-<% if (customConfig["serialize-null-properties"] !== true) { %>
-        options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-<% } %>
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
     }
