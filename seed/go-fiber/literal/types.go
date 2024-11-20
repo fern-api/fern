@@ -54,13 +54,11 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, true, unmarshaler.Success)
 	}
 	s.success = unmarshaler.Success
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s, "success")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

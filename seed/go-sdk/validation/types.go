@@ -62,7 +62,7 @@ type Type struct {
 	Shape   Shape   `json:"shape" url:"shape"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (t *Type) GetDecimal() float64 {
@@ -104,20 +104,18 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Type(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
-	t._rawJSON = json.RawMessage(data)
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (t *Type) String() string {
-	if len(t._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(t._rawJSON); err == nil {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
 		}
 	}

@@ -32,13 +32,11 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 

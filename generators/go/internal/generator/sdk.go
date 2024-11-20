@@ -29,6 +29,12 @@ var (
 	//go:embed sdk/internal/caller_test.go
 	callerTestFile string
 
+	//go:embed sdk/internal/error_decoder.go
+	errorDecoderFile string
+
+	//go:embed sdk/internal/error_decoder_test.go
+	errorDecoderTestFile string
+
 	//go:embed sdk/internal/extra_properties.go
 	extraPropertiesFile string
 
@@ -912,7 +918,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, serviceHeaders, idempotencyHeaders, inlineFileProperties, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlineFileProperties, receiver)
 		if err != nil {
 			return nil, err
 		}
@@ -998,37 +1004,27 @@ func (f *fileWriter) WriteClient(
 			f.P(signatureParameter.parameter, ",")
 		}
 		f.P(") ", endpoint.ReturnValues, " {")
-		// Compose all the request options.
 		f.P("options := ", endpoint.OptionConstructor)
-		f.P()
-		// Compose the URL, including any query parameters.
-		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
-		f.P("if ", fmt.Sprintf("%s.baseURL", receiver), ` != "" {`)
-		f.P("baseURL = ", fmt.Sprintf("%s.baseURL", receiver))
-		f.P("}")
-		f.P(`if options.BaseURL != "" {`)
-		f.P("baseURL = options.BaseURL")
-		f.P("}")
+		f.P("baseURL := internal.ResolveBaseURL(")
+		f.P("options.BaseURL,")
+		f.P("c.baseURL,")
+		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+		f.P(")")
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
 		if len(endpoint.PathParameterNames) > 0 {
-			if len(endpoint.PathParameterNames) == 1 {
-				f.P("endpointURL := internal.EncodeURL(", baseURLVariable, ", ", endpoint.PathParameterNames[0], ")")
-			} else {
-				f.P("endpointURL := internal.EncodeURL(")
-				f.P(baseURLVariable, ", ")
-				for _, pathParameterName := range endpoint.PathParameterNames {
-					f.P(pathParameterName, ",")
-				}
-				f.P(")")
+			f.P("endpointURL := internal.EncodeURL(")
+			f.P(baseURLVariable, ", ")
+			for _, pathParameterName := range endpoint.PathParameterNames {
+				f.P(pathParameterName, ",")
 			}
+			f.P(")")
 		} else {
 			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
 		}
 		if len(endpoint.QueryParameters) > 0 {
-			f.P()
 			f.P("queryParams, err := internal.QueryValues(", endpoint.RequestParameterName, ")")
 			f.P("if err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
@@ -1046,8 +1042,10 @@ func (f *fileWriter) WriteClient(
 		}
 
 		headersParameter := "headers"
-		f.P()
-		f.P(headersParameter, " := internal.MergeHeaders(", receiver, ".header.Clone(), options.ToHeader())")
+		f.P(headersParameter, " := internal.MergeHeaders(")
+		f.P(receiver, ".header.Clone(),")
+		f.P("options.ToHeader(),")
+		f.P(")")
 		if len(endpoint.Headers) > 0 {
 			// Add endpoint-specific headers from the request, if any.
 			for _, header := range endpoint.Headers {
@@ -1070,28 +1068,40 @@ func (f *fileWriter) WriteClient(
 		if endpoint.ContentType != "" {
 			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
 		}
-		f.P()
 
 		// Include the error decoder, if any.
 		if len(endpoint.Errors) > 0 {
-			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
-			f.P("raw, err := io.ReadAll(body)")
-			f.P("if err != nil {")
-			f.P("return err")
-			f.P("}")
-			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
-			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
-			var (
-				switchValue              = "statusCode"
-				discriminantContentField = ""
-			)
-			if errorDiscriminationByPropertyStrategy != nil {
+			if errorDiscriminationByPropertyStrategy == nil {
+				f.P("errorCodes := internal.ErrorCodes{")
+				for _, responseError := range endpoint.Errors {
+					var (
+						errorDeclaration = f.errors[responseError.Error.ErrorId]
+						errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					)
+					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P("return &", errorType, "{")
+					f.P("APIError: apiError,")
+					f.P("}")
+					f.P("},")
+				}
+				f.P("}")
+			} else {
 				var (
-					discriminant = errorDiscriminationByPropertyStrategy.Discriminant
-					content      = errorDiscriminationByPropertyStrategy.ContentProperty
+					switchValue              = "statusCode"
+					discriminantContentField = ""
+					discriminant             = errorDiscriminationByPropertyStrategy.Discriminant
+					content                  = errorDiscriminationByPropertyStrategy.ContentProperty
 				)
 				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
 				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
+				f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
+				f.P("raw, err := io.ReadAll(body)")
+				f.P("if err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
+				f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
 				f.P("var discriminant struct {")
 				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
 				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
@@ -1099,35 +1109,34 @@ func (f *fileWriter) WriteClient(
 				f.P("if err := decoder.Decode(&discriminant); err != nil {")
 				f.P("return apiError")
 				f.P("}")
-			}
-			f.P("switch ", switchValue, " {")
-			for _, responseError := range endpoint.Errors {
-				var (
-					errorDeclaration = f.errors[responseError.Error.ErrorId]
-					errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-					errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-				)
-				if errorDiscriminationByPropertyStrategy != nil {
-					f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
-				} else {
-					f.P("case ", errorDeclaration.StatusCode, ":")
+				f.P("switch ", switchValue, " {")
+				for _, responseError := range endpoint.Errors {
+					var (
+						errorDeclaration = f.errors[responseError.Error.ErrorId]
+						errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					)
+					if errorDiscriminationByPropertyStrategy != nil {
+						f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
+					} else {
+						f.P("case ", errorDeclaration.StatusCode, ":")
+					}
+					f.P("value := new(", errorType, ")")
+					f.P("value.APIError = apiError")
+					if discriminantContentField != "" {
+						f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
+					} else {
+						f.P("if err := decoder.Decode(value); err != nil {")
+					}
+					f.P("return apiError")
+					f.P("}")
+					f.P("return value")
 				}
-				f.P("value := new(", errorType, ")")
-				f.P("value.APIError = apiError")
-				if discriminantContentField != "" {
-					f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
-				} else {
-					f.P("if err := decoder.Decode(value); err != nil {")
-				}
+				// Close the switch statement.
+				f.P("}")
 				f.P("return apiError")
 				f.P("}")
-				f.P("return value")
 			}
-			// Close the switch statement.
-			f.P("}")
-			f.P("return apiError")
-			f.P("}")
-			f.P()
 		}
 
 		if endpoint.RequestIsBytes {
@@ -1139,7 +1148,6 @@ func (f *fileWriter) WriteClient(
 			} else {
 				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
 			}
-			f.P()
 		}
 
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
@@ -1229,8 +1237,9 @@ func (f *fileWriter) WriteClient(
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
 			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
-			f.P()
 		}
+
+		f.P()
 
 		// Prepare a response variable.
 		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
@@ -1246,6 +1255,7 @@ func (f *fileWriter) WriteClient(
 			f.P("&internal.StreamParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
 			if streamingInfo.Delimiter != "" {
 				f.P("Delimiter: ", streamingInfo.Delimiter, ",")
 			}
@@ -1258,7 +1268,6 @@ func (f *fileWriter) WriteClient(
 			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
-			f.P("Headers:", headersParameter, ",")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
@@ -1282,8 +1291,8 @@ func (f *fileWriter) WriteClient(
 			f.P("return &internal.CallParams{")
 			f.P("URL: nextURL, ")
 			f.P("Method:", endpoint.Method, ",")
-			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1393,8 +1402,8 @@ func (f *fileWriter) WriteClient(
 			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
-			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -2137,6 +2146,7 @@ func (f *fileWriter) endpointFromIR(
 	fernFilepath *ir.FernFilepath,
 	irEndpoint *ir.HttpEndpoint,
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	inlineFileProperties bool,
@@ -2419,9 +2429,12 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	// An error decoder is required when there are endpoint-specific errors.
-	errorDecoderParameterName := ""
+	var errorDecoderParameterName string
 	if len(irEndpoint.Errors) > 0 {
 		errorDecoderParameterName = "errorDecoder"
+		if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property == nil {
+			errorDecoderParameterName = "internal.NewErrorDecoder(errorCodes)"
+		}
 	}
 
 	var pathParameterDocs []*string

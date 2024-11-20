@@ -33,13 +33,11 @@ func (f *FolderCFoo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FolderCFoo(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
