@@ -18,7 +18,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
 import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { EXCEPTIONS_DIRECTORY, TYPES_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
+import { EXCEPTIONS_DIRECTORY, TYPES_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES } from "./constants";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
@@ -74,6 +74,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
+        // TODO: Propogate reserved keywords through IR via CasingsGenerator.
+        const unsafeName = endpoint.name.camelCase.unsafeName;
+        if (RESERVED_METHOD_NAMES.includes(unsafeName)) {
+            return unsafeName;
+        }
         return endpoint.name.camelCase.safeName;
     }
 

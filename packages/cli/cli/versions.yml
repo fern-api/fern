@@ -4,8 +4,14 @@
         importer.
       type: feat
   irVersion: 53
-  version: 0.45.0-rc49
+  version: 0.45.0-rc50
 
+- changelogEntry:
+    - summary: |
+        Add 'list' to reserved keywords for use in PHP generator.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc49
 - changelogEntry:
     - summary: |
         OAuth Client Credential Auth Scheme now supports the ability to optionally 
