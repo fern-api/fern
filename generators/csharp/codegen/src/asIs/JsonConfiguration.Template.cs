@@ -14,7 +14,7 @@ internal static partial class JsonOptions
             Converters = { new DateTimeSerializer(), new OneOfSerializer() },
             WriteIndented = true
         };
-<% if (customConfig["serialize-null-properties"] !== false) { %>
+<% if (customConfig["serialize-null-properties"] !== true) { %>
         options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 <% } %>
         ConfigureJsonSerializerOptions(options);

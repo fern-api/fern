@@ -15,7 +15,7 @@
     - type: feat
       summary: |
         Add generator configuration to control whether properties with `null` values should be serialized to JSON.
-        Set `serialize-null-properties` to `false` to not serialize properties with `null` values. The default value is `true`.
+        Set `serialize-null-properties` to `true` to serialize properties with `null` values. The default value is `false`.
   irVersion: 53
 - version: 1.9.9
   createdAt: "2024-11-19"
