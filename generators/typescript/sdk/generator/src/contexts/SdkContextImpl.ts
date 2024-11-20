@@ -112,6 +112,7 @@ export declare namespace SdkContextImpl {
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        neverThrowErrors: boolean;
         useBigInt: boolean;
     }
 }
@@ -150,6 +151,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly inlineFileProperties: boolean;
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
+    public readonly neverThrowErrors: boolean;
 
     constructor({
         logger,
@@ -200,7 +202,8 @@ export class SdkContextImpl implements SdkContext {
         inlineFileProperties,
         generateOAuthClients,
         omitUndefined,
-        useBigInt
+        useBigInt,
+        neverThrowErrors
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -217,6 +220,7 @@ export class SdkContextImpl implements SdkContext {
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
+        this.neverThrowErrors = neverThrowErrors;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager
