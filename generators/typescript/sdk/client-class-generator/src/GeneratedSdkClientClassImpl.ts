@@ -979,7 +979,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         hasQuestionToken: true,
                         docs: [`Override the ${header.name.wireValue} header`]
                     };
-                })
+                }),
+                {
+                    name: "headers",
+                    type: "Record<string, string>",
+                    hasQuestionToken: true,
+                    docs: ["Additional headers to include in the request."]
+                }
             ]
         };
 

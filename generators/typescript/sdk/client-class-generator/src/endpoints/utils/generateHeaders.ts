@@ -71,6 +71,8 @@ export function generateHeaders({
         );
     }
 
+    objectToReturn.push(getRequestOptionsHeaders());
+
     return objectToReturn;
 }
 
@@ -118,4 +120,14 @@ function getValueExpressionForIdempotencyHeader({
             { includeNullCheckIfOptional: true }
         );
     }
+}
+
+function getRequestOptionsHeaders(): ts.SpreadAssignment {
+    return ts.factory.createSpreadAssignment(
+        ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("headers")
+        )
+    );
 }

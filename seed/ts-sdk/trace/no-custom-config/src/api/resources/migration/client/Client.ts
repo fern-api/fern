@@ -26,6 +26,8 @@ export declare namespace Migration {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -67,6 +69,7 @@ export class Migration {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         "admin-key-header": adminKeyHeader,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

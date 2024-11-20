@@ -19,6 +19,8 @@ export declare namespace Service {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -87,6 +89,7 @@ export class Service {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         ..._maybeEncodedRequest.headers,
+                        ...requestOptions?.headers,
                     },
                     requestType: "file",
                     duplex: _maybeEncodedRequest.duplex,
@@ -150,6 +153,7 @@ export class Service {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         ..._maybeEncodedRequest.headers,
+                        ...requestOptions?.headers,
                     },
                     requestType: "file",
                     duplex: _maybeEncodedRequest.duplex,
@@ -233,6 +237,7 @@ export class Service {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         ..._maybeEncodedRequest.headers,
+                        ...requestOptions?.headers,
                     },
                     queryParameters: _queryParams,
                     requestType: "file",
@@ -287,6 +292,9 @@ export class Service {
                 await _request.appendFile("file", request.file);
                 await _request.append("foo", request.foo);
                 await _request.append("bar", JSON.stringify(request.bar));
+                if (request.foobar != null) {
+                    await _request.append("foobar", JSON.stringify(request.foobar));
+                }
                 const _maybeEncodedRequest = await _request.getRequest();
                 const _response = await core.fetcher({
                     url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),
@@ -299,6 +307,7 @@ export class Service {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         ..._maybeEncodedRequest.headers,
+                        ...requestOptions?.headers,
                     },
                     requestType: "file",
                     duplex: _maybeEncodedRequest.duplex,

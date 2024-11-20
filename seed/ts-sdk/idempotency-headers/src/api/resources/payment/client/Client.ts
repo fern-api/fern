@@ -21,6 +21,8 @@ export declare namespace Payment {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 
     interface IdempotentRequestOptions extends RequestOptions {
@@ -61,6 +63,7 @@ export class Payment {
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         "Idempotency-Key": requestOptions?.idempotencyKey,
                         "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -129,6 +132,7 @@ export class Payment {
                         "User-Agent": "@fern/idempotency-headers/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

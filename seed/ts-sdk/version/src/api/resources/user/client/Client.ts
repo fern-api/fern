@@ -22,6 +22,8 @@ export declare namespace User {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
@@ -57,6 +59,7 @@ export class User {
                         "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "2.0.0",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

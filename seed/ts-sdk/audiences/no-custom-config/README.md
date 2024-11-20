@@ -76,6 +76,18 @@ console.log(response.headers['X-My-Header']);
 console.log(response.body);
 ```
 
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.foo.find(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long

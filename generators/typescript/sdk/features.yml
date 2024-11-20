@@ -19,6 +19,11 @@ features:
       The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`, 
       the parsed response body will be available in the `body` field, along with the response headers:
   
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: | 
+      If you would like to send additional headers as part of the request, use the `headers` request option. 
+  
   - id: RETRIES
     advanced: true
     description: |
