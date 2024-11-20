@@ -981,7 +981,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     };
                 }),
                 {
-                    name: "additionalHeaders",
+                    name: "headers",
                     type: "Record<string, string>",
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]

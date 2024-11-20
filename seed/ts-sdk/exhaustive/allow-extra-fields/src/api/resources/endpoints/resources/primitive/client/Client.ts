@@ -20,6 +20,8 @@ export declare namespace Primitive {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -47,6 +49,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -116,6 +119,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -185,6 +189,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -254,6 +259,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -323,6 +329,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -392,6 +399,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -464,6 +472,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -533,6 +542,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -602,6 +612,7 @@ export class Primitive {
                         "User-Agent": "@fern/exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

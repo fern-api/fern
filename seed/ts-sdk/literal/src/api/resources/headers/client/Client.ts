@@ -28,6 +28,8 @@ export declare namespace Headers {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -67,6 +69,7 @@ export class Headers {
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         "X-Endpoint-Version": "02-12-2024",
                         "X-Async": "true",
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

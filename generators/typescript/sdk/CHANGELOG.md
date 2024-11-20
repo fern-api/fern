@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.42.1] - 2024-11-20
+
+- Feat: Added support for passing additional headers in request options. For example:
+
+  ```ts
+  const response = await client.someEndpoint(..., {
+    headers: {
+      'X-Custom-Header': 'custom value'
+    }
+  });
+  ```
+
+
 ## [0.42.0] - 2024-11-15
 
 - Feat: Added support for `.asRaw()` which allows users to access raw response data including headers. For example:

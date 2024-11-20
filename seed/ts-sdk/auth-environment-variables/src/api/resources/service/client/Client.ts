@@ -29,6 +29,8 @@ export declare namespace Service {
         xAnotherHeader?: string;
         /** Override the X-API-Version header */
         xApiVersion?: "01-01-2000";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -59,6 +61,7 @@ export class Service {
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         ...(await this._getCustomAuthorizationHeaders()),
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -134,6 +137,7 @@ export class Service {
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         "X-Endpoint-Header": xEndpointHeader,
                         ...(await this._getCustomAuthorizationHeaders()),
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

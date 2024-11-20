@@ -1,4 +1,9 @@
 - changelogEntry:
+  - summary: Re-elease the `0.17.5` version.
+    type: feat
+    irVersion: 53
+    version: 0.17.6
+
   - summary: Re-release the `0.17.5` version.
     type: feat
   irVersion: 53

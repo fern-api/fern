@@ -28,6 +28,8 @@ export declare namespace Path {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -60,6 +62,7 @@ export class Path {
                         "User-Agent": "@fern/literal/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
