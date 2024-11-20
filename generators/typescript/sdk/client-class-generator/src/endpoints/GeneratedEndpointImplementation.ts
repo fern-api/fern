@@ -2,6 +2,7 @@ import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 
 export interface EndpointSignature {
     parameters: OptionalKind<ParameterDeclarationStructure>[];
@@ -10,6 +11,7 @@ export interface EndpointSignature {
 
 export interface GeneratedEndpointImplementation {
     endpoint: HttpEndpoint;
+    response: GeneratedEndpointResponse;
     getStatements: (context: SdkContext) => ts.Statement[];
     getOverloads: (context: SdkContext) => EndpointSignature[];
     getSignature: (context: SdkContext) => EndpointSignature;

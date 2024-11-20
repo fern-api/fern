@@ -20,6 +20,8 @@ export declare namespace Service {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -30,49 +32,57 @@ export class Service {
      * @param {File | fs.ReadStream | Blob} bytes
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async upload(bytes: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "upload-content"),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/bytes",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/bytes/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/octet-stream",
-            requestType: "bytes",
-            duplex: "half",
-            body: bytes,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedBytesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBytesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public upload(bytes: File | fs.ReadStream | Blob, requestOptions?: Service.RequestOptions): core.APIPromise<void> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "upload-content"),
+                    method: "POST",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/bytes",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/bytes/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/octet-stream",
+                    requestType: "bytes",
+                    duplex: "half",
+                    body: bytes,
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedBytesTimeoutError();
-            case "unknown":
-                throw new errors.SeedBytesError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: undefined,
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedBytesError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedBytesError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedBytesTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedBytesError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }
