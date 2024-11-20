@@ -191,6 +191,7 @@ Executes a deployed Workflow and streams back its results.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExecuteWorkflowStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -288,6 +289,7 @@ Generate a completion using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -384,6 +386,7 @@ Generate a stream of completions using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateStreamBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -477,6 +480,7 @@ Perform a search against a document index.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SearchRequestBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -544,6 +548,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SubmitCompletionActualsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -4470,6 +4475,7 @@ Creates a new document index.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIndexCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4784,6 +4790,7 @@ Upload a document to be indexed and used for search.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadDocumentBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4983,6 +4990,7 @@ Compiles the prompt backing the model version using the provided input values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ModelVersionCompilePromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5339,6 +5347,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RegisterPromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5661,6 +5670,7 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSandboxScenarioRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5935,6 +5945,7 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestSuiteTestCaseRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

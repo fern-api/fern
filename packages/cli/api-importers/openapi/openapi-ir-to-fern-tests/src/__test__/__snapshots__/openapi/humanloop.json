@@ -6230,6 +6230,7 @@ If `"add"` or `"remove"`, one of the `version_id` or `environment` query paramet
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DatasetRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag to identify a deployed Version to base the created Version on. Only used when `action` is `"add"` or `"remove"`.",
@@ -6814,6 +6815,7 @@ By default the deployed version of the Dataset is returned. Use the query parame
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDatasetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8254,6 +8256,7 @@ as completed.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyEvaluationsUpdateStatus",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9054,6 +9057,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EvaluatorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9316,6 +9320,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RunSyncEvaluationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9852,6 +9857,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateEvaluatorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11584,6 +11590,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptCallRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -11897,6 +11904,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12574,6 +12582,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptLogRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -12703,6 +12712,7 @@ in the case where you are storing or deriving your Prompt details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdatePromptRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14885,6 +14895,7 @@ an exception will be raised.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15475,6 +15486,7 @@ in the case where you are storing or deriving your Tool details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToolLogRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "environment": {
                     "docs": "An environment tag of the deployed version to log to.",
@@ -15580,6 +15592,7 @@ in the case where you are storing or deriving your Tool details in code.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateToolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

@@ -10,7 +10,7 @@ import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtens
 import { getFernAvailability } from "../../extensions/getFernAvailability";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
-import { convertParameters } from "../endpoint/convertParameters";
+import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
 import { convertResponse } from "../endpoint/convertResponse";
 
@@ -65,7 +65,7 @@ export function convertHttpOperation({
 
     // if request has query params or headers and body is not an object, then use `Body`
     if (
-        (convertedParameters.queryParameters.length > 0 || convertedParameters.headers.length > 0) &&
+        endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
         convertedRequest != null &&
         convertedRequest.type === "json" &&
         convertedRequest.schema.type !== "object" &&
@@ -148,4 +148,18 @@ function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAP
         return Object.keys(document.security).length > 0;
     }
     return false;
+}
+
+function endpointHasNonRequestBodyParameters({
+    context,
+    convertedParameters
+}: {
+    context: AbstractOpenAPIV3ParserContext;
+    convertedParameters: ConvertedParameters;
+}): boolean {
+    return (
+        (context.options.inlinePathParameters && convertedParameters.pathParameters.length > 0) ||
+        convertedParameters.queryParameters.length > 0 ||
+        convertedParameters.headers.length > 0
+    );
 }

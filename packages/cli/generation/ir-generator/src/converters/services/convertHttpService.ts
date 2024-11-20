@@ -33,6 +33,7 @@ import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
 import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 
 export async function convertHttpService({
     rootDefaultUrl,
@@ -94,10 +95,7 @@ export async function convertHttpService({
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
                 const endpointPathParameters = await convertPathParameters({
-                    pathParameters:
-                        typeof endpoint.request !== "string" && endpoint.request?.["path-parameters"] != null
-                            ? endpoint.request["path-parameters"]
-                            : endpoint["path-parameters"],
+                    pathParameters: getEndpointPathParameters(endpoint),
                     location: PathParameterLocation.Endpoint,
                     file,
                     variableResolver

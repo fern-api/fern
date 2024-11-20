@@ -31,6 +31,7 @@ export interface SpecImportSettings {
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
     onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -201,7 +202,11 @@ function getParseOptions({
         onlyIncludeReferencedSchemas:
             overrides?.onlyIncludeReferencedSchemas ??
             specSettings?.onlyIncludeReferencedSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas
+            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
+        inlinePathParameters:
+            overrides?.inlinePathParameters ??
+            specSettings?.inlinePathParameters ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters
     };
 }
 

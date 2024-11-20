@@ -11033,6 +11033,7 @@ errors:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBooking",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12721,6 +12722,7 @@ docs: Endpoints relating to Booking objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookingAmendment",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13092,6 +13094,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookingLineItem",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13678,6 +13681,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCarbonCalculation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14131,6 +14135,7 @@ docs: Endpoints relating to Carbon Calculations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCommercialInvoice",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14629,6 +14634,7 @@ docs: Endpoints relating to Carbon Calculations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCommercialInvoice",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15398,6 +15404,7 @@ docs: Endpoints relating to Commercial Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCompany",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15801,6 +15808,7 @@ docs: Endpoints relating to Commercial Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompany",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16523,6 +16531,7 @@ docs: Endpoints relating to Company objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCompanyEntity",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16677,6 +16686,7 @@ docs: Endpoints relating to Company objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompanyEntity",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17154,6 +17164,7 @@ docs: Endpoints relating to CompanyEntity objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateContact",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17390,6 +17401,7 @@ docs: Endpoints relating to CompanyEntity objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateContact",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21479,6 +21491,7 @@ docs: Endpoints relating to Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateLocation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21655,6 +21668,7 @@ docs: Endpoints relating to Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateLocation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22538,6 +22552,7 @@ docs: Endpoints relating to Ports objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateProduct",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22819,6 +22834,7 @@ docs: Endpoints relating to Ports objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateProduct",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26478,6 +26494,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ShipmentsShareableRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27162,6 +27179,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateShipment",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

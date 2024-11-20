@@ -109,6 +109,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -155,6 +156,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {

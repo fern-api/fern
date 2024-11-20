@@ -1,7 +1,9 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     constructFernFileContext,
     ErrorResolverImpl,
     ExampleResolverImpl,
+    getEndpointPathParameters,
     resolvePathParameter,
     TypeResolverImpl,
     VariableResolverImpl
@@ -11,6 +13,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters";
 import { validateRequest } from "./validateRequest";
 import { validateResponse } from "./validateResponse";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export const ValidExampleEndpointCallRule: Rule = {
     name: "valid-example-endpoint-call",
@@ -50,14 +53,11 @@ export const ValidExampleEndpointCallRule: Rule = {
                     { relativeFilepath, contents: definitionFile }
                 ) => {
                     return validateExampleEndpointCallParameters({
-                        allDeclarations:
-                            endpoint["base-path"] != null
-                                ? { ...endpoint["path-parameters"] }
-                                : {
-                                      ...workspace.definition.rootApiFile.contents["path-parameters"],
-                                      ...service["path-parameters"],
-                                      ...endpoint["path-parameters"]
-                                  },
+                        allDeclarations: getAllPathParameterDeclarations({
+                            workspace,
+                            service,
+                            endpoint
+                        }),
                         examples,
                         parameterDisplayName: "path parameter",
                         typeResolver,
@@ -133,3 +133,22 @@ export const ValidExampleEndpointCallRule: Rule = {
         };
     }
 };
+
+function getAllPathParameterDeclarations({
+    workspace,
+    service,
+    endpoint
+}: {
+    workspace: FernWorkspace;
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+}): Record<string, RawSchemas.HttpPathParameterSchema> {
+    const endpointPathParameters = getEndpointPathParameters(endpoint);
+    return endpoint["base-path"] != null
+        ? { ...endpointPathParameters }
+        : {
+              ...workspace.definition.rootApiFile.contents["path-parameters"],
+              ...service["path-parameters"],
+              ...endpointPathParameters
+          };
+}

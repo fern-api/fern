@@ -7621,6 +7621,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetApiClientAccessTokenParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7903,6 +7904,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8157,6 +8159,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedAddEntitlementCreditParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8820,6 +8823,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9901,6 +9905,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedCreateIntegrationParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10258,6 +10263,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedUpdateIntegrationParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11576,6 +11582,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedCreateUsageRecordGroupParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14285,6 +14292,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedUpdateProductParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14782,6 +14790,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetRevenueReportParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14851,6 +14860,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SharedGetUsageReportParams",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

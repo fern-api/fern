@@ -73,7 +73,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false
+                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false
                 }
             });
             continue;
@@ -117,7 +118,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 cooerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false
+                onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                inlinePathParameters: definition.settings?.inlinePathParameters ?? false
             },
             source: {
                 type: "openapi",

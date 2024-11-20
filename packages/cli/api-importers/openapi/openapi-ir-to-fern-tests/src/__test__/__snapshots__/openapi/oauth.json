@@ -99,6 +99,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthGetTokenRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
