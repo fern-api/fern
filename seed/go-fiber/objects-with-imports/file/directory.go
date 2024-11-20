@@ -49,13 +49,11 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Directory(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 

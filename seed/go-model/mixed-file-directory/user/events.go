@@ -41,13 +41,11 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Event(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 

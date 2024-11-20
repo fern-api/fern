@@ -17,7 +17,7 @@ type Bar struct {
 	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (b *Bar) GetId() *Id {
@@ -73,20 +73,18 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Bar(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
-	b._rawJSON = json.RawMessage(data)
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (b *Bar) String() string {
-	if len(b._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -107,7 +105,7 @@ type Baz struct {
 	HasDocs *string `json:"hasDocs,omitempty" url:"hasDocs,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (b *Baz) GetId() *Id {
@@ -156,20 +154,18 @@ func (b *Baz) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Baz(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
-	b._rawJSON = json.RawMessage(data)
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (b *Baz) String() string {
-	if len(b._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b._rawJSON); err == nil {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -184,7 +180,7 @@ type Error struct {
 	Recursive []*Error `json:"recursive,omitempty" url:"recursive,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (e *Error) GetMessage() *string {
@@ -212,20 +208,18 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Error(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
-	e._rawJSON = json.RawMessage(data)
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *Error) String() string {
-	if len(e._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e._rawJSON); err == nil {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -244,7 +238,7 @@ type Foo struct {
 	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (f *Foo) GetId() *Id {
@@ -300,20 +294,18 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Foo(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (f *Foo) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -359,7 +351,7 @@ type Request struct {
 	Unknown  interface{}            `json:"unknown,omitempty" url:"unknown,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (r *Request) GetUrl() string {
@@ -401,20 +393,18 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Request(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
-	r._rawJSON = json.RawMessage(data)
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *Request) String() string {
-	if len(r._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
 		}
 	}

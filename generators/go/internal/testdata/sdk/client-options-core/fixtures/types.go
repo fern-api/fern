@@ -12,7 +12,7 @@ type WithAuthToken struct {
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (w *WithAuthToken) GetValue() string {
@@ -33,20 +33,18 @@ func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithAuthToken(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
-	w._rawJSON = json.RawMessage(data)
+	w.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (w *WithAuthToken) String() string {
-	if len(w._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
 		}
 	}

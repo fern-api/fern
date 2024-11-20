@@ -13,7 +13,7 @@ type FolderCFoo struct {
 	BarProperty uuid.UUID `json:"bar_property" url:"bar_property"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (f *FolderCFoo) GetBarProperty() uuid.UUID {
@@ -34,20 +34,18 @@ func (f *FolderCFoo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FolderCFoo(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (f *FolderCFoo) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
 		}
 	}

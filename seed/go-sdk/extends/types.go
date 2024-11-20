@@ -18,7 +18,7 @@ type Docs struct {
 	Docs string `json:"docs" url:"docs"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (d *Docs) GetDocs() string {
@@ -39,20 +39,18 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Docs(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
-	d._rawJSON = json.RawMessage(data)
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (d *Docs) String() string {
-	if len(d._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(d._rawJSON); err == nil {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -67,7 +65,7 @@ type ExampleType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (e *ExampleType) GetDocs() string {
@@ -95,20 +93,18 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
-	e._rawJSON = json.RawMessage(data)
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *ExampleType) String() string {
-	if len(e._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e._rawJSON); err == nil {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -123,7 +119,7 @@ type Json struct {
 	Raw  string `json:"raw" url:"raw"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (j *Json) GetDocs() string {
@@ -151,20 +147,18 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = Json(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
 	j.extraProperties = extraProperties
-
-	j._rawJSON = json.RawMessage(data)
+	j.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (j *Json) String() string {
-	if len(j._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(j._rawJSON); err == nil {
+	if len(j.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -180,7 +174,7 @@ type NestedType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *NestedType) GetDocs() string {
@@ -215,20 +209,18 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *NestedType) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}

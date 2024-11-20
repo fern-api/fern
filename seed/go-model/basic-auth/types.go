@@ -32,13 +32,11 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnauthorizedRequestErrorBody(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 

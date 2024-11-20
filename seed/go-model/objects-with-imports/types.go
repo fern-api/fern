@@ -49,13 +49,11 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Node(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -90,13 +88,11 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Tree(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 

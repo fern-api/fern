@@ -1,3 +1,11 @@
+- version: 0.32.1
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Improve the aesthetics of the generated code, and reduce the amount of repetition
+        in each of the generated endpoints. This change has zero impact on the behavior of
+        the generated SDK.
+  irVersion: 53
 - version: 0.32.0
   changelogEntry:
     - type: feat

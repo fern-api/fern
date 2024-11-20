@@ -40,13 +40,11 @@ func (a *Availability) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = Availability(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -117,13 +115,11 @@ func (d *Declaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Declaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -176,13 +172,11 @@ func (f *FernFilepath) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = FernFilepath(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
 	}
 	f.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -249,13 +243,11 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Name(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -298,13 +290,11 @@ func (n *NameAndWireValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NameAndWireValue(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -349,13 +339,11 @@ func (s *SafeAndUnsafeString) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SafeAndUnsafeString(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -396,13 +384,11 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithDocs(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -437,13 +423,11 @@ func (w *WithJsonExample) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithJsonExample(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 

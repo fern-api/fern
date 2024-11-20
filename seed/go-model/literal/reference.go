@@ -32,13 +32,11 @@ func (c *ContainerObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = ContainerObject(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -97,13 +95,11 @@ func (n *NestedObjectWithLiterals) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", n, "literal2", unmarshaler.Literal2)
 	}
 	n.literal2 = unmarshaler.Literal2
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n, "literal1", "literal2")
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -186,13 +182,11 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, false, unmarshaler.Stream)
 	}
 	s.stream = unmarshaler.Stream
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s, "prompt", "stream")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

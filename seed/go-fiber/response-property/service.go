@@ -34,13 +34,11 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StringResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -75,13 +73,11 @@ func (w *WithMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithMetadata(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -124,13 +120,11 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Movie(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -183,13 +177,11 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -224,13 +216,11 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithDocs(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 

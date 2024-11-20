@@ -19,7 +19,7 @@ type NestedUser struct {
 	NestedUser *User  `json:"NestedUser,omitempty" url:"NestedUser,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *NestedUser) GetName() string {
@@ -47,20 +47,18 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedUser(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *NestedUser) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -74,7 +72,7 @@ type Organization struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (o *Organization) GetName() string {
@@ -95,20 +93,18 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Organization(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
-	o._rawJSON = json.RawMessage(data)
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *Organization) String() string {
-	if len(o._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -246,7 +242,7 @@ type User struct {
 	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES,omitempty" url:"EXTRA_PROPERTIES,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *User) GetUserName() string {
@@ -281,20 +277,18 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *User) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}

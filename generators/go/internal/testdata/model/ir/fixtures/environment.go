@@ -42,13 +42,11 @@ func (e *EnvironmentBaseUrlWithId) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnvironmentBaseUrlWithId(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -185,13 +183,11 @@ func (e *EnvironmentsConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnvironmentsConfig(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -250,13 +246,11 @@ func (m *MultipleBaseUrlsEnvironment) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MultipleBaseUrlsEnvironment(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -299,13 +293,11 @@ func (m *MultipleBaseUrlsEnvironments) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MultipleBaseUrlsEnvironments(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -364,13 +356,11 @@ func (s *SingleBaseUrlEnvironment) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleBaseUrlEnvironment(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -405,13 +395,11 @@ func (s *SingleBaseUrlEnvironments) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleBaseUrlEnvironments(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

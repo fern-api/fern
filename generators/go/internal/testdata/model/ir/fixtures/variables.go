@@ -56,13 +56,11 @@ func (v *VariableDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*v = VariableDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *v)
 	if err != nil {
 		return err
 	}
 	v.extraProperties = extraProperties
-
 	return nil
 }
 

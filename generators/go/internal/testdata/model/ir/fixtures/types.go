@@ -50,13 +50,11 @@ func (d *DeclaredErrorName) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeclaredErrorName(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -123,13 +121,11 @@ func (e *ErrorDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ErrorDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -269,13 +265,11 @@ func (a *AliasTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = AliasTypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -521,13 +515,11 @@ func (d *DeclaredTypeName) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DeclaredTypeName(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -562,13 +554,11 @@ func (e *EnumTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnumTypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -619,13 +609,11 @@ func (e *EnumValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EnumValue(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -660,13 +648,11 @@ func (e *ExampleAliasType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleAliasType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -873,13 +859,11 @@ func (e *ExampleEnumType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleEnumType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -922,13 +906,11 @@ func (e *ExampleKeyValuePair) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleKeyValuePair(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -971,13 +953,11 @@ func (e *ExampleNamedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleNamedType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1030,13 +1010,11 @@ func (e *ExampleObjectProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleObjectProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1071,13 +1049,11 @@ func (e *ExampleObjectType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleObjectType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1420,13 +1396,11 @@ func (e *ExampleSingleUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleSingleUnionType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1605,13 +1579,11 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -1654,13 +1626,11 @@ func (e *ExampleTypeReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleTypeReference(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2078,13 +2048,11 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MapType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2143,13 +2111,11 @@ func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2193,13 +2159,11 @@ func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectTypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2286,13 +2250,11 @@ func (r *ResolvedNamedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = ResolvedNamedType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2532,13 +2494,11 @@ func (s *SingleUnionType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleUnionType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2701,13 +2661,11 @@ func (s *SingleUnionTypeProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SingleUnionTypeProperty(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -2943,13 +2901,11 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -3153,13 +3109,11 @@ func (u *UndiscriminatedUnionMember) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UndiscriminatedUnionMember(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -3194,13 +3148,11 @@ func (u *UndiscriminatedUnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UndiscriminatedUnionTypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -3260,13 +3212,11 @@ func (u *UnionTypeDeclaration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnionTypeDeclaration(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
