@@ -39,59 +39,66 @@ export class Ec2 {
      *         size: "size"
      *     })
      */
-    public async bootInstance(
+    public bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions
-    ): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedMultiUrlEnvironmentEnvironment.Production
-                ).ec2,
-                "/ec2/boot"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/multi-url-environment",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/multi-url-environment/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.BootInstanceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMultiUrlEnvironmentError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<void> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.SeedMultiUrlEnvironmentEnvironment.Production
+                        ).ec2,
+                        "/ec2/boot"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/multi-url-environment",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/multi-url-environment/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.BootInstanceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentTimeoutError();
-            case "unknown":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: undefined,
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedMultiUrlEnvironmentError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedMultiUrlEnvironmentError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedMultiUrlEnvironmentTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedMultiUrlEnvironmentError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     protected async _getAuthorizationHeader(): Promise<string> {

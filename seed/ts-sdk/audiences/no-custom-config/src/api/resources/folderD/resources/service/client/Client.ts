@@ -33,52 +33,59 @@ export class Service {
      * @example
      *     await client.folderD.service.getDirectThread()
      */
-    public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderD.Response> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/partner-path"),
-            method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/audiences",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/audiences/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.folderD.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedAudiencesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedAudiencesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public getDirectThread(requestOptions?: Service.RequestOptions): core.APIPromise<SeedAudiences.folderD.Response> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "/partner-path"),
+                    method: "GET",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/audiences",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/audiences/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedAudiencesTimeoutError();
-            case "unknown":
-                throw new errors.SeedAudiencesError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.folderD.Response.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedAudiencesError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedAudiencesError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedAudiencesTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedAudiencesError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

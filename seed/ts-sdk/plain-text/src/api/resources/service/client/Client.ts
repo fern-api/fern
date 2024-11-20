@@ -27,48 +27,55 @@ export class Service {
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "text"),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/plain-text",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/plain-text/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            responseType: "text",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return _response.body as string;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPlainTextError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPlainTextError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public getText(requestOptions?: Service.RequestOptions): core.APIPromise<string> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "text"),
+                    method: "POST",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/plain-text",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/plain-text/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    responseType: "text",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedPlainTextTimeoutError();
-            case "unknown":
-                throw new errors.SeedPlainTextError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: _response.body as string,
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPlainTextError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPlainTextError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPlainTextTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedPlainTextError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

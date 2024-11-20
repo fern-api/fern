@@ -32,54 +32,61 @@ export class Dummy {
      * @example
      *     await client.dummy.getDummy()
      */
-    public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "dummy"),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/no-environment",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/no-environment/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedNoEnvironmentError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedNoEnvironmentError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public getDummy(requestOptions?: Dummy.RequestOptions): core.APIPromise<string> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "dummy"),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/no-environment",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/no-environment/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedNoEnvironmentTimeoutError();
-            case "unknown":
-                throw new errors.SeedNoEnvironmentError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedNoEnvironmentError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedNoEnvironmentError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedNoEnvironmentTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedNoEnvironmentError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     protected async _getAuthorizationHeader(): Promise<string> {

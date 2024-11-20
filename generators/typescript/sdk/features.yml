@@ -12,7 +12,13 @@ features:
     description: |
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
       will be thrown.
-
+ 
+  - id: RAW_RESPONSES
+    advanced: true
+    description: | 
+      The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`, 
+      the parsed response body will be available in the `body` field, along with the response headers:
+  
   - id: RETRIES
     advanced: true
     description: |
@@ -55,3 +61,4 @@ features:
 
       The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
       unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+  

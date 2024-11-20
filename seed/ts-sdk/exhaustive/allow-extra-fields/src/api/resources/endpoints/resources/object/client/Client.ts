@@ -50,65 +50,72 @@ export class Object_ {
      *         bigint: "1000000"
      *     })
      */
-    public async getAndReturnWithOptionalField(
+    public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-optional-field"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        "/object/get-and-return-with-optional-field"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -120,65 +127,72 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
+    public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-with-required-field"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        "/object/get-and-return-with-required-field"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -194,62 +208,72 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
+    public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        "/object/get-and-return-with-map-of-map"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -278,65 +302,72 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
+    public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-optional-field"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        "/object/get-and-return-nested-with-optional-field"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -366,66 +397,73 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
+    public getAndReturnNestedWithRequiredField(
         string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -473,65 +511,75 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
+    public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field-list"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        await core.Supplier.get(this._options.environment),
+                        "/object/get-and-return-nested-with-required-field-list"
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/exhaustive",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/exhaustive/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(
+                        request,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        }
+                    ),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedExhaustiveError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedExhaustiveTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedExhaustiveError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

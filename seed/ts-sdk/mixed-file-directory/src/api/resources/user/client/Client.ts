@@ -38,63 +38,69 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async list(
+    public list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
         requestOptions?: User.RequestOptions
-    ): Promise<SeedMixedFileDirectory.User[]> {
-        const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/"),
-            method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/mixed-file-directory",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/mixed-file-directory/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.user.list.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedFileDirectoryError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedFileDirectoryError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedMixedFileDirectory.User[]> {
+        return core.APIPromise.from(
+            (async () => {
+                const { limit } = request;
+                const _queryParams: Record<string, string | string[] | object | object[]> = {};
+                if (limit != null) {
+                    _queryParams["limit"] = limit.toString();
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "/users/"),
+                    method: "GET",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/mixed-file-directory",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/mixed-file-directory/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError();
-            case "unknown":
-                throw new errors.SeedMixedFileDirectoryError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.user.list.Response.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedMixedFileDirectoryError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedMixedFileDirectoryError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedMixedFileDirectoryTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedMixedFileDirectoryError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     protected _events: Events | undefined;
