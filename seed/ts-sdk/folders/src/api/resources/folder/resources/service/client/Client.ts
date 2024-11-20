@@ -32,48 +32,51 @@ export class Service {
      * @example
      *     await client.folder.service.endpoint()
      */
-    public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
-            method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/folders",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/folders/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public endpoint(requestOptions?: Service.RequestOptions): core.APIPromise<void> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
+                    method: "GET",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/folders",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/folders/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError();
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return;
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedApiError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedApiTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedApiError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 
     /**
@@ -87,60 +90,63 @@ export class Service {
      *         "key": "value"
      *     })
      */
-    public async unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/folders",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/folders/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedApi.folder.NotFoundError(
-                        serializers.folder.NotFoundError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.SeedApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): core.APIPromise<void> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
+                    method: "POST",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/folders",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/folders/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: request,
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError();
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return;
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 404:
+                            throw new SeedApi.folder.NotFoundError(
+                                serializers.folder.NotFoundError.parseOrThrow(_response.error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                })
+                            );
+                        default:
+                            throw new errors.SeedApiError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                            });
+                    }
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedApiError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedApiTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedApiError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

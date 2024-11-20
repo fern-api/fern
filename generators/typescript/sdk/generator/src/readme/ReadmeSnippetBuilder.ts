@@ -5,12 +5,9 @@ import {
     FeatureId,
     FernFilepath,
     HttpEndpoint,
-    HttpService,
-    ReadmeConfig,
     SdkRequestWrapper,
-    ServiceId
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, NpmPackage } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";
 import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
@@ -32,6 +29,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSES";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -71,10 +69,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
@@ -150,6 +150,20 @@ const request: ${requestTypeName} = {
 `
             )
         ];
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(rawResponseEndpoint)}(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+`
+            )
+        );
     }
 
     private buildRetrySnippets(): string[] {
