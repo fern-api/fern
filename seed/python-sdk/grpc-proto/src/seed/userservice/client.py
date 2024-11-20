@@ -71,6 +71,9 @@ class UserserviceClient:
                     object_=metadata, annotation=Metadata, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -152,6 +155,9 @@ class AsyncUserserviceClient:
                 "metadata": convert_and_respect_annotation_metadata(
                     object_=metadata, annotation=Metadata, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
