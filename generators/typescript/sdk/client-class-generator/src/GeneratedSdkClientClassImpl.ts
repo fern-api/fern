@@ -618,8 +618,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           )
                       )
                     : getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
-                    ),
+                          ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                      ),
                 scope: Scope.Public,
                 isAsync: !returnsAPIPromise, // if not returnsAPIPromise we return an `APIPromise`
                 statements: returnsAPIPromise

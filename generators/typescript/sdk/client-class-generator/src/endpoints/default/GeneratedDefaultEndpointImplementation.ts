@@ -62,7 +62,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
     }
-    
+
     public isPaginated(context: SdkContext): boolean {
         return this.response.getPaginationInfo(context) != null;
     }
