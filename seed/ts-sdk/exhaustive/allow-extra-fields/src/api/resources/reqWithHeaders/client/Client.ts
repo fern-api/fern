@@ -21,6 +21,8 @@ export declare namespace ReqWithHeaders {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -58,6 +60,7 @@ export class ReqWithHeaders {
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
                         "X-TEST-SERVICE-HEADER": xTestServiceHeader,
                         "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",

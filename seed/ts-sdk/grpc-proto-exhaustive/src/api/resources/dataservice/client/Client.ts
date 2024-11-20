@@ -20,6 +20,8 @@ export declare namespace Dataservice {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -54,6 +56,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -121,6 +124,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -188,6 +192,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -267,6 +272,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     queryParameters: _queryParams,
@@ -348,6 +354,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     queryParameters: _queryParams,
@@ -417,6 +424,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
@@ -486,6 +494,7 @@ export class Dataservice {
                         "User-Agent": "@fern/grpc-proto-exhaustive/0.0.1",
                         "X-Fern-Runtime": core.RUNTIME.type,
                         "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
                     },
                     contentType: "application/json",
                     requestType: "json",
