@@ -1334,6 +1334,16 @@
               "type": "null"
             }
           ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
