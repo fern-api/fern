@@ -292,6 +292,9 @@ export class Service {
                 await _request.appendFile("file", request.file);
                 await _request.append("foo", request.foo);
                 await _request.append("bar", JSON.stringify(request.bar));
+                if (request.foobar != null) {
+                    await _request.append("foobar", JSON.stringify(request.foobar));
+                }
                 const _maybeEncodedRequest = await _request.getRequest();
                 const _response = await core.fetcher({
                     url: urlJoin(await core.Supplier.get(this._options.environment), "/with-content-type"),

@@ -131,4 +131,3 @@ function getRequestOptionsHeaders(): ts.SpreadAssignment {
         )
     );
 }
-
