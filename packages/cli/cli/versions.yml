@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix bug where max length validation for strings were incorrectly plumbed.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc52
+
+- changelogEntry:
+    - summary: |
         Add support for the `inline-path-parameters` setting in the OpenAPI
         importer.
       type: feat
