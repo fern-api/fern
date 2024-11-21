@@ -10409,6 +10409,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ArtifactsPrepareRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10607,6 +10608,7 @@ connections can not be deleted using this method.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -10752,6 +10754,7 @@ disabled.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsToggleRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11130,6 +11133,7 @@ requesting an application access token (AAT).
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11177,6 +11181,7 @@ JTI claim of the token in the authorization header.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11385,6 +11390,7 @@ authenticated user.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensSelfDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11477,6 +11483,7 @@ organization.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12329,6 +12336,7 @@ docs: Dev user interactions.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PartsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13081,6 +13089,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13130,6 +13139,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13432,6 +13442,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13905,6 +13916,7 @@ permitted.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13954,6 +13966,7 @@ permitted.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14202,6 +14215,7 @@ tags.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15229,6 +15243,7 @@ response.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15278,6 +15293,7 @@ response.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15521,6 +15537,7 @@ won't receive any object events until successfully verified.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16025,6 +16042,7 @@ docs: Webhook event APIs.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WorksDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

@@ -69,6 +69,7 @@ export interface SpecImportSettings {
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
     onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export interface OpenAPIFile {

@@ -12,7 +12,7 @@ type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (i *ImportingA) GetA() *A {
@@ -33,20 +33,18 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingA(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
-	i._rawJSON = json.RawMessage(data)
+	i.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (i *ImportingA) String() string {
-	if len(i._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(i._rawJSON); err == nil {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -60,7 +58,7 @@ type RootType struct {
 	S string `json:"s" url:"s"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (r *RootType) GetS() string {
@@ -81,20 +79,18 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RootType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
-	r._rawJSON = json.RawMessage(data)
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *RootType) String() string {
-	if len(r._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(r._rawJSON); err == nil {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
 		}
 	}

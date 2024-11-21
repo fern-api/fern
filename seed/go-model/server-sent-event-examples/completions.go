@@ -40,13 +40,11 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamedCompletion(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

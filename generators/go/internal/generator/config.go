@@ -20,6 +20,7 @@ type Config struct {
 	IncludeReadme                bool
 	Whitelabel                   bool
 	AlwaysSendRequiredProperties bool
+	InlinePathParameters         bool
 	InlineFileProperties         bool
 	Organization                 string
 	Version                      string
@@ -58,6 +59,7 @@ func NewConfig(
 	includeReadme bool,
 	whitelabel bool,
 	alwaysSendRequiredProperties bool,
+	inlinePathParameters bool,
 	inlineFileProperties bool,
 	organization string,
 	version string,
@@ -81,6 +83,7 @@ func NewConfig(
 		Organization:                 organization,
 		Whitelabel:                   whitelabel,
 		AlwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		InlinePathParameters:         inlinePathParameters,
 		InlineFileProperties:         inlineFileProperties,
 		Version:                      version,
 		IRFilepath:                   irFilepath,

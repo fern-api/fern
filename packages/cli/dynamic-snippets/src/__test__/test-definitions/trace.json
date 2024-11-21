@@ -36368,6 +36368,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -36792,6 +36796,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -37334,7 +37342,11 @@
                         }
                     }
                 ],
-                "body": null
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
             },
             "response": {
                 "type": "json"
@@ -37617,6 +37629,10 @@
                             "value": "type_playlist:PlaylistCreateRequest"
                         }
                     }
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -37965,7 +37981,11 @@
                     }
                 ],
                 "headers": [],
-                "body": null
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
             },
             "response": {
                 "type": "json"
@@ -39072,6 +39092,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

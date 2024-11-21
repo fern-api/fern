@@ -1,16 +1,7 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    EndpointId,
-    FeatureId,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    ReadmeConfig,
-    SdkRequestWrapper,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, NpmPackage } from "@fern-typescript/commons";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";
 import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
@@ -32,6 +23,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSES";
+    private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -71,13 +64,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
 
         if (this.isPaginationEnabled) {
-            snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
@@ -150,6 +146,35 @@ const request: ${requestTypeName} = {
 `
             )
         ];
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(rawResponseEndpoint)}(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+`
+            )
+        );
+    }
+
+    private buildAdditionalHeadersSnippets(): string[] {
+        const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
+        return headerEndpoints.map((headerEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(headerEndpoint)}(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+`
+            )
+        );
     }
 
     private buildRetrySnippets(): string[] {

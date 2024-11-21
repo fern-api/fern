@@ -28,6 +28,8 @@ export declare namespace Query {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -43,67 +45,75 @@ export class Query {
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions
-    ): Promise<SeedLiteral.SendResponse> {
-        const { prompt, query, stream } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        _queryParams["prompt"] = prompt;
-        _queryParams["query"] = query;
-        _queryParams["stream"] = stream.toString();
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
-            method: "POST",
-            headers: {
-                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (
-                    requestOptions?.auditLogging ??
-                    this._options?.auditLogging ??
-                    true
-                ).toString(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/literal",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/literal/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedLiteralError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedLiteralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    ): core.APIPromise<SeedLiteral.SendResponse> {
+        return core.APIPromise.from(
+            (async () => {
+                const { prompt, query, stream } = request;
+                const _queryParams: Record<string, string | string[] | object | object[]> = {};
+                _queryParams["prompt"] = prompt;
+                _queryParams["query"] = query;
+                _queryParams["stream"] = stream.toString();
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+                    method: "POST",
+                    headers: {
+                        "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
+                        "X-API-Enable-Audit-Logging": (
+                            requestOptions?.auditLogging ??
+                            this._options?.auditLogging ??
+                            true
+                        ).toString(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/literal",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/literal/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedLiteralTimeoutError();
-            case "unknown":
-                throw new errors.SeedLiteralError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: serializers.SendResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedLiteralError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedLiteralError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedLiteralTimeoutError();
+                    case "unknown":
+                        throw new errors.SeedLiteralError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

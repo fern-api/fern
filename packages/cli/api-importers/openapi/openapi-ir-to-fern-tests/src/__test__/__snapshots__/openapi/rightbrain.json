@@ -4139,6 +4139,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4438,6 +4439,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4509,6 +4511,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4652,6 +4655,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatConfig",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4709,6 +4713,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5471,6 +5476,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5650,6 +5656,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5876,6 +5883,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5951,6 +5959,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -6134,6 +6143,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionQuery",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -6949,6 +6959,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyGenerateOrgOrgIdProjectProjectIdComposeGeneratePost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7062,6 +7073,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodySectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7117,6 +7129,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ComposeTopicPoint",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -7188,6 +7201,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyUpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13013,6 +13027,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_document_create_org__org_id__project__project_id__document_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13413,6 +13428,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatDocumentUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13486,6 +13502,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_document_upload_org__org_id__project__project_id__document_upload_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13658,6 +13675,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13733,6 +13751,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14571,6 +14590,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OAuthClientCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14621,6 +14641,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "HydraWebhookTokenHook",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15261,6 +15282,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15397,6 +15419,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationDomainCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15499,6 +15522,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgInviteBase",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15717,6 +15741,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15767,6 +15792,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_org_update_avatar_org__org_id__avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15927,6 +15953,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15998,6 +16025,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16683,6 +16711,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16961,6 +16990,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17034,6 +17064,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17142,6 +17173,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_project_update_avatar_org__org_id__project__project_id__avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17238,6 +17270,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectConfig",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17293,6 +17326,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18166,6 +18200,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SiteScrapeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18501,6 +18536,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskForwarderCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18750,6 +18786,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskForwarderUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19190,6 +19227,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19335,6 +19373,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19807,6 +19846,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_Task_Run_Parameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19979,6 +20019,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20054,6 +20095,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21327,6 +21369,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserProfileUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21370,6 +21413,7 @@ types:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_user_update_avatar_user_avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

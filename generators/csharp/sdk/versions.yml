@@ -6,6 +6,23 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.10
+  createdAt: "2024-11-20"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add partial `JsonOptions.ConfigureJsonSerializerOptions` method to allow SDK maintainers to configure the `JsonSerializerOptions` used by the SDK.
+  irVersion: 53
+- version: 1.9.9
+  createdAt: "2024-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for [Auto Pagination](https://buildwithfern.com/learn/sdks/features/auto-pagination).
+        When enabled, the endpoint methods will return a `Pager<T>` object that you can use to iterate over all items of an endpoint.
+        Additionally, you can use the `Pager<T>.AsPagesAsync` method to iterate over all pages of an endpoint.
+        The SDK will automatically make the necessary HTTP requests for you as you iterate over the items or the pages.
+  irVersion: 53
 - version: 1.9.8
   createdAt: "2024-11-14"
   changelogEntry:

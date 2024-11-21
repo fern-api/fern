@@ -40,13 +40,11 @@ func (e *ErrorDiscriminationByPropertyStrategy) UnmarshalJSON(data []byte) error
 		return err
 	}
 	*e = ErrorDiscriminationByPropertyStrategy(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -311,13 +309,11 @@ func (i *IntermediateRepresentation) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = IntermediateRepresentation(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -400,13 +396,11 @@ func (p *Package) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Package(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -457,13 +451,11 @@ func (p *PlatformHeaders) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PlatformHeaders(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -514,13 +506,11 @@ func (s *SdkConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SdkConfig(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -611,13 +601,11 @@ func (s *Subpackage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Subpackage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

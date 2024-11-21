@@ -17262,6 +17262,7 @@ You will be assigned as owner of the new app automatically.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateAppDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17347,6 +17348,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateClientDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17500,6 +17502,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AddLanguageDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17587,6 +17590,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AddRoleDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17676,6 +17680,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AddWorkflowDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17756,6 +17761,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateAppDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17832,6 +17838,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TransferToTeamDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17923,6 +17930,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateAssetScriptsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18026,6 +18034,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateClientDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18115,6 +18124,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateLanguageDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18207,6 +18217,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateRoleDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18307,6 +18318,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateAppSettingsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18416,6 +18428,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateWorkflowDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18489,6 +18502,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "AppsUploadImageRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20216,6 +20230,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BulkUpdateAssetsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20972,6 +20987,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "AssetsPostAssetRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "duplicate": {
                     "docs": "True to duplicate the asset, event if the file has been uploaded.",
@@ -21060,6 +21076,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateAssetFolderDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21152,6 +21169,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "AssetsPostUpsertAssetRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "duplicate": {
                     "docs": "True to duplicate the asset, event if the file has been uploaded.",
@@ -21271,6 +21289,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AnnotateAssetDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21363,6 +21382,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "AssetsPutAssetContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21439,6 +21459,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RenameAssetFolderDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21507,6 +21528,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MoveAssetFolderDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21601,6 +21623,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MoveAssetDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21667,6 +21690,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RenameTagDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23049,6 +23073,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RestoreRequestDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -23792,6 +23817,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BulkUpdateContentsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25319,6 +25345,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ImportContentsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25755,6 +25782,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChangeStatusDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29605,6 +29633,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateRuleDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32797,6 +32826,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateSchemaDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -33092,6 +33122,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChangeCategoryDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -33869,6 +33900,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConfigureFieldRulesDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -34062,6 +34094,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateSchemaDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -34377,6 +34410,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SynchronizeSchemaDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -34536,6 +34570,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConfigureUiFieldsDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -39604,6 +39639,7 @@ You will be assigned as owner of the new team automatically.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTeamDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -39677,6 +39713,7 @@ You will be assigned as owner of the new team automatically.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTeamDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40275,6 +40312,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TranslateDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40639,6 +40677,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateUserDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40735,6 +40774,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateUserDto",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

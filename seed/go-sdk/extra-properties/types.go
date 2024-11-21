@@ -13,7 +13,7 @@ type Failure struct {
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
-	_rawJSON json.RawMessage
+	rawJSON json.RawMessage
 }
 
 func (f *Failure) Status() string {
@@ -40,14 +40,12 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "failure", unmarshaler.Status)
 	}
 	f.status = unmarshaler.Status
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f, "status")
 	if err != nil {
 		return err
 	}
 	f.ExtraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -64,8 +62,8 @@ func (f *Failure) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Failure) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(f._rawJSON); err == nil {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
 		}
 	}

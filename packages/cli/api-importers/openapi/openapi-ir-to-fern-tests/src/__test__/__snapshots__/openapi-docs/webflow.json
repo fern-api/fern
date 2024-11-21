@@ -9067,6 +9067,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9137,6 +9138,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsCreateFolderRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9478,6 +9480,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10865,6 +10868,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11769,6 +11773,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FieldsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11847,6 +11852,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FieldsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12324,6 +12330,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12404,6 +12411,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemForMultipleLocalesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12488,6 +12496,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemLiveRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12978,6 +12987,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsPublishItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13087,6 +13097,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsUpdateItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13196,6 +13207,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsUpdateItemLiveRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15766,6 +15778,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FormsUpdateSubmissionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17081,6 +17094,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InventoryUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18985,6 +18999,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersRefundRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19286,6 +19301,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19576,6 +19592,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersUpdateFulfillRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35878,6 +35895,7 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdatePageSettingsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
@@ -35960,6 +35978,7 @@ Required scope | `pages:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateStaticContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "locale": {
                     "docs": "The locale identifier.",
@@ -37838,6 +37857,7 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsUpsertCustomCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -38431,6 +38451,7 @@ Required scope | `ecommerce:write`",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -38527,6 +38548,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsCreateSkuRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -38947,6 +38969,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -39054,6 +39077,7 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsUpdateSkuRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -45456,6 +45480,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsRegisterHostedRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -45540,6 +45565,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsRegisterInlineRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -46389,6 +46415,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SitesPublishRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -48053,6 +48080,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsUpsertCustomCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -49288,6 +49316,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersInviteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -49528,6 +49557,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -52023,6 +52053,7 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

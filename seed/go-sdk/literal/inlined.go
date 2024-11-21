@@ -57,7 +57,7 @@ type ANestedLiteral struct {
 	myLiteral string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (a *ANestedLiteral) MyLiteral() string {
@@ -84,14 +84,12 @@ func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
 	}
 	a.myLiteral = unmarshaler.MyLiteral
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a, "myLiteral")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
-	a._rawJSON = json.RawMessage(data)
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -108,8 +106,8 @@ func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
 }
 
 func (a *ANestedLiteral) String() string {
-	if len(a._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(a._rawJSON); err == nil {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -123,7 +121,7 @@ type ATopLevelLiteral struct {
 	NestedLiteral *ANestedLiteral `json:"nestedLiteral,omitempty" url:"nestedLiteral,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (a *ATopLevelLiteral) GetNestedLiteral() *ANestedLiteral {
@@ -144,20 +142,18 @@ func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = ATopLevelLiteral(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
-	a._rawJSON = json.RawMessage(data)
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (a *ATopLevelLiteral) String() string {
-	if len(a._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(a._rawJSON); err == nil {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
 		}
 	}

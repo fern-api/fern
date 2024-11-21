@@ -27,7 +27,7 @@ const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA
 
 const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
-const MAX_RECURSION_DEPTH = 16;
+const MAX_RECURSION_DEPTH = 128;
 
 export function validateTypeReferenceExample({
     rawTypeReference,

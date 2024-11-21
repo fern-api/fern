@@ -40,13 +40,11 @@ func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RegularResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -89,13 +87,11 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

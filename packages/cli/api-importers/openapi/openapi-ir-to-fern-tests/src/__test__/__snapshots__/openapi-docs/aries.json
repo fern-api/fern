@@ -11463,6 +11463,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PerformRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11550,6 +11551,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SendMenu",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11766,6 +11768,7 @@ docs: Menu interaction over connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SendMessage",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12068,6 +12071,7 @@ docs: Simple messaging
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateInvitationRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
@@ -12205,6 +12209,7 @@ docs: Simple messaging
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectionStaticRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12607,6 +12612,7 @@ docs: Simple messaging
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ReceiveInvitationRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
@@ -12674,6 +12680,7 @@ docs: Simple messaging
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectionMetadataSetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13706,6 +13713,7 @@ docs: Connection management
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialDefinitionSendRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
@@ -14509,6 +14517,7 @@ docs: Credential definition operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "W3CCredentialsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "count": {
                     "docs": "Maximum number to retrieve",
@@ -15238,6 +15247,7 @@ docs: Holder credential management
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DIDXRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias for connection",
@@ -16236,6 +16246,7 @@ docs: Feature discovery v2
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Date",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "endorser_write_txn": {
                     "docs": "Endorser will write the transaction after endorsing it",
@@ -17483,6 +17494,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17697,6 +17709,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialConnFreeOfferRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18385,6 +18398,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialIssueRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18432,6 +18446,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialProblemReportRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18608,6 +18623,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialBoundOfferRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19039,6 +19055,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialProposalRequestMand",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19264,6 +19281,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialFreeOfferRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19533,6 +19551,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialProposalRequestOpt",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19711,6 +19730,7 @@ docs: Introduction of known parties
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10CredentialStoreRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21848,6 +21868,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20IssueCredSchemaCore",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22112,6 +22133,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredOfferConnFreeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23116,6 +23138,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredIssueRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23163,6 +23186,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredIssueProblemReportRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23417,6 +23441,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredBoundOfferRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23655,6 +23680,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24171,6 +24197,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredOfferRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24696,6 +24723,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredRequestFree",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24953,6 +24981,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20CredStoreRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27468,6 +27497,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27517,6 +27547,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "VerifyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27656,6 +27687,7 @@ docs: Sign and verify json-ld data
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TAAAccept",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28505,6 +28537,7 @@ docs: Interaction with ledger
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AdminMediationDeny",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28876,6 +28909,7 @@ docs: Interaction with ledger
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MediationCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28929,6 +28963,7 @@ docs: Interaction with ledger
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "KeylistQueryFilterRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "paginate_limit": {
                     "docs": "limit number of results",
@@ -29007,6 +29042,7 @@ docs: Interaction with ledger
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "KeylistUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29125,6 +29161,7 @@ docs: Interaction with ledger
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MediationIdMatchInfo",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29804,6 +29841,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateWalletRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29854,6 +29892,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RemoveWalletRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29901,6 +29940,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateWalletTokenRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30058,6 +30098,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateWalletRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30602,6 +30643,7 @@ docs: Multitenant wallet management
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvitationCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
@@ -31394,6 +31436,7 @@ docs: Out-of-band connections
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10PresentationCreateRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32031,6 +32074,7 @@ docs: Out-of-band connections
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10PresentationProblemReportRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32271,6 +32315,7 @@ docs: Out-of-band connections
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10PresentationSendRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32508,6 +32553,7 @@ docs: Out-of-band connections
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10PresentationProposalRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32898,6 +32944,7 @@ docs: Out-of-band connections
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V10PresentationSendRequestToProposal",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -34613,6 +34660,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresCreateRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35212,6 +35260,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresProblemReportRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35428,6 +35477,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresSendRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35645,6 +35695,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresProposalRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35832,6 +35883,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresSpecByFormatRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -36000,6 +36052,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "V20PresentationSendRequestToProposal",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -37576,6 +37629,7 @@ docs: did resolver interface.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClearPendingRevocationsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -37672,6 +37726,7 @@ docs: did resolver interface.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevRegCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -38512,6 +38567,7 @@ docs: did resolver interface.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevokeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -38724,6 +38780,7 @@ docs: did resolver interface.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevRegUpdateTailsFileUri",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -39920,6 +39977,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SchemaSendRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
@@ -40520,6 +40578,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PingRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40635,6 +40694,7 @@ docs: Trust-ping over connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DIDCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40889,6 +40949,7 @@ docs: Trust-ping over connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DIDEndpointWithType",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",

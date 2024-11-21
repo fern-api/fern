@@ -386,6 +386,16 @@
             }
           ]
         },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
         },
@@ -635,6 +645,16 @@
           ]
         },
         "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1306,6 +1326,16 @@
           ]
         },
         "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
           "oneOf": [
             {
               "type": "boolean"

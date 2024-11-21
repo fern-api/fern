@@ -12,7 +12,7 @@ type ContainerObject struct {
 	NestedObjects []*NestedObjectWithLiterals `json:"nestedObjects,omitempty" url:"nestedObjects,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (c *ContainerObject) GetNestedObjects() []*NestedObjectWithLiterals {
@@ -33,20 +33,18 @@ func (c *ContainerObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = ContainerObject(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
-	c._rawJSON = json.RawMessage(data)
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (c *ContainerObject) String() string {
-	if len(c._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -62,7 +60,7 @@ type NestedObjectWithLiterals struct {
 	literal2 string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *NestedObjectWithLiterals) GetStrProp() string {
@@ -105,14 +103,12 @@ func (n *NestedObjectWithLiterals) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", n, "literal2", unmarshaler.Literal2)
 	}
 	n.literal2 = unmarshaler.Literal2
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n, "literal1", "literal2")
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -131,8 +127,8 @@ func (n *NestedObjectWithLiterals) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithLiterals) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -151,7 +147,7 @@ type SendRequest struct {
 	stream          bool
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (s *SendRequest) GetQuery() string {
@@ -201,14 +197,12 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, false, unmarshaler.Stream)
 	}
 	s.stream = unmarshaler.Stream
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s, "prompt", "stream")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -227,8 +221,8 @@ func (s *SendRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendRequest) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}

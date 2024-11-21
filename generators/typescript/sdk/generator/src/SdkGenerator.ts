@@ -1298,7 +1298,8 @@ export class SdkGenerator {
             inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
-            useBigInt: this.config.useBigInt
+            useBigInt: this.config.useBigInt,
+            neverThrowErrors: this.config.neverThrowErrors
         });
     }
 }

@@ -40,6 +40,7 @@
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadFileRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {

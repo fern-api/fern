@@ -36,13 +36,11 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(unmarshaler.embed)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-
 	return nil
 }
 

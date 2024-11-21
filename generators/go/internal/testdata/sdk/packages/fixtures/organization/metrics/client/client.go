@@ -42,17 +42,16 @@ func (c *Client) CreateMetricsTag(
 	opts ...option.RequestOption,
 ) (*metrics.Tag, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := "https://api.foo.io/v1"
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://api.foo.io/v1",
+	)
 	endpointURL := baseURL + "/metrics"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *metrics.Tag
 	if err := c.caller.Call(
@@ -60,8 +59,8 @@ func (c *Client) CreateMetricsTag(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -80,17 +79,19 @@ func (c *Client) GetMetricsTag(
 	opts ...option.RequestOption,
 ) (*metrics.Tag, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := "https://api.foo.io/v1"
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/metrics/%v", id)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://api.foo.io/v1",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/metrics/%v",
+		id,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *metrics.Tag
 	if err := c.caller.Call(
@@ -98,8 +99,8 @@ func (c *Client) GetMetricsTag(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

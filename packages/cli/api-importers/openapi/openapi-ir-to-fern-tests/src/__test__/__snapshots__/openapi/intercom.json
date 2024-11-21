@@ -11788,6 +11788,7 @@ You can view the currently authorised admin along with the embedded app object (
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SetAwayAdminRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18153,6 +18154,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachContactToACompanyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20239,6 +20241,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MergeContactsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20810,6 +20813,7 @@ The table below shows the operators you can use to define how you want to search
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateContactRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22989,6 +22993,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachContactToConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23503,6 +23508,7 @@ It is not possible to use this endpoint with Workflows.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConvertConversationToTicketRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23592,6 +23598,7 @@ This will return the Message model that has been created.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24337,6 +24344,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DetachContactFromConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27662,6 +27670,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "display_as": {
                     "docs": "Set to plaintext to retrieve conversation messages in plain text.",
@@ -32559,6 +32568,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDataAttributeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -33185,6 +33195,7 @@ You can update a data attribute.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDataAttributeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -34300,6 +34311,7 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDataEventSummariesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -34898,6 +34910,7 @@ The only parameters you need to provide are the range of dates that you want exp
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDataExportsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -35708,6 +35721,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCollectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -36618,6 +36632,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCollectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -39728,6 +39743,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateNoteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40723,6 +40739,7 @@ This will return a subscription type model for the subscription type that was ad
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachSubscriptionTypeToContactRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -41474,6 +41491,7 @@ docs: Everything about Switch
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachTagToContactRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -41563,6 +41581,7 @@ docs: Everything about Switch
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachTagToConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -41652,6 +41671,7 @@ docs: Everything about Switch
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AttachTagToTicketRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -41963,6 +41983,7 @@ Each operation will return a tag object.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DetachTagFromConversationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -42074,6 +42095,7 @@ Each operation will return a tag object.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DetachTagFromTicketRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -43168,6 +43190,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTicketTypeAttributeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -43285,6 +43308,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTicketTypeAttributeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -44237,6 +44261,7 @@ docs: Everything about your ticket types
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTicketRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -45573,6 +45598,7 @@ The table below shows the operators you can use to define how you want to search
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTicketRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -47642,6 +47668,7 @@ docs: Everything about your tickets
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConvertVisitorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

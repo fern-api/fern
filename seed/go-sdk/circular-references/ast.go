@@ -394,7 +394,7 @@ func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
 
 type ObjectValue struct {
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
@@ -408,20 +408,18 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectValue(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
-	o._rawJSON = json.RawMessage(data)
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *ObjectValue) String() string {
-	if len(o._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
 		}
 	}

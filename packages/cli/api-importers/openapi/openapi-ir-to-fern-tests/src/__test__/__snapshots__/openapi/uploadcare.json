@@ -2297,6 +2297,7 @@ processing operations.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "CreateFilesGroupRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -3052,6 +3053,7 @@ Log.d("TAG", file.toString())
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "BaseUploadRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -3697,6 +3699,7 @@ to the value of the `check_URL_duplicates` parameter.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "FromUrlUploadRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4555,6 +4558,7 @@ Log.d("TAG", file.toString())
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "MultipartFileUploadCompleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4893,6 +4897,7 @@ to us as a value of the `part_size` parameter (in bytes).
                 "docs": "Multipart upload parameters to start multipart uploading.",
                 "headers": undefined,
                 "name": "MultipartFileUploadStartRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

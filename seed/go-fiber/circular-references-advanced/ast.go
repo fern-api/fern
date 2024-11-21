@@ -282,13 +282,11 @@ func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectFieldValue(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -314,13 +312,11 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectValue(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 

@@ -38,13 +38,11 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "failure", unmarshaler.Status)
 	}
 	f.status = unmarshaler.Status
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *f, "status")
 	if err != nil {
 		return err
 	}
 	f.ExtraProperties = extraProperties
-
 	return nil
 }
 

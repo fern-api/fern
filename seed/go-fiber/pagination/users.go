@@ -105,13 +105,11 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameCursor(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -154,13 +152,11 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernamePage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -212,13 +208,11 @@ func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error
 		return err
 	}
 	*l = ListUsersExtendedOptionalListResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -270,13 +264,11 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersExtendedResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -336,13 +328,11 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersPaginationResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -385,13 +375,11 @@ func (n *NextPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NextPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -473,13 +461,11 @@ func (p *Page) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Page(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -522,13 +508,11 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -563,13 +547,11 @@ func (u *UserListContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserListContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -604,13 +586,11 @@ func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserOptionalListContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -653,13 +633,11 @@ func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserOptionalListPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -702,13 +680,11 @@ func (u *UserPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -743,13 +719,11 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -784,13 +758,11 @@ func (w *WithCursor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithCursor(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -825,13 +797,11 @@ func (w *WithPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
 	return nil
 }
 

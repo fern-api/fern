@@ -1306,6 +1306,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExtensionsPostRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1740,6 +1741,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProfileInput",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -2238,6 +2240,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SessionRestInputV1",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -2811,6 +2814,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -2982,6 +2986,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SummarizeContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

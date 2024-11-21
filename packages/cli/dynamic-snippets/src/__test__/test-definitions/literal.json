@@ -1269,6 +1269,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -1660,6 +1664,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -2007,7 +2015,11 @@
                     }
                 ],
                 "headers": [],
-                "body": null
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
             },
             "response": {
                 "type": "json"

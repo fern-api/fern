@@ -86,13 +86,11 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
 	}
 	a.resourceType = unmarshaler.ResourceType
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resource_type")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -155,13 +153,11 @@ func (b *BaseResource) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BaseResource(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -204,13 +200,11 @@ func (m *Memo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Memo(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -291,13 +285,11 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -382,13 +374,11 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -593,13 +583,11 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
 	}
 	s.resourceType = unmarshaler.ResourceType
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resource_type")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 

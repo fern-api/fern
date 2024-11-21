@@ -85,7 +85,12 @@ types:
       scopes: optional<list<string>>
       client-id-env: optional<string>
       client-secret-env: optional<string>
-      token-prefix: optional<string>
+      token-prefix: 
+        type: optional<string>
+        docs: Sets the token header value prefix. Defaults to 'Bearer'
+      token-header: 
+        type: optional<string>
+        docs: Sets the token header key name. Defaults to 'Authorization'
       get-token: OAuthGetTokenEndpointSchema
       refresh-token: optional<OAuthRefreshTokenEndpointSchema>
   

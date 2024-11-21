@@ -1195,6 +1195,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BusinessUserEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1728,6 +1729,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TransactionEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1969,6 +1971,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConsumerUserEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

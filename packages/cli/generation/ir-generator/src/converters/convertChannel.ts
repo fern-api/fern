@@ -30,6 +30,7 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 
 export async function convertChannel({
     channel,
@@ -358,9 +359,10 @@ function convertChannelPathParameters({
     };
 
     if (example["path-parameters"] != null) {
+        const rawEndpointPathParameters = getEndpointPathParameters(channel);
         for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
             // const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key];
-            const pathParameterDeclaration = channel["path-parameters"]?.[key];
+            const pathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (pathParameterDeclaration != null) {
                 pathParameters.push(

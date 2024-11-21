@@ -32,13 +32,11 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Docs(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -81,13 +79,11 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -130,13 +126,11 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = Json(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
 	j.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -187,13 +181,11 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
