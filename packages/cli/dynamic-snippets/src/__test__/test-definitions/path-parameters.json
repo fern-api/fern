@@ -820,7 +820,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/user/users/{userOd}"
+                "path": "/user/users/{userId}"
             },
             "request": {
                 "type": "inlined",

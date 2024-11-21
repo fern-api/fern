@@ -2455,7 +2455,7 @@
                         "head": "/users/",
                         "parts": [
                             {
-                                "pathParameter": "userOd",
+                                "pathParameter": "userId",
                                 "tail": ""
                             }
                         ]
@@ -2464,7 +2464,7 @@
                         "head": "/user/users/",
                         "parts": [
                             {
-                                "pathParameter": "userOd",
+                                "pathParameter": "userId",
                                 "tail": ""
                             }
                         ]
@@ -2746,7 +2746,7 @@
                         {
                             "example": {
                                 "id": "77244d0cd8c4a7c57fd9c66c29faae4f7e9a17ec",
-                                "url": "/user/users/undefined",
+                                "url": "/user/users/userId",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
