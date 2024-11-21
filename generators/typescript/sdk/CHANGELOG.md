@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.2] - 2024-11-21
+
+- Improvement: Added documentation for pagination in the README. The snippet below will 
+  now show up on generated READMEs. 
+
+  ```typescript
+  // Iterate through all items
+  const response = await client.users.list();
+  for await (const item of response) {
+    console.log(item);
+  }
+
+  // Or manually paginate
+  let page = await client.users.list();
+  while (page.hasNextPage()) {
+    page = await page.getNextPage();
+  }
+  ```
+
 
 ## [0.42.1] - 2024-11-20
 
