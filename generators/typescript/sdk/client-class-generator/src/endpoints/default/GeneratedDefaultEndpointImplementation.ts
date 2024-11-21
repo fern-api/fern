@@ -186,8 +186,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         invocation: ts.Expression;
         context: SdkContext;
     }): ts.Node[] | undefined {
-        const paginationInfo = this.response.getPaginationInfo(context);
-        if (paginationInfo == null) {
+        if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
             return undefined;
         }
 
