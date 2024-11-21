@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchOrganizations(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\u0026fern.SearchOrganizationsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganization"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetOrganization(\n\tcontext.TODO(),\n\t\"organizationId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetOrganizationUser(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\"userId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.SearchUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\"userId\",\n)\n"
+            }
+        }
+    ]
+}

@@ -34,3 +34,41 @@ async def test_get_organization_user(client: SeedPathParameters, async_client: A
 
     async_response = await async_client.user.get_organization_user(organization_id="organizationId", user_id="userId")
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_search_users(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
+    expected_response: typing.Any = [
+        {"name": "name", "tags": ["tags", "tags"]},
+        {"name": "name", "tags": ["tags", "tags"]},
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {"name": None, "tags": ("list", {0: None, 1: None})},
+            1: {"name": None, "tags": ("list", {0: None, 1: None})},
+        },
+    )
+    response = client.user.search_users(user_id="userId", limit=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.user.search_users(user_id="userId", limit=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_search_organizations(client: SeedPathParameters, async_client: AsyncSeedPathParameters) -> None:
+    expected_response: typing.Any = [
+        {"name": "name", "tags": ["tags", "tags"]},
+        {"name": "name", "tags": ["tags", "tags"]},
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {"name": None, "tags": ("list", {0: None, 1: None})},
+            1: {"name": None, "tags": ("list", {0: None, 1: None})},
+        },
+    )
+    response = client.user.search_organizations(organization_id="organizationId", limit=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.user.search_organizations(organization_id="organizationId", limit=1)
+    validate_response(async_response, expected_response, expected_types)

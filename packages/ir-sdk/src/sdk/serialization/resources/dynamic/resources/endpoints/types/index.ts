@@ -4,6 +4,7 @@ export * from "./Request";
 export * from "./Response";
 export * from "./BodyRequest";
 export * from "./InlinedRequest";
+export * from "./InlinedRequestMetadata";
 export * from "./InlinedRequestBody";
 export * from "./ReferencedRequestBody";
 export * from "./ReferencedRequestBodyType";

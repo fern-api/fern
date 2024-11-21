@@ -158,8 +158,20 @@ export class DynamicSnippetsConverter {
             pathParameters,
             queryParameters,
             headers,
-            body: body != null ? this.convertInlinedRequestBody({ wrapper, body }) : undefined
+            body: body != null ? this.convertInlinedRequestBody({ wrapper, body }) : undefined,
+            metadata: this.convertInlinedRequestMetadata({ wrapper })
         });
+    }
+
+    private convertInlinedRequestMetadata({
+        wrapper
+    }: {
+        wrapper: SdkRequestWrapper;
+    }): DynamicSnippets.InlinedRequestMetadata {
+        return {
+            includePathParameters: wrapper.includePathParameters ?? false,
+            onlyPathParameters: wrapper.onlyPathParameters ?? false
+        };
     }
 
     private convertInlinedRequestBody({

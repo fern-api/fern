@@ -32,3 +32,27 @@ client.user.get_organization_user(
 ```                        
 
 
+```python
+
+
+client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client.user.search_users(
+	user_id="userId",
+	limit=1
+)
+ 
+```                        
+
+
+```python
+
+
+client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client.user.search_organizations(
+	organization_id="organizationId",
+	limit=1
+)
+ 
+```                        
+
+

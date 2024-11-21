@@ -36,6 +36,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/ir-sdk": "^53.19.0",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "url-join": "^5.0.0"
   },

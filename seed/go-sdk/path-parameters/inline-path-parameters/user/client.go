@@ -4,10 +4,10 @@ package user
 
 import (
 	context "context"
-	fern "github.com/path-parameters/fern"
-	core "github.com/path-parameters/fern/core"
-	internal "github.com/path-parameters/fern/internal"
-	option "github.com/path-parameters/fern/option"
+	pathparametersgo "github.com/fern-api/path-parameters-go"
+	core "github.com/fern-api/path-parameters-go/core"
+	internal "github.com/fern-api/path-parameters-go/internal"
+	option "github.com/fern-api/path-parameters-go/option"
 	http "net/http"
 )
 
@@ -35,7 +35,7 @@ func (c *Client) GetOrganization(
 	ctx context.Context,
 	organizationId string,
 	opts ...option.RequestOption,
-) (*fern.User, error) {
+) (*pathparametersgo.Organization, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -51,7 +51,7 @@ func (c *Client) GetOrganization(
 		options.ToHeader(),
 	)
 
-	var response *fern.User
+	var response *pathparametersgo.Organization
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -72,10 +72,9 @@ func (c *Client) GetOrganization(
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	userId string,
-	request *fern.GetUsersRequest,
+	request *pathparametersgo.GetUsersRequest,
 	opts ...option.RequestOption,
-) (*fern.User, error) {
+) (*pathparametersgo.User, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -84,14 +83,14 @@ func (c *Client) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/user/users/%v",
-		userId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
 		options.ToHeader(),
 	)
 
-	var response *fern.User
+	var response *pathparametersgo.User
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -112,11 +111,9 @@ func (c *Client) GetUser(
 
 func (c *Client) GetOrganizationUser(
 	ctx context.Context,
-	organizationId string,
-	userId string,
-	request *fern.GetOrganizationUserRequest,
+	request *pathparametersgo.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
-) (*fern.User, error) {
+) (*pathparametersgo.User, error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -125,15 +122,108 @@ func (c *Client) GetOrganizationUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/user/organizations/%v/users/%v",
-		organizationId,
-		userId,
+		request.OrganizationId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
 		options.ToHeader(),
 	)
 
-	var response *fern.User
+	var response *pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) SearchUsers(
+	ctx context.Context,
+	request *pathparametersgo.SearchUsersRequest,
+	opts ...option.RequestOption,
+) ([]*pathparametersgo.User, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/user/users/%v",
+		request.UserId,
+	)
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response []*pathparametersgo.User
+	if err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) SearchOrganizations(
+	ctx context.Context,
+	organizationId string,
+	request *pathparametersgo.SearchOrganizationsRequest,
+	opts ...option.RequestOption,
+) ([]*pathparametersgo.Organization, error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/user/organizations/%v",
+		organizationId,
+	)
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response []*pathparametersgo.Organization
 	if err := c.caller.Call(
 		ctx,
 		&internal.CallParams{

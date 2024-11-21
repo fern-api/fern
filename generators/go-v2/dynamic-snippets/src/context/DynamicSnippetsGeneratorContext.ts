@@ -107,6 +107,11 @@ export class DynamicSnippetsGeneratorContext {
         return instances;
     }
 
+    public doesInlinedRequestExist({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
+        // TODO: Reference the request wrapper's `includePathParameters` field.
+        return true;
+    }
+
     public getRecord(value: unknown): Record<string, unknown> | undefined {
         if (typeof value !== "object" || Array.isArray(value)) {
             this.errors.add({

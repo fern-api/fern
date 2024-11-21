@@ -5,7 +5,6 @@ package generatorexec
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	core "github.com/fern-api/fern-go/internal/fern/ir/core"
 )
 
@@ -13,6 +12,13 @@ type BasicLicense struct {
 	Id LicenseId `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
+}
+
+func (b *BasicLicense) GetId() LicenseId {
+	if b == nil {
+		return ""
+	}
+	return b.Id
 }
 
 func (b *BasicLicense) GetExtraProperties() map[string]interface{} {
@@ -47,6 +53,13 @@ type CustomLicense struct {
 	Filename string `json:"filename" url:"filename"`
 
 	extraProperties map[string]interface{}
+}
+
+func (c *CustomLicense) GetFilename() string {
+	if c == nil {
+		return ""
+	}
+	return c.Filename
 }
 
 func (c *CustomLicense) GetExtraProperties() map[string]interface{} {
@@ -99,6 +112,104 @@ type GeneratorConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (g *GeneratorConfig) GetDryRun() bool {
+	if g == nil {
+		return false
+	}
+	return g.DryRun
+}
+
+func (g *GeneratorConfig) GetIrFilepath() string {
+	if g == nil {
+		return ""
+	}
+	return g.IrFilepath
+}
+
+func (g *GeneratorConfig) GetOriginalReadmeFilepath() *string {
+	if g == nil {
+		return nil
+	}
+	return g.OriginalReadmeFilepath
+}
+
+func (g *GeneratorConfig) GetLicense() *LicenseConfig {
+	if g == nil {
+		return nil
+	}
+	return g.License
+}
+
+func (g *GeneratorConfig) GetOutput() *GeneratorOutputConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Output
+}
+
+func (g *GeneratorConfig) GetPublish() *GeneratorPublishConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Publish
+}
+
+func (g *GeneratorConfig) GetWorkspaceName() string {
+	if g == nil {
+		return ""
+	}
+	return g.WorkspaceName
+}
+
+func (g *GeneratorConfig) GetOrganization() string {
+	if g == nil {
+		return ""
+	}
+	return g.Organization
+}
+
+func (g *GeneratorConfig) GetCustomConfig() interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.CustomConfig
+}
+
+func (g *GeneratorConfig) GetEnvironment() *GeneratorEnvironment {
+	if g == nil {
+		return nil
+	}
+	return g.Environment
+}
+
+func (g *GeneratorConfig) GetWhitelabel() bool {
+	if g == nil {
+		return false
+	}
+	return g.Whitelabel
+}
+
+func (g *GeneratorConfig) GetWriteUnitTests() bool {
+	if g == nil {
+		return false
+	}
+	return g.WriteUnitTests
+}
+
+func (g *GeneratorConfig) GetGeneratePaginatedClients() *bool {
+	if g == nil {
+		return nil
+	}
+	return g.GeneratePaginatedClients
+}
+
+func (g *GeneratorConfig) GetGenerateOauthClients() bool {
+	if g == nil {
+		return false
+	}
+	return g.GenerateOauthClients
+}
+
 func (g *GeneratorConfig) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
@@ -139,6 +250,27 @@ func NewGeneratorEnvironmentFromLocal(value interface{}) *GeneratorEnvironment {
 
 func NewGeneratorEnvironmentFromRemote(value *RemoteGeneratorEnvironment) *GeneratorEnvironment {
 	return &GeneratorEnvironment{Type: "remote", Remote: value}
+}
+
+func (g *GeneratorEnvironment) GetType() string {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GeneratorEnvironment) GetLocal() interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.Local
+}
+
+func (g *GeneratorEnvironment) GetRemote() *RemoteGeneratorEnvironment {
+	if g == nil {
+		return nil
+	}
+	return g.Remote
 }
 
 func (g *GeneratorEnvironment) UnmarshalJSON(data []byte) error {
@@ -213,6 +345,41 @@ type GeneratorOutputConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (g *GeneratorOutputConfig) GetPath() string {
+	if g == nil {
+		return ""
+	}
+	return g.Path
+}
+
+func (g *GeneratorOutputConfig) GetSnippetFilepath() *string {
+	if g == nil {
+		return nil
+	}
+	return g.SnippetFilepath
+}
+
+func (g *GeneratorOutputConfig) GetSnippetTemplateFilepath() *string {
+	if g == nil {
+		return nil
+	}
+	return g.SnippetTemplateFilepath
+}
+
+func (g *GeneratorOutputConfig) GetPublishingMetadata() *PublishingMetadata {
+	if g == nil {
+		return nil
+	}
+	return g.PublishingMetadata
+}
+
+func (g *GeneratorOutputConfig) GetMode() *OutputMode {
+	if g == nil {
+		return nil
+	}
+	return g.Mode
+}
+
 func (g *GeneratorOutputConfig) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
@@ -250,6 +417,34 @@ type GeneratorPublishConfig struct {
 	Version       string                       `json:"version" url:"version"`
 
 	extraProperties map[string]interface{}
+}
+
+func (g *GeneratorPublishConfig) GetRegistries() *GeneratorRegistriesConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Registries
+}
+
+func (g *GeneratorPublishConfig) GetRegistriesV2() *GeneratorRegistriesConfigV2 {
+	if g == nil {
+		return nil
+	}
+	return g.RegistriesV2
+}
+
+func (g *GeneratorPublishConfig) GetPublishTarget() *GeneratorPublishTarget {
+	if g == nil {
+		return nil
+	}
+	return g.PublishTarget
+}
+
+func (g *GeneratorPublishConfig) GetVersion() string {
+	if g == nil {
+		return ""
+	}
+	return g.Version
 }
 
 func (g *GeneratorPublishConfig) GetExtraProperties() map[string]interface{} {
@@ -312,6 +507,55 @@ func NewGeneratorPublishTargetFromRubygems(value *RubyGemsRegistryConfig) *Gener
 
 func NewGeneratorPublishTargetFromNuget(value *NugetRegistryConfig) *GeneratorPublishTarget {
 	return &GeneratorPublishTarget{Type: "nuget", Nuget: value}
+}
+
+func (g *GeneratorPublishTarget) GetType() string {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GeneratorPublishTarget) GetMaven() *MavenRegistryConfigV2 {
+	if g == nil {
+		return nil
+	}
+	return g.Maven
+}
+
+func (g *GeneratorPublishTarget) GetNpm() *NpmRegistryConfigV2 {
+	if g == nil {
+		return nil
+	}
+	return g.Npm
+}
+
+func (g *GeneratorPublishTarget) GetPypi() *PypiRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Pypi
+}
+
+func (g *GeneratorPublishTarget) GetPostman() *PostmanConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Postman
+}
+
+func (g *GeneratorPublishTarget) GetRubygems() *RubyGemsRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Rubygems
+}
+
+func (g *GeneratorPublishTarget) GetNuget() *NugetRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Nuget
 }
 
 func (g *GeneratorPublishTarget) UnmarshalJSON(data []byte) error {
@@ -420,6 +664,20 @@ type GeneratorRegistriesConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (g *GeneratorRegistriesConfig) GetMaven() *MavenRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Maven
+}
+
+func (g *GeneratorRegistriesConfig) GetNpm() *NpmRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Npm
+}
+
 func (g *GeneratorRegistriesConfig) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
@@ -456,6 +714,41 @@ type GeneratorRegistriesConfigV2 struct {
 	Nuget    *NugetRegistryConfig    `json:"nuget,omitempty" url:"nuget,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (g *GeneratorRegistriesConfigV2) GetMaven() *MavenRegistryConfigV2 {
+	if g == nil {
+		return nil
+	}
+	return g.Maven
+}
+
+func (g *GeneratorRegistriesConfigV2) GetNpm() *NpmRegistryConfigV2 {
+	if g == nil {
+		return nil
+	}
+	return g.Npm
+}
+
+func (g *GeneratorRegistriesConfigV2) GetPypi() *PypiRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Pypi
+}
+
+func (g *GeneratorRegistriesConfigV2) GetRubygems() *RubyGemsRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Rubygems
+}
+
+func (g *GeneratorRegistriesConfigV2) GetNuget() *NugetRegistryConfig {
+	if g == nil {
+		return nil
+	}
+	return g.Nuget
 }
 
 func (g *GeneratorRegistriesConfigV2) GetExtraProperties() map[string]interface{} {
@@ -496,6 +789,34 @@ type GithubOutputMode struct {
 	PublishInfo       *GithubPublishInfo `json:"publishInfo,omitempty" url:"publishInfo,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (g *GithubOutputMode) GetVersion() string {
+	if g == nil {
+		return ""
+	}
+	return g.Version
+}
+
+func (g *GithubOutputMode) GetRepoUrl() string {
+	if g == nil {
+		return ""
+	}
+	return g.RepoUrl
+}
+
+func (g *GithubOutputMode) GetInstallationToken() *string {
+	if g == nil {
+		return nil
+	}
+	return g.InstallationToken
+}
+
+func (g *GithubOutputMode) GetPublishInfo() *GithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.PublishInfo
 }
 
 func (g *GithubOutputMode) GetExtraProperties() map[string]interface{} {
@@ -558,6 +879,55 @@ func NewGithubPublishInfoFromRubygems(value *RubyGemsGithubPublishInfo) *GithubP
 
 func NewGithubPublishInfoFromNuget(value *NugetGithubPublishInfo) *GithubPublishInfo {
 	return &GithubPublishInfo{Type: "nuget", Nuget: value}
+}
+
+func (g *GithubPublishInfo) GetType() string {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GithubPublishInfo) GetNpm() *NpmGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Npm
+}
+
+func (g *GithubPublishInfo) GetMaven() *MavenGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Maven
+}
+
+func (g *GithubPublishInfo) GetPostman() *PostmanGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Postman
+}
+
+func (g *GithubPublishInfo) GetPypi() *PypiGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Pypi
+}
+
+func (g *GithubPublishInfo) GetRubygems() *RubyGemsGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Rubygems
+}
+
+func (g *GithubPublishInfo) GetNuget() *NugetGithubPublishInfo {
+	if g == nil {
+		return nil
+	}
+	return g.Nuget
 }
 
 func (g *GithubPublishInfo) UnmarshalJSON(data []byte) error {
@@ -673,6 +1043,27 @@ func NewLicenseConfigFromCustom(value *CustomLicense) *LicenseConfig {
 	return &LicenseConfig{Type: "custom", Custom: value}
 }
 
+func (l *LicenseConfig) GetType() string {
+	if l == nil {
+		return ""
+	}
+	return l.Type
+}
+
+func (l *LicenseConfig) GetBasic() *BasicLicense {
+	if l == nil {
+		return nil
+	}
+	return l.Basic
+}
+
+func (l *LicenseConfig) GetCustom() *CustomLicense {
+	if l == nil {
+		return nil
+	}
+	return l.Custom
+}
+
 func (l *LicenseConfig) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -758,6 +1149,27 @@ type MavenCentralSignature struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *MavenCentralSignature) GetKeyId() string {
+	if m == nil {
+		return ""
+	}
+	return m.KeyId
+}
+
+func (m *MavenCentralSignature) GetPassword() string {
+	if m == nil {
+		return ""
+	}
+	return m.Password
+}
+
+func (m *MavenCentralSignature) GetSecretKey() string {
+	if m == nil {
+		return ""
+	}
+	return m.SecretKey
+}
+
 func (m *MavenCentralSignature) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -792,6 +1204,27 @@ type MavenCentralSignatureGithubInfo struct {
 	SecretKeyEnvironmentVariable EnvironmentVariable `json:"secretKeyEnvironmentVariable" url:"secretKeyEnvironmentVariable"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *MavenCentralSignatureGithubInfo) GetKeyIdEnvironmentVariable() EnvironmentVariable {
+	if m == nil {
+		return ""
+	}
+	return m.KeyIdEnvironmentVariable
+}
+
+func (m *MavenCentralSignatureGithubInfo) GetPasswordEnvironmentVariable() EnvironmentVariable {
+	if m == nil {
+		return ""
+	}
+	return m.PasswordEnvironmentVariable
+}
+
+func (m *MavenCentralSignatureGithubInfo) GetSecretKeyEnvironmentVariable() EnvironmentVariable {
+	if m == nil {
+		return ""
+	}
+	return m.SecretKeyEnvironmentVariable
 }
 
 func (m *MavenCentralSignatureGithubInfo) GetExtraProperties() map[string]interface{} {
@@ -833,6 +1266,48 @@ type MavenGithubPublishInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *MavenGithubPublishInfo) GetRegistryUrl() string {
+	if m == nil {
+		return ""
+	}
+	return m.RegistryUrl
+}
+
+func (m *MavenGithubPublishInfo) GetCoordinate() string {
+	if m == nil {
+		return ""
+	}
+	return m.Coordinate
+}
+
+func (m *MavenGithubPublishInfo) GetUsernameEnvironmentVariable() EnvironmentVariable {
+	if m == nil {
+		return ""
+	}
+	return m.UsernameEnvironmentVariable
+}
+
+func (m *MavenGithubPublishInfo) GetPasswordEnvironmentVariable() EnvironmentVariable {
+	if m == nil {
+		return ""
+	}
+	return m.PasswordEnvironmentVariable
+}
+
+func (m *MavenGithubPublishInfo) GetSignature() *MavenCentralSignatureGithubInfo {
+	if m == nil {
+		return nil
+	}
+	return m.Signature
+}
+
+func (m *MavenGithubPublishInfo) GetShouldGeneratePublishWorkflow() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.ShouldGeneratePublishWorkflow
+}
+
 func (m *MavenGithubPublishInfo) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -869,6 +1344,41 @@ type MavenRegistryConfig struct {
 	Signature   *MavenCentralSignature `json:"signature,omitempty" url:"signature,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *MavenRegistryConfig) GetRegistryUrl() string {
+	if m == nil {
+		return ""
+	}
+	return m.RegistryUrl
+}
+
+func (m *MavenRegistryConfig) GetUsername() string {
+	if m == nil {
+		return ""
+	}
+	return m.Username
+}
+
+func (m *MavenRegistryConfig) GetPassword() string {
+	if m == nil {
+		return ""
+	}
+	return m.Password
+}
+
+func (m *MavenRegistryConfig) GetGroup() string {
+	if m == nil {
+		return ""
+	}
+	return m.Group
+}
+
+func (m *MavenRegistryConfig) GetSignature() *MavenCentralSignature {
+	if m == nil {
+		return nil
+	}
+	return m.Signature
 }
 
 func (m *MavenRegistryConfig) GetExtraProperties() map[string]interface{} {
@@ -909,6 +1419,41 @@ type MavenRegistryConfigV2 struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *MavenRegistryConfigV2) GetRegistryUrl() string {
+	if m == nil {
+		return ""
+	}
+	return m.RegistryUrl
+}
+
+func (m *MavenRegistryConfigV2) GetUsername() string {
+	if m == nil {
+		return ""
+	}
+	return m.Username
+}
+
+func (m *MavenRegistryConfigV2) GetPassword() string {
+	if m == nil {
+		return ""
+	}
+	return m.Password
+}
+
+func (m *MavenRegistryConfigV2) GetCoordinate() string {
+	if m == nil {
+		return ""
+	}
+	return m.Coordinate
+}
+
+func (m *MavenRegistryConfigV2) GetSignature() *MavenCentralSignature {
+	if m == nil {
+		return nil
+	}
+	return m.Signature
+}
+
 func (m *MavenRegistryConfigV2) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -944,6 +1489,34 @@ type NpmGithubPublishInfo struct {
 	ShouldGeneratePublishWorkflow *bool               `json:"shouldGeneratePublishWorkflow,omitempty" url:"shouldGeneratePublishWorkflow,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NpmGithubPublishInfo) GetRegistryUrl() string {
+	if n == nil {
+		return ""
+	}
+	return n.RegistryUrl
+}
+
+func (n *NpmGithubPublishInfo) GetPackageName() string {
+	if n == nil {
+		return ""
+	}
+	return n.PackageName
+}
+
+func (n *NpmGithubPublishInfo) GetTokenEnvironmentVariable() EnvironmentVariable {
+	if n == nil {
+		return ""
+	}
+	return n.TokenEnvironmentVariable
+}
+
+func (n *NpmGithubPublishInfo) GetShouldGeneratePublishWorkflow() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.ShouldGeneratePublishWorkflow
 }
 
 func (n *NpmGithubPublishInfo) GetExtraProperties() map[string]interface{} {
@@ -982,6 +1555,27 @@ type NpmRegistryConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *NpmRegistryConfig) GetRegistryUrl() string {
+	if n == nil {
+		return ""
+	}
+	return n.RegistryUrl
+}
+
+func (n *NpmRegistryConfig) GetToken() string {
+	if n == nil {
+		return ""
+	}
+	return n.Token
+}
+
+func (n *NpmRegistryConfig) GetScope() string {
+	if n == nil {
+		return ""
+	}
+	return n.Scope
+}
+
 func (n *NpmRegistryConfig) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -1016,6 +1610,27 @@ type NpmRegistryConfigV2 struct {
 	PackageName string `json:"packageName" url:"packageName"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NpmRegistryConfigV2) GetRegistryUrl() string {
+	if n == nil {
+		return ""
+	}
+	return n.RegistryUrl
+}
+
+func (n *NpmRegistryConfigV2) GetToken() string {
+	if n == nil {
+		return ""
+	}
+	return n.Token
+}
+
+func (n *NpmRegistryConfigV2) GetPackageName() string {
+	if n == nil {
+		return ""
+	}
+	return n.PackageName
 }
 
 func (n *NpmRegistryConfigV2) GetExtraProperties() map[string]interface{} {
@@ -1055,6 +1670,34 @@ type NugetGithubPublishInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *NugetGithubPublishInfo) GetRegistryUrl() string {
+	if n == nil {
+		return ""
+	}
+	return n.RegistryUrl
+}
+
+func (n *NugetGithubPublishInfo) GetPackageName() string {
+	if n == nil {
+		return ""
+	}
+	return n.PackageName
+}
+
+func (n *NugetGithubPublishInfo) GetApiKeyEnvironmentVariable() EnvironmentVariable {
+	if n == nil {
+		return ""
+	}
+	return n.ApiKeyEnvironmentVariable
+}
+
+func (n *NugetGithubPublishInfo) GetShouldGeneratePublishWorkflow() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.ShouldGeneratePublishWorkflow
+}
+
 func (n *NugetGithubPublishInfo) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -1089,6 +1732,27 @@ type NugetRegistryConfig struct {
 	PackageName string `json:"packageName" url:"packageName"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NugetRegistryConfig) GetRegistryUrl() string {
+	if n == nil {
+		return ""
+	}
+	return n.RegistryUrl
+}
+
+func (n *NugetRegistryConfig) GetApiKey() string {
+	if n == nil {
+		return ""
+	}
+	return n.ApiKey
+}
+
+func (n *NugetRegistryConfig) GetPackageName() string {
+	if n == nil {
+		return ""
+	}
+	return n.PackageName
 }
 
 func (n *NugetRegistryConfig) GetExtraProperties() map[string]interface{} {
@@ -1126,6 +1790,20 @@ type OutputMetadata struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OutputMetadata) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *OutputMetadata) GetAuthors() []*OutputMetadataAuthor {
+	if o == nil {
+		return nil
+	}
+	return o.Authors
+}
+
 func (o *OutputMetadata) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -1159,6 +1837,20 @@ type OutputMetadataAuthor struct {
 	Email string `json:"email" url:"email"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *OutputMetadataAuthor) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *OutputMetadataAuthor) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
 }
 
 func (o *OutputMetadataAuthor) GetExtraProperties() map[string]interface{} {
@@ -1206,6 +1898,34 @@ func NewOutputModeFromDownloadFiles(value interface{}) *OutputMode {
 
 func NewOutputModeFromGithub(value *GithubOutputMode) *OutputMode {
 	return &OutputMode{Type: "github", Github: value}
+}
+
+func (o *OutputMode) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *OutputMode) GetPublish() *GeneratorPublishConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Publish
+}
+
+func (o *OutputMode) GetDownloadFiles() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.DownloadFiles
+}
+
+func (o *OutputMode) GetGithub() *GithubOutputMode {
+	if o == nil {
+		return nil
+	}
+	return o.Github
 }
 
 func (o *OutputMode) UnmarshalJSON(data []byte) error {
@@ -1288,6 +2008,20 @@ type PostmanConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PostmanConfig) GetApiKey() string {
+	if p == nil {
+		return ""
+	}
+	return p.ApiKey
+}
+
+func (p *PostmanConfig) GetWorkspaceId() string {
+	if p == nil {
+		return ""
+	}
+	return p.WorkspaceId
+}
+
 func (p *PostmanConfig) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -1321,6 +2055,20 @@ type PostmanGithubPublishInfo struct {
 	WorkspaceIdEnvironmentVariable EnvironmentVariable `json:"workspaceIdEnvironmentVariable" url:"workspaceIdEnvironmentVariable"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *PostmanGithubPublishInfo) GetApiKeyEnvironmentVariable() EnvironmentVariable {
+	if p == nil {
+		return ""
+	}
+	return p.ApiKeyEnvironmentVariable
+}
+
+func (p *PostmanGithubPublishInfo) GetWorkspaceIdEnvironmentVariable() EnvironmentVariable {
+	if p == nil {
+		return ""
+	}
+	return p.WorkspaceIdEnvironmentVariable
 }
 
 func (p *PostmanGithubPublishInfo) GetExtraProperties() map[string]interface{} {
@@ -1359,6 +2107,34 @@ type PublishingMetadata struct {
 	PublisherName      *string `json:"publisher_name,omitempty" url:"publisher_name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *PublishingMetadata) GetPackageDescription() *string {
+	if p == nil {
+		return nil
+	}
+	return p.PackageDescription
+}
+
+func (p *PublishingMetadata) GetPublisherEmail() *string {
+	if p == nil {
+		return nil
+	}
+	return p.PublisherEmail
+}
+
+func (p *PublishingMetadata) GetReferenceUrl() *string {
+	if p == nil {
+		return nil
+	}
+	return p.ReferenceUrl
+}
+
+func (p *PublishingMetadata) GetPublisherName() *string {
+	if p == nil {
+		return nil
+	}
+	return p.PublisherName
 }
 
 func (p *PublishingMetadata) GetExtraProperties() map[string]interface{} {
@@ -1400,6 +2176,48 @@ type PypiGithubPublishInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PypiGithubPublishInfo) GetRegistryUrl() string {
+	if p == nil {
+		return ""
+	}
+	return p.RegistryUrl
+}
+
+func (p *PypiGithubPublishInfo) GetPackageName() string {
+	if p == nil {
+		return ""
+	}
+	return p.PackageName
+}
+
+func (p *PypiGithubPublishInfo) GetUsernameEnvironmentVariable() EnvironmentVariable {
+	if p == nil {
+		return ""
+	}
+	return p.UsernameEnvironmentVariable
+}
+
+func (p *PypiGithubPublishInfo) GetPasswordEnvironmentVariable() EnvironmentVariable {
+	if p == nil {
+		return ""
+	}
+	return p.PasswordEnvironmentVariable
+}
+
+func (p *PypiGithubPublishInfo) GetPypiMetadata() *PypiMetadata {
+	if p == nil {
+		return nil
+	}
+	return p.PypiMetadata
+}
+
+func (p *PypiGithubPublishInfo) GetShouldGeneratePublishWorkflow() *bool {
+	if p == nil {
+		return nil
+	}
+	return p.ShouldGeneratePublishWorkflow
+}
+
 func (p *PypiGithubPublishInfo) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -1436,6 +2254,41 @@ type PypiMetadata struct {
 	HomepageLink      *string                 `json:"homepageLink,omitempty" url:"homepageLink,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *PypiMetadata) GetDescription() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Description
+}
+
+func (p *PypiMetadata) GetAuthors() []*OutputMetadataAuthor {
+	if p == nil {
+		return nil
+	}
+	return p.Authors
+}
+
+func (p *PypiMetadata) GetKeywords() []string {
+	if p == nil {
+		return nil
+	}
+	return p.Keywords
+}
+
+func (p *PypiMetadata) GetDocumentationLink() *string {
+	if p == nil {
+		return nil
+	}
+	return p.DocumentationLink
+}
+
+func (p *PypiMetadata) GetHomepageLink() *string {
+	if p == nil {
+		return nil
+	}
+	return p.HomepageLink
 }
 
 func (p *PypiMetadata) GetExtraProperties() map[string]interface{} {
@@ -1476,6 +2329,41 @@ type PypiRegistryConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PypiRegistryConfig) GetRegistryUrl() string {
+	if p == nil {
+		return ""
+	}
+	return p.RegistryUrl
+}
+
+func (p *PypiRegistryConfig) GetUsername() string {
+	if p == nil {
+		return ""
+	}
+	return p.Username
+}
+
+func (p *PypiRegistryConfig) GetPassword() string {
+	if p == nil {
+		return ""
+	}
+	return p.Password
+}
+
+func (p *PypiRegistryConfig) GetPackageName() string {
+	if p == nil {
+		return ""
+	}
+	return p.PackageName
+}
+
+func (p *PypiRegistryConfig) GetPypiMetadata() *PypiMetadata {
+	if p == nil {
+		return nil
+	}
+	return p.PypiMetadata
+}
+
 func (p *PypiRegistryConfig) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -1510,6 +2398,27 @@ type RemoteGeneratorEnvironment struct {
 	Id               string `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *RemoteGeneratorEnvironment) GetCoordinatorUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.CoordinatorUrl
+}
+
+func (r *RemoteGeneratorEnvironment) GetCoordinatorUrlV2() string {
+	if r == nil {
+		return ""
+	}
+	return r.CoordinatorUrlV2
+}
+
+func (r *RemoteGeneratorEnvironment) GetId() string {
+	if r == nil {
+		return ""
+	}
+	return r.Id
 }
 
 func (r *RemoteGeneratorEnvironment) GetExtraProperties() map[string]interface{} {
@@ -1549,6 +2458,34 @@ type RubyGemsGithubPublishInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *RubyGemsGithubPublishInfo) GetRegistryUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.RegistryUrl
+}
+
+func (r *RubyGemsGithubPublishInfo) GetPackageName() string {
+	if r == nil {
+		return ""
+	}
+	return r.PackageName
+}
+
+func (r *RubyGemsGithubPublishInfo) GetApiKeyEnvironmentVariable() EnvironmentVariable {
+	if r == nil {
+		return ""
+	}
+	return r.ApiKeyEnvironmentVariable
+}
+
+func (r *RubyGemsGithubPublishInfo) GetShouldGeneratePublishWorkflow() *bool {
+	if r == nil {
+		return nil
+	}
+	return r.ShouldGeneratePublishWorkflow
+}
+
 func (r *RubyGemsGithubPublishInfo) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -1583,6 +2520,27 @@ type RubyGemsRegistryConfig struct {
 	PackageName string `json:"packageName" url:"packageName"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *RubyGemsRegistryConfig) GetRegistryUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.RegistryUrl
+}
+
+func (r *RubyGemsRegistryConfig) GetApiKey() string {
+	if r == nil {
+		return ""
+	}
+	return r.ApiKey
+}
+
+func (r *RubyGemsRegistryConfig) GetPackageName() string {
+	if r == nil {
+		return ""
+	}
+	return r.PackageName
 }
 
 func (r *RubyGemsRegistryConfig) GetExtraProperties() map[string]interface{} {
