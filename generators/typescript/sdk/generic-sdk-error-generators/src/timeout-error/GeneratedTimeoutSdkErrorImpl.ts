@@ -49,10 +49,7 @@ export class GeneratedTimeoutSdkErrorImpl
     }
 
     protected getSuperArguments(): ts.Expression[] {
-        return [
-            ts.factory.createStringLiteral("Timeout"),
-            ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME)
-        ];
+        return [ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME)];
     }
 
     protected getConstructorStatements(): ts.Statement[] {
