@@ -287,7 +287,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         type: "string",
         regex: rules != null ? rules.pattern : undefined,
         minLength: rules != null ? rules.minLength : undefined,
-        maxLength: rules != null ? rules.minLength : undefined,
+        maxLength: rules != null ? rules.maxLength : undefined,
         default: primitive != null && primitive.type === "string" ? primitive.default : undefined
     };
 }
