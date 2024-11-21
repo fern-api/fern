@@ -4499,6 +4499,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      '@fern-fern/ir-sdk':
+        specifier: ^53.19.0
+        version: 53.19.0
       url-join:
         specifier: ^5.0.0
         version: 5.0.0

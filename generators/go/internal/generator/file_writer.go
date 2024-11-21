@@ -33,6 +33,7 @@ type fileWriter struct {
 	baseImportPath               string
 	whitelabel                   bool
 	alwaysSendRequiredProperties bool
+	inlinePathParameters         bool
 	inlineFileProperties         bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
@@ -50,6 +51,7 @@ func newFileWriter(
 	baseImportPath string,
 	whitelabel bool,
 	alwaysSendRequiredProperties bool,
+	inlinePathParameters bool,
 	inlineFileProperties bool,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
@@ -91,6 +93,7 @@ func newFileWriter(
 		baseImportPath:               baseImportPath,
 		whitelabel:                   whitelabel,
 		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		inlinePathParameters:         inlinePathParameters,
 		inlineFileProperties:         inlineFileProperties,
 		unionVersion:                 unionVersion,
 		scope:                        scope,
@@ -167,6 +170,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.baseImportPath,
 		f.whitelabel,
 		f.alwaysSendRequiredProperties,
+		f.inlinePathParameters,
 		f.inlineFileProperties,
 		f.unionVersion,
 		f.types,

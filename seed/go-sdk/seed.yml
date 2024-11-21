@@ -63,6 +63,17 @@ fixtures:
         module:
           path: github.com/fern-api/file-upload-go
         inlineFileProperties: true
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: path
+        union: v1
+        module:
+          path: github.com/fern-api/path-parameters-go
+        inlinePathParameters: true
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -90,3 +101,6 @@ allowedFailures:
   - server-sent-events
   - streaming-parameter
   - trace
+
+  # TODO: Update DynamicSnippetsGenerator to recognize InlinedRequestMetadata.
+  - path-parameters:no-custom-config 

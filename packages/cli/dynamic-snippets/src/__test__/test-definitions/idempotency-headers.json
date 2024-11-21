@@ -337,6 +337,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

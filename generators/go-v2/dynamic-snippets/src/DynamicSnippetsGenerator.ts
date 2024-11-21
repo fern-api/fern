@@ -327,7 +327,8 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
 
         this.context.errors.scope(Scope.PathParameters);
         if (request.pathParameters != null) {
-            args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+            const pathParameterFields = this.getPathParameters({ namedParameters: request.pathParameters, snippet });
+            args.push(...pathParameterFields.map((field) => field.value));
         }
         this.context.errors.unscope();
 
@@ -377,24 +378,36 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         const args: go.TypeInstantiation[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
+        const pathParameterFields: go.StructField[] = [];
         if (request.pathParameters != null) {
-            args.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
         this.context.errors.unscope();
 
-        args.push(this.getInlinedRequestArg({ request, snippet }));
+        if (!this.context.customConfig?.inlinePathParameters) {
+            args.push(...pathParameterFields.map((field) => field.value));
+        }
+        if (this.context.doesInlinedRequestExist({ request })) {
+            args.push(
+                this.getInlinedRequestArg({
+                    request,
+                    snippet,
+                    pathParameterFields: this.context.customConfig?.inlinePathParameters ? pathParameterFields : []
+                })
+            );
+        }
         return args;
     }
 
     private getInlinedRequestArg({
         request,
-        snippet
+        snippet,
+        pathParameterFields
     }: {
         request: DynamicSnippets.InlinedRequest;
         snippet: DynamicSnippets.EndpointSnippetRequest;
+        pathParameterFields: go.StructField[];
     }): go.TypeInstantiation {
-        const fields: go.StructField[] = [];
-
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
@@ -429,7 +442,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
                 name: this.context.getMethodName(request.declaration.name),
                 importPath: this.context.getImportPath(request.declaration.fernFilepath)
             }),
-            fields: [...queryParameterFields, ...headerFields, ...requestBodyFields]
+            fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
         });
     }
 
@@ -507,15 +520,18 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
     }: {
         namedParameters: DynamicSnippets.NamedParameter[];
         snippet: DynamicSnippets.EndpointSnippetRequest;
-    }): go.TypeInstantiation[] {
-        const args: go.TypeInstantiation[] = [];
+    }): go.StructField[] {
+        const args: go.StructField[] = [];
 
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(this.context.dynamicTypeInstantiationMapper.convert(parameter));
+            args.push({
+                name: this.context.getTypeName(parameter.name.name),
+                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
+            });
         }
 
         return args;

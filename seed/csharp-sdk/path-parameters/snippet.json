@@ -36,6 +36,30 @@
                 "type": "typescript",
                 "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetOrganizationUserAsync(\n    \"organizationId\",\n    \"userId\",\n    new GetOrganizationUserRequest()\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"userId\", new SearchUsersRequest { Limit = 1 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/organizations/{organizationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchOrganizationsAsync(\n    \"organizationId\",\n    new SearchOrganizationsRequest { Limit = 1 }\n);\n"
+            }
         }
     ]
 }
