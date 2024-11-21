@@ -55,12 +55,12 @@ export const ContainerType = {
         return {
             list: value,
             type: "list",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.ContainerType.List,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -68,12 +68,12 @@ export const ContainerType = {
         return {
             ...value,
             type: "map",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.ContainerType.Map,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -81,12 +81,12 @@ export const ContainerType = {
         return {
             optional: value,
             type: "optional",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.ContainerType.Optional,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -94,12 +94,12 @@ export const ContainerType = {
         return {
             set: value,
             type: "set",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.ContainerType.Set,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -107,12 +107,12 @@ export const ContainerType = {
         return {
             literal: value,
             type: "literal",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.ContainerType.Literal,
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -131,5 +131,5 @@ export const ContainerType = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

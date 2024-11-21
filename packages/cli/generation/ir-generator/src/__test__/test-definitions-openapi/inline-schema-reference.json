@@ -538,7 +538,7 @@
             "docs": null
         },
         "type_:RootSchema1BarInnerBar": {
-            "inline": false,
+            "inline": true,
             "name": {
                 "name": {
                     "originalName": "RootSchema1BarInnerBar",
@@ -672,7 +672,7 @@
             "docs": null
         },
         "type_:RootSchema1Bar": {
-            "inline": false,
+            "inline": true,
             "name": {
                 "name": {
                     "originalName": "RootSchema1Bar",

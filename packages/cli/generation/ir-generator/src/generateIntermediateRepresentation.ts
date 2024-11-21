@@ -2,9 +2,11 @@ import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-ap
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    ContainerType,
     ExampleType,
     HttpEndpoint,
     IntermediateRepresentation,
+    NamedType,
     ObjectProperty,
     PathParameterLocation,
     ResponseErrors,
@@ -733,6 +735,11 @@ function filterServiceTypeReferenceInfoForAudiences(
 }
 
 type NamedObjectProperty = ObjectProperty & { valueType: TypeReference.Named };
+type OptionalNamedObjectProperty = ObjectProperty & {
+    valueType: TypeReference.Container & {
+        container: ContainerType.Optional & { optional: NamedType };
+    };
+};
 function markInlineTypes(types: Record<string, TypeDeclaration>) {
     // find types that have properties containing inline types
     const namedProps = Object.values(types).flatMap((type) => {
@@ -740,35 +747,68 @@ function markInlineTypes(types: Record<string, TypeDeclaration>) {
             return [];
         }
 
-        return Object.values(type.shape.properties).filter((prop): prop is NamedObjectProperty => {
-            switch (prop.valueType.type) {
-                case "container":
-                case "primitive":
-                case "unknown":
-                    return false;
-                case "named":
-                    return true;
-                default:
-                    assertNever(prop.valueType);
-            }
-        });
+        return Object.values(type.shape.properties)
+            .filter((prop): prop is NamedObjectProperty | OptionalNamedObjectProperty => {
+                switch (prop.valueType.type) {
+                    case "primitive":
+                        return false;
+                    case "unknown":
+                        return false;
+                    case "container":
+                        switch (prop.valueType.container.type) {
+                            case "list":
+                                break;
+                            case "literal":
+                                break;
+                            case "map":
+                                break;
+                            case "set":
+                                break;
+                            case "optional":
+                                switch (prop.valueType.container.optional.type) {
+                                    case "named":
+                                        return true;
+                                    case "primitive":
+                                        break;
+                                    case "unknown":
+                                        break;
+                                    case "container":
+                                        break;
+                                    default:
+                                        assertNever(prop.valueType.container.optional);
+                                }
+                                return false;
+                            default:
+                                assertNever(prop.valueType.container);
+                        }
+                        return false;
+                    case "named":
+                        return true;
+                    default:
+                        assertNever(prop.valueType);
+                }
+            })
+            .map((prop): NamedType => {
+                switch (prop.valueType.type) {
+                    case "named":
+                        return prop.valueType;
+                    case "container":
+                        return prop.valueType.container.optional;
+                    default:
+                        assertNever(prop.valueType);
+                }
+            });
     });
+    const inlinePropTypeIds = new Set<string>();
+    const nonInlinePropTypeIds = new Set<string>();
     // split props into inline and non-inline using reduce
-    const [inlineProps, nonInlineProps] = namedProps.reduce(
-        (splitArray, prop) => {
-            const [inline, nonInline] = splitArray;
-            if (prop.valueType.inline === true) {
-                inline.push(prop);
-            } else {
-                nonInline.push(prop);
-            }
-            return splitArray;
-        },
-        [[], []] as [NamedObjectProperty[], NamedObjectProperty[]]
-    );
-
-    const inlinePropTypeIds = new Set(inlineProps.map((prop) => prop.valueType.typeId));
-    const nonInlinePropTypeIds = new Set(nonInlineProps.map((prop) => prop.valueType.typeId));
+    namedProps.forEach((prop) => {
+        if (prop.inline === true) {
+            inlinePropTypeIds.add(prop.typeId);
+        } else {
+            nonInlinePropTypeIds.add(prop.typeId);
+        }
+    });
     for (const [typeId, type] of Object.entries(types)) {
         if (nonInlinePropTypeIds.has(typeId)) {
             type.inline = false;
