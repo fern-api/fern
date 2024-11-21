@@ -25,7 +25,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSES";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
-    
+
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
