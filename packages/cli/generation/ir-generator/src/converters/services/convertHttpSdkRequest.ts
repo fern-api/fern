@@ -62,7 +62,9 @@ function convertHttpSdkRequestShape({
         }
         return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),
-            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER)
+            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
+            includePathParameters: shouldIncludePathParametersInWrapper(request),
+            onlyPathParameters: doesRequestHaveOnlyPathParameters({ request, file, typeResolver })
         });
     };
 
@@ -134,6 +136,29 @@ export function doesRequestHaveNonBodyProperties({
     return (
         !areAllHeadersLiteral({ headers, file, typeResolver }) || size(pathParameters) > 0 || size(queryParameters) > 0
     );
+}
+
+function doesRequestHaveOnlyPathParameters({
+    request,
+    file,
+    typeResolver
+}: {
+    request: RawSchemas.HttpRequestSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): boolean {
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request;
+
+    return (
+        size(pathParameters) > 0 &&
+        areAllHeadersLiteral({ headers, file, typeResolver }) &&
+        size(queryParameters) === 0 &&
+        request.body == null
+    );
+}
+
+function shouldIncludePathParametersInWrapper(request: RawSchemas.HttpRequestSchema): boolean {
+    return typeof request !== "string" && request?.["path-parameters"] != null;
 }
 
 function areAllHeadersLiteral({

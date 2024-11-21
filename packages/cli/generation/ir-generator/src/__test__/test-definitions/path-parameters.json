@@ -1009,7 +1009,9 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            }
+                            },
+                            "includePathParameters": true,
+                            "onlyPathParameters": true
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -1735,7 +1737,9 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            }
+                            },
+                            "includePathParameters": true,
+                            "onlyPathParameters": true
                         },
                         "requestParameterName": {
                             "originalName": "request",

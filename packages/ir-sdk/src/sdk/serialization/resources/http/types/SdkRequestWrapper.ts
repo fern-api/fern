@@ -13,11 +13,15 @@ export const SdkRequestWrapper: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     wrapperName: Name,
     bodyKey: Name,
+    includePathParameters: core.serialization.boolean(),
+    onlyPathParameters: core.serialization.boolean(),
 });
 
 export declare namespace SdkRequestWrapper {
     interface Raw {
         wrapperName: Name.Raw;
         bodyKey: Name.Raw;
+        includePathParameters: boolean;
+        onlyPathParameters: boolean;
     }
 }
