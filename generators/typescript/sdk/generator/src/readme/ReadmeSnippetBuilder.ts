@@ -128,7 +128,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (explicitlyConfigured != null) {
             return explicitlyConfigured;
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)].filter(isNonNullish);
+        return [this.getSnippetForEndpointIdOrThrow(this.defaultEndpointId)];
     }
 
     private buildExceptionHandlingSnippets(): string[] {
@@ -300,6 +300,14 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
         }
         return snippets;
+    }
+
+    private getSnippetForEndpointIdOrThrow(endpointId: EndpointId): string {
+        const snippet = this.getSnippetForEndpointId(endpointId);
+        if (snippet == null) {
+            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+        }
+        return snippet;
     }
 
     private getSnippetForEndpointId(endpointId: EndpointId): string | undefined {
