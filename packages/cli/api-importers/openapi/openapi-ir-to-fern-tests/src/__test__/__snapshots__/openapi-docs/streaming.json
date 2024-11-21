@@ -40,6 +40,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -83,6 +84,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -127,6 +129,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV2Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -172,6 +175,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV2StreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -215,6 +219,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV3Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -260,6 +265,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV3StreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {

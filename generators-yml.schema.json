@@ -653,6 +653,16 @@
               "type": "null"
             }
           ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1316,6 +1326,16 @@
           ]
         },
         "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
           "oneOf": [
             {
               "type": "boolean"

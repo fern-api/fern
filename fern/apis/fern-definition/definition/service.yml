@@ -74,6 +74,7 @@ types:
       - commons.WithDocsSchema
     properties: 
       content-type: optional<string>
+      path-parameters: optional<map<string, HttpPathParameterSchema>>
       query-parameters: optional<map<string, HttpQueryParameterSchema>>
       headers: optional<map<string, HttpHeaderSchema>>
       body: optional<HttpRequestBodySchema>

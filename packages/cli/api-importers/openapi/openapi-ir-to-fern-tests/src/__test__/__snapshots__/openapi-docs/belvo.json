@@ -36577,6 +36577,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BalancesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -38801,6 +38802,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CategorizationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -40161,6 +40163,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EmploymentRecordRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -40645,6 +40648,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EyodIncomeVerificationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -41720,6 +41724,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "IncomesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -48789,6 +48794,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoicesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -52292,6 +52298,7 @@ For single links, you have to perform POST calls to an institution **every time*
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChangeAccessMode",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -53237,6 +53244,7 @@ For a list of standards codes, see the table below.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LinksRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -53468,6 +53476,7 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LinksPutRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -56967,6 +56976,7 @@ A payment intent captures all payment information (such as the amount to be char
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreatePaymentIntentPse",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -57474,6 +57484,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PatchPaymentIntentPse",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -59606,6 +59617,7 @@ docs: >
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PaymentWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -60198,6 +60210,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ReceivableTransactionRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -61590,6 +61603,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RecurringExpensesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -65420,6 +65434,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxComplianceStatusRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -66932,6 +66947,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxDeclarationsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -68233,6 +68249,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxRetentionsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -78619,6 +78636,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxStatusRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",

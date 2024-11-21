@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/organizations/{organizationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganization"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetOrganizationAsync(\"organizationId\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"userId\", new GetUsersRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user/organizations/{organizationId}/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetOrganizationUserAsync(\n    \"organizationId\",\n    \"userId\",\n    new GetOrganizationUserRequest()\n);\n"
+            }
+        }
+    ]
+}

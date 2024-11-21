@@ -36,6 +36,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostV1UsersRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {

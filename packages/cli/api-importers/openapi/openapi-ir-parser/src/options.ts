@@ -17,6 +17,8 @@ export interface ParseOpenAPIOptions {
     respectReadonlySchemas: boolean;
     /* Whether or not to only include endpoint referenced schemas */
     onlyIncludeReferencedSchemas: boolean;
+    /* Whether or not to include path parameters in the in-lined request */
+    inlinePathParameters: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -27,5 +29,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     optionalAdditionalProperties: true,
     cooerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
-    onlyIncludeReferencedSchemas: false
+    onlyIncludeReferencedSchemas: false,
+    inlinePathParameters: false
 };

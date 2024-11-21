@@ -14850,6 +14850,7 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NewJointOwnerInvitation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15121,6 +15122,7 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OverdraftProtectionPatch",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15987,6 +15989,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
                 "name": "NewTransfer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16330,6 +16333,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
                 "name": "TransferPatch",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

@@ -7750,6 +7750,8 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "unsafeName": "body",
                 },
               },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
@@ -7929,6 +7931,8 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "unsafeName": "body",
                 },
               },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
@@ -8144,6 +8148,8 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "unsafeName": "body",
                 },
               },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
@@ -10387,6 +10393,8 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "unsafeName": "body",
                 },
               },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
@@ -11044,6 +11052,8 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "unsafeName": "body",
                 },
               },
+              "includePathParameters": false,
+              "onlyPathParameters": false,
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {

@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: path-parameters
+  version: ''
+paths:
+  /user/organizations/{organizationId}:
+    get:
+      operationId: user_getOrganization
+      tags:
+        - User
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/users/{userId}:
+    get:
+      operationId: user_getUser
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/organizations/{organizationId}/users/{userId}:
+    get:
+      operationId: user_getOrganizationUser
+      tags:
+        - User
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - tags
+  securitySchemes: {}

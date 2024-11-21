@@ -1372,6 +1372,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginGoogleRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1418,6 +1419,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginNicknameRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1767,6 +1769,7 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "RunBuildRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -2678,6 +2681,7 @@ service:
                   },
                 },
                 "name": "CreateLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2755,6 +2759,7 @@ service:
                   },
                 },
                 "name": "CreateLocalLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2832,6 +2837,7 @@ service:
                   },
                 },
                 "name": "CreatePrivateLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2909,6 +2915,7 @@ service:
                   },
                 },
                 "name": "CreatePublicLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -3069,6 +3076,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SetLobbyStateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -4091,6 +4099,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRoomRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

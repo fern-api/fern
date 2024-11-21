@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Add support for the `inline-path-parameters` setting in the OpenAPI
+        importer.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc51
+
+- changelogEntry:
+    - summary: |
         Increase max recursive depth allowed for example validation.
       type: fix
   irVersion: 53
