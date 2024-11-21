@@ -1,0 +1,171 @@
+{
+  "types": {
+    "type_:RootType1": {
+      "name": "RootType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "id",
+              "value": "type_:InlineType1"
+            }
+          },
+          {
+            "key": "two",
+            "valueType": {
+              "type": "id",
+              "value": "type_:MixedInlineType1"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:RootType2": {
+      "name": "RootType2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "one",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "two",
+            "valueType": {
+              "type": "id",
+              "value": "type_:MixedInlineType1"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:InlineType1": {
+      "name": "InlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "id",
+              "value": "type_:NestedInlineType1"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:NestedInlineType1": {
+      "name": "NestedInlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:MixedInlineType1": {
+      "name": "MixedInlineType1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:RootType1",
+      "type_:RootType2",
+      "type_:InlineType1",
+      "type_:NestedInlineType1",
+      "type_:MixedInlineType1"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

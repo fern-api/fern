@@ -1015,6 +1015,16 @@
         "type": {
           "type": "string"
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {

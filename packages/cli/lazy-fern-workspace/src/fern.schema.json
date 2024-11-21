@@ -441,6 +441,16 @@
         },
         "type": {
           "type": "string"
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1434,6 +1444,16 @@
         "type": {
           "type": "string"
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1545,6 +1565,16 @@
       "properties": {
         "type": {
           "type": "string"
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "default": {
           "oneOf": [
@@ -1682,6 +1712,16 @@
       "properties": {
         "type": {
           "type": "string"
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "default": {
           "oneOf": [

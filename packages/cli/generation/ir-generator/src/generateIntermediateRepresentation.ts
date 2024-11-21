@@ -1,16 +1,19 @@
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
-import { noop, visitObject } from "@fern-api/core-utils";
+import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ExampleType,
     HttpEndpoint,
     IntermediateRepresentation,
+    ObjectProperty,
     PathParameterLocation,
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
+    TypeDeclaration,
     TypeId,
+    TypeReference,
     Webhook
 } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -492,6 +495,7 @@ export async function generateIntermediateRepresentation({
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
+    markInlineTypes(types);
 
     return {
         ...intermediateRepresentationForAudiences,
@@ -726,4 +730,50 @@ function filterServiceTypeReferenceInfoForAudiences(
         sharedTypes: serviceTypeReferenceInfo.sharedTypes.filter((typeId) => filteredIr.hasTypeId(typeId)),
         typesReferencedOnlyByService: filteredTypesReferencedOnlyByService
     };
+}
+
+type NamedObjectProperty = ObjectProperty & { valueType: TypeReference.Named };
+function markInlineTypes(types: Record<string, TypeDeclaration>) {
+    // find types that have properties containing inline types
+    const namedProps = Object.values(types).flatMap((type) => {
+        if (type.shape.type !== "object") {
+            return [];
+        }
+
+        return Object.values(type.shape.properties).filter((prop): prop is NamedObjectProperty => {
+            switch (prop.valueType.type) {
+                case "container":
+                case "primitive":
+                case "unknown":
+                    return false;
+                case "named":
+                    return true;
+                default:
+                    assertNever(prop.valueType);
+            }
+        });
+    });
+    // split props into inline and non-inline using reduce
+    const [inlineProps, nonInlineProps] = namedProps.reduce(
+        (splitArray, prop) => {
+            const [inline, nonInline] = splitArray;
+            if (prop.valueType.inline === true) {
+                inline.push(prop);
+            } else {
+                nonInline.push(prop);
+            }
+            return splitArray;
+        },
+        [[], []] as [NamedObjectProperty[], NamedObjectProperty[]]
+    );
+
+    const inlinePropTypeIds = new Set(inlineProps.map((prop) => prop.valueType.typeId));
+    const nonInlinePropTypeIds = new Set(nonInlineProps.map((prop) => prop.valueType.typeId));
+    for (const [typeId, type] of Object.entries(types)) {
+        if (nonInlinePropTypeIds.has(typeId)) {
+            type.inline = false;
+            continue;
+        }
+        type.inline = inlinePropTypeIds.has(typeId);
+    }
 }

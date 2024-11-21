@@ -6,13 +6,14 @@ import { parseTypeName } from "./parseTypeName";
 export declare namespace parseInlineType {
     export interface Args {
         type: string;
+        inline: boolean | undefined;
         file: FernFileContext;
         _default: unknown | undefined;
         validation: RawSchemas.ValidationSchema | undefined;
     }
 }
 
-export function parseInlineType({ type, file, _default, validation }: parseInlineType.Args): TypeReference {
+export function parseInlineType({ type, inline, file, _default, validation }: parseInlineType.Args): TypeReference {
     return recursivelyVisitRawTypeReference<TypeReference>({
         type,
         _default,
@@ -32,7 +33,7 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
                         file
                     }),
                     default: undefined,
-                    inline: undefined
+                    inline
                 })
         }
     });
@@ -42,9 +43,15 @@ export type TypeReferenceParser = (type: RawSchemas.TypeReferenceSchema) => Type
 
 export function createTypeReferenceParser(file: FernFileContext): TypeReferenceParser {
     return (type) => {
-        const typeAsString = typeof type === "string" ? type : type.type;
-        const _default = typeof type === "string" ? undefined : type.default;
-        const validation = typeof type === "string" ? undefined : type.validation;
-        return parseInlineType({ type: typeAsString, _default, validation, file });
+        if (typeof type === "string") {
+            return parseInlineType({ type, inline: undefined, _default: undefined, validation: undefined, file });
+        }
+        return parseInlineType({
+            type: type.type,
+            inline: undefined, // TODO: check if this is correct
+            _default: type.default,
+            validation: type.validation,
+            file
+        });
     };
 }

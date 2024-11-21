@@ -109,6 +109,7 @@ export async function visitTypeDeclaration({
                                         validation: property.validation
                                     });
                                 },
+                                inline: noop,
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,

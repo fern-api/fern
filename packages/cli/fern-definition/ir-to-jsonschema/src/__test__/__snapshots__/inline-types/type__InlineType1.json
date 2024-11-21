@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "$ref": "#/definitions/NestedInlineType1"
+    }
+  },
+  "required": [
+    "foo",
+    "bar"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NestedInlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

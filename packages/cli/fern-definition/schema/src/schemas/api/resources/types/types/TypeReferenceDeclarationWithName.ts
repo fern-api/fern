@@ -9,4 +9,5 @@ export interface TypeReferenceDeclarationWithName
         FernDefinition.WithName,
         FernDefinition.WithAudiences {
     type: string;
+    inline?: boolean;
 }

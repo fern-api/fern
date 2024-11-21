@@ -1,0 +1,33 @@
+types:
+  RootType1:
+    properties:
+      foo: string
+      bar:
+        type: InlineType1
+        inline: true
+      two:
+        type: MixedInlineType1
+
+  RootType2:
+    properties:
+      one: integer
+      two:
+        type: MixedInlineType1
+        inline: true
+
+  InlineType1:
+    properties:
+      foo: string
+      bar:
+        type: NestedInlineType1
+        inline: true
+
+  NestedInlineType1:
+    properties:
+      foo: string
+      bar: string
+
+  MixedInlineType1:
+    properties:
+      foo: string
+      bar: string

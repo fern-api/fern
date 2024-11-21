@@ -15,6 +15,7 @@ export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         type: core.serialization.string(),
+        inline: core.serialization.boolean().optional(),
     })
     .extend(BaseTypeReferenceSchema)
     .extend(WithName)
@@ -23,5 +24,6 @@ export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
 export declare namespace TypeReferenceDeclarationWithName {
     interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
         type: string;
+        inline?: boolean | null;
     }
 }

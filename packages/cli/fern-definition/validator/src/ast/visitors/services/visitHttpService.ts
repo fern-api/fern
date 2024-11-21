@@ -140,6 +140,7 @@ async function visitEndpoint({
                                         validation: queryParameter.validation
                                     });
                                 },
+                                inline: noop,
                                 "allow-multiple": noop,
                                 audiences: noop,
                                 encoding: noop,
@@ -207,6 +208,7 @@ async function visitEndpoint({
                                                     validation: property.validation
                                                 });
                                             },
+                                            inline: noop,
                                             "content-type": noop,
                                             audiences: noop,
                                             encoding: noop,
@@ -563,6 +565,7 @@ async function visitHeaders({
                         validation: header.validation
                     });
                 },
+                inline: noop,
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
                 encoding: noop,

@@ -3644,6 +3644,8 @@ func do() {
 "
 `;
 
+exports[`test definitions > inline-types 1`] = `"<none>"`;
+
 exports[`test definitions > license 1`] = `
 "package example
 
