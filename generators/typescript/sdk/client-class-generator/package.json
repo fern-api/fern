@@ -33,7 +33,8 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "ts-morph": "^15.1.0",
-    "ts-poet": "^6.7.0"
+    "ts-poet": "^6.7.0",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

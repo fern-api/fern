@@ -14,6 +14,7 @@ import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/c
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
+import urlJoin from "url-join";
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
@@ -776,7 +777,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     .getGeneratedTimeoutSdkError()
                                     .build(
                                         context,
-                                        `Timeout exception generated in endpoint ${this.endpoint.name.camelCase.unsafeName}.`
+                                        `Timeout exceeded when calling ${
+                                            this.endpoint.method
+                                        } ${this.getFullPathForEndpoint(this.endpoint)}.`
                                     )
                             )
                         ]
@@ -801,6 +804,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ])
             )
         ];
+    }
+
+    // HACK - we should ideally just define this in a single place.
+    private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+        let url = "";
+        if (endpoint.fullPath.head.length > 0) {
+            url = urlJoin(url, endpoint.fullPath.head);
+        }
+        for (const part of endpoint.fullPath.parts) {
+            url = urlJoin(url, "{" + part.pathParameter + "}");
+            if (part.tail.length > 0) {
+                url = urlJoin(url, part.tail);
+            }
+        }
+        return url.startsWith("/") ? url : `/${url}`;
     }
 
     private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
