@@ -10717,7 +10717,8 @@
                 "groupName": [],
                 "type": "nullable"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             },
             {
               "conflict": {},
@@ -10989,7 +10990,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             },
             {
               "conflict": {},
@@ -11120,7 +11122,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -11368,7 +11371,8 @@
               "groupName": [],
               "type": "nullable"
             },
-            "audiences": []
+            "audiences": [],
+            "inline": true
           },
           {
             "conflict": {},
@@ -11815,7 +11819,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             },
             {
               "conflict": {},

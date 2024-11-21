@@ -1004,7 +1004,10 @@
                   "pattern": "^[a-z0-9-]+$",
                 },
               },
-              "authConfiguration": "AppConfigAuthConfiguration",
+              "authConfiguration": {
+                "inline": true,
+                "type": "AppConfigAuthConfiguration",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -1014,7 +1017,10 @@
             "docs": undefined,
             "properties": {
               "anonymous": "optional<RecordStringNever>",
-              "google": "optional<AppConfigAuthConfigurationGoogle>",
+              "google": {
+                "inline": true,
+                "type": "optional<AppConfigAuthConfigurationGoogle>",
+              },
               "nickname": "optional<RecordStringNever>",
             },
             "source": {
@@ -1037,7 +1043,10 @@
               "appId": "string",
               "appName": "string",
               "appSecret": "string",
-              "authConfiguration": "ApplicationAuthConfiguration",
+              "authConfiguration": {
+                "inline": true,
+                "type": "ApplicationAuthConfiguration",
+              },
               "createdAt": "datetime",
               "createdBy": "string",
               "deletedAt": "optional<datetime>",
@@ -1052,7 +1061,10 @@
             "docs": undefined,
             "properties": {
               "anonymous": "optional<RecordStringNever>",
-              "google": "optional<ApplicationAuthConfigurationGoogle>",
+              "google": {
+                "inline": true,
+                "type": "optional<ApplicationAuthConfigurationGoogle>",
+              },
               "nickname": "optional<RecordStringNever>",
             },
             "source": {
@@ -1944,7 +1956,9 @@ types:
       openapi: ../openapi.json
   ApplicationAuthConfiguration:
     properties:
-      google: optional<ApplicationAuthConfigurationGoogle>
+      google:
+        type: optional<ApplicationAuthConfigurationGoogle>
+        inline: true
       nickname: optional<RecordStringNever>
       anonymous: optional<RecordStringNever>
     source:
@@ -1956,7 +1970,9 @@ types:
       createdAt: datetime
       createdBy: string
       orgId: OrgId
-      authConfiguration: ApplicationAuthConfiguration
+      authConfiguration:
+        type: ApplicationAuthConfiguration
+        inline: true
       appSecret: string
       appId: string
       appName: string
@@ -2038,14 +2054,18 @@ types:
       openapi: ../openapi.json
   AppConfigAuthConfiguration:
     properties:
-      google: optional<AppConfigAuthConfigurationGoogle>
+      google:
+        type: optional<AppConfigAuthConfigurationGoogle>
+        inline: true
       nickname: optional<RecordStringNever>
       anonymous: optional<RecordStringNever>
     source:
       openapi: ../openapi.json
   AppConfig:
     properties:
-      authConfiguration: AppConfigAuthConfiguration
+      authConfiguration:
+        type: AppConfigAuthConfiguration
+        inline: true
       appName:
         type: string
         validation:

@@ -7,7 +7,7 @@ paths:
     get:
       summary: Get Example
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -16,6 +16,16 @@ paths:
                   - $ref: "#/components/responses/NotFound/content/application~1json/schema"
                   - $ref: "#/components/schemas/Schema1"
                   - $ref: "#/components/schemas/Schema2"
+  /root:
+    get:
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RootSchema1"
+
 components:
   responses:
     NotFound:
@@ -42,3 +52,21 @@ components:
           type: string
         age:
           type: integer
+
+    RootSchema1:
+      type: object
+      properties:
+        foo:
+          type: string
+        bar:
+          type: object
+          properties:
+            foo:
+              type: string
+            inner_bar:
+              type: object
+              properties:
+                foo:
+                  type: string
+                bar:
+                  type: string

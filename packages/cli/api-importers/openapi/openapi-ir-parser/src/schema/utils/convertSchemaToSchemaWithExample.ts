@@ -319,6 +319,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,
         availability: objectProperty.availability,
-        readonly: objectProperty.readonly
+        readonly: objectProperty.readonly,
+        inline: objectProperty.inline
     };
 }

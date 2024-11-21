@@ -56,7 +56,10 @@
             "docs": undefined,
             "properties": {
               "age": "optional<integer>",
-              "location": "optional<SearchRequestFilterLocation>",
+              "location": {
+                "inline": true,
+                "type": "optional<SearchRequestFilterLocation>",
+              },
               "name": "optional<string>",
             },
             "source": {
@@ -67,7 +70,10 @@
             "docs": undefined,
             "properties": {
               "city": "optional<string>",
-              "coordinates": "optional<SearchRequestFilterLocationCoordinates>",
+              "coordinates": {
+                "inline": true,
+                "type": "optional<SearchRequestFilterLocationCoordinates>",
+              },
               "country": "optional<string>",
             },
             "source": {
@@ -115,14 +121,18 @@
     properties:
       city: optional<string>
       country: optional<string>
-      coordinates: optional<SearchRequestFilterLocationCoordinates>
+      coordinates:
+        type: optional<SearchRequestFilterLocationCoordinates>
+        inline: true
     source:
       openapi: ../openapi.yml
   SearchRequestFilter:
     properties:
       name: optional<string>
       age: optional<integer>
-      location: optional<SearchRequestFilterLocation>
+      location:
+        type: optional<SearchRequestFilterLocation>
+        inline: true
     source:
       openapi: ../openapi.yml
   SearchRequestSort:

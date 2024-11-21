@@ -2767,6 +2767,7 @@
               },
               "performed_by": {
                 "docs": "Details about the Admin involved in the activity.",
+                "inline": true,
                 "type": "optional<ActivityLogPerformedBy>",
               },
             },
@@ -2976,6 +2977,7 @@
               },
               "avatar": {
                 "docs": "This object represents the avatar associated with the admin.",
+                "inline": true,
                 "type": "optional<AdminWithAppAvatar>",
               },
               "away_mode_enabled": {
@@ -4741,6 +4743,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               },
               "pages": {
                 "docs": "Pagination",
+                "inline": true,
                 "type": "optional<DataEventListPages>",
               },
               "type": {
@@ -6557,9 +6560,11 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "type": "optional<string>",
               },
               "avatar": {
+                "inline": true,
                 "type": "optional<VisitorAvatar>",
               },
               "companies": {
+                "inline": true,
                 "type": "optional<VisitorCompanies>",
               },
               "created_at": {
@@ -6597,6 +6602,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "type": "optional<integer>",
               },
               "location_data": {
+                "inline": true,
                 "type": "optional<VisitorLocationData>",
               },
               "marked_email_as_spam": {
@@ -6628,6 +6634,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "type": "optional<integer>",
               },
               "segments": {
+                "inline": true,
                 "type": "optional<VisitorSegments>",
               },
               "session_count": {
@@ -6639,9 +6646,11 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "type": "optional<integer>",
               },
               "social_profiles": {
+                "inline": true,
                 "type": "optional<VisitorSocialProfiles>",
               },
               "tags": {
+                "inline": true,
                 "type": "optional<VisitorTags>",
               },
               "type": {
@@ -8318,6 +8327,7 @@ types:
       performed_by:
         type: optional<ActivityLogPerformedBy>
         docs: Details about the Admin involved in the activity.
+        inline: true
       metadata:
         type: optional<ActivityLogMetadata>
       created_at:
@@ -8564,6 +8574,7 @@ types:
       avatar:
         type: optional<AdminWithAppAvatar>
         docs: This object represents the avatar associated with the admin.
+        inline: true
       email_verified:
         type: optional<boolean>
         docs: Identifies if this admin's email is verified.
@@ -9841,6 +9852,7 @@ types:
       pages:
         type: optional<DataEventListPages>
         docs: Pagination
+        inline: true
     source:
       openapi: ../openapi.yml
   DataEventSummary:
@@ -11297,13 +11309,16 @@ types:
         docs: The pseudonym of the visitor.
       avatar:
         type: optional<VisitorAvatar>
+        inline: true
       app_id:
         type: optional<string>
         docs: The id of the app the visitor is associated with.
       companies:
         type: optional<VisitorCompanies>
+        inline: true
       location_data:
         type: optional<VisitorLocationData>
+        inline: true
       las_request_at:
         type: optional<integer>
         docs: The time the Lead last recorded making a request.
@@ -11324,6 +11339,7 @@ types:
         docs: The number of sessions the Visitor has had.
       social_profiles:
         type: optional<VisitorSocialProfiles>
+        inline: true
       owner_id:
         type: optional<string>
         docs: The id of the admin that owns the Visitor.
@@ -11338,8 +11354,10 @@ types:
         docs: Identifies if this visitor has had a hard bounce.
       tags:
         type: optional<VisitorTags>
+        inline: true
       segments:
         type: optional<VisitorSegments>
+        inline: true
       custom_attributes:
         type: optional<map<string, string>>
         docs: The custom attributes you have set on the Visitor.
@@ -15056,6 +15074,7 @@ imports:
             "properties": {
               "data": {
                 "docs": "An object containing the results of the search.",
+                "inline": true,
                 "type": "optional<ArticleSearchResponseData>",
               },
               "pages": {
@@ -17611,6 +17630,7 @@ types:
       data:
         type: optional<ArticleSearchResponseData>
         docs: An object containing the results of the search.
+        inline: true
       pages:
         type: optional<root.CursorPages>
     source:
@@ -18766,6 +18786,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                 "type": "optional<string>",
               },
               "plan": {
+                "inline": true,
                 "type": "optional<CompanyPlan>",
               },
               "remote_created_at": {
@@ -18774,6 +18795,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
               "segments": {
                 "docs": "The list of segments associated with the company",
+                "inline": true,
                 "type": "optional<CompanySegments>",
               },
               "session_count": {
@@ -18786,6 +18808,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
               "tags": {
                 "docs": "The list of tags associated with the company",
+                "inline": true,
                 "type": "optional<CompanyTags>",
               },
               "type": {
@@ -19745,6 +19768,7 @@ types:
           to.
       plan:
         type: optional<CompanyPlan>
+        inline: true
       company_id:
         type: optional<string>
         docs: The company id you have defined for the company.
@@ -19784,9 +19808,11 @@ types:
       tags:
         type: optional<CompanyTags>
         docs: The list of tags associated with the company
+        inline: true
       segments:
         type: optional<CompanySegments>
         docs: The list of segments associated with the company
+        inline: true
     source:
       openapi: ../openapi.yml
 ",
@@ -21120,6 +21146,7 @@ The data property will show a combined list of:
                 "type": "optional<string>",
               },
               "avatar": {
+                "inline": true,
                 "type": "optional<ContactAvatar>",
               },
               "browser": {
@@ -22573,6 +22600,7 @@ types:
         docs: The custom attributes which are set for the contact.
       avatar:
         type: optional<ContactAvatar>
+        inline: true
       tags:
         type: optional<root.ContactTags>
       notes:
@@ -39950,6 +39978,7 @@ types:
               },
               "contact": {
                 "docs": "Represents the contact that the note was created about.",
+                "inline": true,
                 "type": "optional<NoteContact>",
               },
               "created_at": {
@@ -40286,6 +40315,7 @@ types:
       contact:
         type: optional<NoteContact>
         docs: Represents the contact that the note was created about.
+        inline: true
       author:
         type: optional<admins.Admin>
         docs: Optional. Represents the Admin that created the note.

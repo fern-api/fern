@@ -3764,7 +3764,8 @@
               },
               "type": "object"
             },
-            "audiences": []
+            "audiences": [],
+            "inline": true
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4296,7 +4297,8 @@
                         },
                         "type": "object"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "inline": true
                     }
                   ],
                   "allOfPropertyConflicts": [],

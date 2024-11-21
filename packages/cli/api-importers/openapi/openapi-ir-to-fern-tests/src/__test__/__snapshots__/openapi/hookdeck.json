@@ -82,7 +82,10 @@
                 "docs": "Error code",
                 "type": "string",
               },
-              "data": "optional<ApiErrorResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ApiErrorResponseData>",
+              },
               "message": {
                 "docs": "Error description",
                 "type": "string",
@@ -795,6 +798,7 @@
               },
               "body": {
                 "docs": "Response body from the destination",
+                "inline": true,
                 "type": "optional<EventAttemptBody>",
               },
               "bulk_retry_id": {
@@ -2636,7 +2640,9 @@ types:
       message:
         type: string
         docs: Error description
-      data: optional<ApiErrorResponseData>
+      data:
+        type: optional<ApiErrorResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   DeletedIssueTriggerResponse:
@@ -2725,6 +2731,7 @@ types:
       body:
         type: optional<EventAttemptBody>
         docs: Response body from the destination
+        inline: true
       requested_url:
         type: optional<string>
         docs: URL of the destination where delivery was attempted

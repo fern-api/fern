@@ -388,6 +388,7 @@
               "image": "optional<SchemasImageInfo>",
               "mime": {
                 "docs": "MIME type.",
+                "inline": true,
                 "type": "optional<ContentInfoMime>",
               },
               "video": "optional<VideoInfo>",
@@ -713,6 +714,7 @@ that are tool old (or that have not been created at all).
               "datetime_stored": {
                 "availability": "deprecated",
                 "docs": "ISO-8601 date and time when the group was marked as stored.",
+                "inline": undefined,
                 "type": "optional<datetime>",
               },
               "files": {
@@ -770,6 +772,7 @@ that are tool old (or that have not been created at all).
               },
               "geo_location": {
                 "docs": "Geo-location of image from EXIF.",
+                "inline": true,
                 "type": "optional<ImageInfoGeoLocation>",
               },
               "height": {
@@ -840,6 +843,7 @@ that are tool old (or that have not been created at all).
             "properties": {
               "audio": {
                 "docs": "Audio stream's metadata.",
+                "inline": true,
                 "type": "optional<LegacyVideoInfoAudio>",
               },
               "bitrate": {
@@ -856,6 +860,7 @@ that are tool old (or that have not been created at all).
               },
               "video": {
                 "docs": "Video stream's metadata.",
+                "inline": true,
                 "type": "optional<LegacyVideoInfoVideo>",
               },
             },
@@ -1010,6 +1015,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               },
               "geo_location": {
                 "docs": "Geo-location of image from EXIF.",
+                "inline": true,
                 "type": "optional<SchemasImageInfoGeoLocation>",
               },
               "height": {
@@ -1706,6 +1712,7 @@ change the value to `auto`.
       geo_location:
         type: optional<ImageInfoGeoLocation>
         docs: Geo-location of image from EXIF.
+        inline: true
       datetime_original:
         type: optional<datetime>
         docs: >-
@@ -1768,9 +1775,11 @@ change the value to `auto`.
       audio:
         type: optional<LegacyVideoInfoAudio>
         docs: Audio stream's metadata.
+        inline: true
       video:
         type: optional<LegacyVideoInfoVideo>
         docs: Video stream's metadata.
+        inline: true
     source:
       openapi: ../openapi.json
   SchemasImageInfoColorMode:
@@ -1827,6 +1836,7 @@ change the value to `auto`.
       geo_location:
         type: optional<SchemasImageInfoGeoLocation>
         docs: Geo-location of image from EXIF.
+        inline: true
       datetime_original:
         type: optional<datetime>
         docs: >-
@@ -1910,6 +1920,7 @@ change the value to `auto`.
       mime:
         type: optional<ContentInfoMime>
         docs: MIME type.
+        inline: true
       image: optional<SchemasImageInfo>
       video: optional<VideoInfo>
     source:

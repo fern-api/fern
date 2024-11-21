@@ -15,4 +15,5 @@ export interface ObjectProperty extends FernOpenapiIr.WithAvailability {
     /** An optional name override populated via `x-fern-property-name`. */
     nameOverride: string | undefined;
     audiences: string[];
+    inline: boolean | undefined;
 }

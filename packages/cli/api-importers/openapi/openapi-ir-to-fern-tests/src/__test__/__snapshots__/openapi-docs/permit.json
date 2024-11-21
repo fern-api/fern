@@ -3749,6 +3749,7 @@ The actions represents the ways you can interact with a protected resource.",
               },
               "roles": {
                 "availability": "deprecated",
+                "inline": undefined,
                 "type": "optional<list<UserRole>>",
               },
             },

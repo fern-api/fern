@@ -5553,6 +5553,7 @@
               "canAccessApi": {
                 "availability": "deprecated",
                 "docs": "Indicates if the user can access the api.",
+                "inline": undefined,
                 "type": "boolean",
               },
               "canAccessContent": {
@@ -5772,6 +5773,7 @@
               "isImage": {
                 "availability": "deprecated",
                 "docs": "Determines of the created file is an image.",
+                "inline": undefined,
                 "type": "boolean",
               },
               "isProtected": {
@@ -5805,11 +5807,13 @@
               "pixelHeight": {
                 "availability": "deprecated",
                 "docs": "The height of the image in pixels if the asset is an image.",
+                "inline": undefined,
                 "type": "optional<integer>",
               },
               "pixelWidth": {
                 "availability": "deprecated",
                 "docs": "The width of the image in pixels if the asset is an image.",
+                "inline": undefined,
                 "type": "optional<integer>",
               },
               "slug": {
@@ -6061,6 +6065,7 @@
               "mustBeImage": {
                 "availability": "deprecated",
                 "docs": "True to resolve first image in the content list.",
+                "inline": undefined,
                 "type": "boolean",
               },
               "previewFormat": {
@@ -6078,6 +6083,7 @@
               "resolveImage": {
                 "availability": "deprecated",
                 "docs": "True to resolve first image in the content list.",
+                "inline": undefined,
                 "type": "boolean",
               },
             },
@@ -6233,6 +6239,7 @@
               "contentId": {
                 "availability": "deprecated",
                 "docs": "The ID of the entity that has been handled successfully or not.",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "error": {
@@ -8343,6 +8350,7 @@
               "lastExecuted": {
                 "availability": "deprecated",
                 "docs": "The date and time when the rule was executed the last time.",
+                "inline": undefined,
                 "type": "optional<datetime>",
               },
               "lastModified": {
@@ -8696,6 +8704,7 @@
               "isSingleton": {
                 "availability": "deprecated",
                 "docs": "Indicates if the schema is a singleton.",
+                "inline": undefined,
                 "type": "boolean",
               },
               "lastModified": {

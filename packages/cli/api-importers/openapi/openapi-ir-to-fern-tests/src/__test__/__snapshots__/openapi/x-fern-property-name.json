@@ -10,6 +10,7 @@
             "docs": undefined,
             "properties": {
               "id": {
+                "inline": undefined,
                 "name": "renamed_id",
                 "type": "optional<string>",
                 "validation": {

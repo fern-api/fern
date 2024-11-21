@@ -941,7 +941,10 @@ service:
           "StartIgnitionResponse": {
             "docs": "",
             "properties": {
-              "data": "StartIgnitionResponseData",
+              "data": {
+                "inline": true,
+                "type": "StartIgnitionResponseData",
+              },
               "success": {
                 "type": "root.Success",
               },
@@ -986,7 +989,9 @@ types:
     properties:
       success:
         type: root.Success
-      data: StartIgnitionResponseData
+      data:
+        type: StartIgnitionResponseData
+        inline: true
     source:
       openapi: ../openapi.yml
 service:
@@ -1356,7 +1361,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "ExchangeTokenResponse": {
             "docs": "",
             "properties": {
-              "data": "ExchangeTokenResponseData",
+              "data": {
+                "inline": true,
+                "type": "ExchangeTokenResponseData",
+              },
               "success": {
                 "type": "root.Success",
               },
@@ -1413,7 +1421,9 @@ types:
     properties:
       success:
         type: root.Success
-      data: ExchangeTokenResponseData
+      data:
+        type: ExchangeTokenResponseData
+        inline: true
     source:
       openapi: ../openapi.yml
 service:

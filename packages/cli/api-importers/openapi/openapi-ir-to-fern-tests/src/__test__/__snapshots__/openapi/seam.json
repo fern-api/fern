@@ -300,7 +300,10 @@
                 },
               },
               "starts_at": "optional<string>",
-              "visionline_metadata": "optional<AcsCredentialVisionlineMetadata>",
+              "visionline_metadata": {
+                "inline": true,
+                "type": "optional<AcsCredentialVisionlineMetadata>",
+              },
               "warnings": "list<AcsCredentialWarningsItem>",
               "workspace_id": {
                 "type": "string",
@@ -494,8 +497,14 @@
               "created_at": "datetime",
               "display_name": "string",
               "errors": "list<AcsEntranceErrorsItem>",
-              "latch_metadata": "optional<AcsEntranceLatchMetadata>",
-              "visionline_metadata": "optional<AcsEntranceVisionlineMetadata>",
+              "latch_metadata": {
+                "inline": true,
+                "type": "optional<AcsEntranceLatchMetadata>",
+              },
+              "visionline_metadata": {
+                "inline": true,
+                "type": "optional<AcsEntranceVisionlineMetadata>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -706,7 +715,10 @@
           "AcsUser": {
             "docs": undefined,
             "properties": {
-              "access_schedule": "optional<AcsUserAccessSchedule>",
+              "access_schedule": {
+                "inline": true,
+                "type": "optional<AcsUserAccessSchedule>",
+              },
               "acs_system_id": {
                 "type": "string",
                 "validation": {
@@ -950,7 +962,10 @@
                 },
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
-              "error": "ActionAttemptActionAttemptIdError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptActionAttemptIdError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -987,7 +1002,10 @@
                 },
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
-              "error": "ActionAttemptEightError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptEightError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1051,7 +1069,10 @@
                 },
               },
               "action_type": "literal<"SET_COOL">",
-              "error": "ActionAttemptElevenError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptElevenError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1115,7 +1136,10 @@
                 },
               },
               "action_type": "literal<"UNLOCK_DOOR">",
-              "error": "ActionAttemptFiveError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptFiveError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1179,7 +1203,10 @@
                 },
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
-              "error": "ActionAttemptFortyOneError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptFortyOneError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1271,7 +1298,10 @@
               },
               "action_type": "literal<"UNLOCK_DOOR">",
               "error": "optional<string>",
-              "result": "ActionAttemptFourResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptFourResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1304,7 +1334,10 @@
                 },
               },
               "action_type": "literal<"SET_HEAT">",
-              "error": "ActionAttemptFourteenError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptFourteenError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1369,7 +1402,10 @@
               },
               "action_type": "literal<"SET_FAN_MODE">",
               "error": "optional<string>",
-              "result": "ActionAttemptNineteenResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptNineteenResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1403,7 +1439,10 @@
               },
               "action_type": "literal<"LOCK_DOOR">",
               "error": "optional<string>",
-              "result": "ActionAttemptOneResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptOneResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1437,7 +1476,10 @@
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
               "error": "optional<string>",
-              "result": "ActionAttemptSevenResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptSevenResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1470,7 +1512,10 @@
                 },
               },
               "action_type": "literal<"SET_HEAT_COOL">",
-              "error": "ActionAttemptSeventeenError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptSeventeenError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1535,7 +1580,10 @@
               },
               "action_type": "literal<"SET_HEAT_COOL">",
               "error": "optional<string>",
-              "result": "ActionAttemptSixteenResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptSixteenResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1569,7 +1617,10 @@
               },
               "action_type": "literal<"SET_COOL">",
               "error": "optional<string>",
-              "result": "ActionAttemptTenResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptTenResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1603,7 +1654,10 @@
               },
               "action_type": "literal<"SET_HEAT">",
               "error": "optional<string>",
-              "result": "ActionAttemptThirteenResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptThirteenResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -1663,7 +1717,10 @@
                 },
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
-              "error": "ActionAttemptThirtyEightError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptThirtyEightError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1700,7 +1757,10 @@
                 },
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
-              "error": "ActionAttemptThirtyFiveError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptThirtyFiveError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1899,7 +1959,10 @@
                 },
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
-              "error": "ActionAttemptThirtyTwoError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptThirtyTwoError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1990,7 +2053,10 @@
                 },
               },
               "action_type": "literal<"SET_FAN_MODE">",
-              "error": "ActionAttemptTwentyError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptTwentyError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2108,7 +2174,10 @@
                 },
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
-              "error": "ActionAttemptTwentyNineError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptTwentyNineError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2199,7 +2268,10 @@
                 },
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
-              "error": "ActionAttemptTwentySixError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptTwentySixError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2236,7 +2308,10 @@
                 },
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
-              "error": "ActionAttemptTwentyThreeError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptTwentyThreeError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2274,7 +2349,10 @@
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
               "error": "optional<string>",
-              "result": "ActionAttemptTwentyTwoResult",
+              "result": {
+                "inline": true,
+                "type": "ActionAttemptTwentyTwoResult",
+              },
               "status": "literal<"success">",
             },
             "source": {
@@ -2307,7 +2385,10 @@
                 },
               },
               "action_type": "literal<"LOCK_DOOR">",
-              "error": "ActionAttemptTwoError",
+              "error": {
+                "inline": true,
+                "type": "ActionAttemptTwoError",
+              },
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2575,7 +2656,10 @@
               "created_at": "optional<datetime>",
               "custom_metadata": "map<string, ConnectedAccountCustomMetadataValue>",
               "errors": "optional<unknown>",
-              "user_identifier": "optional<ConnectedAccountUserIdentifier>",
+              "user_identifier": {
+                "inline": true,
+                "type": "optional<ConnectedAccountUserIdentifier>",
+              },
               "warnings": "optional<unknown>",
             },
             "source": {
@@ -2664,6 +2748,7 @@
               },
               "location": {
                 "docs": "Location information for the device.",
+                "inline": true,
                 "type": "optional<DeviceLocation>",
               },
               "nickname": {
@@ -2791,14 +2876,28 @@
               "_experimental_supported_code_from_access_codes_lengths": "optional<list<double>>",
               "accessory_keypad": {
                 "docs": "Represents the accessory keypad state.",
+                "inline": true,
                 "type": "optional<DevicePropertiesAccessoryKeypad>",
               },
-              "appearance": "DevicePropertiesAppearance",
-              "assa_abloy_credential_service_metadata": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
-              "august_metadata": "optional<DevicePropertiesAugustMetadata>",
-              "avigilon_alta_metadata": "optional<DevicePropertiesAvigilonAltaMetadata>",
+              "appearance": {
+                "inline": true,
+                "type": "DevicePropertiesAppearance",
+              },
+              "assa_abloy_credential_service_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
+              },
+              "august_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesAugustMetadata>",
+              },
+              "avigilon_alta_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesAvigilonAltaMetadata>",
+              },
               "battery": {
                 "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
+                "inline": true,
                 "type": "optional<DevicePropertiesBattery>",
               },
               "battery_level": {
@@ -2812,27 +2911,57 @@
                   "multipleOf": undefined,
                 },
               },
-              "brivo_metadata": "optional<DevicePropertiesBrivoMetadata>",
+              "brivo_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesBrivoMetadata>",
+              },
               "code_constraints": "optional<list<DevicePropertiesCodeConstraintsItem>>",
-              "controlbyweb_metadata": "optional<DevicePropertiesControlbywebMetadata>",
+              "controlbyweb_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesControlbywebMetadata>",
+              },
               "currently_triggering_noise_threshold_ids": {
                 "docs": "Array of noise threshold IDs that are currently triggering.",
                 "type": "optional<list<string>>",
               },
               "door_open": "optional<boolean>",
-              "dormakaba_oracode_metadata": "optional<DevicePropertiesDormakabaOracodeMetadata>",
-              "ecobee_metadata": "optional<DevicePropertiesEcobeeMetadata>",
-              "four_suites_metadata": "optional<DevicePropertiesFourSuitesMetadata>",
-              "genie_metadata": "optional<DevicePropertiesGenieMetadata>",
+              "dormakaba_oracode_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesDormakabaOracodeMetadata>",
+              },
+              "ecobee_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesEcobeeMetadata>",
+              },
+              "four_suites_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesFourSuitesMetadata>",
+              },
+              "genie_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesGenieMetadata>",
+              },
               "has_direct_power": {
                 "docs": "Indicates whether the device has direct power.",
                 "type": "optional<boolean>",
               },
               "has_native_entry_events": "optional<boolean>",
-              "honeywell_resideo_metadata": "optional<DevicePropertiesHoneywellResideoMetadata>",
-              "hubitat_metadata": "optional<DevicePropertiesHubitatMetadata>",
-              "igloo_metadata": "optional<DevicePropertiesIglooMetadata>",
-              "igloohome_metadata": "optional<DevicePropertiesIgloohomeMetadata>",
+              "honeywell_resideo_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesHoneywellResideoMetadata>",
+              },
+              "hubitat_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesHubitatMetadata>",
+              },
+              "igloo_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesIglooMetadata>",
+              },
+              "igloohome_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesIgloohomeMetadata>",
+              },
               "image_alt_text": {
                 "docs": "Alt text for the device image.",
                 "type": "optional<string>",
@@ -2847,17 +2976,32 @@
                   "pattern": undefined,
                 },
               },
-              "keypad_battery": "optional<DevicePropertiesKeypadBattery>",
-              "kwikset_metadata": "optional<DevicePropertiesKwiksetMetadata>",
+              "keypad_battery": {
+                "inline": true,
+                "type": "optional<DevicePropertiesKeypadBattery>",
+              },
+              "kwikset_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesKwiksetMetadata>",
+              },
               "locked": "optional<boolean>",
-              "lockly_metadata": "optional<DevicePropertiesLocklyMetadata>",
+              "lockly_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesLocklyMetadata>",
+              },
               "manufacturer": {
                 "docs": "Manufacturer of the device.",
                 "type": "optional<string>",
               },
               "max_active_codes_supported": "optional<double>",
-              "minut_metadata": "optional<DevicePropertiesMinutMetadata>",
-              "model": "DevicePropertiesModel",
+              "minut_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesMinutMetadata>",
+              },
+              "model": {
+                "inline": true,
+                "type": "DevicePropertiesModel",
+              },
               "name": {
                 "docs": "
       ---
@@ -2867,13 +3011,22 @@
       ",
                 "type": "string",
               },
-              "nest_metadata": "optional<DevicePropertiesNestMetadata>",
+              "nest_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesNestMetadata>",
+              },
               "noise_level_decibels": {
                 "docs": "Indicates current noise level in decibels, if the device supports noise detection.",
                 "type": "optional<double>",
               },
-              "noiseaware_metadata": "optional<DevicePropertiesNoiseawareMetadata>",
-              "nuki_metadata": "optional<DevicePropertiesNukiMetadata>",
+              "noiseaware_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesNoiseawareMetadata>",
+              },
+              "nuki_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesNukiMetadata>",
+              },
               "offline_access_codes_enabled": {
                 "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
                 "type": "optional<boolean>",
@@ -2886,14 +3039,26 @@
                 "docs": "Indicates whether it is currently possible to use online access codes for the device.",
                 "type": "optional<boolean>",
               },
-              "salto_metadata": "optional<DevicePropertiesSaltoMetadata>",
-              "schlage_metadata": "optional<DevicePropertiesSchlageMetadata>",
-              "seam_bridge_metadata": "optional<DevicePropertiesSeamBridgeMetadata>",
+              "salto_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesSaltoMetadata>",
+              },
+              "schlage_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesSchlageMetadata>",
+              },
+              "seam_bridge_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesSeamBridgeMetadata>",
+              },
               "serial_number": {
                 "docs": "Serial number of the device.",
                 "type": "optional<string>",
               },
-              "smartthings_metadata": "optional<DevicePropertiesSmartthingsMetadata>",
+              "smartthings_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesSmartthingsMetadata>",
+              },
               "supported_code_lengths": "optional<list<double>>",
               "supports_accessory_keypad": {
                 "docs": "
@@ -2912,10 +3077,22 @@
       ",
                 "type": "optional<boolean>",
               },
-              "tedee_metadata": "optional<DevicePropertiesTedeeMetadata>",
-              "ttlock_metadata": "optional<DevicePropertiesTtlockMetadata>",
-              "two_n_metadata": "optional<DevicePropertiesTwoNMetadata>",
-              "wyze_metadata": "optional<DevicePropertiesWyzeMetadata>",
+              "tedee_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesTedeeMetadata>",
+              },
+              "ttlock_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesTtlockMetadata>",
+              },
+              "two_n_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesTwoNMetadata>",
+              },
+              "wyze_metadata": {
+                "inline": true,
+                "type": "optional<DevicePropertiesWyzeMetadata>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -2926,6 +3103,7 @@
             "properties": {
               "battery": {
                 "docs": "Indicates if the keypad battery properties.",
+                "inline": true,
                 "type": "optional<DevicePropertiesAccessoryKeypadBattery>",
               },
               "is_connected": {
@@ -3278,7 +3456,10 @@
             "properties": {
               "device_id": "string",
               "device_name": "string",
-              "latest_sensor_values": "DevicePropertiesMinutMetadataLatestSensorValues",
+              "latest_sensor_values": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValues",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -3287,11 +3468,26 @@
           "DevicePropertiesMinutMetadataLatestSensorValues": {
             "docs": undefined,
             "properties": {
-              "accelerometer_z": "DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ",
-              "humidity": "DevicePropertiesMinutMetadataLatestSensorValuesHumidity",
-              "pressure": "DevicePropertiesMinutMetadataLatestSensorValuesPressure",
-              "sound": "DevicePropertiesMinutMetadataLatestSensorValuesSound",
-              "temperature": "DevicePropertiesMinutMetadataLatestSensorValuesTemperature",
+              "accelerometer_z": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ",
+              },
+              "humidity": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValuesHumidity",
+              },
+              "pressure": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValuesPressure",
+              },
+              "sound": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValuesSound",
+              },
+              "temperature": {
+                "inline": true,
+                "type": "DevicePropertiesMinutMetadataLatestSensorValuesTemperature",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -3861,13 +4057,17 @@
               },
               "location": {
                 "docs": "Location information for the device.",
+                "inline": true,
                 "type": "optional<PhoneLocation>",
               },
               "nickname": {
                 "docs": "Optional nickname to describe the device, settable through Seam",
                 "type": "optional<string>",
               },
-              "properties": "PhoneProperties",
+              "properties": {
+                "inline": true,
+                "type": "PhoneProperties",
+              },
               "warnings": {
                 "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
                 "type": "list<PhoneWarningsItem>",
@@ -3950,7 +4150,10 @@
           "PhoneProperties": {
             "docs": undefined,
             "properties": {
-              "assa_abloy_credential_service_metadata": "optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>",
+              "assa_abloy_credential_service_metadata": {
+                "inline": true,
+                "type": "optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -4120,7 +4323,10 @@
                 "type": "list<UnmanagedDeviceErrorsItem>",
               },
               "is_managed": "boolean",
-              "properties": "UnmanagedDeviceProperties",
+              "properties": {
+                "inline": true,
+                "type": "UnmanagedDeviceProperties",
+              },
               "warnings": {
                 "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
                 "type": "list<UnmanagedDeviceWarningsItem>",
@@ -4209,10 +4415,12 @@
             "properties": {
               "accessory_keypad": {
                 "docs": "Represents the accessory keypad state.",
+                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesAccessoryKeypad>",
               },
               "battery": {
                 "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
+                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesBattery>",
               },
               "battery_level": {
@@ -4244,7 +4452,10 @@
                 "docs": "Manufacturer of the device.",
                 "type": "optional<string>",
               },
-              "model": "UnmanagedDevicePropertiesModel",
+              "model": {
+                "inline": true,
+                "type": "UnmanagedDevicePropertiesModel",
+              },
               "name": {
                 "docs": "
       ---
@@ -4276,6 +4487,7 @@
             "properties": {
               "battery": {
                 "docs": "Indicates if the keypad battery properties.",
+                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>",
               },
               "is_connected": {
@@ -4710,7 +4922,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"LOCK_DOOR">
-      result: ActionAttemptOneResult
+      result:
+        type: ActionAttemptOneResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwoError:
@@ -4736,7 +4950,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"LOCK_DOOR">
-      error: ActionAttemptTwoError
+      error:
+        type: ActionAttemptTwoError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptThree:
@@ -4780,7 +4996,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"UNLOCK_DOOR">
-      result: ActionAttemptFourResult
+      result:
+        type: ActionAttemptFourResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptFiveError:
@@ -4806,7 +5024,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UNLOCK_DOOR">
-      error: ActionAttemptFiveError
+      error:
+        type: ActionAttemptFiveError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptSix:
@@ -4850,7 +5070,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
-      result: ActionAttemptSevenResult
+      result:
+        type: ActionAttemptSevenResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptEightError:
@@ -4876,7 +5098,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
-      error: ActionAttemptEightError
+      error:
+        type: ActionAttemptEightError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptNine:
@@ -4920,7 +5144,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_COOL">
-      result: ActionAttemptTenResult
+      result:
+        type: ActionAttemptTenResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptElevenError:
@@ -4946,7 +5172,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_COOL">
-      error: ActionAttemptElevenError
+      error:
+        type: ActionAttemptElevenError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwelve:
@@ -4990,7 +5218,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_HEAT">
-      result: ActionAttemptThirteenResult
+      result:
+        type: ActionAttemptThirteenResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptFourteenError:
@@ -5016,7 +5246,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_HEAT">
-      error: ActionAttemptFourteenError
+      error:
+        type: ActionAttemptFourteenError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptFifteen:
@@ -5060,7 +5292,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_HEAT_COOL">
-      result: ActionAttemptSixteenResult
+      result:
+        type: ActionAttemptSixteenResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptSeventeenError:
@@ -5086,7 +5320,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_HEAT_COOL">
-      error: ActionAttemptSeventeenError
+      error:
+        type: ActionAttemptSeventeenError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptEighteen:
@@ -5130,7 +5366,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_FAN_MODE">
-      result: ActionAttemptNineteenResult
+      result:
+        type: ActionAttemptNineteenResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwentyError:
@@ -5156,7 +5394,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_FAN_MODE">
-      error: ActionAttemptTwentyError
+      error:
+        type: ActionAttemptTwentyError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwentyOne:
@@ -5200,7 +5440,9 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
-      result: ActionAttemptTwentyTwoResult
+      result:
+        type: ActionAttemptTwentyTwoResult
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwentyThreeError:
@@ -5226,7 +5468,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
-      error: ActionAttemptTwentyThreeError
+      error:
+        type: ActionAttemptTwentyThreeError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwentyFour:
@@ -5289,7 +5533,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SYNC_ACCESS_CODES">
-      error: ActionAttemptTwentySixError
+      error:
+        type: ActionAttemptTwentySixError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptTwentySeven:
@@ -5352,7 +5598,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"CREATE_ACCESS_CODE">
-      error: ActionAttemptTwentyNineError
+      error:
+        type: ActionAttemptTwentyNineError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptThirty:
@@ -5415,7 +5663,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"DELETE_ACCESS_CODE">
-      error: ActionAttemptThirtyTwoError
+      error:
+        type: ActionAttemptThirtyTwoError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptThirtyThree:
@@ -5478,7 +5728,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
-      error: ActionAttemptThirtyFiveError
+      error:
+        type: ActionAttemptThirtyFiveError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptThirtySix:
@@ -5541,7 +5793,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
-      error: ActionAttemptThirtyEightError
+      error:
+        type: ActionAttemptThirtyEightError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptThirtyNine:
@@ -5604,7 +5858,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
-      error: ActionAttemptFortyOneError
+      error:
+        type: ActionAttemptFortyOneError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttemptFortyTwo:
@@ -5667,7 +5923,9 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
-      error: ActionAttemptActionAttemptIdError
+      error:
+        type: ActionAttemptActionAttemptIdError
+        inline: true
     source:
       openapi: ../openapi.json
   ActionAttempt:
@@ -5896,7 +6154,9 @@ types:
         validation:
           format: uuid
       created_at: optional<datetime>
-      user_identifier: optional<ConnectedAccountUserIdentifier>
+      user_identifier:
+        type: optional<ConnectedAccountUserIdentifier>
+        inline: true
       account_type: optional<string>
       account_type_display_name: string
       errors: optional<unknown>
@@ -5972,6 +6232,7 @@ types:
       battery:
         type: optional<DevicePropertiesAccessoryKeypadBattery>
         docs: Indicates if the keypad battery properties.
+        inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesAppearance:
@@ -6189,18 +6450,30 @@ types:
       openapi: ../openapi.json
   DevicePropertiesMinutMetadataLatestSensorValues:
     properties:
-      temperature: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
-      sound: DevicePropertiesMinutMetadataLatestSensorValuesSound
-      humidity: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
-      pressure: DevicePropertiesMinutMetadataLatestSensorValuesPressure
-      accelerometer_z: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
+      temperature:
+        type: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
+        inline: true
+      sound:
+        type: DevicePropertiesMinutMetadataLatestSensorValuesSound
+        inline: true
+      humidity:
+        type: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
+        inline: true
+      pressure:
+        type: DevicePropertiesMinutMetadataLatestSensorValuesPressure
+        inline: true
+      accelerometer_z:
+        type: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
+        inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesMinutMetadata:
     properties:
       device_id: string
       device_name: string
-      latest_sensor_values: DevicePropertiesMinutMetadataLatestSensorValues
+      latest_sensor_values:
+        type: DevicePropertiesMinutMetadataLatestSensorValues
+        inline: true
     source:
       openapi: ../openapi.json
   DevicePropertiesFourSuitesMetadata:
@@ -6392,8 +6665,13 @@ types:
       accessory_keypad:
         type: optional<DevicePropertiesAccessoryKeypad>
         docs: Represents the accessory keypad state.
-      appearance: DevicePropertiesAppearance
-      model: DevicePropertiesModel
+        inline: true
+      appearance:
+        type: DevicePropertiesAppearance
+        inline: true
+      model:
+        type: DevicePropertiesModel
+        inline: true
       has_direct_power:
         type: optional<boolean>
         docs: Indicates whether the device has direct power.
@@ -6416,6 +6694,7 @@ types:
           adequate for normal use without the immediate need for recharging; and
           "full," which represents a battery that is fully charged, providing
           the maximum duration of usage.
+        inline: true
       manufacturer:
         type: optional<string>
         docs: Manufacturer of the device.
@@ -6464,33 +6743,87 @@ types:
       currently_triggering_noise_threshold_ids:
         type: optional<list<string>>
         docs: Array of noise threshold IDs that are currently triggering.
-      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
-      august_metadata: optional<DevicePropertiesAugustMetadata>
-      avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
-      schlage_metadata: optional<DevicePropertiesSchlageMetadata>
-      smartthings_metadata: optional<DevicePropertiesSmartthingsMetadata>
-      lockly_metadata: optional<DevicePropertiesLocklyMetadata>
-      nuki_metadata: optional<DevicePropertiesNukiMetadata>
-      kwikset_metadata: optional<DevicePropertiesKwiksetMetadata>
-      salto_metadata: optional<DevicePropertiesSaltoMetadata>
-      genie_metadata: optional<DevicePropertiesGenieMetadata>
-      brivo_metadata: optional<DevicePropertiesBrivoMetadata>
-      igloo_metadata: optional<DevicePropertiesIglooMetadata>
-      noiseaware_metadata: optional<DevicePropertiesNoiseawareMetadata>
-      minut_metadata: optional<DevicePropertiesMinutMetadata>
-      four_suites_metadata: optional<DevicePropertiesFourSuitesMetadata>
-      two_n_metadata: optional<DevicePropertiesTwoNMetadata>
-      controlbyweb_metadata: optional<DevicePropertiesControlbywebMetadata>
-      ttlock_metadata: optional<DevicePropertiesTtlockMetadata>
-      seam_bridge_metadata: optional<DevicePropertiesSeamBridgeMetadata>
-      igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
-      nest_metadata: optional<DevicePropertiesNestMetadata>
-      ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
-      honeywell_resideo_metadata: optional<DevicePropertiesHoneywellResideoMetadata>
-      hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
-      dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
-      wyze_metadata: optional<DevicePropertiesWyzeMetadata>
-      tedee_metadata: optional<DevicePropertiesTedeeMetadata>
+      assa_abloy_credential_service_metadata:
+        type: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
+        inline: true
+      august_metadata:
+        type: optional<DevicePropertiesAugustMetadata>
+        inline: true
+      avigilon_alta_metadata:
+        type: optional<DevicePropertiesAvigilonAltaMetadata>
+        inline: true
+      schlage_metadata:
+        type: optional<DevicePropertiesSchlageMetadata>
+        inline: true
+      smartthings_metadata:
+        type: optional<DevicePropertiesSmartthingsMetadata>
+        inline: true
+      lockly_metadata:
+        type: optional<DevicePropertiesLocklyMetadata>
+        inline: true
+      nuki_metadata:
+        type: optional<DevicePropertiesNukiMetadata>
+        inline: true
+      kwikset_metadata:
+        type: optional<DevicePropertiesKwiksetMetadata>
+        inline: true
+      salto_metadata:
+        type: optional<DevicePropertiesSaltoMetadata>
+        inline: true
+      genie_metadata:
+        type: optional<DevicePropertiesGenieMetadata>
+        inline: true
+      brivo_metadata:
+        type: optional<DevicePropertiesBrivoMetadata>
+        inline: true
+      igloo_metadata:
+        type: optional<DevicePropertiesIglooMetadata>
+        inline: true
+      noiseaware_metadata:
+        type: optional<DevicePropertiesNoiseawareMetadata>
+        inline: true
+      minut_metadata:
+        type: optional<DevicePropertiesMinutMetadata>
+        inline: true
+      four_suites_metadata:
+        type: optional<DevicePropertiesFourSuitesMetadata>
+        inline: true
+      two_n_metadata:
+        type: optional<DevicePropertiesTwoNMetadata>
+        inline: true
+      controlbyweb_metadata:
+        type: optional<DevicePropertiesControlbywebMetadata>
+        inline: true
+      ttlock_metadata:
+        type: optional<DevicePropertiesTtlockMetadata>
+        inline: true
+      seam_bridge_metadata:
+        type: optional<DevicePropertiesSeamBridgeMetadata>
+        inline: true
+      igloohome_metadata:
+        type: optional<DevicePropertiesIgloohomeMetadata>
+        inline: true
+      nest_metadata:
+        type: optional<DevicePropertiesNestMetadata>
+        inline: true
+      ecobee_metadata:
+        type: optional<DevicePropertiesEcobeeMetadata>
+        inline: true
+      honeywell_resideo_metadata:
+        type: optional<DevicePropertiesHoneywellResideoMetadata>
+        inline: true
+      hubitat_metadata:
+        type: optional<DevicePropertiesHubitatMetadata>
+        inline: true
+      dormakaba_oracode_metadata:
+        type: optional<DevicePropertiesDormakabaOracodeMetadata>
+        inline: true
+      wyze_metadata:
+        type: optional<DevicePropertiesWyzeMetadata>
+        inline: true
+      tedee_metadata:
+        type: optional<DevicePropertiesTedeeMetadata>
+        inline: true
       _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
       code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
       supported_code_lengths: optional<list<double>>
@@ -6498,7 +6831,9 @@ types:
       supports_backup_access_code_pool: optional<boolean>
       has_native_entry_events: optional<boolean>
       locked: optional<boolean>
-      keypad_battery: optional<DevicePropertiesKeypadBattery>
+      keypad_battery:
+        type: optional<DevicePropertiesKeypadBattery>
+        inline: true
       door_open: optional<boolean>
     source:
       openapi: ../openapi.json
@@ -6571,6 +6906,7 @@ types:
       location:
         type: optional<DeviceLocation>
         docs: Location information for the device.
+        inline: true
       connected_account_id:
         type: string
         docs: Unique identifier for the account associated with the device.
@@ -6694,6 +7030,7 @@ types:
       battery:
         type: optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>
         docs: Indicates if the keypad battery properties.
+        inline: true
     source:
       openapi: ../openapi.json
   UnmanagedDevicePropertiesBatteryStatus:
@@ -6759,6 +7096,7 @@ types:
       accessory_keypad:
         type: optional<UnmanagedDevicePropertiesAccessoryKeypad>
         docs: Represents the accessory keypad state.
+        inline: true
       name:
         type: string
         docs: |2-
@@ -6801,6 +7139,7 @@ types:
           adequate for normal use without the immediate need for recharging; and
           "full," which represents a battery that is fully charged, providing
           the maximum duration of usage.
+        inline: true
       online_access_codes_enabled:
         type: optional<boolean>
         docs: >-
@@ -6811,7 +7150,9 @@ types:
         docs: >-
           Indicates whether it is currently possible to use offline access codes
           for the device.
-      model: UnmanagedDevicePropertiesModel
+      model:
+        type: UnmanagedDevicePropertiesModel
+        inline: true
     source:
       openapi: ../openapi.json
   UnmanagedDevice:
@@ -6869,7 +7210,9 @@ types:
         type: datetime
         docs: Date and time at which the device object was created.
       is_managed: boolean
-      properties: UnmanagedDeviceProperties
+      properties:
+        type: UnmanagedDeviceProperties
+        inline: true
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -7230,7 +7573,9 @@ types:
       external_type: optional<AcsUserExternalType>
       external_type_display_name: optional<string>
       is_suspended: boolean
-      access_schedule: optional<AcsUserAccessSchedule>
+      access_schedule:
+        type: optional<AcsUserAccessSchedule>
+        inline: true
       user_identity_id: optional<string>
       user_identity_full_name: optional<string>
       user_identity_email_address: optional<string>
@@ -7311,8 +7656,12 @@ types:
       created_at: datetime
       display_name: string
       errors: list<AcsEntranceErrorsItem>
-      latch_metadata: optional<AcsEntranceLatchMetadata>
-      visionline_metadata: optional<AcsEntranceVisionlineMetadata>
+      latch_metadata:
+        type: optional<AcsEntranceLatchMetadata>
+        inline: true
+      visionline_metadata:
+        type: optional<AcsEntranceVisionlineMetadata>
+        inline: true
     source:
       openapi: ../openapi.json
   AcsCredentialProvisioningAutomation:
@@ -7442,7 +7791,9 @@ types:
       is_multi_phone_sync_credential: optional<boolean>
       is_latest_desired_state_synced_with_provider: optional<boolean>
       latest_desired_state_synced_with_provider_at: optional<datetime>
-      visionline_metadata: optional<AcsCredentialVisionlineMetadata>
+      visionline_metadata:
+        type: optional<AcsCredentialVisionlineMetadata>
+        inline: true
     source:
       openapi: ../openapi.json
   EnrollmentAutomation:
@@ -7496,7 +7847,9 @@ types:
       openapi: ../openapi.json
   PhoneProperties:
     properties:
-      assa_abloy_credential_service_metadata: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
+      assa_abloy_credential_service_metadata:
+        type: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
+        inline: true
     source:
       openapi: ../openapi.json
   PhoneLocation:
@@ -7560,10 +7913,13 @@ types:
           "battery," which indicates that the device can manage battery life and
           health.
         type: list<PhoneCapabilitiesSupportedItem>
-      properties: PhoneProperties
+      properties:
+        type: PhoneProperties
+        inline: true
       location:
         type: optional<PhoneLocation>
         docs: Location information for the device.
+        inline: true
       workspace_id:
         type: string
         docs: Unique identifier for the Seam workspace associated with the device.
@@ -29084,7 +29440,10 @@ service:
           "EnrollmentAutomationsLaunchResponse": {
             "docs": undefined,
             "properties": {
-              "enrollment_automation": "EnrollmentAutomationsLaunchResponseEnrollmentAutomation",
+              "enrollment_automation": {
+                "inline": true,
+                "type": "EnrollmentAutomationsLaunchResponseEnrollmentAutomation",
+              },
               "ok": "boolean",
             },
             "source": {
@@ -29196,7 +29555,9 @@ service:
       openapi: ../openapi.json
   EnrollmentAutomationsLaunchResponse:
     properties:
-      enrollment_automation: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
+      enrollment_automation:
+        type: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
+        inline: true
       ok: boolean
     source:
       openapi: ../openapi.json

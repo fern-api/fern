@@ -6522,10 +6522,19 @@
             "properties": {
               "agreement_title": "string",
               "agreement_type": "string",
-              "client_legal_entity": "AgreementClientLegalEntity",
+              "client_legal_entity": {
+                "inline": true,
+                "type": "AgreementClientLegalEntity",
+              },
               "id": "double",
-              "msa": "AgreementMsa",
-              "provider_legal_entity": "AgreementProviderLegalEntity",
+              "msa": {
+                "inline": true,
+                "type": "AgreementMsa",
+              },
+              "provider_legal_entity": {
+                "inline": true,
+                "type": "AgreementProviderLegalEntity",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6713,23 +6722,38 @@
             "docs": undefined,
             "properties": {
               "attachment": "optional<FileAttachmentInfo>",
-              "contract": "BasicInvoiceAdjustmentContract",
+              "contract": {
+                "inline": true,
+                "type": "BasicInvoiceAdjustmentContract",
+              },
               "created_at": "optional<DateTimeStringRequired>",
               "currency_code": "CurrencyCodeRequired",
               "custom_scale": "optional<string>",
               "date_submitted": "optional<DateTimeStringRequired>",
               "description": "string",
               "id": "UniqueObjectIdentifier",
-              "payment_cycle": "BasicInvoiceAdjustmentPaymentCycle",
+              "payment_cycle": {
+                "inline": true,
+                "type": "BasicInvoiceAdjustmentPaymentCycle",
+              },
               "public_id": "optional<PublicId>",
               "quantity": "optional<double>",
-              "reported_by": "BasicInvoiceAdjustmentReportedBy",
-              "reviewed_by": "optional<BasicInvoiceAdjustmentReviewedBy>",
+              "reported_by": {
+                "inline": true,
+                "type": "BasicInvoiceAdjustmentReportedBy",
+              },
+              "reviewed_by": {
+                "inline": true,
+                "type": "optional<BasicInvoiceAdjustmentReviewedBy>",
+              },
               "scale": "optional<string>",
               "status": "optional<InvoiceAdjustmentStatusEnum>",
               "total_amount": "string",
               "type": "InvoiceAdjustmentTypeEnum",
-              "worksheet": "optional<BasicInvoiceAdjustmentWorksheet>",
+              "worksheet": {
+                "inline": true,
+                "type": "optional<BasicInvoiceAdjustmentWorksheet>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6878,18 +6902,30 @@
             "docs": undefined,
             "properties": {
               "attachment": "optional<FileAttachmentInfo>",
-              "contract": "BasicTimesheetContract",
+              "contract": {
+                "inline": true,
+                "type": "BasicTimesheetContract",
+              },
               "created_at": "string",
               "currency_code": "CurrencyCodeRequired",
               "custom_scale": "optional<string>",
               "date_submitted": "optional<DateTimeStringRequired>",
               "description": "string",
               "id": "UniqueObjectIdentifier",
-              "payment_cycle": "optional<BasicTimesheetPaymentCycle>",
+              "payment_cycle": {
+                "inline": true,
+                "type": "optional<BasicTimesheetPaymentCycle>",
+              },
               "public_id": "optional<PublicId>",
               "quantity": "optional<double>",
-              "reported_by": "BasicTimesheetReportedBy",
-              "reviewed_by": "optional<BasicTimesheetReviewedBy>",
+              "reported_by": {
+                "inline": true,
+                "type": "BasicTimesheetReportedBy",
+              },
+              "reviewed_by": {
+                "inline": true,
+                "type": "optional<BasicTimesheetReviewedBy>",
+              },
               "scale": "optional<string>",
               "status": "optional<TimesheetStatusEnum>",
               "total_amount": {
@@ -6900,7 +6936,10 @@
                 "docs": "Deprecated - it is always "work"",
                 "type": "string",
               },
-              "worksheet": "optional<BasicTimesheetWorksheet>",
+              "worksheet": {
+                "inline": true,
+                "type": "optional<BasicTimesheetWorksheet>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7800,7 +7839,10 @@
           "ContractToCreateShared": {
             "docs": "Details of contract to create",
             "properties": {
-              "client": "ContractToCreateSharedClient",
+              "client": {
+                "inline": true,
+                "type": "ContractToCreateSharedClient",
+              },
               "country_code": "optional<CountryCode>",
               "external_id": {
                 "docs": "External Id.",
@@ -7808,6 +7850,7 @@
               },
               "job_title": {
                 "docs": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
+                "inline": true,
                 "type": "ContractToCreateSharedJobTitle",
               },
               "meta": "MetaDataOfContractToCreate",
@@ -7818,6 +7861,7 @@
               },
               "seniority": {
                 "docs": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
+                "inline": true,
                 "type": "optional<ContractToCreateSharedSeniority>",
               },
               "special_clause": {
@@ -7837,6 +7881,7 @@
               "who_reports": "optional<ContractWhoReportsEnum>",
               "worker": {
                 "docs": "Worker properties",
+                "inline": true,
                 "type": "optional<ContractToCreateSharedWorker>",
               },
             },
@@ -7849,10 +7894,12 @@
             "properties": {
               "legal_entity": {
                 "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
+                "inline": true,
                 "type": "ContractToCreateSharedClientLegalEntity",
               },
               "team": {
                 "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
+                "inline": true,
                 "type": "ContractToCreateSharedClientTeam",
               },
             },
@@ -8256,7 +8303,10 @@
             "docs": undefined,
             "properties": {
               "birth_date": "optional<string>",
-              "client_legal_entity": "optional<EmployeeListClientLegalEntity>",
+              "client_legal_entity": {
+                "inline": true,
+                "type": "optional<EmployeeListClientLegalEntity>",
+              },
               "completion_date": "optional<string>",
               "country": "optional<string>",
               "email": "optional<string>",
@@ -8268,7 +8318,10 @@
               "id": "optional<string>",
               "job_title": "optional<string>",
               "last_name": "optional<string>",
-              "monthly_payment": "optional<EmployeeListMonthlyPayment>",
+              "monthly_payment": {
+                "inline": true,
+                "type": "optional<EmployeeListMonthlyPayment>",
+              },
               "payments": "optional<list<EmployeeListPaymentsItem>>",
               "personal_email": "optional<string>",
               "pic_url": "optional<string>",
@@ -8491,12 +8544,27 @@
           "EorContractCreated": {
             "docs": undefined,
             "properties": {
-              "client": "optional<EorContractCreatedClient>",
-              "compensation_details": "optional<EorContractCreatedCompensationDetails>",
+              "client": {
+                "inline": true,
+                "type": "optional<EorContractCreatedClient>",
+              },
+              "compensation_details": {
+                "inline": true,
+                "type": "optional<EorContractCreatedCompensationDetails>",
+              },
               "created_at": "optional<DateTimeString>",
-              "employee": "optional<EorContractCreatedEmployee>",
-              "employment": "optional<EorContractCreatedEmployment>",
-              "health_plan": "optional<EorContractCreatedHealthPlan>",
+              "employee": {
+                "inline": true,
+                "type": "optional<EorContractCreatedEmployee>",
+              },
+              "employment": {
+                "inline": true,
+                "type": "optional<EorContractCreatedEmployment>",
+              },
+              "health_plan": {
+                "inline": true,
+                "type": "optional<EorContractCreatedHealthPlan>",
+              },
               "id": {
                 "docs": "Id of the contract quote created",
                 "type": "optional<string>",
@@ -8516,7 +8584,10 @@
           "EorContractCreatedClient": {
             "docs": undefined,
             "properties": {
-              "legal_entity": "optional<EorContractCreatedClientLegalEntity>",
+              "legal_entity": {
+                "inline": true,
+                "type": "optional<EorContractCreatedClientLegalEntity>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8648,10 +8719,22 @@
           "EorContractToCreate": {
             "docs": undefined,
             "properties": {
-              "client": "EorContractToCreateClient",
-              "compensation_details": "EorContractToCreateCompensationDetails",
-              "employee": "optional<EorContractToCreateEmployee>",
-              "employment": "EorContractToCreateEmployment",
+              "client": {
+                "inline": true,
+                "type": "EorContractToCreateClient",
+              },
+              "compensation_details": {
+                "inline": true,
+                "type": "EorContractToCreateCompensationDetails",
+              },
+              "employee": {
+                "inline": true,
+                "type": "optional<EorContractToCreateEmployee>",
+              },
+              "employment": {
+                "inline": true,
+                "type": "EorContractToCreateEmployment",
+              },
               "health_plan_id": {
                 "docs": "Healthare plan Id. You can see available healthcare plans in the country guide endpoint.",
                 "type": "optional<string>",
@@ -8662,9 +8745,13 @@
               },
               "quote_additional_fields": {
                 "docs": "Some countries require additional employee information for employment contracts.",
+                "inline": true,
                 "type": "optional<EorContractToCreateQuoteAdditionalFields>",
               },
-              "seniority": "EorContractToCreateSeniority",
+              "seniority": {
+                "inline": true,
+                "type": "EorContractToCreateSeniority",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8673,8 +8760,14 @@
           "EorContractToCreateClient": {
             "docs": undefined,
             "properties": {
-              "legal_entity": "optional<EorContractToCreateClientLegalEntity>",
-              "team": "optional<EorContractToCreateClientTeam>",
+              "legal_entity": {
+                "inline": true,
+                "type": "optional<EorContractToCreateClientLegalEntity>",
+              },
+              "team": {
+                "inline": true,
+                "type": "optional<EorContractToCreateClientTeam>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8731,7 +8824,10 @@
           "EorContractToCreateEmployee": {
             "docs": undefined,
             "properties": {
-              "address": "optional<EorContractToCreateEmployeeAddress>",
+              "address": {
+                "inline": true,
+                "type": "optional<EorContractToCreateEmployeeAddress>",
+              },
               "email": {
                 "docs": "Employee's email address.",
                 "type": "optional<string>",
@@ -8899,15 +8995,20 @@
               },
               "definite_contract": {
                 "docs": "Conditions to make definitive contract.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsDefiniteContract>",
               },
-              "health_insurance": "optional<EorCountryValidationsHealthInsurance>",
+              "health_insurance": {
+                "inline": true,
+                "type": "optional<EorCountryValidationsHealthInsurance>",
+              },
               "hiring_guide_country_name": {
                 "docs": "Country name.",
                 "type": "optional<string>",
               },
               "holiday": {
                 "docs": "Range of the number of holidays.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsHoliday>",
               },
               "insurance_fee": {
@@ -8916,27 +9017,35 @@
               },
               "part_time_holiday": {
                 "docs": "Holiday type and range for part-time contracts.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsPartTimeHoliday>",
               },
               "part_time_probation": {
                 "docs": "Probation period range for part-time contracts.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsPartTimeProbation>",
               },
               "probation": {
                 "docs": "Probation period range.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsProbation>",
               },
               "salary": {
                 "docs": "Salary range.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsSalary>",
               },
-              "sick_days": "optional<EorCountryValidationsSickDays>",
+              "sick_days": {
+                "inline": true,
+                "type": "optional<EorCountryValidationsSickDays>",
+              },
               "start_date_buffer": {
                 "docs": "Calculate employee's minimum start date using the start date buffer. Today's date + (number of business days x start_date_buffer) = Minimum start date.",
                 "type": "optional<double>",
               },
               "work_schedule": {
                 "docs": "Employee's Work schedule in days and hours.",
+                "inline": true,
                 "type": "optional<EorCountryValidationsWorkSchedule>",
               },
             },
@@ -9085,8 +9194,14 @@
           "EorCountryValidationsWorkSchedule": {
             "docs": "Employee's Work schedule in days and hours.",
             "properties": {
-              "days": "optional<EorCountryValidationsWorkScheduleDays>",
-              "hours": "optional<EorCountryValidationsWorkScheduleHours>",
+              "days": {
+                "inline": true,
+                "type": "optional<EorCountryValidationsWorkScheduleDays>",
+              },
+              "hours": {
+                "inline": true,
+                "type": "optional<EorCountryValidationsWorkScheduleHours>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9367,7 +9482,10 @@
           "EstimateFirstPayment": {
             "docs": "Details of pro rata payment to create.",
             "properties": {
-              "compensation_details": "EstimateFirstPaymentCompensationDetails",
+              "compensation_details": {
+                "inline": true,
+                "type": "EstimateFirstPaymentCompensationDetails",
+              },
               "country_code": "CountryCode",
               "start_date": "DateStringRequired",
               "type": "ContractTypeEnum",
@@ -9613,7 +9731,10 @@
           "GenericResultCreated": {
             "docs": undefined,
             "properties": {
-              "data": "GenericResultCreatedData",
+              "data": {
+                "inline": true,
+                "type": "GenericResultCreatedData",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9631,7 +9752,10 @@
           "GenericResultDeleted": {
             "docs": undefined,
             "properties": {
-              "data": "GenericResultDeletedData",
+              "data": {
+                "inline": true,
+                "type": "GenericResultDeletedData",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9652,7 +9776,10 @@
           "GenericResultUpdated": {
             "docs": undefined,
             "properties": {
-              "data": "GenericResultUpdatedData",
+              "data": {
+                "inline": true,
+                "type": "GenericResultUpdatedData",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9837,7 +9964,10 @@
               "employee_details": "HrisDirectEmployeeDetails",
               "job_information": "HrisDirectEmployeeJobInformation",
               "team_information": "HrisTeamInformation",
-              "vacation_info": "optional<HrisDirectEmployeeVacationInfo>",
+              "vacation_info": {
+                "inline": true,
+                "type": "optional<HrisDirectEmployeeVacationInfo>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10046,7 +10176,10 @@
           "InputToShieldContract": {
             "docs": undefined,
             "properties": {
-              "data": "InputToShieldContractData",
+              "data": {
+                "inline": true,
+                "type": "InputToShieldContractData",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10604,7 +10737,10 @@
             "docs": undefined,
             "properties": {
               "data": "JobTitleList",
-              "page": "JobTitleListContainerPage",
+              "page": {
+                "inline": true,
+                "type": "JobTitleListContainerPage",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10678,10 +10814,12 @@
               },
               "reported_by": {
                 "docs": "Milestone creator.",
+                "inline": true,
                 "type": "MilestoneReportedBy",
               },
               "reviewed_by": {
                 "docs": "Reviewer's information.",
+                "inline": true,
                 "type": "optional<MilestoneReviewedBy>",
               },
               "status": {
@@ -10940,8 +11078,14 @@
               },
               "id": "UniqueObjectIdentifier",
               "public_id": "optional<PublicId>",
-              "reported_by": "OffCyclePaymentReportedBy",
-              "reviewed_by": "optional<OffCyclePaymentReviewedBy>",
+              "reported_by": {
+                "inline": true,
+                "type": "OffCyclePaymentReportedBy",
+              },
+              "reviewed_by": {
+                "inline": true,
+                "type": "optional<OffCyclePaymentReviewedBy>",
+              },
               "status": "optional<InvoiceAdjustmentStatusEnum>",
             },
             "source": {
@@ -11694,9 +11838,18 @@
                 "docs": "Deel Premium plan id.",
                 "type": "string",
               },
-              "misclassification_guarantee": "PremiumResultAddedMisclassificationGuarantee",
-              "penalties": "PremiumResultAddedPenalties",
-              "third_party_liabilities": "PremiumResultAddedThirdPartyLiabilities",
+              "misclassification_guarantee": {
+                "inline": true,
+                "type": "PremiumResultAddedMisclassificationGuarantee",
+              },
+              "penalties": {
+                "inline": true,
+                "type": "PremiumResultAddedPenalties",
+              },
+              "third_party_liabilities": {
+                "inline": true,
+                "type": "PremiumResultAddedThirdPartyLiabilities",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -12185,7 +12338,10 @@
             "docs": undefined,
             "properties": {
               "integration": "string",
-              "mapping_category": "optional<TimesheetAccountingRefsItemMappingCategory>",
+              "mapping_category": {
+                "inline": true,
+                "type": "optional<TimesheetAccountingRefsItemMappingCategory>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13386,11 +13542,13 @@
         docs: >-
           Choose the Deel legal entity for this contract. Use legal entity
           endpoint to retrieve a list of legal entities in your organization.
+        inline: true
       team:
         type: ContractToCreateSharedClientTeam
         docs: >-
           Choose the Deel team for this contract. Use teams endpoint to retrieve
           a list of teams in your organization.
+        inline: true
     source:
       openapi: ../openapi.yml
   ContractToCreateSharedJobTitle:
@@ -13452,17 +13610,21 @@
         docs: Enter any special clause you may have.
       start_date: optional<DateStringRequired>
       termination_date: optional<DateString>
-      client: ContractToCreateSharedClient
+      client:
+        type: ContractToCreateSharedClient
+        inline: true
       job_title:
         type: ContractToCreateSharedJobTitle
         docs: >-
           Worker's job title. You can enter a custom job title or use a
           pre-defiled job title using the Id retrieved in job-titles endpoint.
+        inline: true
       seniority:
         type: optional<ContractToCreateSharedSeniority>
         docs: >-
           Job seniority level. Please use the seniority levels endpoint to
           retrieve the list of seniority levels.
+        inline: true
       notice_period: optional<NoticePeriod>
       who_reports: optional<ContractWhoReportsEnum>
       meta: MetaDataOfContractToCreate
@@ -13472,6 +13634,7 @@
       worker:
         type: optional<ContractToCreateSharedWorker>
         docs: Worker properties
+        inline: true
     source:
       openapi: ../openapi.yml
   MetaDataOfContractToCreate:
@@ -13747,11 +13910,21 @@
       scale: optional<string>
       custom_scale: optional<string>
       attachment: optional<FileAttachmentInfo>
-      worksheet: optional<BasicTimesheetWorksheet>
-      reviewed_by: optional<BasicTimesheetReviewedBy>
-      contract: BasicTimesheetContract
-      payment_cycle: optional<BasicTimesheetPaymentCycle>
-      reported_by: BasicTimesheetReportedBy
+      worksheet:
+        type: optional<BasicTimesheetWorksheet>
+        inline: true
+      reviewed_by:
+        type: optional<BasicTimesheetReviewedBy>
+        inline: true
+      contract:
+        type: BasicTimesheetContract
+        inline: true
+      payment_cycle:
+        type: optional<BasicTimesheetPaymentCycle>
+        inline: true
+      reported_by:
+        type: BasicTimesheetReportedBy
+        inline: true
     source:
       openapi: ../openapi.yml
   TimesheetContainer:
@@ -13956,7 +14129,9 @@
   TimesheetAccountingRefsItem:
     properties:
       integration: string
-      mapping_category: optional<TimesheetAccountingRefsItemMappingCategory>
+      mapping_category:
+        type: optional<TimesheetAccountingRefsItemMappingCategory>
+        inline: true
     source:
       openapi: ../openapi.yml
   TimesheetAccountingRefs: optional<list<TimesheetAccountingRefsItem>>
@@ -14087,11 +14262,21 @@
       scale: optional<string>
       custom_scale: optional<string>
       attachment: optional<FileAttachmentInfo>
-      worksheet: optional<BasicInvoiceAdjustmentWorksheet>
-      reviewed_by: optional<BasicInvoiceAdjustmentReviewedBy>
-      contract: BasicInvoiceAdjustmentContract
-      payment_cycle: BasicInvoiceAdjustmentPaymentCycle
-      reported_by: BasicInvoiceAdjustmentReportedBy
+      worksheet:
+        type: optional<BasicInvoiceAdjustmentWorksheet>
+        inline: true
+      reviewed_by:
+        type: optional<BasicInvoiceAdjustmentReviewedBy>
+        inline: true
+      contract:
+        type: BasicInvoiceAdjustmentContract
+        inline: true
+      payment_cycle:
+        type: BasicInvoiceAdjustmentPaymentCycle
+        inline: true
+      reported_by:
+        type: BasicInvoiceAdjustmentReportedBy
+        inline: true
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentContainer:
@@ -14213,7 +14398,9 @@
       openapi: ../openapi.yml
   GenericResultCreated:
     properties:
-      data: GenericResultCreatedData
+      data:
+        type: GenericResultCreatedData
+        inline: true
     source:
       openapi: ../openapi.yml
   ContractExternalIdPatchedResponseContainer: ContractExternalIdToPatch
@@ -14229,7 +14416,9 @@
       openapi: ../openapi.yml
   GenericResultUpdated:
     properties:
-      data: GenericResultUpdatedData
+      data:
+        type: GenericResultUpdatedData
+        inline: true
     source:
       openapi: ../openapi.yml
   GenericResultDeletedData:
@@ -14241,7 +14430,9 @@
       openapi: ../openapi.yml
   GenericResultDeleted:
     properties:
-      data: GenericResultDeletedData
+      data:
+        type: GenericResultDeletedData
+        inline: true
     source:
       openapi: ../openapi.yml
   ContractTypeEnumList:
@@ -14506,7 +14697,9 @@
   JobTitleListContainer:
     properties:
       data: JobTitleList
-      page: JobTitleListContainerPage
+      page:
+        type: JobTitleListContainerPage
+        inline: true
     source:
       openapi: ../openapi.yml
   JobTitleList: list<JobTitle>
@@ -14754,9 +14947,11 @@
       reviewed_by:
         type: optional<MilestoneReviewedBy>
         docs: Reviewer's information.
+        inline: true
       reported_by:
         type: MilestoneReportedBy
         docs: Milestone creator.
+        inline: true
       title:
         type: string
         docs: Title of milestone.
@@ -14857,7 +15052,9 @@
       type: ContractTypeEnum
       country_code: CountryCode
       start_date: DateStringRequired
-      compensation_details: EstimateFirstPaymentCompensationDetails
+      compensation_details:
+        type: EstimateFirstPaymentCompensationDetails
+        inline: true
     source:
       openapi: ../openapi.yml
   ProRataCalculationType:
@@ -14953,8 +15150,12 @@
         type: string
         docs: Amount of off-cycle payment.
       created_at: optional<DateTimeStringRequired>
-      reviewed_by: optional<OffCyclePaymentReviewedBy>
-      reported_by: OffCyclePaymentReportedBy
+      reviewed_by:
+        type: optional<OffCyclePaymentReviewedBy>
+        inline: true
+      reported_by:
+        type: OffCyclePaymentReportedBy
+        inline: true
     source:
       openapi: ../openapi.yml
   FileAttachmentInfo:
@@ -15114,9 +15315,15 @@
       id: double
       agreement_title: string
       agreement_type: string
-      msa: AgreementMsa
-      client_legal_entity: AgreementClientLegalEntity
-      provider_legal_entity: AgreementProviderLegalEntity
+      msa:
+        type: AgreementMsa
+        inline: true
+      client_legal_entity:
+        type: AgreementClientLegalEntity
+        inline: true
+      provider_legal_entity:
+        type: AgreementProviderLegalEntity
+        inline: true
     source:
       openapi: ../openapi.yml
   InputToShieldContractData:
@@ -15128,7 +15335,9 @@
       openapi: ../openapi.yml
   InputToShieldContract:
     properties:
-      data: InputToShieldContractData
+      data:
+        type: InputToShieldContractData
+        inline: true
     source:
       openapi: ../openapi.yml
   PremiumToAdd:
@@ -15264,9 +15473,15 @@
       calculated_premium:
         type: double
         docs: Cost for Deel Premium.
-      misclassification_guarantee: PremiumResultAddedMisclassificationGuarantee
-      penalties: PremiumResultAddedPenalties
-      third_party_liabilities: PremiumResultAddedThirdPartyLiabilities
+      misclassification_guarantee:
+        type: PremiumResultAddedMisclassificationGuarantee
+        inline: true
+      penalties:
+        type: PremiumResultAddedPenalties
+        inline: true
+      third_party_liabilities:
+        type: PremiumResultAddedThirdPartyLiabilities
+        inline: true
     source:
       openapi: ../openapi.yml
   EorEntitlements:
@@ -15435,7 +15650,9 @@
       nationality:
         type: string
         docs: Employee's nationality.
-      address: optional<EorContractToCreateEmployeeAddress>
+      address:
+        type: optional<EorContractToCreateEmployeeAddress>
+        inline: true
     source:
       openapi: ../openapi.yml
   EorContractToCreateEmploymentType:
@@ -15523,8 +15740,12 @@
       openapi: ../openapi.yml
   EorContractToCreateClient:
     properties:
-      legal_entity: optional<EorContractToCreateClientLegalEntity>
-      team: optional<EorContractToCreateClientTeam>
+      legal_entity:
+        type: optional<EorContractToCreateClientLegalEntity>
+        inline: true
+      team:
+        type: optional<EorContractToCreateClientTeam>
+        inline: true
     source:
       openapi: ../openapi.yml
   EorContractToCreateCompensationDetails:
@@ -15572,19 +15793,30 @@
       openapi: ../openapi.yml
   EorContractToCreate:
     properties:
-      employee: optional<EorContractToCreateEmployee>
-      employment: EorContractToCreateEmployment
+      employee:
+        type: optional<EorContractToCreateEmployee>
+        inline: true
+      employment:
+        type: EorContractToCreateEmployment
+        inline: true
       job_title:
         type: optional<string>
         docs: Employee's job title.
-      seniority: EorContractToCreateSeniority
-      client: EorContractToCreateClient
-      compensation_details: EorContractToCreateCompensationDetails
+      seniority:
+        type: EorContractToCreateSeniority
+        inline: true
+      client:
+        type: EorContractToCreateClient
+        inline: true
+      compensation_details:
+        type: EorContractToCreateCompensationDetails
+        inline: true
       quote_additional_fields:
         type: optional<EorContractToCreateQuoteAdditionalFields>
         docs: >-
           Some countries require additional employee information for employment
           contracts.
+        inline: true
       health_plan_id:
         type: optional<string>
         docs: >-
@@ -15633,7 +15865,9 @@
       openapi: ../openapi.yml
   EorContractCreatedClient:
     properties:
-      legal_entity: optional<EorContractCreatedClientLegalEntity>
+      legal_entity:
+        type: optional<EorContractCreatedClientLegalEntity>
+        inline: true
     source:
       openapi: ../openapi.yml
   EorContractCreatedCompensationDetails:
@@ -15689,11 +15923,21 @@
       job_title:
         type: optional<string>
         docs: Employee's job title.
-      employment: optional<EorContractCreatedEmployment>
-      client: optional<EorContractCreatedClient>
-      compensation_details: optional<EorContractCreatedCompensationDetails>
-      employee: optional<EorContractCreatedEmployee>
-      health_plan: optional<EorContractCreatedHealthPlan>
+      employment:
+        type: optional<EorContractCreatedEmployment>
+        inline: true
+      client:
+        type: optional<EorContractCreatedClient>
+        inline: true
+      compensation_details:
+        type: optional<EorContractCreatedCompensationDetails>
+        inline: true
+      employee:
+        type: optional<EorContractCreatedEmployee>
+        inline: true
+      health_plan:
+        type: optional<EorContractCreatedHealthPlan>
+        inline: true
       seniority: optional<Seniority>
     source:
       openapi: ../openapi.yml
@@ -15777,8 +16021,12 @@
   EorCountryValidationsWorkSchedule:
     docs: Employee's Work schedule in days and hours.
     properties:
-      days: optional<EorCountryValidationsWorkScheduleDays>
-      hours: optional<EorCountryValidationsWorkScheduleHours>
+      days:
+        type: optional<EorCountryValidationsWorkScheduleDays>
+        inline: true
+      hours:
+        type: optional<EorCountryValidationsWorkScheduleHours>
+        inline: true
     source:
       openapi: ../openapi.yml
   EorCountryValidationsDefiniteContractType:
@@ -15806,22 +16054,30 @@
       holiday:
         type: optional<EorCountryValidationsHoliday>
         docs: Range of the number of holidays.
+        inline: true
       part_time_holiday:
         type: optional<EorCountryValidationsPartTimeHoliday>
         docs: Holiday type and range for part-time contracts.
-      sick_days: optional<EorCountryValidationsSickDays>
+        inline: true
+      sick_days:
+        type: optional<EorCountryValidationsSickDays>
+        inline: true
       salary:
         type: optional<EorCountryValidationsSalary>
         docs: Salary range.
+        inline: true
       probation:
         type: optional<EorCountryValidationsProbation>
         docs: Probation period range.
+        inline: true
       part_time_probation:
         type: optional<EorCountryValidationsPartTimeProbation>
         docs: Probation period range for part-time contracts.
+        inline: true
       work_schedule:
         type: optional<EorCountryValidationsWorkSchedule>
         docs: Employee's Work schedule in days and hours.
+        inline: true
       insurance_fee:
         type: optional<string>
         docs: Insurance fee.
@@ -15840,10 +16096,13 @@
       definite_contract:
         type: optional<EorCountryValidationsDefiniteContract>
         docs: Conditions to make definitive contract.
+        inline: true
       adjustments_information_box:
         type: optional<string>
         docs: Country specific notes and information.
-      health_insurance: optional<EorCountryValidationsHealthInsurance>
+      health_insurance:
+        type: optional<EorCountryValidationsHealthInsurance>
+        inline: true
     source:
       openapi: ../openapi.yml
   HealthInsuranceProviderAttachmentsItem:
@@ -16216,12 +16475,16 @@
       job_title: optional<string>
       payments: optional<list<EmployeeListPaymentsItem>>
       hourly_report_total: optional<string>
-      client_legal_entity: optional<EmployeeListClientLegalEntity>
+      client_legal_entity:
+        type: optional<EmployeeListClientLegalEntity>
+        inline: true
       state: optional<string>
       seniority: optional<string>
       completion_date: optional<string>
       hiring_status: optional<string>
-      monthly_payment: optional<EmployeeListMonthlyPayment>
+      monthly_payment:
+        type: optional<EmployeeListMonthlyPayment>
+        inline: true
     source:
       openapi: ../openapi.yml
   WebhookItemStatus:
@@ -16626,7 +16889,9 @@
       job_information: HrisDirectEmployeeJobInformation
       compensation: HrisCompensation
       contract: HrisDirectEmployeeContract
-      vacation_info: optional<HrisDirectEmployeeVacationInfo>
+      vacation_info:
+        type: optional<HrisDirectEmployeeVacationInfo>
+        inline: true
     source:
       openapi: ../openapi.yml
   HrisDirectEmployeeResponse:

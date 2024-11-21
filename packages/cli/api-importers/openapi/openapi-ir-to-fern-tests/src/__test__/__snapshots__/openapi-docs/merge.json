@@ -1322,6 +1322,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
+                "inline": undefined,
                 "type": "optional<datetime>",
               },
               "home_location": {
@@ -1633,6 +1634,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
+                "inline": undefined,
                 "type": "optional<datetime>",
               },
               "home_location": {

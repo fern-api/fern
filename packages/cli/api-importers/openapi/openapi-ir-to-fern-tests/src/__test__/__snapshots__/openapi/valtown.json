@@ -91,7 +91,10 @@
                   "pattern": undefined,
                 },
               },
-              "links": "BasicValLinks",
+              "links": {
+                "inline": true,
+                "type": "BasicValLinks",
+              },
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -249,7 +252,10 @@
                   "multipleOf": undefined,
                 },
               },
-              "links": "ExtendedValLinks",
+              "links": {
+                "inline": true,
+                "type": "ExtendedValLinks",
+              },
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -506,7 +512,10 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
                   "pattern": undefined,
                 },
               },
-              "links": "UserLinks",
+              "links": {
+                "inline": true,
+                "type": "UserLinks",
+              },
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
                 "type": "optional<string>",
@@ -604,7 +613,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: URL of this user’s profile on Val Town’s website
         validation:
           format: uri
-      links: UserLinks
+      links:
+        type: UserLinks
+        inline: true
     source:
       openapi: ../openapi.yml
   ResultSetLastInsertRowid:
@@ -756,7 +767,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links: ExtendedValLinks
+      links:
+        type: ExtendedValLinks
+        inline: true
       author:
         type: optional<ExtendedValAuthor>
         docs: The user who created this val
@@ -867,7 +880,9 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links: BasicValLinks
+      links:
+        type: BasicValLinks
+        inline: true
       author:
         type: optional<BasicValAuthor>
         docs: The user who created this val
@@ -1077,7 +1092,10 @@ API endpoints",
                   "multipleOf": undefined,
                 },
               },
-              "links": "AliasValResponseLinks",
+              "links": {
+                "inline": true,
+                "type": "AliasValResponseLinks",
+              },
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -1395,7 +1413,9 @@ types:
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links: AliasValResponseLinks
+      links:
+        type: AliasValResponseLinks
+        inline: true
       author:
         type: optional<AliasValResponseAuthor>
         docs: The user who created this val
@@ -2281,7 +2301,10 @@ give access to details and data from the requesting user.",
           "MeCommentsResponseDataItem": {
             "docs": undefined,
             "properties": {
-              "author": "MeCommentsResponseDataItemAuthor",
+              "author": {
+                "inline": true,
+                "type": "MeCommentsResponseDataItemAuthor",
+              },
               "comment": {
                 "docs": "Text of the given comment, in Markdown",
                 "type": "string",
@@ -2297,7 +2320,10 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "val": "MeCommentsResponseDataItemVal",
+              "val": {
+                "inline": true,
+                "type": "MeCommentsResponseDataItemVal",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2410,7 +2436,10 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "links": "MeGetResponseLinks",
+              "links": {
+                "inline": true,
+                "type": "MeGetResponseLinks",
+              },
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
                 "type": "optional<string>",
@@ -2497,10 +2526,12 @@ give access to details and data from the requesting user.",
             "properties": {
               "dependsOn": {
                 "docs": "A val in a dependency relationship",
+                "inline": true,
                 "type": "MeReferencesResponseDataItemDependsOn",
               },
               "reference": {
                 "docs": "A val in a dependency relationship",
+                "inline": true,
                 "type": "MeReferencesResponseDataItemReference",
               },
               "referencedAt": "datetime",
@@ -2626,7 +2657,9 @@ give access to details and data from the requesting user.",
         docs: URL of this user’s profile on Val Town’s website
         validation:
           format: uri
-      links: MeGetResponseLinks
+      links:
+        type: MeGetResponseLinks
+        inline: true
       tier:
         type: optional<MeGetResponseTier>
         docs: Your account tier
@@ -2713,8 +2746,12 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       createdAt: datetime
-      author: MeCommentsResponseDataItemAuthor
-      val: MeCommentsResponseDataItemVal
+      author:
+        type: MeCommentsResponseDataItemAuthor
+        inline: true
+      val:
+        type: MeCommentsResponseDataItemVal
+        inline: true
     source:
       openapi: ../openapi.yml
   MeCommentsResponse:
@@ -2774,9 +2811,11 @@ give access to details and data from the requesting user.",
       reference:
         type: MeReferencesResponseDataItemReference
         docs: A val in a dependency relationship
+        inline: true
       dependsOn:
         type: MeReferencesResponseDataItemDependsOn
         docs: A val in a dependency relationship
+        inline: true
       referencedAt: datetime
     source:
       openapi: ../openapi.yml

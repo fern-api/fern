@@ -1095,6 +1095,7 @@
               },
               "company": {
                 "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+                "inline": true,
                 "type": "optional<ContactCompany>",
               },
               "email": "optional<string>",
@@ -1389,6 +1390,7 @@
               "manufacturer_ref": {
                 "availability": "deprecated",
                 "docs": "[DEPRECATED] Your custom string used to refer to a manufacturer location.",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "metadata": "optional<MetadataCreate>",
@@ -3253,6 +3255,7 @@
               "country_of_origin": {
                 "availability": "deprecated",
                 "docs": "[DEPRECATED] - Use the country_of_origin on the supplier field. The country the product was manufactured",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "description": {
@@ -3262,6 +3265,7 @@
               "hs_codes": {
                 "availability": "deprecated",
                 "docs": "DEPRECATED - HS codes can be found in the classifications array",
+                "inline": undefined,
                 "type": "optional<list<HsCode>>",
               },
               "id": {
@@ -6874,6 +6878,7 @@
       company:
         type: optional<ContactCompany>
         docs: '[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)'
+        inline: true
     source:
       openapi: ../openapi.yml
   Location:
@@ -9266,7 +9271,10 @@ errors:
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<BookingsIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<BookingsIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -9332,7 +9340,9 @@ errors:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<BookingsIndexResponseData>
+      data:
+        type: optional<BookingsIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   CreateBookingDeclaredAsStrategy:
@@ -11151,7 +11161,10 @@ docs: >-
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<BookingLineItemIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<BookingLineItemIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -11206,7 +11219,9 @@ docs: >-
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<BookingLineItemIndexResponseData>
+      data:
+        type: optional<BookingLineItemIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   BookingLineItemCreateResponse:
@@ -12521,7 +12536,10 @@ docs: Endpoints relating to Carbon Calculations
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<CommercialInvoicesIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<CommercialInvoicesIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -12583,7 +12601,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<CommercialInvoicesIndexResponseData>
+      data:
+        type: optional<CommercialInvoicesIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   CommercialInvoicesCreateResponse:
@@ -13695,7 +13715,10 @@ docs: Endpoints relating to Commercial Invoice objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<NetworkCompanyIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<NetworkCompanyIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -13771,7 +13794,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<NetworkCompanyIndexResponseData>
+      data:
+        type: optional<NetworkCompanyIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   NetworkCompanyCreateResponse:
@@ -14561,7 +14586,10 @@ docs: Endpoints relating to Company objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<CompanyEntityIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<CompanyEntityIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -14637,7 +14665,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<CompanyEntityIndexResponseData>
+      data:
+        type: optional<CompanyEntityIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   NetworkCompanyEntityCreateResponse:
@@ -15288,7 +15318,10 @@ docs: Endpoints relating to CompanyEntity objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<NetworkContactIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<NetworkContactIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -15352,7 +15385,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<NetworkContactIndexResponseData>
+      data:
+        type: optional<NetworkContactIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   NetworkContactCreateResponse:
@@ -15886,7 +15921,10 @@ docs: Endpoints relating to Contact objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<ContainerListResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ContainerListResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -15936,7 +15974,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<ContainerListResponseData>
+      data:
+        type: optional<ContainerListResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   ContainerShowResponse:
@@ -16336,7 +16376,10 @@ docs: Endpoints relating to Container objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<OceanContainerLegsIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<OceanContainerLegsIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -16386,7 +16429,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<OceanContainerLegsIndexResponseData>
+      data:
+        type: optional<OceanContainerLegsIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   OceanContainerLegsShowResponse:
@@ -16688,7 +16733,10 @@ docs: Endpoints relating to ContainerLeg objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<CustomsEntryIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<CustomsEntryIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -16726,7 +16774,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<CustomsEntryIndexResponseData>
+      data:
+        type: optional<CustomsEntryIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   CustomsEntriesShowResponse:
@@ -17123,7 +17173,10 @@ docs: Endpoints relating to Customs Entry objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<DocumentsIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<DocumentsIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -17175,7 +17228,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<DocumentsIndexResponseData>
+      data:
+        type: optional<DocumentsIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   DocumentsCreateResponse:
@@ -17642,7 +17697,10 @@ docs: Endpoints relating to Document objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<EventsIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<EventsIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -17706,7 +17764,9 @@ docs: Endpoints relating to Document objects
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<EventsIndexResponseData>
+      data:
+        type: optional<EventsIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   EventsShowResponse:
@@ -18545,7 +18605,10 @@ Other details about this invoice",
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<InvoiceIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<InvoiceIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -18608,7 +18671,9 @@ Other details about this invoice",
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<InvoiceIndexResponseData>
+      data:
+        type: optional<InvoiceIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   InvoicesShowResponse:
@@ -19543,7 +19608,10 @@ docs: Endpoints relating to Invoice objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<LocationIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<LocationIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -19619,7 +19687,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<LocationIndexResponseData>
+      data:
+        type: optional<LocationIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   NetworkLocationCreateResponse:
@@ -20133,7 +20203,10 @@ docs: Endpoints relating to Location objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<PortsIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<PortsIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -20179,7 +20252,9 @@ docs: Endpoints relating to Location objects
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<PortsIndexResponseData>
+      data:
+        type: optional<PortsIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -20721,7 +20796,10 @@ docs: Endpoints relating to Ports objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<ProductIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ProductIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -20783,7 +20861,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<ProductIndexResponseData>
+      data:
+        type: optional<ProductIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   ProductCreateResponse:
@@ -22177,7 +22257,10 @@ docs: Endpoints relating to Product objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<PurchaseOrderIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<PurchaseOrderIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -22255,7 +22338,9 @@ docs: Endpoints relating to Product objects
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<PurchaseOrderIndexResponseData>
+      data:
+        type: optional<PurchaseOrderIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderShowResponse:
@@ -23457,7 +23542,10 @@ docs: >-
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<PurchaseOrderLineItemIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<PurchaseOrderLineItemIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -23512,7 +23600,9 @@ docs: >-
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<PurchaseOrderLineItemIndexResponseData>
+      data:
+        type: optional<PurchaseOrderLineItemIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   PurchaseOrderLineItemShowResponse:
@@ -25077,7 +25167,10 @@ docs: >-
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<ShipmentIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ShipmentIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -25125,7 +25218,10 @@ docs: >-
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<ShipmentsShareableResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ShipmentsShareableResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -25187,7 +25283,9 @@ docs: >-
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<ShipmentIndexResponseData>
+      data:
+        type: optional<ShipmentIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   ShipmentShowResponse:
@@ -25224,7 +25322,9 @@ docs: >-
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<ShipmentsShareableResponseData>
+      data:
+        type: optional<ShipmentsShareableResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -26644,7 +26744,10 @@ docs: Endpoints relating to Shipment objects
             "docs": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<ShipmentLegIndexResponseData>",
+              "data": {
+                "inline": true,
+                "type": "optional<ShipmentLegIndexResponseData>",
+              },
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -26694,7 +26797,9 @@ types:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data: optional<ShipmentLegIndexResponseData>
+      data:
+        type: optional<ShipmentLegIndexResponseData>
+        inline: true
     source:
       openapi: ../openapi.yml
   ShipmentLegShowResponse:

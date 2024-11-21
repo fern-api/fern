@@ -125,6 +125,7 @@
             "properties": {
               "config": {
                 "docs": "Configuration settings",
+                "inline": true,
                 "type": "optional<AdminConfigConfig>",
               },
             },
@@ -158,6 +159,7 @@
             "properties": {
               "conductor": {
                 "docs": "Conductor statistics",
+                "inline": true,
                 "type": "optional<AdminStatusConductor>",
               },
               "label": {
@@ -166,6 +168,7 @@
               },
               "timing": {
                 "docs": "Timing results",
+                "inline": true,
                 "type": "optional<AdminStatusTiming>",
               },
               "version": {
@@ -431,21 +434,27 @@
             "docs": undefined,
             "properties": {
               "jwt": {
+                "inline": true,
                 "type": "optional<jwt>",
               },
               "jwt_vc": {
+                "inline": true,
                 "type": "optional<ClaimFormatJwtVc>",
               },
               "jwt_vp": {
+                "inline": true,
                 "type": "optional<ClaimFormatJwtVp>",
               },
               "ldp": {
+                "inline": true,
                 "type": "optional<ldp>",
               },
               "ldp_vc": {
+                "inline": true,
                 "type": "optional<ClaimFormatLdpVc>",
               },
               "ldp_vp": {
+                "inline": true,
                 "type": "optional<ClaimFormatLdpVp>",
               },
             },
@@ -723,6 +732,7 @@
             "properties": {
               "results": {
                 "docs": "Dictionary of metadata associated with connection.",
+                "inline": true,
                 "type": "optional<ConnectionMetadataResults>",
               },
             },
@@ -889,6 +899,7 @@
               },
               "settings": {
                 "docs": "Settings for this wallet.",
+                "inline": true,
                 "type": "optional<CreateWalletResponseSettings>",
               },
               "state": {
@@ -1085,6 +1096,7 @@
             "properties": {
               "rev_reg_delta": {
                 "docs": "Indy revocation registry delta",
+                "inline": true,
                 "type": "optional<CredRevIndyRecordsResultRevRegDelta>",
               },
             },
@@ -1589,10 +1601,12 @@
               },
               "record_ids": {
                 "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
+                "inline": true,
                 "type": "optional<DifPresSpecRecordIds>",
               },
               "reveal_doc": {
                 "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
+                "inline": true,
                 "type": "optional<DifPresSpecRevealDoc>",
               },
             },
@@ -1726,6 +1740,7 @@
             "properties": {
               "credential": {
                 "docs": "Credential to sign",
+                "inline": true,
                 "type": "DocCredential",
               },
               "options": "DocOptions",
@@ -2093,10 +2108,12 @@
             "properties": {
               "blinded_ms": {
                 "docs": "Blinded master secret",
+                "inline": true,
                 "type": "IndyCredRequestBlindedMs",
               },
               "blinded_ms_correctness_proof": {
                 "docs": "Blinded master secret correctness proof",
+                "inline": true,
                 "type": "IndyCredRequestBlindedMsCorrectnessProof",
               },
               "cred_def_id": {
@@ -2163,6 +2180,7 @@
               },
               "rev_reg": {
                 "docs": "Revocation registry state",
+                "inline": true,
                 "type": "optional<IndyCredentialRevReg>",
               },
               "rev_reg_id": {
@@ -2187,10 +2205,12 @@
               },
               "signature": {
                 "docs": "Credential signature",
+                "inline": true,
                 "type": "signature",
               },
               "signature_correctness_proof": {
                 "docs": "Credential signature correctness proof",
+                "inline": true,
                 "type": "IndyCredentialSignatureCorrectnessProof",
               },
               "values": {
@@ -2199,6 +2219,7 @@
               },
               "witness": {
                 "docs": "Witness for revocation proof",
+                "inline": true,
                 "type": "optional<witness>",
               },
             },
@@ -2908,10 +2929,12 @@
               },
               "self_attested_attrs": {
                 "docs": "Proof requested proof self-attested attributes",
+                "inline": true,
                 "type": "optional<IndyProofRequestedProofSelfAttestedAttrs>",
               },
               "unrevealed_attrs": {
                 "docs": "Unrevealed attributes",
+                "inline": true,
                 "type": "optional<IndyProofRequestedProofUnrevealedAttrs>",
               },
             },
@@ -3194,6 +3217,7 @@
               },
               "metadata": {
                 "docs": "Metadata dictionary",
+                "inline": true,
                 "type": "optional<metadata>",
               },
               "name": {
@@ -3551,6 +3575,7 @@
               },
               "filter": {
                 "docs": "Query dictionary object",
+                "inline": true,
                 "type": "optional<KeylistQueryFilter>",
               },
               "paginate": {
@@ -4355,10 +4380,12 @@
             "properties": {
               "did_document": {
                 "docs": "DID Document",
+                "inline": true,
                 "type": "ResolutionResultDidDocument",
               },
               "metadata": {
                 "docs": "Resolution metadata",
+                "inline": true,
                 "type": "ResolutionResultMetadata",
               },
             },
@@ -4415,14 +4442,17 @@
             "properties": {
               "accum_calculated": {
                 "docs": "Calculated accumulator for phantom revocations",
+                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultAccumCalculated>",
               },
               "accum_fixed": {
                 "docs": "Applied ledger transaction to fix revocations",
+                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultAccumFixed>",
               },
               "rev_reg_delta": {
                 "docs": "Indy revocation registry delta",
+                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultRevRegDelta>",
               },
             },
@@ -4676,6 +4706,7 @@
               },
               "signed_doc": {
                 "docs": "Signed document",
+                "inline": true,
                 "type": "optional<SignResponseSignedDoc>",
               },
             },
@@ -4923,6 +4954,7 @@
                 "type": "optional<list<TransactionRecordMessagesAttachItem>>",
               },
               "meta_data": {
+                "inline": true,
                 "type": "optional<TransactionRecordMetaData>",
               },
               "signature_request": {
@@ -4940,6 +4972,7 @@
                 "type": "optional<string>",
               },
               "timing": {
+                "inline": true,
                 "type": "optional<TransactionRecordTiming>",
               },
               "trace": {
@@ -5163,6 +5196,7 @@
               },
               "credential_request_metadata": {
                 "docs": "(Indy) credential request metadata",
+                "inline": true,
                 "type": "optional<V10CredentialExchangeCredentialRequestMetadata>",
               },
               "error_msg": {
@@ -5679,15 +5713,19 @@
             "docs": undefined,
             "properties": {
               "cred_issue": {
+                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredIssue>",
               },
               "cred_offer": {
+                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredOffer>",
               },
               "cred_proposal": {
+                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredProposal>",
               },
               "cred_request": {
+                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredRequest>",
               },
             },
@@ -5791,6 +5829,7 @@
               },
               "cred_request_metadata": {
                 "docs": "Credential request metadata for indy holder",
+                "inline": true,
                 "type": "optional<V20CredExRecordIndyCredRequestMetadata>",
               },
               "cred_rev_id": {
@@ -6412,12 +6451,15 @@
             "docs": undefined,
             "properties": {
               "pres": {
+                "inline": true,
                 "type": "optional<pres>",
               },
               "pres_proposal": {
+                "inline": true,
                 "type": "optional<V20PresExRecordByFormatPresProposal>",
               },
               "pres_request": {
+                "inline": true,
                 "type": "optional<V20PresExRecordByFormatPresRequest>",
               },
             },
@@ -6666,6 +6708,7 @@
               },
               "cred_value": {
                 "docs": "(JSON-serializable) credential value",
+                "inline": true,
                 "type": "optional<VcRecordCredValue>",
               },
               "expanded_types": {
@@ -6764,6 +6807,7 @@
               },
               "settings": {
                 "docs": "Settings for this wallet.",
+                "inline": true,
                 "type": "optional<WalletRecordSettings>",
               },
               "state": {
@@ -6983,6 +7027,7 @@ types:
       config:
         type: optional<AdminConfigConfig>
         docs: Configuration settings
+        inline: true
     source:
       openapi: ../openapi.yml
   AdminModules:
@@ -7009,12 +7054,14 @@ types:
       conductor:
         type: optional<AdminStatusConductor>
         docs: Conductor statistics
+        inline: true
       label:
         type: optional<string>
         docs: Default label
       timing:
         type: optional<AdminStatusTiming>
         docs: Timing results
+        inline: true
       version:
         type: optional<string>
         docs: Version code
@@ -7183,16 +7230,22 @@ types:
     properties:
       jwt:
         type: optional<jwt>
+        inline: true
       jwt_vc:
         type: optional<ClaimFormatJwtVc>
+        inline: true
       jwt_vp:
         type: optional<ClaimFormatJwtVp>
+        inline: true
       ldp:
         type: optional<ldp>
+        inline: true
       ldp_vc:
         type: optional<ClaimFormatLdpVc>
+        inline: true
       ldp_vp:
         type: optional<ClaimFormatLdpVp>
+        inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordAccept:
@@ -7366,6 +7419,7 @@ types:
       results:
         type: optional<ConnectionMetadataResults>
         docs: Dictionary of metadata associated with connection.
+        inline: true
     source:
       openapi: ../openapi.yml
   ConnectionModuleResponse: map<string, unknown>
@@ -7480,6 +7534,7 @@ types:
       settings:
         type: optional<CreateWalletResponseSettings>
         docs: Settings for this wallet.
+        inline: true
       state:
         type: optional<string>
         docs: Current record state
@@ -7590,6 +7645,7 @@ types:
       rev_reg_delta:
         type: optional<CredRevIndyRecordsResultRevRegDelta>
         docs: Indy revocation registry delta
+        inline: true
     source:
       openapi: ../openapi.yml
   CredRevRecordDetailsResult:
@@ -7950,11 +8006,13 @@ types:
         docs: >-
           Mapping of input_descriptor id to list of stored W3C credential
           record_id
+        inline: true
       reveal_doc:
         type: optional<DifPresSpecRevealDoc>
         docs: >-
           reveal doc [JSON-LD frame] dict used to derive the credential when
           selective disclosure is required
+        inline: true
     source:
       openapi: ../openapi.yml
   DIFProofProposal:
@@ -8009,6 +8067,7 @@ types:
       credential:
         type: DocCredential
         docs: Credential to sign
+        inline: true
       options: DocOptions
     source:
       openapi: ../openapi.yml
@@ -8224,9 +8283,11 @@ types:
       blinded_ms:
         type: IndyCredRequestBlindedMs
         docs: Blinded master secret
+        inline: true
       blinded_ms_correctness_proof:
         type: IndyCredRequestBlindedMsCorrectnessProof
         docs: Blinded master secret correctness proof
+        inline: true
       cred_def_id:
         type: string
         docs: Credential definition identifier
@@ -8277,6 +8338,7 @@ types:
       rev_reg:
         type: optional<IndyCredentialRevReg>
         docs: Revocation registry state
+        inline: true
       rev_reg_id:
         type: optional<string>
         docs: Revocation registry identifier
@@ -8292,15 +8354,18 @@ types:
       signature:
         type: signature
         docs: Credential signature
+        inline: true
       signature_correctness_proof:
         type: IndyCredentialSignatureCorrectnessProof
         docs: Credential signature correctness proof
+        inline: true
       values:
         type: map<string, IndyCredentialValuesValue>
         docs: Credential attributes
       witness:
         type: optional<witness>
         docs: Witness for revocation proof
+        inline: true
     source:
       openapi: ../openapi.yml
   IndyEQProof:
@@ -8711,9 +8776,11 @@ types:
       self_attested_attrs:
         type: optional<IndyProofRequestedProofSelfAttestedAttrs>
         docs: Proof requested proof self-attested attributes
+        inline: true
       unrevealed_attrs:
         type: optional<IndyProofRequestedProofUnrevealedAttrs>
         docs: Unrevealed attributes
+        inline: true
     source:
       openapi: ../openapi.yml
   IndyProofRequestedProofPredicate:
@@ -8883,6 +8950,7 @@ types:
       metadata:
         type: optional<metadata>
         docs: Metadata dictionary
+        inline: true
       name:
         type: optional<string>
         docs: Name
@@ -9116,6 +9184,7 @@ types:
       filter:
         type: optional<KeylistQueryFilter>
         docs: Query dictionary object
+        inline: true
       paginate:
         type: optional<KeylistQueryPaginate>
     source:
@@ -9652,9 +9721,11 @@ types:
       did_document:
         type: ResolutionResultDidDocument
         docs: DID Document
+        inline: true
       metadata:
         type: ResolutionResultMetadata
         docs: Resolution metadata
+        inline: true
     source:
       openapi: ../openapi.yml
   RevRegIssuedResult:
@@ -9692,12 +9763,15 @@ types:
       accum_calculated:
         type: optional<RevRegWalletUpdatedResultAccumCalculated>
         docs: Calculated accumulator for phantom revocations
+        inline: true
       accum_fixed:
         type: optional<RevRegWalletUpdatedResultAccumFixed>
         docs: Applied ledger transaction to fix revocations
+        inline: true
       rev_reg_delta:
         type: optional<RevRegWalletUpdatedResultRevRegDelta>
         docs: Indy revocation registry delta
+        inline: true
     source:
       openapi: ../openapi.yml
   RevRegsCreated:
@@ -9837,6 +9911,7 @@ types:
       signed_doc:
         type: optional<SignResponseSignedDoc>
         docs: Signed document
+        inline: true
     source:
       openapi: ../openapi.yml
   SignatureOptions:
@@ -10011,6 +10086,7 @@ types:
         type: optional<list<TransactionRecordMessagesAttachItem>>
       meta_data:
         type: optional<TransactionRecordMetaData>
+        inline: true
       signature_request:
         type: optional<list<TransactionRecordSignatureRequestItem>>
       signature_response:
@@ -10023,6 +10099,7 @@ types:
         docs: Thread Identifier
       timing:
         type: optional<TransactionRecordTiming>
+        inline: true
       trace:
         type: optional<boolean>
         docs: Record trace information, based on agent configuration
@@ -10144,6 +10221,7 @@ types:
       credential_request_metadata:
         type: optional<V10CredentialExchangeCredentialRequestMetadata>
         docs: (Indy) credential request metadata
+        inline: true
       error_msg:
         type: optional<string>
         docs: Error message
@@ -10493,12 +10571,16 @@ types:
     properties:
       cred_issue:
         type: optional<V20CredExRecordByFormatCredIssue>
+        inline: true
       cred_offer:
         type: optional<V20CredExRecordByFormatCredOffer>
+        inline: true
       cred_proposal:
         type: optional<V20CredExRecordByFormatCredProposal>
+        inline: true
       cred_request:
         type: optional<V20CredExRecordByFormatCredRequest>
+        inline: true
     source:
       openapi: ../openapi.yml
   V20CredExRecordDetail:
@@ -10537,6 +10619,7 @@ types:
       cred_request_metadata:
         type: optional<V20CredExRecordIndyCredRequestMetadata>
         docs: Credential request metadata for indy holder
+        inline: true
       cred_rev_id:
         type: optional<string>
         docs: Credential revocation identifier within revocation registry
@@ -10934,10 +11017,13 @@ types:
     properties:
       pres:
         type: optional<pres>
+        inline: true
       pres_proposal:
         type: optional<V20PresExRecordByFormatPresProposal>
+        inline: true
       pres_request:
         type: optional<V20PresExRecordByFormatPresRequest>
+        inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecordList:
@@ -11027,6 +11113,7 @@ types:
       cred_value:
         type: optional<VcRecordCredValue>
         docs: (JSON-serializable) credential value
+        inline: true
       expanded_types:
         type: optional<list<string>>
       given_id:
@@ -11095,6 +11182,7 @@ types:
       settings:
         type: optional<WalletRecordSettings>
         docs: Settings for this wallet.
+        inline: true
       state:
         type: optional<string>
         docs: Current record state

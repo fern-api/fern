@@ -137,13 +137,14 @@ export function buildObjectTypeDeclaration({
         const audiences = property.audiences;
         const name = property.nameOverride;
         const availability = convertAvailability(property.availability);
-
-        properties[property.key] = convertPropertyTypeReferenceToTypeDefinition(
+        const inline = property.inline;
+        properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
             typeReference,
             audiences,
             name,
-            availability
-        );
+            availability,
+            inline: inline || undefined // remove false values
+        });
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
 
@@ -593,20 +594,28 @@ function getSchemaIdOfResolvedType({
     return schema;
 }
 
-function convertPropertyTypeReferenceToTypeDefinition(
-    typeReference: RawSchemas.TypeReferenceSchema,
-    audiences: string[],
-    name?: string | undefined,
-    availability?: RawSchemas.AvailabilityUnionSchema
-): RawSchemas.ObjectPropertySchema {
-    if (audiences.length === 0 && name == null && availability == null) {
+function convertPropertyTypeReferenceToTypeDefinition({
+    typeReference,
+    audiences,
+    name,
+    availability,
+    inline
+}: {
+    typeReference: RawSchemas.TypeReferenceSchema;
+    audiences: string[];
+    name?: string | undefined;
+    availability?: RawSchemas.AvailabilityUnionSchema;
+    inline: boolean | undefined;
+}): RawSchemas.ObjectPropertySchema {
+    if (audiences.length === 0 && name == null && availability == null && inline !== true) {
         return typeReference;
     } else {
         return {
             ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
-            ...(availability != null ? { availability } : {})
+            ...(availability != null ? { availability } : {}),
+            inline
         };
     }
 }

@@ -10,7 +10,10 @@
             "docs": undefined,
             "properties": {
               "added_at": "optional<datetime>",
-              "complete": "GameComplete",
+              "complete": {
+                "inline": true,
+                "type": "GameComplete",
+              },
               "date": {
                 "type": "string",
                 "validation": {
@@ -126,7 +129,10 @@
             "docs": undefined,
             "properties": {
               "added_at": "optional<datetime>",
-              "complete": "GroupGamesItemComplete",
+              "complete": {
+                "inline": true,
+                "type": "GroupGamesItemComplete",
+              },
               "date": {
                 "type": "string",
                 "validation": {
@@ -429,7 +435,9 @@
       room: optional<string>
       photos: optional<list<GamePhotosItem>>
       extra_fields: list<GameExtraFieldsItem>
-      complete: GameComplete
+      complete:
+        type: GameComplete
+        inline: true
     source:
       openapi: ../openapi.yml
   GroupGamesItemExtraFieldsItem:
@@ -466,7 +474,9 @@
       start_at: optional<datetime>
       room: optional<string>
       extra_fields: list<GroupGamesItemExtraFieldsItem>
-      complete: GroupGamesItemComplete
+      complete:
+        type: GroupGamesItemComplete
+        inline: true
     source:
       openapi: ../openapi.yml
   GroupPlayersItemExtraFieldsItem:

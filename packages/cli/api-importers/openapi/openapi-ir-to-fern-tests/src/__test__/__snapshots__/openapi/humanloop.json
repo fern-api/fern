@@ -182,6 +182,7 @@ in the Evaluation Report.",
               "tool_call": {
                 "availability": "deprecated",
                 "docs": "NB: Deprecated in favour of tool_calls. A tool call requested by the assistant.",
+                "inline": undefined,
                 "type": "optional<FunctionTool>",
               },
               "tool_call_id": {
@@ -1785,6 +1786,7 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
               "tool_configs": {
                 "availability": "deprecated",
                 "docs": "NB: Deprecated with tools field. Definition of tools shown to the model.",
+                "inline": undefined,
                 "type": "optional<list<ToolConfigResponse>>",
               },
               "tools": {

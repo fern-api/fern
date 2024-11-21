@@ -9576,6 +9576,7 @@ service:
               },
               "uploadDetails": {
                 "docs": "Metadata for uploading the asset binary",
+                "inline": true,
                 "type": "optional<AssetsCreateResponseUploadDetails>",
               },
               "uploadUrl": {
@@ -9757,6 +9758,7 @@ service:
               },
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<AssetsListFoldersResponsePagination>",
               },
             },
@@ -10128,6 +10130,7 @@ service:
       uploadDetails:
         type: optional<AssetsCreateResponseUploadDetails>
         docs: Metadata for uploading the asset binary
+        inline: true
       contentType: optional<string>
       id: optional<string>
       parentFolder:
@@ -10343,6 +10346,7 @@ service:
       pagination:
         type: optional<AssetsListFoldersResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   AssetsCreateFolderResponse:
@@ -13586,7 +13590,10 @@ service:
                 "docs": "List of Items within the collection",
                 "type": "optional<list<ItemsListItemsLiveResponseItemsItem>>",
               },
-              "pagination": "optional<ItemsListItemsLiveResponsePagination>",
+              "pagination": {
+                "inline": true,
+                "type": "optional<ItemsListItemsLiveResponsePagination>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13697,7 +13704,10 @@ service:
                 "docs": "List of Items within the collection",
                 "type": "optional<list<ItemsListItemsResponseItemsItem>>",
               },
-              "pagination": "optional<ItemsListItemsResponsePagination>",
+              "pagination": {
+                "inline": true,
+                "type": "optional<ItemsListItemsResponsePagination>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -14023,7 +14033,9 @@ service:
       items:
         type: optional<list<ItemsListItemsResponseItemsItem>>
         docs: List of Items within the collection
-      pagination: optional<ItemsListItemsResponsePagination>
+      pagination:
+        type: optional<ItemsListItemsResponsePagination>
+        inline: true
     source:
       openapi: ../openapi.yml
   ItemsCreateItemRequestFieldData:
@@ -14165,7 +14177,9 @@ service:
       items:
         type: optional<list<ItemsListItemsLiveResponseItemsItem>>
         docs: List of Items within the collection
-      pagination: optional<ItemsListItemsLiveResponsePagination>
+      pagination:
+        type: optional<ItemsListItemsLiveResponsePagination>
+        inline: true
     source:
       openapi: ../openapi.yml
   ItemsCreateItemLiveRequestFieldData:
@@ -15800,6 +15814,7 @@ service:
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<FormSubmissionPayloadPayload>",
               },
               "triggerType": {
@@ -15888,6 +15903,7 @@ service:
               },
               "responseSettings": {
                 "docs": "Settings for form responses",
+                "inline": true,
                 "type": "optional<FormsGetResponseResponseSettings>",
               },
               "siteDomainId": {
@@ -16006,6 +16022,7 @@ service:
               "forms": "optional<list<FormsListResponseFormsItem>>",
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<FormsListResponsePagination>",
               },
             },
@@ -16050,6 +16067,7 @@ service:
               },
               "responseSettings": {
                 "docs": "Settings for form responses",
+                "inline": true,
                 "type": "optional<FormsListResponseFormsItemResponseSettings>",
               },
               "siteDomainId": {
@@ -16156,6 +16174,7 @@ service:
               "formSubmissions": "optional<list<FormsListSubmissionsResponseFormSubmissionsItem>>",
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<FormsListSubmissionsResponsePagination>",
               },
             },
@@ -16369,6 +16388,7 @@ service:
       responseSettings:
         type: optional<FormsListResponseFormsItemResponseSettings>
         docs: Settings for form responses
+        inline: true
       id:
         type: optional<string>
         docs: The unique id for the Form
@@ -16413,6 +16433,7 @@ service:
       pagination:
         type: optional<FormsListResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   FormsGetResponseFieldsValueType:
@@ -16477,6 +16498,7 @@ service:
       responseSettings:
         type: optional<FormsGetResponseResponseSettings>
         docs: Settings for form responses
+        inline: true
       id:
         type: optional<string>
         docs: The unique id for the Form
@@ -16543,6 +16565,7 @@ service:
       pagination:
         type: optional<FormsListSubmissionsResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   FormsGetSubmissionResponse:
@@ -16629,6 +16652,7 @@ service:
       payload:
         type: optional<FormSubmissionPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -17554,6 +17578,7 @@ webhooks:
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<CollectionItemDeletedPayloadPayload>",
               },
               "triggerType": {
@@ -17594,6 +17619,7 @@ webhooks:
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<CollectionItemUnpublishedPayloadPayload>",
               },
               "triggerType": {
@@ -17851,6 +17877,7 @@ webhooks:
       payload:
         type: optional<CollectionItemDeletedPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
   CollectionItemUnpublishedPayloadPayload:
@@ -17878,6 +17905,7 @@ webhooks:
       payload:
         type: optional<CollectionItemUnpublishedPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
 webhooks:
@@ -19958,7 +19986,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<EcommNewOrderPayloadMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<EcommNewOrderPayloadMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<EcommNewOrderPayloadNetAmount>",
@@ -19977,7 +20008,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<EcommNewOrderPayloadPaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<EcommNewOrderPayloadPaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<EcommNewOrderPayloadPurchasedItemsItem>>",
@@ -20418,7 +20452,10 @@ Required scope | `ecommerce:write`
           "EcommNewOrderPayloadPurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<EcommNewOrderPayloadPurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<EcommNewOrderPayloadPurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -20613,6 +20650,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<EcommNewOrderPayloadStripeCardExpires>",
               },
               "last4": {
@@ -20899,7 +20937,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<EcommOrderChangedPayloadMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<EcommOrderChangedPayloadMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<EcommOrderChangedPayloadNetAmount>",
@@ -20918,7 +20959,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<EcommOrderChangedPayloadPaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<EcommOrderChangedPayloadPaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<EcommOrderChangedPayloadPurchasedItemsItem>>",
@@ -21359,7 +21403,10 @@ Required scope | `ecommerce:write`
           "EcommOrderChangedPayloadPurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<EcommOrderChangedPayloadPurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<EcommOrderChangedPayloadPurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -21554,6 +21601,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<EcommOrderChangedPayloadStripeCardExpires>",
               },
               "last4": {
@@ -21840,7 +21888,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersGetResponseMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersGetResponseMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersGetResponseNetAmount>",
@@ -21859,7 +21910,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersGetResponsePaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersGetResponsePaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersGetResponsePurchasedItemsItem>>",
@@ -22300,7 +22354,10 @@ Required scope | `ecommerce:write`
           "OrdersGetResponsePurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersGetResponsePurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersGetResponsePurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -22495,6 +22552,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersGetResponseStripeCardExpires>",
               },
               "last4": {
@@ -22731,6 +22789,7 @@ Required scope | `ecommerce:write`
               },
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<OrdersListResponsePagination>",
               },
             },
@@ -22813,7 +22872,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersListResponseOrdersItemMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersListResponseOrdersItemMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersListResponseOrdersItemNetAmount>",
@@ -22832,7 +22894,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersListResponseOrdersItemPaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersListResponseOrdersItemPaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersListResponseOrdersItemPurchasedItemsItem>>",
@@ -23273,7 +23338,10 @@ Required scope | `ecommerce:write`
           "OrdersListResponseOrdersItemPurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersListResponseOrdersItemPurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersListResponseOrdersItemPurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -23468,6 +23536,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersListResponseOrdersItemStripeCardExpires>",
               },
               "last4": {
@@ -23785,7 +23854,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersRefundResponseMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersRefundResponseMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersRefundResponseNetAmount>",
@@ -23804,7 +23876,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersRefundResponsePaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersRefundResponsePaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersRefundResponsePurchasedItemsItem>>",
@@ -24245,7 +24320,10 @@ Required scope | `ecommerce:write`
           "OrdersRefundResponsePurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersRefundResponsePurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersRefundResponsePurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -24440,6 +24518,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersRefundResponseStripeCardExpires>",
               },
               "last4": {
@@ -24726,7 +24805,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersUpdateFulfillResponseMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersUpdateFulfillResponseMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersUpdateFulfillResponseNetAmount>",
@@ -24745,7 +24827,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersUpdateFulfillResponsePaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersUpdateFulfillResponsePaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersUpdateFulfillResponsePurchasedItemsItem>>",
@@ -25186,7 +25271,10 @@ Required scope | `ecommerce:write`
           "OrdersUpdateFulfillResponsePurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersUpdateFulfillResponsePurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersUpdateFulfillResponsePurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -25381,6 +25469,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersUpdateFulfillResponseStripeCardExpires>",
               },
               "last4": {
@@ -25667,7 +25756,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersUpdateResponseMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersUpdateResponseMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersUpdateResponseNetAmount>",
@@ -25686,7 +25778,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersUpdateResponsePaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersUpdateResponsePaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersUpdateResponsePurchasedItemsItem>>",
@@ -26127,7 +26222,10 @@ Required scope | `ecommerce:write`
           "OrdersUpdateResponsePurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersUpdateResponsePurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersUpdateResponsePurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -26322,6 +26420,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersUpdateResponseStripeCardExpires>",
               },
               "last4": {
@@ -26608,7 +26707,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<boolean>",
               },
-              "metadata": "optional<OrdersUpdateUnfulfillResponseMetadata>",
+              "metadata": {
+                "inline": true,
+                "type": "optional<OrdersUpdateUnfulfillResponseMetadata>",
+              },
               "netAmount": {
                 "docs": "The net amount after application fees",
                 "type": "optional<OrdersUpdateUnfulfillResponseNetAmount>",
@@ -26627,7 +26729,10 @@ Required scope | `ecommerce:write`
 ",
                 "type": "optional<string>",
               },
-              "paypalDetails": "optional<OrdersUpdateUnfulfillResponsePaypalDetails>",
+              "paypalDetails": {
+                "inline": true,
+                "type": "optional<OrdersUpdateUnfulfillResponsePaypalDetails>",
+              },
               "purchasedItems": {
                 "docs": "An array of all things that the Customer purchased.",
                 "type": "optional<list<OrdersUpdateUnfulfillResponsePurchasedItemsItem>>",
@@ -27068,7 +27173,10 @@ Required scope | `ecommerce:write`
           "OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantImage": {
             "docs": undefined,
             "properties": {
-              "file": "optional<OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantImageFile>",
+              "file": {
+                "inline": true,
+                "type": "optional<OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantImageFile>",
+              },
               "url": {
                 "docs": "The hosted location for the Variant's image",
                 "type": "optional<string>",
@@ -27263,6 +27371,7 @@ Required scope | `ecommerce:write`
               },
               "expires": {
                 "docs": "The card's expiration date.",
+                "inline": true,
                 "type": "optional<OrdersUpdateUnfulfillResponseStripeCardExpires>",
               },
               "last4": {
@@ -28241,7 +28350,10 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<OrdersListResponseOrdersItemPurchasedItemsItemVariantImageFile>
+      file:
+        type: >-
+          optional<OrdersListResponseOrdersItemPurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemPurchasedItemsItemVariantPrice:
@@ -28379,6 +28491,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersListResponseOrdersItemStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersListResponseOrdersItemPaypalDetails:
@@ -28607,14 +28720,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersListResponseOrdersItemPaypalDetails>
+      paypalDetails:
+        type: optional<OrdersListResponseOrdersItemPaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersListResponseOrdersItemMetadata>
+      metadata:
+        type: optional<OrdersListResponseOrdersItemMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -28665,6 +28782,7 @@ Required scope | `ecommerce:write`
       pagination:
         type: optional<OrdersListResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponseStatus:
@@ -28966,7 +29084,9 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<OrdersGetResponsePurchasedItemsItemVariantImageFile>
+      file:
+        type: optional<OrdersGetResponsePurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponsePurchasedItemsItemVariantPrice:
@@ -29104,6 +29224,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersGetResponseStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersGetResponsePaypalDetails:
@@ -29332,14 +29453,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersGetResponsePaypalDetails>
+      paypalDetails:
+        type: optional<OrdersGetResponsePaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersGetResponseMetadata>
+      metadata:
+        type: optional<OrdersGetResponseMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -29666,7 +29791,9 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<OrdersUpdateResponsePurchasedItemsItemVariantImageFile>
+      file:
+        type: optional<OrdersUpdateResponsePurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponsePurchasedItemsItemVariantPrice:
@@ -29804,6 +29931,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersUpdateResponseStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateResponsePaypalDetails:
@@ -30032,14 +30160,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersUpdateResponsePaypalDetails>
+      paypalDetails:
+        type: optional<OrdersUpdateResponsePaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersUpdateResponseMetadata>
+      metadata:
+        type: optional<OrdersUpdateResponseMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -30366,7 +30498,10 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<OrdersUpdateFulfillResponsePurchasedItemsItemVariantImageFile>
+      file:
+        type: >-
+          optional<OrdersUpdateFulfillResponsePurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponsePurchasedItemsItemVariantPrice:
@@ -30504,6 +30639,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersUpdateFulfillResponseStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateFulfillResponsePaypalDetails:
@@ -30732,14 +30868,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersUpdateFulfillResponsePaypalDetails>
+      paypalDetails:
+        type: optional<OrdersUpdateFulfillResponsePaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersUpdateFulfillResponseMetadata>
+      metadata:
+        type: optional<OrdersUpdateFulfillResponseMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -31066,8 +31206,10 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: >-
-        optional<OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantImageFile>
+      file:
+        type: >-
+          optional<OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponsePurchasedItemsItemVariantPrice:
@@ -31205,6 +31347,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersUpdateUnfulfillResponseStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersUpdateUnfulfillResponsePaypalDetails:
@@ -31433,14 +31576,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersUpdateUnfulfillResponsePaypalDetails>
+      paypalDetails:
+        type: optional<OrdersUpdateUnfulfillResponsePaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersUpdateUnfulfillResponseMetadata>
+      metadata:
+        type: optional<OrdersUpdateUnfulfillResponseMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -31775,7 +31922,9 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<OrdersRefundResponsePurchasedItemsItemVariantImageFile>
+      file:
+        type: optional<OrdersRefundResponsePurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponsePurchasedItemsItemVariantPrice:
@@ -31913,6 +32062,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<OrdersRefundResponseStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   OrdersRefundResponsePaypalDetails:
@@ -32141,14 +32291,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<OrdersRefundResponsePaypalDetails>
+      paypalDetails:
+        type: optional<OrdersRefundResponsePaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<OrdersRefundResponseMetadata>
+      metadata:
+        type: optional<OrdersRefundResponseMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -32475,7 +32629,9 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<EcommNewOrderPayloadPurchasedItemsItemVariantImageFile>
+      file:
+        type: optional<EcommNewOrderPayloadPurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadPurchasedItemsItemVariantPrice:
@@ -32613,6 +32769,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<EcommNewOrderPayloadStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   EcommNewOrderPayloadPaypalDetails:
@@ -32841,14 +32998,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<EcommNewOrderPayloadPaypalDetails>
+      paypalDetails:
+        type: optional<EcommNewOrderPayloadPaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<EcommNewOrderPayloadMetadata>
+      metadata:
+        type: optional<EcommNewOrderPayloadMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -33175,7 +33336,9 @@ Required scope | `ecommerce:write`
         docs: The hosted location for the Variant's image
         validation:
           format: uri
-      file: optional<EcommOrderChangedPayloadPurchasedItemsItemVariantImageFile>
+      file:
+        type: optional<EcommOrderChangedPayloadPurchasedItemsItemVariantImageFile>
+        inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadPurchasedItemsItemVariantPrice:
@@ -33313,6 +33476,7 @@ Required scope | `ecommerce:write`
       expires:
         type: optional<EcommOrderChangedPayloadStripeCardExpires>
         docs: The card's expiration date.
+        inline: true
     source:
       openapi: ../openapi.yml
   EcommOrderChangedPayloadPaypalDetails:
@@ -33541,14 +33705,18 @@ Required scope | `ecommerce:write`
         docs: >
           Details on the card used to fulfill this order, if this order was
           finalized with Stripe.
-      paypalDetails: optional<EcommOrderChangedPayloadPaypalDetails>
+      paypalDetails:
+        type: optional<EcommOrderChangedPayloadPaypalDetails>
+        inline: true
       customData:
         type: optional<list<map<string, unknown>>>
         docs: >
           An array of additional inputs for custom order data gathering. Each
           object in the array represents an input with a name, and a textInput,
           textArea, or checkbox value.
-      metadata: optional<EcommOrderChangedPayloadMetadata>
+      metadata:
+        type: optional<EcommOrderChangedPayloadMetadata>
+        inline: true
       isCustomerDeleted:
         type: optional<boolean>
         docs: >
@@ -36005,6 +36173,7 @@ Required scope | `pages:write`
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<PageCreatedPayloadPayload>",
               },
               "triggerType": {
@@ -36033,6 +36202,7 @@ Required scope | `pages:write`
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<PageDeletedPayloadPayload>",
               },
               "triggerType": {
@@ -36061,6 +36231,7 @@ Required scope | `pages:write`
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<PageMetadataUpdatedPayloadPayload>",
               },
               "triggerType": {
@@ -36095,6 +36266,7 @@ Required scope | `pages:write`
               },
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<PagesGetContentResponsePagination>",
               },
             },
@@ -36117,11 +36289,13 @@ Required scope | `pages:write`
               "image": {
                 "docs": "Represents an image within the DOM. It contains details about the image, such as its alternative text (alt) for accessibility and an asset identifier for fetching the actual image resource. Additional attributes can be associated with the image for styling or other purposes.
 ",
+                "inline": true,
                 "type": "optional<PagesGetContentResponseNodesItemImage>",
               },
               "text": {
                 "docs": "Represents textual content within the DOM. It contains both the raw text and its HTML representation, allowing for flexibility in rendering and processing. Additional attributes can be associated with the text for styling or other purposes.
 ",
+                "inline": true,
                 "type": "optional<PagesGetContentResponseNodesItemText>",
               },
               "type": "optional<PagesGetContentResponseNodesItemType>",
@@ -36226,6 +36400,7 @@ Required scope | `pages:write`
               },
               "openGraph": {
                 "docs": "Open Graph fields for the Page",
+                "inline": true,
                 "type": "optional<PagesGetMetadataResponseOpenGraph>",
               },
               "parentId": {
@@ -36238,6 +36413,7 @@ Required scope | `pages:write`
               },
               "seo": {
                 "docs": "SEO-related fields for the Page",
+                "inline": true,
                 "type": "optional<PagesGetMetadataResponseSeo>",
               },
               "siteId": {
@@ -36305,6 +36481,7 @@ Required scope | `pages:write`
               "pages": "optional<list<PagesListResponsePagesItem>>",
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<PagesListResponsePagination>",
               },
             },
@@ -36357,6 +36534,7 @@ Required scope | `pages:write`
               },
               "openGraph": {
                 "docs": "Open Graph fields for the Page",
+                "inline": true,
                 "type": "optional<PagesListResponsePagesItemOpenGraph>",
               },
               "parentId": {
@@ -36369,6 +36547,7 @@ Required scope | `pages:write`
               },
               "seo": {
                 "docs": "SEO-related fields for the Page",
+                "inline": true,
                 "type": "optional<PagesListResponsePagesItemSeo>",
               },
               "siteId": {
@@ -36537,6 +36716,7 @@ Required scope | `pages:write`
               },
               "openGraph": {
                 "docs": "Open Graph fields for the Page",
+                "inline": true,
                 "type": "optional<UpdatePageSettingsResponseOpenGraph>",
               },
               "parentId": {
@@ -36549,6 +36729,7 @@ Required scope | `pages:write`
               },
               "seo": {
                 "docs": "SEO-related fields for the Page",
+                "inline": true,
                 "type": "optional<UpdatePageSettingsResponseSeo>",
               },
               "siteId": {
@@ -36799,9 +36980,11 @@ Required scope | `pages:write`
       seo:
         type: optional<PagesListResponsePagesItemSeo>
         docs: SEO-related fields for the Page
+        inline: true
       openGraph:
         type: optional<PagesListResponsePagesItemOpenGraph>
         docs: Open Graph fields for the Page
+        inline: true
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
@@ -36831,6 +37014,7 @@ Required scope | `pages:write`
       pagination:
         type: optional<PagesListResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   PagesGetMetadataResponseSeo:
@@ -36917,9 +37101,11 @@ Required scope | `pages:write`
       seo:
         type: optional<PagesGetMetadataResponseSeo>
         docs: SEO-related fields for the Page
+        inline: true
       openGraph:
         type: optional<PagesGetMetadataResponseOpenGraph>
         docs: Open Graph fields for the Page
+        inline: true
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
@@ -37044,9 +37230,11 @@ Required scope | `pages:write`
       seo:
         type: optional<UpdatePageSettingsResponseSeo>
         docs: SEO-related fields for the Page
+        inline: true
       openGraph:
         type: optional<UpdatePageSettingsResponseOpenGraph>
         docs: Open Graph fields for the Page
+        inline: true
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
@@ -37100,6 +37288,7 @@ Required scope | `pages:write`
           text and its HTML representation, allowing for flexibility in
           rendering and processing. Additional attributes can be associated with
           the text for styling or other purposes.
+        inline: true
       image:
         type: optional<PagesGetContentResponseNodesItemImage>
         docs: >
@@ -37108,6 +37297,7 @@ Required scope | `pages:write`
           asset identifier for fetching the actual image resource. Additional
           attributes can be associated with the image for styling or other
           purposes.
+        inline: true
       attributes:
         type: optional<map<string, string>>
         docs: The custom attributes of the node
@@ -37143,6 +37333,7 @@ Required scope | `pages:write`
       pagination:
         type: optional<PagesGetContentResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   UpdateStaticContentRequestNodesItem:
@@ -37182,6 +37373,7 @@ Required scope | `pages:write`
       payload:
         type: optional<PageCreatedPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
   PageMetadataUpdatedPayloadPayload:
@@ -37202,6 +37394,7 @@ Required scope | `pages:write`
       payload:
         type: optional<PageMetadataUpdatedPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
   PageDeletedPayloadPayload:
@@ -37222,6 +37415,7 @@ Required scope | `pages:write`
       payload:
         type: optional<PageDeletedPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -39371,16 +39565,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsCreateRequestSkuFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsCreateRequestSkuFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsCreateRequestSkuFieldDataPrice",
               },
               "quantity": {
@@ -39519,6 +39718,7 @@ Required scope | `ecommerce:write`
             "properties": {
               "product": {
                 "docs": "The Product object",
+                "inline": true,
                 "type": "optional<ProductsCreateResponseProduct>",
               },
               "skus": {
@@ -39826,16 +40026,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsCreateResponseSkusItemFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsCreateResponseSkusItemFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsCreateResponseSkusItemFieldDataPrice",
               },
               "quantity": {
@@ -40017,16 +40222,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsCreateSkuRequestSkusItemFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsCreateSkuRequestSkusItemFieldDataPrice",
               },
               "quantity": {
@@ -40206,16 +40416,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsCreateSkuResponseSkusItemFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsCreateSkuResponseSkusItemFieldDataPrice",
               },
               "quantity": {
@@ -40354,6 +40569,7 @@ Required scope | `ecommerce:write`
             "properties": {
               "product": {
                 "docs": "The Product object",
+                "inline": true,
                 "type": "optional<ProductsGetResponseProduct>",
               },
               "skus": {
@@ -40661,16 +40877,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsGetResponseSkusItemFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsGetResponseSkusItemFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsGetResponseSkusItemFieldDataPrice",
               },
               "quantity": {
@@ -40813,6 +41034,7 @@ Required scope | `ecommerce:write`
               },
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<ProductsListResponsePagination>",
               },
             },
@@ -40825,6 +41047,7 @@ Required scope | `ecommerce:write`
             "properties": {
               "product": {
                 "docs": "The Product object",
+                "inline": true,
                 "type": "optional<ProductsListResponseItemsItemProduct>",
               },
               "skus": {
@@ -41132,16 +41355,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsListResponseItemsItemSkusItemFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsListResponseItemsItemSkusItemFieldDataPrice",
               },
               "quantity": {
@@ -41602,16 +41830,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsUpdateRequestSkuFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsUpdateRequestSkuFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsUpdateRequestSkuFieldDataPrice",
               },
               "quantity": {
@@ -42052,16 +42285,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsUpdateSkuRequestSkuFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsUpdateSkuRequestSkuFieldDataPrice",
               },
               "quantity": {
@@ -42232,16 +42470,21 @@ Required scope | `ecommerce:write`
             "properties": {
               "compare-at-price": {
                 "docs": "comparison price of SKU",
+                "inline": true,
                 "type": "optional<ProductsUpdateSkuResponseFieldDataCompareAtPrice>",
               },
               "ec-sku-billing-method": "optional<ProductsUpdateSkuResponseFieldDataEcSkuBillingMethod>",
-              "ec-sku-subscription-plan": "optional<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlan>",
+              "ec-sku-subscription-plan": {
+                "inline": true,
+                "type": "optional<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlan>",
+              },
               "name": {
                 "docs": "Name of the Product",
                 "type": "string",
               },
               "price": {
                 "docs": "price of SKU",
+                "inline": true,
                 "type": "ProductsUpdateSkuResponseFieldDataPrice",
               },
               "quantity": {
@@ -42651,13 +42894,17 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsListResponseItemsItemSkusItemFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsListResponseItemsItemSkusItemFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: >-
         optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: >-
-        optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: >-
+          optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -42698,6 +42945,7 @@ Required scope | `ecommerce:write`
       product:
         type: optional<ProductsListResponseItemsItemProduct>
         docs: The Product object
+        inline: true
       skus:
         type: optional<list<ProductsListResponseItemsItemSkusItem>>
         docs: A list of SKU Objects
@@ -42728,6 +42976,7 @@ Required scope | `ecommerce:write`
       pagination:
         type: optional<ProductsListResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
   ProductsCreateRequestPublishStatus:
@@ -42986,11 +43235,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsCreateRequestSkuFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsCreateRequestSkuFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsCreateRequestSkuFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -43297,11 +43550,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsCreateResponseSkusItemFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsCreateResponseSkusItemFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsCreateResponseSkusItemFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -43342,6 +43599,7 @@ Required scope | `ecommerce:write`
       product:
         type: optional<ProductsCreateResponseProduct>
         docs: The Product object
+        inline: true
       skus:
         type: optional<list<ProductsCreateResponseSkusItem>>
         docs: A list of SKU Objects
@@ -43618,11 +43876,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsGetResponseSkusItemFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsGetResponseSkusItemFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsGetResponseSkusItemFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -43663,6 +43925,7 @@ Required scope | `ecommerce:write`
       product:
         type: optional<ProductsGetResponseProduct>
         docs: The Product object
+        inline: true
       skus:
         type: optional<list<ProductsGetResponseSkusItem>>
         docs: A list of SKU Objects
@@ -43947,11 +44210,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsUpdateRequestSkuFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsUpdateRequestSkuFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsUpdateRequestSkuFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -44265,11 +44532,16 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsCreateSkuRequestSkusItemFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsCreateSkuRequestSkusItemFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: >-
+          optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -44397,12 +44669,16 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsCreateSkuResponseSkusItemFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsCreateSkuResponseSkusItemFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: >-
-        optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: >-
+          optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -44543,11 +44819,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsUpdateSkuRequestSkuFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsUpdateSkuRequestSkuFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -44675,11 +44955,15 @@ Required scope | `ecommerce:write`
       price:
         type: ProductsUpdateSkuResponseFieldDataPrice
         docs: price of SKU
+        inline: true
       compare-at-price:
         type: optional<ProductsUpdateSkuResponseFieldDataCompareAtPrice>
         docs: comparison price of SKU
+        inline: true
       ec-sku-billing-method: optional<ProductsUpdateSkuResponseFieldDataEcSkuBillingMethod>
-      ec-sku-subscription-plan: optional<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlan>
+      ec-sku-subscription-plan:
+        type: optional<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlan>
+        inline: true
       track-inventory:
         type: optional<boolean>
         docs: >-
@@ -46437,6 +46721,7 @@ service:
             "properties": {
               "payload": {
                 "docs": "The payload of data sent from Webflow",
+                "inline": true,
                 "type": "optional<SitePublishPayloadPayload>",
               },
               "triggerType": {
@@ -46521,7 +46806,10 @@ service:
                 "docs": "Date the Site was last updated",
                 "type": "optional<datetime>",
               },
-              "locales": "optional<SitesGetResponseLocales>",
+              "locales": {
+                "inline": true,
+                "type": "optional<SitesGetResponseLocales>",
+              },
               "parentFolderId": {
                 "docs": "The ID of the parent folder the Site exists in",
                 "type": "optional<string>",
@@ -46574,6 +46862,7 @@ service:
             "properties": {
               "primary": {
                 "docs": "The primary locale for the site or application.",
+                "inline": true,
                 "type": "optional<SitesGetResponseLocalesPrimary>",
               },
               "secondary": {
@@ -46698,7 +46987,10 @@ service:
                 "docs": "Date the Site was last updated",
                 "type": "optional<datetime>",
               },
-              "locales": "optional<SitesListResponseSitesItemLocales>",
+              "locales": {
+                "inline": true,
+                "type": "optional<SitesListResponseSitesItemLocales>",
+              },
               "parentFolderId": {
                 "docs": "The ID of the parent folder the Site exists in",
                 "type": "optional<string>",
@@ -46751,6 +47043,7 @@ service:
             "properties": {
               "primary": {
                 "docs": "The primary locale for the site or application.",
+                "inline": true,
                 "type": "optional<SitesListResponseSitesItemLocalesPrimary>",
               },
               "secondary": {
@@ -46984,6 +47277,7 @@ service:
       primary:
         type: optional<SitesListResponseSitesItemLocalesPrimary>
         docs: The primary locale for the site or application.
+        inline: true
       secondary:
         type: optional<list<SitesListResponseSitesItemLocalesSecondaryItem>>
         docs: A list of secondary locales available for the site or application.
@@ -47024,7 +47318,9 @@ service:
         type: optional<string>
         docs: The ID of the parent folder the Site exists in
       customDomains: optional<list<SitesListResponseSitesItemCustomDomainsItem>>
-      locales: optional<SitesListResponseSitesItemLocales>
+      locales:
+        type: optional<SitesListResponseSitesItemLocales>
+        inline: true
     source:
       openapi: ../openapi.yml
   SitesListResponse:
@@ -47108,6 +47404,7 @@ service:
       primary:
         type: optional<SitesGetResponseLocalesPrimary>
         docs: The primary locale for the site or application.
+        inline: true
       secondary:
         type: optional<list<SitesGetResponseLocalesSecondaryItem>>
         docs: A list of secondary locales available for the site or application.
@@ -47148,7 +47445,9 @@ service:
         type: optional<string>
         docs: The ID of the parent folder the Site exists in
       customDomains: optional<list<SitesGetResponseCustomDomainsItem>>
-      locales: optional<SitesGetResponseLocales>
+      locales:
+        type: optional<SitesGetResponseLocales>
+        inline: true
     source:
       openapi: ../openapi.yml
   SitesGetCustomDomainResponseCustomDomainsItem:
@@ -47213,6 +47512,7 @@ service:
       payload:
         type: optional<SitePublishPayloadPayload>
         docs: The payload of data sent from Webflow
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -47605,6 +47905,7 @@ webhooks:
               "items": "optional<list<ActivityLogsListResponseItemsItem>>",
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<ActivityLogsListResponsePagination>",
               },
             },
@@ -47625,7 +47926,10 @@ webhooks:
               "resourceId": "optional<string>",
               "resourceName": "optional<string>",
               "resourceOperation": "optional<ActivityLogsListResponseItemsItemResourceOperation>",
-              "user": "optional<ActivityLogsListResponseItemsItemUser>",
+              "user": {
+                "inline": true,
+                "type": "optional<ActivityLogsListResponseItemsItemUser>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -47698,7 +48002,9 @@ webhooks:
       lastUpdated: optional<datetime>
       event: optional<string>
       resourceOperation: optional<ActivityLogsListResponseItemsItemResourceOperation>
-      user: optional<ActivityLogsListResponseItemsItemUser>
+      user:
+        type: optional<ActivityLogsListResponseItemsItemUser>
+        inline: true
       resourceId: optional<string>
       resourceName: optional<string>
       newValue: optional<string>
@@ -47726,6 +48032,7 @@ webhooks:
       pagination:
         type: optional<ActivityLogsListResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -48159,6 +48466,7 @@ service:
               "blocks": "optional<list<ScriptsListCustomCodeBlocksResponseBlocksItem>>",
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<ScriptsListCustomCodeBlocksResponsePagination>",
               },
             },
@@ -48563,6 +48871,7 @@ service:
       pagination:
         type: optional<ScriptsListCustomCodeBlocksResponsePagination>
         docs: Pagination object
+        inline: true
     source:
       openapi: ../openapi.yml
 imports:
@@ -48919,6 +49228,7 @@ service:
               "application": "optional<unknown>",
               "authorization": {
                 "docs": "The Authorization object",
+                "inline": true,
                 "type": "optional<TokenIntrospectResponseAuthorization>",
               },
             },
@@ -48929,7 +49239,10 @@ service:
           "TokenIntrospectResponseAuthorization": {
             "docs": "The Authorization object",
             "properties": {
-              "authorizedTo": "optional<TokenIntrospectResponseAuthorizationAuthorizedTo>",
+              "authorizedTo": {
+                "inline": true,
+                "type": "optional<TokenIntrospectResponseAuthorizationAuthorizedTo>",
+              },
               "createdOn": {
                 "docs": "The date the Authorization was created",
                 "type": "optional<datetime>",
@@ -49034,7 +49347,9 @@ service:
       scope:
         type: optional<string>
         docs: Comma separted list of OAuth scopes corresponding to the Authorization
-      authorizedTo: optional<TokenIntrospectResponseAuthorizationAuthorizedTo>
+      authorizedTo:
+        type: optional<TokenIntrospectResponseAuthorizationAuthorizedTo>
+        inline: true
     source:
       openapi: ../openapi.yml
   TokenIntrospectResponse:
@@ -49042,6 +49357,7 @@ service:
       authorization:
         type: optional<TokenIntrospectResponseAuthorization>
         docs: The Authorization object
+        inline: true
       application: optional<unknown>
     source:
       openapi: ../openapi.yml
@@ -49605,6 +49921,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UserAccountAddedPayloadPayloadData>",
               },
               "id": {
@@ -49671,7 +49988,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UserAccountAddedPayloadPayloadData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UserAccountAddedPayloadPayloadDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UserAccountAddedPayloadPayloadDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -49762,6 +50082,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UserAccountDeletedPayloadPayloadData>",
               },
               "id": {
@@ -49828,7 +50149,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UserAccountDeletedPayloadPayloadData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UserAccountDeletedPayloadPayloadDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UserAccountDeletedPayloadPayloadDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -49919,6 +50243,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UserAccountUpdatedPayloadPayloadData>",
               },
               "id": {
@@ -49985,7 +50310,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UserAccountUpdatedPayloadPayloadData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UserAccountUpdatedPayloadPayloadDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UserAccountUpdatedPayloadPayloadDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -50059,6 +50387,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UsersGetResponseData>",
               },
               "id": {
@@ -50125,7 +50454,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UsersGetResponseData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UsersGetResponseDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UsersGetResponseDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -50188,6 +50520,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UsersInviteResponseData>",
               },
               "id": {
@@ -50254,7 +50587,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UsersInviteResponseData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UsersInviteResponseDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UsersInviteResponseDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -50404,6 +50740,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UsersListResponseUsersItemData>",
               },
               "id": {
@@ -50470,7 +50807,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UsersListResponseUsersItemData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UsersListResponseUsersItemDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UsersListResponseUsersItemDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -50556,6 +50896,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
               "data": {
                 "docs": "An object containing the User's basic info and custom fields",
+                "inline": true,
                 "type": "optional<UsersUpdateResponseData>",
               },
               "id": {
@@ -50622,7 +50963,10 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
           "UsersUpdateResponseData": {
             "docs": "An object containing the User's basic info and custom fields",
             "properties": {
-              "data": "optional<UsersUpdateResponseDataData>",
+              "data": {
+                "inline": true,
+                "type": "optional<UsersUpdateResponseDataData>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -50855,7 +51199,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UsersListResponseUsersItemData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UsersListResponseUsersItemDataData>
+      data:
+        type: optional<UsersListResponseUsersItemDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersListResponseUsersItem:
@@ -50892,6 +51238,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UsersListResponseUsersItemData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersListResponse:
@@ -50974,7 +51321,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UsersGetResponseData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UsersGetResponseDataData>
+      data:
+        type: optional<UsersGetResponseDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersGetResponse:
@@ -51011,6 +51360,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UsersGetResponseData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersUpdateRequestData:
@@ -51087,7 +51437,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UsersUpdateResponseData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UsersUpdateResponseDataData>
+      data:
+        type: optional<UsersUpdateResponseDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersUpdateResponse:
@@ -51124,6 +51476,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UsersUpdateResponseData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersInviteResponseStatus:
@@ -51184,7 +51537,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UsersInviteResponseData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UsersInviteResponseDataData>
+      data:
+        type: optional<UsersInviteResponseDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UsersInviteResponse:
@@ -51221,6 +51576,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UsersInviteResponseData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayloadTriggerType:
@@ -51289,7 +51645,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UserAccountAddedPayloadPayloadData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UserAccountAddedPayloadPayloadDataData>
+      data:
+        type: optional<UserAccountAddedPayloadPayloadDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayloadPayload:
@@ -51326,6 +51684,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UserAccountAddedPayloadPayloadData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountAddedPayload:
@@ -51408,7 +51767,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UserAccountUpdatedPayloadPayloadData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UserAccountUpdatedPayloadPayloadDataData>
+      data:
+        type: optional<UserAccountUpdatedPayloadPayloadDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountUpdatedPayloadPayload:
@@ -51445,6 +51806,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UserAccountUpdatedPayloadPayloadData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountUpdatedPayload:
@@ -51527,7 +51889,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
   UserAccountDeletedPayloadPayloadData:
     docs: An object containing the User's basic info and custom fields
     properties:
-      data: optional<UserAccountDeletedPayloadPayloadDataData>
+      data:
+        type: optional<UserAccountDeletedPayloadPayloadDataData>
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountDeletedPayloadPayload:
@@ -51564,6 +51928,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       data:
         type: optional<UserAccountDeletedPayloadPayloadData>
         docs: An object containing the User's basic info and custom fields
+        inline: true
     source:
       openapi: ../openapi.yml
   UserAccountDeletedPayload:
@@ -52292,6 +52657,7 @@ webhooks:
               },
               "filter": {
                 "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "inline": true,
                 "type": "optional<WebhooksCreateResponseFilter>",
               },
               "id": {
@@ -52397,6 +52763,7 @@ webhooks:
               },
               "filter": {
                 "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "inline": true,
                 "type": "optional<WebhooksGetResponseFilter>",
               },
               "id": {
@@ -52498,6 +52865,7 @@ webhooks:
             "properties": {
               "pagination": {
                 "docs": "Pagination object",
+                "inline": true,
                 "type": "optional<WebhooksListResponsePagination>",
               },
               "webhooks": "optional<list<WebhooksListResponseWebhooksItem>>",
@@ -52535,6 +52903,7 @@ webhooks:
               },
               "filter": {
                 "docs": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                "inline": true,
                 "type": "optional<WebhooksListResponseWebhooksItemFilter>",
               },
               "id": {
@@ -52781,6 +53150,7 @@ webhooks:
         docs: >-
           Only supported for the `form_submission` trigger type. Filter for the
           form you want Webhooks to be sent for. 
+        inline: true
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered
@@ -52794,6 +53164,7 @@ webhooks:
       pagination:
         type: optional<WebhooksListResponsePagination>
         docs: Pagination object
+        inline: true
       webhooks: optional<list<WebhooksListResponseWebhooksItem>>
     source:
       openapi: ../openapi.yml
@@ -53000,6 +53371,7 @@ webhooks:
         docs: >-
           Only supported for the `form_submission` trigger type. Filter for the
           form you want Webhooks to be sent for. 
+        inline: true
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered
@@ -53141,6 +53513,7 @@ webhooks:
         docs: >-
           Only supported for the `form_submission` trigger type. Filter for the
           form you want Webhooks to be sent for. 
+        inline: true
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered

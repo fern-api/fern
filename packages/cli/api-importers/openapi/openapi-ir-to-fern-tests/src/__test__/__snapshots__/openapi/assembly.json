@@ -1058,6 +1058,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "acoustic_model": {
                 "availability": "deprecated",
                 "docs": "The acoustic model that was used for the transcription",
+                "inline": undefined,
                 "type": "string",
               },
               "audio_duration": {
@@ -1185,6 +1186,7 @@ The default value is 'en_us'.
               "language_model": {
                 "availability": "deprecated",
                 "docs": "The language model that was used for the transcription",
+                "inline": undefined,
                 "type": "string",
               },
               "punctuate": {
@@ -1244,6 +1246,7 @@ Valid values are in the range [0, 1] inclusive.
               "speed_boost": {
                 "availability": "deprecated",
                 "docs": "Whether speed boost was enabled in the transcription request",
+                "inline": undefined,
                 "type": "optional<boolean>",
               },
               "status": {

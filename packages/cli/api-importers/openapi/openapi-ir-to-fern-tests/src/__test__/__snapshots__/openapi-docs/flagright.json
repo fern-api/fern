@@ -4676,6 +4676,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "optional<Amount>",
               },
               "paymentMethodLimits": {
+                "inline": true,
                 "type": "optional<TransactionLimitsPaymentMethodLimits>",
               },
             },
@@ -6363,6 +6364,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         type: optional<Amount>
       paymentMethodLimits:
         type: optional<TransactionLimitsPaymentMethodLimits>
+        inline: true
     source:
       openapi: ../openapi.yml
   RuleAction:

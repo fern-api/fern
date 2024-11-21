@@ -187,6 +187,7 @@ For `access_to_resource_denied` errors, the description is:
 
 *The institution's product ID for the account type.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "category": "optional<EnumAccountCategory>",
@@ -229,6 +230,7 @@ For `access_to_resource_denied` errors, the description is:
 
 *The institution's internal identification for the account.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "last_accessed_at": {
@@ -330,6 +332,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
                 "availability": "deprecated",
                 "docs": "*This field has been deprecated.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "interest_rate": {
@@ -343,6 +346,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
 
 *The date when the last credit payment was made.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "minimum_payment": {
@@ -355,6 +359,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
 
 *The recurrent monthly payment, if applicable.*
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "next_payment_date": {
@@ -459,6 +464,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
 
 Please see `principal` instead.
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "cutting_date": {
@@ -467,6 +473,7 @@ Please see `principal` instead.
 
 The closing date of the loan period.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "cutting_day": {
@@ -475,6 +482,7 @@ The closing date of the loan period.
 
 The closing day of the month for the loan.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "fees": {
@@ -487,6 +495,7 @@ The closing day of the month for the loan.
 
 Please see the `interest_rates` object instead.
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "interest_rates": {
@@ -499,6 +508,7 @@ Please see the `interest_rates` object instead.
 
 The date when the last loan payment was made.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "last_period_balance": {
@@ -507,6 +517,7 @@ The date when the last loan payment was made.
 
 Please see `outstanding_balance` instead.
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "limit_day": {
@@ -515,6 +526,7 @@ Please see `outstanding_balance` instead.
 
 Please see `payment_day` instead.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "loan_type": {
@@ -531,6 +543,7 @@ Please see `payment_day` instead.
 
 The minimum amount required to pay to avoid generating interest.
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "number_of_installments_outstanding": {
@@ -819,12 +832,14 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 
 The ISO-8601 timestamp when the data point was collected.
 ",
+                "inline": undefined,
                 "type": "optional<datetime>",
               },
               "current_balance": {
                 "availability": "deprecated",
                 "docs": "*This field has been deprecated. Please use the `balance` field instead.*
 ",
+                "inline": undefined,
                 "type": "optional<double>",
               },
               "id": {
@@ -843,6 +858,7 @@ The ISO-8601 timestamp when the data point was collected.
 
 *The ID of the banking statement used to extract the `balance`.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "value_date": {
@@ -5170,6 +5186,7 @@ For example: If the invoice is paid in installments, this field indicates the da
                 "availability": "deprecated",
                 "docs": "The description of the payment method used for this invoice.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "payment_type": {
@@ -5475,6 +5492,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
 
 *The description of the payment method used for this invoice.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "payment_type": {
@@ -5488,6 +5506,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "availability": "deprecated",
                 "docs": "*This field has been deprecated.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "payments": {
@@ -5505,6 +5524,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "availability": "deprecated",
                 "docs": "This field has been deprecated. Please use `receiver_tax_fraud_status` instead.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "receiver_id": {
@@ -5527,6 +5547,7 @@ Possible statuses are:
                 "availability": "deprecated",
                 "docs": "This field has been deprecated. Please use `sender_tax_fraud_status` instead.
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "sender_id": {
@@ -6656,6 +6677,7 @@ For `not_found` errors, the description is:
 
 *The first name of the account owner.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "id": {
@@ -6678,6 +6700,7 @@ For `not_found` errors, the description is:
 
 *The last name of the account owner.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
               "link": {
@@ -6700,6 +6723,7 @@ For `not_found` errors, the description is:
 
 *The second last name of the account owner.*
 ",
+                "inline": undefined,
                 "type": "optional<string>",
               },
             },
@@ -7002,6 +7026,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
+                "inline": undefined,
                 "type": "optional<list<Charge>>",
               },
               "created_at": {
@@ -7302,6 +7327,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                 "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
+                "inline": undefined,
                 "type": "optional<list<Charge>>",
               },
               "created_at": {

@@ -2083,7 +2083,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -4164,7 +4165,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -11041,7 +11043,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -15219,7 +15222,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -16461,7 +16465,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -18403,7 +18408,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -20182,7 +20188,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -23968,7 +23975,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -26839,7 +26847,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -29284,7 +29293,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -31564,7 +31574,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -34921,7 +34932,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -36140,7 +36152,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -37986,7 +37999,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -38929,7 +38943,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -41506,7 +41521,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -44415,7 +44431,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -51076,7 +51093,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -54470,7 +54488,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -61243,7 +61262,8 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": []
+              "audiences": [],
+              "inline": true
             }
           ],
           "allOfPropertyConflicts": [],
@@ -79437,7 +79457,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "inline": true
           }
         ],
         "allOfPropertyConflicts": [],
