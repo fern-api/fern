@@ -631,7 +631,22 @@ function endpointRequestSupportsInlinedPathParameters({
     context: OpenApiIrConverterContext;
     request: Request | undefined;
 }): boolean {
-    // octet-stream requests do not support named request wrappers,
-    // so we can't inline path parameters for them.
-    return context.inlinePathParameters && request?.type !== "octetStream";
+    if (!context.inlinePathParameters) {
+        return false;
+    }
+    if (request == null) {
+        return true;
+    }
+    switch (request.type) {
+        case "octetStream":
+            // octet-stream requests do not support named request wrappers,
+            // so we can't inline path parameters for them.
+            return false;
+        case "multipart":
+            return true;
+        case "json":
+            return true;
+        default:
+            assertNever(request);
+    }
 }

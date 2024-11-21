@@ -15,7 +15,7 @@ describe("valid-path-parameters-configuration", () => {
 
         expect(violations).toEqual([
             {
-                message: "Endpoint has path-parameters defined in both endpoint and request.",
+                message: "path-parameters cannot be defined in both endpoint and request.",
                 nodePath: ["service", "endpoints", "conflict"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "error"
