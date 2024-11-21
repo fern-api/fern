@@ -772,7 +772,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         ),
                         [
                             ts.factory.createThrowStatement(
-                                context.timeoutSdkError.getGeneratedTimeoutSdkError().build(context)
+                                context.timeoutSdkError
+                                    .getGeneratedTimeoutSdkError()
+                                    .build(
+                                        context,
+                                        `Timeout exception generated in endpoint ${this.endpoint.name.camelCase.unsafeName}.`
+                                    )
                             )
                         ]
                     ),
