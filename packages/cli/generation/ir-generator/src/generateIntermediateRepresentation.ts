@@ -497,7 +497,7 @@ export async function generateIntermediateRepresentation({
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
-    markInlineTypes(types);
+    markInlineTypeDeclarations(types);
 
     return {
         ...intermediateRepresentationForAudiences,
@@ -740,7 +740,7 @@ type OptionalNamedObjectProperty = ObjectProperty & {
         container: ContainerType.Optional & { optional: NamedType };
     };
 };
-function markInlineTypes(types: Record<string, TypeDeclaration>) {
+function markInlineTypeDeclarations(types: Record<string, TypeDeclaration>) {
     // find types that have properties containing inline types
     const namedProps = Object.values(types).flatMap((type) => {
         if (type.shape.type !== "object") {
