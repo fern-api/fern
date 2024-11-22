@@ -143,7 +143,6 @@ types:
   HttpResponseSchemaDetailed:
     extends:
       - commons.WithDocsSchema
-      - commons.WithInline
     properties:
       type: string
       property: optional<string>

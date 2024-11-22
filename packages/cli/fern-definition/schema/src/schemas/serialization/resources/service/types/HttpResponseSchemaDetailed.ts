@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
-import { WithInline } from "../../commons/types/WithInline";
 
 export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
     serializers.HttpResponseSchemaDetailed.Raw,
@@ -17,11 +16,10 @@ export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
         property: core.serialization.string().optional(),
         "status-code": core.serialization.number().optional(),
     })
-    .extend(WithDocsSchema)
-    .extend(WithInline);
+    .extend(WithDocsSchema);
 
 export declare namespace HttpResponseSchemaDetailed {
-    interface Raw extends WithDocsSchema.Raw, WithInline.Raw {
+    interface Raw extends WithDocsSchema.Raw {
         type: string;
         property?: string | null;
         "status-code"?: number | null;

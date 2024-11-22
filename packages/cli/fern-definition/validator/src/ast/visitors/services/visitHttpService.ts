@@ -266,8 +266,7 @@ async function visitEndpoint({
                         });
                     },
                     property: noop,
-                    "status-code": noop,
-                    inline: noop
+                    "status-code": noop
                 });
             }
         },

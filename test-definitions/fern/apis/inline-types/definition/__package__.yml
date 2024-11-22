@@ -15,12 +15,6 @@ service:
         content-type: application/json
         name: PostRootRequest
       response: RootType1
-    getInline:
-      path: /inline
-      method: GET
-      response:
-        type: InlineType1
-        inline: true
 
 types:
   DiscriminatedUnion1:
