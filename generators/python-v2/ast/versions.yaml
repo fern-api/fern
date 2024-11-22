@@ -1,3 +1,9 @@
+- version: 0.0.10
+  createdAt: '2024-11-22'
+  changelogEntry:
+    - type: internal
+      summary: Class and Method imports.
+  irVersion: 33
 - version: 0.0.9
   createdAt: '2024-11-17'
   changelogEntry:
