@@ -60,19 +60,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedExtraPropertiesClient, SeedExtraProperties } from "@fern/extra-properties";
-
-const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
-await client.user.createUser({
-    name: "name",
-});
-```
-
 ## Advanced
 
 ### Raw Responses

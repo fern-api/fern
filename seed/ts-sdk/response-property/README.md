@@ -45,17 +45,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedResponsePropertyClient, SeedResponseProperty } from "@fern/response-property";
-
-const client = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
-await client.service.getMovie("string");
-```
-
 ## Advanced
 
 ### Raw Responses

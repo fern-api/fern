@@ -45,17 +45,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
-
-const client = new SeedBearerTokenEnvironmentVariableClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
-await client.service.getWithBearerToken();
-```
-
 ## Advanced
 
 ### Raw Responses

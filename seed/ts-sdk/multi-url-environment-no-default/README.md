@@ -66,25 +66,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import {
-    SeedMultiUrlEnvironmentNoDefaultEnvironment,
-    SeedMultiUrlEnvironmentNoDefaultClient,
-} from "@fern/multi-url-environment-no-default";
-
-const client = new SeedMultiUrlEnvironmentNoDefaultClient({
-    environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
-await client.ec2.bootInstance({
-    size: "size",
-});
-```
-
 ## Advanced
 
 ### Raw Responses
