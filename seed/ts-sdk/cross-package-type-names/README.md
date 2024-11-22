@@ -62,21 +62,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from "@fern/cross-package-type-names";
-
-const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL" });
-await client.foo.find({
-    optionalString: "optionalString",
-    publicProperty: "publicProperty",
-    privateProperty: 1,
-});
-```
-
 ## Advanced
 
 ### Raw Responses

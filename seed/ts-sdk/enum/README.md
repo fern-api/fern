@@ -61,20 +61,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedEnumClient } from "@fern/enum";
-
-const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
-await client.inlinedRequest.send({
-    operand: ">",
-    operandOrColor: "red",
-});
-```
-
 ## Advanced
 
 ### Raw Responses

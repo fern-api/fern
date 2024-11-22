@@ -45,17 +45,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedNoEnvironmentClient } from "@fern/no-environment";
-
-const client = new SeedNoEnvironmentClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.dummy.getDummy();
-```
-
 ## Advanced
 
 ### Raw Responses

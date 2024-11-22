@@ -48,20 +48,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedApiClient, SeedApi } from "@fern/imdb";
-
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.imdb.createMovie({
-    title: "title",
-    rating: 1.1,
-});
-```
-
 ## Advanced
 
 ### Raw Responses

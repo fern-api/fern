@@ -49,21 +49,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedObjectsWithImportsClient } from "@fern/optional";
-
-const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
-await client.optional.sendOptionalBody({
-    string: {
-        key: "value",
-    },
-});
-```
-
 ## Advanced
 
 ### Raw Responses

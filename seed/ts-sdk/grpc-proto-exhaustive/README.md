@@ -65,24 +65,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedApiClient, SeedApi } from "@fern/grpc-proto-exhaustive";
-
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.dataservice.upload({
-    columns: [
-        {
-            id: "id",
-            values: [1.1],
-        },
-    ],
-});
-```
-
 ## Advanced
 
 ### Raw Responses

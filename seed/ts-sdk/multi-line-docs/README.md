@@ -61,20 +61,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedMultiLineDocsClient, SeedMultiLineDocs } from "@fern/multi-line-docs";
-
-const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
-await client.user.createUser({
-    name: "name",
-    age: 1,
-});
-```
-
 ## Advanced
 
 ### Raw Responses

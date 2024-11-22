@@ -68,27 +68,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedAnyAuthClient, SeedAnyAuth } from "@fern/any-auth";
-
-const client = new SeedAnyAuthClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    token: "YOUR_TOKEN",
-    apiKey: "YOUR_API_KEY",
-});
-await client.auth.getToken({
-    clientId: "client_id",
-    clientSecret: "client_secret",
-    scope: "scope",
-});
-```
-
 ## Advanced
 
 ### Raw Responses

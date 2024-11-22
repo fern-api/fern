@@ -60,19 +60,6 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedStreamingClient, SeedStreaming } from "@fern/streaming";
-
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-await client.dummy.generate({
-    numEvents: 5,
-});
-```
-
 ## Advanced
 
 ### Raw Responses

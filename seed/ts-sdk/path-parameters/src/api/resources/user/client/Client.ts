@@ -320,7 +320,9 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError();
+                        throw new errors.SeedPathParametersTimeoutError(
+                            "Timeout exceeded when calling GET /user/users/{userId}."
+                        );
                     case "unknown":
                         throw new errors.SeedPathParametersError({
                             message: _response.error.errorMessage,
@@ -400,7 +402,9 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedPathParametersTimeoutError();
+                        throw new errors.SeedPathParametersTimeoutError(
+                            "Timeout exceeded when calling GET /user/organizations/{organizationId}."
+                        );
                     case "unknown":
                         throw new errors.SeedPathParametersError({
                             message: _response.error.errorMessage,
