@@ -1,4 +1,29 @@
+service:
+  base-path: /root
+  auth: false
+  endpoints:
+    getRoot:
+      path: /root
+      method: GET
+      response: RootType1
+    getInline:
+      path: /inline
+      method: GET
+      response:
+        type: InlineType1
+        inline: true
+
 types:
+  DiscriminatedUnion1:
+    union:
+      type1: InlineType1
+      type2: MixedInlineType1
+  UndiscriminatedUnion1:
+    discriminated: false
+    union:
+      - type: InlineType1
+      - type: MixedInlineType1
+
   RootType1:
     properties:
       foo: string

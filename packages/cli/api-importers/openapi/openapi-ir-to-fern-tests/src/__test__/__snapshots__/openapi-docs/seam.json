@@ -13778,7 +13778,10 @@ service:
                       "type": "optional<boolean>",
                     },
                     "starts_at": "optional<datetime>",
-                    "visionline_metadata": "optional<CredentialsCreateRequestVisionlineMetadata>",
+                    "visionline_metadata": {
+                      "inline": true,
+                      "type": "optional<CredentialsCreateRequestVisionlineMetadata>",
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -14633,7 +14636,9 @@ service:
               type: optional<boolean>
               default: false
             allowed_acs_entrance_ids: optional<list<string>>
-            visionline_metadata: optional<CredentialsCreateRequestVisionlineMetadata>
+            visionline_metadata:
+              type: optional<CredentialsCreateRequestVisionlineMetadata>
+              inline: true
             starts_at: optional<datetime>
             ends_at: optional<datetime>
         content-type: application/json
@@ -16187,7 +16192,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "access_schedule": "optional<UsersCreateRequestAccessSchedule>",
+                    "access_schedule": {
+                      "inline": true,
+                      "type": "optional<UsersCreateRequestAccessSchedule>",
+                    },
                     "acs_access_group_ids": "optional<list<string>>",
                     "acs_system_id": {
                       "type": "string",
@@ -16777,7 +16785,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "access_schedule": "optional<UsersUpdateRequestAccessSchedule>",
+                    "access_schedule": {
+                      "inline": true,
+                      "type": "optional<UsersUpdateRequestAccessSchedule>",
+                    },
                     "acs_user_id": {
                       "type": "string",
                       "validation": {
@@ -17099,7 +17110,9 @@ service:
               type: optional<string>
               validation:
                 format: uuid
-            access_schedule: optional<UsersCreateRequestAccessSchedule>
+            access_schedule:
+              type: optional<UsersCreateRequestAccessSchedule>
+              inline: true
             full_name: optional<string>
             email:
               type: optional<string>
@@ -17457,7 +17470,9 @@ service:
         name: UsersUpdateRequest
         body:
           properties:
-            access_schedule: optional<UsersUpdateRequestAccessSchedule>
+            access_schedule:
+              type: optional<UsersUpdateRequestAccessSchedule>
+              inline: true
             acs_user_id:
               type: string
               validation:
@@ -20550,7 +20565,10 @@ service:
                       "type": "optional<boolean>",
                     },
                     "name": "optional<string>",
-                    "properties": "optional<DevicesUpdateRequestProperties>",
+                    "properties": {
+                      "inline": true,
+                      "type": "optional<DevicesUpdateRequestProperties>",
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -21404,7 +21422,9 @@ service:
               type: string
               validation:
                 format: uuid
-            properties: optional<DevicesUpdateRequestProperties>
+            properties:
+              type: optional<DevicesUpdateRequestProperties>
+              inline: true
             name: optional<string>
             is_managed:
               type: optional<boolean>
@@ -26876,9 +26896,15 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "assa_abloy_metadata": "optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>",
+                    "assa_abloy_metadata": {
+                      "inline": true,
+                      "type": "optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>",
+                    },
                     "custom_sdk_installation_id": "optional<string>",
-                    "phone_metadata": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>",
+                    "phone_metadata": {
+                      "inline": true,
+                      "type": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>",
+                    },
                     "user_identity_id": {
                       "type": "string",
                       "validation": {
@@ -27064,8 +27090,12 @@ service:
               type: string
               validation:
                 format: uuid
-            phone_metadata: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
-            assa_abloy_metadata: optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>
+            phone_metadata:
+              type: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
+              inline: true
+            assa_abloy_metadata:
+              type: optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>
+              inline: true
         content-type: application/json
       response:
         docs: OK
@@ -27906,7 +27936,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "default_climate_setting": "ThermostatsUpdateRequestDefaultClimateSetting",
+                    "default_climate_setting": {
+                      "inline": true,
+                      "type": "ThermostatsUpdateRequestDefaultClimateSetting",
+                    },
                     "device_id": {
                       "type": "string",
                       "validation": {
@@ -28973,7 +29006,9 @@ service:
               type: string
               validation:
                 format: uuid
-            default_climate_setting: ThermostatsUpdateRequestDefaultClimateSetting
+            default_climate_setting:
+              type: ThermostatsUpdateRequestDefaultClimateSetting
+              inline: true
         content-type: application/json
       response:
         docs: OK

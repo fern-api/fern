@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpResponseSchemaDetailed extends FernDefinition.WithDocsSchema {
+export interface HttpResponseSchemaDetailed extends FernDefinition.WithDocsSchema, FernDefinition.WithInline {
     type: string;
     property?: string;
     "status-code"?: number;

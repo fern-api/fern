@@ -167,7 +167,6 @@ export function convertObject({
             });
         }
     }
-
     const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
         ([propertyName, propertySchema]) => {
             const isRequired = allRequired.includes(propertyName);

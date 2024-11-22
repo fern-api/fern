@@ -23620,7 +23620,10 @@ This will return the Message model that has been created.
                       "docs": "The content of the message. HTML is not supported.",
                       "type": "string",
                     },
-                    "from": "CreateConversationRequestFrom",
+                    "from": {
+                      "inline": true,
+                      "type": "CreateConversationRequestFrom",
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -28060,7 +28063,9 @@ service:
         name: CreateConversationRequest
         body:
           properties:
-            from: CreateConversationRequestFrom
+            from:
+              type: CreateConversationRequestFrom
+              inline: true
             body:
               type: string
               docs: The content of the message. HTML is not supported.
@@ -47691,8 +47696,14 @@ docs: Everything about your tickets
                       "docs": "Represents the role of the Contact model. Accepts `lead` or `user`.",
                       "type": "string",
                     },
-                    "user": "unknown",
-                    "visitor": "unknown",
+                    "user": {
+                      "inline": true,
+                      "type": "unknown",
+                    },
+                    "visitor": {
+                      "inline": true,
+                      "type": "unknown",
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -48402,8 +48413,12 @@ service:
               docs: >-
                 Represents the role of the Contact model. Accepts `lead` or
                 `user`.
-            user: unknown
-            visitor: unknown
+            user:
+              type: unknown
+              inline: true
+            visitor:
+              type: unknown
+              inline: true
         content-type: application/json
       response:
         docs: successful

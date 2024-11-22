@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { BaseTypeReferenceSchema } from "./BaseTypeReferenceSchema";
 import { WithName } from "../../commons/types/WithName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const TypeReferenceDetailedSchema: core.serialization.ObjectSchema<
     serializers.TypeReferenceDetailedSchema.Raw,
@@ -18,10 +19,11 @@ export const TypeReferenceDetailedSchema: core.serialization.ObjectSchema<
     })
     .extend(BaseTypeReferenceSchema)
     .extend(WithName)
-    .extend(WithAudiences);
+    .extend(WithAudiences)
+    .extend(WithInline);
 
 export declare namespace TypeReferenceDetailedSchema {
-    interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
+    interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw, WithInline.Raw {
         type: string;
     }
 }

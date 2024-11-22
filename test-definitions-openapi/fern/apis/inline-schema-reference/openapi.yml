@@ -17,14 +17,49 @@ paths:
                   - $ref: "#/components/schemas/Schema1"
                   - $ref: "#/components/schemas/Schema2"
   /root:
-    get:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                foo:
+                  type: string
+                bar:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    inner_bar:
+                      type: object
+                      properties:
+                        foo:
+                          type: string
+                        bar:
+                          type: string
       responses:
         "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RootSchema1"
+                type: object
+                properties:
+                  foo:
+                    type: string
+                  bar:
+                    type: object
+                    properties:
+                      foo:
+                        type: string
+                      inner_bar:
+                        type: object
+                        properties:
+                          foo:
+                            type: string
+                          bar:
+                            type: string
 
 components:
   responses:

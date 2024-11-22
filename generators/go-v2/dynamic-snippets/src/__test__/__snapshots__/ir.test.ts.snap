@@ -3644,7 +3644,38 @@ func do() {
 "
 `;
 
-exports[`test definitions > inline-types 1`] = `"<none>"`;
+exports[`test definitions > inline-types 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetRoot(
+		context.TODO(),
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.GetInline(
+		context.TODO(),
+	)
+}
+"
+`;
 
 exports[`test definitions > license 1`] = `
 "package example

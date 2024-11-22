@@ -1,6 +1,152 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_:DiscriminatedUnion1": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "DiscriminatedUnion1",
+                    "camelCase": {
+                        "unsafeName": "discriminatedUnion1",
+                        "safeName": "discriminatedUnion1"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "discriminated_union1",
+                        "safeName": "discriminated_union1"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DISCRIMINATED_UNION1",
+                        "safeName": "DISCRIMINATED_UNION1"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DiscriminatedUnion1",
+                        "safeName": "DiscriminatedUnion1"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "type1": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:InlineType1",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "type1",
+                            "camelCase": {
+                                "unsafeName": "type1",
+                                "safeName": "type1"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type1",
+                                "safeName": "type1"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE1",
+                                "safeName": "TYPE1"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type1",
+                                "safeName": "Type1"
+                            }
+                        },
+                        "wireValue": "type1"
+                    },
+                    "properties": []
+                },
+                "type2": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:MixedInlineType1",
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "type2",
+                            "camelCase": {
+                                "unsafeName": "type2",
+                                "safeName": "type2"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type2",
+                                "safeName": "type2"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE2",
+                                "safeName": "TYPE2"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type2",
+                                "safeName": "Type2"
+                            }
+                        },
+                        "wireValue": "type2"
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:UndiscriminatedUnion1": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion1",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion1",
+                        "safeName": "undiscriminatedUnion1"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union1",
+                        "safeName": "undiscriminated_union1"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION1",
+                        "safeName": "UNDISCRIMINATED_UNION1"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion1",
+                        "safeName": "UndiscriminatedUnion1"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "types": [
+                {
+                    "_type": "named",
+                    "value": "type_:InlineType1"
+                },
+                {
+                    "_type": "named",
+                    "value": "type_:MixedInlineType1"
+                }
+            ]
+        },
         "type_:RootType1": {
             "type": "object",
             "declaration": {
@@ -466,5 +612,88 @@
         }
     },
     "headers": [],
-    "endpoints": {}
+    "endpoints": {
+        "endpoint_.getRoot": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getRoot",
+                    "camelCase": {
+                        "unsafeName": "getRoot",
+                        "safeName": "getRoot"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_root",
+                        "safeName": "get_root"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_ROOT",
+                        "safeName": "GET_ROOT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetRoot",
+                        "safeName": "GetRoot"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/root"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            }
+        },
+        "endpoint_.getInline": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getInline",
+                    "camelCase": {
+                        "unsafeName": "getInline",
+                        "safeName": "getInline"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_inline",
+                        "safeName": "get_inline"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_INLINE",
+                        "safeName": "GET_INLINE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetInline",
+                        "safeName": "GetInline"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/inline"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            }
+        }
+    }
 }

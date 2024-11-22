@@ -3,6 +3,7 @@ export * from "./WithName";
 export * from "./WithAvailability";
 export * from "./WithDisplayName";
 export * from "./WithAudiences";
+export * from "./WithInline";
 export * from "./DeclarationSchema";
 export * from "./DeclarationWithoutDocsSchema";
 export * from "./DeclarationWithNameSchema";

@@ -269,6 +269,740 @@
             "availability": null,
             "docs": null
         },
+        "type_:PostRootRequestBarInnerBar": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "PostRootRequestBarInnerBar",
+                    "camelCase": {
+                        "unsafeName": "postRootRequestBarInnerBar",
+                        "safeName": "postRootRequestBarInnerBar"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_root_request_bar_inner_bar",
+                        "safeName": "post_root_request_bar_inner_bar"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_ROOT_REQUEST_BAR_INNER_BAR",
+                        "safeName": "POST_ROOT_REQUEST_BAR_INNER_BAR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRootRequestBarInnerBar",
+                        "safeName": "PostRootRequestBarInnerBar"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRootRequestBarInnerBar"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:PostRootRequestBar": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "PostRootRequestBar",
+                    "camelCase": {
+                        "unsafeName": "postRootRequestBar",
+                        "safeName": "postRootRequestBar"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_root_request_bar",
+                        "safeName": "post_root_request_bar"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_ROOT_REQUEST_BAR",
+                        "safeName": "POST_ROOT_REQUEST_BAR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRootRequestBar",
+                        "safeName": "PostRootRequestBar"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRootRequestBar"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "inner_bar",
+                                "camelCase": {
+                                    "unsafeName": "innerBar",
+                                    "safeName": "innerBar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inner_bar",
+                                    "safeName": "inner_bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INNER_BAR",
+                                    "safeName": "INNER_BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InnerBar",
+                                    "safeName": "InnerBar"
+                                }
+                            },
+                            "wireValue": "inner_bar"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PostRootRequestBarInnerBar",
+                                        "camelCase": {
+                                            "unsafeName": "postRootRequestBarInnerBar",
+                                            "safeName": "postRootRequestBarInnerBar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_root_request_bar_inner_bar",
+                                            "safeName": "post_root_request_bar_inner_bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_ROOT_REQUEST_BAR_INNER_BAR",
+                                            "safeName": "POST_ROOT_REQUEST_BAR_INNER_BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostRootRequestBarInnerBar",
+                                            "safeName": "PostRootRequestBarInnerBar"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:PostRootRequestBarInnerBar",
+                                    "default": null,
+                                    "inline": true
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:PostRootRequestBarInnerBar"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:PostRootResponseBarInnerBar": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "PostRootResponseBarInnerBar",
+                    "camelCase": {
+                        "unsafeName": "postRootResponseBarInnerBar",
+                        "safeName": "postRootResponseBarInnerBar"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_root_response_bar_inner_bar",
+                        "safeName": "post_root_response_bar_inner_bar"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                        "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRootResponseBarInnerBar",
+                        "safeName": "PostRootResponseBarInnerBar"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRootResponseBarInnerBar"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:PostRootResponseBar": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "PostRootResponseBar",
+                    "camelCase": {
+                        "unsafeName": "postRootResponseBar",
+                        "safeName": "postRootResponseBar"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_root_response_bar",
+                        "safeName": "post_root_response_bar"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                        "safeName": "POST_ROOT_RESPONSE_BAR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRootResponseBar",
+                        "safeName": "PostRootResponseBar"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRootResponseBar"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "inner_bar",
+                                "camelCase": {
+                                    "unsafeName": "innerBar",
+                                    "safeName": "innerBar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inner_bar",
+                                    "safeName": "inner_bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INNER_BAR",
+                                    "safeName": "INNER_BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InnerBar",
+                                    "safeName": "InnerBar"
+                                }
+                            },
+                            "wireValue": "inner_bar"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PostRootResponseBarInnerBar",
+                                        "camelCase": {
+                                            "unsafeName": "postRootResponseBarInnerBar",
+                                            "safeName": "postRootResponseBarInnerBar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_root_response_bar_inner_bar",
+                                            "safeName": "post_root_response_bar_inner_bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                            "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostRootResponseBarInnerBar",
+                                            "safeName": "PostRootResponseBarInnerBar"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:PostRootResponseBarInnerBar",
+                                    "default": null,
+                                    "inline": true
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:PostRootResponseBarInnerBar"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:PostRootResponse": {
+            "inline": false,
+            "name": {
+                "name": {
+                    "originalName": "PostRootResponse",
+                    "camelCase": {
+                        "unsafeName": "postRootResponse",
+                        "safeName": "postRootResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_root_response",
+                        "safeName": "post_root_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_ROOT_RESPONSE",
+                        "safeName": "POST_ROOT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRootResponse",
+                        "safeName": "PostRootResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRootResponse"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PostRootResponseBar",
+                                        "camelCase": {
+                                            "unsafeName": "postRootResponseBar",
+                                            "safeName": "postRootResponseBar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_root_response_bar",
+                                            "safeName": "post_root_response_bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                            "safeName": "POST_ROOT_RESPONSE_BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostRootResponseBar",
+                                            "safeName": "PostRootResponseBar"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:PostRootResponseBar",
+                                    "default": null,
+                                    "inline": true
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:PostRootResponseBar",
+                "type_:PostRootResponseBarInnerBar"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_:Schema1": {
             "inline": false,
             "name": {
@@ -1468,31 +2202,31 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_.getRoot",
+                    "id": "endpoint_.postRoot",
                     "name": {
-                        "originalName": "getRoot",
+                        "originalName": "postRoot",
                         "camelCase": {
-                            "unsafeName": "getRoot",
-                            "safeName": "getRoot"
+                            "unsafeName": "postRoot",
+                            "safeName": "postRoot"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_root",
-                            "safeName": "get_root"
+                            "unsafeName": "post_root",
+                            "safeName": "post_root"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_ROOT",
-                            "safeName": "GET_ROOT"
+                            "unsafeName": "POST_ROOT",
+                            "safeName": "POST_ROOT"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetRoot",
-                            "safeName": "GetRoot"
+                            "unsafeName": "PostRoot",
+                            "safeName": "PostRoot"
                         }
                     },
                     "displayName": null,
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
-                    "method": "GET",
+                    "method": "POST",
                     "basePath": null,
                     "path": {
                         "head": "/root",
@@ -1506,8 +2240,205 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "requestBody": null,
-                    "sdkRequest": null,
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "PostRootRequest",
+                            "camelCase": {
+                                "unsafeName": "postRootRequest",
+                                "safeName": "postRootRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "post_root_request",
+                                "safeName": "post_root_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POST_ROOT_REQUEST",
+                                "safeName": "POST_ROOT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PostRootRequest",
+                                "safeName": "PostRootRequest"
+                            }
+                        },
+                        "extends": [],
+                        "contentType": "application/json",
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    },
+                                    "wireValue": "foo"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "bar",
+                                        "camelCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "BAR",
+                                            "safeName": "BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Bar",
+                                            "safeName": "Bar"
+                                        }
+                                    },
+                                    "wireValue": "bar"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "PostRootRequestBar",
+                                                "camelCase": {
+                                                    "unsafeName": "postRootRequestBar",
+                                                    "safeName": "postRootRequestBar"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "post_root_request_bar",
+                                                    "safeName": "post_root_request_bar"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "POST_ROOT_REQUEST_BAR",
+                                                    "safeName": "POST_ROOT_REQUEST_BAR"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "PostRootRequestBar",
+                                                    "safeName": "PostRootRequestBar"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "typeId": "type_:PostRootRequestBar",
+                                            "default": null,
+                                            "inline": true
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PostRootRequest",
+                                "camelCase": {
+                                    "unsafeName": "postRootRequest",
+                                    "safeName": "postRootRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "post_root_request",
+                                    "safeName": "post_root_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POST_ROOT_REQUEST",
+                                    "safeName": "POST_ROOT_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PostRootRequest",
+                                    "safeName": "PostRootRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
                     "response": {
                         "body": {
                             "type": "json",
@@ -1516,22 +2447,22 @@
                                 "responseBodyType": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "RootSchema1",
+                                        "originalName": "PostRootResponse",
                                         "camelCase": {
-                                            "unsafeName": "rootSchema1",
-                                            "safeName": "rootSchema1"
+                                            "unsafeName": "postRootResponse",
+                                            "safeName": "postRootResponse"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "root_schema1",
-                                            "safeName": "root_schema1"
+                                            "unsafeName": "post_root_response",
+                                            "safeName": "post_root_response"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_SCHEMA1",
-                                            "safeName": "ROOT_SCHEMA1"
+                                            "unsafeName": "POST_ROOT_RESPONSE",
+                                            "safeName": "POST_ROOT_RESPONSE"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "RootSchema1",
-                                            "safeName": "RootSchema1"
+                                            "unsafeName": "PostRootResponse",
+                                            "safeName": "PostRootResponse"
                                         }
                                     },
                                     "fernFilepath": {
@@ -1539,7 +2470,7 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:RootSchema1",
+                                    "typeId": "type_:PostRootResponse",
                                     "default": null,
                                     "inline": null
                                 },
@@ -1552,7 +2483,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "2032d19ea7474cd0093ab1eef0cfd54fbe8bb5068162e4cd83f99a9c7327d64a",
+                                "id": "7eda6d031b33bfd08627608eb55f4a966170a0ce281f137740f324a67facb8e2",
                                 "name": null,
                                 "url": "/root",
                                 "rootPathParameters": [],
@@ -1561,7 +2492,11 @@
                                 "endpointHeaders": [],
                                 "serviceHeaders": [],
                                 "queryParameters": [],
-                                "request": null,
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [],
+                                    "jsonExample": {}
+                                },
                                 "response": {
                                     "type": "ok",
                                     "value": {
@@ -1570,29 +2505,29 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_:RootSchema1",
+                                                    "typeId": "type_:PostRootResponse",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
                                                         "file": null
                                                     },
                                                     "name": {
-                                                        "originalName": "RootSchema1",
+                                                        "originalName": "PostRootResponse",
                                                         "camelCase": {
-                                                            "unsafeName": "rootSchema1",
-                                                            "safeName": "rootSchema1"
+                                                            "unsafeName": "postRootResponse",
+                                                            "safeName": "postRootResponse"
                                                         },
                                                         "snakeCase": {
-                                                            "unsafeName": "root_schema1",
-                                                            "safeName": "root_schema1"
+                                                            "unsafeName": "post_root_response",
+                                                            "safeName": "post_root_response"
                                                         },
                                                         "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_SCHEMA1",
-                                                            "safeName": "ROOT_SCHEMA1"
+                                                            "unsafeName": "POST_ROOT_RESPONSE",
+                                                            "safeName": "POST_ROOT_RESPONSE"
                                                         },
                                                         "pascalCase": {
-                                                            "unsafeName": "RootSchema1",
-                                                            "safeName": "RootSchema1"
+                                                            "unsafeName": "PostRootResponse",
+                                                            "safeName": "PostRootResponse"
                                                         }
                                                     }
                                                 },
@@ -1655,29 +2590,29 @@
                                                                 "jsonExample": "foo"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:RootSchema1",
+                                                                "typeId": "type_:PostRootResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
                                                                 "name": {
-                                                                    "originalName": "RootSchema1",
+                                                                    "originalName": "PostRootResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "rootSchema1",
-                                                                        "safeName": "rootSchema1"
+                                                                        "unsafeName": "postRootResponse",
+                                                                        "safeName": "postRootResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "root_schema1",
-                                                                        "safeName": "root_schema1"
+                                                                        "unsafeName": "post_root_response",
+                                                                        "safeName": "post_root_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_SCHEMA1",
-                                                                        "safeName": "ROOT_SCHEMA1"
+                                                                        "unsafeName": "POST_ROOT_RESPONSE",
+                                                                        "safeName": "POST_ROOT_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "RootSchema1",
-                                                                        "safeName": "RootSchema1"
+                                                                        "unsafeName": "PostRootResponse",
+                                                                        "safeName": "PostRootResponse"
                                                                     }
                                                                 }
                                                             }
@@ -1714,29 +2649,29 @@
                                                                             "shape": {
                                                                                 "type": "named",
                                                                                 "typeName": {
-                                                                                    "typeId": "type_:RootSchema1Bar",
+                                                                                    "typeId": "type_:PostRootResponseBar",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
                                                                                     "name": {
-                                                                                        "originalName": "RootSchema1Bar",
+                                                                                        "originalName": "PostRootResponseBar",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "rootSchema1Bar",
-                                                                                            "safeName": "rootSchema1Bar"
+                                                                                            "unsafeName": "postRootResponseBar",
+                                                                                            "safeName": "postRootResponseBar"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "root_schema1bar",
-                                                                                            "safeName": "root_schema1bar"
+                                                                                            "unsafeName": "post_root_response_bar",
+                                                                                            "safeName": "post_root_response_bar"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                            "safeName": "ROOT_SCHEMA1BAR"
+                                                                                            "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                            "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "RootSchema1Bar",
-                                                                                            "safeName": "RootSchema1Bar"
+                                                                                            "unsafeName": "PostRootResponseBar",
+                                                                                            "safeName": "PostRootResponseBar"
                                                                                         }
                                                                                     }
                                                                                 },
@@ -1799,29 +2734,29 @@
                                                                                                 "jsonExample": "foo"
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_:RootSchema1Bar",
+                                                                                                "typeId": "type_:PostRootResponseBar",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "name": {
-                                                                                                    "originalName": "RootSchema1Bar",
+                                                                                                    "originalName": "PostRootResponseBar",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "rootSchema1Bar",
-                                                                                                        "safeName": "rootSchema1Bar"
+                                                                                                        "unsafeName": "postRootResponseBar",
+                                                                                                        "safeName": "postRootResponseBar"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "root_schema1bar",
-                                                                                                        "safeName": "root_schema1bar"
+                                                                                                        "unsafeName": "post_root_response_bar",
+                                                                                                        "safeName": "post_root_response_bar"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                                        "safeName": "ROOT_SCHEMA1BAR"
+                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "RootSchema1Bar",
-                                                                                                        "safeName": "RootSchema1Bar"
+                                                                                                        "unsafeName": "PostRootResponseBar",
+                                                                                                        "safeName": "PostRootResponseBar"
                                                                                                     }
                                                                                                 }
                                                                                             }
@@ -1858,29 +2793,29 @@
                                                                                                             "shape": {
                                                                                                                 "type": "named",
                                                                                                                 "typeName": {
-                                                                                                                    "typeId": "type_:RootSchema1BarInnerBar",
+                                                                                                                    "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [],
                                                                                                                         "packagePath": [],
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "name": {
-                                                                                                                        "originalName": "RootSchema1BarInnerBar",
+                                                                                                                        "originalName": "PostRootResponseBarInnerBar",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                            "safeName": "rootSchema1BarInnerBar"
+                                                                                                                            "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                            "safeName": "postRootResponseBarInnerBar"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                            "safeName": "root_schema1bar_inner_bar"
+                                                                                                                            "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                            "safeName": "post_root_response_bar_inner_bar"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                            "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                            "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                            "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                            "safeName": "RootSchema1BarInnerBar"
+                                                                                                                            "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                            "safeName": "PostRootResponseBarInnerBar"
                                                                                                                         }
                                                                                                                     }
                                                                                                                 },
@@ -1943,29 +2878,29 @@
                                                                                                                                 "jsonExample": "foo"
                                                                                                                             },
                                                                                                                             "originalTypeDeclaration": {
-                                                                                                                                "typeId": "type_:RootSchema1BarInnerBar",
+                                                                                                                                "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                                                 "fernFilepath": {
                                                                                                                                     "allParts": [],
                                                                                                                                     "packagePath": [],
                                                                                                                                     "file": null
                                                                                                                                 },
                                                                                                                                 "name": {
-                                                                                                                                    "originalName": "RootSchema1BarInnerBar",
+                                                                                                                                    "originalName": "PostRootResponseBarInnerBar",
                                                                                                                                     "camelCase": {
-                                                                                                                                        "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "rootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "postRootResponseBarInnerBar"
                                                                                                                                     },
                                                                                                                                     "snakeCase": {
-                                                                                                                                        "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                                        "safeName": "root_schema1bar_inner_bar"
+                                                                                                                                        "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                                        "safeName": "post_root_response_bar_inner_bar"
                                                                                                                                     },
                                                                                                                                     "screamingSnakeCase": {
-                                                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                                        "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                                     },
                                                                                                                                     "pascalCase": {
-                                                                                                                                        "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "RootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "PostRootResponseBarInnerBar"
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             }
@@ -2026,29 +2961,29 @@
                                                                                                                                 "jsonExample": "bar"
                                                                                                                             },
                                                                                                                             "originalTypeDeclaration": {
-                                                                                                                                "typeId": "type_:RootSchema1BarInnerBar",
+                                                                                                                                "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                                                 "fernFilepath": {
                                                                                                                                     "allParts": [],
                                                                                                                                     "packagePath": [],
                                                                                                                                     "file": null
                                                                                                                                 },
                                                                                                                                 "name": {
-                                                                                                                                    "originalName": "RootSchema1BarInnerBar",
+                                                                                                                                    "originalName": "PostRootResponseBarInnerBar",
                                                                                                                                     "camelCase": {
-                                                                                                                                        "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "rootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "postRootResponseBarInnerBar"
                                                                                                                                     },
                                                                                                                                     "snakeCase": {
-                                                                                                                                        "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                                        "safeName": "root_schema1bar_inner_bar"
+                                                                                                                                        "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                                        "safeName": "post_root_response_bar_inner_bar"
                                                                                                                                     },
                                                                                                                                     "screamingSnakeCase": {
-                                                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                                        "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                                     },
                                                                                                                                     "pascalCase": {
-                                                                                                                                        "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "RootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "PostRootResponseBarInnerBar"
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             }
@@ -2064,22 +2999,22 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
-                                                                                                                "originalName": "RootSchema1BarInnerBar",
+                                                                                                                "originalName": "PostRootResponseBarInnerBar",
                                                                                                                 "camelCase": {
-                                                                                                                    "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                    "safeName": "rootSchema1BarInnerBar"
+                                                                                                                    "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                    "safeName": "postRootResponseBarInnerBar"
                                                                                                                 },
                                                                                                                 "snakeCase": {
-                                                                                                                    "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                    "safeName": "root_schema1bar_inner_bar"
+                                                                                                                    "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                    "safeName": "post_root_response_bar_inner_bar"
                                                                                                                 },
                                                                                                                 "screamingSnakeCase": {
-                                                                                                                    "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                    "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                    "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                    "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                 },
                                                                                                                 "pascalCase": {
-                                                                                                                    "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                    "safeName": "RootSchema1BarInnerBar"
+                                                                                                                    "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                    "safeName": "PostRootResponseBarInnerBar"
                                                                                                                 }
                                                                                                             },
                                                                                                             "fernFilepath": {
@@ -2087,7 +3022,7 @@
                                                                                                                 "packagePath": [],
                                                                                                                 "file": null
                                                                                                             },
-                                                                                                            "typeId": "type_:RootSchema1BarInnerBar",
+                                                                                                            "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                             "default": null,
                                                                                                             "inline": null
                                                                                                         }
@@ -2099,29 +3034,29 @@
                                                                                                 }
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_:RootSchema1Bar",
+                                                                                                "typeId": "type_:PostRootResponseBar",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "name": {
-                                                                                                    "originalName": "RootSchema1Bar",
+                                                                                                    "originalName": "PostRootResponseBar",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "rootSchema1Bar",
-                                                                                                        "safeName": "rootSchema1Bar"
+                                                                                                        "unsafeName": "postRootResponseBar",
+                                                                                                        "safeName": "postRootResponseBar"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "root_schema1bar",
-                                                                                                        "safeName": "root_schema1bar"
+                                                                                                        "unsafeName": "post_root_response_bar",
+                                                                                                        "safeName": "post_root_response_bar"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                                        "safeName": "ROOT_SCHEMA1BAR"
+                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "RootSchema1Bar",
-                                                                                                        "safeName": "RootSchema1Bar"
+                                                                                                        "unsafeName": "PostRootResponseBar",
+                                                                                                        "safeName": "PostRootResponseBar"
                                                                                                     }
                                                                                                 }
                                                                                             }
@@ -2140,22 +3075,22 @@
                                                                         "valueType": {
                                                                             "_type": "named",
                                                                             "name": {
-                                                                                "originalName": "RootSchema1Bar",
+                                                                                "originalName": "PostRootResponseBar",
                                                                                 "camelCase": {
-                                                                                    "unsafeName": "rootSchema1Bar",
-                                                                                    "safeName": "rootSchema1Bar"
+                                                                                    "unsafeName": "postRootResponseBar",
+                                                                                    "safeName": "postRootResponseBar"
                                                                                 },
                                                                                 "snakeCase": {
-                                                                                    "unsafeName": "root_schema1bar",
-                                                                                    "safeName": "root_schema1bar"
+                                                                                    "unsafeName": "post_root_response_bar",
+                                                                                    "safeName": "post_root_response_bar"
                                                                                 },
                                                                                 "screamingSnakeCase": {
-                                                                                    "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                    "safeName": "ROOT_SCHEMA1BAR"
+                                                                                    "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                    "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                 },
                                                                                 "pascalCase": {
-                                                                                    "unsafeName": "RootSchema1Bar",
-                                                                                    "safeName": "RootSchema1Bar"
+                                                                                    "unsafeName": "PostRootResponseBar",
+                                                                                    "safeName": "PostRootResponseBar"
                                                                                 }
                                                                             },
                                                                             "fernFilepath": {
@@ -2163,7 +3098,7 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:RootSchema1Bar",
+                                                                            "typeId": "type_:PostRootResponseBar",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -2178,29 +3113,29 @@
                                                                 }
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:RootSchema1",
+                                                                "typeId": "type_:PostRootResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
                                                                 "name": {
-                                                                    "originalName": "RootSchema1",
+                                                                    "originalName": "PostRootResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "rootSchema1",
-                                                                        "safeName": "rootSchema1"
+                                                                        "unsafeName": "postRootResponse",
+                                                                        "safeName": "postRootResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "root_schema1",
-                                                                        "safeName": "root_schema1"
+                                                                        "unsafeName": "post_root_response",
+                                                                        "safeName": "post_root_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_SCHEMA1",
-                                                                        "safeName": "ROOT_SCHEMA1"
+                                                                        "unsafeName": "POST_ROOT_RESPONSE",
+                                                                        "safeName": "POST_ROOT_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "RootSchema1",
-                                                                        "safeName": "RootSchema1"
+                                                                        "unsafeName": "PostRootResponse",
+                                                                        "safeName": "PostRootResponse"
                                                                     }
                                                                 }
                                                             }
@@ -2229,7 +3164,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c35607c33cbcfe09408f14e974896288310e06ed",
+                                "id": "c7bb94f0df7d48d2922bdca77ebb4c93cf56868d",
                                 "url": "/root",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2238,7 +3173,121 @@
                                 "servicePathParameters": [],
                                 "serviceHeaders": [],
                                 "rootPathParameters": [],
-                                "request": null,
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "foo",
+                                                    "camelCase": {
+                                                        "unsafeName": "foo",
+                                                        "safeName": "foo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "foo",
+                                                        "safeName": "foo"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "FOO",
+                                                        "safeName": "FOO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Foo",
+                                                        "safeName": "Foo"
+                                                    }
+                                                },
+                                                "wireValue": "foo"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "optional",
+                                                        "optional": null,
+                                                        "valueType": {
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "bar",
+                                                    "camelCase": {
+                                                        "unsafeName": "bar",
+                                                        "safeName": "bar"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "bar",
+                                                        "safeName": "bar"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "BAR",
+                                                        "safeName": "BAR"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Bar",
+                                                        "safeName": "Bar"
+                                                    }
+                                                },
+                                                "wireValue": "bar"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "optional",
+                                                        "optional": null,
+                                                        "valueType": {
+                                                            "_type": "named",
+                                                            "name": {
+                                                                "originalName": "PostRootRequestBar",
+                                                                "camelCase": {
+                                                                    "unsafeName": "postRootRequestBar",
+                                                                    "safeName": "postRootRequestBar"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "post_root_request_bar",
+                                                                    "safeName": "post_root_request_bar"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "POST_ROOT_REQUEST_BAR",
+                                                                    "safeName": "POST_ROOT_REQUEST_BAR"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "PostRootRequestBar",
+                                                                    "safeName": "PostRootRequestBar"
+                                                                }
+                                                            },
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "typeId": "type_:PostRootRequestBar",
+                                                            "default": null,
+                                                            "inline": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "jsonExample": {}
+                                },
                                 "response": {
                                     "type": "ok",
                                     "value": {
@@ -2274,22 +3323,22 @@
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
-                                                                    "originalName": "RootSchema1",
+                                                                    "originalName": "PostRootResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "rootSchema1",
-                                                                        "safeName": "rootSchema1"
+                                                                        "unsafeName": "postRootResponse",
+                                                                        "safeName": "postRootResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "root_schema1",
-                                                                        "safeName": "root_schema1"
+                                                                        "unsafeName": "post_root_response",
+                                                                        "safeName": "post_root_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_SCHEMA1",
-                                                                        "safeName": "ROOT_SCHEMA1"
+                                                                        "unsafeName": "POST_ROOT_RESPONSE",
+                                                                        "safeName": "POST_ROOT_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "RootSchema1",
-                                                                        "safeName": "RootSchema1"
+                                                                        "unsafeName": "PostRootResponse",
+                                                                        "safeName": "PostRootResponse"
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
@@ -2297,7 +3346,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "typeId": "type_:RootSchema1"
+                                                                "typeId": "type_:PostRootResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2357,22 +3406,22 @@
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
-                                                                    "originalName": "RootSchema1",
+                                                                    "originalName": "PostRootResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "rootSchema1",
-                                                                        "safeName": "rootSchema1"
+                                                                        "unsafeName": "postRootResponse",
+                                                                        "safeName": "postRootResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "root_schema1",
-                                                                        "safeName": "root_schema1"
+                                                                        "unsafeName": "post_root_response",
+                                                                        "safeName": "post_root_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_SCHEMA1",
-                                                                        "safeName": "ROOT_SCHEMA1"
+                                                                        "unsafeName": "POST_ROOT_RESPONSE",
+                                                                        "safeName": "POST_ROOT_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "RootSchema1",
-                                                                        "safeName": "RootSchema1"
+                                                                        "unsafeName": "PostRootResponse",
+                                                                        "safeName": "PostRootResponse"
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
@@ -2380,7 +3429,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "typeId": "type_:RootSchema1"
+                                                                "typeId": "type_:PostRootResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2418,22 +3467,22 @@
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
-                                                                                                    "originalName": "RootSchema1Bar",
+                                                                                                    "originalName": "PostRootResponseBar",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "rootSchema1Bar",
-                                                                                                        "safeName": "rootSchema1Bar"
+                                                                                                        "unsafeName": "postRootResponseBar",
+                                                                                                        "safeName": "postRootResponseBar"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "root_schema1bar",
-                                                                                                        "safeName": "root_schema1bar"
+                                                                                                        "unsafeName": "post_root_response_bar",
+                                                                                                        "safeName": "post_root_response_bar"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                                        "safeName": "ROOT_SCHEMA1BAR"
+                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "RootSchema1Bar",
-                                                                                                        "safeName": "RootSchema1Bar"
+                                                                                                        "unsafeName": "PostRootResponseBar",
+                                                                                                        "safeName": "PostRootResponseBar"
                                                                                                     }
                                                                                                 },
                                                                                                 "fernFilepath": {
@@ -2441,7 +3490,7 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "typeId": "type_:RootSchema1Bar"
+                                                                                                "typeId": "type_:PostRootResponseBar"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -2501,22 +3550,22 @@
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
-                                                                                                    "originalName": "RootSchema1Bar",
+                                                                                                    "originalName": "PostRootResponseBar",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "rootSchema1Bar",
-                                                                                                        "safeName": "rootSchema1Bar"
+                                                                                                        "unsafeName": "postRootResponseBar",
+                                                                                                        "safeName": "postRootResponseBar"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "root_schema1bar",
-                                                                                                        "safeName": "root_schema1bar"
+                                                                                                        "unsafeName": "post_root_response_bar",
+                                                                                                        "safeName": "post_root_response_bar"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                                        "safeName": "ROOT_SCHEMA1BAR"
+                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "RootSchema1Bar",
-                                                                                                        "safeName": "RootSchema1Bar"
+                                                                                                        "unsafeName": "PostRootResponseBar",
+                                                                                                        "safeName": "PostRootResponseBar"
                                                                                                     }
                                                                                                 },
                                                                                                 "fernFilepath": {
@@ -2524,7 +3573,7 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "typeId": "type_:RootSchema1Bar"
+                                                                                                "typeId": "type_:PostRootResponseBar"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -2562,22 +3611,22 @@
                                                                                                                             },
                                                                                                                             "originalTypeDeclaration": {
                                                                                                                                 "name": {
-                                                                                                                                    "originalName": "RootSchema1BarInnerBar",
+                                                                                                                                    "originalName": "PostRootResponseBarInnerBar",
                                                                                                                                     "camelCase": {
-                                                                                                                                        "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "rootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "postRootResponseBarInnerBar"
                                                                                                                                     },
                                                                                                                                     "snakeCase": {
-                                                                                                                                        "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                                        "safeName": "root_schema1bar_inner_bar"
+                                                                                                                                        "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                                        "safeName": "post_root_response_bar_inner_bar"
                                                                                                                                     },
                                                                                                                                     "screamingSnakeCase": {
-                                                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                                        "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                                     },
                                                                                                                                     "pascalCase": {
-                                                                                                                                        "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "RootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "PostRootResponseBarInnerBar"
                                                                                                                                     }
                                                                                                                                 },
                                                                                                                                 "fernFilepath": {
@@ -2585,7 +3634,7 @@
                                                                                                                                     "packagePath": [],
                                                                                                                                     "file": null
                                                                                                                                 },
-                                                                                                                                "typeId": "type_:RootSchema1BarInnerBar"
+                                                                                                                                "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                             },
                                                                                                                             "value": {
                                                                                                                                 "shape": {
@@ -2645,22 +3694,22 @@
                                                                                                                             },
                                                                                                                             "originalTypeDeclaration": {
                                                                                                                                 "name": {
-                                                                                                                                    "originalName": "RootSchema1BarInnerBar",
+                                                                                                                                    "originalName": "PostRootResponseBarInnerBar",
                                                                                                                                     "camelCase": {
-                                                                                                                                        "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "rootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "postRootResponseBarInnerBar"
                                                                                                                                     },
                                                                                                                                     "snakeCase": {
-                                                                                                                                        "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                                        "safeName": "root_schema1bar_inner_bar"
+                                                                                                                                        "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                                        "safeName": "post_root_response_bar_inner_bar"
                                                                                                                                     },
                                                                                                                                     "screamingSnakeCase": {
-                                                                                                                                        "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                                        "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                                        "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                                        "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                                     },
                                                                                                                                     "pascalCase": {
-                                                                                                                                        "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                                        "safeName": "RootSchema1BarInnerBar"
+                                                                                                                                        "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                                        "safeName": "PostRootResponseBarInnerBar"
                                                                                                                                     }
                                                                                                                                 },
                                                                                                                                 "fernFilepath": {
@@ -2668,7 +3717,7 @@
                                                                                                                                     "packagePath": [],
                                                                                                                                     "file": null
                                                                                                                                 },
-                                                                                                                                "typeId": "type_:RootSchema1BarInnerBar"
+                                                                                                                                "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                             },
                                                                                                                             "value": {
                                                                                                                                 "shape": {
@@ -2707,22 +3756,22 @@
                                                                                                                 },
                                                                                                                 "typeName": {
                                                                                                                     "name": {
-                                                                                                                        "originalName": "RootSchema1BarInnerBar",
+                                                                                                                        "originalName": "PostRootResponseBarInnerBar",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                            "safeName": "rootSchema1BarInnerBar"
+                                                                                                                            "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                            "safeName": "postRootResponseBarInnerBar"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                            "safeName": "root_schema1bar_inner_bar"
+                                                                                                                            "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                            "safeName": "post_root_response_bar_inner_bar"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                            "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                            "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                            "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                            "safeName": "RootSchema1BarInnerBar"
+                                                                                                                            "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                            "safeName": "PostRootResponseBarInnerBar"
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "fernFilepath": {
@@ -2730,7 +3779,7 @@
                                                                                                                         "packagePath": [],
                                                                                                                         "file": null
                                                                                                                     },
-                                                                                                                    "typeId": "type_:RootSchema1BarInnerBar"
+                                                                                                                    "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": {
@@ -2741,22 +3790,22 @@
                                                                                                         "valueType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
-                                                                                                                "originalName": "RootSchema1BarInnerBar",
+                                                                                                                "originalName": "PostRootResponseBarInnerBar",
                                                                                                                 "camelCase": {
-                                                                                                                    "unsafeName": "rootSchema1BarInnerBar",
-                                                                                                                    "safeName": "rootSchema1BarInnerBar"
+                                                                                                                    "unsafeName": "postRootResponseBarInnerBar",
+                                                                                                                    "safeName": "postRootResponseBarInnerBar"
                                                                                                                 },
                                                                                                                 "snakeCase": {
-                                                                                                                    "unsafeName": "root_schema1bar_inner_bar",
-                                                                                                                    "safeName": "root_schema1bar_inner_bar"
+                                                                                                                    "unsafeName": "post_root_response_bar_inner_bar",
+                                                                                                                    "safeName": "post_root_response_bar_inner_bar"
                                                                                                                 },
                                                                                                                 "screamingSnakeCase": {
-                                                                                                                    "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                                                                                                    "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                                                                                                    "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                                                                                                                    "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
                                                                                                                 },
                                                                                                                 "pascalCase": {
-                                                                                                                    "unsafeName": "RootSchema1BarInnerBar",
-                                                                                                                    "safeName": "RootSchema1BarInnerBar"
+                                                                                                                    "unsafeName": "PostRootResponseBarInnerBar",
+                                                                                                                    "safeName": "PostRootResponseBarInnerBar"
                                                                                                                 }
                                                                                                             },
                                                                                                             "fernFilepath": {
@@ -2764,7 +3813,7 @@
                                                                                                                 "packagePath": [],
                                                                                                                 "file": null
                                                                                                             },
-                                                                                                            "typeId": "type_:RootSchema1BarInnerBar",
+                                                                                                            "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                             "default": null,
                                                                                                             "inline": true
                                                                                                         }
@@ -2780,22 +3829,22 @@
                                                                                 },
                                                                                 "typeName": {
                                                                                     "name": {
-                                                                                        "originalName": "RootSchema1Bar",
+                                                                                        "originalName": "PostRootResponseBar",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "rootSchema1Bar",
-                                                                                            "safeName": "rootSchema1Bar"
+                                                                                            "unsafeName": "postRootResponseBar",
+                                                                                            "safeName": "postRootResponseBar"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "root_schema1bar",
-                                                                                            "safeName": "root_schema1bar"
+                                                                                            "unsafeName": "post_root_response_bar",
+                                                                                            "safeName": "post_root_response_bar"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                            "safeName": "ROOT_SCHEMA1BAR"
+                                                                                            "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                            "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "RootSchema1Bar",
-                                                                                            "safeName": "RootSchema1Bar"
+                                                                                            "unsafeName": "PostRootResponseBar",
+                                                                                            "safeName": "PostRootResponseBar"
                                                                                         }
                                                                                     },
                                                                                     "fernFilepath": {
@@ -2803,7 +3852,7 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "typeId": "type_:RootSchema1Bar"
+                                                                                    "typeId": "type_:PostRootResponseBar"
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
@@ -2817,22 +3866,22 @@
                                                                         "valueType": {
                                                                             "_type": "named",
                                                                             "name": {
-                                                                                "originalName": "RootSchema1Bar",
+                                                                                "originalName": "PostRootResponseBar",
                                                                                 "camelCase": {
-                                                                                    "unsafeName": "rootSchema1Bar",
-                                                                                    "safeName": "rootSchema1Bar"
+                                                                                    "unsafeName": "postRootResponseBar",
+                                                                                    "safeName": "postRootResponseBar"
                                                                                 },
                                                                                 "snakeCase": {
-                                                                                    "unsafeName": "root_schema1bar",
-                                                                                    "safeName": "root_schema1bar"
+                                                                                    "unsafeName": "post_root_response_bar",
+                                                                                    "safeName": "post_root_response_bar"
                                                                                 },
                                                                                 "screamingSnakeCase": {
-                                                                                    "unsafeName": "ROOT_SCHEMA1BAR",
-                                                                                    "safeName": "ROOT_SCHEMA1BAR"
+                                                                                    "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                                                                                    "safeName": "POST_ROOT_RESPONSE_BAR"
                                                                                 },
                                                                                 "pascalCase": {
-                                                                                    "unsafeName": "RootSchema1Bar",
-                                                                                    "safeName": "RootSchema1Bar"
+                                                                                    "unsafeName": "PostRootResponseBar",
+                                                                                    "safeName": "PostRootResponseBar"
                                                                                 }
                                                                             },
                                                                             "fernFilepath": {
@@ -2840,7 +3889,7 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "typeId": "type_:RootSchema1Bar",
+                                                                            "typeId": "type_:PostRootResponseBar",
                                                                             "default": null,
                                                                             "inline": true
                                                                         }
@@ -2859,22 +3908,22 @@
                                                 },
                                                 "typeName": {
                                                     "name": {
-                                                        "originalName": "RootSchema1",
+                                                        "originalName": "PostRootResponse",
                                                         "camelCase": {
-                                                            "unsafeName": "rootSchema1",
-                                                            "safeName": "rootSchema1"
+                                                            "unsafeName": "postRootResponse",
+                                                            "safeName": "postRootResponse"
                                                         },
                                                         "snakeCase": {
-                                                            "unsafeName": "root_schema1",
-                                                            "safeName": "root_schema1"
+                                                            "unsafeName": "post_root_response",
+                                                            "safeName": "post_root_response"
                                                         },
                                                         "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_SCHEMA1",
-                                                            "safeName": "ROOT_SCHEMA1"
+                                                            "unsafeName": "POST_ROOT_RESPONSE",
+                                                            "safeName": "POST_ROOT_RESPONSE"
                                                         },
                                                         "pascalCase": {
-                                                            "unsafeName": "RootSchema1",
-                                                            "safeName": "RootSchema1"
+                                                            "unsafeName": "PostRootResponse",
+                                                            "safeName": "PostRootResponse"
                                                         }
                                                     },
                                                     "fernFilepath": {
@@ -2882,7 +3931,7 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "typeId": "type_:RootSchema1"
+                                                    "typeId": "type_:PostRootResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -2946,14 +3995,20 @@
             "service_": [
                 "type_:NotFound",
                 "type_:GetExampleResponse",
+                "type_:PostRootRequestBarInnerBar",
+                "type_:PostRootRequestBar",
+                "type_:PostRootResponseBarInnerBar",
+                "type_:PostRootResponseBar",
+                "type_:PostRootResponse",
                 "type_:Schema1",
-                "type_:Schema2",
-                "type_:RootSchema1BarInnerBar",
-                "type_:RootSchema1Bar",
-                "type_:RootSchema1"
+                "type_:Schema2"
             ]
         },
-        "sharedTypes": []
+        "sharedTypes": [
+            "type_:RootSchema1BarInnerBar",
+            "type_:RootSchema1Bar",
+            "type_:RootSchema1"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -2972,6 +4027,11 @@
         "types": [
             "type_:NotFound",
             "type_:GetExampleResponse",
+            "type_:PostRootRequestBarInnerBar",
+            "type_:PostRootRequestBar",
+            "type_:PostRootResponseBarInnerBar",
+            "type_:PostRootResponseBar",
+            "type_:PostRootResponse",
             "type_:Schema1",
             "type_:Schema2",
             "type_:RootSchema1BarInnerBar",

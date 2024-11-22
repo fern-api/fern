@@ -1,5 +1,54 @@
 {
   "types": {
+    "type_:DiscriminatedUnion1": {
+      "name": "DiscriminatedUnion1",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "type1",
+            "additionalProperties": {
+              "extends": [
+                "type_:InlineType1"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "type2",
+            "additionalProperties": {
+              "extends": [
+                "type_:MixedInlineType1"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_:UndiscriminatedUnion1": {
+      "name": "UndiscriminatedUnion1",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InlineType1",
+            "type": {
+              "type": "id",
+              "value": "type_:InlineType1"
+            }
+          },
+          {
+            "typeName": "MixedInlineType1",
+            "type": {
+              "type": "id",
+              "value": "type_:MixedInlineType1"
+            }
+          }
+        ]
+      }
+    },
     "type_:RootType1": {
       "name": "RootType1",
       "shape": {
@@ -154,10 +203,145 @@
   },
   "subpackages": {},
   "rootPackage": {
-    "endpoints": [],
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getRoot",
+        "originalEndpointId": "endpoint_.getRoot",
+        "name": "Get Root",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/root"
+            },
+            {
+              "type": "literal",
+              "value": "/root"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:RootType1"
+            }
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/root/root",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "foo": "foo",
+              "bar": {
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "bar": "bar"
+                }
+              },
+              "two": {
+                "foo": "foo",
+                "bar": "bar"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "bar": {
+                    "foo": "foo",
+                    "bar": "bar"
+                  }
+                },
+                "two": {
+                  "foo": "foo",
+                  "bar": "bar"
+                }
+              }
+            },
+            "codeSamples": []
+          }
+        ]
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getInline",
+        "originalEndpointId": "endpoint_.getInline",
+        "name": "Get Inline",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/root"
+            },
+            {
+              "type": "literal",
+              "value": "/inline"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:InlineType1"
+            }
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/root/inline",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "foo": "foo",
+              "bar": {
+                "foo": "foo",
+                "bar": "bar"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "bar": "bar"
+                }
+              }
+            },
+            "codeSamples": []
+          }
+        ]
+      }
+    ],
     "webhooks": [],
     "websockets": [],
     "types": [
+      "type_:DiscriminatedUnion1",
+      "type_:UndiscriminatedUnion1",
       "type_:RootType1",
       "type_:RootType2",
       "type_:InlineType1",

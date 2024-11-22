@@ -465,7 +465,8 @@ function getRequest({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
                         context,
-                        namespace
+                        namespace,
+                        inline: property.inline
                     });
 
                     // TODO: clean up conditional logic

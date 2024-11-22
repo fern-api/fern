@@ -11464,7 +11464,10 @@ docs: End-points to retrieve paid invoices and reciepts.
               "request": {
                 "body": {
                   "properties": {
-                    "data": "InputToCreateFileRefData",
+                    "data": {
+                      "inline": true,
+                      "type": "InputToCreateFileRefData",
+                    },
                   },
                 },
                 "content-type": "application/json",
@@ -11524,7 +11527,9 @@ service:
         name: InputToCreateFileRef
         body:
           properties:
-            data: InputToCreateFileRefData
+            data:
+              type: InputToCreateFileRefData
+              inline: true
         content-type: application/json
       response:
         docs: Successful operation.

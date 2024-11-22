@@ -1,39 +1,43 @@
-imports: 
+imports:
   availability: availability.yml
 
-types: 
-  WithDocsSchema: 
-    properties: 
+types:
+  WithDocsSchema:
+    properties:
       docs: optional<string>
-  
-  WithName: 
-    properties: 
+
+  WithName:
+    properties:
       name: optional<string>
-  
-  WithAvailability: 
-    properties: 
+
+  WithAvailability:
+    properties:
       availability: optional<availability.AvailabilityUnionSchema>
-  
-  WithDisplayName: 
-    properties: 
+
+  WithDisplayName:
+    properties:
       display-name: optional<string>
-  
-  WithAudiences: 
-    properties: 
+
+  WithAudiences:
+    properties:
       audiences: optional<list<string>>
-  
-  DeclarationSchema: 
-    extends: 
+
+  WithInline:
+    properties:
+      inline: optional<boolean>
+
+  DeclarationSchema:
+    extends:
       - WithDocsSchema
       - WithAvailability
       - WithAudiences
-  
-  DeclarationWithoutDocsSchema: 
-    extends: 
+
+  DeclarationWithoutDocsSchema:
+    extends:
       - WithAvailability
       - WithAudiences
-  
-  DeclarationWithNameSchema: 
-    extends: 
+
+  DeclarationWithNameSchema:
+    extends:
       - DeclarationSchema
       - WithName

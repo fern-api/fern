@@ -50,11 +50,43 @@ export function buildTypeReference({
     /* The file any type declarations will be written to. Defaults to fileContainingReference if not present */
     declarationFile = fileContainingReference,
     context,
-    namespace
+    namespace,
+    inline
 }: {
     schema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile?: RelativeFilePath;
+    context: OpenApiIrConverterContext;
+    namespace: string | undefined;
+    inline?: boolean | undefined;
+}): RawSchemas.TypeReferenceSchema {
+    const typeReference = buildTypeReferenceWithoutInline({
+        schema,
+        fileContainingReference,
+        declarationFile,
+        context,
+        namespace
+    });
+    if (typeof typeReference === "string" && inline === true) {
+        return {
+            type: typeReference,
+            inline: true
+        };
+    }
+    return typeReference;
+}
+function buildTypeReferenceWithoutInline({
+    schema,
+    /* The file the type reference will be written to */
+    fileContainingReference,
+    /* The file any type declarations will be written to. Defaults to fileContainingReference if not present */
+    declarationFile,
+    context,
+    namespace
+}: {
+    schema: Schema;
+    fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {

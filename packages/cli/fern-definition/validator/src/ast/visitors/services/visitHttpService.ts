@@ -266,7 +266,8 @@ async function visitEndpoint({
                         });
                     },
                     property: noop,
-                    "status-code": noop
+                    "status-code": noop,
+                    inline: noop
                 });
             }
         },
@@ -526,7 +527,8 @@ export async function visitPathParameters({
                     default: noop,
                     validation: noop,
                     name: noop,
-                    audiences: noop
+                    audiences: noop,
+                    inline: noop
                 });
             }
         }

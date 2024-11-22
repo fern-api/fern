@@ -459,9 +459,6 @@
             }
           ]
         },
-        "type": {
-          "type": "string"
-        },
         "inline": {
           "oneOf": [
             {
@@ -471,6 +468,9 @@
               "type": "null"
             }
           ]
+        },
+        "type": {
+          "type": "string"
         }
       },
       "required": [
@@ -894,6 +894,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1464,16 +1474,6 @@
         "type": {
           "type": "string"
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "default": {
           "oneOf": [
             {
@@ -1548,6 +1548,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1586,16 +1596,6 @@
         "type": {
           "type": "string"
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "default": {
           "oneOf": [
             {
@@ -1670,6 +1670,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1733,16 +1743,6 @@
         "type": {
           "type": "string"
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "default": {
           "oneOf": [
             {
@@ -1817,6 +1817,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -2003,6 +2013,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

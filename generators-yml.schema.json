@@ -1007,16 +1007,6 @@
         "type": {
           "type": "string"
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "default": {
           "oneOf": [
             {
@@ -1091,6 +1081,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

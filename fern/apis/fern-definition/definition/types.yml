@@ -64,6 +64,7 @@ types:
       - BaseTypeReferenceSchema
       - commons.WithName
       - commons.WithAudiences
+      - commons.WithInline
     properties:
       type: string
 
@@ -78,9 +79,9 @@ types:
       - BaseTypeReferenceSchema
       - commons.WithName
       - commons.WithAudiences
+      - commons.WithInline
     properties:
       type: string
-      inline: optional<boolean>
 
   BaseTypeDeclarationSchema:
     extends:
