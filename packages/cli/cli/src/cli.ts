@@ -929,8 +929,13 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 .option("language", {
                     choices: Object.values(generatorsYml.GenerationLanguage),
                     description: "Write the definition for a particular SDK language"
+                })
+                .option("preserve-schemas", {
+                    string: true,
+                    description: "Preserve potentially unsafe schema Ids in the generated fern definition"
                 }),
         async (argv) => {
+            const preserveSchemaIds = argv.preserveSchemas != null;
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
@@ -938,10 +943,12 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true,
-                    sdkLanguage: argv.language
+                    sdkLanguage: argv.language,
+                    preserveSchemaIds
                 }),
                 cliContext,
-                sdkLanguage: argv.language
+                sdkLanguage: argv.language,
+                preserveSchemaIds
             });
         }
     );

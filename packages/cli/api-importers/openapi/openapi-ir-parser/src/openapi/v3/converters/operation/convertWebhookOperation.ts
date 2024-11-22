@@ -64,7 +64,7 @@ export function convertWebhookOperation({
         operationId: operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),
         headers: convertedParameters.headers,
-        generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
+        generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
         payload: convertedPayload.schema,
         description: operation.description,
         examples: convertWebhookExamples(convertedPayload.fullExamples),

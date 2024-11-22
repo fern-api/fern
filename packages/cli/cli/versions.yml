@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Docs generation now preserves original model schema names.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc55
+
+- changelogEntry:
+    - summary: |
         Removes errant minimum and maximums for 'float' types for docs.
       type: internal
   irVersion: 53
