@@ -1999,16 +1999,6 @@
             }
           ]
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "type": {
           "type": "string"
         },
