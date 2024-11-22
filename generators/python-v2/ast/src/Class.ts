@@ -35,6 +35,10 @@ export class Class extends AstNode {
         this.extends_.forEach((parentClassReference) => {
             this.inheritReferences(parentClassReference);
         });
+
+        this.decorators.forEach((decorator) => {
+            this.inheritReferences(decorator);
+        });
     }
 
     public write(writer: Writer): void {
