@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedResponsePropertyClient, SeedResponseProperty } from "@fern/response-property";
+import { SeedResponsePropertyClient } from "@fern/response-property";
 
 const client = new SeedResponsePropertyClient({ environment: "YOUR_BASE_URL" });
 await client.service.getMovie("string");

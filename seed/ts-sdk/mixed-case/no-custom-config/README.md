@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMixedCaseClient, SeedMixedCase } from "@fern/mixed-case";
+import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.getResource("rsc-xyz");

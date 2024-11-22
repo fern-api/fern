@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedAudiencesClient, SeedAudiences } from "@fern/audiences";
+import { SeedAudiencesClient } from "@fern/audiences";
 
 const client = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
 await client.folderD.service.getDirectThread();
