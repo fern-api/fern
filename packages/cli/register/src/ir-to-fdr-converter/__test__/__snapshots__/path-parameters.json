@@ -360,7 +360,7 @@
               },
               {
                 "type": "literal",
-                "value": ""
+                "value": "/search"
               }
             ]
           },
@@ -394,7 +394,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/user/users/userId",
+              "path": "/user/users/userId/search",
               "pathParameters": {
                 "userId": "userId"
               },
@@ -473,7 +473,7 @@
               },
               {
                 "type": "literal",
-                "value": ""
+                "value": "/search"
               }
             ]
           },
@@ -507,7 +507,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/user/organizations/organizationId",
+              "path": "/user/organizations/organizationId/search",
               "pathParameters": {
                 "organizationId": "organizationId"
               },

@@ -38,7 +38,7 @@ public class SearchOrganizationsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/user/organizations/organizationId")
+                    .WithPath("/user/organizations/organizationId/search")
                     .WithParam("limit", "1")
                     .UsingGet()
             )

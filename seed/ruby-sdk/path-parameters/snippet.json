@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/user/users/{userId}",
+                "path": "/user/users/{userId}/search",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.searchUsers"
             },
@@ -46,7 +46,7 @@
         },
         {
             "id": {
-                "path": "/user/organizations/{organizationId}",
+                "path": "/user/organizations/{organizationId}/search",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.searchOrganizations"
             },
@@ -90,7 +90,7 @@
         },
         {
             "id": {
-                "path": "/user/users/{userId}",
+                "path": "/user/users/{userId}/search",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.searchUsers"
             },
@@ -101,7 +101,7 @@
         },
         {
             "id": {
-                "path": "/user/organizations/{organizationId}",
+                "path": "/user/organizations/{organizationId}/search",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.searchOrganizations"
             },

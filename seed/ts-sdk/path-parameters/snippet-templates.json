@@ -274,7 +274,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/user/users/{userId}",
+            "path": "/user/users/{userId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -386,7 +386,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/user/organizations/{organizationId}",
+            "path": "/user/organizations/{organizationId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchOrganizations"
         },

@@ -5,6 +5,8 @@ import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
 import { ErrorReporter, Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
+import { assertNever } from "@fern-api/core-utils";
+import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -384,29 +386,62 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         }
         this.context.errors.unscope();
 
-        if (!this.context.customConfig?.inlinePathParameters) {
+        this.context.errors.scope(Scope.RequestBody);
+        const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
+        this.context.errors.unscope();
+
+        if (!this.context.includePathParametersInWrappedRequest({ request })) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
-        if (this.context.doesInlinedRequestExist({ request })) {
+
+        if (!this.context.customConfig?.inlineFileProperties) {
+            args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+        }
+
+        if (this.context.needsRequestParameter({ request })) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields: this.context.customConfig?.inlinePathParameters ? pathParameterFields : []
+                    pathParameterFields: this.context.includePathParametersInWrappedRequest({ request })
+                        ? pathParameterFields
+                        : [],
+                    filePropertyInfo
                 })
             );
         }
         return args;
     }
 
+    private getFilePropertyInfo({
+        request,
+        snippet
+    }: {
+        request: DynamicSnippets.InlinedRequest;
+        snippet: DynamicSnippets.EndpointSnippetRequest;
+    }): FilePropertyInfo {
+        if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
+            return {
+                fileFields: [],
+                bodyPropertyFields: []
+            };
+        }
+        return this.context.filePropertyMapper.getFilePropertyInfo({
+            body: request.body,
+            value: snippet.requestBody
+        });
+    }
+
     private getInlinedRequestArg({
         request,
         snippet,
-        pathParameterFields
+        pathParameterFields,
+        filePropertyInfo
     }: {
         request: DynamicSnippets.InlinedRequest;
         snippet: DynamicSnippets.EndpointSnippetRequest;
         pathParameterFields: go.StructField[];
+        filePropertyInfo: FilePropertyInfo;
     }): go.TypeInstantiation {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
@@ -433,7 +468,11 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         this.context.errors.scope(Scope.RequestBody);
         const requestBodyFields =
             request.body != null
-                ? this.getInlinedRequestBodyStructFields({ body: request.body, value: snippet.requestBody })
+                ? this.getInlinedRequestBodyStructFields({
+                      body: request.body,
+                      value: snippet.requestBody,
+                      filePropertyInfo
+                  })
                 : [];
         this.context.errors.unscope();
 
@@ -448,10 +487,12 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
 
     private getInlinedRequestBodyStructFields({
         body,
-        value
+        value,
+        filePropertyInfo
     }: {
         body: DynamicSnippets.InlinedRequestBody;
         value: unknown;
+        filePropertyInfo: FilePropertyInfo;
     }): go.StructField[] {
         switch (body.type) {
             case "properties":
@@ -459,8 +500,19 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
-                throw new Error("TODO: Implement me!");
+                return this.getFileUploadRequestBodyStructFields({ filePropertyInfo });
         }
+    }
+
+    private getFileUploadRequestBodyStructFields({
+        filePropertyInfo
+    }: {
+        filePropertyInfo: FilePropertyInfo;
+    }): go.StructField[] {
+        if (this.context.customConfig?.inlineFileProperties) {
+            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+        }
+        return filePropertyInfo.bodyPropertyFields;
     }
 
     private getReferencedRequestBodyPropertyStructField({

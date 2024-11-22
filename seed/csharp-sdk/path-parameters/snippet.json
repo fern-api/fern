@@ -40,7 +40,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/user/users/{userId}",
+                "path": "/user/users/{userId}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"
             },
@@ -52,7 +52,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/user/organizations/{organizationId}",
+                "path": "/user/organizations/{organizationId}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchOrganizations"
             },

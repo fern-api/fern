@@ -164,7 +164,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/user/users/$userId",
+                    path: "/user/users/$userId/search",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -206,7 +206,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/user/organizations/$organizationId",
+                    path: "/user/organizations/$organizationId/search",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
