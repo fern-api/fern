@@ -55,6 +55,7 @@
     "@types/uuid": "^9.0.8",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0",
+    "url-join": "^5.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

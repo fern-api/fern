@@ -2526,6 +2526,9 @@ importers:
       ts-poet:
         specifier: ^6.7.0
         version: 6.7.0
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
