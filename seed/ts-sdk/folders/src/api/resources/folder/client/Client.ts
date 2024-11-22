@@ -74,7 +74,7 @@ export class Folder {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

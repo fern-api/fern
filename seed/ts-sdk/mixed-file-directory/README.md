@@ -60,6 +60,19 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from "@fern/mixed-file-directory";
+
+const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
+await client.organization.create({
+    name: "name",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

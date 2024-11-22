@@ -51,6 +51,23 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedBasicAuthEnvironmentVariablesClient } from "@fern/basic-auth-environment-variables";
+
+const client = new SeedBasicAuthEnvironmentVariablesClient({
+    environment: "YOUR_BASE_URL",
+    username: "YOUR_USERNAME",
+    password: "YOUR_PASSWORD",
+});
+await client.basicAuth.postWithBasicAuth({
+    key: "value",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

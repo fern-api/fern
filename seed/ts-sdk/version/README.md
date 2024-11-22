@@ -45,6 +45,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedVersionClient, SeedVersion } from "@fern/version";
+
+const client = new SeedVersionClient({ environment: "YOUR_BASE_URL" });
+await client.user.getUser("userId");
+```
+
 ## Advanced
 
 ### Raw Responses

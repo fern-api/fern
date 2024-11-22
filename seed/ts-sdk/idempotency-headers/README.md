@@ -61,6 +61,20 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
+
+const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.payment.create({
+    amount: 1,
+    currency: "USD",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

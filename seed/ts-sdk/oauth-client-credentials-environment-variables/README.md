@@ -69,6 +69,28 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import {
+    SeedOauthClientCredentialsEnvironmentVariablesClient,
+    SeedOauthClientCredentialsEnvironmentVariables,
+} from "@fern/oauth-client-credentials-environment-variables";
+
+const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
+    environment: "YOUR_BASE_URL",
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
+});
+await client.auth.getTokenWithClientCredentials({
+    clientId: "client_id",
+    clientSecret: "client_secret",
+    scope: "scope",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

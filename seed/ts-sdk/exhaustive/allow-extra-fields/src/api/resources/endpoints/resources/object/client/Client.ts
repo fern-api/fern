@@ -111,7 +111,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-with-optional-field."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -189,7 +191,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-with-required-field."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -271,7 +275,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-with-map-of-map."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -366,7 +372,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -463,7 +471,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field/{string}."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -580,7 +590,9 @@ export class Object_ {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

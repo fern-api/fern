@@ -6,16 +6,32 @@ export class GeneratedTimeoutSdkErrorImpl
     extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedTimeoutSdkError
 {
+    private static MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
+
     public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context);
     }
 
-    public build(context: SdkContext): ts.NewExpression {
+    public build(context: SdkContext, message: string): ts.NewExpression {
         return ts.factory.createNewExpression(
             context.timeoutSdkError.getReferenceToTimeoutSdkError().getExpression(),
             undefined,
-            undefined
+            [ts.factory.createStringLiteral(message)]
         );
+    }
+
+    public buildConstructorArguments(message: ts.Expression): ts.Expression[] {
+        const properties: ts.ObjectLiteralElementLike[] = [];
+        if (message != null) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
+                    message
+                )
+            );
+        }
+
+        return [ts.factory.createObjectLiteralExpression(properties, true)];
     }
 
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
@@ -23,11 +39,17 @@ export class GeneratedTimeoutSdkErrorImpl
     }
 
     protected getConstructorParameters(): OptionalKind<ParameterDeclarationStructure>[] {
-        return [];
+        return [
+            {
+                name: GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
+                type: "string",
+                hasQuestionToken: false
+            }
+        ];
     }
 
     protected getSuperArguments(): ts.Expression[] {
-        return [ts.factory.createStringLiteral("Timeout")];
+        return [ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME)];
     }
 
     protected getConstructorStatements(): ts.Statement[] {

@@ -91,7 +91,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError(
+                            "Timeout exceeded when calling GET /movie/{movieId}."
+                        );
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,
@@ -181,7 +183,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,
@@ -267,7 +269,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /metadata.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,
@@ -494,7 +496,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,

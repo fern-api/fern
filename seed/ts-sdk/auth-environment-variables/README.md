@@ -62,6 +62,21 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
+
+const client = new SeedAuthEnvironmentVariablesClient({
+    environment: "YOUR_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+    xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
+});
+await client.service.getWithApiKey();
+```
+
 ## Advanced
 
 ### Raw Responses

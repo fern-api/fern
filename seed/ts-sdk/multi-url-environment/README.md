@@ -60,6 +60,19 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
+
+const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
+await client.ec2.bootInstance({
+    size: "size",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

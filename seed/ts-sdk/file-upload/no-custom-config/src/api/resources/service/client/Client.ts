@@ -77,12 +77,12 @@ export class Service {
                 }
                 if (request.optionalMetadata != null) {
                     if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                        for (const _item of request.optionalMetadata) {
+                        {for (const _item of request.optionalMetadata) {
                             await _request.append(
                                 "optionalMetadata",
                                 typeof _item === "string" ? _item : JSON.stringify(_item)
                             );
-                        }
+                        }}
                 }
                 if (request.optionalObjectType != null) {
                     await _request.append("optionalObjectType", request.optionalObjectType);
@@ -132,7 +132,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -193,7 +193,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file.");
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -280,7 +280,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError(
+                            "Timeout exceeded when calling POST /just-file-with-query-params."
+                        );
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -351,7 +353,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError(
+                            "Timeout exceeded when calling POST /with-content-type."
+                        );
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,

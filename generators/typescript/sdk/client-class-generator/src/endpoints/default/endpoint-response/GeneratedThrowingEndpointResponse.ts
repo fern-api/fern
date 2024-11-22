@@ -10,7 +10,7 @@ import {
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
+import { getFullPathForEndpoint, getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -772,7 +772,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         ),
                         [
                             ts.factory.createThrowStatement(
-                                context.timeoutSdkError.getGeneratedTimeoutSdkError().build(context)
+                                context.timeoutSdkError
+                                    .getGeneratedTimeoutSdkError()
+                                    .build(
+                                        context,
+                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
+                                            this.endpoint
+                                        )}.`
+                                    )
                             )
                         ]
                     ),

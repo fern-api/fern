@@ -89,7 +89,9 @@ export class Ec2 {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError();
+                        throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
+                            "Timeout exceeded when calling POST /ec2/boot."
+                        );
                     case "unknown":
                         throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                             message: _response.error.errorMessage,

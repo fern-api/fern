@@ -45,6 +45,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedApiClient } from "@fern/folders";
+
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.foo();
+```
+
 ## Advanced
 
 ### Raw Responses

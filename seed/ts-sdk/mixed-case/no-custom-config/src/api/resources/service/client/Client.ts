@@ -88,7 +88,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMixedCaseTimeoutError();
+                        throw new errors.SeedMixedCaseTimeoutError(
+                            "Timeout exceeded when calling GET /resource/{ResourceID}."
+                        );
                     case "unknown":
                         throw new errors.SeedMixedCaseError({
                             message: _response.error.errorMessage,
@@ -163,7 +165,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMixedCaseTimeoutError();
+                        throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
                     case "unknown":
                         throw new errors.SeedMixedCaseError({
                             message: _response.error.errorMessage,

@@ -84,7 +84,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedBearerTokenEnvironmentVariableTimeoutError();
+                        throw new errors.SeedBearerTokenEnvironmentVariableTimeoutError(
+                            "Timeout exceeded when calling GET /apiKey."
+                        );
                     case "unknown":
                         throw new errors.SeedBearerTokenEnvironmentVariableError({
                             message: _response.error.errorMessage,
