@@ -5,6 +5,8 @@ import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
 import { ErrorReporter, Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
+import { NameAndWireValue } from "@fern-api/ir-sdk";
+import { assertNever } from "@fern-api/core-utils";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -384,10 +386,28 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         }
         this.context.errors.unscope();
 
+        this.context.errors.scope(Scope.RequestBody);
+        const filePropertyFields: go.StructField[] = [];
+        if (request.body != null && this.context.isFileUploadRequestBody(request.body)) {
+            filePropertyFields.push(
+                ...this.getFileUploadRequestBodyStructFields({
+                    body: request.body,
+                    value: snippet.requestBody,
+                    onlyFiles: true
+                })
+            );
+        }
+        this.context.errors.unscope();
+
         if (!this.context.customConfig?.inlinePathParameters) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
-        if (this.context.doesInlinedRequestExist({ request })) {
+
+        if (!this.context.customConfig?.inlineFileProperties) {
+            args.push(...filePropertyFields.map((field) => field.value));
+        }
+
+        if (this.context.needsRequestParameter({ request })) {
             args.push(
                 this.getInlinedRequestArg({
                     request,
@@ -459,7 +479,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyStructField({ body, value })];
             case "fileUpload":
-                throw new Error("TODO: Implement me!");
+                return this.getFileUploadRequestBodyStructFields({ body, value });
         }
     }
 
@@ -512,6 +532,127 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<D
         }
 
         return fields;
+    }
+
+    private getFileUploadRequestBodyStructFields({
+        body,
+        value,
+        onlyFiles
+    }: {
+        body: DynamicSnippets.FileUploadRequestBody;
+        value: unknown;
+
+        // TODO: Clean this up in favor of a FilePropertyResolver type.
+        onlyFiles?: boolean;
+    }): go.StructField[] {
+        const fields: go.StructField[] = [];
+        const record = this.context.getRecord(value) ?? {};
+        for (const property of body.properties) {
+            switch (property.type) {
+                case "file": {
+                    if (onlyFiles || this.context.customConfig?.inlineFileProperties) {
+                        fields.push({
+                            name: this.context.getTypeName(property.name),
+                            value: this.getSingleFileProperty({ property, record })
+                        });
+                    }
+                    break;
+                }
+                case "fileArray":
+                    if (onlyFiles || this.context.customConfig?.inlineFileProperties) {
+                        fields.push({
+                            name: this.context.getTypeName(property.name),
+                            value: this.getArrayFileProperty({ property, record })
+                        });
+                    }
+                    break;
+                case "bodyProperty":
+                    if (!onlyFiles) {
+                        fields.push({
+                            name: this.context.getTypeName(property.name.name),
+                            value: this.getBodyProperty({ property, record })
+                        });
+                    }
+                    break;
+                default:
+                    assertNever(property);
+            }
+        }
+        return fields;
+    }
+
+    private getSingleFileProperty({
+        property,
+        record
+    }: {
+        property: DynamicSnippets.FileUploadRequestBodyProperty.File_;
+        record: Record<string, unknown>;
+    }): go.TypeInstantiation {
+        const fileValue = record[property.wireValue];
+        if (fileValue == null) {
+            return go.TypeInstantiation.nop();
+        }
+        if (typeof fileValue !== "string") {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected file value to be a string, got ${typeof fileValue}`
+            });
+            return go.TypeInstantiation.nop();
+        }
+        return go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(fileValue as string));
+    }
+
+    private getArrayFileProperty({
+        property,
+        record
+    }: {
+        property: DynamicSnippets.FileUploadRequestBodyProperty.FileArray;
+        record: Record<string, unknown>;
+    }): go.TypeInstantiation {
+        const fileArrayValue = record[property.wireValue];
+        if (fileArrayValue == null) {
+            return go.TypeInstantiation.nop();
+        }
+        if (!Array.isArray(fileArrayValue)) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected file array value to be an array of strings, got ${typeof fileArrayValue}`
+            });
+            return go.TypeInstantiation.nop();
+        }
+        const stringValues: string[] = [];
+        for (const value of fileArrayValue) {
+            if (typeof value !== "string") {
+                this.context.errors.add({
+                    severity: Severity.Critical,
+                    message: `Expected file array value to be an array of strings, got ${typeof value}`
+                });
+            }
+            stringValues.push(value as string);
+        }
+        return go.TypeInstantiation.slice({
+            valueType: go.Type.reference(this.context.getIoReaderTypeReference()),
+            values: stringValues.map((value) =>
+                go.TypeInstantiation.reference(this.context.getNewStringsReaderFunctionInvocation(value))
+            )
+        });
+    }
+
+    private getBodyProperty({
+        property,
+        record
+    }: {
+        property: DynamicSnippets.NamedParameter;
+        record: Record<string, unknown>;
+    }): go.TypeInstantiation {
+        const bodyPropertyValue = record[property.name.wireValue];
+        if (bodyPropertyValue == null) {
+            return go.TypeInstantiation.nop();
+        }
+        return this.context.dynamicTypeInstantiationMapper.convert({
+            typeReference: property.typeReference,
+            value: bodyPropertyValue
+        });
     }
 
     private getPathParameters({

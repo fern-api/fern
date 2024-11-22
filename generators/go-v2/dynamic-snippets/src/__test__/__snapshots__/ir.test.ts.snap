@@ -4795,7 +4795,6 @@ package example
 
 import (
 	context "context"
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
@@ -4804,7 +4803,6 @@ func do() {
 	client.User.GetUser(
 		context.TODO(),
 		"userId",
-		&acme.GetUsersRequest{},
 	)
 }
 
@@ -4814,7 +4812,6 @@ package example
 
 import (
 	context "context"
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
@@ -4824,7 +4821,6 @@ func do() {
 		context.TODO(),
 		"organizationId",
 		"userId",
-		&acme.GetOrganizationUserRequest{},
 	)
 }
 
@@ -4834,20 +4830,14 @@ package example
 
 import (
 	context "context"
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
-	client.User.SearchUsers(
+	client.User.GetUser(
 		context.TODO(),
 		"userId",
-		&acme.SearchUsersRequest{
-			Limit: acme.Int(
-				1,
-			),
-		},
 	)
 }
 

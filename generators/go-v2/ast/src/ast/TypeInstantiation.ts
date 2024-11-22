@@ -21,6 +21,7 @@ type InternalTypeInstantiation =
     | Nil
     | Nop
     | Optional
+    | Reference
     | Slice
     | String_
     | Struct
@@ -96,6 +97,11 @@ interface Nop {
     type: "nop";
 }
 
+interface Reference {
+    type: "reference";
+    value: AstNode;
+}
+
 interface Slice {
     type: "slice";
     valueType: Type;
@@ -166,6 +172,9 @@ export class TypeInstantiation extends AstNode {
                 break; // no-op
             case "optional":
                 this.writeOptional({ writer, type: this.internalType.value });
+                break;
+            case "reference":
+                writer.writeNode(this.internalType.value);
                 break;
             case "slice":
                 this.writeSlice({ writer, slice: this.internalType });
@@ -288,6 +297,13 @@ export class TypeInstantiation extends AstNode {
         }
         return new this({
             type: "optional",
+            value
+        });
+    }
+
+    public static reference(value: AstNode): TypeInstantiation {
+        return new this({
+            type: "reference",
             value
         });
     }

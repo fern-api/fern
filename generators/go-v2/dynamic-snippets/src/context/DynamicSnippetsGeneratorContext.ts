@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
@@ -107,9 +108,100 @@ export class DynamicSnippetsGeneratorContext {
         return instances;
     }
 
-    public doesInlinedRequestExist({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
-        // TODO: Reference the request wrapper's `includePathParameters` field.
+    public isFileUploadRequestBody(
+        body: DynamicSnippets.InlinedRequestBody
+    ): body is DynamicSnippets.InlinedRequestBody.FileUpload {
+        switch (body.type) {
+            case "fileUpload":
+                return true;
+            case "properties":
+            case "referenced":
+                return false;
+            default:
+                assertNever(body);
+        }
+    }
+
+    public needsRequestParameter({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
+        if (this.includePathParametersInWrappedRequest({ request })) {
+            return true;
+        }
+        if (request.queryParameters != null && request.queryParameters.length > 0) {
+            return true;
+        }
+        if (request.headers != null && request.headers.length > 0) {
+            return true;
+        }
+        if (request.body != null) {
+            return this.includeRequestBodyInWrappedRequest({ body: request.body });
+        }
+        if (request.metadata?.onlyPathParameters) {
+            return false;
+        }
         return true;
+    }
+
+    private includePathParametersInWrappedRequest({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
+        return (this.customConfig?.inlinePathParameters ?? false) && (request.metadata?.includePathParameters ?? false);
+    }
+
+    private includeRequestBodyInWrappedRequest({ body }: { body: DynamicSnippets.InlinedRequestBody }): boolean {
+        switch (body.type) {
+            case "properties":
+            case "referenced":
+                return true;
+            case "fileUpload":
+                return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body });
+            default:
+                assertNever(body);
+        }
+    }
+
+    private includeFileUploadBodyInWrappedRequest({
+        fileUpload
+    }: {
+        fileUpload: DynamicSnippets.FileUploadRequestBody;
+    }): boolean {
+        return (
+            this.fileUploadHasBodyProperties({ fileUpload }) ||
+            ((this.customConfig?.inlineFileProperties ?? false) && this.fileUploadHasFileProperties({ fileUpload }))
+        );
+    }
+
+    private fileUploadHasBodyProperties({
+        fileUpload
+    }: {
+        fileUpload: DynamicSnippets.FileUploadRequestBody;
+    }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return false;
+                case "bodyProperty":
+                    return true;
+                default:
+                    assertNever(property);
+            }
+        });
+    }
+
+    private fileUploadHasFileProperties({
+        fileUpload
+    }: {
+        fileUpload: DynamicSnippets.FileUploadRequestBody;
+    }): boolean {
+        return fileUpload.properties.some((property) => {
+            switch (property.type) {
+                case "file":
+                case "fileArray":
+                    return true;
+                case "bodyProperty":
+                    return false;
+                default:
+                    assertNever(property);
+            }
+        });
     }
 
     public getRecord(value: unknown): Record<string, unknown> | undefined {
@@ -218,6 +310,23 @@ export class DynamicSnippetsGeneratorContext {
         });
     }
 
+    public getIoReaderTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Reader",
+            importPath: "io"
+        });
+    }
+
+    public getNewStringsReaderFunctionInvocation(s: string): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewReader",
+                importPath: "strings"
+            }),
+            arguments_: [go.TypeInstantiation.string(s)]
+        });
+    }
+
     public getClientImportPath(): string {
         return path.join(this.rootImportPath, "client");
     }
@@ -258,6 +367,10 @@ export class DynamicSnippetsGeneratorContext {
         });
     }
 
+    public newParameterNotRecognizedError(parameterName: string): Error {
+        return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
+    }
+
     private isListTypeReference(typeReference: DynamicSnippets.TypeReference): boolean {
         if (typeReference.type === "optional") {
             return this.isListTypeReference(typeReference.value);
@@ -273,9 +386,5 @@ export class DynamicSnippetsGeneratorContext {
         parsedEndpoint: HttpEndpointReferenceParser.Parsed;
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;
-    }
-
-    private newParameterNotRecognizedError(parameterName: string): Error {
-        return new Error(`"${parameterName}" is not a recognized parameter for this endpoint`);
     }
 }
