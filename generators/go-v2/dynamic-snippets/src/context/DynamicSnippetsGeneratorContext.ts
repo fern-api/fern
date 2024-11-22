@@ -10,6 +10,7 @@ import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper
 import { go } from "@fern-api/go-ast";
 import path from "path";
 import { ErrorReporter, Severity } from "./ErrorReporter";
+import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext {
     public ir: DynamicSnippets.DynamicIntermediateRepresentation;
@@ -18,6 +19,7 @@ export class DynamicSnippetsGeneratorContext {
     public errors: ErrorReporter;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
+    public filePropertyMapper: FilePropertyMapper;
     public rootImportPath: string;
 
     private httpEndpointReferenceParser: HttpEndpointReferenceParser;
@@ -35,6 +37,7 @@ export class DynamicSnippetsGeneratorContext {
         this.errors = new ErrorReporter();
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
+        this.filePropertyMapper = new FilePropertyMapper({ context: this });
         this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
         this.httpEndpointReferenceParser = new HttpEndpointReferenceParser();
     }
@@ -141,7 +144,7 @@ export class DynamicSnippetsGeneratorContext {
         return true;
     }
 
-    private includePathParametersInWrappedRequest({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
+    public includePathParametersInWrappedRequest({ request }: { request: DynamicSnippets.InlinedRequest }): boolean {
         return (this.customConfig?.inlinePathParameters ?? false) && (request.metadata?.includePathParameters ?? false);
     }
 

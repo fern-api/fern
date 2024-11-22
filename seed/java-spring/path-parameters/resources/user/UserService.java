@@ -39,14 +39,14 @@ public interface UserService {
       @PathVariable("userId") String userId);
 
   @GetMapping(
-      value = "/users/{userId}",
+      value = "/users/{userId}/search",
       produces = "application/json"
   )
   List<User> searchUsers(@PathVariable("userId") String userId,
       @RequestParam("limit") Optional<Integer> limit);
 
   @GetMapping(
-      value = "/organizations/{organizationId}",
+      value = "/organizations/{organizationId}/search",
       produces = "application/json"
   )
   List<Organization> searchOrganizations(@PathVariable("organizationId") String organizationId,

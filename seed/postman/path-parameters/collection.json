@@ -272,14 +272,15 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user/users/:userId?limit=1",
+              "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "user",
                 "users",
-                ":userId"
+                ":userId",
+                "search"
               ],
               "query": [
                 {
@@ -315,14 +316,15 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/user/users/:userId?limit=1",
+                  "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "user",
                     "users",
-                    ":userId"
+                    ":userId",
+                    "search"
                   ],
                   "query": [
                     {
@@ -362,14 +364,15 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user/organizations/:organizationId?limit=1",
+              "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "user",
                 "organizations",
-                ":organizationId"
+                ":organizationId",
+                "search"
               ],
               "query": [
                 {
@@ -405,14 +408,15 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/user/organizations/:organizationId?limit=1",
+                  "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "user",
                     "organizations",
-                    ":organizationId"
+                    ":organizationId",
+                    "search"
                   ],
                   "query": [
                     {

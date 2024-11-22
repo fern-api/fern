@@ -15,18 +15,19 @@ func do() {
 	client := client.NewClient()
 	client.Service.Post(
 		context.TODO(),
-		strings.NewReader(
-			"Hello, world!",
-		),
-		[]io.Reader{
-			strings.NewReader(
-				"First",
+		&acme.MyRequest{
+			File: strings.NewReader(
+				"Hello, world!",
 			),
-			strings.NewReader(
-				"Second",
-			),
+			FileList: []io.Reader{
+				strings.NewReader(
+					"First",
+				),
+				strings.NewReader(
+					"Second",
+				),
+			},
 		},
-		&acme.MyRequest{},
 	)
 }
 "
@@ -37,6 +38,7 @@ exports[`file-upload (success) > 'POST /just-file (simple)' 1`] = `
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	strings "strings"
 )
@@ -45,9 +47,11 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFile(
 		context.TODO(),
-		strings.NewReader(
-			"Hello, world!",
-		),
+		&acme.JustFileRequet{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
 	)
 }
 "
@@ -67,13 +71,13 @@ func do() {
 	client := client.NewClient()
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		strings.NewReader(
-			"Hello, world!",
-		),
 		&acme.JustFileWithQueryParamsRequet{
 			Integer: 42,
 			MaybeString: acme.String(
 				"exists",
+			),
+			File: strings.NewReader(
+				"Hello, world!",
 			),
 		},
 	)

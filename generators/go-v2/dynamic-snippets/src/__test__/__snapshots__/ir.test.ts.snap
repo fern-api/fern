@@ -4830,14 +4830,20 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
-	client.User.GetUser(
+	client.User.SearchUsers(
 		context.TODO(),
 		"userId",
+		&acme.SearchUsersRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
 	)
 }
 
@@ -4847,14 +4853,20 @@ package example
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
 func do() {
 	client := client.NewClient()
-	client.User.GetOrganization(
+	client.User.SearchOrganizations(
 		context.TODO(),
 		"organizationId",
+		&acme.SearchOrganizationsRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
 	)
 }
 "

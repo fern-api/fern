@@ -269,7 +269,7 @@ export class User {
                 const _response = await core.fetcher({
                     url: urlJoin(
                         await core.Supplier.get(this._options.environment),
-                        `/user/users/${encodeURIComponent(userId)}`
+                        `/user/users/${encodeURIComponent(userId)}/search`
                     ),
                     method: "GET",
                     headers: {
@@ -349,7 +349,7 @@ export class User {
                 const _response = await core.fetcher({
                     url: urlJoin(
                         await core.Supplier.get(this._options.environment),
-                        `/user/organizations/${encodeURIComponent(organizationId)}`
+                        `/user/organizations/${encodeURIComponent(organizationId)}/search`
                     ),
                     method: "GET",
                     headers: {

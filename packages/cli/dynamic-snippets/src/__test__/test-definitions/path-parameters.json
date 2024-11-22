@@ -820,7 +820,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/user/users/{userId}"
+                "path": "/user/users/{userId}/search"
             },
             "request": {
                 "type": "inlined",
@@ -1030,7 +1030,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/user/organizations/{organizationId}"
+                "path": "/user/organizations/{organizationId}/search"
             },
             "request": {
                 "type": "inlined",

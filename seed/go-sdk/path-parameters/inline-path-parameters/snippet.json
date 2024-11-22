@@ -4,22 +4,22 @@
             "id": {
                 "path": "/user/organizations/{organizationId}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.searchOrganizations"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.SearchOrganizations(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\u0026pathparametersgo.SearchOrganizationsRequest{\n\t\tLimit: pathparametersgo.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/user/organizations/{organizationId}",
-                "method": "GET",
                 "identifier_override": "endpoint_user.getOrganization"
             },
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetOrganization(\n\tcontext.TODO(),\n\t\"organizationId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.SearchOrganizations(\n\tcontext.TODO(),\n\t\"organizationId\",\n\t\u0026pathparametersgo.SearchOrganizationsRequest{\n\t\tLimit: pathparametersgo.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         },
         {
@@ -46,7 +46,7 @@
         },
         {
             "id": {
-                "path": "/user/users/{userId}",
+                "path": "/user/users/{userId}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"
             },

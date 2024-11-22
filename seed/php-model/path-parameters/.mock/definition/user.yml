@@ -40,7 +40,7 @@ service:
       response: User
 
     searchUsers:
-      path: "/users/{userId}"
+      path: "/users/{userId}/search"
       method: GET
       request:
         name: SearchUsersRequest
@@ -51,7 +51,7 @@ service:
       response: list<User>
 
     searchOrganizations:
-      path: "/organizations/{organizationId}"
+      path: "/organizations/{organizationId}/search"
       method: GET
       path-parameters:
         organizationId: string

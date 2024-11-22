@@ -164,7 +164,8 @@ public class UserClient {
                 .newBuilder()
                 .addPathSegments("user")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(userId)
+                .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
         }
@@ -208,7 +209,8 @@ public class UserClient {
                 .newBuilder()
                 .addPathSegments("user")
                 .addPathSegments("organizations")
-                .addPathSegment(organizationId);
+                .addPathSegment(organizationId)
+                .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
         }
