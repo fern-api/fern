@@ -5,6 +5,7 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";
 import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
+import { isNonNullish } from "@fern-api/core-utils";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -84,24 +85,50 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
-    private buildSnippetsForFeature(featureId: FernGeneratorCli.feature.FeatureId): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(featureId);
-        if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
+    private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
+        const endpointIds = this.getEndpointIdsForFeature(featureId);
+        if (endpointIds != null) {
+            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter(isNonNullish);
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+        return undefined;
     }
 
     private buildStreamingSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Streaming);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
+            FernGeneratorCli.StructuredFeatureId.Streaming
+        );
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        const streamingEndpoint = this.getEndpointWithStreaming();
+        if (streamingEndpoint != null) {
+            const snippet = this.getSnippetForEndpointId(streamingEndpoint.endpoint.id);
+            return snippet != null ? [snippet] : [];
+        }
+        return [];
     }
 
     private buildPaginationSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Pagination);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
+            FernGeneratorCli.StructuredFeatureId.Pagination
+        );
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        const paginationEndpoint = this.getEndpointWithPagination();
+        if (paginationEndpoint != null) {
+            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id);
+            return snippet != null ? [snippet] : [];
+        }
+        return [];
     }
 
     private buildUsageSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(FernGeneratorCli.StructuredFeatureId.Usage);
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        return [this.getSnippetForEndpointIdOrThrow(this.defaultEndpointId)];
     }
 
     private buildExceptionHandlingSnippets(): string[] {
@@ -275,21 +302,53 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippets;
     }
 
-    private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.snippets[endpointId];
+    private getSnippetForEndpointIdOrThrow(endpointId: EndpointId): string {
+        const snippet = this.getSnippetForEndpointId(endpointId);
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
 
+    private getSnippetForEndpointId(endpointId: EndpointId): string | undefined {
+        return this.snippets[endpointId];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        return this.filterEndpoint((endpointWithFilepath) => {
+            if (endpointWithFilepath.endpoint.pagination != null) {
+                return endpointWithFilepath;
+            }
+            return undefined;
+        });
+    }
+
+    private getEndpointWithStreaming(): EndpointWithFilepath | undefined {
+        return this.filterEndpoint((endpointWithFilepath) => {
+            if (endpointWithFilepath.endpoint.response?.body?.type === "streaming") {
+                return endpointWithFilepath;
+            }
+            return undefined;
+        });
+    }
+
     private getEndpointWithRequest(): EndpointWithRequest | undefined {
-        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+        return this.filterEndpoint((endpointWithFilepath) => {
             if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === "wrapper") {
                 return {
                     endpoint: endpointWithFilepath.endpoint,
                     requestWrapper: endpointWithFilepath.endpoint.sdkRequest.shape
                 };
+            }
+            return undefined;
+        });
+    }
+
+    private filterEndpoint<T>(transform: (endpoint: EndpointWithFilepath) => T | undefined): T | undefined {
+        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+            const result = transform(endpointWithFilepath);
+            if (result !== undefined) {
+                return result;
             }
         }
         return undefined;

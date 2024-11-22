@@ -2,7 +2,7 @@
 
 from . import user
 from .client import AsyncSeedPathParameters, SeedPathParameters
-from .user import User
+from .user import Organization, User
 from .version import __version__
 
-__all__ = ["AsyncSeedPathParameters", "SeedPathParameters", "User", "__version__", "user"]
+__all__ = ["AsyncSeedPathParameters", "Organization", "SeedPathParameters", "User", "__version__", "user"]

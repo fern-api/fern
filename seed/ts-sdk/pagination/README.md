@@ -85,20 +85,22 @@ import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
 import * as core from "../src/core";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const response = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const page = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
