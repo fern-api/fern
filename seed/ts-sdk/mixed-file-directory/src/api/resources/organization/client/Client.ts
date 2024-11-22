@@ -92,7 +92,9 @@ export class Organization {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMixedFileDirectoryTimeoutError();
+                        throw new errors.SeedMixedFileDirectoryTimeoutError(
+                            "Timeout exceeded when calling POST /organizations/."
+                        );
                     case "unknown":
                         throw new errors.SeedMixedFileDirectoryError({
                             message: _response.error.errorMessage,

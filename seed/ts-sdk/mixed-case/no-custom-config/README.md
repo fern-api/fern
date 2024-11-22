@@ -58,6 +58,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedMixedCaseClient, SeedMixedCase } from "@fern/mixed-case";
+
+const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
+await client.service.getResource("rsc-xyz");
+```
+
 ## Advanced
 
 ### Raw Responses

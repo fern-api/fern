@@ -103,7 +103,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -181,7 +181,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -272,7 +272,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -352,7 +352,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -441,7 +441,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -530,7 +530,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -611,7 +611,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -690,7 +690,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -767,7 +767,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -846,7 +846,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,

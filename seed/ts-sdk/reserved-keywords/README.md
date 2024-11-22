@@ -60,6 +60,19 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedNurseryApiClient } from "@fern/reserved-keywords";
+
+const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+await client.package.test({
+    for: "for",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

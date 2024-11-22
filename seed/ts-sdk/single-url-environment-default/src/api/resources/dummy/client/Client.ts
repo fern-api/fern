@@ -87,7 +87,9 @@ export class Dummy {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedSingleUrlEnvironmentDefaultTimeoutError();
+                        throw new errors.SeedSingleUrlEnvironmentDefaultTimeoutError(
+                            "Timeout exceeded when calling GET /dummy."
+                        );
                     case "unknown":
                         throw new errors.SeedSingleUrlEnvironmentDefaultError({
                             message: _response.error.errorMessage,

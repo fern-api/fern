@@ -51,6 +51,23 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import {
+    SeedSingleUrlEnvironmentNoDefaultEnvironment,
+    SeedSingleUrlEnvironmentNoDefaultClient,
+} from "@fern/single-url-environment-no-default";
+
+const client = new SeedSingleUrlEnvironmentNoDefaultClient({
+    environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
+    token: "YOUR_TOKEN",
+});
+await client.dummy.getDummy();
+```
+
 ## Advanced
 
 ### Raw Responses

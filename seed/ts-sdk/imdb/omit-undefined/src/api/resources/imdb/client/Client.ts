@@ -96,7 +96,9 @@ export class Imdb {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError(
+                            "Timeout exceeded when calling POST /movies/create-movie."
+                        );
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -180,7 +182,7 @@ export class Imdb {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movieId}.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

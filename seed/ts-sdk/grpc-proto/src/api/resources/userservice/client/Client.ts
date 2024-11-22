@@ -86,7 +86,7 @@ export class Userservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /users.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

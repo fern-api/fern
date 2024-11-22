@@ -63,6 +63,22 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
+
+const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+const response = await client.completions.stream({
+    query: "foo",
+});
+for await (const item of response) {
+    console.log(item);
+}
+```
+
 ## Advanced
 
 ### Raw Responses

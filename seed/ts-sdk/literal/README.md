@@ -60,6 +60,19 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedLiteralClient, SeedLiteral } from "@fern/literal";
+
+const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
+await client.headers.send({
+    query: "What is the weather today",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

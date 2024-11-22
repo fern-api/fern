@@ -45,6 +45,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedUndiscriminatedUnionsClient, SeedUndiscriminatedUnions } from "@fern/undiscriminated-unions";
+
+const client = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
+await client.union.get("string");
+```
+
 ## Advanced
 
 ### Raw Responses

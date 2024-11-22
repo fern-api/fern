@@ -74,7 +74,7 @@ export class SeedLicenseClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedLicenseTimeoutError();
+                        throw new errors.SeedLicenseTimeoutError("Timeout exceeded when calling GET /.");
                     case "unknown":
                         throw new errors.SeedLicenseError({
                             message: _response.error.errorMessage,

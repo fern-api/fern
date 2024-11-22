@@ -94,7 +94,7 @@ export class SeedPackageYmlClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedPackageYmlTimeoutError();
+                        throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling POST /{id}/.");
                     case "unknown":
                         throw new errors.SeedPackageYmlError({
                             message: _response.error.errorMessage,

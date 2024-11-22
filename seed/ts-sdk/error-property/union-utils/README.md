@@ -45,6 +45,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedErrorPropertyClient } from "@fern/error-property";
+
+const client = new SeedErrorPropertyClient({ environment: "YOUR_BASE_URL" });
+await client.propertyBasedError.throwError();
+```
+
 ## Advanced
 
 ### Raw Responses

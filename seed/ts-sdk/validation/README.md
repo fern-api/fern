@@ -63,6 +63,22 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedValidationClient, SeedValidation } from "@fern/validation";
+
+const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
+await client.create({
+    decimal: 1.1,
+    even: 1,
+    name: "name",
+    shape: "SQUARE",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

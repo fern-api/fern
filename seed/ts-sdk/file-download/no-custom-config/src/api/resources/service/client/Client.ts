@@ -69,7 +69,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileDownloadTimeoutError();
+                        throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedFileDownloadError({
                             message: _response.error.errorMessage,

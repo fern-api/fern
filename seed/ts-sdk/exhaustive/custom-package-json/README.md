@@ -58,6 +58,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
+```
+
 ## Advanced
 
 ### Raw Responses

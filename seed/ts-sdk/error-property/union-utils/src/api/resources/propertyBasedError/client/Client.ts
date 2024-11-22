@@ -97,7 +97,9 @@ export class PropertyBasedError {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedErrorPropertyTimeoutError();
+                        throw new errors.SeedErrorPropertyTimeoutError(
+                            "Timeout exceeded when calling GET /property-based-error."
+                        );
                     case "unknown":
                         throw new errors.SeedErrorPropertyError({
                             message: _response.error.errorMessage,

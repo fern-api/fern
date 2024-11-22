@@ -78,7 +78,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedVariablesTimeoutError();
+                        throw new errors.SeedVariablesTimeoutError(
+                            "Timeout exceeded when calling POST /{endpointParam}."
+                        );
                     case "unknown":
                         throw new errors.SeedVariablesError({
                             message: _response.error.errorMessage,

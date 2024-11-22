@@ -47,6 +47,19 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedCustomAuthClient } from "@fern/custom-auth";
+
+const client = new SeedCustomAuthClient({ environment: "YOUR_BASE_URL", customAuthScheme: "YOUR_CUSTOM_AUTH_SCHEME" });
+await client.customAuth.postWithCustomAuth({
+    key: "value",
+});
+```
+
 ## Advanced
 
 ### Raw Responses

@@ -80,7 +80,7 @@ export class SeedAliasClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAliasTimeoutError();
+                        throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
                     case "unknown":
                         throw new errors.SeedAliasError({
                             message: _response.error.errorMessage,

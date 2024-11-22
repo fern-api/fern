@@ -94,7 +94,9 @@ export class Dummy {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedStreamingTimeoutError();
+                        throw new errors.SeedStreamingTimeoutError(
+                            "Timeout exceeded when calling POST /generate-stream."
+                        );
                     case "unknown":
                         throw new errors.SeedStreamingError({
                             message: _response.error.errorMessage,
@@ -167,7 +169,7 @@ export class Dummy {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedStreamingTimeoutError();
+                        throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
                     case "unknown":
                         throw new errors.SeedStreamingError({
                             message: _response.error.errorMessage,
