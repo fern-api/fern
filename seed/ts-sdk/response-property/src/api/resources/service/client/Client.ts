@@ -88,7 +88,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -158,7 +158,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -228,7 +228,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -298,7 +298,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -368,7 +368,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -438,7 +438,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,
@@ -508,7 +508,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedResponsePropertyTimeoutError();
+                        throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
                     case "unknown":
                         throw new errors.SeedResponsePropertyError({
                             message: _response.error.errorMessage,

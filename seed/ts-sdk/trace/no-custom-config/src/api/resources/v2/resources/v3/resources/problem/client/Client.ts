@@ -99,7 +99,9 @@ export class Problem {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /problems-v2/lightweight-problem-info."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -172,7 +174,9 @@ export class Problem {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /problems-v2/problem-info."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -249,7 +253,9 @@ export class Problem {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -330,7 +336,9 @@ export class Problem {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /problems-v2/problem-info/{problemId}/version/{problemVersion}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,

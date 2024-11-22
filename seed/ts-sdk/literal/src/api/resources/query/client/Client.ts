@@ -107,7 +107,7 @@ export class Query {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedLiteralTimeoutError();
+                        throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
                     case "unknown":
                         throw new errors.SeedLiteralError({
                             message: _response.error.errorMessage,

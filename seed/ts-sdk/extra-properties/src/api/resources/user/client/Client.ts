@@ -92,7 +92,7 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExtraPropertiesTimeoutError();
+                        throw new errors.SeedExtraPropertiesTimeoutError("Timeout exceeded when calling POST /user.");
                     case "unknown":
                         throw new errors.SeedExtraPropertiesError({
                             message: _response.error.errorMessage,

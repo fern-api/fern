@@ -82,7 +82,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAudiencesTimeoutError();
+                        throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling GET /partner-path.");
                     case "unknown":
                         throw new errors.SeedAudiencesError({
                             message: _response.error.errorMessage,

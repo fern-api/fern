@@ -98,7 +98,9 @@ export class Submission {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /sessions/create-session/{language}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -170,7 +172,9 @@ export class Submission {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /sessions/{sessionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -239,7 +243,9 @@ export class Submission {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -307,7 +313,9 @@ export class Submission {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /sessions/execution-sessions-state."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,

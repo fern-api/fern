@@ -91,7 +91,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /data.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -159,7 +159,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /data/delete.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -227,7 +227,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /data/describe.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -307,7 +307,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /data/fetch.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -389,7 +389,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /data/list.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -459,7 +459,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /data/query.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -529,7 +529,7 @@ export class Dataservice {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /data/update.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

@@ -94,7 +94,9 @@ export class Optional {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedObjectsWithImportsTimeoutError();
+                        throw new errors.SeedObjectsWithImportsTimeoutError(
+                            "Timeout exceeded when calling POST /send-optional-body."
+                        );
                     case "unknown":
                         throw new errors.SeedObjectsWithImportsError({
                             message: _response.error.errorMessage,

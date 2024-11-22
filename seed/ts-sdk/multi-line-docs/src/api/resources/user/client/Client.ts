@@ -84,7 +84,9 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMultiLineDocsTimeoutError();
+                        throw new errors.SeedMultiLineDocsTimeoutError(
+                            "Timeout exceeded when calling GET /users/{userId}."
+                        );
                     case "unknown":
                         throw new errors.SeedMultiLineDocsError({
                             message: _response.error.errorMessage,
@@ -158,7 +160,7 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMultiLineDocsTimeoutError();
+                        throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling POST /users.");
                     case "unknown":
                         throw new errors.SeedMultiLineDocsError({
                             message: _response.error.errorMessage,

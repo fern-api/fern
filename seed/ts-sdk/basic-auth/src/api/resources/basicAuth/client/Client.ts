@@ -100,7 +100,7 @@ export class BasicAuth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedBasicAuthTimeoutError();
+                        throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
                     case "unknown":
                         throw new errors.SeedBasicAuthError({
                             message: _response.error.errorMessage,
@@ -187,7 +187,7 @@ export class BasicAuth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedBasicAuthTimeoutError();
+                        throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
                     case "unknown":
                         throw new errors.SeedBasicAuthError({
                             message: _response.error.errorMessage,

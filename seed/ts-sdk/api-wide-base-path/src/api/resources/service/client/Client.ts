@@ -88,7 +88,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiWideBasePathTimeoutError();
+                        throw new errors.SeedApiWideBasePathTimeoutError(
+                            "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}."
+                        );
                     case "unknown":
                         throw new errors.SeedApiWideBasePathError({
                             message: _response.error.errorMessage,

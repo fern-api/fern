@@ -93,7 +93,7 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedVersionTimeoutError();
+                        throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
                     case "unknown":
                         throw new errors.SeedVersionError({
                             message: _response.error.errorMessage,

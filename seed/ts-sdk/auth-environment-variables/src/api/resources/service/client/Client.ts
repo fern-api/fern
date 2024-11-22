@@ -95,7 +95,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError();
+                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
+                            "Timeout exceeded when calling GET /apiKey."
+                        );
                     case "unknown":
                         throw new errors.SeedAuthEnvironmentVariablesError({
                             message: _response.error.errorMessage,
@@ -171,7 +173,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError();
+                        throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
+                            "Timeout exceeded when calling GET /apiKeyInHeader."
+                        );
                     case "unknown":
                         throw new errors.SeedAuthEnvironmentVariablesError({
                             message: _response.error.errorMessage,

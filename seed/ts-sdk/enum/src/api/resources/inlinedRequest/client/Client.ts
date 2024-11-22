@@ -84,7 +84,7 @@ export class InlinedRequest {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedEnumTimeoutError();
+                        throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /inlined.");
                     case "unknown":
                         throw new errors.SeedEnumError({
                             message: _response.error.errorMessage,
