@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/simple-fhir";
+import { SeedApiClient } from "@fern/simple-fhir";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.getAccount("account_id");

@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedCrossPackageTypeNamesClient, SeedCrossPackageTypeNames } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names";
 
 const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL" });
 await client.foo.find({

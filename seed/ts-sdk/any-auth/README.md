@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedAnyAuthClient, SeedAnyAuth } from "@fern/any-auth";
+import { SeedAnyAuthClient } from "@fern/any-auth";
 
 const client = new SeedAnyAuthClient({
     environment: "YOUR_BASE_URL",

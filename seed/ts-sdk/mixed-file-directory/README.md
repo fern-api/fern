@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMixedFileDirectoryClient, SeedMixedFileDirectory } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 
 const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
 await client.organization.create({
