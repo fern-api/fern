@@ -1,9 +1,21 @@
-import { camelCase, upperFirst } from "lodash-es";
+import { camelCase, upperFirst, lowerFirst } from "lodash-es";
 import { replaceStartingNumber } from "./replaceStartingNumber";
 
-export function getGeneratedTypeName(breadcrumbs: string[]): string {
-    const underscoreDelimeted = breadcrumbs.join("_");
-    const name = upperFirst(camelCase(underscoreDelimeted));
+function customCamelCase(input: string): string {
+    const tokens = input.split("_");
+    const processedTokens = tokens.map((token, index) => {
+        if (/^[a-zA-Z0-9]+$/.test(token)) {
+            return index === 0 ? lowerFirst(token) : upperFirst(token);
+        }
+        return token;
+    });
+    return processedTokens.join("");
+}
+
+export function getGeneratedTypeName(breadcrumbs: string[], useOriginalSchemaIds: boolean): string {
+    const camelCaseFn = useOriginalSchemaIds ? customCamelCase : camelCase;
+    const underscoreDelimited = breadcrumbs.join("_");
+    const name = upperFirst(camelCaseFn(underscoreDelimited));
     if (/^\d/.test(name)) {
         return replaceStartingNumber(name) ?? name;
     }
@@ -11,6 +23,6 @@ export function getGeneratedTypeName(breadcrumbs: string[]): string {
 }
 
 export function getGeneratedPropertyName(breadcrumbs: string[]): string {
-    const underscoreDelimeted = breadcrumbs.join("_");
-    return camelCase(underscoreDelimeted);
+    const underscoreDelimited = breadcrumbs.join("_");
+    return camelCase(underscoreDelimited);
 }

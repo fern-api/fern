@@ -69,7 +69,7 @@ export function convertAsyncSyncOperation({
         name: headerToIgnore,
         schema: SchemaWithExample.literal({
             nameOverride: undefined,
-            generatedName: getGeneratedTypeName([headerToIgnore]),
+            generatedName: getGeneratedTypeName([headerToIgnore], context.options.preserveSchemaIds),
             title: undefined,
             description: undefined,
             availability: undefined,

@@ -63,7 +63,7 @@ export function convertParameters({
         const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
-        const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
+        const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
         let schema =
             resolvedParameter.schema != null

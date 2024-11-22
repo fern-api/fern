@@ -5,7 +5,10 @@ import { getDefaultAsString } from "../../../schema/defaults/getDefault";
 import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
-export function getVariableDefinitions(document: OpenAPIV3.Document): Record<string, PrimitiveSchema> {
+export function getVariableDefinitions(
+    document: OpenAPIV3.Document,
+    preserveSchemaIds: boolean
+): Record<string, PrimitiveSchema> {
     const variables = getExtension<Record<string, OpenAPIV3.SchemaObject>>(
         document,
         FernOpenAPIExtension.SDK_VARIABLES
@@ -22,7 +25,7 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                     variableName,
                     {
                         nameOverride: undefined,
-                        generatedName: getGeneratedTypeName([variableName]),
+                        generatedName: getGeneratedTypeName([variableName], preserveSchemaIds),
                         title: schema.title,
                         schema: PrimitiveSchemaValue.string({
                             default: getDefaultAsString(schema),

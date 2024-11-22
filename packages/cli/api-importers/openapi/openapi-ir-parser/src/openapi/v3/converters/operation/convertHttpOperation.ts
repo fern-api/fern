@@ -121,7 +121,7 @@ export function convertHttpOperation({
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
+        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs, context.options.preserveSchemaIds),
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
