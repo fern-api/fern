@@ -1111,7 +1111,7 @@
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
-                    "method": "GET",
+                    "method": "POST",
                     "basePath": null,
                     "path": {
                         "head": "/root",
@@ -1125,8 +1125,193 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "requestBody": null,
-                    "sdkRequest": null,
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "PostRootRequest",
+                            "camelCase": {
+                                "unsafeName": "postRootRequest",
+                                "safeName": "postRootRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "post_root_request",
+                                "safeName": "post_root_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POST_ROOT_REQUEST",
+                                "safeName": "POST_ROOT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PostRootRequest",
+                                "safeName": "PostRootRequest"
+                            }
+                        },
+                        "extends": [],
+                        "contentType": "application/json",
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "bar",
+                                        "camelCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "BAR",
+                                            "safeName": "BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Bar",
+                                            "safeName": "Bar"
+                                        }
+                                    },
+                                    "wireValue": "bar"
+                                },
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "InlineType1",
+                                        "camelCase": {
+                                            "unsafeName": "inlineType1",
+                                            "safeName": "inlineType1"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "inline_type1",
+                                            "safeName": "inline_type1"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "INLINE_TYPE1",
+                                            "safeName": "INLINE_TYPE1"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "InlineType1",
+                                            "safeName": "InlineType1"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:InlineType1",
+                                    "default": null,
+                                    "inline": true
+                                },
+                                "availability": null,
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    },
+                                    "wireValue": "foo"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PostRootRequest",
+                                "camelCase": {
+                                    "unsafeName": "postRootRequest",
+                                    "safeName": "postRootRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "post_root_request",
+                                    "safeName": "post_root_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POST_ROOT_REQUEST",
+                                    "safeName": "POST_ROOT_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PostRootRequest",
+                                    "safeName": "PostRootRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
                     "response": {
                         "body": {
                             "type": "json",
@@ -1172,7 +1357,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "56c6d0b8bbeecd6d8715c114794f14bd679650f1",
+                                "id": "f1c8c5c48b5c7ee330c2272b51d165ef93559aeb",
                                 "url": "/root/root",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1181,7 +1366,408 @@
                                 "servicePathParameters": [],
                                 "serviceHeaders": [],
                                 "rootPathParameters": [],
-                                "request": null,
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "bar",
+                                                    "camelCase": {
+                                                        "unsafeName": "bar",
+                                                        "safeName": "bar"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "bar",
+                                                        "safeName": "bar"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "BAR",
+                                                        "safeName": "BAR"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Bar",
+                                                        "safeName": "Bar"
+                                                    }
+                                                },
+                                                "wireValue": "bar"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "shape": {
+                                                        "type": "object",
+                                                        "properties": [
+                                                            {
+                                                                "name": {
+                                                                    "name": {
+                                                                        "originalName": "foo",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "foo",
+                                                                            "safeName": "foo"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "foo",
+                                                                            "safeName": "foo"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "FOO",
+                                                                            "safeName": "FOO"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Foo",
+                                                                            "safeName": "Foo"
+                                                                        }
+                                                                    },
+                                                                    "wireValue": "foo"
+                                                                },
+                                                                "originalTypeDeclaration": {
+                                                                    "name": {
+                                                                        "originalName": "InlineType1",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "inlineType1",
+                                                                            "safeName": "inlineType1"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "inline_type1",
+                                                                            "safeName": "inline_type1"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "INLINE_TYPE1",
+                                                                            "safeName": "INLINE_TYPE1"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "InlineType1",
+                                                                            "safeName": "InlineType1"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "typeId": "type_:InlineType1"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "string",
+                                                                            "string": {
+                                                                                "original": "foo"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "foo"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": {
+                                                                    "name": {
+                                                                        "originalName": "bar",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "bar",
+                                                                            "safeName": "bar"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "bar",
+                                                                            "safeName": "bar"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "BAR",
+                                                                            "safeName": "BAR"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Bar",
+                                                                            "safeName": "Bar"
+                                                                        }
+                                                                    },
+                                                                    "wireValue": "bar"
+                                                                },
+                                                                "originalTypeDeclaration": {
+                                                                    "name": {
+                                                                        "originalName": "InlineType1",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "inlineType1",
+                                                                            "safeName": "inlineType1"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "inline_type1",
+                                                                            "safeName": "inline_type1"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "INLINE_TYPE1",
+                                                                            "safeName": "INLINE_TYPE1"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "InlineType1",
+                                                                            "safeName": "InlineType1"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "typeId": "type_:InlineType1"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "named",
+                                                                        "shape": {
+                                                                            "type": "object",
+                                                                            "properties": [
+                                                                                {
+                                                                                    "name": {
+                                                                                        "name": {
+                                                                                            "originalName": "foo",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "foo",
+                                                                                                "safeName": "foo"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "foo",
+                                                                                                "safeName": "foo"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "FOO",
+                                                                                                "safeName": "FOO"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "Foo",
+                                                                                                "safeName": "Foo"
+                                                                                            }
+                                                                                        },
+                                                                                        "wireValue": "foo"
+                                                                                    },
+                                                                                    "originalTypeDeclaration": {
+                                                                                        "name": {
+                                                                                            "originalName": "NestedInlineType1",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "nestedInlineType1",
+                                                                                                "safeName": "nestedInlineType1"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "nested_inline_type1",
+                                                                                                "safeName": "nested_inline_type1"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "NESTED_INLINE_TYPE1",
+                                                                                                "safeName": "NESTED_INLINE_TYPE1"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "NestedInlineType1",
+                                                                                                "safeName": "NestedInlineType1"
+                                                                                            }
+                                                                                        },
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "typeId": "type_:NestedInlineType1"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "foo"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "foo"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "name": {
+                                                                                        "name": {
+                                                                                            "originalName": "bar",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "bar",
+                                                                                                "safeName": "bar"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "bar",
+                                                                                                "safeName": "bar"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "BAR",
+                                                                                                "safeName": "BAR"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "Bar",
+                                                                                                "safeName": "Bar"
+                                                                                            }
+                                                                                        },
+                                                                                        "wireValue": "bar"
+                                                                                    },
+                                                                                    "originalTypeDeclaration": {
+                                                                                        "name": {
+                                                                                            "originalName": "NestedInlineType1",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "nestedInlineType1",
+                                                                                                "safeName": "nestedInlineType1"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "nested_inline_type1",
+                                                                                                "safeName": "nested_inline_type1"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "NESTED_INLINE_TYPE1",
+                                                                                                "safeName": "NESTED_INLINE_TYPE1"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "NestedInlineType1",
+                                                                                                "safeName": "NestedInlineType1"
+                                                                                            }
+                                                                                        },
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "typeId": "type_:NestedInlineType1"
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "bar"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "bar"
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "typeName": {
+                                                                            "name": {
+                                                                                "originalName": "NestedInlineType1",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "nestedInlineType1",
+                                                                                    "safeName": "nestedInlineType1"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "nested_inline_type1",
+                                                                                    "safeName": "nested_inline_type1"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "NESTED_INLINE_TYPE1",
+                                                                                    "safeName": "NESTED_INLINE_TYPE1"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "NestedInlineType1",
+                                                                                    "safeName": "NestedInlineType1"
+                                                                                }
+                                                                            },
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "typeId": "type_:NestedInlineType1"
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "foo": "foo",
+                                                                        "bar": "bar"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "typeName": {
+                                                        "name": {
+                                                            "originalName": "InlineType1",
+                                                            "camelCase": {
+                                                                "unsafeName": "inlineType1",
+                                                                "safeName": "inlineType1"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "inline_type1",
+                                                                "safeName": "inline_type1"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "INLINE_TYPE1",
+                                                                "safeName": "INLINE_TYPE1"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "InlineType1",
+                                                                "safeName": "InlineType1"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "typeId": "type_:InlineType1"
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "foo": "foo",
+                                                    "bar": {
+                                                        "foo": "foo",
+                                                        "bar": "bar"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "foo",
+                                                    "camelCase": {
+                                                        "unsafeName": "foo",
+                                                        "safeName": "foo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "foo",
+                                                        "safeName": "foo"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "FOO",
+                                                        "safeName": "FOO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Foo",
+                                                        "safeName": "Foo"
+                                                    }
+                                                },
+                                                "wireValue": "foo"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "foo"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "foo"
+                                            }
+                                        }
+                                    ],
+                                    "jsonExample": {
+                                        "bar": {
+                                            "foo": "foo",
+                                            "bar": {
+                                                "foo": "foo",
+                                                "bar": "bar"
+                                            }
+                                        },
+                                        "foo": "foo"
+                                    }
+                                },
                                 "response": {
                                     "type": "ok",
                                     "value": {

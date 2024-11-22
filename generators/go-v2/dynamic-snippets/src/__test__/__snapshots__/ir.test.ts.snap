@@ -3649,6 +3649,7 @@ exports[`test definitions > inline-types 1`] = `
 
 import (
 	context "context"
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 )
 
@@ -3656,6 +3657,16 @@ func do() {
 	client := client.NewClient()
 	client.GetRoot(
 		context.TODO(),
+		&acme.PostRootRequest{
+			Bar: &acme.InlineType1{
+				Foo: "foo",
+				Bar: &acme.NestedInlineType1{
+					Foo: "foo",
+					Bar: "bar",
+				},
+			},
+			Foo: "foo",
+		},
 	)
 }
 

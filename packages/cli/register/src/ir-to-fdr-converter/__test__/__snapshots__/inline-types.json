@@ -206,7 +206,7 @@
     "endpoints": [
       {
         "auth": false,
-        "method": "GET",
+        "method": "POST",
         "id": "getRoot",
         "originalEndpointId": "endpoint_.getRoot",
         "name": "Get Root",
@@ -225,6 +225,34 @@
         },
         "queryParameters": [],
         "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "bar",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:InlineType1"
+                  }
+                },
+                {
+                  "key": "foo",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -241,6 +269,29 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "bar": {
+                "foo": "foo",
+                "bar": {
+                  "foo": "foo",
+                  "bar": "bar"
+                }
+              },
+              "foo": "foo"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "bar": {
+                  "foo": "foo",
+                  "bar": {
+                    "foo": "foo",
+                    "bar": "bar"
+                  }
+                },
+                "foo": "foo"
+              }
+            },
             "responseStatusCode": 200,
             "responseBody": {
               "foo": "foo",

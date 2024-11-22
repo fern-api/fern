@@ -4,7 +4,16 @@ service:
   endpoints:
     getRoot:
       path: /root
-      method: GET
+      method: POST
+      request:
+        body:
+          properties:
+            bar:
+              inline: true
+              type: InlineType1
+            foo: string
+        content-type: application/json
+        name: PostRootRequest
       response: RootType1
     getInline:
       path: /inline

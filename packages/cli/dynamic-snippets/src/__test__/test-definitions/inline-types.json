@@ -642,13 +642,101 @@
                 }
             },
             "location": {
-                "method": "GET",
+                "method": "POST",
                 "path": "/root/root"
             },
             "request": {
-                "type": "body",
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootRequest",
+                        "camelCase": {
+                            "unsafeName": "postRootRequest",
+                            "safeName": "postRootRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_request",
+                            "safeName": "post_root_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_REQUEST",
+                            "safeName": "POST_ROOT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootRequest",
+                            "safeName": "PostRootRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
                 "pathParameters": [],
-                "body": null
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "bar",
+                                    "camelCase": {
+                                        "unsafeName": "bar",
+                                        "safeName": "bar"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bar",
+                                        "safeName": "bar"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAR",
+                                        "safeName": "BAR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Bar",
+                                        "safeName": "Bar"
+                                    }
+                                },
+                                "wireValue": "bar"
+                            },
+                            "typeReference": {
+                                "_type": "named",
+                                "value": "type_:InlineType1"
+                            }
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "foo",
+                                    "camelCase": {
+                                        "unsafeName": "foo",
+                                        "safeName": "foo"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "foo",
+                                        "safeName": "foo"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FOO",
+                                        "safeName": "FOO"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Foo",
+                                        "safeName": "Foo"
+                                    }
+                                },
+                                "wireValue": "foo"
+                            },
+                            "typeReference": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    ]
+                }
             },
             "response": {
                 "type": "json"
