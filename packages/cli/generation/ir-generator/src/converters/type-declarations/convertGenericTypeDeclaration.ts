@@ -45,7 +45,8 @@ export async function convertGenericTypeDeclaration({
                 file
             ),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            inline: resolvedBaseGeneric.declaration.inline
         });
     }
 

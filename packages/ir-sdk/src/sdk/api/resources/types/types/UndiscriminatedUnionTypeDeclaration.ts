@@ -4,6 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface UndiscriminatedUnionTypeDeclaration {
+export interface UndiscriminatedUnionTypeDeclaration extends FernIr.WithInline {
     members: FernIr.UndiscriminatedUnionMember[];
 }

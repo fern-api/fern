@@ -54,12 +54,10 @@
         "types": {
           "SearchRequestFilter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "age": "optional<integer>",
-              "location": {
-                "inline": true,
-                "type": "optional<SearchRequestFilterLocation>",
-              },
+              "location": "optional<SearchRequestFilterLocation>",
               "name": "optional<string>",
             },
             "source": {
@@ -68,12 +66,10 @@
           },
           "SearchRequestFilterLocation": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "city": "optional<string>",
-              "coordinates": {
-                "inline": true,
-                "type": "optional<SearchRequestFilterLocationCoordinates>",
-              },
+              "coordinates": "optional<SearchRequestFilterLocationCoordinates>",
               "country": "optional<string>",
             },
             "source": {
@@ -82,6 +78,7 @@
           },
           "SearchRequestFilterLocationCoordinates": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "latitude": "optional<double>",
               "longitude": "optional<double>",
@@ -101,6 +98,7 @@
           },
           "SearchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": "optional<list<string>>",
             },
@@ -117,22 +115,20 @@
       longitude: optional<double>
     source:
       openapi: ../openapi.yml
+    inline: true
   SearchRequestFilterLocation:
     properties:
       city: optional<string>
       country: optional<string>
-      coordinates:
-        type: optional<SearchRequestFilterLocationCoordinates>
-        inline: true
+      coordinates: optional<SearchRequestFilterLocationCoordinates>
     source:
       openapi: ../openapi.yml
+    inline: true
   SearchRequestFilter:
     properties:
       name: optional<string>
       age: optional<integer>
-      location:
-        type: optional<SearchRequestFilterLocation>
-        inline: true
+      location: optional<SearchRequestFilterLocation>
     source:
       openapi: ../openapi.yml
   SearchRequestSort:

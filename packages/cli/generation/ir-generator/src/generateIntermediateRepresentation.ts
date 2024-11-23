@@ -499,7 +499,6 @@ export async function generateIntermediateRepresentation({
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
-    markInlineTypeDeclarations(types, services);
 
     return {
         ...intermediateRepresentationForAudiences,
@@ -734,103 +733,4 @@ function filterServiceTypeReferenceInfoForAudiences(
         sharedTypes: serviceTypeReferenceInfo.sharedTypes.filter((typeId) => filteredIr.hasTypeId(typeId)),
         typesReferencedOnlyByService: filteredTypesReferencedOnlyByService
     };
-}
-
-type NamedObjectProperty = ObjectProperty & { valueType: TypeReference.Named };
-type OptionalNamedObjectProperty = ObjectProperty & {
-    valueType: TypeReference.Container & {
-        container: ContainerType.Optional & { optional: NamedType };
-    };
-};
-function markInlineTypeDeclarations(types: Record<string, TypeDeclaration>, services: Record<string, HttpService>) {
-    // find types that have properties containing inline types
-    const namedTypesFromTypes = Object.values(types).flatMap((type) => {
-        if (type.shape.type !== "object") {
-            return [];
-        }
-
-        return getNamedTypes(Object.values(type.shape.properties));
-    });
-
-    const namedTypesFromRequests = Object.values(services)
-        .flatMap((service) => service.endpoints)
-        .filter(
-            (endpoint): endpoint is HttpEndpoint & { requestBody: InlinedRequestBody } =>
-                endpoint.requestBody?.type === "inlinedRequestBody"
-        )
-        .map((endpoint) => endpoint.requestBody?.properties ?? [])
-        .flatMap(getNamedTypes);
-
-    const namedTypes = namedTypesFromTypes.concat(namedTypesFromRequests);
-
-    const inlinePropTypeIds = new Set<string>();
-    const nonInlinePropTypeIds = new Set<string>();
-    // split props into inline and non-inline using reduce
-    namedTypes.forEach((prop) => {
-        if (prop.inline === true) {
-            inlinePropTypeIds.add(prop.typeId);
-        } else {
-            nonInlinePropTypeIds.add(prop.typeId);
-        }
-    });
-    for (const [typeId, type] of Object.entries(types)) {
-        if (nonInlinePropTypeIds.has(typeId)) {
-            type.inline = false;
-            continue;
-        }
-        type.inline = inlinePropTypeIds.has(typeId);
-    }
-}
-function getNamedTypes(props: ObjectProperty[]): NamedType | readonly NamedType[] {
-    return props
-        .filter((prop): prop is NamedObjectProperty | OptionalNamedObjectProperty => {
-            switch (prop.valueType.type) {
-                case "primitive":
-                    return false;
-                case "unknown":
-                    return false;
-                case "container":
-                    switch (prop.valueType.container.type) {
-                        case "list":
-                            break;
-                        case "literal":
-                            break;
-                        case "map":
-                            break;
-                        case "set":
-                            break;
-                        case "optional":
-                            switch (prop.valueType.container.optional.type) {
-                                case "named":
-                                    return true;
-                                case "primitive":
-                                    break;
-                                case "unknown":
-                                    break;
-                                case "container":
-                                    break;
-                                default:
-                                    assertNever(prop.valueType.container.optional);
-                            }
-                            return false;
-                        default:
-                            assertNever(prop.valueType.container);
-                    }
-                    return false;
-                case "named":
-                    return true;
-                default:
-                    assertNever(prop.valueType);
-            }
-        })
-        .map((prop): NamedType => {
-            switch (prop.valueType.type) {
-                case "named":
-                    return prop.valueType;
-                case "container":
-                    return prop.valueType.container.optional;
-                default:
-                    assertNever(prop.valueType);
-            }
-        });
 }

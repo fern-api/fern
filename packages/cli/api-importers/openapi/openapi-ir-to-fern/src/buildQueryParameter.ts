@@ -113,7 +113,8 @@ function getQueryParameterTypeReference({
                     context,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -164,7 +165,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -187,7 +189,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -210,7 +213,8 @@ function getQueryParameterTypeReference({
                     context,
                     fileContainingReference,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: false
             };
@@ -237,7 +241,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: true
                 };
@@ -248,7 +253,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -268,7 +274,8 @@ function getQueryParameterTypeReference({
                     }),
                     context,
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -319,7 +326,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -342,7 +350,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -374,7 +383,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -386,7 +396,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };
@@ -406,7 +417,8 @@ function getQueryParameterTypeReference({
                 }),
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: true
         };
@@ -416,7 +428,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };

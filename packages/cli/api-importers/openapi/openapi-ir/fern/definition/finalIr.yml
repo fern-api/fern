@@ -610,7 +610,6 @@ types:
         docs: |
           An optional name override populated via `x-fern-property-name`.
       audiences: list<string>
-      inline: optional<boolean>
 
   ObjectPropertyConflictInfo:
     properties:

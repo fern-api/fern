@@ -1087,16 +1087,6 @@
             }
           ]
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "env": {
           "oneOf": [
             {

@@ -255,7 +255,6 @@ function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): Obj
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,
         availability: objectProperty.availability,
-        readonly: objectProperty.readonly,
-        inline: objectProperty.inline
+        readonly: objectProperty.readonly
     };
 }

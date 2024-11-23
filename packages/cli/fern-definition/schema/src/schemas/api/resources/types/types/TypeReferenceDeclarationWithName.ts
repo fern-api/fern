@@ -7,7 +7,6 @@ import * as FernDefinition from "../../../index";
 export interface TypeReferenceDeclarationWithName
     extends FernDefinition.BaseTypeReferenceSchema,
         FernDefinition.WithName,
-        FernDefinition.WithAudiences,
-        FernDefinition.WithInline {
+        FernDefinition.WithAudiences {
     type: string;
 }

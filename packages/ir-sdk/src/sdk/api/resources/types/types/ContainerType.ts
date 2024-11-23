@@ -60,7 +60,7 @@ export const ContainerType = {
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -73,7 +73,7 @@ export const ContainerType = {
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -86,7 +86,7 @@ export const ContainerType = {
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -99,7 +99,7 @@ export const ContainerType = {
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -112,7 +112,7 @@ export const ContainerType = {
                 visitor: FernIr.ContainerType._Visitor<_Result>
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -131,5 +131,5 @@ export const ContainerType = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

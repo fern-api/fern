@@ -5392,6 +5392,7 @@
         "types": {
           "AsyncJobResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "status": "string",
               "task_id": {
@@ -5656,6 +5657,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5667,6 +5669,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5678,6 +5681,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5689,6 +5693,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5700,6 +5705,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5711,6 +5717,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5722,6 +5729,7 @@
           },
           "BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "list<string>",
@@ -5733,6 +5741,7 @@
           },
           "Chat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collection_id": {
                 "type": "string",
@@ -5787,6 +5796,7 @@
           },
           "ChatConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_guardrails": {
                 "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
@@ -5826,6 +5836,7 @@
           },
           "ChatDocument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chunks": "integer",
               "connection_id": {
@@ -5875,6 +5886,7 @@
           },
           "ChatDocumentEmbeddingInstance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_document_id": {
                 "type": "string",
@@ -5905,6 +5917,7 @@
           },
           "ChatDocumentEmbeddingRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document": "string",
               "id": {
@@ -5923,6 +5936,7 @@
           },
           "ChatDocumentQueryResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_document_id": {
                 "type": "string",
@@ -5976,6 +5990,7 @@
           },
           "ChatGuardrail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "string",
               "id": {
@@ -6097,6 +6112,7 @@
           },
           "ChatModel": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alias": {
                 "docs": "Human readable name for the LLM.",
@@ -6252,6 +6268,7 @@
           },
           "Collection": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created": {
                 "type": "datetime",
@@ -6336,6 +6353,7 @@
           },
           "CollectionEmbeddingUpdate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "embedding_instance_ids": {
                 "type": "list<string>",
@@ -6506,6 +6524,7 @@
           },
           "CollectionStatsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "documents_by_source": {
                 "type": "list<SourceRow>",
@@ -6518,6 +6537,7 @@
           },
           "ComposeContent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "existing_content": "string",
             },
@@ -6527,6 +6547,7 @@
           },
           "ComposeGenerate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "structure": {
                 "type": "list<InitialComposeSection>",
@@ -6538,6 +6559,7 @@
           },
           "ComposeInit": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "audience": {
                 "type": "optional<string>",
@@ -6590,6 +6612,7 @@
           },
           "ComposeSectionTalkingPoint": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "section_heading": "string",
             },
@@ -6599,6 +6622,7 @@
           },
           "ComposeSectionUpdate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "instructions": {
                 "type": "list<string>",
@@ -6615,6 +6639,7 @@
           },
           "ConversationalGuardrails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "input": {
                 "docs": "List of valid Input Conversational Guardrails to enable",
@@ -6721,6 +6746,7 @@
           },
           "Datasource": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "string",
@@ -6739,6 +6765,7 @@
           },
           "DatasourceConfiguration": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": "string",
               "private": "boolean",
@@ -6750,6 +6777,7 @@
           },
           "DatasourceConnection": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "config": {
                 "type": "optional<map<string, unknown>>",
@@ -6804,6 +6832,7 @@
           },
           "DatasourceConnectionPublic": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "config": {
                 "type": "optional<map<string, unknown>>",
@@ -6853,6 +6882,7 @@
           },
           "DatasourceSyncRun": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created": {
                 "type": "datetime",
@@ -7033,6 +7063,7 @@
           },
           "DocumentCreateTask": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "info": {
                 "type": "optional<map<string, unknown>>",
@@ -7261,6 +7292,7 @@
           },
           "DocumentStatusResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "group_id": "string",
               "task_count": "integer",
@@ -7328,6 +7360,7 @@
           },
           "EmptyErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -7677,6 +7710,7 @@
           },
           "HTTPValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
@@ -7688,6 +7722,7 @@
           },
           "HydraWebhookTokenHookSession": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_id": "string",
               "id_token": {
@@ -7700,6 +7735,7 @@
           },
           "HydraWebhookTokenHookSessionIDTokenClaims": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id_token_claims": {
                 "type": "map<string, unknown>",
@@ -7711,6 +7747,7 @@
           },
           "IAMMember": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "docs": "If avatar of the member, if it is supported by their subject type.",
@@ -7742,6 +7779,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "IAMObjectErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "optional<string>",
@@ -7754,6 +7792,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "IAMPermissionTest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "member": {
                 "type": "optional<string>",
@@ -7780,6 +7819,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7792,6 +7832,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InitialComposeSection": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ideas": {
                 "type": "optional<list<string>>",
@@ -7823,6 +7864,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InputConversationalGuardrailDefinition": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "type": "Name",
@@ -7834,6 +7876,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidMemberErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "resource": {
                 "type": "optional<IAMObjectErrorDetails>",
@@ -7848,6 +7891,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidMemberErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "invalidMemberError": {
                 "docs": "Metadata detailing more information about the error.",
@@ -7864,6 +7908,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidRoleErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "resource": {
                 "type": "optional<IAMObjectErrorDetails>",
@@ -7876,6 +7921,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidRoleErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "invalidRoleError": {
                 "docs": "Metadata detailing more information about the error.",
@@ -7892,6 +7938,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidSubjectTypeErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "subject": {
                 "type": "optional<IAMObjectErrorDetails>",
@@ -7903,6 +7950,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "InvalidSubjectTypeErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "invalidSubjectTypeError": {
                 "docs": "Metadata detailing more information about the error.",
@@ -7920,6 +7968,7 @@ Some entities, such as Organizations, may contain members that exist without any
           "KratosIdentity": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "id": {
                 "type": "string",
@@ -7939,6 +7988,7 @@ Some entities, such as Organizations, may contain members that exist without any
           "KratosIdentityTraits": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "type": "optional<string>",
@@ -7983,6 +8033,7 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "KratosWebhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "bio": {
                 "type": "optional<string>",
@@ -8031,6 +8082,7 @@ Some entities, such as Organizations, may contain members that exist without any
           "KratosWebhookDetailedMessage": {
             "docs": "Sourced from detailedMessage in:
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
+            "inline": undefined,
             "properties": {
               "context": {
                 "type": "optional<unknown>",
@@ -8048,6 +8100,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "KratosWebhookErrorMessage": {
             "docs": "Sourced from errorMessage in:
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
+            "inline": undefined,
             "properties": {
               "instance_ptr": "string",
               "messages": {
@@ -8061,6 +8114,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "KratosWebhookResponse": {
             "docs": "Sourced from rawHookResponse in:
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
+            "inline": undefined,
             "properties": {
               "identity": {
                 "type": "optional<Identity>",
@@ -8327,6 +8381,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "MalformedResourceIdentifierErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "expected_format": "string",
               "field": "string",
@@ -8338,6 +8393,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "MalformedResourceIdentifierErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "malformedResourceIdentifierError": {
                 "docs": "Metadata detailing more information about the error.",
@@ -8354,6 +8410,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "MissingAuthenticationErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Human readable representation of the error",
@@ -8370,6 +8427,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "MultipleRolesNotAllowedErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "resource": {
                 "type": "optional<IAMObjectErrorDetails>",
@@ -8384,6 +8442,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "MultipleRolesNotAllowedErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Human readable representation of the error",
@@ -8409,6 +8468,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OAuthClientCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_id": {
                 "type": "string",
@@ -8446,6 +8506,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "Object": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdTime": {
                 "type": "optional<string>",
@@ -8497,6 +8558,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "Org": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "type": "optional<string>",
@@ -8749,6 +8811,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationDomain": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "domain": "string",
               "id": {
@@ -8893,6 +8956,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationInvite": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email_address": {
                 "type": "string",
@@ -8922,6 +8986,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationInviteAlreadyExistsErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email_address": "string",
               "organization_id": "string",
@@ -8932,6 +8997,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationInviteAlreadyExistsErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Human readable representation of the error",
@@ -8948,6 +9014,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationMemberAlreadyExistsErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "member_id": "string",
               "organization_id": "string",
@@ -8958,6 +9025,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OrganizationMemberAlreadyExistsErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Human readable representation of the error",
@@ -8974,6 +9042,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "OutputConversationalGuardrailDefinition": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "type": "literal<"source_validation">",
@@ -8985,6 +9054,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetChat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9001,6 +9071,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetChatDocument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9017,6 +9088,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetChatDocumentEmbeddingRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9033,6 +9105,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetCollection": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9049,6 +9122,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetDatasourceSyncRun": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9065,6 +9139,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetIamMember": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9081,6 +9156,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetOrganizationDomain": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9097,6 +9173,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetOrganizationInvite": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9113,6 +9190,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetProject": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9129,6 +9207,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetTask": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9145,6 +9224,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetTaskForwarder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9161,6 +9241,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginatedResultSetTaskRun": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
@@ -9177,6 +9258,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PaginationDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "has_next": {
                 "docs": "Indicates whether there are more results available in the next page.",
@@ -9197,6 +9279,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PermissionCheckFailedErrorDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "permission": "string",
               "resource": {
@@ -9212,6 +9295,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "PermissionCheckFailedErrorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "Human readable representation of the error",
@@ -9228,6 +9312,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "Project": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "type": "optional<string>",
@@ -9267,6 +9352,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "ProjectConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "chat_guardrails": {
                 "type": "optional<ConversationalGuardrails>",
@@ -9446,6 +9532,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "ProjectWithDatasources": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "type": "optional<string>",
@@ -9756,6 +9843,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "SourceRow": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": "integer",
               "source": {
@@ -9790,6 +9878,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "Task": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created": {
                 "docs": "When the Task was created.",
@@ -9842,6 +9931,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskForwarder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "config": {
                 "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
@@ -9894,6 +9984,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskForwarderConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "destination_url": {
                 "docs": "The URL where Task Run result will be forwarded. Must be a valid HTTPS URL.",
@@ -9906,6 +9997,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskForwarderSensitiveConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "signing_key": {
                 "docs": "A secret key used to sign the forwarded data for verification purposes.",
@@ -10041,6 +10133,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskLLMConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "temperature": {
                 "default": 0.2,
@@ -10061,6 +10154,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskRAG": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collection_id": {
                 "type": "string",
@@ -10079,6 +10173,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskRevision": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "active": {
                 "default": false,
@@ -10126,7 +10221,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 ],
                 "availability": "pre-release",
                 "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                "inline": undefined,
                 "type": "optional<TaskRAG>",
               },
               "system_prompt": "unknown",
@@ -10218,6 +10312,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "TaskRun": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created": {
                 "docs": "The timestamp when the Task Run was created.",
@@ -10395,6 +10490,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "User": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "type": "optional<string>",
@@ -10428,6 +10524,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "ValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loc": {
                 "type": "list<ValidationErrorLocItem>",
@@ -10443,6 +10540,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15797,6 +15895,7 @@ types:
       - type: KratosIdentity
     source:
       openapi: ../openapi.yml
+    inline: true
   KratosWebhookResponse:
     docs: |-
       Sourced from rawHookResponse in:
@@ -16506,6 +16605,7 @@ types:
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   ValidationError:
     properties:
       loc:

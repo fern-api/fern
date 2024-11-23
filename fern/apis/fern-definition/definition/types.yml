@@ -64,7 +64,6 @@ types:
       - BaseTypeReferenceSchema
       - commons.WithName
       - commons.WithAudiences
-      - commons.WithInline
     properties:
       type: string
 
@@ -79,7 +78,6 @@ types:
       - BaseTypeReferenceSchema
       - commons.WithName
       - commons.WithAudiences
-      - commons.WithInline
     properties:
       type: string
 
@@ -104,7 +102,9 @@ types:
   #### Objects ####
 
   ObjectSchema:
-    extends: BaseTypeDeclarationSchema
+    extends:
+      - BaseTypeDeclarationSchema
+      - commons.WithInline
     properties:
       extends: optional<ObjectExtendsSchema>
       properties: optional<map<string, ObjectPropertySchema>>
@@ -127,7 +127,9 @@ types:
   #### Enums ####
 
   EnumSchema:
-    extends: BaseTypeDeclarationSchema
+    extends:
+      - BaseTypeDeclarationSchema
+      - commons.WithInline
     properties:
       default: optional<string>
       enum: list<EnumValue>
@@ -184,7 +186,9 @@ types:
       value: string
 
   DiscriminatedUnionSchema:
-    extends: BaseTypeDeclarationSchema
+    extends:
+      - BaseTypeDeclarationSchema
+      - commons.WithInline
     properties:
       discriminant: optional<UnionDiscriminant>
       extends: optional<ObjectExtendsSchema>
@@ -206,7 +210,9 @@ types:
   #### Undiscriminated Union ####
 
   UndiscriminatedUnionSchema:
-    extends: BaseTypeDeclarationSchema
+    extends:
+      - BaseTypeDeclarationSchema
+      - commons.WithInline
     properties:
       discriminated: literal<false>
       union: list<SingleUndiscriminatedUnionTypeSchema>

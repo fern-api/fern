@@ -8,54 +8,45 @@ service:
       request:
         body:
           properties:
-            bar:
-              inline: true
-              type: InlineType1
+            bar: InlineType1
             foo: string
         content-type: application/json
         name: PostRootRequest
       response: RootType1
 
 types:
-  DiscriminatedUnion1:
-    union:
-      type1: InlineType1
-      type2: MixedInlineType1
-  UndiscriminatedUnion1:
-    discriminated: false
-    union:
-      - type: InlineType1
-      - type: MixedInlineType1
-
   RootType1:
     properties:
       foo: string
-      bar:
-        type: InlineType1
-        inline: true
-      two:
-        type: MixedInlineType1
-
-  RootType2:
-    properties:
-      one: integer
-      two:
-        type: MixedInlineType1
-        inline: true
+      bar: InlineType1
 
   InlineType1:
+    inline: true
     properties:
       foo: string
       bar:
         type: NestedInlineType1
-        inline: true
+
+  InlineType2:
+    inline: true
+    properties:
+      baz: string
 
   NestedInlineType1:
+    inline: true
     properties:
       foo: string
       bar: string
 
-  MixedInlineType1:
-    properties:
-      foo: string
-      bar: string
+  InlinedDiscriminatedUnion1:
+    inline: true
+    union:
+      type1: InlineType1
+      type2: InlineType2
+
+  InlinedUndiscriminatedUnion1:
+    inline: true
+    discriminated: false
+    union:
+      - type: InlineType1
+      - type: InlineType2

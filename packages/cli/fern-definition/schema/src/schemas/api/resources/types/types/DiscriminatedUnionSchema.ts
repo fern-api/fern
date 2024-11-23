@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface DiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclarationSchema {
+export interface DiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclarationSchema, FernDefinition.WithInline {
     discriminant?: FernDefinition.UnionDiscriminant;
     extends?: FernDefinition.ObjectExtendsSchema;
     "base-properties"?: Record<string, FernDefinition.TypeReferenceSchema>;

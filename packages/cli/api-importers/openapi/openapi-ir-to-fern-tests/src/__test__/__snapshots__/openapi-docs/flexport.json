@@ -938,6 +938,7 @@
         "types": {
           "AdditionalDates": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cargo_ready_date": {
                 "docs": "Represents the date when the cargo on the leg is ready for pickup.",
@@ -980,6 +981,7 @@
           },
           "Address": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1002,6 +1004,7 @@
           },
           "AddressForRequestBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "city": "optional<string>",
               "country_code": "optional<string>",
@@ -1017,6 +1020,7 @@
           },
           "AirBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1054,6 +1058,7 @@
           },
           "AirShipmentDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1070,6 +1075,7 @@
           },
           "AirShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "flight_number": "optional<string>",
@@ -1082,6 +1088,7 @@
           },
           "Airport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1098,6 +1105,7 @@
           },
           "Booking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1161,6 +1169,7 @@
           },
           "BookingAmendment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1243,6 +1252,7 @@
           },
           "BookingAmendmentCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1256,6 +1266,7 @@
           },
           "BookingAmendmentHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/booking_amendment_product_description` for this object.",
@@ -1277,6 +1288,7 @@
           },
           "BookingCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1290,6 +1302,7 @@
           },
           "BookingHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/product_descriptions` for this object.",
@@ -1315,6 +1328,7 @@
           },
           "BookingLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1337,6 +1351,7 @@
           },
           "BookingLineItemCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1357,6 +1372,7 @@
           },
           "BookingLineItemCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1370,6 +1386,7 @@
           },
           "BookingLineItemIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1383,6 +1400,7 @@
           },
           "BookingLineItemShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1413,6 +1431,7 @@
           },
           "BookingRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -1425,6 +1444,7 @@
           },
           "BookingShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1450,6 +1470,7 @@
           },
           "BookingsIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1463,6 +1484,7 @@
           },
           "CarbonCalculation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1476,6 +1498,7 @@
           },
           "CarbonCalculationCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1489,6 +1512,7 @@
           },
           "Cargo": {
             "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, `shipping_units` is required, and `weight` and `volume` is required in the `cargo` object or the `shipping_units` object. For simple cargo, `shipping_units` is required, but only one should be specified, and `weight` and `volume` are required in the `cargo` object.",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/cargo` for this object.",
@@ -1543,6 +1567,7 @@
           },
           "CommercialInvoice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /commercial_invoice for this object.",
@@ -1592,6 +1617,7 @@
           },
           "CommercialInvoiceCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -1614,6 +1640,7 @@
           },
           "CommercialInvoiceLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /commercial_invoice_line_item for this object.",
@@ -1656,6 +1683,7 @@
           },
           "CommercialInvoiceLineItemContainerNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "commercial_invoice_line_item_id": "optional<integer>",
               "container_number": "optional<string>",
@@ -1670,6 +1698,7 @@
           },
           "CommercialInvoicesCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1683,6 +1712,7 @@
           },
           "CommercialInvoicesShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1696,6 +1726,7 @@
           },
           "CommercialInvoicesUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1709,6 +1740,7 @@
           },
           "Company": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/company for this object.",
@@ -1732,6 +1764,7 @@
           },
           "CompanyEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1749,6 +1782,7 @@
           },
           "CompanyEntityIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1762,6 +1796,7 @@
           },
           "CompanyEntityRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -1774,6 +1809,7 @@
           },
           "Contact": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/contact for this object.",
@@ -1781,7 +1817,6 @@
               },
               "company": {
                 "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
-                "inline": true,
                 "type": "optional<ContactCompany>",
               },
               "email": "optional<string>",
@@ -1799,6 +1834,7 @@
           },
           "ContactCompany": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<string>",
@@ -1811,6 +1847,7 @@
           },
           "ContainerCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1831,6 +1868,7 @@
           },
           "ContainerCounts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/container_counts` for this object.",
@@ -1859,6 +1897,7 @@
           },
           "ContainerLegCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -1879,6 +1918,7 @@
           },
           "ContainerListRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1892,6 +1932,7 @@
           },
           "ContainerRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -1904,6 +1945,7 @@
           },
           "ContainerShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -1917,6 +1959,7 @@
           },
           "CoordinatesCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "latitude": "optional<string>",
               "longitude": "optional<string>",
@@ -1927,6 +1970,7 @@
           },
           "CreateAirBooking": {
             "docs": "If a non-null value is passed in for 'air_booking', then the new booking will be assumed to be an air booking, even if the 'ocean_booking' or 'trucking_booking' fields are set.",
+            "inline": undefined,
             "properties": {
               "destination_port_iata_code": {
                 "docs": "Optional, provide one of `destination_port_us_cbp_port_code`, `destination_port_loc_code`, `destination_port_iata_code`, or `destination_port_icao_code`. Unique airport reference code used by IATA.",
@@ -1996,6 +2040,7 @@
           },
           "CreateBookingAmendmentHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Always required. English description of product in booking.",
@@ -2016,6 +2061,7 @@
           },
           "CreateBookingHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Always required. English description of product in booking.",
@@ -2040,6 +2086,7 @@
           },
           "CreateCargo": {
             "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, `shipping_units` is required, and `weight` and `volume` is required in the `cargo` object or the `shipping_units` object. For simple cargo, `shipping_units` is required, but only one should be specified, and `weight` and `volume` are required in the `cargo` object.",
+            "inline": undefined,
             "properties": {
               "contains_hazmat": {
                 "docs": "Required. Whether the cargo contains hazardous materials.",
@@ -2090,6 +2137,7 @@
           },
           "CreateCommercialInvoiceLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "container_number": "optional<string>",
               "country_of_origin": "optional<string>",
@@ -2102,7 +2150,6 @@
               "manufacturer_ref": {
                 "availability": "deprecated",
                 "docs": "[DEPRECATED] Your custom string used to refer to a manufacturer location.",
-                "inline": undefined,
                 "type": "optional<string>",
               },
               "metadata": "optional<MetadataCreate>",
@@ -2130,6 +2177,7 @@
           },
           "CreateContainerCounts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "forty_five_ft_hc": {
                 "docs": "Quantity of 45 ft HC containers requested.",
@@ -2154,6 +2202,7 @@
           },
           "CreateDocument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "document": {
                 "docs": "Document represented in a strict Base64-encoded string.",
@@ -2190,6 +2239,7 @@
           },
           "CreateInvolvedParty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "company_entity_ref": {
                 "docs": "Your custom string used to refer to the company entity. Can be used to look up or reference the company entity later on.",
@@ -2203,6 +2253,7 @@
           },
           "CreateLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "assigned_party_ref": {
                 "docs": "The party that this line item is assigned to. Useful if assigning line items to different factories under a vendor, for example.",
@@ -2299,6 +2350,7 @@
           },
           "CreateLineItemDestinationLocation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "location_ref": {
                 "docs": "Location ref",
@@ -2346,6 +2398,7 @@
           },
           "CreateLineItemMeasurement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "measure_type": {
                 "docs": "The type of measure",
@@ -2537,6 +2590,7 @@
           },
           "CreateOceanBooking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "container_counts": "CreateContainerCounts",
               "destination_port_loc_code": {
@@ -2599,6 +2653,7 @@
           },
           "CreateOrUpdatePurchaseOrder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
@@ -2783,6 +2838,7 @@
           },
           "CreateParty": {
             "docs": "A party is a company entity that is tied to a purchase order and has a specific role.",
+            "inline": undefined,
             "properties": {
               "contacts": {
                 "docs": "A list of contact data for who should be contacted should there be questions about this order. For example, if your supplier needs to contact someone, who should they contact?",
@@ -2807,6 +2863,7 @@
           },
           "CreatePartyContactsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "department": "optional<string>",
               "email": "optional<string>",
@@ -2840,6 +2897,7 @@
           },
           "CreatePurchaseOrderHsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "The indentifying code on the hs code",
@@ -2856,6 +2914,7 @@
           },
           "CreatePurchaseOrderPort": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique identifier for this port",
@@ -2884,6 +2943,7 @@
           },
           "CreatePurchaseOrderProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the product",
@@ -2940,6 +3000,7 @@
           },
           "CreateQuantity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement.",
@@ -2971,6 +3032,7 @@
           },
           "CreateTruckingBooking": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description_of_products": {
                 "docs": "General description of the products in the shipment.",
@@ -3001,6 +3063,7 @@
           },
           "CreditMemo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -3031,6 +3094,7 @@
           },
           "CustomsEntriesShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3044,6 +3108,7 @@
           },
           "CustomsEntry": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /customs_entry for this object.",
@@ -3076,6 +3141,7 @@
           },
           "CustomsEntryCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -3087,6 +3153,7 @@
           },
           "CustomsEntryIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3111,6 +3178,7 @@
           },
           "CustomsInvolvedParty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3133,6 +3201,7 @@
           },
           "DistanceCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "km" for kilometers. "mi" for miles.",
@@ -3159,6 +3228,7 @@
           },
           "Document": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /document for this object.",
@@ -3200,6 +3270,7 @@
           },
           "DocumentCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -3211,6 +3282,7 @@
           },
           "DocumentsCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3224,6 +3296,7 @@
           },
           "DocumentsDownloadRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3237,6 +3310,7 @@
           },
           "DocumentsIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3250,6 +3324,7 @@
           },
           "DocumentsShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3263,6 +3338,7 @@
           },
           "Error": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always /api/error for this object.",
@@ -3287,6 +3363,7 @@
           },
           "EventsIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3300,6 +3377,7 @@
           },
           "EventsShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3313,6 +3391,7 @@
           },
           "Exception": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "message": {
@@ -3357,6 +3436,7 @@
           },
           "FileMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /file_metadata for this object.",
@@ -3388,6 +3468,7 @@
           },
           "GenericCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "link": "optional<string>",
@@ -3399,6 +3480,7 @@
           },
           "GenericObjectRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<GenericObjectRefId>",
@@ -3413,6 +3495,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3423,6 +3506,7 @@
           },
           "HsCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/hs_code` for this object.",
@@ -3444,6 +3528,7 @@
           },
           "Invoice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always '/invoice' for this object.",
@@ -3517,6 +3602,7 @@
           },
           "InvoiceIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3530,6 +3616,7 @@
           },
           "InvoiceItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object.",
@@ -3575,6 +3662,7 @@
           },
           "InvoiceQuantity": {
             "docs": "Describes the number of units used to calculate the price of a line item",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -3595,6 +3683,7 @@
           },
           "InvoiceRate": {
             "docs": "Describes the rate per unit used to calculate the price of a line item",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "The type of the object",
@@ -3638,6 +3727,7 @@
           },
           "InvoicesShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3651,6 +3741,7 @@
           },
           "LegCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3671,6 +3762,7 @@
           },
           "LegRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -3683,6 +3775,7 @@
           },
           "Length": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/quantity/length` for this object.",
@@ -3703,6 +3796,7 @@
           },
           "LengthCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
@@ -3739,6 +3833,7 @@
           },
           "LineItemMeasurement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "measure_type": {
                 "docs": "The type of measure",
@@ -3775,6 +3870,7 @@
           },
           "Location": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object. Always /network/location for this object.",
@@ -3798,6 +3894,7 @@
           },
           "LocationIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3811,6 +3908,7 @@
           },
           "LocationUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3824,6 +3922,7 @@
           },
           "Manufacturer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -3844,6 +3943,7 @@
             "discriminated": false,
             "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3860,6 +3960,7 @@
           },
           "MetadataCreateExampleKey": {
             "docs": "Object format.",
+            "inline": true,
             "properties": {
               "example_key": "optional<list<string>>",
             },
@@ -3869,6 +3970,7 @@
           },
           "MetadataCreateItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": "optional<string>",
               "value": "optional<list<string>>",
@@ -3882,6 +3984,7 @@
             "extends": [
               "MoneyCreate",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3889,6 +3992,7 @@
           },
           "MoneyCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "optional<string>",
               "currency_code": "optional<string>",
@@ -3899,6 +4003,7 @@
           },
           "NetworkCompanyCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3912,6 +4017,7 @@
           },
           "NetworkCompanyEntityCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3925,6 +4031,7 @@
           },
           "NetworkCompanyEntityShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3938,6 +4045,7 @@
           },
           "NetworkCompanyEntityUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3951,6 +4059,7 @@
           },
           "NetworkCompanyIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3964,6 +4073,7 @@
           },
           "NetworkCompanyMeRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3977,6 +4087,7 @@
           },
           "NetworkCompanyUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -3990,6 +4101,7 @@
           },
           "NetworkContactCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4003,6 +4115,7 @@
           },
           "NetworkContactIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4016,6 +4129,7 @@
           },
           "NetworkContactShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4029,6 +4143,7 @@
           },
           "NetworkContactUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4042,6 +4157,7 @@
           },
           "NetworkLocationCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4055,6 +4171,7 @@
           },
           "NetworkLocationShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4068,6 +4185,7 @@
           },
           "OceanBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4107,6 +4225,7 @@
           },
           "OceanContainerLegsIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4120,6 +4239,7 @@
           },
           "OceanContainerLegsShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4133,6 +4253,7 @@
           },
           "OceanShipmentContainerLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4148,6 +4269,7 @@
           },
           "OceanShipmentDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4169,6 +4291,7 @@
           },
           "OceanShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -4183,6 +4306,7 @@
           },
           "Parties": {
             "docs": "A party is a company entity that is tied to a purchase order that has a specific role.",
+            "inline": undefined,
             "properties": {
               "company_entity": "optional<CompanyEntity>",
               "contacts": {
@@ -4204,6 +4328,7 @@
           },
           "PartiesContactsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "department": "optional<string>",
               "email": "optional<string>",
@@ -4237,6 +4362,7 @@
           },
           "Place": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4257,6 +4383,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4268,6 +4395,7 @@
           },
           "Placeport": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4301,6 +4429,7 @@
           },
           "PortsIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4314,6 +4443,7 @@
           },
           "Product": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4331,7 +4461,6 @@
               "country_of_origin": {
                 "availability": "deprecated",
                 "docs": "[DEPRECATED] - Use the country_of_origin on the supplier field. The country the product was manufactured",
-                "inline": undefined,
                 "type": "optional<string>",
               },
               "description": {
@@ -4341,7 +4470,6 @@
               "hs_codes": {
                 "availability": "deprecated",
                 "docs": "DEPRECATED - HS codes can be found in the classifications array",
-                "inline": undefined,
                 "type": "optional<list<HsCode>>",
               },
               "id": {
@@ -4371,6 +4499,7 @@
           },
           "ProductClassification": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4391,6 +4520,7 @@
           },
           "ProductCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4404,6 +4534,7 @@
           },
           "ProductIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4417,6 +4548,7 @@
           },
           "ProductProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4437,6 +4569,7 @@
           },
           "ProductRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -4449,6 +4582,7 @@
           },
           "ProductShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4462,6 +4596,7 @@
           },
           "ProductUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4475,6 +4610,7 @@
           },
           "PurchaseOrder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4554,6 +4690,7 @@
           },
           "PurchaseOrderCreateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4595,6 +4732,7 @@
           },
           "PurchaseOrderIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4608,6 +4746,7 @@
           },
           "PurchaseOrderLineItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4668,6 +4807,7 @@
           },
           "PurchaseOrderLineItemCollectionRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -4688,6 +4828,7 @@
           },
           "PurchaseOrderLineItemDestinationAddress": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "location_ref": {
                 "docs": "Location ref",
@@ -4723,6 +4864,7 @@
           },
           "PurchaseOrderLineItemIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4747,6 +4889,7 @@
           },
           "PurchaseOrderLineItemRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -4759,6 +4902,7 @@
           },
           "PurchaseOrderLineItemShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4846,6 +4990,7 @@
           },
           "PurchaseOrderProduct": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "color": {
                 "docs": "The color of the product",
@@ -4902,6 +5047,7 @@
           },
           "PurchaseOrderRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "id": "optional<integer>",
@@ -4914,6 +5060,7 @@
           },
           "PurchaseOrderShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4939,6 +5086,7 @@
           },
           "PurchaseOrderUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -4952,6 +5100,7 @@
           },
           "RailShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -4962,6 +5111,7 @@
           },
           "Shipment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5140,6 +5290,7 @@
           },
           "ShipmentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5222,6 +5373,7 @@
           },
           "ShipmentDangerousGoods": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of this object",
@@ -5252,6 +5404,7 @@
           },
           "ShipmentEventData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5277,6 +5430,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5307,6 +5461,7 @@
           },
           "ShipmentIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5320,6 +5475,7 @@
           },
           "ShipmentItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5338,6 +5494,7 @@
           },
           "ShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5379,6 +5536,7 @@
           },
           "ShipmentLegIndexRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5392,6 +5550,7 @@
           },
           "ShipmentLegShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5405,6 +5564,7 @@
           },
           "ShipmentNode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5430,6 +5590,7 @@
           },
           "ShipmentRef": {
             "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of Object Returned. In this case, /api/refs/object.",
@@ -5454,6 +5615,7 @@
           },
           "ShipmentShowRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5487,6 +5649,7 @@
           },
           "ShipmentUpdateRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5500,6 +5663,7 @@
           },
           "ShipmentsShareableRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<map<string, unknown>>",
@@ -5513,6 +5677,7 @@
           },
           "ShippingUnit": {
             "docs": "For detailed cargo, `shipping_units` is required. For simple cargo, `shipping_units` is required, but only one should be specified.",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/shipping_unit` for this object.",
@@ -5546,6 +5711,7 @@
           },
           "ShippingUnitCreate": {
             "docs": "For detailed cargo, `shipping_units` is required. For simple cargo, `shipping_units` is required, but only one should be specified.",
+            "inline": undefined,
             "properties": {
               "atomic_count": {
                 "docs": "Required if `unit_type` = `pallet`. The number of atomic units, i.e. units that will not be unpacked and broken up during shipping, contained in each shipping unit.",
@@ -5575,6 +5741,7 @@
           },
           "Terminal": {
             "docs": "Name and address of a specific terminal within a port or airport.  Possibly null",
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5611,6 +5778,7 @@
           },
           "TruckingBookingDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5635,6 +5803,7 @@
           },
           "TruckingShipmentLeg": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "container_legs": "optional<ContainerLegCollectionRef>",
@@ -5660,6 +5829,7 @@
           },
           "VatNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5680,6 +5850,7 @@
             "extends": [
               "VolumeCreate",
             ],
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5692,6 +5863,7 @@
           },
           "VolumeCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "unit of measurement. "cbm" for cubic meters. "cbft" for cubic feet.",
@@ -5718,6 +5890,7 @@
           },
           "WebhookEvent": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "Type of the object",
@@ -5739,6 +5912,7 @@
             "extends": [
               "WeightCreate",
             ],
+            "inline": undefined,
             "properties": {
               "_object": {
                 "docs": "String representing the object’s type. Always `/quantity/weight` for this object.",
@@ -5751,6 +5925,7 @@
           },
           "WeightCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "unit": {
                 "docs": "Required. Unit of measurement. "kg" for kilograms, "lbs" for pounds",
@@ -5777,6 +5952,7 @@
           },
           "WriteProductClassification": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "codes": {
                 "docs": "Always required. An array of HS codes for this product in the provided region",
@@ -5793,6 +5969,7 @@
           },
           "WriteProductProperty": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "Always required. User defined type of this property",
@@ -5809,6 +5986,7 @@
           },
           "WriteProductSupplier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country_of_origin": {
                 "docs": "Always required. ISO Alpha-2 country in which the product is manufactured",
@@ -5829,6 +6007,7 @@
           },
           "WriteVatNumber": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country_code": {
                 "docs": "ISO 3166 two-letter country code",
@@ -6540,12 +6719,14 @@
       example_key: optional<list<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   MetadataCreateItem:
     properties:
       name: optional<string>
       value: optional<list<string>>
     source:
       openapi: ../openapi.yml
+    inline: true
   MetadataCreate:
     discriminated: false
     docs: >-
@@ -6981,6 +7162,7 @@
       - Manufacturer
     source:
       openapi: ../openapi.yml
+    inline: true
   Place:
     properties:
       _object:
@@ -7741,6 +7923,7 @@
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   GenericObjectRef:
     docs: '[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)'
     properties:
@@ -8431,6 +8614,7 @@
       - OceanShipmentContainerLeg
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentEventData:
     properties:
       _object:
@@ -8660,6 +8844,7 @@
       id: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Contact:
     properties:
       _object:
@@ -8675,7 +8860,6 @@
       company:
         type: optional<ContactCompany>
         docs: '[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)'
-        inline: true
     source:
       openapi: ../openapi.yml
   Location:
@@ -8967,6 +9151,7 @@
       department: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   Parties:
     docs: >-
       A party is a company entity that is tied to a purchase order that has a
@@ -9143,6 +9328,7 @@
       department: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateParty:
     docs: >-
       A party is a company entity that is tied to a purchase order and has a
@@ -11363,6 +11549,7 @@ errors:
         "types": {
           "BookingCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Booking>",
@@ -11375,6 +11562,7 @@ errors:
           },
           "BookingShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Booking>",
@@ -11415,12 +11603,10 @@ errors:
           },
           "BookingsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<BookingsIndexResponseData>",
-              },
+              "data": "optional<BookingsIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -11430,6 +11616,7 @@ errors:
           },
           "BookingsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Booking>>",
@@ -11481,14 +11668,13 @@ errors:
       data: optional<list<root.Booking>>
     source:
       openapi: ../openapi.yml
+    inline: true
   BookingsIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<BookingsIndexResponseData>
-        inline: true
+      data: optional<BookingsIndexResponseData>
     source:
       openapi: ../openapi.yml
   CreateBookingDeclaredAsStrategy:
@@ -12751,6 +12937,7 @@ docs: Endpoints relating to Booking objects
         "types": {
           "BookingAmendmentCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingAmendment>",
@@ -13283,6 +13470,7 @@ docs: >-
         "types": {
           "BookingLineItemCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingLineItem>",
@@ -13305,12 +13493,10 @@ docs: >-
           },
           "BookingLineItemIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<BookingLineItemIndexResponseData>",
-              },
+              "data": "optional<BookingLineItemIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -13320,6 +13506,7 @@ docs: >-
           },
           "BookingLineItemIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.BookingLineItem>>",
@@ -13332,6 +13519,7 @@ docs: >-
           },
           "BookingLineItemShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.BookingLineItem>",
@@ -13360,14 +13548,13 @@ docs: >-
       data: optional<list<root.BookingLineItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   BookingLineItemIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<BookingLineItemIndexResponseData>
-        inline: true
+      data: optional<BookingLineItemIndexResponseData>
     source:
       openapi: ../openapi.yml
   BookingLineItemCreateResponse:
@@ -13715,6 +13902,7 @@ docs: >-
         "types": {
           "CarbonCalculationCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CarbonCalculation>",
@@ -14668,6 +14856,7 @@ docs: Endpoints relating to Carbon Calculations
         "types": {
           "CommercialInvoicesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -14680,12 +14869,10 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<CommercialInvoicesIndexResponseData>",
-              },
+              "data": "optional<CommercialInvoicesIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -14695,6 +14882,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CommercialInvoice>>",
@@ -14707,6 +14895,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -14719,6 +14908,7 @@ docs: Endpoints relating to Carbon Calculations
           },
           "CommercialInvoicesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CommercialInvoice>",
@@ -14742,14 +14932,13 @@ types:
       data: optional<list<root.CommercialInvoice>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CommercialInvoicesIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<CommercialInvoicesIndexResponseData>
-        inline: true
+      data: optional<CommercialInvoicesIndexResponseData>
     source:
       openapi: ../openapi.yml
   CommercialInvoicesCreateResponse:
@@ -15847,6 +16036,7 @@ docs: Endpoints relating to Commercial Invoice objects
         "types": {
           "NetworkCompanyCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -15859,12 +16049,10 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<NetworkCompanyIndexResponseData>",
-              },
+              "data": "optional<NetworkCompanyIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -15874,6 +16062,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Company>>",
@@ -15887,6 +16076,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyMeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -15899,6 +16089,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -15911,6 +16102,7 @@ docs: Endpoints relating to Commercial Invoice objects
           },
           "NetworkCompanyUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Company>",
@@ -15935,14 +16127,13 @@ types:
       data: optional<list<root.Company>>
     source:
       openapi: ../openapi.yml
+    inline: true
   NetworkCompanyIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<NetworkCompanyIndexResponseData>
-        inline: true
+      data: optional<NetworkCompanyIndexResponseData>
     source:
       openapi: ../openapi.yml
   NetworkCompanyCreateResponse:
@@ -16730,12 +16921,10 @@ docs: Endpoints relating to Company objects
         "types": {
           "CompanyEntityIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<CompanyEntityIndexResponseData>",
-              },
+              "data": "optional<CompanyEntityIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -16745,6 +16934,7 @@ docs: Endpoints relating to Company objects
           },
           "CompanyEntityIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CompanyEntity>>",
@@ -16758,6 +16948,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -16770,6 +16961,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -16782,6 +16974,7 @@ docs: Endpoints relating to Company objects
           },
           "NetworkCompanyEntityUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CompanyEntity>",
@@ -16806,14 +16999,13 @@ types:
       data: optional<list<root.CompanyEntity>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CompanyEntityIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<CompanyEntityIndexResponseData>
-        inline: true
+      data: optional<CompanyEntityIndexResponseData>
     source:
       openapi: ../openapi.yml
   NetworkCompanyEntityCreateResponse:
@@ -17450,6 +17642,7 @@ docs: Endpoints relating to CompanyEntity objects
         "types": {
           "NetworkContactCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -17462,12 +17655,10 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<NetworkContactIndexResponseData>",
-              },
+              "data": "optional<NetworkContactIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -17477,6 +17668,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Contact>>",
@@ -17490,6 +17682,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -17502,6 +17695,7 @@ docs: Endpoints relating to CompanyEntity objects
           },
           "NetworkContactUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Contact>",
@@ -17526,14 +17720,13 @@ types:
       data: optional<list<root.Contact>>
     source:
       openapi: ../openapi.yml
+    inline: true
   NetworkContactIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<NetworkContactIndexResponseData>
-        inline: true
+      data: optional<NetworkContactIndexResponseData>
     source:
       openapi: ../openapi.yml
   NetworkContactCreateResponse:
@@ -18065,12 +18258,10 @@ docs: Endpoints relating to Contact objects
         "types": {
           "ContainerListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<ContainerListResponseData>",
-              },
+              "data": "optional<ContainerListResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -18080,6 +18271,7 @@ docs: Endpoints relating to Contact objects
           },
           "ContainerListResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentContainer>>",
@@ -18092,6 +18284,7 @@ docs: Endpoints relating to Contact objects
           },
           "ContainerShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.ShipmentContainer>",
@@ -18115,14 +18308,13 @@ types:
       data: optional<list<root.ShipmentContainer>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ContainerListResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<ContainerListResponseData>
-        inline: true
+      data: optional<ContainerListResponseData>
     source:
       openapi: ../openapi.yml
   ContainerShowResponse:
@@ -18520,12 +18712,10 @@ docs: Endpoints relating to Container objects
         "types": {
           "OceanContainerLegsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<OceanContainerLegsIndexResponseData>",
-              },
+              "data": "optional<OceanContainerLegsIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -18535,6 +18725,7 @@ docs: Endpoints relating to Container objects
           },
           "OceanContainerLegsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.OceanShipmentContainerLeg>>",
@@ -18547,6 +18738,7 @@ docs: Endpoints relating to Container objects
           },
           "OceanContainerLegsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.OceanShipmentContainerLeg>",
@@ -18570,14 +18762,13 @@ types:
       data: optional<list<root.OceanShipmentContainerLeg>>
     source:
       openapi: ../openapi.yml
+    inline: true
   OceanContainerLegsIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<OceanContainerLegsIndexResponseData>
-        inline: true
+      data: optional<OceanContainerLegsIndexResponseData>
     source:
       openapi: ../openapi.yml
   OceanContainerLegsShowResponse:
@@ -18865,6 +19056,7 @@ docs: Endpoints relating to ContainerLeg objects
         "types": {
           "CustomsEntriesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CustomsEntry>",
@@ -18877,12 +19069,10 @@ docs: Endpoints relating to ContainerLeg objects
           },
           "CustomsEntryIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<CustomsEntryIndexResponseData>",
-              },
+              "data": "optional<CustomsEntryIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -18892,6 +19082,7 @@ docs: Endpoints relating to ContainerLeg objects
           },
           "CustomsEntryIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.CustomsEntry>>",
@@ -18915,14 +19106,13 @@ types:
       data: optional<list<root.CustomsEntry>>
     source:
       openapi: ../openapi.yml
+    inline: true
   CustomsEntryIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<CustomsEntryIndexResponseData>
-        inline: true
+      data: optional<CustomsEntryIndexResponseData>
     source:
       openapi: ../openapi.yml
   CustomsEntriesShowResponse:
@@ -19305,6 +19495,7 @@ docs: Endpoints relating to Customs Entry objects
         "types": {
           "DocumentsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.CreateDocument>",
@@ -19317,12 +19508,10 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<DocumentsIndexResponseData>",
-              },
+              "data": "optional<DocumentsIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -19332,6 +19521,7 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Document>>",
@@ -19345,6 +19535,7 @@ docs: Endpoints relating to Customs Entry objects
           },
           "DocumentsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Document>",
@@ -19369,14 +19560,13 @@ types:
       data: optional<list<root.Document>>
     source:
       openapi: ../openapi.yml
+    inline: true
   DocumentsIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<DocumentsIndexResponseData>
-        inline: true
+      data: optional<DocumentsIndexResponseData>
     source:
       openapi: ../openapi.yml
   DocumentsCreateResponse:
@@ -19841,12 +20031,10 @@ docs: Endpoints relating to Document objects
           },
           "EventsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<EventsIndexResponseData>",
-              },
+              "data": "optional<EventsIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -19856,6 +20044,7 @@ docs: Endpoints relating to Document objects
           },
           "EventsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.WebhookEvent>>",
@@ -19868,6 +20057,7 @@ docs: Endpoints relating to Document objects
           },
           "EventsShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.WebhookEvent>",
@@ -19905,14 +20095,13 @@ docs: Endpoints relating to Document objects
       data: optional<list<root.WebhookEvent>>
     source:
       openapi: ../openapi.yml
+    inline: true
   EventsIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<EventsIndexResponseData>
-        inline: true
+      data: optional<EventsIndexResponseData>
     source:
       openapi: ../openapi.yml
   EventsShowResponse:
@@ -20749,12 +20938,10 @@ Other details about this invoice",
           },
           "InvoiceIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<InvoiceIndexResponseData>",
-              },
+              "data": "optional<InvoiceIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -20764,6 +20951,7 @@ Other details about this invoice",
           },
           "InvoiceIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Invoice>>",
@@ -20776,6 +20964,7 @@ Other details about this invoice",
           },
           "InvoicesShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Invoice>",
@@ -20812,14 +21001,13 @@ Other details about this invoice",
       data: optional<list<root.Invoice>>
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoiceIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<InvoiceIndexResponseData>
-        inline: true
+      data: optional<InvoiceIndexResponseData>
     source:
       openapi: ../openapi.yml
   InvoicesShowResponse:
@@ -21752,12 +21940,10 @@ docs: Endpoints relating to Invoice objects
         "types": {
           "LocationIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<LocationIndexResponseData>",
-              },
+              "data": "optional<LocationIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -21767,6 +21953,7 @@ docs: Endpoints relating to Invoice objects
           },
           "LocationIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Location>>",
@@ -21780,6 +21967,7 @@ docs: Endpoints relating to Invoice objects
           },
           "LocationUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -21792,6 +21980,7 @@ docs: Endpoints relating to Invoice objects
           },
           "NetworkLocationCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -21804,6 +21993,7 @@ docs: Endpoints relating to Invoice objects
           },
           "NetworkLocationShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Location>",
@@ -21828,14 +22018,13 @@ types:
       data: optional<list<root.Location>>
     source:
       openapi: ../openapi.yml
+    inline: true
   LocationIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<LocationIndexResponseData>
-        inline: true
+      data: optional<LocationIndexResponseData>
     source:
       openapi: ../openapi.yml
   NetworkLocationCreateResponse:
@@ -22347,12 +22536,10 @@ docs: Endpoints relating to Location objects
           },
           "PortsIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<PortsIndexResponseData>",
-              },
+              "data": "optional<PortsIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -22362,6 +22549,7 @@ docs: Endpoints relating to Location objects
           },
           "PortsIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<optional<root.Place>>>",
@@ -22393,14 +22581,13 @@ docs: Endpoints relating to Location objects
       data: optional<list<optional<root.Place>>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PortsIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<PortsIndexResponseData>
-        inline: true
+      data: optional<PortsIndexResponseData>
     source:
       openapi: ../openapi.yml
 imports:
@@ -22928,6 +23115,7 @@ docs: Endpoints relating to Ports objects
         "types": {
           "ProductCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -22940,12 +23128,10 @@ docs: Endpoints relating to Ports objects
           },
           "ProductIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<ProductIndexResponseData>",
-              },
+              "data": "optional<ProductIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -22955,6 +23141,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Product>>",
@@ -22967,6 +23154,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -22979,6 +23167,7 @@ docs: Endpoints relating to Ports objects
           },
           "ProductUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Product>",
@@ -23002,14 +23191,13 @@ types:
       data: optional<list<root.Product>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ProductIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<ProductIndexResponseData>
-        inline: true
+      data: optional<ProductIndexResponseData>
     source:
       openapi: ../openapi.yml
   ProductCreateResponse:
@@ -24401,12 +24589,10 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<PurchaseOrderIndexResponseData>",
-              },
+              "data": "optional<PurchaseOrderIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -24416,6 +24602,7 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.PurchaseOrder>>",
@@ -24428,6 +24615,7 @@ docs: Endpoints relating to Product objects
           },
           "PurchaseOrderShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.PurchaseOrder>",
@@ -24479,14 +24667,13 @@ docs: Endpoints relating to Product objects
       data: optional<list<root.PurchaseOrder>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PurchaseOrderIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<PurchaseOrderIndexResponseData>
-        inline: true
+      data: optional<PurchaseOrderIndexResponseData>
     source:
       openapi: ../openapi.yml
   PurchaseOrderShowResponse:
@@ -25686,12 +25873,10 @@ docs: >-
           },
           "PurchaseOrderLineItemIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<PurchaseOrderLineItemIndexResponseData>",
-              },
+              "data": "optional<PurchaseOrderLineItemIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -25701,6 +25886,7 @@ docs: >-
           },
           "PurchaseOrderLineItemIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.PurchaseOrderLineItem>>",
@@ -25713,6 +25899,7 @@ docs: >-
           },
           "PurchaseOrderLineItemShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.PurchaseOrderLineItem>",
@@ -25741,14 +25928,13 @@ docs: >-
       data: optional<list<root.PurchaseOrderLineItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   PurchaseOrderLineItemIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<PurchaseOrderLineItemIndexResponseData>
-        inline: true
+      data: optional<PurchaseOrderLineItemIndexResponseData>
     source:
       openapi: ../openapi.yml
   PurchaseOrderLineItemShowResponse:
@@ -27311,12 +27497,10 @@ docs: >-
           },
           "ShipmentIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<ShipmentIndexResponseData>",
-              },
+              "data": "optional<ShipmentIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -27326,6 +27510,7 @@ docs: >-
           },
           "ShipmentIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.Shipment>>",
@@ -27338,6 +27523,7 @@ docs: >-
           },
           "ShipmentShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Shipment>",
@@ -27350,6 +27536,7 @@ docs: >-
           },
           "ShipmentUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.Shipment>",
@@ -27362,12 +27549,10 @@ docs: >-
           },
           "ShipmentsShareableResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<ShipmentsShareableResponseData>",
-              },
+              "data": "optional<ShipmentsShareableResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -27377,6 +27562,7 @@ docs: >-
           },
           "ShipmentsShareableResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "shipments": "optional<list<ShipmentsShareableResponseDataShipmentsItem>>",
@@ -27387,6 +27573,7 @@ docs: >-
           },
           "ShipmentsShareableResponseDataShipmentsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "expiration_date": "optional<string>",
               "shareable_url": "optional<string>",
@@ -27424,14 +27611,13 @@ docs: >-
       data: optional<list<root.Shipment>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<ShipmentIndexResponseData>
-        inline: true
+      data: optional<ShipmentIndexResponseData>
     source:
       openapi: ../openapi.yml
   ShipmentShowResponse:
@@ -27457,20 +27643,20 @@ docs: >-
       expiration_date: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentsShareableResponseData:
     properties:
       _object: optional<string>
       shipments: optional<list<ShipmentsShareableResponseDataShipmentsItem>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentsShareableResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<ShipmentsShareableResponseData>
-        inline: true
+      data: optional<ShipmentsShareableResponseData>
     source:
       openapi: ../openapi.yml
 imports:
@@ -28888,12 +29074,10 @@ docs: Endpoints relating to Shipment objects
         "types": {
           "ShipmentLegIndexResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
-              "data": {
-                "inline": true,
-                "type": "optional<ShipmentLegIndexResponseData>",
-              },
+              "data": "optional<ShipmentLegIndexResponseData>",
               "self": "optional<string>",
               "version": "optional<integer>",
             },
@@ -28903,6 +29087,7 @@ docs: Endpoints relating to Shipment objects
           },
           "ShipmentLegIndexResponseData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<list<root.ShipmentLeg>>",
@@ -28915,6 +29100,7 @@ docs: Endpoints relating to Shipment objects
           },
           "ShipmentLegShowResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_object": "optional<string>",
               "data": "optional<root.ShipmentLeg>",
@@ -28938,14 +29124,13 @@ types:
       data: optional<list<root.ShipmentLeg>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ShipmentLegIndexResponse:
     properties:
       _object: optional<string>
       self: optional<string>
       version: optional<integer>
-      data:
-        type: optional<ShipmentLegIndexResponseData>
-        inline: true
+      data: optional<ShipmentLegIndexResponseData>
     source:
       openapi: ../openapi.yml
   ShipmentLegShowResponse:

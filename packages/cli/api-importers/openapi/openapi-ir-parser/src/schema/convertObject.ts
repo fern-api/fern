@@ -20,7 +20,6 @@ import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } fr
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
-import { isInlineObjectProperty } from "./utils/isInlineObjectProperty";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
 
@@ -174,7 +173,6 @@ export function convertObject({
             const availability = convertAvailability(propertySchema);
 
             const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
-            const inline = isInlineObjectProperty(propertySchema);
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
@@ -212,8 +210,7 @@ export function convertObject({
                 conflict: conflicts,
                 generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
                 availability,
-                readonly,
-                inline: inline || undefined
+                readonly
             };
         }
     );

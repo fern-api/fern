@@ -12915,6 +12915,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -13069,6 +13070,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "enum",
         "_visit": [Function],
         "default": undefined,
+        "inline": undefined,
         "type": "enum",
         "values": [
           {
@@ -13413,6 +13415,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -13824,6 +13827,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -14118,6 +14122,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -14731,6 +14736,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -15117,6 +15123,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           "wireValue": "animal",
         },
         "extends": [],
+        "inline": undefined,
         "type": "union",
         "types": [
           {
@@ -15514,6 +15521,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {
@@ -15703,6 +15711,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
+        "inline": undefined,
         "properties": [
           {
             "availability": {

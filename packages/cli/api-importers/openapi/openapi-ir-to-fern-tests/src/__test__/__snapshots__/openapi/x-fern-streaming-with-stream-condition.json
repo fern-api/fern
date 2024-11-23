@@ -116,6 +116,7 @@
         "types": {
           "ChatFullResponse": {
             "docs": "Full response to a chat question when the result is not streamed.",
+            "inline": undefined,
             "properties": {
               "answer": {
                 "docs": "The message from the chat model for the chat message.",
@@ -136,6 +137,7 @@
           },
           "ChatStreamedResponse": {
             "docs": "An individual event when the response is streamed.",
+            "inline": undefined,
             "properties": {
               "chunk": {
                 "docs": "The chunk of the response.",

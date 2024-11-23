@@ -86,6 +86,7 @@
         "types": {
           "BasicVal": {
             "docs": "A Val",
+            "inline": undefined,
             "properties": {
               "author": {
                 "docs": "The user who created this val",
@@ -106,10 +107,7 @@
                   "pattern": undefined,
                 },
               },
-              "links": {
-                "inline": true,
-                "type": "BasicValLinks",
-              },
+              "links": "BasicValLinks",
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -154,6 +152,7 @@
           },
           "BasicValAuthor": {
             "docs": "The user who created this val",
+            "inline": true,
             "properties": {
               "id": {
                 "type": "string",
@@ -172,6 +171,7 @@
           },
           "BasicValLinks": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "module": {
                 "docs": "The URL of this Val’s source code as a module",
@@ -236,6 +236,7 @@
           },
           "EmailsSendRequestInternalServerErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": "string",
             },
@@ -245,6 +246,7 @@
           },
           "EvalGetRequestBadRequestErrorBody": {
             "docs": "The function throw an error or had invalid syntax",
+            "inline": undefined,
             "properties": {
               "error": "string",
               "type": "literal<"error">",
@@ -255,6 +257,7 @@
           },
           "EvalPostRequestBadRequestErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": "string",
               "type": "literal<"error">",
@@ -265,6 +268,7 @@
           },
           "ExtendedVal": {
             "docs": "A Val",
+            "inline": undefined,
             "properties": {
               "author": {
                 "docs": "The user who created this val",
@@ -296,10 +300,7 @@
                   "multipleOf": undefined,
                 },
               },
-              "links": {
-                "inline": true,
-                "type": "ExtendedValLinks",
-              },
+              "links": "ExtendedValLinks",
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -358,6 +359,7 @@
           },
           "ExtendedValAuthor": {
             "docs": "The user who created this val",
+            "inline": true,
             "properties": {
               "id": {
                 "type": "string",
@@ -376,6 +378,7 @@
           },
           "ExtendedValLinks": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "module": {
                 "docs": "The URL of this Val’s source code as a module",
@@ -440,6 +443,7 @@
           },
           "PaginationLinks": {
             "docs": "Links to use for pagination",
+            "inline": undefined,
             "properties": {
               "next": {
                 "docs": "URL of the next page, if any",
@@ -478,6 +482,7 @@
           },
           "ResultSet": {
             "docs": "Result of executing an SQL statement.",
+            "inline": undefined,
             "properties": {
               "columnTypes": {
                 "docs": "Types of columns.
@@ -522,6 +527,7 @@ This value is not specified for other SQL statements.",
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -532,6 +538,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           },
           "User": {
             "docs": "User object",
+            "inline": undefined,
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
@@ -547,10 +554,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
                   "pattern": undefined,
                 },
               },
-              "links": {
-                "inline": true,
-                "type": "UserLinks",
-              },
+              "links": "UserLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
                 "type": "optional<string>",
@@ -582,6 +586,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           },
           "UserLinks": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "self": {
                 "docs": "URL of this user on this API",
@@ -628,6 +633,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
     source:
       openapi: ../openapi.yml
+    inline: true
   User:
     docs: User object
     properties:
@@ -654,9 +660,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: URL of this user’s profile on Val Town’s website
         validation:
           format: uri
-      links:
-        type: UserLinks
-        inline: true
+      links: UserLinks
     source:
       openapi: ../openapi.yml
   ResultSetLastInsertRowid:
@@ -672,6 +676,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
       - double
     source:
       openapi: ../openapi.yml
+    inline: true
   ResultSet:
     docs: Result of executing an SQL statement.
     properties:
@@ -759,6 +764,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
     source:
       openapi: ../openapi.yml
+    inline: true
   ExtendedValAuthor:
     docs: The user who created this val
     properties:
@@ -769,6 +775,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
       username: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ExtendedVal:
     docs: A Val
     properties:
@@ -808,9 +815,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links:
-        type: ExtendedValLinks
-        inline: true
+      links: ExtendedValLinks
       author:
         type: optional<ExtendedValAuthor>
         docs: The user who created this val
@@ -872,6 +877,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicValAuthor:
     docs: The user who created this val
     properties:
@@ -882,6 +888,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
       username: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicVal:
     docs: A Val
     properties:
@@ -921,9 +928,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links:
-        type: BasicValLinks
-        inline: true
+      links: BasicValLinks
       author:
         type: optional<BasicValAuthor>
         docs: The user who created this val
@@ -1118,6 +1123,7 @@ API endpoints",
         "types": {
           "AliasValResponse": {
             "docs": "A Val",
+            "inline": undefined,
             "properties": {
               "author": {
                 "docs": "The user who created this val",
@@ -1149,10 +1155,7 @@ API endpoints",
                   "multipleOf": undefined,
                 },
               },
-              "links": {
-                "inline": true,
-                "type": "AliasValResponseLinks",
-              },
+              "links": "AliasValResponseLinks",
               "name": {
                 "docs": "The name of this val",
                 "type": "string",
@@ -1211,6 +1214,7 @@ API endpoints",
           },
           "AliasValResponseAuthor": {
             "docs": "The user who created this val",
+            "inline": true,
             "properties": {
               "id": {
                 "type": "string",
@@ -1229,6 +1233,7 @@ API endpoints",
           },
           "AliasValResponseLinks": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "module": {
                 "docs": "The URL of this Val’s source code as a module",
@@ -1421,6 +1426,7 @@ types:
           format: uri
     source:
       openapi: ../openapi.yml
+    inline: true
   AliasValResponseAuthor:
     docs: The user who created this val
     properties:
@@ -1431,6 +1437,7 @@ types:
       username: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   AliasValResponse:
     docs: A Val
     properties:
@@ -1470,9 +1477,7 @@ types:
         docs: The URL of this val on the Val Town website
         validation:
           format: uri
-      links:
-        type: AliasValResponseLinks
-        inline: true
+      links: AliasValResponseLinks
       author:
         type: optional<AliasValResponseAuthor>
         docs: The user who created this val
@@ -1625,6 +1630,7 @@ types:
         "types": {
           "BlobListingItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": "string",
               "lastModified": {
@@ -1831,6 +1837,7 @@ docs: Blobs
         "types": {
           "AttachmentObject": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "content": "string",
               "contentId": {
@@ -1852,6 +1859,7 @@ docs: Blobs
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1867,6 +1875,7 @@ docs: Blobs
             "discriminated": false,
             "docs": "A single email or list of emails for one of the address fields",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1882,6 +1891,7 @@ docs: Blobs
           },
           "EmailNameAndAddress": {
             "docs": "An email address and name",
+            "inline": true,
             "properties": {
               "email": "string",
               "name": {
@@ -1894,6 +1904,7 @@ docs: Blobs
           },
           "EmailsSendResponse": {
             "docs": "Successfully sent email",
+            "inline": undefined,
             "properties": {
               "message": "string",
             },
@@ -1905,6 +1916,7 @@ docs: Blobs
             "discriminated": false,
             "docs": "A reply-to list of email addresses",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1929,6 +1941,7 @@ docs: Blobs
       email: string
     source:
       openapi: ../openapi.yml
+    inline: true
   EmailData:
     discriminated: false
     union:
@@ -1937,6 +1950,7 @@ docs: Blobs
         docs: An email address and name
     source:
       openapi: ../openapi.yml
+    inline: true
   EmailDataInput:
     discriminated: false
     docs: A single email or list of emails for one of the address fields
@@ -1946,6 +1960,7 @@ docs: Blobs
       - type: list<EmailData>
     source:
       openapi: ../openapi.yml
+    inline: true
   AttachmentObject:
     properties:
       content: string
@@ -1958,6 +1973,7 @@ docs: Blobs
         type: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   ReplyToList:
     discriminated: false
     docs: A reply-to list of email addresses
@@ -1967,6 +1983,7 @@ docs: Blobs
       - type: list<EmailNameAndAddress>
     source:
       openapi: ../openapi.yml
+    inline: true
   EmailsSendResponse:
     docs: Successfully sent email
     properties:
@@ -2347,6 +2364,7 @@ give access to details and data from the requesting user.",
           },
           "MeCommentsResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<MeCommentsResponseDataItem>",
               "links": "root.PaginationLinks",
@@ -2357,11 +2375,9 @@ give access to details and data from the requesting user.",
           },
           "MeCommentsResponseDataItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
-              "author": {
-                "inline": true,
-                "type": "MeCommentsResponseDataItemAuthor",
-              },
+              "author": "MeCommentsResponseDataItemAuthor",
               "comment": {
                 "docs": "Text of the given comment, in Markdown",
                 "type": "string",
@@ -2377,10 +2393,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "val": {
-                "inline": true,
-                "type": "MeCommentsResponseDataItemVal",
-              },
+              "val": "MeCommentsResponseDataItemVal",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2388,6 +2401,7 @@ give access to details and data from the requesting user.",
           },
           "MeCommentsResponseDataItemAuthor": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": {
                 "type": "string",
@@ -2406,6 +2420,7 @@ give access to details and data from the requesting user.",
           },
           "MeCommentsResponseDataItemVal": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "author": {
                 "docs": "The user who created this val",
@@ -2445,6 +2460,7 @@ give access to details and data from the requesting user.",
           },
           "MeCommentsResponseDataItemValAuthor": {
             "docs": "The user who created this val",
+            "inline": true,
             "properties": {
               "id": {
                 "type": "string",
@@ -2474,6 +2490,7 @@ give access to details and data from the requesting user.",
           },
           "MeGetResponse": {
             "docs": "Your user information, with tier and email included",
+            "inline": undefined,
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
@@ -2493,10 +2510,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "links": {
-                "inline": true,
-                "type": "MeGetResponseLinks",
-              },
+              "links": "MeGetResponseLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
                 "type": "optional<string>",
@@ -2532,6 +2546,7 @@ give access to details and data from the requesting user.",
           },
           "MeGetResponseLinks": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "self": {
                 "docs": "URL of this user on this API",
@@ -2560,6 +2575,7 @@ give access to details and data from the requesting user.",
           },
           "MeLikesResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<root.BasicVal>",
               "links": "root.PaginationLinks",
@@ -2570,6 +2586,7 @@ give access to details and data from the requesting user.",
           },
           "MeReferencesResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<MeReferencesResponseDataItem>",
               "links": "root.PaginationLinks",
@@ -2580,15 +2597,14 @@ give access to details and data from the requesting user.",
           },
           "MeReferencesResponseDataItem": {
             "docs": "A description of a dependency from one val (reference) to another (dependsOn) that was introduced at a particular time.",
+            "inline": true,
             "properties": {
               "dependsOn": {
                 "docs": "A val in a dependency relationship",
-                "inline": true,
                 "type": "MeReferencesResponseDataItemDependsOn",
               },
               "reference": {
                 "docs": "A val in a dependency relationship",
-                "inline": true,
                 "type": "MeReferencesResponseDataItemReference",
               },
               "referencedAt": "datetime",
@@ -2599,6 +2615,7 @@ give access to details and data from the requesting user.",
           },
           "MeReferencesResponseDataItemDependsOn": {
             "docs": "A val in a dependency relationship",
+            "inline": true,
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
@@ -2635,6 +2652,7 @@ give access to details and data from the requesting user.",
           },
           "MeReferencesResponseDataItemReference": {
             "docs": "A val in a dependency relationship",
+            "inline": true,
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
@@ -2681,6 +2699,7 @@ give access to details and data from the requesting user.",
           format: uri
     source:
       openapi: ../openapi.yml
+    inline: true
   MeGetResponseTier:
     enum:
       - free
@@ -2714,9 +2733,7 @@ give access to details and data from the requesting user.",
         docs: URL of this user’s profile on Val Town’s website
         validation:
           format: uri
-      links:
-        type: MeGetResponseLinks
-        inline: true
+      links: MeGetResponseLinks
       tier:
         type: optional<MeGetResponseTier>
         docs: Your account tier
@@ -2749,6 +2766,7 @@ give access to details and data from the requesting user.",
       username: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   MeCommentsResponseDataItemValPrivacy:
     enum:
       - public
@@ -2769,6 +2787,7 @@ give access to details and data from the requesting user.",
       username: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   MeCommentsResponseDataItemVal:
     properties:
       name:
@@ -2792,6 +2811,7 @@ give access to details and data from the requesting user.",
         docs: The user who created this val
     source:
       openapi: ../openapi.yml
+    inline: true
   MeCommentsResponseDataItem:
     properties:
       comment:
@@ -2803,14 +2823,11 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       createdAt: datetime
-      author:
-        type: MeCommentsResponseDataItemAuthor
-        inline: true
-      val:
-        type: MeCommentsResponseDataItemVal
-        inline: true
+      author: MeCommentsResponseDataItemAuthor
+      val: MeCommentsResponseDataItemVal
     source:
       openapi: ../openapi.yml
+    inline: true
   MeCommentsResponse:
     docs: A paginated result set
     properties:
@@ -2839,6 +2856,7 @@ give access to details and data from the requesting user.",
         docs: The name of this val
     source:
       openapi: ../openapi.yml
+    inline: true
   MeReferencesResponseDataItemDependsOn:
     docs: A val in a dependency relationship
     properties:
@@ -2860,6 +2878,7 @@ give access to details and data from the requesting user.",
         docs: The name of this val
     source:
       openapi: ../openapi.yml
+    inline: true
   MeReferencesResponseDataItem:
     docs: >-
       A description of a dependency from one val (reference) to another
@@ -2868,14 +2887,13 @@ give access to details and data from the requesting user.",
       reference:
         type: MeReferencesResponseDataItemReference
         docs: A val in a dependency relationship
-        inline: true
       dependsOn:
         type: MeReferencesResponseDataItemDependsOn
         docs: A val in a dependency relationship
-        inline: true
       referencedAt: datetime
     source:
       openapi: ../openapi.yml
+    inline: true
   MeReferencesResponse:
     docs: A paginated result set
     properties:
@@ -3184,6 +3202,7 @@ imports:
         "types": {
           "SearchValsResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<root.BasicVal>",
               "links": "root.PaginationLinks",
@@ -3431,6 +3450,7 @@ docs: Search
         "types": {
           "ParameterizedQuery": {
             "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
+            "inline": true,
             "properties": {
               "args": {
                 "display-name": "StatementArg",
@@ -3460,6 +3480,7 @@ docs: Search
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3478,6 +3499,7 @@ docs: Search
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3496,6 +3518,7 @@ docs: Search
             "discriminated": false,
             "docs": "List of arguments to be used in the given statement",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3508,6 +3531,7 @@ docs: Search
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3529,6 +3553,7 @@ docs: Search
       - boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   StatementArg:
     discriminated: false
     docs: List of arguments to be used in the given statement
@@ -3537,6 +3562,7 @@ docs: Search
       - map<string, optional<TursoValue>>
     source:
       openapi: ../openapi.yml
+    inline: true
   ParameterizedQuery:
     docs: >-
       A parameterized SQL query. See
@@ -3551,6 +3577,7 @@ docs: Search
         docs: List of arguments to be used in the given statement
     source:
       openapi: ../openapi.yml
+    inline: true
   SqliteExecuteRequestStatement:
     discriminated: false
     union:
@@ -3563,6 +3590,7 @@ docs: Search
           reference
     source:
       openapi: ../openapi.yml
+    inline: true
   SqliteBatchRequestStatementsItem:
     discriminated: false
     union:
@@ -3575,6 +3603,7 @@ docs: Search
           reference
     source:
       openapi: ../openapi.yml
+    inline: true
   SqliteBatchRequestMode:
     enum:
       - write
@@ -3820,6 +3849,7 @@ docs: SQLite
         "types": {
           "UsersValsResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<root.BasicVal>",
               "links": "root.PaginationLinks",
@@ -4779,6 +4809,7 @@ let you get, create, and run vals.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4794,6 +4825,7 @@ let you get, create, and run vals.",
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -4807,6 +4839,7 @@ let you get, create, and run vals.",
           },
           "ValsCancelResponse": {
             "docs": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
+            "inline": undefined,
             "properties": {
               "found": {
                 "docs": "True if the evaluation was found and cancelled",
@@ -4865,6 +4898,7 @@ let you get, create, and run vals.",
           },
           "ValsListResponse": {
             "docs": "A paginated result set",
+            "inline": undefined,
             "properties": {
               "data": "list<ValsListResponseDataItem>",
               "links": "root.PaginationLinks",
@@ -4875,6 +4909,7 @@ let you get, create, and run vals.",
           },
           "ValsListResponseDataItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "createdAt": "datetime",
               "val_id": {
@@ -5004,6 +5039,7 @@ let you get, create, and run vals.",
       createdAt: datetime
     source:
       openapi: ../openapi.yml
+    inline: true
   ValsListResponse:
     docs: A paginated result set
     properties:

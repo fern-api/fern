@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { EnumValue } from "./EnumValue";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernDefinition.EnumSchema> =
     core.serialization
@@ -14,10 +15,11 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
             default: core.serialization.string().optional(),
             enum: core.serialization.list(EnumValue),
         })
-        .extend(BaseTypeDeclarationSchema);
+        .extend(BaseTypeDeclarationSchema)
+        .extend(WithInline);
 
 export declare namespace EnumSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw, WithInline.Raw {
         default?: string | null;
         enum: EnumValue.Raw[];
     }

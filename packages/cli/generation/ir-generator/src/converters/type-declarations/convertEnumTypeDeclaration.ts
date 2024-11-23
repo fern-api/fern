@@ -33,7 +33,8 @@ export async function convertEnumTypeDeclaration({
     }
     return {
         default: defaultValue,
-        values
+        values,
+        inline: _enum.inline
     };
 }
 

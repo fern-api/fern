@@ -46,6 +46,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -56,6 +57,7 @@
           },
           "GetExampleResponseMessage": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "optional<string>",
             },
@@ -65,6 +67,7 @@
           },
           "Schema": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "age": {
                 "default": 50,
@@ -135,6 +138,7 @@
       message: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   GetExampleResponse:
     discriminated: false
     union:

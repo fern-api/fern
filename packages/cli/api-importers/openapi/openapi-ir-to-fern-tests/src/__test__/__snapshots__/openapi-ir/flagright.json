@@ -13970,8 +13970,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],

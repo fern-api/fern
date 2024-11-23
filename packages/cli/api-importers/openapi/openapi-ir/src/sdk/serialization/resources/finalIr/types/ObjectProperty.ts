@@ -21,7 +21,6 @@ export const ObjectProperty: core.serialization.ObjectSchema<
         generatedName: core.serialization.string(),
         nameOverride: core.serialization.string().optional(),
         audiences: core.serialization.list(core.serialization.string()),
-        inline: core.serialization.boolean().optional(),
     })
     .extend(WithAvailability);
 
@@ -34,6 +33,5 @@ export declare namespace ObjectProperty {
         generatedName: string;
         nameOverride?: string | null;
         audiences: string[];
-        inline?: boolean | null;
     }
 }

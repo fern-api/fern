@@ -21,7 +21,6 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         nameOverride: core.serialization.string().optional(),
         generatedName: core.serialization.string(),
-        inline: core.serialization.boolean().optional(),
     })
     .extend(WithAvailability);
 
@@ -34,6 +33,5 @@ export declare namespace ObjectPropertyWithExample {
         conflict: Record<SchemaId.Raw, ObjectPropertyConflictInfo.Raw>;
         nameOverride?: string | null;
         generatedName: string;
-        inline?: boolean | null;
     }
 }

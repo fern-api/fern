@@ -1095,16 +1095,6 @@
             }
           ]
         },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "env": {
           "oneOf": [
             {
@@ -1249,16 +1239,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"

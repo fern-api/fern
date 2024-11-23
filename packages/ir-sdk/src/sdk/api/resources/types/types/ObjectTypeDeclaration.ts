@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface ObjectTypeDeclaration {
+export interface ObjectTypeDeclaration extends FernIr.WithInline {
     /** A list of other types to inherit from */
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.ObjectProperty[];

@@ -4,7 +4,9 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface UndiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclarationSchema {
+export interface UndiscriminatedUnionSchema
+    extends FernDefinition.BaseTypeDeclarationSchema,
+        FernDefinition.WithInline {
     discriminated: false;
     union: FernDefinition.SingleUndiscriminatedUnionTypeSchema[];
 }

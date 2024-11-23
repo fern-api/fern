@@ -89,6 +89,7 @@
         "types": {
           "AMLRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "aml": {
                 "type": "optional<map<string, string>>",
@@ -106,6 +107,7 @@
           },
           "ActionMenuFetchResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "type": "optional<ActionMenuFetchResultResult>",
@@ -122,10 +124,10 @@
           "ActionMenuModulesResult": "map<string, unknown>",
           "AdminConfig": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "config": {
                 "docs": "Configuration settings",
-                "inline": true,
                 "type": "optional<AdminConfigConfig>",
               },
             },
@@ -135,6 +137,7 @@
           },
           "AdminConfigConfig": {
             "docs": "Configuration settings",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -142,6 +145,7 @@
           },
           "AdminModules": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "docs": "List of admin modules",
@@ -156,10 +160,10 @@
           "AdminShutdown": "map<string, unknown>",
           "AdminStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "conductor": {
                 "docs": "Conductor statistics",
-                "inline": true,
                 "type": "optional<AdminStatusConductor>",
               },
               "label": {
@@ -168,7 +172,6 @@
               },
               "timing": {
                 "docs": "Timing results",
-                "inline": true,
                 "type": "optional<AdminStatusTiming>",
               },
               "version": {
@@ -182,6 +185,7 @@
           },
           "AdminStatusConductor": {
             "docs": "Conductor statistics",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -189,6 +193,7 @@
           },
           "AdminStatusLiveliness": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alive": {
                 "docs": "Liveliness status",
@@ -201,6 +206,7 @@
           },
           "AdminStatusReadiness": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ready": {
                 "docs": "Readiness status",
@@ -213,6 +219,7 @@
           },
           "AdminStatusTiming": {
             "docs": "Timing results",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -220,6 +227,7 @@
           },
           "AttachDecorator": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Attachment identifier",
@@ -261,6 +269,7 @@
           },
           "AttachDecoratorData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "base64": {
                 "docs": "Base64-encoded data",
@@ -300,6 +309,7 @@
           },
           "AttachDecoratorData1Jws": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "header": {
                 "type": "AttachDecoratorDataJWSHeader",
@@ -331,6 +341,7 @@
           },
           "AttachDecoratorDataJWS": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "header": {
                 "type": "optional<AttachDecoratorDataJWSHeader>",
@@ -366,6 +377,7 @@
           },
           "AttachDecoratorDataJWSHeader": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "kid": {
                 "docs": "Key identifier, in W3C did:key or DID URL format",
@@ -388,6 +400,7 @@
           },
           "AttachmentDef": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Attachment identifier",
@@ -420,6 +433,7 @@
           },
           "AttributeMimeTypesResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<map<string, optional<string>>>",
@@ -432,29 +446,24 @@
           "BasicMessageModuleResponse": "map<string, unknown>",
           "ClaimFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "jwt": {
-                "inline": true,
                 "type": "optional<jwt>",
               },
               "jwt_vc": {
-                "inline": true,
                 "type": "optional<ClaimFormatJwtVc>",
               },
               "jwt_vp": {
-                "inline": true,
                 "type": "optional<ClaimFormatJwtVp>",
               },
               "ldp": {
-                "inline": true,
                 "type": "optional<ldp>",
               },
               "ldp_vc": {
-                "inline": true,
                 "type": "optional<ClaimFormatLdpVc>",
               },
               "ldp_vp": {
-                "inline": true,
                 "type": "optional<ClaimFormatLdpVp>",
               },
             },
@@ -464,6 +473,7 @@
           },
           "ClaimFormatJwtVc": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -471,6 +481,7 @@
           },
           "ClaimFormatJwtVp": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -478,6 +489,7 @@
           },
           "ClaimFormatLdpVc": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -485,6 +497,7 @@
           },
           "ClaimFormatLdpVp": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -492,6 +505,7 @@
           },
           "ConnRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accept": {
                 "docs": "Connection acceptance: manual or auto",
@@ -671,6 +685,7 @@
           },
           "ConnectionInvitation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -717,6 +732,7 @@
           },
           "ConnectionList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "List of connection records",
@@ -729,10 +745,10 @@
           },
           "ConnectionMetadata": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "Dictionary of metadata associated with connection.",
-                "inline": true,
                 "type": "optional<ConnectionMetadataResults>",
               },
             },
@@ -742,6 +758,7 @@
           },
           "ConnectionMetadataResults": {
             "docs": "Dictionary of metadata associated with connection.",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -750,6 +767,7 @@
           "ConnectionModuleResponse": "map<string, unknown>",
           "ConnectionStaticResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "my_did": {
                 "docs": "Local DID",
@@ -811,6 +829,7 @@
           },
           "Constraints": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "fields": {
                 "type": "optional<list<DIFField>>",
@@ -882,6 +901,7 @@
           },
           "CreateWalletResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -899,7 +919,6 @@
               },
               "settings": {
                 "docs": "Settings for this wallet.",
-                "inline": true,
                 "type": "optional<CreateWalletResponseSettings>",
               },
               "state": {
@@ -941,6 +960,7 @@
           },
           "CreateWalletResponseSettings": {
             "docs": "Settings for this wallet.",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -948,6 +968,7 @@
           },
           "CreateWalletTokenResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "token": {
                 "docs": "Authorization token to authenticate wallet requests",
@@ -960,6 +981,7 @@
           },
           "CredAttrSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "mime-type": {
                 "docs": "MIME type: omit for (null) default",
@@ -980,6 +1002,7 @@
           },
           "CredDefValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "primary": {
                 "type": "optional<CredDefValuePrimary>",
@@ -994,6 +1017,7 @@
           },
           "CredDefValuePrimary": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "n": {
                 "type": "optional<string>",
@@ -1041,6 +1065,7 @@
           },
           "CredDefValueRevocation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "g": {
                 "type": "optional<string>",
@@ -1082,6 +1107,7 @@
           },
           "CredInfoList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<list<IndyCredInfo>>",
@@ -1093,10 +1119,10 @@
           },
           "CredRevIndyRecordsResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rev_reg_delta": {
                 "docs": "Indy revocation registry delta",
-                "inline": true,
                 "type": "optional<CredRevIndyRecordsResultRevRegDelta>",
               },
             },
@@ -1106,6 +1132,7 @@
           },
           "CredRevIndyRecordsResultRevRegDelta": {
             "docs": "Indy revocation registry delta",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -1113,6 +1140,7 @@
           },
           "CredRevRecordDetailsResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<list<IssuerCredRevRecord>>",
@@ -1124,6 +1152,7 @@
           },
           "CredRevRecordResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "type": "optional<IssuerCredRevRecord>",
@@ -1135,6 +1164,7 @@
           },
           "CredRevokedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "revoked": {
                 "docs": "Whether credential is revoked on the ledger",
@@ -1147,6 +1177,7 @@
           },
           "Credential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@context": {
                 "docs": "The JSON-LD context of the credential",
@@ -1202,6 +1233,7 @@
           },
           "CredentialDefinition": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Credential definition identifier",
@@ -1245,6 +1277,7 @@
           },
           "CredentialDefinitionGetResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential_definition": {
                 "type": "optional<CredentialDefinition>",
@@ -1256,6 +1289,7 @@
           },
           "CredentialDefinitionSendResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential_definition_id": {
                 "docs": "Credential definition identifier",
@@ -1278,6 +1312,7 @@
           },
           "CredentialDefinitionsCreatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential_definition_ids": {
                 "type": "optional<list<string>>",
@@ -1289,6 +1324,7 @@
           },
           "CredentialOffer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -1315,6 +1351,7 @@
           },
           "CredentialPreview": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@type": {
                 "docs": "Message type identifier",
@@ -1332,6 +1369,7 @@
           },
           "CredentialProposal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -1403,6 +1441,7 @@
           },
           "CredentialStatusOptions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "Credential status method type to use for the credential. Should match status method registered in the Verifiable Credential Extension Registry",
@@ -1415,6 +1454,7 @@
           },
           "DID": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "did": {
                 "docs": "DID of interest",
@@ -1455,6 +1495,7 @@
           },
           "DIDCreateOptions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "did": {
                 "docs": "Specify final value of the did (including did:<method>: prefix)if the method supports or requires so.",
@@ -1477,6 +1518,7 @@
           },
           "DIDEndpoint": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "did": {
                 "docs": "DID of interest",
@@ -1505,6 +1547,7 @@
           },
           "DIDList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "DID list",
@@ -1517,6 +1560,7 @@
           },
           "DIDResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "type": "optional<DID>",
@@ -1528,6 +1572,7 @@
           },
           "DIFField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "filter": {
                 "type": "optional<Filter>",
@@ -1554,6 +1599,7 @@
           },
           "DIFHolder": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "directive": {
                 "docs": "Preference",
@@ -1569,6 +1615,7 @@
           },
           "DIFOptions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "docs": "Challenge protect against replay attack",
@@ -1591,6 +1638,7 @@
           },
           "DIFPresSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "issuer_id": {
                 "docs": "Issuer identifier to sign the presentation, if different from current public DID",
@@ -1601,12 +1649,10 @@
               },
               "record_ids": {
                 "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
-                "inline": true,
                 "type": "optional<DifPresSpecRecordIds>",
               },
               "reveal_doc": {
                 "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
-                "inline": true,
                 "type": "optional<DifPresSpecRevealDoc>",
               },
             },
@@ -1616,6 +1662,7 @@
           },
           "DIFProofProposal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "input_descriptors": {
                 "type": "optional<list<InputDescriptors>>",
@@ -1630,6 +1677,7 @@
           },
           "DIFProofRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "options": {
                 "type": "optional<DIFOptions>",
@@ -1683,6 +1731,7 @@
           },
           "DifPresSpecRecordIds": {
             "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -1690,6 +1739,7 @@
           },
           "DifPresSpecRevealDoc": {
             "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -1697,6 +1747,7 @@
           },
           "Disclose": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -1717,6 +1768,7 @@
           },
           "Disclosures": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -1737,10 +1789,10 @@
           },
           "Doc": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential": {
                 "docs": "Credential to sign",
-                "inline": true,
                 "type": "DocCredential",
               },
               "options": "DocOptions",
@@ -1751,6 +1803,7 @@
           },
           "DocCredential": {
             "docs": "Credential to sign",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -1762,6 +1815,7 @@
           },
           "EndorserInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endorser_did": {
                 "docs": "Endorser DID",
@@ -1778,6 +1832,7 @@
           },
           "EndpointsResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "my_endpoint": {
                 "docs": "My endpoint",
@@ -1806,6 +1861,7 @@
           },
           "Filter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "const": {
                 "docs": "Const",
@@ -1861,6 +1917,7 @@
           },
           "Generated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "master_secret": {
                 "type": "optional<string>",
@@ -1896,6 +1953,7 @@
           },
           "GetDIDEndpointResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "endpoint": {
                 "docs": "Full verification key",
@@ -1914,6 +1972,7 @@
           },
           "GetDIDVerkeyResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "verkey": {
                 "docs": "Full verification key",
@@ -1932,6 +1991,7 @@
           },
           "GetNymRoleResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "role": {
                 "docs": "Ledger role",
@@ -1959,6 +2019,7 @@
           "HolderModuleResponse": "map<string, unknown>",
           "IndyAttrValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "encoded": {
                 "docs": "Attribute encoded value",
@@ -1981,6 +2042,7 @@
           },
           "IndyCredAbstract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -2024,6 +2086,7 @@
           },
           "IndyCredInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attrs": {
                 "docs": "Attribute names and value",
@@ -2080,6 +2143,7 @@
           },
           "IndyCredPrecis": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_info": {
                 "type": "optional<IndyCredPrecisCredInfo>",
@@ -2105,15 +2169,14 @@
           },
           "IndyCredRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "blinded_ms": {
                 "docs": "Blinded master secret",
-                "inline": true,
                 "type": "IndyCredRequestBlindedMs",
               },
               "blinded_ms_correctness_proof": {
                 "docs": "Blinded master secret correctness proof",
-                "inline": true,
                 "type": "IndyCredRequestBlindedMsCorrectnessProof",
               },
               "cred_def_id": {
@@ -2153,6 +2216,7 @@
           },
           "IndyCredRequestBlindedMs": {
             "docs": "Blinded master secret",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2160,6 +2224,7 @@
           },
           "IndyCredRequestBlindedMsCorrectnessProof": {
             "docs": "Blinded master secret correctness proof",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2167,6 +2232,7 @@
           },
           "IndyCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -2180,7 +2246,6 @@
               },
               "rev_reg": {
                 "docs": "Revocation registry state",
-                "inline": true,
                 "type": "optional<IndyCredentialRevReg>",
               },
               "rev_reg_id": {
@@ -2205,12 +2270,10 @@
               },
               "signature": {
                 "docs": "Credential signature",
-                "inline": true,
                 "type": "signature",
               },
               "signature_correctness_proof": {
                 "docs": "Credential signature correctness proof",
-                "inline": true,
                 "type": "IndyCredentialSignatureCorrectnessProof",
               },
               "values": {
@@ -2219,7 +2282,6 @@
               },
               "witness": {
                 "docs": "Witness for revocation proof",
-                "inline": true,
                 "type": "optional<witness>",
               },
             },
@@ -2229,6 +2291,7 @@
           },
           "IndyCredentialRevReg": {
             "docs": "Revocation registry state",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2236,6 +2299,7 @@
           },
           "IndyCredentialSignatureCorrectnessProof": {
             "docs": "Credential signature correctness proof",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -2247,6 +2311,7 @@
           },
           "IndyEQProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "a_prime": {
                 "type": "optional<string>",
@@ -2297,6 +2362,7 @@
           },
           "IndyGEProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alpha": {
                 "type": "optional<string>",
@@ -2335,6 +2401,7 @@
           },
           "IndyGEProofPred": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attr_name": {
                 "docs": "Attribute name, indy-canonicalized",
@@ -2367,6 +2434,7 @@
           },
           "IndyKeyCorrectnessProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "c": {
                 "docs": "c in key correctness proof",
@@ -2399,6 +2467,7 @@
           },
           "IndyNonRevocProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "c_list": {
                 "type": "optional<map<string, string>>",
@@ -2413,6 +2482,7 @@
           },
           "IndyNonRevocationInterval": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "from": {
                 "docs": "Earliest time of interest in non-revocation interval",
@@ -2443,6 +2513,7 @@
           },
           "IndyPresAttrSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "type": "optional<string>",
@@ -2476,6 +2547,7 @@
           },
           "IndyPresPredSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -2530,6 +2602,7 @@
           },
           "IndyPresPreview": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@type": {
                 "docs": "Message type identifier",
@@ -2544,6 +2617,7 @@
           },
           "IndyPresSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "requested_attributes": {
                 "docs": "Nested object mapping proof request attribute referents to requested-attribute specifiers",
@@ -2568,6 +2642,7 @@
           },
           "IndyPrimaryProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "eq_proof": {
                 "type": "optional<IndyPrimaryProofEqProof>",
@@ -2587,6 +2662,7 @@
           },
           "IndyProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "identifiers": {
                 "docs": "Indy proof.identifiers content",
@@ -2605,6 +2681,7 @@
           },
           "IndyProofIdentifier": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -2654,6 +2731,7 @@
           },
           "IndyProofProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "aggregated_proof": {
                 "type": "optional<IndyProofProofAggregatedProof>",
@@ -2669,6 +2747,7 @@
           },
           "IndyProofProofAggregatedProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "c_hash": {
                 "docs": "c_hash value",
@@ -2685,6 +2764,7 @@
           },
           "IndyProofProofProofsProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "non_revoc_proof": {
                 "type": "optional<IndyProofProofProofsProofNonRevocProof>",
@@ -2707,6 +2787,7 @@
           },
           "IndyProofReqAttrSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Attribute name",
@@ -2730,6 +2811,7 @@
           },
           "IndyProofReqAttrSpecNonRevoked": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "from": {
                 "docs": "Earliest time of interest in non-revocation interval",
@@ -2760,6 +2842,7 @@
           },
           "IndyProofReqPredSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Attribute name",
@@ -2787,6 +2870,7 @@
           },
           "IndyProofReqPredSpecNonRevoked": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "from": {
                 "docs": "Earliest time of interest in non-revocation interval",
@@ -2841,6 +2925,7 @@
           },
           "IndyProofRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Proof request name",
@@ -2884,6 +2969,7 @@
           },
           "IndyProofRequestNonRevoked": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "from": {
                 "docs": "Earliest time of interest in non-revocation interval",
@@ -2914,6 +3000,7 @@
           },
           "IndyProofRequestedProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "predicates": {
                 "docs": "Proof requested proof predicates.",
@@ -2929,12 +3016,10 @@
               },
               "self_attested_attrs": {
                 "docs": "Proof requested proof self-attested attributes",
-                "inline": true,
                 "type": "optional<IndyProofRequestedProofSelfAttestedAttrs>",
               },
               "unrevealed_attrs": {
                 "docs": "Unrevealed attributes",
-                "inline": true,
                 "type": "optional<IndyProofRequestedProofUnrevealedAttrs>",
               },
             },
@@ -2944,6 +3029,7 @@
           },
           "IndyProofRequestedProofPredicate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sub_proof_index": {
                 "docs": "Sub-proof index",
@@ -2956,6 +3042,7 @@
           },
           "IndyProofRequestedProofRevealedAttr": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "encoded": {
                 "docs": "Encoded value",
@@ -2982,6 +3069,7 @@
           },
           "IndyProofRequestedProofRevealedAttrGroup": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sub_proof_index": {
                 "docs": "Sub-proof index",
@@ -2998,6 +3086,7 @@
           },
           "IndyProofRequestedProofSelfAttestedAttrs": {
             "docs": "Proof requested proof self-attested attributes",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3005,6 +3094,7 @@
           },
           "IndyProofRequestedProofUnrevealedAttrs": {
             "docs": "Unrevealed attributes",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3012,6 +3102,7 @@
           },
           "IndyRequestedCredsRequestedAttr": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_id": {
                 "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
@@ -3028,6 +3119,7 @@
           },
           "IndyRequestedCredsRequestedPred": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_id": {
                 "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
@@ -3051,6 +3143,7 @@
           },
           "IndyRevRegDef": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credDefId": {
                 "docs": "Credential definition identifier",
@@ -3100,6 +3193,7 @@
           },
           "IndyRevRegDefValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "issuanceType": {
                 "docs": "Issuance type",
@@ -3140,6 +3234,7 @@
           },
           "IndyRevRegDefValuePublicKeys": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accumKey": {
                 "type": "optional<IndyRevRegDefValuePublicKeysAccumKey>",
@@ -3151,6 +3246,7 @@
           },
           "IndyRevRegDefValuePublicKeysAccumKey": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "z": {
                 "docs": "Value for z",
@@ -3163,6 +3259,7 @@
           },
           "IndyRevRegEntry": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "value": {
                 "type": "optional<IndyRevRegEntryValue>",
@@ -3184,6 +3281,7 @@
           },
           "IndyRevRegEntryValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accum": {
                 "docs": "Accumulator value",
@@ -3204,6 +3302,7 @@
           },
           "InputDescriptors": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "constraints": {
                 "type": "optional<Constraints>",
@@ -3217,7 +3316,6 @@
               },
               "metadata": {
                 "docs": "Metadata dictionary",
-                "inline": true,
                 "type": "optional<metadata>",
               },
               "name": {
@@ -3243,6 +3341,7 @@
           "IntroModuleResponse": "map<string, unknown>",
           "InvitationMessage": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3281,6 +3380,7 @@
           },
           "InvitationRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -3340,6 +3440,7 @@
           },
           "InvitationResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connection_id": {
                 "docs": "Connection identifier",
@@ -3360,6 +3461,7 @@
           "IssueCredentialModuleResponse": "map<string, unknown>",
           "IssuerCredRevRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -3434,6 +3536,7 @@
           },
           "IssuerRevRegRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -3552,6 +3655,7 @@
           },
           "Keylist": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "List of keylist records",
@@ -3564,6 +3668,7 @@
           },
           "KeylistQuery": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3575,7 +3680,6 @@
               },
               "filter": {
                 "docs": "Query dictionary object",
-                "inline": true,
                 "type": "optional<KeylistQueryFilter>",
               },
               "paginate": {
@@ -3588,6 +3692,7 @@
           },
           "KeylistQueryFilter": {
             "docs": "Query dictionary object",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3595,6 +3700,7 @@
           },
           "KeylistQueryPaginate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "limit": {
                 "docs": "Limit for keylist query",
@@ -3611,6 +3717,7 @@
           },
           "KeylistUpdate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3631,6 +3738,7 @@
           },
           "KeylistUpdateRule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action": {
                 "docs": "Action for specific key",
@@ -3663,6 +3771,7 @@
           },
           "LDProofVCDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "credential": "LdProofVcDetailCredential",
               "options": "LdProofVcDetailOptions",
@@ -3673,6 +3782,7 @@
           },
           "LDProofVCDetailOptions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "docs": "A challenge to include in the proof. SHOULD be provided by the requesting party of the credential (=holder)",
@@ -3722,6 +3832,7 @@
           },
           "LedgerConfigInstance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "genesis_file": {
                 "docs": "genesis_file",
@@ -3750,6 +3861,7 @@
           },
           "LedgerConfigList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ledger_config_list": "list<LedgerConfigInstance>",
             },
@@ -3760,6 +3872,7 @@
           "LedgerModulesResult": "map<string, unknown>",
           "LinkedDataProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "docs": "Associates a challenge with a proof, for use with a proofPurpose such as authentication",
@@ -3822,6 +3935,7 @@
           },
           "MediationDeny": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3844,6 +3958,7 @@
           },
           "MediationGrant": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3867,6 +3982,7 @@
           },
           "MediationList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "List of mediation records",
@@ -3879,6 +3995,7 @@
           },
           "MediationRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connection_id": "string",
               "created_at": {
@@ -3928,6 +4045,7 @@
           },
           "Menu": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -3960,6 +4078,7 @@
           },
           "MenuForm": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Additional descriptive text for menu form",
@@ -3984,6 +4103,7 @@
           },
           "MenuFormParam": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "default": {
                 "docs": "Default parameter value",
@@ -4016,6 +4136,7 @@
           },
           "MenuJson": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Introductory text for the menu",
@@ -4040,6 +4161,7 @@
           },
           "MenuOption": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Additional descriptive text for menu option",
@@ -4068,6 +4190,7 @@
           "MultitenantModuleResponse": "map<string, unknown>",
           "OobRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attach_thread_id": {
                 "docs": "Connection record identifier",
@@ -4169,6 +4292,7 @@
           },
           "PingRequestResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "thread_id": {
                 "docs": "Thread ID of the ping message",
@@ -4181,6 +4305,7 @@
           },
           "PresentationDefinition": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "format": {
                 "type": "optional<ClaimFormat>",
@@ -4216,6 +4341,7 @@
           },
           "PresentationProposal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -4239,6 +4365,7 @@
           },
           "PresentationRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -4262,6 +4389,7 @@
           },
           "ProtocolDescriptor": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pid": "string",
               "roles": {
@@ -4275,6 +4403,7 @@
           },
           "PublishRevocations": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rrid2crid": {
                 "docs": "Credential revocation ids by revocation registry id",
@@ -4287,6 +4416,7 @@
           },
           "Queries": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -4306,6 +4436,7 @@
           },
           "Query": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -4326,6 +4457,7 @@
           },
           "QueryItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "feature-type": {
                 "docs": "feature type",
@@ -4355,6 +4487,7 @@
           },
           "RawEncoded": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "encoded": {
                 "docs": "Encoded value",
@@ -4377,15 +4510,14 @@
           },
           "ResolutionResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "did_document": {
                 "docs": "DID Document",
-                "inline": true,
                 "type": "ResolutionResultDidDocument",
               },
               "metadata": {
                 "docs": "Resolution metadata",
-                "inline": true,
                 "type": "ResolutionResultMetadata",
               },
             },
@@ -4395,6 +4527,7 @@
           },
           "ResolutionResultDidDocument": {
             "docs": "DID Document",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4402,6 +4535,7 @@
           },
           "ResolutionResultMetadata": {
             "docs": "Resolution metadata",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4409,6 +4543,7 @@
           },
           "RevRegIssuedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "docs": "Number of credentials issued against revocation registry",
@@ -4428,6 +4563,7 @@
           },
           "RevRegResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "type": "optional<IssuerRevRegRecord>",
@@ -4439,20 +4575,18 @@
           },
           "RevRegWalletUpdatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accum_calculated": {
                 "docs": "Calculated accumulator for phantom revocations",
-                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultAccumCalculated>",
               },
               "accum_fixed": {
                 "docs": "Applied ledger transaction to fix revocations",
-                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultAccumFixed>",
               },
               "rev_reg_delta": {
                 "docs": "Indy revocation registry delta",
-                "inline": true,
                 "type": "optional<RevRegWalletUpdatedResultRevRegDelta>",
               },
             },
@@ -4462,6 +4596,7 @@
           },
           "RevRegWalletUpdatedResultAccumCalculated": {
             "docs": "Calculated accumulator for phantom revocations",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4469,6 +4604,7 @@
           },
           "RevRegWalletUpdatedResultAccumFixed": {
             "docs": "Applied ledger transaction to fix revocations",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4476,6 +4612,7 @@
           },
           "RevRegWalletUpdatedResultRevRegDelta": {
             "docs": "Indy revocation registry delta",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4483,6 +4620,7 @@
           },
           "RevRegsCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rev_reg_ids": {
                 "type": "optional<list<string>>",
@@ -4495,6 +4633,7 @@
           "RevocationModuleResponse": "map<string, unknown>",
           "RouteRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connection_id": {
                 "type": "optional<string>",
@@ -4540,6 +4679,7 @@
           },
           "Schema": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attrNames": {
                 "docs": "Schema attribute names",
@@ -4597,6 +4737,7 @@
           },
           "SchemaGetResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "schema": {
                 "type": "optional<Schema>",
@@ -4608,6 +4749,7 @@
           },
           "SchemaInputDescriptor": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "required": {
                 "docs": "Required",
@@ -4624,6 +4766,7 @@
           },
           "SchemaSendResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "schema": {
                 "type": "optional<SchemaSendResultSchema>",
@@ -4649,6 +4792,7 @@
           },
           "SchemasCreatedResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "schema_ids": {
                 "type": "optional<list<string>>",
@@ -4660,6 +4804,7 @@
           },
           "SchemasInputDescriptorFilter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "oneof_filter": {
                 "docs": "oneOf",
@@ -4679,6 +4824,7 @@
           },
           "ServiceDecorator": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "recipientKeys": {
                 "docs": "List of recipient keys",
@@ -4699,6 +4845,7 @@
           },
           "SignResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": {
                 "docs": "Error text",
@@ -4706,7 +4853,6 @@
               },
               "signed_doc": {
                 "docs": "Signed document",
-                "inline": true,
                 "type": "optional<SignResponseSignedDoc>",
               },
             },
@@ -4716,6 +4862,7 @@
           },
           "SignResponseSignedDoc": {
             "docs": "Signed document",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4723,6 +4870,7 @@
           },
           "SignatureOptions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "type": "optional<string>",
@@ -4742,6 +4890,7 @@
           },
           "SignedDoc": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "proof": "SignedDocProof",
             },
@@ -4755,6 +4904,7 @@
           },
           "SubmissionRequirements": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "Count Value",
@@ -4794,6 +4944,7 @@
           },
           "TAAAcceptance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "mechanism": {
                 "type": "optional<string>",
@@ -4815,6 +4966,7 @@
           },
           "TAAInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "aml_record": {
                 "type": "optional<AMLRecord>",
@@ -4835,6 +4987,7 @@
           },
           "TAARecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "digest": {
                 "type": "optional<string>",
@@ -4852,6 +5005,7 @@
           },
           "TAAResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "result": {
                 "type": "optional<TAAInfo>",
@@ -4863,6 +5017,7 @@
           },
           "TailsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "type": "optional<string>",
@@ -4874,6 +5029,7 @@
           },
           "TransactionJobs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transaction_my_job": {
                 "docs": "My transaction related job",
@@ -4912,6 +5068,7 @@
           },
           "TransactionList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "List of transaction records",
@@ -4924,6 +5081,7 @@
           },
           "TransactionRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "_type": {
                 "docs": "Transaction type",
@@ -4954,7 +5112,6 @@
                 "type": "optional<list<TransactionRecordMessagesAttachItem>>",
               },
               "meta_data": {
-                "inline": true,
                 "type": "optional<TransactionRecordMetaData>",
               },
               "signature_request": {
@@ -4972,7 +5129,6 @@
                 "type": "optional<string>",
               },
               "timing": {
-                "inline": true,
                 "type": "optional<TransactionRecordTiming>",
               },
               "trace": {
@@ -5000,6 +5156,7 @@
           },
           "TransactionRecordMessagesAttachItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5007,6 +5164,7 @@
           },
           "TransactionRecordMetaData": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5014,6 +5172,7 @@
           },
           "TransactionRecordSignatureRequestItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5021,6 +5180,7 @@
           },
           "TransactionRecordSignatureResponseItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5028,6 +5188,7 @@
           },
           "TransactionRecordTiming": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5035,6 +5196,7 @@
           },
           "TxnOrCredentialDefinitionSendResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sent": {
                 "type": "optional<CredentialDefinitionSendResult>",
@@ -5053,6 +5215,7 @@
           },
           "TxnOrPublishRevocationsResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sent": {
                 "type": "optional<PublishRevocations>",
@@ -5071,6 +5234,7 @@
           },
           "TxnOrRegisterLedgerNymResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "success": {
                 "docs": "Success of nym registration operation",
@@ -5090,6 +5254,7 @@
           },
           "TxnOrRevRegResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sent": {
                 "type": "optional<RevRegResult>",
@@ -5108,6 +5273,7 @@
           },
           "TxnOrSchemaSendResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "sent": {
                 "type": "optional<TxnOrSchemaSendResultSent>",
@@ -5134,6 +5300,7 @@
           },
           "V10CredentialExchange": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auto_issue": {
                 "docs": "Issuer choice to issue to request in this credential exchange",
@@ -5196,7 +5363,6 @@
               },
               "credential_request_metadata": {
                 "docs": "(Indy) credential request metadata",
-                "inline": true,
                 "type": "optional<V10CredentialExchangeCredentialRequestMetadata>",
               },
               "error_msg": {
@@ -5285,6 +5451,7 @@
           },
           "V10CredentialExchangeCredentialRequestMetadata": {
             "docs": "(Indy) credential request metadata",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5302,6 +5469,7 @@
           },
           "V10CredentialExchangeListResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "Aries#0036 v1.0 credential exchange records",
@@ -5328,6 +5496,7 @@
           },
           "V10DiscoveryExchangeListResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
@@ -5343,6 +5512,7 @@
           },
           "V10DiscoveryRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connection_id": {
                 "docs": "Connection identifier",
@@ -5406,6 +5576,7 @@
           "V10PresentProofModuleResponse": "map<string, unknown>",
           "V10PresentationExchange": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auto_present": {
                 "docs": "Prover choice to auto-present proof as verifier requests",
@@ -5503,6 +5674,7 @@
           },
           "V10PresentationExchangeList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "Aries RFC 37 v1.0 presentation exchange records",
@@ -5551,6 +5723,7 @@
           },
           "V20CredAttrSpec": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "mime-type": {
                 "docs": "MIME type: omit for (null) default",
@@ -5579,6 +5752,7 @@
           },
           "V20CredExFree": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auto_remove": {
                 "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -5617,6 +5791,7 @@
           },
           "V20CredExRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auto_issue": {
                 "docs": "Issuer choice to issue to request in this credential exchange",
@@ -5711,21 +5886,18 @@
           },
           "V20CredExRecordByFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_issue": {
-                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredIssue>",
               },
               "cred_offer": {
-                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredOffer>",
               },
               "cred_proposal": {
-                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredProposal>",
               },
               "cred_request": {
-                "inline": true,
                 "type": "optional<V20CredExRecordByFormatCredRequest>",
               },
             },
@@ -5735,6 +5907,7 @@
           },
           "V20CredExRecordByFormatCredIssue": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5742,6 +5915,7 @@
           },
           "V20CredExRecordByFormatCredOffer": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5749,6 +5923,7 @@
           },
           "V20CredExRecordByFormatCredProposal": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5756,6 +5931,7 @@
           },
           "V20CredExRecordByFormatCredRequest": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5783,6 +5959,7 @@
           },
           "V20CredExRecordDetail": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_ex_record": {
                 "type": "optional<V20CredExRecordDetailCredExRecord>",
@@ -5804,6 +5981,7 @@
           },
           "V20CredExRecordIndy": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -5829,7 +6007,6 @@
               },
               "cred_request_metadata": {
                 "docs": "Credential request metadata for indy holder",
-                "inline": true,
                 "type": "optional<V20CredExRecordIndyCredRequestMetadata>",
               },
               "cred_rev_id": {
@@ -5873,6 +6050,7 @@
           },
           "V20CredExRecordIndyCredRequestMetadata": {
             "docs": "Credential request metadata for indy holder",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5890,6 +6068,7 @@
           },
           "V20CredExRecordLdProof": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -5934,6 +6113,7 @@
           },
           "V20CredExRecordListResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "Credential exchange records and corresponding detail records",
@@ -6003,6 +6183,7 @@
           },
           "V20CredFilter": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "indy": {
                 "type": "optional<V20CredFilterIndy>",
@@ -6017,6 +6198,7 @@
           },
           "V20CredFilterIndy": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -6083,6 +6265,7 @@
           },
           "V20CredFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attach_id": {
                 "docs": "Attachment identifier",
@@ -6099,6 +6282,7 @@
           },
           "V20CredIssue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6131,6 +6315,7 @@
           },
           "V20CredOffer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6166,6 +6351,7 @@
           },
           "V20CredPreview": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@type": {
                 "docs": "Message type identifier",
@@ -6179,6 +6365,7 @@
           },
           "V20CredProposal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6214,6 +6401,7 @@
           },
           "V20CredRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6246,6 +6434,7 @@
           },
           "V20DiscoveryExchangeListResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
@@ -6261,6 +6450,7 @@
           },
           "V20DiscoveryExchangeResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<V20DiscoveryExchangeListResultResultsInner>",
@@ -6272,6 +6462,7 @@
           },
           "V20DiscoveryRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connection_id": {
                 "docs": "Connection identifier",
@@ -6335,6 +6526,7 @@
           "V20IssueCredentialModuleResponse": "map<string, unknown>",
           "V20Pres": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6362,6 +6554,7 @@
           },
           "V20PresExRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auto_present": {
                 "docs": "Prover choice to auto-present proof as verifier requests",
@@ -6449,17 +6642,15 @@
           },
           "V20PresExRecordByFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pres": {
-                "inline": true,
                 "type": "optional<pres>",
               },
               "pres_proposal": {
-                "inline": true,
                 "type": "optional<V20PresExRecordByFormatPresProposal>",
               },
               "pres_request": {
-                "inline": true,
                 "type": "optional<V20PresExRecordByFormatPresRequest>",
               },
             },
@@ -6469,6 +6660,7 @@
           },
           "V20PresExRecordByFormatPresProposal": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6476,6 +6668,7 @@
           },
           "V20PresExRecordByFormatPresRequest": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6493,6 +6686,7 @@
           },
           "V20PresExRecordList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "Presentation exchange records",
@@ -6572,6 +6766,7 @@
           },
           "V20PresFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attach_id": {
                 "docs": "Attachment identifier",
@@ -6588,6 +6783,7 @@
           },
           "V20PresProposal": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6615,6 +6811,7 @@
           },
           "V20PresProposalByFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dif": {
                 "type": "optional<V20PresProposalByFormatDif>",
@@ -6637,6 +6834,7 @@
           },
           "V20PresRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "@id": {
                 "docs": "Message identifier",
@@ -6668,6 +6866,7 @@
           },
           "V20PresRequestByFormat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "dif": {
                 "type": "optional<V20PresRequestByFormatDif>",
@@ -6699,6 +6898,7 @@
           "V20PresentProofModuleResponse": "map<string, unknown>",
           "VCRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contexts": {
                 "type": "optional<list<string>>",
@@ -6708,7 +6908,6 @@
               },
               "cred_value": {
                 "docs": "(JSON-serializable) credential value",
-                "inline": true,
                 "type": "optional<VcRecordCredValue>",
               },
               "expanded_types": {
@@ -6742,6 +6941,7 @@
           },
           "VCRecordList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "type": "optional<list<VCRecord>>",
@@ -6753,6 +6953,7 @@
           },
           "VcRecordCredValue": {
             "docs": "(JSON-serializable) credential value",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6764,6 +6965,7 @@
           },
           "VerifyResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": {
                 "docs": "Error text",
@@ -6777,6 +6979,7 @@
           },
           "WalletList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "results": {
                 "docs": "List of wallet records",
@@ -6790,6 +6993,7 @@
           "WalletModuleResponse": "map<string, unknown>",
           "WalletRecord": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Time of record creation",
@@ -6807,7 +7011,6 @@
               },
               "settings": {
                 "docs": "Settings for this wallet.",
-                "inline": true,
                 "type": "optional<WalletRecordSettings>",
               },
               "state": {
@@ -6845,6 +7048,7 @@
           },
           "WalletRecordSettings": {
             "docs": "Settings for this wallet.",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6852,6 +7056,7 @@
           },
           "WriteLedgerRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ledger_id": {
                 "type": "optional<string>",
@@ -6883,6 +7088,7 @@
           },
           "jwt": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6890,6 +7096,7 @@
           },
           "ldp": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6897,6 +7104,7 @@
           },
           "metadata": {
             "docs": "Metadata dictionary",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6914,6 +7122,7 @@
           },
           "pres": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6931,6 +7140,7 @@
           },
           "signature": {
             "docs": "Credential signature",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6938,6 +7148,7 @@
           },
           "witness": {
             "docs": "Witness for revocation proof",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -7022,12 +7233,12 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   AdminConfig:
     properties:
       config:
         type: optional<AdminConfigConfig>
         docs: Configuration settings
-        inline: true
     source:
       openapi: ../openapi.yml
   AdminModules:
@@ -7044,24 +7255,24 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   AdminStatusTiming:
     docs: Timing results
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   AdminStatus:
     properties:
       conductor:
         type: optional<AdminStatusConductor>
         docs: Conductor statistics
-        inline: true
       label:
         type: optional<string>
         docs: Default label
       timing:
         type: optional<AdminStatusTiming>
         docs: Timing results
-        inline: true
       version:
         type: optional<string>
         docs: Version code
@@ -7206,46 +7417,46 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ClaimFormatJwtVc:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ClaimFormatJwtVp:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ldp:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ClaimFormatLdpVc:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ClaimFormatLdpVp:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ClaimFormat:
     properties:
       jwt:
         type: optional<jwt>
-        inline: true
       jwt_vc:
         type: optional<ClaimFormatJwtVc>
-        inline: true
       jwt_vp:
         type: optional<ClaimFormatJwtVp>
-        inline: true
       ldp:
         type: optional<ldp>
-        inline: true
       ldp_vc:
         type: optional<ClaimFormatLdpVc>
-        inline: true
       ldp_vp:
         type: optional<ClaimFormatLdpVp>
-        inline: true
     source:
       openapi: ../openapi.yml
   ConnRecordAccept:
@@ -7414,12 +7625,12 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ConnectionMetadata:
     properties:
       results:
         type: optional<ConnectionMetadataResults>
         docs: Dictionary of metadata associated with connection.
-        inline: true
     source:
       openapi: ../openapi.yml
   ConnectionModuleResponse: map<string, unknown>
@@ -7519,6 +7730,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateWalletResponse:
     properties:
       created_at:
@@ -7534,7 +7746,6 @@ types:
       settings:
         type: optional<CreateWalletResponseSettings>
         docs: Settings for this wallet.
-        inline: true
       state:
         type: optional<string>
         docs: Current record state
@@ -7640,12 +7851,12 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   CredRevIndyRecordsResult:
     properties:
       rev_reg_delta:
         type: optional<CredRevIndyRecordsResultRevRegDelta>
         docs: Indy revocation registry delta
-        inline: true
     source:
       openapi: ../openapi.yml
   CredRevRecordDetailsResult:
@@ -7985,6 +8196,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   DifPresSpecRevealDoc:
     docs: >-
       reveal doc [JSON-LD frame] dict used to derive the credential when
@@ -7992,6 +8204,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   DIFPresSpec:
     properties:
       issuer_id:
@@ -8006,13 +8219,11 @@ types:
         docs: >-
           Mapping of input_descriptor id to list of stored W3C credential
           record_id
-        inline: true
       reveal_doc:
         type: optional<DifPresSpecRevealDoc>
         docs: >-
           reveal doc [JSON-LD frame] dict used to derive the credential when
           selective disclosure is required
-        inline: true
     source:
       openapi: ../openapi.yml
   DIFProofProposal:
@@ -8062,12 +8273,12 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   Doc:
     properties:
       credential:
         type: DocCredential
         docs: Credential to sign
-        inline: true
       options: DocOptions
     source:
       openapi: ../openapi.yml
@@ -8273,21 +8484,21 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyCredRequestBlindedMsCorrectnessProof:
     docs: Blinded master secret correctness proof
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyCredRequest:
     properties:
       blinded_ms:
         type: IndyCredRequestBlindedMs
         docs: Blinded master secret
-        inline: true
       blinded_ms_correctness_proof:
         type: IndyCredRequestBlindedMsCorrectnessProof
         docs: Blinded master secret correctness proof
-        inline: true
       cred_def_id:
         type: string
         docs: Credential definition identifier
@@ -8312,21 +8523,25 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   signature:
     docs: Credential signature
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyCredentialSignatureCorrectnessProof:
     docs: Credential signature correctness proof
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   witness:
     docs: Witness for revocation proof
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyCredential:
     properties:
       cred_def_id:
@@ -8338,7 +8553,6 @@ types:
       rev_reg:
         type: optional<IndyCredentialRevReg>
         docs: Revocation registry state
-        inline: true
       rev_reg_id:
         type: optional<string>
         docs: Revocation registry identifier
@@ -8354,18 +8568,15 @@ types:
       signature:
         type: signature
         docs: Credential signature
-        inline: true
       signature_correctness_proof:
         type: IndyCredentialSignatureCorrectnessProof
         docs: Credential signature correctness proof
-        inline: true
       values:
         type: map<string, IndyCredentialValuesValue>
         docs: Credential attributes
       witness:
         type: optional<witness>
         docs: Witness for revocation proof
-        inline: true
     source:
       openapi: ../openapi.yml
   IndyEQProof:
@@ -8755,11 +8966,13 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyProofRequestedProofUnrevealedAttrs:
     docs: Unrevealed attributes
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   IndyProofRequestedProof:
     properties:
       predicates:
@@ -8776,11 +8989,9 @@ types:
       self_attested_attrs:
         type: optional<IndyProofRequestedProofSelfAttestedAttrs>
         docs: Proof requested proof self-attested attributes
-        inline: true
       unrevealed_attrs:
         type: optional<IndyProofRequestedProofUnrevealedAttrs>
         docs: Unrevealed attributes
-        inline: true
     source:
       openapi: ../openapi.yml
   IndyProofRequestedProofPredicate:
@@ -8938,6 +9149,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   InputDescriptors:
     properties:
       constraints:
@@ -8950,7 +9162,6 @@ types:
       metadata:
         type: optional<metadata>
         docs: Metadata dictionary
-        inline: true
       name:
         type: optional<string>
         docs: Name
@@ -9173,6 +9384,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   KeylistQuery:
     properties:
       '@id':
@@ -9184,7 +9396,6 @@ types:
       filter:
         type: optional<KeylistQueryFilter>
         docs: Query dictionary object
-        inline: true
       paginate:
         type: optional<KeylistQueryPaginate>
     source:
@@ -9711,21 +9922,21 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ResolutionResultMetadata:
     docs: Resolution metadata
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ResolutionResult:
     properties:
       did_document:
         type: ResolutionResultDidDocument
         docs: DID Document
-        inline: true
       metadata:
         type: ResolutionResultMetadata
         docs: Resolution metadata
-        inline: true
     source:
       openapi: ../openapi.yml
   RevRegIssuedResult:
@@ -9748,30 +9959,30 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   RevRegWalletUpdatedResultAccumFixed:
     docs: Applied ledger transaction to fix revocations
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   RevRegWalletUpdatedResultRevRegDelta:
     docs: Indy revocation registry delta
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   RevRegWalletUpdatedResult:
     properties:
       accum_calculated:
         type: optional<RevRegWalletUpdatedResultAccumCalculated>
         docs: Calculated accumulator for phantom revocations
-        inline: true
       accum_fixed:
         type: optional<RevRegWalletUpdatedResultAccumFixed>
         docs: Applied ledger transaction to fix revocations
-        inline: true
       rev_reg_delta:
         type: optional<RevRegWalletUpdatedResultRevRegDelta>
         docs: Indy revocation registry delta
-        inline: true
     source:
       openapi: ../openapi.yml
   RevRegsCreated:
@@ -9903,6 +10114,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   SignResponse:
     properties:
       error:
@@ -9911,7 +10123,6 @@ types:
       signed_doc:
         type: optional<SignResponseSignedDoc>
         docs: Signed document
-        inline: true
     source:
       openapi: ../openapi.yml
   SignatureOptions:
@@ -10046,22 +10257,27 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionRecordMetaData:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionRecordSignatureRequestItem:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionRecordSignatureResponseItem:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionRecordTiming:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   TransactionRecord:
     properties:
       _type:
@@ -10086,7 +10302,6 @@ types:
         type: optional<list<TransactionRecordMessagesAttachItem>>
       meta_data:
         type: optional<TransactionRecordMetaData>
-        inline: true
       signature_request:
         type: optional<list<TransactionRecordSignatureRequestItem>>
       signature_response:
@@ -10099,7 +10314,6 @@ types:
         docs: Thread Identifier
       timing:
         type: optional<TransactionRecordTiming>
-        inline: true
       trace:
         type: optional<boolean>
         docs: Record trace information, based on agent configuration
@@ -10161,6 +10375,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V10CredentialExchangeInitiator:
     enum:
       - self
@@ -10221,7 +10436,6 @@ types:
       credential_request_metadata:
         type: optional<V10CredentialExchangeCredentialRequestMetadata>
         docs: (Indy) credential request metadata
-        inline: true
       error_msg:
         type: optional<string>
         docs: Error message
@@ -10555,32 +10769,32 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20CredExRecordByFormatCredOffer:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20CredExRecordByFormatCredProposal:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20CredExRecordByFormatCredRequest:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20CredExRecordByFormat:
     properties:
       cred_issue:
         type: optional<V20CredExRecordByFormatCredIssue>
-        inline: true
       cred_offer:
         type: optional<V20CredExRecordByFormatCredOffer>
-        inline: true
       cred_proposal:
         type: optional<V20CredExRecordByFormatCredProposal>
-        inline: true
       cred_request:
         type: optional<V20CredExRecordByFormatCredRequest>
-        inline: true
     source:
       openapi: ../openapi.yml
   V20CredExRecordDetail:
@@ -10598,6 +10812,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20CredExRecordIndy:
     properties:
       created_at:
@@ -10619,7 +10834,6 @@ types:
       cred_request_metadata:
         type: optional<V20CredExRecordIndyCredRequestMetadata>
         docs: Credential request metadata for indy holder
-        inline: true
       cred_rev_id:
         type: optional<string>
         docs: Credential revocation identifier within revocation registry
@@ -11005,25 +11219,25 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20PresExRecordByFormatPresProposal:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20PresExRecordByFormatPresRequest:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   V20PresExRecordByFormat:
     properties:
       pres:
         type: optional<pres>
-        inline: true
       pres_proposal:
         type: optional<V20PresExRecordByFormatPresProposal>
-        inline: true
       pres_request:
         type: optional<V20PresExRecordByFormatPresRequest>
-        inline: true
     source:
       openapi: ../openapi.yml
   V20PresExRecordList:
@@ -11104,6 +11318,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   VCRecord:
     properties:
       contexts:
@@ -11113,7 +11328,6 @@ types:
       cred_value:
         type: optional<VcRecordCredValue>
         docs: (JSON-serializable) credential value
-        inline: true
       expanded_types:
         type: optional<list<string>>
       given_id:
@@ -11167,6 +11381,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   WalletRecord:
     properties:
       created_at:
@@ -11182,7 +11397,6 @@ types:
       settings:
         type: optional<WalletRecordSettings>
         docs: Settings for this wallet.
-        inline: true
       state:
         type: optional<string>
         docs: Current record state
@@ -12825,6 +13039,7 @@ docs: Simple messaging
         "types": {
           "ConnectionMetadataSetRequestMetadata": {
             "docs": "Dictionary of metadata to set for connection.",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -12832,6 +13047,7 @@ docs: Simple messaging
           },
           "CreateInvitationRequestMetadata": {
             "docs": "Optional metadata to attach to the connection created with the invitation",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -12916,11 +13132,13 @@ docs: Simple messaging
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   ConnectionMetadataSetRequestMetadata:
     docs: Dictionary of metadata to set for connection.
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
 imports:
   root: __package__.yml
 service:
@@ -29288,6 +29506,7 @@ docs: Interaction with ledger
           },
           "KeylistQueryFilterRequestFilter": {
             "docs": "Filter for keylist query",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -29829,6 +30048,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
   GetMatchingMediationRecordsRequestState:
     enum:
       - request
@@ -30976,6 +31196,7 @@ docs: Multitenant wallet management
         "types": {
           "InvitationCreateRequestMetadata": {
             "docs": "Optional metadata to attach to the connection created with the invitation",
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -30991,6 +31212,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.yml
+    inline: true
 service:
   auth: false
   base-path: ''

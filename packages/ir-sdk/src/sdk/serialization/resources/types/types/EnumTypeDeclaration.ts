@@ -6,17 +6,20 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { EnumValue } from "./EnumValue";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const EnumTypeDeclaration: core.serialization.ObjectSchema<
     serializers.EnumTypeDeclaration.Raw,
     FernIr.EnumTypeDeclaration
-> = core.serialization.objectWithoutOptionalProperties({
-    default: EnumValue.optional(),
-    values: core.serialization.list(EnumValue),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        default: EnumValue.optional(),
+        values: core.serialization.list(EnumValue),
+    })
+    .extend(WithInline);
 
 export declare namespace EnumTypeDeclaration {
-    interface Raw {
+    interface Raw extends WithInline.Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
     }

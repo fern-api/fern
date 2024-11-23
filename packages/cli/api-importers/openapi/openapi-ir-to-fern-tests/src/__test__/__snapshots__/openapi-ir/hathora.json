@@ -9843,8 +9843,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -9899,8 +9898,7 @@
               },
               "type": "object"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10386,8 +10384,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -10442,8 +10439,7 @@
               },
               "type": "object"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},

@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface EnumSchema extends FernDefinition.BaseTypeDeclarationSchema {
+export interface EnumSchema extends FernDefinition.BaseTypeDeclarationSchema, FernDefinition.WithInline {
     default?: string;
     enum: FernDefinition.EnumValue[];
 }

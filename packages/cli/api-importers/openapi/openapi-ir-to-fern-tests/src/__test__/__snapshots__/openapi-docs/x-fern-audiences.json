@@ -51,12 +51,12 @@
         "types": {
           "BaseUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "audiences": [
                   "public",
                 ],
-                "inline": undefined,
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",

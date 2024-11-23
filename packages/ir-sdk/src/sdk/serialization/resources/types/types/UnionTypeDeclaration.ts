@@ -9,19 +9,22 @@ import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { DeclaredTypeName } from "./DeclaredTypeName";
 import { SingleUnionType } from "./SingleUnionType";
 import { ObjectProperty } from "./ObjectProperty";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     serializers.UnionTypeDeclaration.Raw,
     FernIr.UnionTypeDeclaration
-> = core.serialization.objectWithoutOptionalProperties({
-    discriminant: NameAndWireValue,
-    extends: core.serialization.list(DeclaredTypeName),
-    types: core.serialization.list(SingleUnionType),
-    baseProperties: core.serialization.list(ObjectProperty),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        discriminant: NameAndWireValue,
+        extends: core.serialization.list(DeclaredTypeName),
+        types: core.serialization.list(SingleUnionType),
+        baseProperties: core.serialization.list(ObjectProperty),
+    })
+    .extend(WithInline);
 
 export declare namespace UnionTypeDeclaration {
-    interface Raw {
+    interface Raw extends WithInline.Raw {
         discriminant: NameAndWireValue.Raw;
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];

@@ -7,19 +7,22 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { DeclaredTypeName } from "./DeclaredTypeName";
 import { ObjectProperty } from "./ObjectProperty";
+import { WithInline } from "../../commons/types/WithInline";
 
 export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
     serializers.ObjectTypeDeclaration.Raw,
     FernIr.ObjectTypeDeclaration
-> = core.serialization.objectWithoutOptionalProperties({
-    extends: core.serialization.list(DeclaredTypeName),
-    properties: core.serialization.list(ObjectProperty),
-    extendedProperties: core.serialization.list(ObjectProperty).optional(),
-    extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        extends: core.serialization.list(DeclaredTypeName),
+        properties: core.serialization.list(ObjectProperty),
+        extendedProperties: core.serialization.list(ObjectProperty).optional(),
+        extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
+    })
+    .extend(WithInline);
 
 export declare namespace ObjectTypeDeclaration {
-    interface Raw {
+    interface Raw extends WithInline.Raw {
         extends: DeclaredTypeName.Raw[];
         properties: ObjectProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;

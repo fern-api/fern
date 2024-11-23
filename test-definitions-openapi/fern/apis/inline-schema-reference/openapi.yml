@@ -13,7 +13,6 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/responses/NotFound/content/application~1json/schema"
                   - $ref: "#/components/schemas/Schema1"
                   - $ref: "#/components/schemas/Schema2"
   /root:

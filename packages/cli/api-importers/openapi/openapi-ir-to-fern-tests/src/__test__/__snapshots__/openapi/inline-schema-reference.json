@@ -43,6 +43,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -55,6 +56,7 @@
           },
           "GetExampleResponseMessage": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "optional<string>",
             },
@@ -64,6 +66,7 @@
           },
           "NotFound": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "optional<string>",
             },
@@ -73,6 +76,7 @@
           },
           "Schema1": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "optional<integer>",
               "name": "optional<string>",
@@ -83,6 +87,7 @@
           },
           "Schema2": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "age": "optional<integer>",
               "email": "optional<string>",
@@ -99,11 +104,13 @@
       message: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   GetExampleResponseMessage:
     properties:
       message: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   GetExampleResponse:
     discriminated: false
     union:

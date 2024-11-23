@@ -65,7 +65,8 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                                   fileContainingReference: namespace
                                       ? join(RelativeFilePath.of(camelCase(namespace)), defaultFile)
                                       : defaultFile,
-                                  namespace
+                                  namespace,
+                                  declarationDepth: 0
                               })
                           ) ?? "optional<string>"
                         : "optional<string>"

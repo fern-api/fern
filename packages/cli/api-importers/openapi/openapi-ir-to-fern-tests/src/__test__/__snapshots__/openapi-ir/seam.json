@@ -12568,8 +12568,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -24422,8 +24421,7 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -34010,8 +34008,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -39010,8 +39007,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -41312,8 +41308,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -45836,8 +45831,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -45982,8 +45976,7 @@
                 "groupName": [],
                 "type": "optional"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -48939,8 +48932,7 @@
                 },
                 "type": "object"
               },
-              "audiences": [],
-              "inline": true
+              "audiences": []
             },
             {
               "conflict": {},
@@ -50208,8 +50200,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -50338,8 +50329,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -50540,8 +50530,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -50670,8 +50659,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -50872,8 +50860,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51002,8 +50989,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51204,8 +51190,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51334,8 +51319,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51536,8 +51520,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51666,8 +51649,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51868,8 +51850,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -51998,8 +51979,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -52200,8 +52180,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -52330,8 +52309,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -52532,8 +52510,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -52662,8 +52639,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -52987,8 +52963,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -53311,8 +53286,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -53635,8 +53609,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -53959,8 +53932,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -54283,8 +54255,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -54607,8 +54578,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -54931,8 +54901,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -55984,8 +55953,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -56515,8 +56483,7 @@
                             "groupName": [],
                             "type": "optional"
                           },
-                          "audiences": [],
-                          "inline": true
+                          "audiences": []
                         }
                       ],
                       "allOfPropertyConflicts": [],
@@ -56533,8 +56500,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -56569,8 +56535,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -56720,8 +56685,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -56842,8 +56806,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57141,8 +57104,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57280,8 +57242,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57404,8 +57365,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57496,8 +57456,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57588,8 +57547,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57661,8 +57619,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57772,8 +57729,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57840,8 +57796,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -57955,8 +57910,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58009,8 +57963,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58049,8 +58002,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58122,8 +58074,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58231,8 +58182,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58324,8 +58274,7 @@
                                   },
                                   "type": "object"
                                 },
-                                "audiences": [],
-                                "inline": true
+                                "audiences": []
                               },
                               {
                                 "conflict": {},
@@ -58373,8 +58322,7 @@
                                   },
                                   "type": "object"
                                 },
-                                "audiences": [],
-                                "inline": true
+                                "audiences": []
                               },
                               {
                                 "conflict": {},
@@ -58422,8 +58370,7 @@
                                   },
                                   "type": "object"
                                 },
-                                "audiences": [],
-                                "inline": true
+                                "audiences": []
                               },
                               {
                                 "conflict": {},
@@ -58471,8 +58418,7 @@
                                   },
                                   "type": "object"
                                 },
-                                "audiences": [],
-                                "inline": true
+                                "audiences": []
                               },
                               {
                                 "conflict": {},
@@ -58520,8 +58466,7 @@
                                   },
                                   "type": "object"
                                 },
-                                "audiences": [],
-                                "inline": true
+                                "audiences": []
                               }
                             ],
                             "allOfPropertyConflicts": [],
@@ -58534,8 +58479,7 @@
                             },
                             "type": "object"
                           },
-                          "audiences": [],
-                          "inline": true
+                          "audiences": []
                         }
                       ],
                       "allOfPropertyConflicts": [],
@@ -58551,8 +58495,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58619,8 +58562,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58673,8 +58615,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58746,8 +58687,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58814,8 +58754,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -58900,8 +58839,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59011,8 +58949,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59079,8 +59016,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59133,8 +59069,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59187,8 +59122,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59255,8 +59189,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59560,8 +59493,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59708,8 +59640,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -59837,8 +59768,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -60186,8 +60116,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -60287,8 +60216,7 @@
               "groupName": [],
               "type": "nullable"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -61148,8 +61076,7 @@
                             "groupName": [],
                             "type": "optional"
                           },
-                          "audiences": [],
-                          "inline": true
+                          "audiences": []
                         }
                       ],
                       "allOfPropertyConflicts": [],
@@ -61166,8 +61093,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -61359,8 +61285,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -61550,8 +61475,7 @@
                     },
                     "type": "object"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -61564,8 +61488,7 @@
               },
               "type": "object"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -63525,8 +63448,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -63907,8 +63829,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -64065,8 +63986,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -64864,8 +64784,7 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -65197,8 +65116,7 @@
                     "groupName": [],
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "inline": true
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -65211,8 +65129,7 @@
               },
               "type": "object"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},
@@ -65279,8 +65196,7 @@
               "groupName": [],
               "type": "nullable"
             },
-            "audiences": [],
-            "inline": true
+            "audiences": []
           },
           {
             "conflict": {},

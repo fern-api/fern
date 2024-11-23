@@ -20,6 +20,7 @@
         "types": {
           "AccessCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code_id": {
                 "docs": "Unique identifier for the access code.",
@@ -151,6 +152,7 @@
           },
           "AcsAccessGroup": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_group_type": {
                 "docs": "
@@ -234,6 +236,7 @@
           },
           "AcsCredential": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_method": "AcsCredentialAccessMethod",
               "acs_credential_id": {
@@ -300,10 +303,7 @@
                 },
               },
               "starts_at": "optional<string>",
-              "visionline_metadata": {
-                "inline": true,
-                "type": "optional<AcsCredentialVisionlineMetadata>",
-              },
+              "visionline_metadata": "optional<AcsCredentialVisionlineMetadata>",
               "warnings": "list<AcsCredentialWarningsItem>",
               "workspace_id": {
                 "type": "string",
@@ -331,6 +331,7 @@
           },
           "AcsCredentialErrorsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "error_code": "string",
               "message": "string",
@@ -352,6 +353,7 @@
           },
           "AcsCredentialPool": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential_pool_id": {
                 "type": "string",
@@ -399,6 +401,7 @@
           },
           "AcsCredentialProvisioningAutomation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential_provisioning_automation_id": {
                 "type": "string",
@@ -444,6 +447,7 @@
           },
           "AcsCredentialVisionlineMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "card_function_type": "AcsCredentialVisionlineMetadataCardFunctionType",
               "common_acs_entrance_ids": "optional<list<string>>",
@@ -465,6 +469,7 @@
           },
           "AcsCredentialWarningsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "warning_code": "string",
@@ -475,6 +480,7 @@
           },
           "AcsEntrance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_entrance_id": {
                 "type": "string",
@@ -497,14 +503,8 @@
               "created_at": "datetime",
               "display_name": "string",
               "errors": "list<AcsEntranceErrorsItem>",
-              "latch_metadata": {
-                "inline": true,
-                "type": "optional<AcsEntranceLatchMetadata>",
-              },
-              "visionline_metadata": {
-                "inline": true,
-                "type": "optional<AcsEntranceVisionlineMetadata>",
-              },
+              "latch_metadata": "optional<AcsEntranceLatchMetadata>",
+              "visionline_metadata": "optional<AcsEntranceVisionlineMetadata>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -512,6 +512,7 @@
           },
           "AcsEntranceErrorsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "error_code": "string",
               "message": "string",
@@ -522,6 +523,7 @@
           },
           "AcsEntranceLatchMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "accessibility_type": "string",
               "door_name": "string",
@@ -534,6 +536,7 @@
           },
           "AcsEntranceVisionlineMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "door_category": "AcsEntranceVisionlineMetadataDoorCategory",
               "door_name": "string",
@@ -563,6 +566,7 @@
           },
           "AcsEntranceVisionlineMetadataProfilesItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "visionline_door_profile_id": "string",
               "visionline_door_profile_type": "AcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType",
@@ -583,6 +587,7 @@
           },
           "AcsSystem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_system_id": {
                 "type": "string",
@@ -652,6 +657,7 @@
           },
           "AcsSystemErrorsItemSeamBridgeDisconnected": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "created_at": "datetime",
               "message": "string",
@@ -662,6 +668,7 @@
           },
           "AcsSystemErrorsItemVisionlineInstanceUnreachable": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "created_at": "datetime",
               "message": "string",
@@ -707,6 +714,7 @@
           },
           "AcsSystemWarningsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -714,11 +722,9 @@
           },
           "AcsUser": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
-              "access_schedule": {
-                "inline": true,
-                "type": "optional<AcsUserAccessSchedule>",
-              },
+              "access_schedule": "optional<AcsUserAccessSchedule>",
               "acs_system_id": {
                 "type": "string",
                 "validation": {
@@ -796,6 +802,7 @@
           },
           "AcsUserAccessSchedule": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ends_at": "datetime",
               "starts_at": "datetime",
@@ -820,6 +827,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -945,6 +953,7 @@
           },
           "ActionAttemptActionAttemptId": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -962,10 +971,7 @@
                 },
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptActionAttemptIdError",
-              },
+              "error": "ActionAttemptActionAttemptIdError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -975,6 +981,7 @@
           },
           "ActionAttemptActionAttemptIdError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -985,6 +992,7 @@
           },
           "ActionAttemptEight": {
             "docs": "Resetting sandbox workspace failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1002,10 +1010,7 @@
                 },
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptEightError",
-              },
+              "error": "ActionAttemptEightError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1015,6 +1020,7 @@
           },
           "ActionAttemptEightError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1025,6 +1031,7 @@
           },
           "ActionAttemptEighteen": {
             "docs": "Setting fan mode.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1052,6 +1059,7 @@
           },
           "ActionAttemptEleven": {
             "docs": "Setting HVAC to cool failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1069,10 +1077,7 @@
                 },
               },
               "action_type": "literal<"SET_COOL">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptElevenError",
-              },
+              "error": "ActionAttemptElevenError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1082,6 +1087,7 @@
           },
           "ActionAttemptElevenError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1092,6 +1098,7 @@
           },
           "ActionAttemptFifteen": {
             "docs": "Setting HVAC to heat-cool mode.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1119,6 +1126,7 @@
           },
           "ActionAttemptFive": {
             "docs": "Unlocking door failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1136,10 +1144,7 @@
                 },
               },
               "action_type": "literal<"UNLOCK_DOOR">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptFiveError",
-              },
+              "error": "ActionAttemptFiveError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1149,6 +1154,7 @@
           },
           "ActionAttemptFiveError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1159,6 +1165,7 @@
           },
           "ActionAttemptForty": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1186,6 +1193,7 @@
           },
           "ActionAttemptFortyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1203,10 +1211,7 @@
                 },
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptFortyOneError",
-              },
+              "error": "ActionAttemptFortyOneError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1216,6 +1221,7 @@
           },
           "ActionAttemptFortyOneError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1226,6 +1232,7 @@
           },
           "ActionAttemptFortyThree": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1253,6 +1260,7 @@
           },
           "ActionAttemptFortyTwo": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1280,6 +1288,7 @@
           },
           "ActionAttemptFour": {
             "docs": "Unlocking door succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1298,10 +1307,7 @@
               },
               "action_type": "literal<"UNLOCK_DOOR">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptFourResult",
-              },
+              "result": "ActionAttemptFourResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1310,6 +1316,7 @@
           },
           "ActionAttemptFourResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1317,6 +1324,7 @@
           },
           "ActionAttemptFourteen": {
             "docs": "Setting HVAC to heat mode failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1334,10 +1342,7 @@
                 },
               },
               "action_type": "literal<"SET_HEAT">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptFourteenError",
-              },
+              "error": "ActionAttemptFourteenError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1347,6 +1352,7 @@
           },
           "ActionAttemptFourteenError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1357,6 +1363,7 @@
           },
           "ActionAttemptNine": {
             "docs": "Setting HVAC to cool.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1384,6 +1391,7 @@
           },
           "ActionAttemptNineteen": {
             "docs": "Setting fan mode succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1402,10 +1410,7 @@
               },
               "action_type": "literal<"SET_FAN_MODE">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptNineteenResult",
-              },
+              "result": "ActionAttemptNineteenResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1414,6 +1419,7 @@
           },
           "ActionAttemptNineteenResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1421,6 +1427,7 @@
           },
           "ActionAttemptOne": {
             "docs": "Locking door succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1439,10 +1446,7 @@
               },
               "action_type": "literal<"LOCK_DOOR">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptOneResult",
-              },
+              "result": "ActionAttemptOneResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1451,6 +1455,7 @@
           },
           "ActionAttemptOneResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1458,6 +1463,7 @@
           },
           "ActionAttemptSeven": {
             "docs": "Resetting sandbox workspace succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1476,10 +1482,7 @@
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptSevenResult",
-              },
+              "result": "ActionAttemptSevenResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1488,6 +1491,7 @@
           },
           "ActionAttemptSevenResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1495,6 +1499,7 @@
           },
           "ActionAttemptSeventeen": {
             "docs": "Setting heat-cool mode failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1512,10 +1517,7 @@
                 },
               },
               "action_type": "literal<"SET_HEAT_COOL">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptSeventeenError",
-              },
+              "error": "ActionAttemptSeventeenError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1525,6 +1527,7 @@
           },
           "ActionAttemptSeventeenError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1535,6 +1538,7 @@
           },
           "ActionAttemptSix": {
             "docs": "Resetting sandbox workspace.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1562,6 +1566,7 @@
           },
           "ActionAttemptSixteen": {
             "docs": "Setting HVAC to heat-cool mode succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1580,10 +1585,7 @@
               },
               "action_type": "literal<"SET_HEAT_COOL">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptSixteenResult",
-              },
+              "result": "ActionAttemptSixteenResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1592,6 +1594,7 @@
           },
           "ActionAttemptSixteenResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1599,6 +1602,7 @@
           },
           "ActionAttemptTen": {
             "docs": "Setting HVAC to cool succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1617,10 +1621,7 @@
               },
               "action_type": "literal<"SET_COOL">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptTenResult",
-              },
+              "result": "ActionAttemptTenResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1629,6 +1630,7 @@
           },
           "ActionAttemptTenResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1636,6 +1638,7 @@
           },
           "ActionAttemptThirteen": {
             "docs": "Setting HVAC to heat mode succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1654,10 +1657,7 @@
               },
               "action_type": "literal<"SET_HEAT">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptThirteenResult",
-              },
+              "result": "ActionAttemptThirteenResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -1666,6 +1666,7 @@
           },
           "ActionAttemptThirteenResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -1673,6 +1674,7 @@
           },
           "ActionAttemptThirty": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1700,6 +1702,7 @@
           },
           "ActionAttemptThirtyEight": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1717,10 +1720,7 @@
                 },
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptThirtyEightError",
-              },
+              "error": "ActionAttemptThirtyEightError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1730,6 +1730,7 @@
           },
           "ActionAttemptThirtyEightError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1740,6 +1741,7 @@
           },
           "ActionAttemptThirtyFive": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1757,10 +1759,7 @@
                 },
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptThirtyFiveError",
-              },
+              "error": "ActionAttemptThirtyFiveError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1770,6 +1769,7 @@
           },
           "ActionAttemptThirtyFiveError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1780,6 +1780,7 @@
           },
           "ActionAttemptThirtyFour": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1807,6 +1808,7 @@
           },
           "ActionAttemptThirtyNine": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1834,6 +1836,7 @@
           },
           "ActionAttemptThirtyOne": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1861,6 +1864,7 @@
           },
           "ActionAttemptThirtySeven": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1888,6 +1892,7 @@
           },
           "ActionAttemptThirtySix": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1915,6 +1920,7 @@
           },
           "ActionAttemptThirtyThree": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1942,6 +1948,7 @@
           },
           "ActionAttemptThirtyTwo": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -1959,10 +1966,7 @@
                 },
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptThirtyTwoError",
-              },
+              "error": "ActionAttemptThirtyTwoError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -1972,6 +1976,7 @@
           },
           "ActionAttemptThirtyTwoError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -1982,6 +1987,7 @@
           },
           "ActionAttemptThree": {
             "docs": "Unlocking door.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2009,6 +2015,7 @@
           },
           "ActionAttemptTwelve": {
             "docs": "Setting HVAC to heat mode.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2036,6 +2043,7 @@
           },
           "ActionAttemptTwenty": {
             "docs": "Setting fan mode failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2053,10 +2061,7 @@
                 },
               },
               "action_type": "literal<"SET_FAN_MODE">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptTwentyError",
-              },
+              "error": "ActionAttemptTwentyError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2066,6 +2071,7 @@
           },
           "ActionAttemptTwentyEight": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2093,6 +2099,7 @@
           },
           "ActionAttemptTwentyError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -2103,6 +2110,7 @@
           },
           "ActionAttemptTwentyFive": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2130,6 +2138,7 @@
           },
           "ActionAttemptTwentyFour": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2157,6 +2166,7 @@
           },
           "ActionAttemptTwentyNine": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2174,10 +2184,7 @@
                 },
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptTwentyNineError",
-              },
+              "error": "ActionAttemptTwentyNineError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2187,6 +2194,7 @@
           },
           "ActionAttemptTwentyNineError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -2197,6 +2205,7 @@
           },
           "ActionAttemptTwentyOne": {
             "docs": "Turning HVAC off.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2224,6 +2233,7 @@
           },
           "ActionAttemptTwentySeven": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2251,6 +2261,7 @@
           },
           "ActionAttemptTwentySix": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2268,10 +2279,7 @@
                 },
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptTwentySixError",
-              },
+              "error": "ActionAttemptTwentySixError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2281,6 +2289,7 @@
           },
           "ActionAttemptTwentySixError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -2291,6 +2300,7 @@
           },
           "ActionAttemptTwentyThree": {
             "docs": "Turning HVAC off failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2308,10 +2318,7 @@
                 },
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptTwentyThreeError",
-              },
+              "error": "ActionAttemptTwentyThreeError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2321,6 +2328,7 @@
           },
           "ActionAttemptTwentyThreeError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -2331,6 +2339,7 @@
           },
           "ActionAttemptTwentyTwo": {
             "docs": "Turning HVAC off succeeded.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2349,10 +2358,7 @@
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
               "error": "optional<string>",
-              "result": {
-                "inline": true,
-                "type": "ActionAttemptTwentyTwoResult",
-              },
+              "result": "ActionAttemptTwentyTwoResult",
               "status": "literal<"success">",
             },
             "source": {
@@ -2361,6 +2367,7 @@
           },
           "ActionAttemptTwentyTwoResult": {
             "docs": undefined,
+            "inline": true,
             "properties": {},
             "source": {
               "openapi": "../openapi.json",
@@ -2368,6 +2375,7 @@
           },
           "ActionAttemptTwo": {
             "docs": "Locking door failed.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2385,10 +2393,7 @@
                 },
               },
               "action_type": "literal<"LOCK_DOOR">",
-              "error": {
-                "inline": true,
-                "type": "ActionAttemptTwoError",
-              },
+              "error": "ActionAttemptTwoError",
               "result": "optional<string>",
               "status": "literal<"error">",
             },
@@ -2398,6 +2403,7 @@
           },
           "ActionAttemptTwoError": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "type": "string",
@@ -2408,6 +2414,7 @@
           },
           "ActionAttemptZero": {
             "docs": "Locking door.",
+            "inline": true,
             "properties": {
               "action_attempt_id": {
                 "docs": "
@@ -2435,6 +2442,7 @@
           },
           "ClientSession": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_session_id": {
                 "type": "string",
@@ -2468,6 +2476,7 @@
           },
           "ClimateSettingSchedule": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "automatic_cooling_enabled": "optional<boolean>",
               "automatic_heating_enabled": "optional<boolean>",
@@ -2519,6 +2528,7 @@
           },
           "ConnectWebview": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accepted_devices": {
                 "docs": "
@@ -2610,6 +2620,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2640,6 +2651,7 @@
           },
           "ConnectedAccount": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_type": "optional<string>",
               "account_type_display_name": "string",
@@ -2656,10 +2668,7 @@
               "created_at": "optional<datetime>",
               "custom_metadata": "map<string, ConnectedAccountCustomMetadataValue>",
               "errors": "optional<unknown>",
-              "user_identifier": {
-                "inline": true,
-                "type": "optional<ConnectedAccountUserIdentifier>",
-              },
+              "user_identifier": "optional<ConnectedAccountUserIdentifier>",
               "warnings": "optional<unknown>",
             },
             "source": {
@@ -2670,6 +2679,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2680,6 +2690,7 @@
           },
           "ConnectedAccountUserIdentifier": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "api_url": "optional<string>",
               "email": "optional<string>",
@@ -2693,6 +2704,7 @@
           },
           "Device": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "can_program_offline_access_codes": "optional<boolean>",
               "can_program_online_access_codes": "optional<boolean>",
@@ -2748,7 +2760,6 @@
               },
               "location": {
                 "docs": "Location information for the device.",
-                "inline": true,
                 "type": "optional<DeviceLocation>",
               },
               "nickname": {
@@ -2795,6 +2806,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -2846,6 +2858,7 @@
           },
           "DeviceErrorsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "error_code": "string",
               "message": "string",
@@ -2856,6 +2869,7 @@
           },
           "DeviceLocation": {
             "docs": "Location information for the device.",
+            "inline": true,
             "properties": {
               "location_name": {
                 "docs": "Name of the device location.",
@@ -2872,32 +2886,19 @@
           },
           "DeviceProperties": {
             "docs": "Properties of the device.",
+            "inline": true,
             "properties": {
               "_experimental_supported_code_from_access_codes_lengths": "optional<list<double>>",
               "accessory_keypad": {
                 "docs": "Represents the accessory keypad state.",
-                "inline": true,
                 "type": "optional<DevicePropertiesAccessoryKeypad>",
               },
-              "appearance": {
-                "inline": true,
-                "type": "DevicePropertiesAppearance",
-              },
-              "assa_abloy_credential_service_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
-              },
-              "august_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesAugustMetadata>",
-              },
-              "avigilon_alta_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesAvigilonAltaMetadata>",
-              },
+              "appearance": "DevicePropertiesAppearance",
+              "assa_abloy_credential_service_metadata": "optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>",
+              "august_metadata": "optional<DevicePropertiesAugustMetadata>",
+              "avigilon_alta_metadata": "optional<DevicePropertiesAvigilonAltaMetadata>",
               "battery": {
                 "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
-                "inline": true,
                 "type": "optional<DevicePropertiesBattery>",
               },
               "battery_level": {
@@ -2911,57 +2912,27 @@
                   "multipleOf": undefined,
                 },
               },
-              "brivo_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesBrivoMetadata>",
-              },
+              "brivo_metadata": "optional<DevicePropertiesBrivoMetadata>",
               "code_constraints": "optional<list<DevicePropertiesCodeConstraintsItem>>",
-              "controlbyweb_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesControlbywebMetadata>",
-              },
+              "controlbyweb_metadata": "optional<DevicePropertiesControlbywebMetadata>",
               "currently_triggering_noise_threshold_ids": {
                 "docs": "Array of noise threshold IDs that are currently triggering.",
                 "type": "optional<list<string>>",
               },
               "door_open": "optional<boolean>",
-              "dormakaba_oracode_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesDormakabaOracodeMetadata>",
-              },
-              "ecobee_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesEcobeeMetadata>",
-              },
-              "four_suites_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesFourSuitesMetadata>",
-              },
-              "genie_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesGenieMetadata>",
-              },
+              "dormakaba_oracode_metadata": "optional<DevicePropertiesDormakabaOracodeMetadata>",
+              "ecobee_metadata": "optional<DevicePropertiesEcobeeMetadata>",
+              "four_suites_metadata": "optional<DevicePropertiesFourSuitesMetadata>",
+              "genie_metadata": "optional<DevicePropertiesGenieMetadata>",
               "has_direct_power": {
                 "docs": "Indicates whether the device has direct power.",
                 "type": "optional<boolean>",
               },
               "has_native_entry_events": "optional<boolean>",
-              "honeywell_resideo_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesHoneywellResideoMetadata>",
-              },
-              "hubitat_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesHubitatMetadata>",
-              },
-              "igloo_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesIglooMetadata>",
-              },
-              "igloohome_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesIgloohomeMetadata>",
-              },
+              "honeywell_resideo_metadata": "optional<DevicePropertiesHoneywellResideoMetadata>",
+              "hubitat_metadata": "optional<DevicePropertiesHubitatMetadata>",
+              "igloo_metadata": "optional<DevicePropertiesIglooMetadata>",
+              "igloohome_metadata": "optional<DevicePropertiesIgloohomeMetadata>",
               "image_alt_text": {
                 "docs": "Alt text for the device image.",
                 "type": "optional<string>",
@@ -2976,32 +2947,17 @@
                   "pattern": undefined,
                 },
               },
-              "keypad_battery": {
-                "inline": true,
-                "type": "optional<DevicePropertiesKeypadBattery>",
-              },
-              "kwikset_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesKwiksetMetadata>",
-              },
+              "keypad_battery": "optional<DevicePropertiesKeypadBattery>",
+              "kwikset_metadata": "optional<DevicePropertiesKwiksetMetadata>",
               "locked": "optional<boolean>",
-              "lockly_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesLocklyMetadata>",
-              },
+              "lockly_metadata": "optional<DevicePropertiesLocklyMetadata>",
               "manufacturer": {
                 "docs": "Manufacturer of the device.",
                 "type": "optional<string>",
               },
               "max_active_codes_supported": "optional<double>",
-              "minut_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesMinutMetadata>",
-              },
-              "model": {
-                "inline": true,
-                "type": "DevicePropertiesModel",
-              },
+              "minut_metadata": "optional<DevicePropertiesMinutMetadata>",
+              "model": "DevicePropertiesModel",
               "name": {
                 "docs": "
       ---
@@ -3011,22 +2967,13 @@
       ",
                 "type": "string",
               },
-              "nest_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesNestMetadata>",
-              },
+              "nest_metadata": "optional<DevicePropertiesNestMetadata>",
               "noise_level_decibels": {
                 "docs": "Indicates current noise level in decibels, if the device supports noise detection.",
                 "type": "optional<double>",
               },
-              "noiseaware_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesNoiseawareMetadata>",
-              },
-              "nuki_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesNukiMetadata>",
-              },
+              "noiseaware_metadata": "optional<DevicePropertiesNoiseawareMetadata>",
+              "nuki_metadata": "optional<DevicePropertiesNukiMetadata>",
               "offline_access_codes_enabled": {
                 "docs": "Indicates whether it is currently possible to use offline access codes for the device.",
                 "type": "optional<boolean>",
@@ -3039,26 +2986,14 @@
                 "docs": "Indicates whether it is currently possible to use online access codes for the device.",
                 "type": "optional<boolean>",
               },
-              "salto_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesSaltoMetadata>",
-              },
-              "schlage_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesSchlageMetadata>",
-              },
-              "seam_bridge_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesSeamBridgeMetadata>",
-              },
+              "salto_metadata": "optional<DevicePropertiesSaltoMetadata>",
+              "schlage_metadata": "optional<DevicePropertiesSchlageMetadata>",
+              "seam_bridge_metadata": "optional<DevicePropertiesSeamBridgeMetadata>",
               "serial_number": {
                 "docs": "Serial number of the device.",
                 "type": "optional<string>",
               },
-              "smartthings_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesSmartthingsMetadata>",
-              },
+              "smartthings_metadata": "optional<DevicePropertiesSmartthingsMetadata>",
               "supported_code_lengths": "optional<list<double>>",
               "supports_accessory_keypad": {
                 "docs": "
@@ -3077,22 +3012,10 @@
       ",
                 "type": "optional<boolean>",
               },
-              "tedee_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesTedeeMetadata>",
-              },
-              "ttlock_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesTtlockMetadata>",
-              },
-              "two_n_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesTwoNMetadata>",
-              },
-              "wyze_metadata": {
-                "inline": true,
-                "type": "optional<DevicePropertiesWyzeMetadata>",
-              },
+              "tedee_metadata": "optional<DevicePropertiesTedeeMetadata>",
+              "ttlock_metadata": "optional<DevicePropertiesTtlockMetadata>",
+              "two_n_metadata": "optional<DevicePropertiesTwoNMetadata>",
+              "wyze_metadata": "optional<DevicePropertiesWyzeMetadata>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -3100,10 +3023,10 @@
           },
           "DevicePropertiesAccessoryKeypad": {
             "docs": "Represents the accessory keypad state.",
+            "inline": true,
             "properties": {
               "battery": {
                 "docs": "Indicates if the keypad battery properties.",
-                "inline": true,
                 "type": "optional<DevicePropertiesAccessoryKeypadBattery>",
               },
               "is_connected": {
@@ -3117,6 +3040,7 @@
           },
           "DevicePropertiesAccessoryKeypadBattery": {
             "docs": "Indicates if the keypad battery properties.",
+            "inline": true,
             "properties": {
               "level": {
                 "type": "double",
@@ -3135,6 +3059,7 @@
           },
           "DevicePropertiesAppearance": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": {
                 "docs": "Name of the device as seen from the provider API and application, not settable through Seam.",
@@ -3147,6 +3072,7 @@
           },
           "DevicePropertiesAssaAbloyCredentialServiceMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "endpoints": "list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>",
               "has_active_endpoint": "boolean",
@@ -3157,6 +3083,7 @@
           },
           "DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "endpoint_id": "string",
               "is_active": "boolean",
@@ -3167,6 +3094,7 @@
           },
           "DevicePropertiesAugustMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "has_keypad": "boolean",
               "house_id": "optional<string>",
@@ -3182,6 +3110,7 @@
           },
           "DevicePropertiesAvigilonAltaMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "entry_name": "string",
               "entry_relays_total_count": "double",
@@ -3197,6 +3126,7 @@
           },
           "DevicePropertiesBattery": {
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
+            "inline": true,
             "properties": {
               "level": {
                 "type": "double",
@@ -3227,6 +3157,7 @@
           },
           "DevicePropertiesBrivoMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_name": "string",
             },
@@ -3238,6 +3169,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -3248,6 +3180,7 @@
           },
           "DevicePropertiesCodeConstraintsItemMaxLength": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "constraint_type": "DevicePropertiesCodeConstraintsItemMaxLengthConstraintType",
               "max_length": "optional<double>",
@@ -3268,6 +3201,7 @@
           },
           "DevicePropertiesCodeConstraintsItemZero": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "constraint_type": "DevicePropertiesCodeConstraintsItemZeroConstraintType",
             },
@@ -3293,6 +3227,7 @@
           },
           "DevicePropertiesControlbywebMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
@@ -3304,6 +3239,7 @@
           },
           "DevicePropertiesDormakabaOracodeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "optional<double>",
               "door_id": "double",
@@ -3320,6 +3256,7 @@
           },
           "DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "check_in_time": "string",
               "check_out_time": "string",
@@ -3346,6 +3283,7 @@
           },
           "DevicePropertiesEcobeeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_name": "string",
               "ecobee_device_id": "string",
@@ -3356,6 +3294,7 @@
           },
           "DevicePropertiesFourSuitesMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "double",
               "device_name": "string",
@@ -3367,6 +3306,7 @@
           },
           "DevicePropertiesGenieMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_name": "string",
               "door_name": "string",
@@ -3377,6 +3317,7 @@
           },
           "DevicePropertiesHoneywellResideoMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_name": "string",
               "honeywell_resideo_device_id": "string",
@@ -3387,6 +3328,7 @@
           },
           "DevicePropertiesHubitatMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_label": "string",
@@ -3398,6 +3340,7 @@
           },
           "DevicePropertiesIglooMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "bridge_id": "string",
               "device_id": "string",
@@ -3409,6 +3352,7 @@
           },
           "DevicePropertiesIgloohomeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "bridge_id": "optional<string>",
               "bridge_name": "optional<string>",
@@ -3422,6 +3366,7 @@
           },
           "DevicePropertiesKeypadBattery": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "level": "double",
             },
@@ -3431,6 +3376,7 @@
           },
           "DevicePropertiesKwiksetMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
@@ -3442,6 +3388,7 @@
           },
           "DevicePropertiesLocklyMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
@@ -3453,13 +3400,11 @@
           },
           "DevicePropertiesMinutMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
-              "latest_sensor_values": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValues",
-              },
+              "latest_sensor_values": "DevicePropertiesMinutMetadataLatestSensorValues",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -3467,27 +3412,13 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValues": {
             "docs": undefined,
+            "inline": true,
             "properties": {
-              "accelerometer_z": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ",
-              },
-              "humidity": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValuesHumidity",
-              },
-              "pressure": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValuesPressure",
-              },
-              "sound": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValuesSound",
-              },
-              "temperature": {
-                "inline": true,
-                "type": "DevicePropertiesMinutMetadataLatestSensorValuesTemperature",
-              },
+              "accelerometer_z": "DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ",
+              "humidity": "DevicePropertiesMinutMetadataLatestSensorValuesHumidity",
+              "pressure": "DevicePropertiesMinutMetadataLatestSensorValuesPressure",
+              "sound": "DevicePropertiesMinutMetadataLatestSensorValuesSound",
+              "temperature": "DevicePropertiesMinutMetadataLatestSensorValuesTemperature",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -3495,6 +3426,7 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "time": "string",
               "value": "double",
@@ -3505,6 +3437,7 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValuesHumidity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "time": "string",
               "value": "double",
@@ -3515,6 +3448,7 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValuesPressure": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "time": "string",
               "value": "double",
@@ -3525,6 +3459,7 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValuesSound": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "time": "string",
               "value": "double",
@@ -3535,6 +3470,7 @@
           },
           "DevicePropertiesMinutMetadataLatestSensorValuesTemperature": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "time": "string",
               "value": "double",
@@ -3545,6 +3481,7 @@
           },
           "DevicePropertiesModel": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "accessory_keypad_supported": {
                 "docs": "
@@ -3585,6 +3522,7 @@
           },
           "DevicePropertiesNestMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "custom_name": "string",
               "device_name": "string",
@@ -3596,6 +3534,7 @@
           },
           "DevicePropertiesNoiseawareMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_model": "DevicePropertiesNoiseawareMetadataDeviceModel",
@@ -3618,6 +3557,7 @@
           },
           "DevicePropertiesNukiMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
@@ -3631,6 +3571,7 @@
           },
           "DevicePropertiesSaltoMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "battery_level": "string",
               "customer_reference": "string",
@@ -3645,6 +3586,7 @@
           },
           "DevicePropertiesSchlageMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "access_code_length": "optional<double>",
               "device_id": "string",
@@ -3657,6 +3599,7 @@
           },
           "DevicePropertiesSeamBridgeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_num": "double",
               "name": "string",
@@ -3677,6 +3620,7 @@
           },
           "DevicePropertiesSmartthingsMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_name": "string",
@@ -3689,6 +3633,7 @@
           },
           "DevicePropertiesTedeeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "bridge_id": "double",
               "bridge_name": "string",
@@ -3704,6 +3649,7 @@
           },
           "DevicePropertiesTtlockMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "feature_value": "string",
               "lock_alias": "string",
@@ -3715,6 +3661,7 @@
           },
           "DevicePropertiesTwoNMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "double",
               "device_name": "string",
@@ -3725,6 +3672,7 @@
           },
           "DevicePropertiesWyzeMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_id": "string",
               "device_info_model": "string",
@@ -3741,6 +3689,7 @@
           },
           "DeviceProvider": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device_provider_name": "DeviceProviderDeviceProviderName",
               "display_name": "string",
@@ -3809,6 +3758,7 @@
           },
           "DeviceWarningsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "warning_code": "string",
@@ -3819,6 +3769,7 @@
           },
           "EnrollmentAutomation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": "datetime",
               "credential_manager_acs_system_id": {
@@ -3864,6 +3815,7 @@
           },
           "Event": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential_id": {
                 "type": "optional<string>",
@@ -3956,6 +3908,7 @@
           },
           "Network": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": "datetime",
               "display_name": "string",
@@ -3984,6 +3937,7 @@
           },
           "NoiseThreshold": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device_id": {
                 "type": "string",
@@ -4015,6 +3969,7 @@
           },
           "Phone": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "can_program_offline_access_codes": "optional<boolean>",
               "can_program_online_access_codes": "optional<boolean>",
@@ -4057,17 +4012,13 @@
               },
               "location": {
                 "docs": "Location information for the device.",
-                "inline": true,
                 "type": "optional<PhoneLocation>",
               },
               "nickname": {
                 "docs": "Optional nickname to describe the device, settable through Seam",
                 "type": "optional<string>",
               },
-              "properties": {
-                "inline": true,
-                "type": "PhoneProperties",
-              },
+              "properties": "PhoneProperties",
               "warnings": {
                 "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
                 "type": "list<PhoneWarningsItem>",
@@ -4104,6 +4055,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -4123,6 +4075,7 @@
           },
           "PhoneErrorsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "error_code": "string",
               "message": "string",
@@ -4133,6 +4086,7 @@
           },
           "PhoneLocation": {
             "docs": "Location information for the device.",
+            "inline": true,
             "properties": {
               "location_name": {
                 "docs": "Name of the device location.",
@@ -4149,11 +4103,9 @@
           },
           "PhoneProperties": {
             "docs": undefined,
+            "inline": true,
             "properties": {
-              "assa_abloy_credential_service_metadata": {
-                "inline": true,
-                "type": "optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>",
-              },
+              "assa_abloy_credential_service_metadata": "optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -4161,6 +4113,7 @@
           },
           "PhonePropertiesAssaAbloyCredentialServiceMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "endpoints": "list<PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>",
               "has_active_endpoint": "boolean",
@@ -4171,6 +4124,7 @@
           },
           "PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "endpoint_id": "string",
               "is_active": "boolean",
@@ -4181,6 +4135,7 @@
           },
           "PhoneWarningsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "warning_code": "string",
@@ -4191,6 +4146,7 @@
           },
           "ServiceHealth": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": "string",
               "service": "string",
@@ -4212,6 +4168,7 @@
           },
           "UnmanagedAccessCode": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code_id": {
                 "docs": "Unique identifier for the access code.",
@@ -4278,6 +4235,7 @@
           },
           "UnmanagedDevice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "can_program_offline_access_codes": "optional<boolean>",
               "can_program_online_access_codes": "optional<boolean>",
@@ -4323,10 +4281,7 @@
                 "type": "list<UnmanagedDeviceErrorsItem>",
               },
               "is_managed": "boolean",
-              "properties": {
-                "inline": true,
-                "type": "UnmanagedDeviceProperties",
-              },
+              "properties": "UnmanagedDeviceProperties",
               "warnings": {
                 "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
                 "type": "list<UnmanagedDeviceWarningsItem>",
@@ -4402,6 +4357,7 @@
           },
           "UnmanagedDeviceErrorsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "error_code": "string",
               "message": "string",
@@ -4412,15 +4368,14 @@
           },
           "UnmanagedDeviceProperties": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "accessory_keypad": {
                 "docs": "Represents the accessory keypad state.",
-                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesAccessoryKeypad>",
               },
               "battery": {
                 "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
-                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesBattery>",
               },
               "battery_level": {
@@ -4452,10 +4407,7 @@
                 "docs": "Manufacturer of the device.",
                 "type": "optional<string>",
               },
-              "model": {
-                "inline": true,
-                "type": "UnmanagedDevicePropertiesModel",
-              },
+              "model": "UnmanagedDevicePropertiesModel",
               "name": {
                 "docs": "
       ---
@@ -4484,10 +4436,10 @@
           },
           "UnmanagedDevicePropertiesAccessoryKeypad": {
             "docs": "Represents the accessory keypad state.",
+            "inline": true,
             "properties": {
               "battery": {
                 "docs": "Indicates if the keypad battery properties.",
-                "inline": true,
                 "type": "optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>",
               },
               "is_connected": {
@@ -4501,6 +4453,7 @@
           },
           "UnmanagedDevicePropertiesAccessoryKeypadBattery": {
             "docs": "Indicates if the keypad battery properties.",
+            "inline": true,
             "properties": {
               "level": {
                 "type": "double",
@@ -4519,6 +4472,7 @@
           },
           "UnmanagedDevicePropertiesBattery": {
             "docs": "Represents the current status of the battery charge level. Values are "critical," which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; "low," which signifies that the battery is under the preferred threshold and should be charged soon; "good," which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and "full," which represents a battery that is fully charged, providing the maximum duration of usage.",
+            "inline": true,
             "properties": {
               "level": {
                 "type": "double",
@@ -4549,6 +4503,7 @@
           },
           "UnmanagedDevicePropertiesModel": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "accessory_keypad_supported": {
                 "docs": "
@@ -4589,6 +4544,7 @@
           },
           "UnmanagedDeviceWarningsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "message": "string",
               "warning_code": "string",
@@ -4599,6 +4555,7 @@
           },
           "UserIdentity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": "datetime",
               "display_name": {
@@ -4663,6 +4620,7 @@
           },
           "Webhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "event_types": "optional<list<string>>",
               "secret": "optional<string>",
@@ -4675,6 +4633,7 @@
           },
           "Workspace": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "company_name": "string",
               "connect_partner_name": {
@@ -4901,10 +4860,12 @@ types:
       action_type: literal<"LOCK_DOOR">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptOneResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptOne:
     docs: Locking door succeeded.
     properties:
@@ -4922,17 +4883,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"LOCK_DOOR">
-      result:
-        type: ActionAttemptOneResult
-        inline: true
+      result: ActionAttemptOneResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwoError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwo:
     docs: Locking door failed.
     properties:
@@ -4950,11 +4911,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"LOCK_DOOR">
-      error:
-        type: ActionAttemptTwoError
-        inline: true
+      error: ActionAttemptTwoError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThree:
     docs: Unlocking door.
     properties:
@@ -4975,10 +4935,12 @@ types:
       action_type: literal<"UNLOCK_DOOR">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFourResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFour:
     docs: Unlocking door succeeded.
     properties:
@@ -4996,17 +4958,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"UNLOCK_DOOR">
-      result:
-        type: ActionAttemptFourResult
-        inline: true
+      result: ActionAttemptFourResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFiveError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFive:
     docs: Unlocking door failed.
     properties:
@@ -5024,11 +4986,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UNLOCK_DOOR">
-      error:
-        type: ActionAttemptFiveError
-        inline: true
+      error: ActionAttemptFiveError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSix:
     docs: Resetting sandbox workspace.
     properties:
@@ -5049,10 +5010,12 @@ types:
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSevenResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSeven:
     docs: Resetting sandbox workspace succeeded.
     properties:
@@ -5070,17 +5033,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
-      result:
-        type: ActionAttemptSevenResult
-        inline: true
+      result: ActionAttemptSevenResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptEightError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptEight:
     docs: Resetting sandbox workspace failed.
     properties:
@@ -5098,11 +5061,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
-      error:
-        type: ActionAttemptEightError
-        inline: true
+      error: ActionAttemptEightError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptNine:
     docs: Setting HVAC to cool.
     properties:
@@ -5123,10 +5085,12 @@ types:
       action_type: literal<"SET_COOL">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTenResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTen:
     docs: Setting HVAC to cool succeeded.
     properties:
@@ -5144,17 +5108,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_COOL">
-      result:
-        type: ActionAttemptTenResult
-        inline: true
+      result: ActionAttemptTenResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptElevenError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptEleven:
     docs: Setting HVAC to cool failed.
     properties:
@@ -5172,11 +5136,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_COOL">
-      error:
-        type: ActionAttemptElevenError
-        inline: true
+      error: ActionAttemptElevenError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwelve:
     docs: Setting HVAC to heat mode.
     properties:
@@ -5197,10 +5160,12 @@ types:
       action_type: literal<"SET_HEAT">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirteenResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirteen:
     docs: Setting HVAC to heat mode succeeded.
     properties:
@@ -5218,17 +5183,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_HEAT">
-      result:
-        type: ActionAttemptThirteenResult
-        inline: true
+      result: ActionAttemptThirteenResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFourteenError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFourteen:
     docs: Setting HVAC to heat mode failed.
     properties:
@@ -5246,11 +5211,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_HEAT">
-      error:
-        type: ActionAttemptFourteenError
-        inline: true
+      error: ActionAttemptFourteenError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFifteen:
     docs: Setting HVAC to heat-cool mode.
     properties:
@@ -5271,10 +5235,12 @@ types:
       action_type: literal<"SET_HEAT_COOL">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSixteenResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSixteen:
     docs: Setting HVAC to heat-cool mode succeeded.
     properties:
@@ -5292,17 +5258,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_HEAT_COOL">
-      result:
-        type: ActionAttemptSixteenResult
-        inline: true
+      result: ActionAttemptSixteenResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSeventeenError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptSeventeen:
     docs: Setting heat-cool mode failed.
     properties:
@@ -5320,11 +5286,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_HEAT_COOL">
-      error:
-        type: ActionAttemptSeventeenError
-        inline: true
+      error: ActionAttemptSeventeenError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptEighteen:
     docs: Setting fan mode.
     properties:
@@ -5345,10 +5310,12 @@ types:
       action_type: literal<"SET_FAN_MODE">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptNineteenResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptNineteen:
     docs: Setting fan mode succeeded.
     properties:
@@ -5366,17 +5333,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_FAN_MODE">
-      result:
-        type: ActionAttemptNineteenResult
-        inline: true
+      result: ActionAttemptNineteenResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwenty:
     docs: Setting fan mode failed.
     properties:
@@ -5394,11 +5361,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_FAN_MODE">
-      error:
-        type: ActionAttemptTwentyError
-        inline: true
+      error: ActionAttemptTwentyError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyOne:
     docs: Turning HVAC off.
     properties:
@@ -5419,10 +5385,12 @@ types:
       action_type: literal<"SET_THERMOSTAT_OFF">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyTwoResult:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyTwo:
     docs: Turning HVAC off succeeded.
     properties:
@@ -5440,17 +5408,17 @@ types:
       status: literal<"success">
       error: optional<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
-      result:
-        type: ActionAttemptTwentyTwoResult
-        inline: true
+      result: ActionAttemptTwentyTwoResult
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyThreeError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyThree:
     docs: Turning HVAC off failed.
     properties:
@@ -5468,11 +5436,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
-      error:
-        type: ActionAttemptTwentyThreeError
-        inline: true
+      error: ActionAttemptTwentyThreeError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyFour:
     properties:
       action_attempt_id:
@@ -5492,6 +5459,7 @@ types:
       action_type: literal<"SYNC_ACCESS_CODES">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyFive:
     properties:
       action_attempt_id:
@@ -5511,12 +5479,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentySixError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentySix:
     properties:
       action_attempt_id:
@@ -5533,11 +5503,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"SYNC_ACCESS_CODES">
-      error:
-        type: ActionAttemptTwentySixError
-        inline: true
+      error: ActionAttemptTwentySixError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentySeven:
     properties:
       action_attempt_id:
@@ -5557,6 +5526,7 @@ types:
       action_type: literal<"CREATE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyEight:
     properties:
       action_attempt_id:
@@ -5576,12 +5546,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyNineError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptTwentyNine:
     properties:
       action_attempt_id:
@@ -5598,11 +5570,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"CREATE_ACCESS_CODE">
-      error:
-        type: ActionAttemptTwentyNineError
-        inline: true
+      error: ActionAttemptTwentyNineError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirty:
     properties:
       action_attempt_id:
@@ -5622,6 +5593,7 @@ types:
       action_type: literal<"DELETE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyOne:
     properties:
       action_attempt_id:
@@ -5641,12 +5613,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyTwoError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyTwo:
     properties:
       action_attempt_id:
@@ -5663,11 +5637,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"DELETE_ACCESS_CODE">
-      error:
-        type: ActionAttemptThirtyTwoError
-        inline: true
+      error: ActionAttemptThirtyTwoError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyThree:
     properties:
       action_attempt_id:
@@ -5687,6 +5660,7 @@ types:
       action_type: literal<"UPDATE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyFour:
     properties:
       action_attempt_id:
@@ -5706,12 +5680,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyFiveError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyFive:
     properties:
       action_attempt_id:
@@ -5728,11 +5704,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
-      error:
-        type: ActionAttemptThirtyFiveError
-        inline: true
+      error: ActionAttemptThirtyFiveError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtySix:
     properties:
       action_attempt_id:
@@ -5752,6 +5727,7 @@ types:
       action_type: literal<"CREATE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtySeven:
     properties:
       action_attempt_id:
@@ -5771,12 +5747,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyEightError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyEight:
     properties:
       action_attempt_id:
@@ -5793,11 +5771,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
-      error:
-        type: ActionAttemptThirtyEightError
-        inline: true
+      error: ActionAttemptThirtyEightError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptThirtyNine:
     properties:
       action_attempt_id:
@@ -5817,6 +5794,7 @@ types:
       action_type: literal<"DELETE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptForty:
     properties:
       action_attempt_id:
@@ -5836,12 +5814,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFortyOneError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFortyOne:
     properties:
       action_attempt_id:
@@ -5858,11 +5838,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
-      error:
-        type: ActionAttemptFortyOneError
-        inline: true
+      error: ActionAttemptFortyOneError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFortyTwo:
     properties:
       action_attempt_id:
@@ -5882,6 +5861,7 @@ types:
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptFortyThree:
     properties:
       action_attempt_id:
@@ -5901,12 +5881,14 @@ types:
       result: optional<unknown>
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptActionAttemptIdError:
     properties:
       type: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttemptActionAttemptId:
     properties:
       action_attempt_id:
@@ -5923,11 +5905,10 @@ types:
       status: literal<"error">
       result: optional<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
-      error:
-        type: ActionAttemptActionAttemptIdError
-        inline: true
+      error: ActionAttemptActionAttemptIdError
     source:
       openapi: ../openapi.json
+    inline: true
   ActionAttempt:
     discriminated: false
     union:
@@ -6076,6 +6057,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectWebview:
     properties:
       connect_webview_id:
@@ -6140,6 +6122,7 @@ types:
       exclusive: optional<boolean>
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccountCustomMetadataValue:
     discriminated: false
     union:
@@ -6147,6 +6130,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccount:
     properties:
       connected_account_id:
@@ -6154,9 +6138,7 @@ types:
         validation:
           format: uuid
       created_at: optional<datetime>
-      user_identifier:
-        type: optional<ConnectedAccountUserIdentifier>
-        inline: true
+      user_identifier: optional<ConnectedAccountUserIdentifier>
       account_type: optional<string>
       account_type_display_name: string
       errors: optional<unknown>
@@ -6223,6 +6205,7 @@ types:
           max: 1
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAccessoryKeypad:
     docs: Represents the accessory keypad state.
     properties:
@@ -6232,9 +6215,9 @@ types:
       battery:
         type: optional<DevicePropertiesAccessoryKeypadBattery>
         docs: Indicates if the keypad battery properties.
-        inline: true
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAppearance:
     properties:
       name:
@@ -6244,6 +6227,7 @@ types:
           settable through Seam.
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesModel:
     properties:
       can_connect_accessory_keypad:
@@ -6276,6 +6260,7 @@ types:
                 
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesBatteryStatus:
     enum:
       - critical
@@ -6302,18 +6287,21 @@ types:
       status: DevicePropertiesBatteryStatus
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem:
     properties:
       endpoint_id: string
       is_active: boolean
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAssaAbloyCredentialServiceMetadata:
     properties:
       has_active_endpoint: boolean
       endpoints: list<DevicePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAugustMetadata:
     properties:
       lock_id: string
@@ -6325,6 +6313,7 @@ types:
       house_id: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesAvigilonAltaMetadata:
     properties:
       entry_name: string
@@ -6336,6 +6325,7 @@ types:
       entry_relays_total_count: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesSchlageMetadata:
     properties:
       device_id: string
@@ -6344,6 +6334,7 @@ types:
       model: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesSmartthingsMetadata:
     properties:
       device_id: string
@@ -6352,6 +6343,7 @@ types:
       location_id: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesLocklyMetadata:
     properties:
       device_id: string
@@ -6359,6 +6351,7 @@ types:
       model: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesNukiMetadata:
     properties:
       device_id: string
@@ -6368,6 +6361,7 @@ types:
       keypad_2_paired: optional<boolean>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesKwiksetMetadata:
     properties:
       device_id: string
@@ -6375,6 +6369,7 @@ types:
       model_number: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesSaltoMetadata:
     properties:
       lock_id: string
@@ -6385,17 +6380,20 @@ types:
       model: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesGenieMetadata:
     properties:
       device_name: string
       door_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesBrivoMetadata:
     properties:
       device_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesIglooMetadata:
     properties:
       device_id: string
@@ -6403,6 +6401,7 @@ types:
       model: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesNoiseawareMetadataDeviceModel:
     enum:
       - indoor
@@ -6418,64 +6417,60 @@ types:
       device_id: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValuesTemperature:
     properties:
       time: string
       value: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValuesSound:
     properties:
       time: string
       value: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValuesHumidity:
     properties:
       time: string
       value: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValuesPressure:
     properties:
       time: string
       value: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ:
     properties:
       time: string
       value: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadataLatestSensorValues:
     properties:
-      temperature:
-        type: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
-        inline: true
-      sound:
-        type: DevicePropertiesMinutMetadataLatestSensorValuesSound
-        inline: true
-      humidity:
-        type: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
-        inline: true
-      pressure:
-        type: DevicePropertiesMinutMetadataLatestSensorValuesPressure
-        inline: true
-      accelerometer_z:
-        type: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
-        inline: true
+      temperature: DevicePropertiesMinutMetadataLatestSensorValuesTemperature
+      sound: DevicePropertiesMinutMetadataLatestSensorValuesSound
+      humidity: DevicePropertiesMinutMetadataLatestSensorValuesHumidity
+      pressure: DevicePropertiesMinutMetadataLatestSensorValuesPressure
+      accelerometer_z: DevicePropertiesMinutMetadataLatestSensorValuesAccelerometerZ
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesMinutMetadata:
     properties:
       device_id: string
       device_name: string
-      latest_sensor_values:
-        type: DevicePropertiesMinutMetadataLatestSensorValues
-        inline: true
+      latest_sensor_values: DevicePropertiesMinutMetadataLatestSensorValues
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesFourSuitesMetadata:
     properties:
       device_id: double
@@ -6483,12 +6478,14 @@ types:
       reclose_delay_in_seconds: double
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesTwoNMetadata:
     properties:
       device_id: double
       device_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesControlbywebMetadata:
     properties:
       device_id: string
@@ -6496,6 +6493,7 @@ types:
       relay_name: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesTtlockMetadata:
     properties:
       lock_id: double
@@ -6503,6 +6501,7 @@ types:
       feature_value: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesSeamBridgeMetadataUnlockMethod:
     enum:
       - bridge
@@ -6516,6 +6515,7 @@ types:
       name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesIgloohomeMetadata:
     properties:
       device_id: string
@@ -6525,6 +6525,7 @@ types:
       keypad_id: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesNestMetadata:
     properties:
       nest_device_id: string
@@ -6532,18 +6533,21 @@ types:
       custom_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesEcobeeMetadata:
     properties:
       ecobee_device_id: string
       device_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesHoneywellResideoMetadata:
     properties:
       honeywell_resideo_device_id: string
       device_name: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesHubitatMetadata:
     properties:
       device_id: string
@@ -6551,6 +6555,7 @@ types:
       device_label: string
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem:
     properties:
       name: string
@@ -6568,6 +6573,7 @@ types:
           format: uuid
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesDormakabaOracodeMetadata:
     properties:
       door_id: double
@@ -6581,6 +6587,7 @@ types:
         optional<list<DevicePropertiesDormakabaOracodeMetadataPredefinedTimeSlotsItem>>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesWyzeMetadata:
     properties:
       device_id: string
@@ -6593,6 +6600,7 @@ types:
       locker_status_hardlock: optional<double>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesTedeeMetadata:
     properties:
       device_id: double
@@ -6604,6 +6612,7 @@ types:
       keypad_id: optional<double>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesCodeConstraintsItemZeroConstraintType:
     enum:
       - no_zeros
@@ -6622,6 +6631,7 @@ types:
       constraint_type: DevicePropertiesCodeConstraintsItemZeroConstraintType
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesCodeConstraintsItemMaxLengthConstraintType:
     enum:
       - name_length
@@ -6635,6 +6645,7 @@ types:
       max_length: optional<double>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesCodeConstraintsItem:
     discriminated: false
     union:
@@ -6642,11 +6653,13 @@ types:
       - DevicePropertiesCodeConstraintsItemMaxLength
     source:
       openapi: ../openapi.json
+    inline: true
   DevicePropertiesKeypadBattery:
     properties:
       level: double
     source:
       openapi: ../openapi.json
+    inline: true
   DeviceProperties:
     docs: Properties of the device.
     properties:
@@ -6665,13 +6678,8 @@ types:
       accessory_keypad:
         type: optional<DevicePropertiesAccessoryKeypad>
         docs: Represents the accessory keypad state.
-        inline: true
-      appearance:
-        type: DevicePropertiesAppearance
-        inline: true
-      model:
-        type: DevicePropertiesModel
-        inline: true
+      appearance: DevicePropertiesAppearance
+      model: DevicePropertiesModel
       has_direct_power:
         type: optional<boolean>
         docs: Indicates whether the device has direct power.
@@ -6694,7 +6702,6 @@ types:
           adequate for normal use without the immediate need for recharging; and
           "full," which represents a battery that is fully charged, providing
           the maximum duration of usage.
-        inline: true
       manufacturer:
         type: optional<string>
         docs: Manufacturer of the device.
@@ -6743,87 +6750,33 @@ types:
       currently_triggering_noise_threshold_ids:
         type: optional<list<string>>
         docs: Array of noise threshold IDs that are currently triggering.
-      assa_abloy_credential_service_metadata:
-        type: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
-        inline: true
-      august_metadata:
-        type: optional<DevicePropertiesAugustMetadata>
-        inline: true
-      avigilon_alta_metadata:
-        type: optional<DevicePropertiesAvigilonAltaMetadata>
-        inline: true
-      schlage_metadata:
-        type: optional<DevicePropertiesSchlageMetadata>
-        inline: true
-      smartthings_metadata:
-        type: optional<DevicePropertiesSmartthingsMetadata>
-        inline: true
-      lockly_metadata:
-        type: optional<DevicePropertiesLocklyMetadata>
-        inline: true
-      nuki_metadata:
-        type: optional<DevicePropertiesNukiMetadata>
-        inline: true
-      kwikset_metadata:
-        type: optional<DevicePropertiesKwiksetMetadata>
-        inline: true
-      salto_metadata:
-        type: optional<DevicePropertiesSaltoMetadata>
-        inline: true
-      genie_metadata:
-        type: optional<DevicePropertiesGenieMetadata>
-        inline: true
-      brivo_metadata:
-        type: optional<DevicePropertiesBrivoMetadata>
-        inline: true
-      igloo_metadata:
-        type: optional<DevicePropertiesIglooMetadata>
-        inline: true
-      noiseaware_metadata:
-        type: optional<DevicePropertiesNoiseawareMetadata>
-        inline: true
-      minut_metadata:
-        type: optional<DevicePropertiesMinutMetadata>
-        inline: true
-      four_suites_metadata:
-        type: optional<DevicePropertiesFourSuitesMetadata>
-        inline: true
-      two_n_metadata:
-        type: optional<DevicePropertiesTwoNMetadata>
-        inline: true
-      controlbyweb_metadata:
-        type: optional<DevicePropertiesControlbywebMetadata>
-        inline: true
-      ttlock_metadata:
-        type: optional<DevicePropertiesTtlockMetadata>
-        inline: true
-      seam_bridge_metadata:
-        type: optional<DevicePropertiesSeamBridgeMetadata>
-        inline: true
-      igloohome_metadata:
-        type: optional<DevicePropertiesIgloohomeMetadata>
-        inline: true
-      nest_metadata:
-        type: optional<DevicePropertiesNestMetadata>
-        inline: true
-      ecobee_metadata:
-        type: optional<DevicePropertiesEcobeeMetadata>
-        inline: true
-      honeywell_resideo_metadata:
-        type: optional<DevicePropertiesHoneywellResideoMetadata>
-        inline: true
-      hubitat_metadata:
-        type: optional<DevicePropertiesHubitatMetadata>
-        inline: true
-      dormakaba_oracode_metadata:
-        type: optional<DevicePropertiesDormakabaOracodeMetadata>
-        inline: true
-      wyze_metadata:
-        type: optional<DevicePropertiesWyzeMetadata>
-        inline: true
-      tedee_metadata:
-        type: optional<DevicePropertiesTedeeMetadata>
-        inline: true
+      assa_abloy_credential_service_metadata: optional<DevicePropertiesAssaAbloyCredentialServiceMetadata>
+      august_metadata: optional<DevicePropertiesAugustMetadata>
+      avigilon_alta_metadata: optional<DevicePropertiesAvigilonAltaMetadata>
+      schlage_metadata: optional<DevicePropertiesSchlageMetadata>
+      smartthings_metadata: optional<DevicePropertiesSmartthingsMetadata>
+      lockly_metadata: optional<DevicePropertiesLocklyMetadata>
+      nuki_metadata: optional<DevicePropertiesNukiMetadata>
+      kwikset_metadata: optional<DevicePropertiesKwiksetMetadata>
+      salto_metadata: optional<DevicePropertiesSaltoMetadata>
+      genie_metadata: optional<DevicePropertiesGenieMetadata>
+      brivo_metadata: optional<DevicePropertiesBrivoMetadata>
+      igloo_metadata: optional<DevicePropertiesIglooMetadata>
+      noiseaware_metadata: optional<DevicePropertiesNoiseawareMetadata>
+      minut_metadata: optional<DevicePropertiesMinutMetadata>
+      four_suites_metadata: optional<DevicePropertiesFourSuitesMetadata>
+      two_n_metadata: optional<DevicePropertiesTwoNMetadata>
+      controlbyweb_metadata: optional<DevicePropertiesControlbywebMetadata>
+      ttlock_metadata: optional<DevicePropertiesTtlockMetadata>
+      seam_bridge_metadata: optional<DevicePropertiesSeamBridgeMetadata>
+      igloohome_metadata: optional<DevicePropertiesIgloohomeMetadata>
+      nest_metadata: optional<DevicePropertiesNestMetadata>
+      ecobee_metadata: optional<DevicePropertiesEcobeeMetadata>
+      honeywell_resideo_metadata: optional<DevicePropertiesHoneywellResideoMetadata>
+      hubitat_metadata: optional<DevicePropertiesHubitatMetadata>
+      dormakaba_oracode_metadata: optional<DevicePropertiesDormakabaOracodeMetadata>
+      wyze_metadata: optional<DevicePropertiesWyzeMetadata>
+      tedee_metadata: optional<DevicePropertiesTedeeMetadata>
       _experimental_supported_code_from_access_codes_lengths: optional<list<double>>
       code_constraints: optional<list<DevicePropertiesCodeConstraintsItem>>
       supported_code_lengths: optional<list<double>>
@@ -6831,12 +6784,11 @@ types:
       supports_backup_access_code_pool: optional<boolean>
       has_native_entry_events: optional<boolean>
       locked: optional<boolean>
-      keypad_battery:
-        type: optional<DevicePropertiesKeypadBattery>
-        inline: true
+      keypad_battery: optional<DevicePropertiesKeypadBattery>
       door_open: optional<boolean>
     source:
       openapi: ../openapi.json
+    inline: true
   DeviceLocation:
     docs: Location information for the device.
     properties:
@@ -6848,18 +6800,21 @@ types:
         docs: Time zone of the device location.
     source:
       openapi: ../openapi.json
+    inline: true
   DeviceErrorsItem:
     properties:
       error_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   DeviceWarningsItem:
     properties:
       warning_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   DeviceCustomMetadataValue:
     discriminated: false
     union:
@@ -6867,6 +6822,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   Device:
     properties:
       device_id:
@@ -6906,7 +6862,6 @@ types:
       location:
         type: optional<DeviceLocation>
         docs: Location information for the device.
-        inline: true
       connected_account_id:
         type: string
         docs: Unique identifier for the account associated with the device.
@@ -7005,12 +6960,14 @@ types:
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDeviceWarningsItem:
     properties:
       warning_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDevicePropertiesAccessoryKeypadBattery:
     docs: Indicates if the keypad battery properties.
     properties:
@@ -7021,6 +6978,7 @@ types:
           max: 1
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDevicePropertiesAccessoryKeypad:
     docs: Represents the accessory keypad state.
     properties:
@@ -7030,9 +6988,9 @@ types:
       battery:
         type: optional<UnmanagedDevicePropertiesAccessoryKeypadBattery>
         docs: Indicates if the keypad battery properties.
-        inline: true
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDevicePropertiesBatteryStatus:
     enum:
       - critical
@@ -7059,6 +7017,7 @@ types:
       status: UnmanagedDevicePropertiesBatteryStatus
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDevicePropertiesModel:
     properties:
       can_connect_accessory_keypad:
@@ -7091,12 +7050,12 @@ types:
                 
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDeviceProperties:
     properties:
       accessory_keypad:
         type: optional<UnmanagedDevicePropertiesAccessoryKeypad>
         docs: Represents the accessory keypad state.
-        inline: true
       name:
         type: string
         docs: |2-
@@ -7139,7 +7098,6 @@ types:
           adequate for normal use without the immediate need for recharging; and
           "full," which represents a battery that is fully charged, providing
           the maximum duration of usage.
-        inline: true
       online_access_codes_enabled:
         type: optional<boolean>
         docs: >-
@@ -7150,11 +7108,10 @@ types:
         docs: >-
           Indicates whether it is currently possible to use offline access codes
           for the device.
-      model:
-        type: UnmanagedDevicePropertiesModel
-        inline: true
+      model: UnmanagedDevicePropertiesModel
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedDevice:
     properties:
       device_id:
@@ -7210,9 +7167,7 @@ types:
         type: datetime
         docs: Date and time at which the device object was created.
       is_managed: boolean
-      properties:
-        type: UnmanagedDeviceProperties
-        inline: true
+      properties: UnmanagedDeviceProperties
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -7417,12 +7372,14 @@ types:
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   AcsSystemErrorsItemVisionlineInstanceUnreachable:
     properties:
       created_at: datetime
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   AcsSystemErrorsItem:
     discriminant: error_code
     base-properties: {}
@@ -7435,6 +7392,7 @@ types:
     properties: {}
     source:
       openapi: ../openapi.json
+    inline: true
   AcsSystem:
     properties:
       acs_system_id:
@@ -7550,6 +7508,7 @@ types:
       ends_at: datetime
     source:
       openapi: ../openapi.json
+    inline: true
   AcsUser:
     properties:
       acs_user_id:
@@ -7573,9 +7532,7 @@ types:
       external_type: optional<AcsUserExternalType>
       external_type_display_name: optional<string>
       is_suspended: boolean
-      access_schedule:
-        type: optional<AcsUserAccessSchedule>
-        inline: true
+      access_schedule: optional<AcsUserAccessSchedule>
       user_identity_id: optional<string>
       user_identity_full_name: optional<string>
       user_identity_email_address: optional<string>
@@ -7604,6 +7561,7 @@ types:
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   AcsEntranceLatchMetadata:
     properties:
       accessibility_type: string
@@ -7612,6 +7570,7 @@ types:
       is_connected: boolean
     source:
       openapi: ../openapi.json
+    inline: true
   AcsEntranceVisionlineMetadataDoorCategory:
     enum:
       - entrance
@@ -7636,6 +7595,7 @@ types:
       visionline_door_profile_type: AcsEntranceVisionlineMetadataProfilesItemVisionlineDoorProfileType
     source:
       openapi: ../openapi.json
+    inline: true
   AcsEntranceVisionlineMetadata:
     properties:
       door_name: string
@@ -7643,6 +7603,7 @@ types:
       profiles: optional<list<AcsEntranceVisionlineMetadataProfilesItem>>
     source:
       openapi: ../openapi.json
+    inline: true
   AcsEntrance:
     properties:
       acs_system_id:
@@ -7656,12 +7617,8 @@ types:
       created_at: datetime
       display_name: string
       errors: list<AcsEntranceErrorsItem>
-      latch_metadata:
-        type: optional<AcsEntranceLatchMetadata>
-        inline: true
-      visionline_metadata:
-        type: optional<AcsEntranceVisionlineMetadata>
-        inline: true
+      latch_metadata: optional<AcsEntranceLatchMetadata>
+      visionline_metadata: optional<AcsEntranceVisionlineMetadata>
     source:
       openapi: ../openapi.json
   AcsCredentialProvisioningAutomation:
@@ -7729,12 +7686,14 @@ types:
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   AcsCredentialWarningsItem:
     properties:
       warning_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   AcsCredentialVisionlineMetadataCardFunctionType:
     enum:
       - guest
@@ -7749,6 +7708,7 @@ types:
       common_acs_entrance_ids: optional<list<string>>
     source:
       openapi: ../openapi.json
+    inline: true
   AcsCredential:
     properties:
       acs_credential_id:
@@ -7791,9 +7751,7 @@ types:
       is_multi_phone_sync_credential: optional<boolean>
       is_latest_desired_state_synced_with_provider: optional<boolean>
       latest_desired_state_synced_with_provider_at: optional<datetime>
-      visionline_metadata:
-        type: optional<AcsCredentialVisionlineMetadata>
-        inline: true
+      visionline_metadata: optional<AcsCredentialVisionlineMetadata>
     source:
       openapi: ../openapi.json
   EnrollmentAutomation:
@@ -7839,19 +7797,20 @@ types:
       is_active: boolean
     source:
       openapi: ../openapi.json
+    inline: true
   PhonePropertiesAssaAbloyCredentialServiceMetadata:
     properties:
       has_active_endpoint: boolean
       endpoints: list<PhonePropertiesAssaAbloyCredentialServiceMetadataEndpointsItem>
     source:
       openapi: ../openapi.json
+    inline: true
   PhoneProperties:
     properties:
-      assa_abloy_credential_service_metadata:
-        type: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
-        inline: true
+      assa_abloy_credential_service_metadata: optional<PhonePropertiesAssaAbloyCredentialServiceMetadata>
     source:
       openapi: ../openapi.json
+    inline: true
   PhoneLocation:
     docs: Location information for the device.
     properties:
@@ -7863,18 +7822,21 @@ types:
         docs: Time zone of the device location.
     source:
       openapi: ../openapi.json
+    inline: true
   PhoneErrorsItem:
     properties:
       error_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   PhoneWarningsItem:
     properties:
       warning_code: string
       message: string
     source:
       openapi: ../openapi.json
+    inline: true
   PhoneCustomMetadataValue:
     discriminated: false
     union:
@@ -7882,6 +7844,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   Phone:
     properties:
       device_id:
@@ -7913,13 +7876,10 @@ types:
           "battery," which indicates that the device can manage battery life and
           health.
         type: list<PhoneCapabilitiesSupportedItem>
-      properties:
-        type: PhoneProperties
-        inline: true
+      properties: PhoneProperties
       location:
         type: optional<PhoneLocation>
         docs: Location information for the device.
-        inline: true
       workspace_id:
         type: string
         docs: Unique identifier for the Seam workspace associated with the device.
@@ -8779,6 +8739,7 @@ types:
           },
           "AccessCodesCreateMultipleResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_codes": "list<root.AccessCode>",
               "ok": "boolean",
@@ -8813,6 +8774,7 @@ types:
           },
           "AccessCodesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code": "root.AccessCode",
               "action_attempt": "root.ActionAttempt",
@@ -8824,6 +8786,7 @@ types:
           },
           "AccessCodesDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -8834,6 +8797,7 @@ types:
           },
           "AccessCodesGenerateCodeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "generated_code": "root.AccessCode",
               "ok": "boolean",
@@ -8844,6 +8808,7 @@ types:
           },
           "AccessCodesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code": "root.AccessCode",
               "ok": "boolean",
@@ -8854,6 +8819,7 @@ types:
           },
           "AccessCodesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_codes": "list<root.AccessCode>",
               "ok": "boolean",
@@ -8864,6 +8830,7 @@ types:
           },
           "AccessCodesPullBackupAccessCodeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "backup_access_code": "root.AccessCode",
               "ok": "boolean",
@@ -8907,6 +8874,7 @@ types:
           },
           "AccessCodesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -9615,6 +9583,7 @@ service:
         "types": {
           "SimulateCreateUnmanagedAccessCodeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code": "root.UnmanagedAccessCode",
               "ok": "boolean",
@@ -10040,6 +10009,7 @@ service:
         "types": {
           "UnmanagedConvertToManagedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -10049,6 +10019,7 @@ service:
           },
           "UnmanagedDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -10059,6 +10030,7 @@ service:
           },
           "UnmanagedGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_code": "root.UnmanagedAccessCode",
               "ok": "boolean",
@@ -10069,6 +10041,7 @@ service:
           },
           "UnmanagedListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_codes": "list<root.UnmanagedAccessCode>",
               "ok": "boolean",
@@ -10079,6 +10052,7 @@ service:
           },
           "UnmanagedUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -10678,6 +10652,7 @@ service:
         "types": {
           "AccessGroupsAddUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -10687,6 +10662,7 @@ service:
           },
           "AccessGroupsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_access_group": "root.AcsAccessGroup",
               "ok": "boolean",
@@ -10697,6 +10673,7 @@ service:
           },
           "AccessGroupsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_access_groups": "list<root.AcsAccessGroup>",
               "ok": "boolean",
@@ -10707,6 +10684,7 @@ service:
           },
           "AccessGroupsListUsersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_users": "list<root.AcsUser>",
               "ok": "boolean",
@@ -10717,6 +10695,7 @@ service:
           },
           "AccessGroupsRemoveUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -11045,6 +11024,7 @@ service:
         "types": {
           "CredentialPoolsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential_pools": "list<root.AcsCredentialPool>",
               "ok": "boolean",
@@ -11215,6 +11195,7 @@ service:
         "types": {
           "CredentialProvisioningAutomationsLaunchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential_provisioning_automation": "root.AcsCredentialProvisioningAutomation",
               "ok": "boolean",
@@ -11510,10 +11491,7 @@ service:
                       "type": "optional<boolean>",
                     },
                     "starts_at": "optional<datetime>",
-                    "visionline_metadata": {
-                      "inline": true,
-                      "type": "optional<CredentialsCreateRequestVisionlineMetadata>",
-                    },
+                    "visionline_metadata": "optional<CredentialsCreateRequestVisionlineMetadata>",
                   },
                 },
                 "content-type": "application/json",
@@ -12039,6 +12017,7 @@ service:
         "types": {
           "CredentialsAssignResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential": "root.AcsCredential",
               "ok": "boolean",
@@ -12059,6 +12038,7 @@ service:
           },
           "CredentialsCreateRequestVisionlineMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "assa_abloy_credential_service_mobile_endpoint_id": {
                 "type": "optional<string>",
@@ -12110,6 +12090,7 @@ service:
           },
           "CredentialsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential": "root.AcsCredential",
               "ok": "boolean",
@@ -12120,6 +12101,7 @@ service:
           },
           "CredentialsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -12129,6 +12111,7 @@ service:
           },
           "CredentialsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential": "root.AcsCredential",
               "ok": "boolean",
@@ -12139,6 +12122,7 @@ service:
           },
           "CredentialsListAccessibleEntrancesResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_entrances": "list<root.AcsEntrance>",
               "ok": "boolean",
@@ -12149,6 +12133,7 @@ service:
           },
           "CredentialsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credentials": "list<root.AcsCredential>",
               "ok": "boolean",
@@ -12159,6 +12144,7 @@ service:
           },
           "CredentialsUnassignResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential": "root.AcsCredential",
               "ok": "boolean",
@@ -12169,6 +12155,7 @@ service:
           },
           "CredentialsUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credential": "root.AcsCredential",
               "ok": "boolean",
@@ -12230,6 +12217,7 @@ types:
       joiner_acs_credential_ids: optional<list<string>>
     source:
       openapi: ../openapi.json
+    inline: true
   CredentialsCreateResponse:
     properties:
       acs_credential: root.AcsCredential
@@ -12368,9 +12356,7 @@ service:
               type: optional<boolean>
               default: false
             allowed_acs_entrance_ids: optional<list<string>>
-            visionline_metadata:
-              type: optional<CredentialsCreateRequestVisionlineMetadata>
-              inline: true
+            visionline_metadata: optional<CredentialsCreateRequestVisionlineMetadata>
             starts_at: optional<datetime>
             ends_at: optional<datetime>
         content-type: application/json
@@ -13067,6 +13053,7 @@ service:
         "types": {
           "EntrancesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_entrance": "root.AcsEntrance",
               "ok": "boolean",
@@ -13077,6 +13064,7 @@ service:
           },
           "EntrancesGrantAccessResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -13086,6 +13074,7 @@ service:
           },
           "EntrancesListCredentialsWithAccessResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_credentials": "list<root.AcsCredential>",
               "ok": "boolean",
@@ -13096,6 +13085,7 @@ service:
           },
           "EntrancesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_entrances": "list<root.AcsEntrance>",
               "ok": "boolean",
@@ -13588,6 +13578,7 @@ service:
         "types": {
           "SystemsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_system": "root.AcsSystem",
               "ok": "boolean",
@@ -13598,6 +13589,7 @@ service:
           },
           "SystemsListCompatibleCredentialManagerAcsSystemsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_systems": "list<root.AcsSystem>",
               "ok": "boolean",
@@ -13608,6 +13600,7 @@ service:
           },
           "SystemsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_systems": "list<root.AcsSystem>",
               "ok": "boolean",
@@ -13922,10 +13915,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "access_schedule": {
-                      "inline": true,
-                      "type": "optional<UsersCreateRequestAccessSchedule>",
-                    },
+                    "access_schedule": "optional<UsersCreateRequestAccessSchedule>",
                     "acs_access_group_ids": "optional<list<string>>",
                     "acs_system_id": {
                       "type": "string",
@@ -14515,10 +14505,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "access_schedule": {
-                      "inline": true,
-                      "type": "optional<UsersUpdateRequestAccessSchedule>",
-                    },
+                    "access_schedule": "optional<UsersUpdateRequestAccessSchedule>",
                     "acs_user_id": {
                       "type": "string",
                       "validation": {
@@ -14586,6 +14573,7 @@ service:
         "types": {
           "UsersAddToAccessGroupResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14595,6 +14583,7 @@ service:
           },
           "UsersCreateRequestAccessSchedule": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ends_at": "datetime",
               "starts_at": "datetime",
@@ -14605,6 +14594,7 @@ service:
           },
           "UsersCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_user": "root.AcsUser",
               "ok": "boolean",
@@ -14615,6 +14605,7 @@ service:
           },
           "UsersDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14624,6 +14615,7 @@ service:
           },
           "UsersGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_user": "root.AcsUser",
               "ok": "boolean",
@@ -14634,6 +14626,7 @@ service:
           },
           "UsersListAccessibleEntrancesResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_entrances": "list<root.AcsEntrance>",
               "ok": "boolean",
@@ -14644,6 +14637,7 @@ service:
           },
           "UsersListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_users": "list<root.AcsUser>",
               "ok": "boolean",
@@ -14654,6 +14648,7 @@ service:
           },
           "UsersRemoveFromAccessGroupResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14663,6 +14658,7 @@ service:
           },
           "UsersRevokeAccessToAllEntrancesResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14672,6 +14668,7 @@ service:
           },
           "UsersSuspendResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14681,6 +14678,7 @@ service:
           },
           "UsersUnsuspendResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14690,6 +14688,7 @@ service:
           },
           "UsersUpdateRequestAccessSchedule": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "ends_at": "datetime",
               "starts_at": "datetime",
@@ -14700,6 +14699,7 @@ service:
           },
           "UsersUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -14721,6 +14721,7 @@ service:
       ends_at: datetime
     source:
       openapi: ../openapi.json
+    inline: true
   UsersCreateResponse:
     properties:
       acs_user: root.AcsUser
@@ -14776,6 +14777,7 @@ service:
       ends_at: datetime
     source:
       openapi: ../openapi.json
+    inline: true
   UsersUpdateResponse:
     properties:
       ok: boolean
@@ -14840,9 +14842,7 @@ service:
               type: optional<string>
               validation:
                 format: uuid
-            access_schedule:
-              type: optional<UsersCreateRequestAccessSchedule>
-              inline: true
+            access_schedule: optional<UsersCreateRequestAccessSchedule>
             full_name: optional<string>
             email:
               type: optional<string>
@@ -15200,9 +15200,7 @@ service:
         name: UsersUpdateRequest
         body:
           properties:
-            access_schedule:
-              type: optional<UsersUpdateRequestAccessSchedule>
-              inline: true
+            access_schedule: optional<UsersUpdateRequestAccessSchedule>
             acs_user_id:
               type: string
               validation:
@@ -15376,6 +15374,7 @@ service:
         "types": {
           "ActionAttemptsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -15386,6 +15385,7 @@ service:
           },
           "ActionAttemptsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempts": "list<root.ActionAttempt>",
               "ok": "boolean",
@@ -15936,6 +15936,7 @@ service:
         "types": {
           "ClientSessionsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_session": "root.ClientSession",
               "ok": "boolean",
@@ -15946,6 +15947,7 @@ service:
           },
           "ClientSessionsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -15955,6 +15957,7 @@ service:
           },
           "ClientSessionsGetOrCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_session": "root.ClientSession",
               "ok": "boolean",
@@ -15965,6 +15968,7 @@ service:
           },
           "ClientSessionsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_session": "root.ClientSession",
               "ok": "boolean",
@@ -15975,6 +15979,7 @@ service:
           },
           "ClientSessionsGrantAccessResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_session": "root.ClientSession",
               "ok": "boolean",
@@ -15985,6 +15990,7 @@ service:
           },
           "ClientSessionsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_sessions": "list<root.ClientSession>",
               "ok": "boolean",
@@ -15995,6 +16001,7 @@ service:
           },
           "ClientSessionsRevokeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -16681,6 +16688,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -16723,6 +16731,7 @@ service:
           },
           "ConnectWebviewsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connect_webview": "root.ConnectWebview",
               "ok": "boolean",
@@ -16733,6 +16742,7 @@ service:
           },
           "ConnectWebviewsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -16742,6 +16752,7 @@ service:
           },
           "ConnectWebviewsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connect_webview": "root.ConnectWebview",
               "ok": "boolean",
@@ -16754,6 +16765,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -16764,6 +16776,7 @@ service:
           },
           "ConnectWebviewsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connect_webviews": "list<root.ConnectWebview>",
               "ok": "boolean",
@@ -16846,6 +16859,7 @@ service:
       - optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectWebviewsCreateResponse:
     properties:
       connect_webview: root.ConnectWebview
@@ -16870,6 +16884,7 @@ service:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectWebviewsListResponse:
     properties:
       connect_webviews: list<root.ConnectWebview>
@@ -17357,6 +17372,7 @@ service:
         "types": {
           "ConnectedAccountsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -17368,6 +17384,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -17378,6 +17395,7 @@ service:
           },
           "ConnectedAccountsGetRequestConnectedAccountId": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "connected_account_id": {
                 "type": "string",
@@ -17395,6 +17413,7 @@ service:
           },
           "ConnectedAccountsGetRequestEmail": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "email": {
                 "type": "string",
@@ -17412,6 +17431,7 @@ service:
           },
           "ConnectedAccountsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connected_account": "root.ConnectedAccount",
               "ok": "boolean",
@@ -17424,6 +17444,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -17434,6 +17455,7 @@ service:
           },
           "ConnectedAccountsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connected_accounts": "list<root.ConnectedAccount>",
               "ok": "boolean",
@@ -17446,6 +17468,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -17465,6 +17488,7 @@ service:
           },
           "ConnectedAccountsUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "connected_account": "root.ConnectedAccount",
               "ok": "boolean",
@@ -17489,6 +17513,7 @@ service:
           format: uuid
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccountsGetRequestEmail:
     properties:
       email:
@@ -17497,6 +17522,7 @@ service:
           format: email
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccountsGetRequest:
     discriminated: false
     union:
@@ -17517,6 +17543,7 @@ service:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccountsListResponse:
     properties:
       connected_accounts: list<root.ConnectedAccount>
@@ -17533,6 +17560,7 @@ service:
       - optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   ConnectedAccountsUpdateResponse:
     properties:
       connected_account: root.ConnectedAccount
@@ -18295,10 +18323,7 @@ service:
                       "type": "optional<boolean>",
                     },
                     "name": "optional<string>",
-                    "properties": {
-                      "inline": true,
-                      "type": "optional<DevicesUpdateRequestProperties>",
-                    },
+                    "properties": "optional<DevicesUpdateRequestProperties>",
                   },
                 },
                 "content-type": "application/json",
@@ -18323,6 +18348,7 @@ service:
         "types": {
           "DevicesDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -18332,6 +18358,7 @@ service:
           },
           "DevicesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device": "root.Device",
               "ok": "boolean",
@@ -18354,6 +18381,7 @@ service:
           },
           "DevicesListDeviceProvidersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device_providers": "list<root.DeviceProvider>",
               "ok": "boolean",
@@ -18366,6 +18394,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -18525,6 +18554,7 @@ service:
           },
           "DevicesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "devices": "list<root.Device>",
               "ok": "boolean",
@@ -18537,6 +18567,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -18556,6 +18587,7 @@ service:
           },
           "DevicesUpdateRequestProperties": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": "optional<string>",
             },
@@ -18565,6 +18597,7 @@ service:
           },
           "DevicesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -18705,6 +18738,7 @@ service:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   DevicesListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
@@ -18753,6 +18787,7 @@ service:
       name: optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicesUpdateRequestCustomMetadataValue:
     discriminated: false
     union:
@@ -18763,6 +18798,7 @@ service:
       - optional<string>
     source:
       openapi: ../openapi.json
+    inline: true
   DevicesUpdateResponse:
     properties:
       ok: boolean
@@ -19152,9 +19188,7 @@ service:
               type: string
               validation:
                 format: uuid
-            properties:
-              type: optional<DevicesUpdateRequestProperties>
-              inline: true
+            properties: optional<DevicesUpdateRequestProperties>
             name: optional<string>
             is_managed:
               type: optional<boolean>
@@ -19350,6 +19384,7 @@ service:
         "types": {
           "SimulateConnectResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -19359,6 +19394,7 @@ service:
           },
           "SimulateDisconnectResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -19368,6 +19404,7 @@ service:
           },
           "SimulateRemoveResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -19774,6 +19811,7 @@ service:
         "types": {
           "UnmanagedGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device": "root.UnmanagedDevice",
               "ok": "boolean",
@@ -19786,6 +19824,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -19945,6 +19984,7 @@ service:
           },
           "UnmanagedListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "devices": "list<root.UnmanagedDevice>",
               "ok": "boolean",
@@ -19955,6 +19995,7 @@ service:
           },
           "UnmanagedUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -20092,6 +20133,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   UnmanagedListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
@@ -20492,6 +20534,7 @@ service:
         "types": {
           "EventsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "event": "optional<root.Event>",
               "message": "optional<string>",
@@ -20505,6 +20548,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -20993,6 +21037,7 @@ service:
           },
           "EventsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "events": "list<root.Event>",
               "ok": "boolean",
@@ -21020,6 +21065,7 @@ types:
       - datetime
     source:
       openapi: ../openapi.json
+    inline: true
   EventsListRequestEventType:
     enum:
       - value: device.accessory_keypad_connected
@@ -22250,6 +22296,7 @@ service:
         "types": {
           "LocksGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "device": "root.Device",
               "lock": "root.Device",
@@ -22263,6 +22310,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -22422,6 +22470,7 @@ service:
           },
           "LocksListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "devices": "list<root.Device>",
               "locks": "list<root.Device>",
@@ -22433,6 +22482,7 @@ service:
           },
           "LocksLockDoorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -22443,6 +22493,7 @@ service:
           },
           "LocksUnlockDoorResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -22582,6 +22633,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   LocksListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
@@ -23364,6 +23416,7 @@ service:
         "types": {
           "NetworksGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "network": "root.Network",
               "ok": "boolean",
@@ -23374,6 +23427,7 @@ service:
           },
           "NetworksListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "networks": "list<root.Network>",
               "ok": "boolean",
@@ -23841,6 +23895,7 @@ service:
         "types": {
           "NoiseThresholdsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "noise_threshold": "root.NoiseThreshold",
@@ -23852,6 +23907,7 @@ service:
           },
           "NoiseThresholdsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -23862,6 +23918,7 @@ service:
           },
           "NoiseThresholdsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "noise_threshold": "root.NoiseThreshold",
               "ok": "boolean",
@@ -23872,6 +23929,7 @@ service:
           },
           "NoiseThresholdsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "noise_thresholds": "list<root.NoiseThreshold>",
               "ok": "boolean",
@@ -23882,6 +23940,7 @@ service:
           },
           "NoiseThresholdsUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -24220,6 +24279,7 @@ service:
         "types": {
           "SimulateTriggerNoiseThresholdResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -24421,6 +24481,7 @@ service:
         "types": {
           "PhonesDeactivateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -24430,6 +24491,7 @@ service:
           },
           "PhonesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "phones": "list<root.Phone>",
@@ -24626,15 +24688,9 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "assa_abloy_metadata": {
-                      "inline": true,
-                      "type": "optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>",
-                    },
+                    "assa_abloy_metadata": "optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>",
                     "custom_sdk_installation_id": "optional<string>",
-                    "phone_metadata": {
-                      "inline": true,
-                      "type": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>",
-                    },
+                    "phone_metadata": "optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>",
                     "user_identity_id": {
                       "type": "string",
                       "validation": {
@@ -24669,6 +24725,7 @@ service:
         "types": {
           "SimulateCreateSandboxPhoneRequestAssaAbloyMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "application_version": {
                 "default": "1.0.0",
@@ -24701,6 +24758,7 @@ service:
           },
           "SimulateCreateSandboxPhoneRequestPhoneMetadata": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "device_manufacturer": {
                 "default": "Samsung",
@@ -24735,6 +24793,7 @@ service:
           },
           "SimulateCreateSandboxPhoneResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "phone": "root.Phone",
@@ -24770,6 +24829,7 @@ service:
         default: Samsung Galaxy S10
     source:
       openapi: ../openapi.json
+    inline: true
   SimulateCreateSandboxPhoneRequestAssaAbloyMetadata:
     properties:
       ble_capability:
@@ -24792,6 +24852,7 @@ service:
         default: 1
     source:
       openapi: ../openapi.json
+    inline: true
   SimulateCreateSandboxPhoneResponse:
     properties:
       phone: root.Phone
@@ -24820,12 +24881,8 @@ service:
               type: string
               validation:
                 format: uuid
-            phone_metadata:
-              type: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
-              inline: true
-            assa_abloy_metadata:
-              type: optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>
-              inline: true
+            phone_metadata: optional<SimulateCreateSandboxPhoneRequestPhoneMetadata>
+            assa_abloy_metadata: optional<SimulateCreateSandboxPhoneRequestAssaAbloyMetadata>
         content-type: application/json
       response:
         docs: OK
@@ -25666,10 +25723,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "default_climate_setting": {
-                      "inline": true,
-                      "type": "ThermostatsUpdateRequestDefaultClimateSetting",
-                    },
+                    "default_climate_setting": "ThermostatsUpdateRequestDefaultClimateSetting",
                     "device_id": {
                       "type": "string",
                       "validation": {
@@ -25703,6 +25757,7 @@ service:
         "types": {
           "ThermostatsCoolResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -25713,6 +25768,7 @@ service:
           },
           "ThermostatsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "thermostat": "root.Device",
@@ -25723,6 +25779,7 @@ service:
           },
           "ThermostatsHeatCoolResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -25733,6 +25790,7 @@ service:
           },
           "ThermostatsHeatResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -25745,6 +25803,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -25904,6 +25963,7 @@ service:
           },
           "ThermostatsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "thermostats": "list<root.Device>",
@@ -25914,6 +25974,7 @@ service:
           },
           "ThermostatsOffResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -25942,6 +26003,7 @@ service:
           },
           "ThermostatsSetFanModeResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",
@@ -25952,6 +26014,7 @@ service:
           },
           "ThermostatsUpdateRequestDefaultClimateSetting": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "automatic_cooling_enabled": "optional<boolean>",
               "automatic_heating_enabled": "optional<boolean>",
@@ -25979,6 +26042,7 @@ service:
           },
           "ThermostatsUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -26134,6 +26198,7 @@ types:
       - boolean
     source:
       openapi: ../openapi.json
+    inline: true
   ThermostatsListRequestIncludeIfItem:
     enum:
       - can_remotely_unlock
@@ -26206,6 +26271,7 @@ types:
       manual_override_allowed: optional<boolean>
     source:
       openapi: ../openapi.json
+    inline: true
   ThermostatsUpdateResponse:
     properties:
       ok: boolean
@@ -26736,9 +26802,7 @@ service:
               type: string
               validation:
                 format: uuid
-            default_climate_setting:
-              type: ThermostatsUpdateRequestDefaultClimateSetting
-              inline: true
+            default_climate_setting: ThermostatsUpdateRequestDefaultClimateSetting
         content-type: application/json
       response:
         docs: OK
@@ -27152,6 +27216,7 @@ service:
           },
           "ClimateSettingSchedulesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "climate_setting_schedule": "root.ClimateSettingSchedule",
               "ok": "boolean",
@@ -27162,6 +27227,7 @@ service:
           },
           "ClimateSettingSchedulesDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -27171,6 +27237,7 @@ service:
           },
           "ClimateSettingSchedulesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "climate_setting_schedule": "root.ClimateSettingSchedule",
               "ok": "boolean",
@@ -27181,6 +27248,7 @@ service:
           },
           "ClimateSettingSchedulesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "climate_setting_schedules": "list<root.ClimateSettingSchedule>",
               "ok": "boolean",
@@ -27202,6 +27270,7 @@ service:
           },
           "ClimateSettingSchedulesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "climate_setting_schedule": "root.ClimateSettingSchedule",
               "ok": "boolean",
@@ -28397,6 +28466,7 @@ service:
         "types": {
           "UserIdentitiesAddAcsUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28406,6 +28476,7 @@ service:
           },
           "UserIdentitiesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "user_identity": "root.UserIdentity",
@@ -28416,6 +28487,7 @@ service:
           },
           "UserIdentitiesDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28427,6 +28499,7 @@ service:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -28437,6 +28510,7 @@ service:
           },
           "UserIdentitiesGetRequestUserIdentityId": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "user_identity_id": {
                 "type": "string",
@@ -28454,6 +28528,7 @@ service:
           },
           "UserIdentitiesGetRequestUserIdentityKey": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "user_identity_key": "string",
             },
@@ -28463,6 +28538,7 @@ service:
           },
           "UserIdentitiesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "user_identity": "root.UserIdentity",
@@ -28473,6 +28549,7 @@ service:
           },
           "UserIdentitiesGrantAccessToDeviceResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28482,6 +28559,7 @@ service:
           },
           "UserIdentitiesListAccessibleDevicesResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accessible_devices": {
                 "docs": "
@@ -28500,6 +28578,7 @@ service:
           },
           "UserIdentitiesListAcsSystemsResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_systems": "list<root.AcsSystem>",
               "ok": "boolean",
@@ -28510,6 +28589,7 @@ service:
           },
           "UserIdentitiesListAcsUsersResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "acs_users": "list<root.AcsUser>",
               "ok": "boolean",
@@ -28520,6 +28600,7 @@ service:
           },
           "UserIdentitiesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "user_identities": "list<root.UserIdentity>",
@@ -28530,6 +28611,7 @@ service:
           },
           "UserIdentitiesRemoveAcsUserResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28539,6 +28621,7 @@ service:
           },
           "UserIdentitiesRevokeAccessToDeviceResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28548,6 +28631,7 @@ service:
           },
           "UserIdentitiesUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -28582,11 +28666,13 @@ service:
           format: uuid
     source:
       openapi: ../openapi.json
+    inline: true
   UserIdentitiesGetRequestUserIdentityKey:
     properties:
       user_identity_key: string
     source:
       openapi: ../openapi.json
+    inline: true
   UserIdentitiesGetRequest:
     discriminated: false
     union:
@@ -29455,6 +29541,7 @@ service:
         "types": {
           "EnrollmentAutomationsDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -29464,6 +29551,7 @@ service:
           },
           "EnrollmentAutomationsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "enrollment_automation": "root.EnrollmentAutomation",
               "ok": "boolean",
@@ -29474,11 +29562,9 @@ service:
           },
           "EnrollmentAutomationsLaunchResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
-              "enrollment_automation": {
-                "inline": true,
-                "type": "EnrollmentAutomationsLaunchResponseEnrollmentAutomation",
-              },
+              "enrollment_automation": "EnrollmentAutomationsLaunchResponseEnrollmentAutomation",
               "ok": "boolean",
             },
             "source": {
@@ -29487,6 +29573,7 @@ service:
           },
           "EnrollmentAutomationsLaunchResponseEnrollmentAutomation": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "acs_credential_provisioning_automation_id": {
                 "type": "string",
@@ -29541,6 +29628,7 @@ service:
           },
           "EnrollmentAutomationsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "enrollment_automations": "list<root.EnrollmentAutomation>",
               "ok": "boolean",
@@ -29588,11 +29676,10 @@ service:
           format: uuid
     source:
       openapi: ../openapi.json
+    inline: true
   EnrollmentAutomationsLaunchResponse:
     properties:
-      enrollment_automation:
-        type: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
-        inline: true
+      enrollment_automation: EnrollmentAutomationsLaunchResponseEnrollmentAutomation
       ok: boolean
     source:
       openapi: ../openapi.json
@@ -30020,6 +30107,7 @@ service:
         "types": {
           "WebhooksCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "webhook": "root.Webhook",
@@ -30030,6 +30118,7 @@ service:
           },
           "WebhooksDeleteResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -30039,6 +30128,7 @@ service:
           },
           "WebhooksGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "webhook": "root.Webhook",
@@ -30049,6 +30139,7 @@ service:
           },
           "WebhooksListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "webhooks": "list<root.Webhook>",
@@ -30059,6 +30150,7 @@ service:
           },
           "WebhooksUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
             },
@@ -30455,6 +30547,7 @@ service:
           },
           "WorkspacesCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "workspace": "root.Workspace",
@@ -30465,6 +30558,7 @@ service:
           },
           "WorkspacesGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "workspace": "root.Workspace",
@@ -30475,6 +30569,7 @@ service:
           },
           "WorkspacesListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ok": "boolean",
               "workspaces": "list<root.Workspace>",
@@ -30485,6 +30580,7 @@ service:
           },
           "WorkspacesResetSandboxResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "action_attempt": "root.ActionAttempt",
               "ok": "boolean",

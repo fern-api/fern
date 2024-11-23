@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface UnionTypeDeclaration {
+export interface UnionTypeDeclaration extends FernIr.WithInline {
     discriminant: FernIr.NameAndWireValue;
     /** A list of other types to inherit from */
     extends: FernIr.DeclaredTypeName[];

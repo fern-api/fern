@@ -82,7 +82,6 @@ export async function visitWebhooks({
                                         location: TypeReferenceLocation.InlinedRequestProperty
                                     });
                                 },
-                                inline: noop,
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
@@ -131,7 +130,6 @@ async function visitHeaders({
                         validation: header.validation
                     });
                 },
-                inline: noop,
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
                 encoding: noop,
