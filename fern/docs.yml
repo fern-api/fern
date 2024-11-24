@@ -66,10 +66,6 @@ navigation:
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
             path: ./pages/api-definition/openapi/auth.mdx
-          # - page: OpenAPI Examples
-          #   icon: fa-regular fa-square-terminal
-          #   path: ./pages/api-definition/openapi/examples.mdx
-          #   slug: examples
           - section: Endpoints
             icon: fa-regular fa-object-intersect
             slug: endpoints
@@ -286,16 +282,6 @@ navigation:
           - page: WebSockets
             path: ./pages/sdks/features/websockets.mdx
             icon: fa-regular fa-pro
-          #   icon: fa-regular fa-pro
-          # - page: Object oriented SDKs
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: fa-regular fa-pro
-          # - page: Polling
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: fa-regular fa-pro
-          # - page: GitHub integration
-          #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: fa-regular fa-pro
       - section: Package Managers
         contents:
           - page: NPM (TypeScript)
@@ -391,7 +377,6 @@ navigation:
           - section: Components
             icon: fa-regular fa-toolbox
             slug: components
-            # path: ./pages/docs/components/overview.mdx
             contents:
               - page: Overview
                 icon: fa-regular fa-wrench
@@ -551,9 +536,6 @@ navigation:
         layout:
           - page: Overview
             path: ./pages/cli-api/api-summary.mdx
-        # snippets:
-        #   python: fern-api
-        #   typescript: "@fern-api/node-sdk"
 
 navbar-links:
   - type: minimal
@@ -577,8 +559,6 @@ logo:
   light: ./images/logo-primary.svg
   dark: ./images/logo-white.svg
   height: 30
-# background-image:
-#   dark: ./images/background.svg
 colors:
   accentPrimary:
     dark: "#1DA32B"
