@@ -186,7 +186,7 @@ class UserClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"user/users/{jsonable_encoder(user_id)}",
+            f"user/users/{jsonable_encoder(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -241,7 +241,7 @@ class UserClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"user/organizations/{jsonable_encoder(organization_id)}",
+            f"user/organizations/{jsonable_encoder(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -469,7 +469,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"user/users/{jsonable_encoder(user_id)}",
+            f"user/users/{jsonable_encoder(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -532,7 +532,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"user/organizations/{jsonable_encoder(organization_id)}",
+            f"user/organizations/{jsonable_encoder(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,

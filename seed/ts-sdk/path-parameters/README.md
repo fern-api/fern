@@ -58,6 +58,17 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPathParametersClient, SeedPathParameters } from "@fern/path-parameters";
+
+const client = new SeedPathParametersClient({ environment: "YOUR_BASE_URL" });
+await client.user.getOrganization("organizationId");
+```
+
 ## Advanced
 
 ### Raw Responses

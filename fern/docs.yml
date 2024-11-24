@@ -510,6 +510,9 @@ navigation:
             icon: fa-regular fa-chart-simple
             slug: analytics
             contents:
+              - page: Google Analytics
+                path: ./pages/docs/integrations/analytics/google.mdx
+                slug: google
               - page: PostHog
                 path: ./pages/docs/integrations/analytics/posthog.mdx
                 slug: posthog

@@ -199,7 +199,7 @@ export class UserService {
                 next(error);
             }
         });
-        this.router.get("/users/:userId", async (req, res, next) => {
+        this.router.get("/users/:userId/search", async (req, res, next) => {
             try {
                 await this.methods.searchUsers(
                     req as any,
@@ -231,7 +231,7 @@ export class UserService {
                 next(error);
             }
         });
-        this.router.get("/organizations/:organizationId", async (req, res, next) => {
+        this.router.get("/organizations/:organizationId/search", async (req, res, next) => {
             try {
                 await this.methods.searchOrganizations(
                     req as any,

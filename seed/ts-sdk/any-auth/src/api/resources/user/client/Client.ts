@@ -85,7 +85,7 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAnyAuthTimeoutError();
+                        throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /users.");
                     case "unknown":
                         throw new errors.SeedAnyAuthError({
                             message: _response.error.errorMessage,

@@ -168,7 +168,7 @@ public partial class UserClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/user/users/{userId}",
+                Path = $"/user/users/{userId}/search",
                 Query = _query,
                 Options = options,
             },
@@ -219,7 +219,7 @@ public partial class UserClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/user/organizations/{organizationId}",
+                Path = $"/user/organizations/{organizationId}/search",
                 Query = _query,
                 Options = options,
             },

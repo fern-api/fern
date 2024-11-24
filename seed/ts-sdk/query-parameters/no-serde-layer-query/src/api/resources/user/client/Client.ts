@@ -122,7 +122,7 @@ export class User {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedQueryParametersTimeoutError();
+                        throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
                     case "unknown":
                         throw new errors.SeedQueryParametersError({
                             message: _response.error.errorMessage,

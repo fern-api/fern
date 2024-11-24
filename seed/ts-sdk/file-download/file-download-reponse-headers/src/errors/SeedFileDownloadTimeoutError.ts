@@ -3,8 +3,8 @@
  */
 
 export class SeedFileDownloadTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, SeedFileDownloadTimeoutError.prototype);
     }
 }

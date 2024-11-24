@@ -86,7 +86,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/string."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -154,7 +156,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/integer."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -222,7 +226,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/long."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -290,7 +296,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/double."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -358,7 +366,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/boolean."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -429,7 +439,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/datetime."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -497,7 +509,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/date."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -565,7 +579,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/uuid."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -633,7 +649,9 @@ export class Primitive {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /primitive/base64."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

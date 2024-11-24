@@ -104,9 +104,13 @@ export declare namespace OSSWorkspace {
          */
         cooerceEnumsToLiterals?: boolean;
         /*
-         * Whehter or not to parse object query parameters.
+         * Whether or not to parse object query parameters.
          */
         objectQueryParameters?: boolean;
+        /*
+         * Whether or not to preserve original schema ids.
+         */
+        preserveSchemaIds?: boolean;
     }
 }
 
@@ -301,6 +305,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     }
     if (settings.cooerceEnumsToLiterals) {
         result.cooerceEnumsToLiterals = true;
+    }
+    if (settings.preserveSchemaIds) {
+        result.preserveSchemaIds = true;
     }
     return result;
 }

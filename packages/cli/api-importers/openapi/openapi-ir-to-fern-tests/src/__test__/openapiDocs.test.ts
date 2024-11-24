@@ -30,7 +30,7 @@ describe("openapi-ir-to-fern docs", async () => {
                 }
                 const definition = await workspace.workspace.getDefinition(
                     { context },
-                    { enableUniqueErrorsPerEndpoint: true }
+                    { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
                 );
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);

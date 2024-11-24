@@ -76,7 +76,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /service.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,
@@ -152,7 +152,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /service.");
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

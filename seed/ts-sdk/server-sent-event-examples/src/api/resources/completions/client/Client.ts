@@ -91,7 +91,9 @@ export class Completions {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedServerSentEventsTimeoutError();
+                        throw new errors.SeedServerSentEventsTimeoutError(
+                            "Timeout exceeded when calling POST /stream."
+                        );
                     case "unknown":
                         throw new errors.SeedServerSentEventsError({
                             message: _response.error.errorMessage,

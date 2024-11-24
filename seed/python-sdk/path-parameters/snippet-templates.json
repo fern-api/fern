@@ -308,7 +308,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/user/users/{userId}",
+            "path": "/user/users/{userId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchUsers"
         },
@@ -430,7 +430,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/user/organizations/{organizationId}",
+            "path": "/user/organizations/{organizationId}/search",
             "method": "GET",
             "identifierOverride": "endpoint_user.searchOrganizations"
         },

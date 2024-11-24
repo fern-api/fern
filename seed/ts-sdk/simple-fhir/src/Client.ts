@@ -88,7 +88,9 @@ export class SeedApiClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedApiTimeoutError();
+                        throw new errors.SeedApiTimeoutError(
+                            "Timeout exceeded when calling GET /account/{account_id}."
+                        );
                     case "unknown":
                         throw new errors.SeedApiError({
                             message: _response.error.errorMessage,

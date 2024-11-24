@@ -96,7 +96,9 @@ export class Events {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMixedFileDirectoryTimeoutError();
+                        throw new errors.SeedMixedFileDirectoryTimeoutError(
+                            "Timeout exceeded when calling GET /users/events/."
+                        );
                     case "unknown":
                         throw new errors.SeedMixedFileDirectoryError({
                             message: _response.error.errorMessage,

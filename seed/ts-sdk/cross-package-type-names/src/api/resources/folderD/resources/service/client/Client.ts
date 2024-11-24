@@ -82,7 +82,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedCrossPackageTypeNamesTimeoutError();
+                        throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling GET /.");
                     case "unknown":
                         throw new errors.SeedCrossPackageTypeNamesError({
                             message: _response.error.errorMessage,

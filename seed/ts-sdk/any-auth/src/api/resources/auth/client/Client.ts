@@ -98,7 +98,7 @@ export class Auth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAnyAuthTimeoutError();
+                        throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /token.");
                     case "unknown":
                         throw new errors.SeedAnyAuthError({
                             message: _response.error.errorMessage,

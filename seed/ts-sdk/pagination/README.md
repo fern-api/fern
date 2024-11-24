@@ -20,8 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
-import * as core from "../src/core";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listWithBodyCursorPagination({
@@ -81,24 +80,25 @@ try {
 List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
-import * as core from "../src/core";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const response = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor",
-    },
+const page = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();

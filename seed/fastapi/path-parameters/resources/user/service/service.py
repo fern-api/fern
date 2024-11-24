@@ -222,7 +222,7 @@ class AbstractUserService(AbstractFernService):
         wrapper.__globals__.update(cls.search_users.__globals__)
 
         router.get(
-            path="/user/users/{user_id}",
+            path="/user/users/{user_id}/search",
             response_model=typing.Sequence[User],
             description=AbstractUserService.search_users.__doc__,
             **get_route_args(cls.search_users, default_tag="user"),
@@ -270,7 +270,7 @@ class AbstractUserService(AbstractFernService):
         wrapper.__globals__.update(cls.search_organizations.__globals__)
 
         router.get(
-            path="/user/organizations/{organization_id}",
+            path="/user/organizations/{organization_id}/search",
             response_model=typing.Sequence[Organization],
             description=AbstractUserService.search_organizations.__doc__,
             **get_route_args(cls.search_organizations, default_tag="user"),

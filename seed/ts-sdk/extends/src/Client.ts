@@ -86,7 +86,9 @@ export class SeedExtendsClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExtendsTimeoutError();
+                        throw new errors.SeedExtendsTimeoutError(
+                            "Timeout exceeded when calling POST /extends/extended-inline-request-body."
+                        );
                     case "unknown":
                         throw new errors.SeedExtendsError({
                             message: _response.error.errorMessage,

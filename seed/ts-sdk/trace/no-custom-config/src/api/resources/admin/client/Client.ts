@@ -101,7 +101,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-test-submission-status/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -182,7 +184,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-test-submission-status-v2/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -261,7 +265,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-workspace-submission-status/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -344,7 +350,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-workspace-submission-status-v2/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -510,7 +518,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -665,7 +675,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -826,7 +838,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-workspace-trace/submission/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -979,7 +993,9 @@ export class Admin {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /admin/store-workspace-trace-v2/submission/{submissionId}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,

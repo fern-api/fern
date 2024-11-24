@@ -101,6 +101,3 @@ allowedFailures:
   - server-sent-events
   - streaming-parameter
   - trace
-
-  # TODO: Update DynamicSnippetsGenerator to recognize InlinedRequestMetadata.
-  - path-parameters:no-custom-config 

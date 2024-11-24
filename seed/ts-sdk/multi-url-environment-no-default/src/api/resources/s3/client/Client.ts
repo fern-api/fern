@@ -94,7 +94,9 @@ export class S3 {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError();
+                        throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
+                            "Timeout exceeded when calling POST /s3/presigned-url."
+                        );
                     case "unknown":
                         throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                             message: _response.error.errorMessage,

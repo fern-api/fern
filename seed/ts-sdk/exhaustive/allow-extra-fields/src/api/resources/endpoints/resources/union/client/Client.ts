@@ -96,7 +96,7 @@ export class Union {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

@@ -47,7 +47,7 @@ export async function previewDocsWorkspace({
                 for (const apiWorkspace of project.apiWorkspaces) {
                     await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
                         await validateAPIWorkspaceWithoutExiting({
-                            workspace: await apiWorkspace.toFernWorkspace({ context }),
+                            workspace: await apiWorkspace.toFernWorkspace({ context }, { preserveSchemaIds: true }),
                             context: apiWorkspaceContext,
                             logWarnings: false,
                             logSummary: false

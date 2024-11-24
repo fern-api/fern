@@ -87,7 +87,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /check/{id}.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,
@@ -153,7 +153,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /ping.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,

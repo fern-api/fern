@@ -85,7 +85,7 @@ export class NoReqBody {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /no-req-body.");
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -149,7 +149,7 @@ export class NoReqBody {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /no-req-body.");
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

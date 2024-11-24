@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedUndiscriminatedUnionsClient, SeedUndiscriminatedUnions } from "@fern/undiscriminated-unions";
+import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
 
 const client = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL" });
 await client.union.get("string");

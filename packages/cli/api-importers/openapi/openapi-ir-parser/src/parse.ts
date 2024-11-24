@@ -206,7 +206,8 @@ function getParseOptions({
         inlinePathParameters:
             overrides?.inlinePathParameters ??
             specSettings?.inlinePathParameters ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
+        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds
     };
 }
 

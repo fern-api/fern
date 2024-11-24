@@ -75,6 +75,7 @@ describe("class", () => {
         });
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(clazz.getReferences().length).toBe(1);
     });
 
     it("should generate a class with local classes", async () => {

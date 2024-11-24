@@ -103,7 +103,7 @@ export class ContentType {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/bar.");
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -187,7 +187,7 @@ export class ContentType {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /foo/baz.");
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

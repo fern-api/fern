@@ -82,7 +82,7 @@ export class Union {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUnionsTimeoutError();
+                        throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
                     case "unknown":
                         throw new errors.SeedUnionsError({
                             message: _response.error.errorMessage,
@@ -150,7 +150,7 @@ export class Union {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUnionsTimeoutError();
+                        throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
                     case "unknown":
                         throw new errors.SeedUnionsError({
                             message: _response.error.errorMessage,

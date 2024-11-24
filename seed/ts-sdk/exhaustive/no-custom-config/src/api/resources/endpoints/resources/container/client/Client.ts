@@ -93,7 +93,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/list-of-primitives."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -171,7 +173,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/list-of-objects."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -245,7 +249,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/set-of-primitives."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -321,7 +327,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/set-of-objects."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -397,7 +405,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/map-prim-to-prim."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -475,7 +485,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/map-prim-to-object."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,
@@ -554,7 +566,9 @@ export class Container {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExhaustiveTimeoutError();
+                        throw new errors.SeedExhaustiveTimeoutError(
+                            "Timeout exceeded when calling POST /container/opt-objects."
+                        );
                     case "unknown":
                         throw new errors.SeedExhaustiveError({
                             message: _response.error.errorMessage,

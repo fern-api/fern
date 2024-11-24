@@ -163,7 +163,7 @@ func (c *Client) SearchUsers(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/user/users/%v",
+		baseURL+"/user/users/%v/search",
 		userId,
 	)
 	queryParams, err := internal.QueryValues(request)
@@ -210,7 +210,7 @@ func (c *Client) SearchOrganizations(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/user/organizations/%v",
+		baseURL+"/user/organizations/%v/search",
 		organizationId,
 	)
 	queryParams, err := internal.QueryValues(request)

@@ -119,7 +119,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -183,7 +183,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file.");
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -268,7 +268,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError(
+                            "Timeout exceeded when calling POST /just-file-with-query-params."
+                        );
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,
@@ -337,7 +339,9 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedFileUploadTimeoutError();
+                        throw new errors.SeedFileUploadTimeoutError(
+                            "Timeout exceeded when calling POST /with-content-type."
+                        );
                     case "unknown":
                         throw new errors.SeedFileUploadError({
                             message: _response.error.errorMessage,

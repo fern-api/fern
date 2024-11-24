@@ -19,7 +19,8 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     generateOauthClients: false,
     customConfig: {
         packageName: "acme",
-        union: "v1"
+        union: "v1",
+        inlineFileProperties: true
     } as BaseGoCustomConfigSchema
 };
 

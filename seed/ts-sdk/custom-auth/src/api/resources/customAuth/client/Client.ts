@@ -99,7 +99,7 @@ export class CustomAuth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedCustomAuthTimeoutError();
+                        throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
                     case "unknown":
                         throw new errors.SeedCustomAuthError({
                             message: _response.error.errorMessage,
@@ -186,7 +186,7 @@ export class CustomAuth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedCustomAuthTimeoutError();
+                        throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
                     case "unknown":
                         throw new errors.SeedCustomAuthError({
                             message: _response.error.errorMessage,

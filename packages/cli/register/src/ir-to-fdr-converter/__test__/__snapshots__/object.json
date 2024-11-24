@@ -246,10 +246,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "double",
-                "minimum": 2.2250738585072014e-308,
-                "maximum": 1.7976931348623157e+308,
-                "default": 0
+                "type": "double"
               }
             }
           },

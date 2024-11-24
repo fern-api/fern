@@ -91,7 +91,7 @@ export class SeedValidationClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedValidationTimeoutError();
+                        throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
                     case "unknown":
                         throw new errors.SeedValidationError({
                             message: _response.error.errorMessage,
@@ -168,7 +168,7 @@ export class SeedValidationClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedValidationTimeoutError();
+                        throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
                     case "unknown":
                         throw new errors.SeedValidationError({
                             message: _response.error.errorMessage,

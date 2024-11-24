@@ -81,7 +81,7 @@ export class Package {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedNurseryApiTimeoutError();
+                        throw new errors.SeedNurseryApiTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedNurseryApiError({
                             message: _response.error.errorMessage,

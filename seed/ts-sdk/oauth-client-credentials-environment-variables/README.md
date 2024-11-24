@@ -20,10 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import {
-    SeedOauthClientCredentialsEnvironmentVariablesClient,
-    SeedOauthClientCredentialsEnvironmentVariables,
-} from "@fern/oauth-client-credentials-environment-variables";
+import { SeedOauthClientCredentialsEnvironmentVariablesClient } from "@fern/oauth-client-credentials-environment-variables";
 
 const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
     environment: "YOUR_BASE_URL",
