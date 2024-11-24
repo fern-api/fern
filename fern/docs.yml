@@ -39,8 +39,21 @@ tabs:
 css: ./assets/styles.css
 
 redirects:
-  - source: /api-definition/fern/api-yml-reference
-    destination: /api-definition/fern/api-yml/overview
+  - source: /learn/api-definition/fern/api-yml-reference
+    destination: /learn/api-definition/fern/api-yml/overview
+  - source: /learn/sdks/features/:slug
+    destination: /learn/sdks/capabilities/:slug
+  - source: /learn/sdks/package-managers/:slug
+    destination: /learn/sdks/guides/publish-to-package-managers/:slug
+  - source: /learn/sdks/introduction/configuration
+    destination: /learn/sdks/introduction/language-support
+  - source: /learn/sdks/getting-started/generate-your-first-sdk
+    destination: /learn/sdks/guides/generate-your-first-sdk
+  - source: /learn/sdks/getting-started/preview-your-sdk-locally
+    destination: /learn/sdks/guides/preview-your-sdk-locally
+  - source: /learn/sdks/publish-sdk/publish-your-sdk
+    destination: /learn/sdks/guides/publish-your-sdk
+
 
 navigation:
   - tab: home
