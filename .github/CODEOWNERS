@@ -1,13 +1,27 @@
+# General rule for everything
 * @dsinghvi
+
+# Specific rules for fern/* with overriding
 fern/* @dsinghvi
 fern/docs.yml @chdeskur
 fern/pages/* @chdeskur
+
+# Specific rules for generators
 generators/go/* @amckinney
 generators/java/* @dsinghvi
 generators/csharp/* @Swimburger
 generators/python/* @dsinghvi
 generators/ruby/* @dsinghvi
 generators/typescript/* @Swimburger
+
+# Specific rules for packages
 packages/cli/* @amckinney
 packages/generators/cli/* @dsinghvi
 packages/generators/docker/* @dsinghvi
+
+# Make chdeskur the only codeowner for specified paths
+!fern/docs.yml
+fern/docs.yml @chdeskur
+
+!fern/pages/*
+fern/pages/* @chdeskur
