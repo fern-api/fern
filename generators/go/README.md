@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=logo">
-    <img src="../../fern/images/logo-primary.png" height="50" align="center" alt="header" />
+    <img src="../../fern/images/logo-primary.svg" height="50" align="center" alt="header" />
   </a>
   
   <br/>
