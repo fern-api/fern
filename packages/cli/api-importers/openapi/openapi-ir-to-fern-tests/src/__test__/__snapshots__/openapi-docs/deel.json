@@ -20835,6 +20835,7 @@ docs: End-points to retrieve paid invoices and reciepts.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToCreateFileRef",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21297,6 +21298,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PremiumToAddContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21358,6 +21360,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToAmendDetailsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21528,6 +21531,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21695,6 +21699,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerOngoingTimeBased",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21860,6 +21865,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPaygMilestones",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22025,6 +22031,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPaygTasks",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22192,6 +22199,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPayAsYouGoTimeBased",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22355,6 +22363,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToTerminateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23284,6 +23293,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "This is the file you will upload in a multi-part form.",
                 "headers": undefined,
                 "name": "AddContractDocumentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23392,6 +23402,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToPatchContractExternalId",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23525,6 +23536,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "This is the file you will upload in a multi-part form.",
                 "headers": undefined,
                 "name": "EditContractDocumentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23937,6 +23949,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractInvitationToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24006,6 +24019,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EstimateFirstPaymentContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24069,6 +24083,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractSignatureToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24894,6 +24909,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EorContractToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25427,6 +25443,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25490,6 +25507,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25547,6 +25565,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25951,6 +25970,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentToUpdateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26924,6 +26944,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26992,6 +27013,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27058,6 +27080,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27592,6 +27615,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OffCyclePaymentToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28326,6 +28350,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToCreatePgoTask",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28403,6 +28428,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28481,6 +28507,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29498,6 +29525,7 @@ docs: End-points to manage tasks for a given contract
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimeoffToReviewContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30062,6 +30090,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30125,6 +30154,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30182,6 +30212,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30637,6 +30668,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetToUpdateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31265,6 +31297,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PatchWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31417,6 +31450,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

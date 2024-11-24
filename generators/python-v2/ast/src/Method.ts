@@ -50,6 +50,20 @@ export class Method extends AstNode {
         this.type = type;
         this.decorators = decorators ?? [];
         this.static_ = static_ ?? false;
+
+        this.parameters.forEach((parameter) => {
+            this.inheritReferences(parameter);
+        });
+
+        this.inheritReferences(this.return);
+
+        this.decorators.forEach((decorator) => {
+            this.inheritReferences(decorator);
+        });
+
+        this.statements.forEach((statements) => {
+            this.inheritReferences(statements);
+        });
     }
 
     public addStatement(statement: AstNode): void {

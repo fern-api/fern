@@ -55,6 +55,7 @@ export interface APIDefinitionSettings {
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
+    inlinePathParameters: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

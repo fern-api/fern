@@ -5123,6 +5123,7 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurQuestionAnswerParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5180,6 +5181,7 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurSummaryParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5237,6 +5239,7 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurTaskParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5522,6 +5525,7 @@ docs: LeMUR related operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRealtimeTemporaryTokenParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -5809,6 +5813,7 @@ docs: Real-time transcription
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTranscriptParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

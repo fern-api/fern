@@ -38,6 +38,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

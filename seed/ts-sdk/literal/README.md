@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedLiteralClient, SeedLiteral } from "@fern/literal";
+import { SeedLiteralClient } from "@fern/literal";
 
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
@@ -61,6 +61,30 @@ try {
 ```
 
 ## Advanced
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
+the parsed response body will be available in the `body` field, along with the response headers:
+
+```typescript
+const response = await client.headers.send(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.headers.send(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

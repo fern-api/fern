@@ -148,6 +148,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Agent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -335,6 +336,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PredictAgent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -558,6 +560,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ApiToken",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -799,6 +802,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignIn",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -848,6 +852,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignUp",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -990,6 +995,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Document",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1249,6 +1255,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Prompt",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1567,6 +1574,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Tool",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

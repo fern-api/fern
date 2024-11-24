@@ -21,10 +21,6 @@ const (
 	contentTypeHeader = "Content-Type"
 )
 
-// ErrorDecoder decodes *http.Response errors and returns a
-// typed API error (e.g. *core.APIError).
-type ErrorDecoder func(statusCode int, body io.Reader) error
-
 // Caller calls APIs and deserializes their response, if any.
 type Caller struct {
 	client  core.HTTPClient

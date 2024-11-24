@@ -24,9 +24,9 @@ export declare namespace Reference {
 export class Reference extends AstNode {
     public readonly name: string;
     public readonly modulePath: ModulePath;
-    private readonly genericTypes: AstNode[];
+    public readonly genericTypes: AstNode[];
     public readonly alias: string | undefined;
-    private readonly attribute: AttrPath;
+    public readonly attribute: AttrPath;
 
     constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
         super();

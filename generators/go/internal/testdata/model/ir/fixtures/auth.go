@@ -48,13 +48,11 @@ func (a *ApiAuth) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = ApiAuth(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -240,13 +238,11 @@ func (b *BasicAuthScheme) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BasicAuthScheme(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -289,13 +285,11 @@ func (b *BearerAuthScheme) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BearerAuthScheme(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -354,13 +348,11 @@ func (h *HeaderAuthScheme) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*h = HeaderAuthScheme(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
 	}
 	h.extraProperties = extraProperties
-
 	return nil
 }
 

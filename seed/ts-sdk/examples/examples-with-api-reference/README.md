@@ -26,7 +26,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExamplesEnvironment, SeedExamplesClient, SeedExamples } from "@fern/examples";
+import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
 
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.service.createMovie({
@@ -82,6 +82,30 @@ try {
 ```
 
 ## Advanced
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
+the parsed response body will be available in the `body` field, along with the response headers:
+
+```typescript
+const response = await client.service.createMovie(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.service.createMovie(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

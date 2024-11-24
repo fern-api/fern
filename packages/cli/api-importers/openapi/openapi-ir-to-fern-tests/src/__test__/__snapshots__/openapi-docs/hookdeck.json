@@ -8230,6 +8230,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8501,6 +8502,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TriggerBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -8603,6 +8605,7 @@ docs: An attempt is any request that Hookdeck makes on behalf of an event.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateBookmarkRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -9091,6 +9094,7 @@ docs: A bookmark lets you conveniently store and replay a specific request.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateEventBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10513,6 +10517,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIgnoredEventBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11129,6 +11134,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRequestBulkRetryRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12441,6 +12447,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13099,6 +13106,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13260,6 +13268,7 @@ docs: ''
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertConnectionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14524,6 +14533,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14777,6 +14787,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14855,6 +14866,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertDestinationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16137,6 +16149,7 @@ docs: An event is any request that Hookdeck receives from a source.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIntegrationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16394,6 +16407,7 @@ docs: An event is any request that Hookdeck receives from a source.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIntegrationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16820,6 +16834,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17144,6 +17159,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17218,6 +17234,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertIssueTriggerRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18087,6 +18104,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateIssueRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18606,6 +18624,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ToggleWebhookNotificationsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19219,6 +19238,7 @@ docs: Notifications let your team receive alerts anytime an issue changes.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RetryRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19826,6 +19846,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20068,6 +20089,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20136,6 +20158,7 @@ docs: A request represent a webhook received by Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertRulesetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20581,6 +20604,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20831,6 +20855,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20897,6 +20922,7 @@ docs: A ruleset defines a group of rules that can be used across many connection
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSourceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21315,6 +21341,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21666,6 +21693,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21740,6 +21768,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21810,6 +21839,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertTransformationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

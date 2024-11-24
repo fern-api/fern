@@ -50,6 +50,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

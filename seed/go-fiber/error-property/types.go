@@ -32,13 +32,11 @@ func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PropertyBasedErrorTestBody(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 

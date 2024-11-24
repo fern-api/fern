@@ -100,7 +100,10 @@ export function buildEndpoint({
         source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
     };
 
-    if (Object.keys(pathParameters).length > 0) {
+    if (
+        !endpointRequestSupportsInlinedPathParameters({ context, request: endpoint.request }) &&
+        Object.keys(pathParameters).length > 0
+    ) {
         convertedEndpoint["path-parameters"] = pathParameters;
     }
 
@@ -133,6 +136,8 @@ export function buildEndpoint({
             request: endpoint.request,
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
+            pathParameters:
+                context.inlinePathParameters && Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
@@ -143,13 +148,17 @@ export function buildEndpoint({
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
         context.unsetInState(State.Request);
     } else {
+        const hasPathParams = context.inlinePathParameters && Object.keys(pathParameters).length > 0;
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;
 
         const convertedRequest: RawSchemas.HttpRequestSchema = {};
 
-        if (hasQueryParams || hasHeaders) {
+        if (hasPathParams || hasQueryParams || hasHeaders) {
             convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
+        }
+        if (hasPathParams) {
+            convertedRequest["path-parameters"] = pathParameters;
         }
         if (hasQueryParams) {
             convertedRequest["query-parameters"] = queryParameters;
@@ -369,6 +378,7 @@ function getRequest({
     request,
     requestNameOverride,
     generatedRequestName,
+    pathParameters,
     queryParameters,
     nonRequestReferencedSchemas,
     headers,
@@ -381,6 +391,7 @@ function getRequest({
     request: Request;
     requestNameOverride?: string;
     generatedRequestName: string;
+    pathParameters?: Record<string, RawSchemas.HttpPathParameterSchema>;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
     nonRequestReferencedSchemas: SchemaId[];
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
@@ -410,16 +421,20 @@ function getRequest({
                 }
             };
 
+            const hasPathParams = Object.keys(pathParameters ?? {}).length > 0;
             const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0;
             const hasHeaders = Object.keys(headers ?? {}).length > 0;
 
+            if (hasPathParams) {
+                convertedRequest.value["path-parameters"] = pathParameters;
+            }
             if (hasQueryParams) {
                 convertedRequest.value["query-parameters"] = queryParameters;
             }
             if (hasHeaders) {
                 convertedRequest.value.headers = headers;
             }
-            if (hasQueryParams || hasHeaders) {
+            if (hasPathParams || hasQueryParams || hasHeaders) {
                 convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
             }
 
@@ -524,6 +539,7 @@ function getRequest({
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
+            "path-parameters": pathParameters,
             "query-parameters": queryParameters,
             headers,
             body: requestBodySchema
@@ -593,6 +609,7 @@ function getRequest({
             schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
+                "path-parameters": pathParameters,
                 "query-parameters": queryParameters,
                 headers,
                 body: {
@@ -604,5 +621,32 @@ function getRequest({
         };
     } else {
         assertNever(request);
+    }
+}
+
+function endpointRequestSupportsInlinedPathParameters({
+    context,
+    request
+}: {
+    context: OpenApiIrConverterContext;
+    request: Request | undefined;
+}): boolean {
+    if (!context.inlinePathParameters) {
+        return false;
+    }
+    if (request == null) {
+        return true;
+    }
+    switch (request.type) {
+        case "octetStream":
+            // octet-stream requests do not support named request wrappers,
+            // so we can't inline path parameters for them.
+            return false;
+        case "multipart":
+            return true;
+        case "json":
+            return true;
+        default:
+            assertNever(request);
     }
 }

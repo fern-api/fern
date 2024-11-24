@@ -36,17 +36,16 @@ func (c *Client) GetDirectThread(
 	opts ...option.RequestOption,
 ) (*folderd.Response, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *folderd.Response
 	if err := c.caller.Call(
@@ -54,8 +53,8 @@ func (c *Client) GetDirectThread(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

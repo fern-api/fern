@@ -21,6 +21,8 @@ export declare namespace Users {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -71,6 +73,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -100,7 +103,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -146,6 +149,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 requestType: "json",
@@ -177,7 +181,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -238,6 +242,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -267,7 +272,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -315,6 +320,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 requestType: "json",
@@ -346,7 +352,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -405,6 +411,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -434,7 +441,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -493,6 +500,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -522,7 +530,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -573,6 +581,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -602,7 +611,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -651,6 +660,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -680,7 +690,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -727,6 +737,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -756,7 +767,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,
@@ -805,6 +816,7 @@ export class Users {
                     "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
+                    ...requestOptions?.headers,
                 },
                 contentType: "application/json",
                 queryParameters: _queryParams,
@@ -834,7 +846,7 @@ export class Users {
                         body: _response.error.rawBody,
                     });
                 case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
+                    throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
                 case "unknown":
                     throw new errors.SeedPaginationError({
                         message: _response.error.errorMessage,

@@ -6,6 +6,7 @@
 ../packages/cli/configuration/src/docs-yml/schemas/**
 ../packages/cli/openapi-ir-sdk/**
 ../packages/seed/src/config/**
+../generators/csharp/codegen/src/asIs/**/*.Template.*
 ../scripts/**
 ../seed/**
 ../docker/seed/**

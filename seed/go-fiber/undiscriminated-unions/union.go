@@ -300,13 +300,11 @@ func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TypeWithOptionalUnion(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 

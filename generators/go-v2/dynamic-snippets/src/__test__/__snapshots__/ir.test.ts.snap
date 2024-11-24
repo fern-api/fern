@@ -4773,6 +4773,105 @@ func do() {
 "
 `;
 
+exports[`test definitions > path-parameters 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.GetOrganization(
+		context.TODO(),
+		"organizationId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.GetUser(
+		context.TODO(),
+		"userId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.GetOrganizationUser(
+		context.TODO(),
+		"organizationId",
+		"userId",
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.SearchUsers(
+		context.TODO(),
+		"userId",
+		&acme.SearchUsersRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
+	)
+}
+
+------------------------
+
+package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	client.User.SearchOrganizations(
+		context.TODO(),
+		"organizationId",
+		&acme.SearchOrganizationsRequest{
+			Limit: acme.Int(
+				1,
+			),
+		},
+	)
+}
+"
+`;
+
 exports[`test definitions > plain-text 1`] = `"<none>"`;
 
 exports[`test definitions > query-parameters 1`] = `"<none>"`;

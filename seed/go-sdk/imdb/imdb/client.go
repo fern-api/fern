@@ -3,15 +3,11 @@
 package imdb
 
 import (
-	bytes "bytes"
 	context "context"
-	json "encoding/json"
-	errors "errors"
 	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
-	io "io"
 	http "net/http"
 )
 
@@ -42,17 +38,16 @@ func (c *Client) CreateMovie(
 	opts ...option.RequestOption,
 ) (fern.MovieId, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/movies/create-movie"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response fern.MovieId
 	if err := c.caller.Call(
@@ -60,8 +55,8 @@ func (c *Client) CreateMovie(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -80,35 +75,25 @@ func (c *Client) GetMovie(
 	opts ...option.RequestOption,
 ) (*fern.Movie, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/movies/%v", movieId)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	errorDecoder := func(statusCode int, body io.Reader) error {
-		raw, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
-		decoder := json.NewDecoder(bytes.NewReader(raw))
-		switch statusCode {
-		case 404:
-			value := new(fern.MovieDoesNotExistError)
-			value.APIError = apiError
-			if err := decoder.Decode(value); err != nil {
-				return apiError
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/movies/%v",
+		movieId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	errorCodes := internal.ErrorCodes{
+		404: func(apiError *core.APIError) error {
+			return &fern.MovieDoesNotExistError{
+				APIError: apiError,
 			}
-			return value
-		}
-		return apiError
+		},
 	}
 
 	var response *fern.Movie
@@ -117,13 +102,13 @@ func (c *Client) GetMovie(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    errorDecoder,
+			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},
 	); err != nil {
 		return nil, err

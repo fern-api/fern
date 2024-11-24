@@ -18,6 +18,8 @@ export declare namespace SeedLicenseClient {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -30,47 +32,55 @@ export class SeedLicenseClient {
      * @example
      *     await client.get()
      */
-    public async get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/"),
-            method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/license",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/license/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedLicenseError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedLicenseError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public get(requestOptions?: SeedLicenseClient.RequestOptions): core.APIPromise<void> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher({
+                    url: urlJoin(await core.Supplier.get(this._options.environment), "/"),
+                    method: "GET",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/license",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/license/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedLicenseTimeoutError();
-            case "unknown":
-                throw new errors.SeedLicenseError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: undefined,
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedLicenseError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedLicenseError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedLicenseTimeoutError("Timeout exceeded when calling GET /.");
+                    case "unknown":
+                        throw new errors.SeedLicenseError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

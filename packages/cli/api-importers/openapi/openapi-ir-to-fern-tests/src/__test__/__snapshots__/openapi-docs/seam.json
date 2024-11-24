@@ -10033,6 +10033,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10139,6 +10140,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesCreateMultipleRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10210,6 +10212,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10287,6 +10290,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesGenerateCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10373,6 +10377,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10453,6 +10458,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10531,6 +10537,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesPullBackupAccessCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10631,6 +10638,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessCodesUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11499,6 +11507,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateCreateUnmanagedAccessCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11655,6 +11664,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedConvertToManagedRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11716,6 +11726,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11792,6 +11803,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11864,6 +11876,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11920,6 +11933,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12282,6 +12296,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessGroupsAddUserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12344,6 +12359,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessGroupsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12416,6 +12432,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessGroupsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12492,6 +12509,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessGroupsListUsersRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12553,6 +12571,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AccessGroupsRemoveUserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12918,6 +12937,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialPoolsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13087,6 +13107,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialProvisioningAutomationsLaunchRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13285,6 +13306,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsAssignRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13406,6 +13428,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13457,6 +13480,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13550,6 +13574,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13627,6 +13652,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13702,6 +13728,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsListAccessibleEntrancesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13806,6 +13833,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsUnassignRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13901,6 +13929,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CredentialsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14692,6 +14721,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EntrancesGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14753,6 +14783,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EntrancesGrantAccessRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14834,6 +14865,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EntrancesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14922,6 +14954,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EntrancesListCredentialsWithAccessRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15278,6 +15311,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SystemsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15358,6 +15392,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SystemsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15440,6 +15475,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SystemsListCompatibleCredentialManagerAcsSystemsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15735,6 +15771,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersAddToAccessGroupRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15844,6 +15881,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15895,6 +15933,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15968,6 +16007,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16053,6 +16093,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16128,6 +16169,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersListAccessibleEntrancesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16189,6 +16231,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersRemoveFromAccessGroupRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16239,6 +16282,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersRevokeAccessToAllEntrancesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16289,6 +16333,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersSuspendRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16339,6 +16384,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersUnsuspendRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16424,6 +16470,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17153,6 +17200,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ActionAttemptsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17207,6 +17255,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ActionAttemptsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17406,6 +17455,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17457,6 +17507,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17515,6 +17566,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17585,6 +17637,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsGetOrCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17647,6 +17700,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsGrantAccessRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17710,6 +17764,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17761,6 +17816,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClientSessionsRevokeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18246,6 +18302,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectWebviewsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18297,6 +18354,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectWebviewsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18374,6 +18432,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectWebviewsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18452,6 +18511,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectWebviewsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18978,6 +19038,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectedAccountsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19098,6 +19159,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectedAccountsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19174,6 +19236,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConnectedAccountsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19601,6 +19664,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevicesDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19903,6 +19967,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevicesGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20024,6 +20089,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevicesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20075,6 +20141,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevicesListDeviceProvidersRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20133,6 +20200,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevicesUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21055,6 +21123,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateConnectRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21105,6 +21174,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateDisconnectRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21155,6 +21225,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateRemoveRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21410,6 +21481,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21523,6 +21595,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21576,6 +21649,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UnmanagedUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22198,6 +22272,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EventsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -22291,6 +22366,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EventsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23752,6 +23828,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LocksGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23921,6 +23998,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LocksListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -23983,6 +24061,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LocksLockDoorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -24045,6 +24124,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LocksUnlockDoorRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25110,6 +25190,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NetworksGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25157,6 +25238,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NetworksListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25359,6 +25441,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NoiseThresholdsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25431,6 +25514,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NoiseThresholdsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25490,6 +25574,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NoiseThresholdsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25553,6 +25638,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NoiseThresholdsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -25630,6 +25716,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NoiseThresholdsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26008,6 +26095,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateTriggerNoiseThresholdRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26121,6 +26209,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PhonesDeactivateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26206,6 +26295,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PhonesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26447,6 +26537,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SimulateCreateSandboxPhoneRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -26734,6 +26825,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsCoolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27037,6 +27129,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27101,6 +27194,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsHeatRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27167,6 +27261,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsHeatCoolRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27288,6 +27383,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27350,6 +27446,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsOffRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27414,6 +27511,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsSetFanModeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -27467,6 +27565,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ThermostatsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28613,6 +28712,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClimateSettingSchedulesCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28664,6 +28764,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClimateSettingSchedulesDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28741,6 +28842,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClimateSettingSchedulesGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28815,6 +28917,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClimateSettingSchedulesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -28898,6 +29001,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ClimateSettingSchedulesUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29345,6 +29449,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesAddAcsUserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29422,6 +29527,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29473,6 +29579,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29579,6 +29686,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesGrantAccessToDeviceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29639,6 +29747,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29786,6 +29895,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesListAccessibleDevicesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29868,6 +29978,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesListAcsSystemsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -29944,6 +30055,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesListAcsUsersRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30005,6 +30117,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesRemoveAcsUserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30065,6 +30178,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesRevokeAccessToDeviceRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30143,6 +30257,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserIdentitiesUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -30991,6 +31106,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnrollmentAutomationsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31048,6 +31164,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnrollmentAutomationsGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31136,6 +31253,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnrollmentAutomationsLaunchRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31196,6 +31314,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnrollmentAutomationsListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31574,6 +31693,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31617,6 +31737,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31667,6 +31788,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -31753,6 +31875,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -32067,6 +32190,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WorkspacesCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

@@ -37,17 +37,16 @@ func (c *Client) Stream(
 	opts ...option.RequestOption,
 ) (*core.Stream[fern.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/stream"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Accept", "text/event-stream")
 
 	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
@@ -56,12 +55,12 @@ func (c *Client) Stream(
 		&internal.StreamParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
+			Headers:         headers,
 			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      "[[DONE]]",
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
-			Headers:         headers,
 			Client:          options.HTTPClient,
 			Request:         request,
 		},

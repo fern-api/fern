@@ -37,17 +37,19 @@ func (c *Client) GetResource(
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := internal.EncodeURL(baseURL+"/resource/%v", resourceId)
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/resource/%v",
+		resourceId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *fern.Resource
 	if err := c.caller.Call(
@@ -55,8 +57,8 @@ func (c *Client) GetResource(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -74,16 +76,12 @@ func (c *Client) ListResources(
 	opts ...option.RequestOption,
 ) ([]*fern.Resource, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/resource"
-
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
@@ -91,8 +89,10 @@ func (c *Client) ListResources(
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response []*fern.Resource
 	if err := c.caller.Call(
@@ -100,8 +100,8 @@ func (c *Client) ListResources(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

@@ -19452,6 +19452,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LinkedAccountSelectiveSyncConfigurationListRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

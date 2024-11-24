@@ -85,7 +85,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
         if (this.service != null && this.serviceId != null) {
             for (const endpoint of this.service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -93,7 +93,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 

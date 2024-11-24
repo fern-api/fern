@@ -921,6 +921,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "StartIgnitionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1335,6 +1336,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExchangeTokenRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

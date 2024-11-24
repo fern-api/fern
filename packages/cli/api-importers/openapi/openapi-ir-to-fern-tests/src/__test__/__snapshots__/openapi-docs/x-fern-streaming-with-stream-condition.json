@@ -47,6 +47,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -95,6 +96,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {

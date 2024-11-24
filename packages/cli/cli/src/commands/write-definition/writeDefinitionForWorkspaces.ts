@@ -13,11 +13,13 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function writeDefinitionForWorkspaces({
     project,
     cliContext,
-    sdkLanguage
+    sdkLanguage,
+    preserveSchemaIds
 }: {
     project: Project;
     cliContext: CliContext;
     sdkLanguage: generatorsYml.GenerationLanguage | undefined;
+    preserveSchemaIds: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -26,7 +28,7 @@ export async function writeDefinitionForWorkspaces({
                     await writeDefinitionForFernWorkspace({ workspace, context });
                 } else {
                     await writeDefinitionForNonFernWorkspace({
-                        workspace: await workspace.toFernWorkspace({ context }),
+                        workspace: await workspace.toFernWorkspace({ context }, { preserveSchemaIds }),
                         context
                     });
                 }

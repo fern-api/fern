@@ -34,13 +34,11 @@ func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = DoubleOptional(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -83,13 +81,11 @@ func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedObjectWithOptionalField(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -132,13 +128,11 @@ func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedObjectWithRequiredField(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -173,13 +167,11 @@ func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectWithMapOfMap(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -319,13 +311,11 @@ func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	*o = ObjectWithOptionalField(unmarshaler.embed)
 	o.Datetime = unmarshaler.Datetime.TimePtr()
 	o.Date = unmarshaler.Date.TimePtr()
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -374,13 +364,11 @@ func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectWithRequiredField(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 

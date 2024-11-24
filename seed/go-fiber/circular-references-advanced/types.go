@@ -32,13 +32,11 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingA(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -73,13 +71,11 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RootType(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 

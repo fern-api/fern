@@ -43,4 +43,5 @@ export interface SdkContext extends ModelContext {
     generateOAuthClients: boolean;
     inlineFileProperties: boolean;
     omitUndefined: boolean;
+    neverThrowErrors: boolean;
 }

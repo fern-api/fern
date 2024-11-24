@@ -85,7 +85,7 @@ type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UsernameCursor) GetCursor() *UsernamePage {
@@ -106,20 +106,18 @@ func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameCursor(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UsernameCursor) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -134,7 +132,7 @@ type UsernamePage struct {
 	Data  []string `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UsernamePage) GetAfter() *string {
@@ -162,20 +160,18 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernamePage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UsernamePage) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -192,7 +188,7 @@ type ListUsersExtendedOptionalListResponse struct {
 	TotalCount int `json:"total_count" url:"total_count"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (l *ListUsersExtendedOptionalListResponse) GetData() *UserOptionalListContainer {
@@ -227,20 +223,18 @@ func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error
 		return err
 	}
 	*l = ListUsersExtendedOptionalListResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
-	l._rawJSON = json.RawMessage(data)
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (l *ListUsersExtendedOptionalListResponse) String() string {
-	if len(l._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l._rawJSON); err == nil {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -257,7 +251,7 @@ type ListUsersExtendedResponse struct {
 	TotalCount int `json:"total_count" url:"total_count"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (l *ListUsersExtendedResponse) GetData() *UserListContainer {
@@ -292,20 +286,18 @@ func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersExtendedResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
-	l._rawJSON = json.RawMessage(data)
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (l *ListUsersExtendedResponse) String() string {
-	if len(l._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l._rawJSON); err == nil {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -323,7 +315,7 @@ type ListUsersPaginationResponse struct {
 	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (l *ListUsersPaginationResponse) GetHasNextPage() *bool {
@@ -365,20 +357,18 @@ func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*l = ListUsersPaginationResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
 	l.extraProperties = extraProperties
-
-	l._rawJSON = json.RawMessage(data)
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (l *ListUsersPaginationResponse) String() string {
-	if len(l._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l._rawJSON); err == nil {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -393,7 +383,7 @@ type NextPage struct {
 	StartingAfter string `json:"starting_after" url:"starting_after"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *NextPage) GetPage() int {
@@ -421,20 +411,18 @@ func (n *NextPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NextPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *NextPage) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -474,7 +462,7 @@ type Page struct {
 	TotalPage int       `json:"total_page" url:"total_page"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (p *Page) GetPage() int {
@@ -516,20 +504,18 @@ func (p *Page) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Page(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
-	p._rawJSON = json.RawMessage(data)
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (p *Page) String() string {
-	if len(p._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(p._rawJSON); err == nil {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -544,7 +530,7 @@ type User struct {
 	Id   int    `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *User) GetName() string {
@@ -572,20 +558,18 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *User) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -599,7 +583,7 @@ type UserListContainer struct {
 	Users []*User `json:"users,omitempty" url:"users,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UserListContainer) GetUsers() []*User {
@@ -620,20 +604,18 @@ func (u *UserListContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserListContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UserListContainer) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -647,7 +629,7 @@ type UserOptionalListContainer struct {
 	Users []*User `json:"users,omitempty" url:"users,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UserOptionalListContainer) GetUsers() []*User {
@@ -668,20 +650,18 @@ func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserOptionalListContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UserOptionalListContainer) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -696,7 +676,7 @@ type UserOptionalListPage struct {
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UserOptionalListPage) GetData() *UserOptionalListContainer {
@@ -724,20 +704,18 @@ func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserOptionalListPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UserOptionalListPage) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -752,7 +730,7 @@ type UserPage struct {
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UserPage) GetData() *UserListContainer {
@@ -780,20 +758,18 @@ func (u *UserPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UserPage) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -807,7 +783,7 @@ type UsernameContainer struct {
 	Results []string `json:"results,omitempty" url:"results,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UsernameContainer) GetResults() []string {
@@ -828,20 +804,18 @@ func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UsernameContainer(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UsernameContainer) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -855,7 +829,7 @@ type WithCursor struct {
 	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (w *WithCursor) GetCursor() *string {
@@ -876,20 +850,18 @@ func (w *WithCursor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithCursor(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
-	w._rawJSON = json.RawMessage(data)
+	w.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (w *WithCursor) String() string {
-	if len(w._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -903,7 +875,7 @@ type WithPage struct {
 	Page *int `json:"page,omitempty" url:"page,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (w *WithPage) GetPage() *int {
@@ -924,20 +896,18 @@ func (w *WithPage) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithPage(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
-	w._rawJSON = json.RawMessage(data)
+	w.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (w *WithPage) String() string {
-	if len(w._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(w._rawJSON); err == nil {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
 		}
 	}

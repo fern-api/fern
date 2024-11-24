@@ -157,7 +157,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P(extraPropertiesFieldName, " map[string]interface{}")
 	}
 	if t.includeRawJSON {
-		t.writer.P("_rawJSON json.RawMessage")
+		t.writer.P("rawJSON json.RawMessage")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -190,10 +190,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P("return err")
 		t.writer.P("}")
 		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
-		t.writer.P()
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
 		if t.includeRawJSON {
-			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
 		t.writer.P("return nil")
 		t.writer.P("}")
@@ -227,13 +226,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			t.writer.P("}")
 			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = unmarshaler.", literal.Name.Name.PascalCase.UnsafeName)
 		}
-		t.writer.P()
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
 		if t.includeRawJSON {
-			t.writer.P()
-			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+			t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
 		}
-
 		t.writer.P("return nil")
 		t.writer.P("}")
 		t.writer.P()
@@ -272,8 +268,8 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// Implement fmt.Stringer.
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
 	if t.includeRawJSON {
-		t.writer.P("if len(", receiver, "._rawJSON) > 0 {")
-		t.writer.P("if value, err := internal.StringifyJSON(", receiver, "._rawJSON); err == nil {")
+		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+		t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
 		t.writer.P("return value")
 		t.writer.P("}")
 		t.writer.P("}")
@@ -1471,7 +1467,6 @@ func writeExtractExtraProperties(
 	f.P("return err")
 	f.P("}")
 	f.P(receiver, ".", extraPropertiesFieldName, " = extraProperties")
-	f.P()
 }
 
 // typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an

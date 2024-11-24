@@ -56,6 +56,7 @@
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "PostTestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

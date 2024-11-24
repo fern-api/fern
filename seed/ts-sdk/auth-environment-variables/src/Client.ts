@@ -26,6 +26,8 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
         xAnotherHeader?: string;
         /** Override the X-API-Version header */
         xApiVersion?: "01-01-2000";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 

@@ -39,7 +39,7 @@ export async function getPreviewDocsDefinition({
             async (workspace) =>
                 await workspace.toFernWorkspace(
                     { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
                 )
         )
     );

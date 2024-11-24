@@ -195,6 +195,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {
@@ -393,6 +397,10 @@
                             }
                         }
                     ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

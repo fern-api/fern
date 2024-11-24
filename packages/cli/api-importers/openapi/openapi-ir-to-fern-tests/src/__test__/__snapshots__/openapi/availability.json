@@ -124,6 +124,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineBetaBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -160,6 +161,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineObjectDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -199,6 +201,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlinePropertyDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -238,6 +241,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Settings",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

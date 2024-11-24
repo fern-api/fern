@@ -12,7 +12,7 @@ type Optional struct {
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (o *Optional) GetValue() string {
@@ -33,20 +33,18 @@ func (o *Optional) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Optional(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
-	o._rawJSON = json.RawMessage(data)
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *Optional) String() string {
-	if len(o._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o._rawJSON); err == nil {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
 		}
 	}

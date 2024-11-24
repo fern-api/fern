@@ -38,16 +38,12 @@ func (c *Client) GetMetadata(
 	opts ...option.RequestOption,
 ) (*events.Metadata, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/users/events/metadata/"
-
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
@@ -55,8 +51,10 @@ func (c *Client) GetMetadata(
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *events.Metadata
 	if err := c.caller.Call(
@@ -64,8 +62,8 @@ func (c *Client) GetMetadata(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
