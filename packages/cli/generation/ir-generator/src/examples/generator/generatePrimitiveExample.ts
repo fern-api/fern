@@ -1,6 +1,13 @@
-import { ExamplePrimitive, PrimitiveType } from "@fern-api/ir-sdk";
+import {
+    ExamplePrimitive,
+    PrimitiveType,
+    PrimitiveTypeV2,
+    StringValidationRules,
+    DoubleValidationRules,
+    IntegerValidationRules
+} from "@fern-api/ir-sdk";
 import { assertNever, Examples } from "@fern-api/core-utils";
-import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult";
+import { ExampleGenerationSuccess } from "./ExampleGenerationResult";
 
 export declare namespace generatePrimitiveExample {
     interface Args {
@@ -16,8 +23,12 @@ export function generatePrimitiveExample({
 }: generatePrimitiveExample.Args): ExampleGenerationSuccess<ExamplePrimitive> {
     switch (primitiveType.v1) {
         case "STRING": {
-            const jsonExample = fieldName ?? Examples.STRING;
-            return { type: "success", example: ExamplePrimitive.string({ original: jsonExample }), jsonExample };
+            let validation = undefined;
+            if (primitiveType.v2?.type === "string") {
+                const stringType = primitiveType.v2 as PrimitiveTypeV2.String;
+                validation = stringType.validation;
+            }
+            return generatePrimitiveStringExample(fieldName, validation);
         }
         case "BASE_64": {
             return { type: "success", example: ExamplePrimitive.base64(Examples.BASE64), jsonExample: Examples.BASE64 };
@@ -43,13 +54,23 @@ export function generatePrimitiveExample({
             };
         }
         case "DOUBLE": {
-            return { type: "success", example: ExamplePrimitive.double(Examples.DOUBLE), jsonExample: Examples.DOUBLE };
+            let validation = undefined;
+            if (primitiveType.v2?.type === "double") {
+                const doubleType = primitiveType.v2 as PrimitiveTypeV2.Double;
+                validation = doubleType.validation;
+            }
+            return generatePrimitiveDoubleExample(fieldName, validation);
         }
         case "FLOAT": {
             return { type: "success", example: ExamplePrimitive.float(Examples.FLOAT), jsonExample: Examples.FLOAT };
         }
         case "INTEGER": {
-            return { type: "success", example: ExamplePrimitive.integer(Examples.INT), jsonExample: Examples.INT };
+            let validation = undefined;
+            if (primitiveType.v2?.type === "integer") {
+                const integerType = primitiveType.v2 as PrimitiveTypeV2.Integer;
+                validation = integerType.validation;
+            }
+            return generatePrimitiveIntegerExample(fieldName, validation);
         }
         case "UINT_64": {
             return { type: "success", example: ExamplePrimitive.uint64(Examples.INT64), jsonExample: Examples.INT64 };
@@ -73,4 +94,65 @@ export function generatePrimitiveExample({
         default:
             assertNever(primitiveType.v1);
     }
+}
+
+function generatePrimitiveStringExample(
+    fieldName: string | undefined,
+    validation: StringValidationRules | undefined
+): ExampleGenerationSuccess<ExamplePrimitive> {
+    if (validation) {
+        const minLength = validation.minLength;
+        const maxLength = validation.maxLength;
+        if (maxLength) {
+            const maxLengthExample = "a".repeat(maxLength);
+            return {
+                type: "success",
+                example: ExamplePrimitive.string({ original: maxLengthExample }),
+                jsonExample: maxLengthExample
+            };
+        } else if (minLength) {
+            const minLengthExample = "a".repeat(minLength);
+            return {
+                type: "success",
+                example: ExamplePrimitive.string({ original: minLengthExample }),
+                jsonExample: minLengthExample
+            };
+        }
+    }
+    const jsonExample = fieldName ?? Examples.STRING;
+    return { type: "success", example: ExamplePrimitive.string({ original: jsonExample }), jsonExample };
+}
+
+function generatePrimitiveDoubleExample(
+    fieldName: string | undefined,
+    validation: DoubleValidationRules | undefined
+): ExampleGenerationSuccess<ExamplePrimitive> {
+    if (validation) {
+        const maximum = validation.max;
+        const minimum = validation.min;
+        if (maximum) {
+            return { type: "success", example: ExamplePrimitive.double(maximum), jsonExample: maximum };
+        } else if (minimum) {
+            return { type: "success", example: ExamplePrimitive.double(minimum), jsonExample: minimum };
+        }
+    }
+    const jsonExample = fieldName ?? Examples.DOUBLE;
+    return { type: "success", example: ExamplePrimitive.double(Examples.DOUBLE), jsonExample: Examples.DOUBLE };
+}
+
+function generatePrimitiveIntegerExample(
+    fieldName: string | undefined,
+    validation: IntegerValidationRules | undefined
+): ExampleGenerationSuccess<ExamplePrimitive> {
+    if (validation) {
+        const maximum = validation.max;
+        const minimum = validation.min;
+        if (maximum) {
+            return { type: "success", example: ExamplePrimitive.integer(maximum), jsonExample: maximum };
+        } else if (minimum) {
+            return { type: "success", example: ExamplePrimitive.integer(minimum), jsonExample: minimum };
+        }
+    }
+    const jsonExample = fieldName ?? Examples.DOUBLE;
+    return { type: "success", example: ExamplePrimitive.integer(Examples.INT), jsonExample: Examples.INT };
 }
