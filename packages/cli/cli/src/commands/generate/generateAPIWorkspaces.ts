@@ -6,6 +6,7 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { PREVIEW_DIRECTORY } from "../../constants";
 import { generateWorkspace } from "./generateAPIWorkspace";
+import { checkOutputDirectory } from "./checkOutputDirectory";
 
 export const GenerationMode = {
     PullRequest: "pull-request"
@@ -50,6 +51,20 @@ export async function generateAPIWorkspaces({
             });
         }
         token = currentToken;
+    }
+
+    let shouldProceed = true;
+    for (const workspace of project.apiWorkspaces) {
+        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+            const { shouldProceed: workspaceShouldProceed } = await checkOutputDirectory(
+                generator.absolutePathToLocalOutput,
+                cliContext
+            );
+            shouldProceed = shouldProceed && workspaceShouldProceed;
+        }
+    }
+    if (!shouldProceed) {
+        cliContext.failAndThrow("Generation cancelled - output directory not empty");
     }
 
     await cliContext.instrumentPostHogEvent({
