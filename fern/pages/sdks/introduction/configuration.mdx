@@ -8,10 +8,6 @@ subtitle: "Configure your SDK generators in `generators.yml` and publish to regi
   [**here**](/learn/api-definition/introduction/what-is-the-fern-folder)
 </Note>
 
-<Note>
-  The public schema for `generators.yml` can be found [**here**](https://schema.buildwithfern.dev/generators-yml.json).
-</Note>
-
 ## Top Level Configuration
 
 ```yaml title="generators.yml" maxLines=10
@@ -97,3 +93,13 @@ metadata:
   request a new license, [open a GitHub
   Issue](https://github.com/fern-api/fern/issues/new?assignees=&labels=&projects=&template=feature-request.md&title=%5BFeature%5D).
 </ParamField>
+
+## Schema Validation
+
+Add the following line to the top of your `generators.yml` to enable schema validation:
+
+```yaml
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+```
+
+This will enable schema validation in your editor, ensuring that your configuration is correct.
