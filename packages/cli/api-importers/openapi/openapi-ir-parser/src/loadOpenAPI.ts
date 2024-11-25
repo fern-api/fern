@@ -7,6 +7,7 @@ import { NodeType } from "@redocly/openapi-core/lib/types";
 import { OpenAPI } from "openapi-types";
 import { mergeWithOverrides } from "./mergeWithOverrides";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
+import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 
 const XFernStreaming: NodeType = {
     properties: {
@@ -72,6 +73,28 @@ export async function loadOpenAPI({
         // references are resolved.
         return await parseOpenAPI({
             absolutePathToOpenAPI,
+            parsed: merged
+        });
+    }
+    return parsed;
+}
+
+export async function loadParsedOpenAPI({
+    openapi,
+    overrides
+}: {
+    openapi: OpenAPI.Document;
+    overrides: OpenAPI.Document | undefined;
+}): Promise<OpenAPI.Document> {
+    const memoryFilepath = AbsoluteFilePath.of("<memory>");
+    const parsed = await parseOpenAPI({
+        absolutePathToOpenAPI: memoryFilepath,
+        parsed: openapi
+    });
+    if (overrides != null) {
+        const merged = await coreMergeWithOverrides({ data: parsed, overrides });
+        return await parseOpenAPI({
+            absolutePathToOpenAPI: memoryFilepath,
             parsed: merged
         });
     }

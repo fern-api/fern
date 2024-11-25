@@ -1,0 +1,32 @@
+{
+    "irFilepath": "/fern/ir.json",
+    "output": {
+        "mode": {
+            "type": "github",
+            "repoUrl": "https://github.com/square/square-go-sdk",
+            "version": "0.0.1",
+            "publishInfo": null
+        },
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json",
+        "snippetTemplateFilepath": "/fern/snippet-templates.json"
+    },
+    "publish": null,
+    "customConfig": {
+        "union": "v1",
+        "packageName": "square",
+        "inlinePathParameters": true,
+        "inlineFileProperties": true
+    },
+    "workspaceName": "square",
+    "organization": "square",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
+}

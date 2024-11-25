@@ -4,13 +4,14 @@ import { OSSWorkspace } from "../OSSWorkspace";
 import { LazyFernWorkspace } from "../LazyFernWorkspace";
 import { ConjureWorkspace } from "../ConjureWorkspace";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { ParsedOpenAPIWorkspace } from "../ParsedOpenAPIWorkspace";
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
         didSucceed: true;
-        workspace: LazyFernWorkspace | OSSWorkspace | ConjureWorkspace;
+        workspace: LazyFernWorkspace | OSSWorkspace | ParsedOpenAPIWorkspace | ConjureWorkspace;
     }
 
     export interface FailedResult {

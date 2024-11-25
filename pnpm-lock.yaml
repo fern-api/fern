@@ -5434,6 +5434,9 @@ importers:
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -5639,6 +5642,49 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/playground:
+    dependencies:
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^53.21.0
+        version: 53.22.0
+      '@fern-api/go-dynamic-snippets':
+        specifier: 0.0.4
+        version: 0.0.4
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../generation/ir-generator
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace-loader
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/posthog-manager:
     dependencies:
@@ -7516,8 +7562,14 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
+  '@fern-api/dynamic-ir-sdk@53.22.0':
+    resolution: {integrity: sha512-pWYQ9bQD6SMkjZjczKY7uy+zJ3VAEehLwd+EDXHxDId7YZQAoDC+9qU2Fbr7Uyj05++WzujKUBrSED1qinEgNQ==}
+
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
+
+  '@fern-api/go-dynamic-snippets@0.0.4':
+    resolution: {integrity: sha512-7ILcR44QA42Zdzvw7MwtfylcqSz6vvCU6raePISxCYBJHBIZl7L1G2Wo64wgYSSSkUAXDjXsLZBWYcEaqAsytA==}
 
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
@@ -14506,6 +14558,8 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
+  '@fern-api/dynamic-ir-sdk@53.22.0': {}
+
   '@fern-api/fdr-sdk@0.126.1-444264056(typescript@4.6.4)':
     dependencies:
       '@fern-api/ui-core-utils': 0.126.1-444264056
@@ -14525,6 +14579,8 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - typescript
+
+  '@fern-api/go-dynamic-snippets@0.0.4': {}
 
   '@fern-api/sdk@0.12.3':
     dependencies:

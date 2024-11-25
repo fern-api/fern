@@ -1,0 +1,25 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./src/**/*",
+    "./src/config/go/config.json",
+    "./src/config/ir/ir.json"
+  ],
+  "references": [
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../workspace-loader"
+    },
+    {
+      "path": "../task-context"
+    },
+  ]
+}

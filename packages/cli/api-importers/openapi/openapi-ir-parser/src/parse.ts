@@ -7,7 +7,7 @@ import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
 import { parseAsyncAPI } from "./asyncapi/parse";
 import { AsyncAPIV2 } from "./asyncapi/v2";
-import { loadOpenAPI } from "./loadOpenAPI";
+import { loadOpenAPI, loadParsedOpenAPI } from "./loadOpenAPI";
 import { mergeWithOverrides } from "./mergeWithOverrides";
 import { generateIr as generateIrFromV2 } from "./openapi/v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
@@ -17,6 +17,13 @@ export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     source: Source;
+    namespace?: string;
+    settings?: SpecImportSettings;
+}
+
+export interface ParsedOpenAPISpec {
+    parsed: OpenAPI.Document;
+    overrides?: OpenAPI.Document;
     namespace?: string;
     settings?: SpecImportSettings;
 }
@@ -166,6 +173,69 @@ export async function parse({
         }
     }
 
+    return ir;
+}
+
+export async function parseOpenAPISpecs({
+    specs,
+    taskContext,
+    optionOverrides
+}: {
+    specs: ParsedOpenAPISpec[];
+    taskContext: TaskContext;
+    optionOverrides?: Partial<ParseOpenAPIOptions>;
+}): Promise<OpenApiIntermediateRepresentation> {
+    let ir: OpenApiIntermediateRepresentation = {
+        apiVersion: undefined,
+        title: undefined,
+        description: undefined,
+        basePath: undefined,
+        servers: [],
+        tags: {
+            tagsById: {},
+            orderedTagIds: undefined
+        },
+        hasEndpointsMarkedInternal: false,
+        endpoints: [],
+        webhooks: [],
+        channel: [],
+        groupedSchemas: {
+            rootSchemas: {},
+            namespacedSchemas: {}
+        },
+        variables: {},
+        nonRequestReferencedSchemas: new Set(),
+        securitySchemes: {},
+        globalHeaders: [],
+        idempotencyHeaders: [],
+        groups: {}
+    };
+    const source = OpenApiIrSource.openapi({ file: "<memory>" });
+    for (const spec of specs) {
+        const parsed = await loadParsedOpenAPI({
+            openapi: spec.parsed,
+            overrides: spec.overrides
+        });
+        if (isOpenApiV3(parsed)) {
+            const openapiIr = generateIrFromV3({
+                openApi: parsed,
+                taskContext,
+                options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides }),
+                source,
+                namespace: spec.namespace
+            });
+            ir = merge(ir, openapiIr);
+        } else if (isOpenApiV2(parsed)) {
+            const openapiIr = await generateIrFromV2({
+                openApi: parsed,
+                taskContext,
+                options: getParseOptions({ specSettings: spec.settings }),
+                source,
+                namespace: spec.namespace
+            });
+            ir = merge(ir, openapiIr);
+        }
+    }
     return ir;
 }
 
