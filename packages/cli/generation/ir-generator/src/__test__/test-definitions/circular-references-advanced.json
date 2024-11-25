@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ImportingA": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ImportingA",
@@ -165,7 +165,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_a:A",
@@ -182,7 +183,7 @@
             "docs": null
         },
         "type_:RootType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "RootType",
@@ -253,7 +254,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -267,7 +269,7 @@
             "docs": null
         },
         "type_a:A": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "A",
@@ -404,7 +406,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:RootType"
@@ -420,7 +423,7 @@
             "docs": null
         },
         "type_ast:ContainerValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ContainerValue",
@@ -765,7 +768,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_ast:FieldValue",
@@ -784,7 +788,7 @@
             "docs": null
         },
         "type_ast:PrimitiveValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "PrimitiveValue",
@@ -906,7 +910,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -920,7 +925,7 @@
             "docs": null
         },
         "type_ast:ObjectValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ObjectValue",
@@ -991,7 +996,8 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1005,7 +1011,7 @@
             "docs": null
         },
         "type_ast:FieldName": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "FieldName",
@@ -1108,7 +1114,7 @@
             "docs": null
         },
         "type_ast:FieldValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "FieldValue",
@@ -1534,7 +1540,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_ast:PrimitiveValue",
@@ -1553,7 +1560,7 @@
             "docs": null
         },
         "type_ast:ObjectFieldValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ObjectFieldValue",
@@ -1813,7 +1820,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_ast:FieldName",

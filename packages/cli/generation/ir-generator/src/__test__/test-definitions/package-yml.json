@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:EchoRequest": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "EchoRequest",
@@ -139,7 +139,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

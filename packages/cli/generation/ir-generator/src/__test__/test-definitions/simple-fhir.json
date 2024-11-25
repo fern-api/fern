@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Memo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Memo",
@@ -164,7 +164,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Account",
@@ -186,7 +187,7 @@
             "docs": null
         },
         "type_:BaseResource": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "BaseResource",
@@ -375,7 +376,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:ResourceList",
@@ -397,7 +399,7 @@
             "docs": null
         },
         "type_:ResourceList": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ResourceList",
@@ -560,7 +562,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Account",
@@ -582,7 +585,7 @@
             "docs": null
         },
         "type_:Account": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Account",
@@ -997,7 +1000,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -1019,7 +1023,7 @@
             "docs": null
         },
         "type_:Patient": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Patient",
@@ -1372,7 +1376,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -1394,7 +1399,7 @@
             "docs": null
         },
         "type_:Practitioner": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Practitioner",
@@ -1685,7 +1690,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -1707,7 +1713,7 @@
             "docs": null
         },
         "type_:Script": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Script",
@@ -1998,7 +2004,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:BaseResource",

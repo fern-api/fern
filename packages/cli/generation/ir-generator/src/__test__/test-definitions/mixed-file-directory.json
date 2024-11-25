@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Id": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Id",
@@ -96,7 +96,7 @@
             "docs": null
         },
         "type_organization:Organization": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Organization",
@@ -361,7 +361,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Id",
@@ -378,7 +379,7 @@
             "docs": null
         },
         "type_organization:CreateOrganizationRequest": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "CreateOrganizationRequest",
@@ -487,7 +488,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -501,7 +503,7 @@
             "docs": null
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -703,7 +705,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Id"
@@ -719,7 +722,7 @@
             "docs": null
         },
         "type_user/events:Event": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Event",
@@ -923,7 +926,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Id"
@@ -939,7 +943,7 @@
             "docs": null
         },
         "type_user/events/metadata:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -1173,7 +1177,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Id"

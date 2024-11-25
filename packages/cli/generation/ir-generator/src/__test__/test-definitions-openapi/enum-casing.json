@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ExampleResponseStatus": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ExampleResponseStatus",
@@ -115,7 +115,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -129,7 +130,7 @@
             "docs": null
         },
         "type_:ExampleResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ExampleResponse",
@@ -328,7 +329,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:ExampleResponseStatus"
@@ -344,7 +346,7 @@
             "docs": null
         },
         "type_:GrantTypeEnum": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "GrantTypeEnum",
@@ -428,7 +430,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

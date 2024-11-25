@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_service:Organization": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Organization",
@@ -140,7 +140,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -286,7 +287,7 @@
             "docs": null
         },
         "type_service:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -492,7 +493,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -961,7 +963,7 @@
             "docs": null
         },
         "type_service:NestedUser": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "NestedUser",
@@ -1164,7 +1166,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_service:User"
@@ -1914,7 +1917,7 @@
             "docs": null
         },
         "type_service:ResourceStatus": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ResourceStatus",
@@ -2036,7 +2039,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2050,7 +2054,7 @@
             "docs": null
         },
         "type_service:Resource": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Resource",
@@ -2424,7 +2428,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_service:ResourceStatus",

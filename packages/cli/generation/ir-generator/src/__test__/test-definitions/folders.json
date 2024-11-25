@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_a/d/types:Foo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Foo",

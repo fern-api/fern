@@ -121,7 +121,8 @@
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "inline": null
         }
     },
     "apiName": {
@@ -154,7 +155,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_user:UserId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserId",
@@ -257,7 +258,7 @@
             "docs": null
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -460,7 +461,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_user:UserId"

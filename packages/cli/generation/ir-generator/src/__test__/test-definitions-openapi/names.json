@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_telemetry:TelemetryGetTelemetryDataResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TelemetryGetTelemetryDataResponse",
@@ -349,7 +349,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_infra/telemetry:TelemetryData"
@@ -365,7 +366,7 @@
             "docs": null
         },
         "type_infra/telemetry:TelemetryData": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TelemetryData",
@@ -593,7 +594,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_commons:Imported": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Imported",
@@ -134,7 +134,7 @@
             "docs": null
         },
         "type_folder-a/service:Response": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Response",
@@ -384,7 +384,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_folder-b/common:Foo",
@@ -401,7 +402,7 @@
             "docs": null
         },
         "type_folder-b/common:Foo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -651,7 +652,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_folder-c/common:Foo"
@@ -667,7 +669,7 @@
             "docs": null
         },
         "type_folder-c/common:Foo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -811,7 +813,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -825,7 +828,7 @@
             "docs": null
         },
         "type_folder-d/service:Response": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Response",
@@ -1075,7 +1078,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_folder-b/common:Foo",
@@ -1092,7 +1096,7 @@
             "docs": null
         },
         "type_foo:ImportingType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ImportingType",
@@ -1258,7 +1262,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_commons:Imported"
@@ -1274,7 +1279,7 @@
             "docs": null
         },
         "type_foo:OptionalString": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "OptionalString",

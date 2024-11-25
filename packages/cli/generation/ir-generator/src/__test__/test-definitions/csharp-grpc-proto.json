@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:CreateResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "CreateResponse",
@@ -127,7 +127,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:UserModel",
@@ -178,7 +179,7 @@
             "docs": null
         },
         "type_:UserModel": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserModel",
@@ -438,7 +439,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -488,7 +490,7 @@
             "docs": null
         },
         "type_:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -592,7 +594,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:MetadataValue"
@@ -616,7 +619,7 @@
             "docs": null
         },
         "type_:MetadataValue": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MetadataValue",
@@ -685,7 +688,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

@@ -6,15 +6,11 @@
     },
     "bar": {
       "$ref": "#/definitions/InlineType1"
-    },
-    "two": {
-      "$ref": "#/definitions/MixedInlineType1"
     }
   },
   "required": [
     "foo",
-    "bar",
-    "two"
+    "bar"
   ],
   "additionalProperties": false,
   "definitions": {
@@ -42,22 +38,6 @@
         },
         "bar": {
           "$ref": "#/definitions/NestedInlineType1"
-        }
-      },
-      "required": [
-        "foo",
-        "bar"
-      ],
-      "additionalProperties": false
-    },
-    "MixedInlineType1": {
-      "type": "object",
-      "properties": {
-        "foo": {
-          "type": "string"
-        },
-        "bar": {
-          "type": "string"
         }
       },
       "required": [

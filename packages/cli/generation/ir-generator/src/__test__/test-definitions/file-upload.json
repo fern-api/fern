@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_service:Id": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Id",
@@ -134,7 +134,7 @@
             "docs": null
         },
         "type_service:MyObject": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MyObject",
@@ -243,7 +243,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -257,7 +258,7 @@
             "docs": null
         },
         "type_service:ObjectType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ObjectType",
@@ -379,7 +380,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

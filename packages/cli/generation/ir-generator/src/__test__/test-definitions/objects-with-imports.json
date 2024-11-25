@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Node": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Node",
@@ -284,7 +284,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_commons/metadata:Metadata"
@@ -2049,7 +2050,7 @@
             "docs": null
         },
         "type_:Tree": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Tree",
@@ -2151,7 +2152,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Node",
@@ -4173,7 +4175,7 @@
             "docs": null
         },
         "type_commons/metadata:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -4381,7 +4383,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4826,7 +4829,7 @@
             "docs": null
         },
         "type_file:File": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "File",
@@ -5066,7 +5069,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_file:FileInfo"
@@ -5921,7 +5925,7 @@
             "docs": null
         },
         "type_file:FileInfo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "FileInfo",
@@ -6043,7 +6047,8 @@
                         "availability": null,
                         "docs": "A directory (e.g. foo/)."
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -6154,7 +6159,7 @@
             "docs": null
         },
         "type_file/directory:Directory": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Directory",
@@ -6553,7 +6558,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_file:File",

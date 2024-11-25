@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "type1",
+        "type2"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "type1"
+        },
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "$ref": "#/definitions/NestedInlineType1"
+        }
+      },
+      "required": [
+        "type",
+        "foo",
+        "bar"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "type2"
+        },
+        "baz": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "baz"
+      ]
+    }
+  ],
+  "definitions": {
+    "NestedInlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

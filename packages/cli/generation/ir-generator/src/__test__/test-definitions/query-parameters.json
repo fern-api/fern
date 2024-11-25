@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -183,7 +183,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -197,7 +198,7 @@
             "docs": null
         },
         "type_user:NestedUser": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "NestedUser",
@@ -400,7 +401,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_user:User"

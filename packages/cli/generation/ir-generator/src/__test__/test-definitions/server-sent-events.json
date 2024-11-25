@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_completions:StreamedCompletion": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "StreamedCompletion",
@@ -183,7 +183,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

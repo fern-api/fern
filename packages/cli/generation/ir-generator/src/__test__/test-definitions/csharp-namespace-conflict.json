@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_a/aa:A": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "A",
@@ -142,7 +142,8 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -156,7 +157,7 @@
             "docs": null
         },
         "type_a/aa:B": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "B",
@@ -267,7 +268,8 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -281,7 +283,7 @@
             "docs": null
         },
         "type_a/aa:SubTestType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SubTestType",
@@ -661,7 +663,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_a/aa:A",
@@ -678,7 +681,7 @@
             "docs": null
         },
         "type_b:TestType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TestType",
@@ -1020,7 +1023,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_a/aa:A",
@@ -1037,7 +1041,7 @@
             "docs": null
         },
         "type_tasktest:Task": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Task",
@@ -1146,7 +1150,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

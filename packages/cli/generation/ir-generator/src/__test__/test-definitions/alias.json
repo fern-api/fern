@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:TypeId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TypeId",
@@ -135,7 +135,7 @@
             "docs": "An alias for type IDs."
         },
         "type_:Type": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Type",
@@ -262,7 +262,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:TypeId"
@@ -472,7 +473,7 @@
             "docs": "A simple type with just a name."
         },
         "type_:Object": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Object",

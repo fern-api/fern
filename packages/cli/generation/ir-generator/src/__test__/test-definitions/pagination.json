@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:UsernameCursor": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernameCursor",
@@ -146,7 +146,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:UsernamePage"
@@ -162,7 +163,7 @@
             "docs": null
         },
         "type_:UsernamePage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernamePage",
@@ -282,7 +283,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -296,7 +298,7 @@
             "docs": null
         },
         "type_users:Order": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Order",
@@ -418,7 +420,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -432,7 +435,7 @@
             "docs": null
         },
         "type_users:WithPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithPage",
@@ -547,7 +550,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -561,7 +565,7 @@
             "docs": null
         },
         "type_users:WithCursor": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithCursor",
@@ -676,7 +680,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -690,7 +695,7 @@
             "docs": null
         },
         "type_users:UserListContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserListContainer",
@@ -862,7 +867,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -878,7 +884,7 @@
             "docs": null
         },
         "type_users:UserPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserPage",
@@ -1083,7 +1089,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:UserListContainer",
@@ -1100,7 +1107,7 @@
             "docs": null
         },
         "type_users:UserOptionalListContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListContainer",
@@ -1278,7 +1285,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:User"
@@ -1294,7 +1302,7 @@
             "docs": null
         },
         "type_users:UserOptionalListPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListPage",
@@ -1499,7 +1507,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:UserOptionalListContainer",
@@ -1516,7 +1525,7 @@
             "docs": null
         },
         "type_users:UsernameContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernameContainer",
@@ -1631,7 +1640,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1645,7 +1655,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedResponse",
@@ -1954,7 +1964,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:UserPage",
@@ -1972,7 +1983,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedOptionalListResponse",
@@ -2281,7 +2292,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:UserOptionalListPage",
@@ -2299,7 +2311,7 @@
             "docs": null
         },
         "type_users:ListUsersPaginationResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersPaginationResponse",
@@ -2647,7 +2659,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:Page",
@@ -2665,7 +2678,7 @@
             "docs": null
         },
         "type_users:Page": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Page",
@@ -2948,7 +2961,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_users:NextPage"
@@ -2964,7 +2978,7 @@
             "docs": null
         },
         "type_users:NextPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "NextPage",
@@ -3110,7 +3124,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3124,7 +3139,7 @@
             "docs": null
         },
         "type_users:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -3270,7 +3285,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

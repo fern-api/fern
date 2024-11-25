@@ -106,7 +106,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:SendResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SendResponse",
@@ -250,7 +250,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -264,7 +265,7 @@
             "docs": null
         },
         "type_inlined:SomeAliasedLiteral": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SomeAliasedLiteral",
@@ -365,7 +366,7 @@
             "docs": null
         },
         "type_inlined:ATopLevelLiteral": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ATopLevelLiteral",
@@ -531,7 +532,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_inlined:ANestedLiteral"
@@ -547,7 +549,7 @@
             "docs": null
         },
         "type_inlined:ANestedLiteral": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ANestedLiteral",
@@ -655,7 +657,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -669,7 +672,7 @@
             "docs": null
         },
         "type_reference:SendRequest": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SendRequest",
@@ -1138,7 +1141,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_reference:SomeLiteral",
@@ -1156,7 +1160,7 @@
             "docs": null
         },
         "type_reference:ContainerObject": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ContainerObject",
@@ -1328,7 +1332,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_reference:NestedObjectWithLiterals"
@@ -1344,7 +1349,7 @@
             "docs": null
         },
         "type_reference:NestedObjectWithLiterals": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "NestedObjectWithLiterals",
@@ -1525,7 +1530,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1539,7 +1545,7 @@
             "docs": null
         },
         "type_reference:SomeLiteral": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SomeLiteral",

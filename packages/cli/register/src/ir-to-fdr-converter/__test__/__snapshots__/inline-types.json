@@ -1,54 +1,5 @@
 {
   "types": {
-    "type_:DiscriminatedUnion1": {
-      "name": "DiscriminatedUnion1",
-      "shape": {
-        "type": "discriminatedUnion",
-        "discriminant": "type",
-        "variants": [
-          {
-            "discriminantValue": "type1",
-            "additionalProperties": {
-              "extends": [
-                "type_:InlineType1"
-              ],
-              "properties": []
-            }
-          },
-          {
-            "discriminantValue": "type2",
-            "additionalProperties": {
-              "extends": [
-                "type_:MixedInlineType1"
-              ],
-              "properties": []
-            }
-          }
-        ]
-      }
-    },
-    "type_:UndiscriminatedUnion1": {
-      "name": "UndiscriminatedUnion1",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "InlineType1",
-            "type": {
-              "type": "id",
-              "value": "type_:InlineType1"
-            }
-          },
-          {
-            "typeName": "MixedInlineType1",
-            "type": {
-              "type": "id",
-              "value": "type_:MixedInlineType1"
-            }
-          }
-        ]
-      }
-    },
     "type_:RootType1": {
       "name": "RootType1",
       "shape": {
@@ -69,41 +20,6 @@
             "valueType": {
               "type": "id",
               "value": "type_:InlineType1"
-            }
-          },
-          {
-            "key": "two",
-            "valueType": {
-              "type": "id",
-              "value": "type_:MixedInlineType1"
-            }
-          }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "type_:RootType2": {
-      "name": "RootType2",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "one",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
-            }
-          },
-          {
-            "key": "two",
-            "valueType": {
-              "type": "id",
-              "value": "type_:MixedInlineType1"
             }
           }
         ],
@@ -132,6 +48,27 @@
             "valueType": {
               "type": "id",
               "value": "type_:NestedInlineType1"
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "type_:InlineType2": {
+      "name": "InlineType2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "baz",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -170,34 +107,53 @@
         }
       }
     },
-    "type_:MixedInlineType1": {
-      "name": "MixedInlineType1",
+    "type_:InlinedDiscriminatedUnion1": {
+      "name": "InlinedDiscriminatedUnion1",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
           {
-            "key": "foo",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+            "discriminantValue": "type1",
+            "additionalProperties": {
+              "extends": [
+                "type_:InlineType1"
+              ],
+              "properties": []
             }
           },
           {
-            "key": "bar",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
+            "discriminantValue": "type2",
+            "additionalProperties": {
+              "extends": [
+                "type_:InlineType2"
+              ],
+              "properties": []
             }
           }
-        ],
-        "extraProperties": {
-          "type": "unknown"
-        }
+        ]
+      }
+    },
+    "type_:InlinedUndiscriminatedUnion1": {
+      "name": "InlinedUndiscriminatedUnion1",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InlineType1",
+            "type": {
+              "type": "id",
+              "value": "type_:InlineType1"
+            }
+          },
+          {
+            "typeName": "InlineType2",
+            "type": {
+              "type": "id",
+              "value": "type_:InlineType2"
+            }
+          }
+        ]
       }
     }
   },
@@ -301,10 +257,6 @@
                   "foo": "foo",
                   "bar": "bar"
                 }
-              },
-              "two": {
-                "foo": "foo",
-                "bar": "bar"
               }
             },
             "responseBodyV3": {
@@ -317,69 +269,6 @@
                     "foo": "foo",
                     "bar": "bar"
                   }
-                },
-                "two": {
-                  "foo": "foo",
-                  "bar": "bar"
-                }
-              }
-            },
-            "codeSamples": []
-          }
-        ]
-      },
-      {
-        "auth": false,
-        "method": "GET",
-        "id": "getInline",
-        "originalEndpointId": "endpoint_.getInline",
-        "name": "Get Inline",
-        "path": {
-          "pathParameters": [],
-          "parts": [
-            {
-              "type": "literal",
-              "value": "/root"
-            },
-            {
-              "type": "literal",
-              "value": "/inline"
-            }
-          ]
-        },
-        "queryParameters": [],
-        "headers": [],
-        "response": {
-          "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "type_:InlineType1"
-            }
-          }
-        },
-        "errorsV2": [],
-        "examples": [
-          {
-            "path": "/root/inline",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": {
-              "foo": "foo",
-              "bar": {
-                "foo": "foo",
-                "bar": "bar"
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": {
-                  "foo": "foo",
-                  "bar": "bar"
                 }
               }
             },
@@ -391,13 +280,12 @@
     "webhooks": [],
     "websockets": [],
     "types": [
-      "type_:DiscriminatedUnion1",
-      "type_:UndiscriminatedUnion1",
       "type_:RootType1",
-      "type_:RootType2",
       "type_:InlineType1",
+      "type_:InlineType2",
       "type_:NestedInlineType1",
-      "type_:MixedInlineType1"
+      "type_:InlinedDiscriminatedUnion1",
+      "type_:InlinedUndiscriminatedUnion1"
     ],
     "subpackages": []
   },

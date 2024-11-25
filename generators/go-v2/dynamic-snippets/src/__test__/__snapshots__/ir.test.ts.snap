@@ -3669,22 +3669,6 @@ func do() {
 		},
 	)
 }
-
-------------------------
-
-package example
-
-import (
-	context "context"
-	client "github.com/acme/acme-go/client"
-)
-
-func do() {
-	client := client.NewClient()
-	client.GetInline(
-		context.TODO(),
-	)
-}
 "
 `;
 

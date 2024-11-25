@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_union:TypeWithOptionalUnion": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TypeWithOptionalUnion",
@@ -203,7 +203,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_union:MyUnion"
@@ -219,7 +220,7 @@
             "docs": null
         },
         "type_union:MyUnion": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MyUnion",
@@ -402,7 +403,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -416,7 +418,7 @@
             "docs": "Several different types are accepted."
         },
         "type_union:Metadata": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Metadata",
@@ -1251,7 +1253,7 @@
             "docs": "Undiscriminated unions can act as a map key\nas long as all of their values are valid keys\n(i.e. do they have a valid string representation)."
         },
         "type_union:Key": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Key",
@@ -1404,7 +1406,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_union:KeyType"
@@ -1420,7 +1423,7 @@
             "docs": null
         },
         "type_union:KeyType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "KeyType",
@@ -1542,7 +1545,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

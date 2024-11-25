@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Operand": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Operand",
@@ -141,7 +141,8 @@
                         "availability": null,
                         "docs": "The name and value should be similar\nare similar for less than."
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -252,7 +253,7 @@
             "docs": "Tests enum name and value can be\ndifferent."
         },
         "type_:Color": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Color",
@@ -336,7 +337,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -399,7 +401,7 @@
             "docs": null
         },
         "type_:ColorOrOperand": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ColorOrOperand",
@@ -496,7 +498,8 @@
                         },
                         "docs": null
                     }
-                ]
+                ],
+                "inline": null
             },
             "referencedTypes": [
                 "type_:Color",

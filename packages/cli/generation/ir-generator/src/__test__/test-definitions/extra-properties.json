@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Failure": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Failure",
@@ -101,7 +101,8 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -115,7 +116,7 @@
             "docs": null
         },
         "type_user:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",
@@ -224,7 +225,8 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [],
             "encoding": {

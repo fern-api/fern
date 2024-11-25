@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_imdb:MovieId": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "MovieId",
@@ -159,7 +159,7 @@
             "docs": null
         },
         "type_imdb:Movie": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Movie",
@@ -399,7 +399,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "inline": null
             },
             "referencedTypes": [
                 "type_imdb:MovieId"
