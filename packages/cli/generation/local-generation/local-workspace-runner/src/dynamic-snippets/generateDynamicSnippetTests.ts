@@ -1,4 +1,4 @@
-import { generateDynamicSnippetsTestSuite } from "@fern-api/dynamic-snippets";
+import { generateDynamicSnippetsTestSuite } from "./generateDynamicSnippetsTestSuite";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DynamicSnippetsTestGenerator } from "./DynamicSnippetsTestGenerator";

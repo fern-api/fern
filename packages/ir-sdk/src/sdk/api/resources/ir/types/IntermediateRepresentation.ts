@@ -42,4 +42,5 @@ export interface IntermediateRepresentation {
     readmeConfig: FernIr.ReadmeConfig | undefined;
     sourceConfig: FernIr.SourceConfig | undefined;
     publishConfig: FernIr.PublishingConfig | undefined;
+    dynamic: FernIr.dynamic.DynamicIntermediateRepresentation | undefined;
 }
