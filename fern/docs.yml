@@ -51,8 +51,8 @@ redirects:
     destination: /learn/sdks/guides/generate-your-first-sdk
   - source: /learn/sdks/getting-started/preview-your-sdk-locally
     destination: /learn/sdks/guides/preview-your-sdk-locally
-  - source: /learn/sdks/publish-sdk/publish-your-sdk
-    destination: /learn/sdks/guides/publish-your-sdk
+  - source: /learn/sdks/getting-started/publish-a-public-facing-sdk
+    destination: /learn/sdks/guides/publish-a-public-facing-sdk
 
 navigation:
   - tab: home
