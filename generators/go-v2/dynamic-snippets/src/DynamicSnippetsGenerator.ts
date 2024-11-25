@@ -1,11 +1,9 @@
-import { AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
+import { AbstractDynamicSnippetsGenerator, AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
-import { AbstractDynamicSnippetsGenerator } from "@fern-api/dynamic-snippets";
 import { ErrorReporter, Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
-import { assertNever } from "@fern-api/core-utils";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
 const SNIPPET_PACKAGE_NAME = "example";
@@ -13,7 +11,12 @@ const SNIPPET_IMPORT_PATH = "fern";
 const SNIPPET_FUNC_NAME = "do";
 const CLIENT_VAR_NAME = "client";
 
-export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
+export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
+    DynamicSnippets.DynamicIntermediateRepresentation,
+    DynamicSnippetsGeneratorContext,
+    DynamicSnippets.EndpointSnippetRequest,
+    DynamicSnippets.EndpointSnippetResponse
+> {
     private formatter: AbstractFormatter | undefined;
 
     constructor({

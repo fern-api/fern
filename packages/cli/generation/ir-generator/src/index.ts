@@ -37,3 +37,4 @@ export { IdGenerator } from "./IdGenerator";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
 export { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 export { getEndpointPathParameters } from "./utils/getEndpointPathParameters";
+export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";

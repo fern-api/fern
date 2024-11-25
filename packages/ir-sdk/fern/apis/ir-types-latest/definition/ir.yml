@@ -4,6 +4,7 @@ imports:
   auth: auth.yml
   commons: commons.yml
   constants: constants.yml
+  dynamic: dynamic/ir.yml
   environment: environment.yml
   errors: errors.yml
   http: http.yml
@@ -60,6 +61,7 @@ types:
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
+      dynamic: optional<dynamic.DynamicIntermediateRepresentation>
 
   ReadmeConfig:
     docs: |

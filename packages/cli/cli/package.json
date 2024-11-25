@@ -47,7 +47,6 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-validator": "workspace:*",
-    "@fern-api/dynamic-snippets": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
