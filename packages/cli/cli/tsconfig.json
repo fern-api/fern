@@ -11,7 +11,6 @@
     { "path": "../auth" },
     { "path": "../configuration" },
     { "path": "../docs-preview" },
-    { "path": "../dynamic-snippets" },
     { "path": "../generation/ir-generator" },
     { "path": "../generation/ir-migrations" },
     { "path": "../generation/local-generation/local-workspace-runner" },

@@ -8,3 +8,4 @@ export * from "./project";
 export * from "./readme";
 export * from "./reference";
 export * from "./utils";
+export * from "./dynamic-snippets";

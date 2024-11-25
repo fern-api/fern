@@ -30,7 +30,7 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
       "x-internal": false
     },
     {
-      "url": "https://mocks.example.com/rest",
+      "url": "https://try.microcks.io/rest/Train+Travel+API/1.0.0",
       "description": "Mock Server",
       "x-internal": false
     }
