@@ -42,7 +42,8 @@ export async function convertGenericTypeDeclaration({
             ),
             properties: await getObjectPropertiesFromRawObjectSchema(
                 { properties: Object.fromEntries(newProperties) },
-                file
+                file,
+                typeResolver
             ),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
             extendedProperties: undefined,
