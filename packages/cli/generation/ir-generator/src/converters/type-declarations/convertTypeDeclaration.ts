@@ -112,7 +112,7 @@ export async function convertType({
 }): Promise<Type> {
     return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
-        object: (object) => convertObjectTypeDeclaration({ object, file, typeResolver }),
+        object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
         enum: async (enum_) => Type.enum(await convertEnumTypeDeclaration({ _enum: enum_, file }))
@@ -200,7 +200,7 @@ function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean |
         return undefined;
     }
     if ("inline" in typeDeclaration) {
-        return typeDeclaration.inline || undefined;
+        return typeDeclaration.inline;
     }
     return undefined;
 }

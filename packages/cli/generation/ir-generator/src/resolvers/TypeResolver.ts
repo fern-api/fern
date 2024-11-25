@@ -296,7 +296,7 @@ export class TypeResolverImpl implements TypeResolver {
 
         const parsedTypeReference = parseInlineType({
             type: referenceToNamedType,
-            inline: declaration.inline,
+            inline: undefined,
             _default: undefined,
             validation: undefined,
             file: referencedIn

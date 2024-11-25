@@ -86,7 +86,7 @@ async function getAllPropertiesForRawObjectSchema(
         });
     }
 
-    const objectProperties = await getObjectPropertiesFromRawObjectSchema(objectSchema, file, typeResolver);
+    const objectProperties = await getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
         properties[objectProperty.name.name.originalName] = objectProperty;
     });
