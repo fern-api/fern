@@ -96,10 +96,8 @@ metadata:
 
 ## Schema Validation
 
-Add the following line to the top of your `generators.yml` to enable schema validation:
+Add the following as a comment in your `generators.yml` to enable schema validation, ensuring that your configuration is correct. Check out an example in [Cartesia's Fern Folder](https://github.com/cartesia-ai/docs/blob/43b143f66845d90bffbd0ef1951fd812229d95c0/fern/generators.yml#L1).
 
 ```yaml
-# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 ```
-
-This will enable schema validation in your editor, ensuring that your configuration is correct.
