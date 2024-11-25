@@ -6,12 +6,26 @@
     },
     "bar": {
       "type": "string"
+    },
+    "myEnum": {
+      "$ref": "#/definitions/InlineEnum"
     }
   },
   "required": [
     "foo",
-    "bar"
+    "bar",
+    "myEnum"
   ],
   "additionalProperties": false,
-  "definitions": {}
+  "definitions": {
+    "InlineEnum": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    }
+  }
 }

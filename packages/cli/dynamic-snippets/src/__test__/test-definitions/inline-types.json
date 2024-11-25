@@ -318,6 +318,34 @@
                         "_type": "primitive",
                         "value": "STRING"
                     }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "myEnum",
+                            "camelCase": {
+                                "unsafeName": "myEnum",
+                                "safeName": "myEnum"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "my_enum",
+                                "safeName": "my_enum"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MY_ENUM",
+                                "safeName": "MY_ENUM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MyEnum",
+                                "safeName": "MyEnum"
+                            }
+                        },
+                        "wireValue": "myEnum"
+                    },
+                    "typeReference": {
+                        "_type": "named",
+                        "value": "type_:InlineEnum"
+                    }
                 }
             ]
         },
@@ -464,6 +492,125 @@
                 {
                     "_type": "named",
                     "value": "type_:InlineType2"
+                }
+            ]
+        },
+        "type_:InlineEnum": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "InlineEnum",
+                    "camelCase": {
+                        "unsafeName": "inlineEnum",
+                        "safeName": "inlineEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "inline_enum",
+                        "safeName": "inline_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INLINE_ENUM",
+                        "safeName": "INLINE_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "InlineEnum",
+                        "safeName": "InlineEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "SUNNY",
+                        "camelCase": {
+                            "unsafeName": "sunny",
+                            "safeName": "sunny"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "sunny",
+                            "safeName": "sunny"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SUNNY",
+                            "safeName": "SUNNY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Sunny",
+                            "safeName": "Sunny"
+                        }
+                    },
+                    "wireValue": "SUNNY"
+                },
+                {
+                    "name": {
+                        "originalName": "CLOUDY",
+                        "camelCase": {
+                            "unsafeName": "cloudy",
+                            "safeName": "cloudy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "cloudy",
+                            "safeName": "cloudy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CLOUDY",
+                            "safeName": "CLOUDY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Cloudy",
+                            "safeName": "Cloudy"
+                        }
+                    },
+                    "wireValue": "CLOUDY"
+                },
+                {
+                    "name": {
+                        "originalName": "RAINING",
+                        "camelCase": {
+                            "unsafeName": "raining",
+                            "safeName": "raining"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "raining",
+                            "safeName": "raining"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RAINING",
+                            "safeName": "RAINING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Raining",
+                            "safeName": "Raining"
+                        }
+                    },
+                    "wireValue": "RAINING"
+                },
+                {
+                    "name": {
+                        "originalName": "SNOWING",
+                        "camelCase": {
+                            "unsafeName": "snowing",
+                            "safeName": "snowing"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "snowing",
+                            "safeName": "snowing"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SNOWING",
+                            "safeName": "SNOWING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Snowing",
+                            "safeName": "Snowing"
+                        }
+                    },
+                    "wireValue": "SNOWING"
                 }
             ]
         }

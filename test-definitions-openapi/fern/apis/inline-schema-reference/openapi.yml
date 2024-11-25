@@ -86,21 +86,31 @@ components:
           type: string
         age:
           type: integer
-
-    RootSchema1:
-      type: object
-      properties:
-        foo:
+        testEnum:
           type: string
-        bar:
-          type: object
-          properties:
-            foo:
-              type: string
-            inner_bar:
-              type: object
+          enum:
+            - test1
+            - test2
+            - test3
+        testDiscriminatedUnion:
+          discriminator:
+            propertyName: objectType
+          oneOf:
+            - type: object
               properties:
-                foo:
+                objectType:
                   type: string
-                bar:
+            - type: object
+              properties:
+                objectType:
+                  type: string
+        testUnion:
+          oneOf:
+            - type: object
+              properties:
+                a:
+                  type: string
+            - type: object
+              properties:
+                b:
                   type: string

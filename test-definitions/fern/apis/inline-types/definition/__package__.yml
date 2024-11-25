@@ -37,6 +37,7 @@ types:
     properties:
       foo: string
       bar: string
+      myEnum: InlineEnum
 
   InlinedDiscriminatedUnion1:
     inline: true
@@ -50,3 +51,11 @@ types:
     union:
       - type: InlineType1
       - type: InlineType2
+
+  InlineEnum:
+    inline: true
+    enum:
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING

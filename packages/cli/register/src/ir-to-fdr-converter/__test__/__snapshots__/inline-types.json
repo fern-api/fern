@@ -100,6 +100,13 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "key": "myEnum",
+            "valueType": {
+              "type": "id",
+              "value": "type_:InlineEnum"
+            }
           }
         ],
         "extraProperties": {
@@ -152,6 +159,26 @@
               "type": "id",
               "value": "type_:InlineType2"
             }
+          }
+        ]
+      }
+    },
+    "type_:InlineEnum": {
+      "name": "InlineEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "SUNNY"
+          },
+          {
+            "value": "CLOUDY"
+          },
+          {
+            "value": "RAINING"
+          },
+          {
+            "value": "SNOWING"
           }
         ]
       }
@@ -230,7 +257,8 @@
                 "foo": "foo",
                 "bar": {
                   "foo": "foo",
-                  "bar": "bar"
+                  "bar": "bar",
+                  "myEnum": "SUNNY"
                 }
               },
               "foo": "foo"
@@ -242,7 +270,8 @@
                   "foo": "foo",
                   "bar": {
                     "foo": "foo",
-                    "bar": "bar"
+                    "bar": "bar",
+                    "myEnum": "SUNNY"
                   }
                 },
                 "foo": "foo"
@@ -255,7 +284,8 @@
                 "foo": "foo",
                 "bar": {
                   "foo": "foo",
-                  "bar": "bar"
+                  "bar": "bar",
+                  "myEnum": "SUNNY"
                 }
               }
             },
@@ -267,7 +297,8 @@
                   "foo": "foo",
                   "bar": {
                     "foo": "foo",
-                    "bar": "bar"
+                    "bar": "bar",
+                    "myEnum": "SUNNY"
                   }
                 }
               }
@@ -285,7 +316,8 @@
       "type_:InlineType2",
       "type_:NestedInlineType1",
       "type_:InlinedDiscriminatedUnion1",
-      "type_:InlinedUndiscriminatedUnion1"
+      "type_:InlinedUndiscriminatedUnion1",
+      "type_:InlineEnum"
     ],
     "subpackages": []
   },

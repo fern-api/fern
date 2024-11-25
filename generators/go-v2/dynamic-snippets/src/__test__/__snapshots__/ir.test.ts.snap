@@ -3661,8 +3661,9 @@ func do() {
 			Bar: &acme.InlineType1{
 				Foo: "foo",
 				Bar: &acme.NestedInlineType1{
-					Foo: "foo",
-					Bar: "bar",
+					Foo:    "foo",
+					Bar:    "bar",
+					MyEnum: acme.InlineEnumSunny,
 				},
 			},
 			Foo: "foo",

@@ -133,7 +133,14 @@
             },
             "referencedTypes": [
                 "type_:Schema1",
-                "type_:Schema2"
+                "type_:Schema2",
+                "type_:Schema2TestEnum",
+                "type_:Schema2TestDiscriminatedUnion",
+                "type_:Schema2TestDiscriminatedUnionZero",
+                "type_:Schema2TestDiscriminatedUnionOne",
+                "type_:Schema2TestUnion",
+                "type_:Schema2TestUnionA",
+                "type_:Schema2TestUnionB"
             ],
             "encoding": {
                 "json": {},
@@ -1019,6 +1026,729 @@
             "availability": null,
             "docs": null
         },
+        "type_:Schema2TestEnum": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestEnum",
+                    "camelCase": {
+                        "unsafeName": "schema2TestEnum",
+                        "safeName": "schema2TestEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_enum",
+                        "safeName": "schema2test_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_ENUM",
+                        "safeName": "SCHEMA2TEST_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestEnum",
+                        "safeName": "Schema2TestEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestEnum"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": null,
+                "values": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "test1",
+                                "camelCase": {
+                                    "unsafeName": "test1",
+                                    "safeName": "test1"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test1",
+                                    "safeName": "test1"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST1",
+                                    "safeName": "TEST1"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Test1",
+                                    "safeName": "Test1"
+                                }
+                            },
+                            "wireValue": "test1"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "test2",
+                                "camelCase": {
+                                    "unsafeName": "test2",
+                                    "safeName": "test2"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test2",
+                                    "safeName": "test2"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST2",
+                                    "safeName": "TEST2"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Test2",
+                                    "safeName": "Test2"
+                                }
+                            },
+                            "wireValue": "test2"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "test3",
+                                "camelCase": {
+                                    "unsafeName": "test3",
+                                    "safeName": "test3"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test3",
+                                    "safeName": "test3"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST3",
+                                    "safeName": "TEST3"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Test3",
+                                    "safeName": "Test3"
+                                }
+                            },
+                            "wireValue": "test3"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "inline": null
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestDiscriminatedUnionZero": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestDiscriminatedUnionZero",
+                    "camelCase": {
+                        "unsafeName": "schema2TestDiscriminatedUnionZero",
+                        "safeName": "schema2TestDiscriminatedUnionZero"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_discriminated_union_zero",
+                        "safeName": "schema2test_discriminated_union_zero"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO",
+                        "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestDiscriminatedUnionZero",
+                        "safeName": "Schema2TestDiscriminatedUnionZero"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestDiscriminatedUnionZero"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "objectType",
+                                "camelCase": {
+                                    "unsafeName": "objectType",
+                                    "safeName": "objectType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "object_type",
+                                    "safeName": "object_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OBJECT_TYPE",
+                                    "safeName": "OBJECT_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ObjectType",
+                                    "safeName": "ObjectType"
+                                }
+                            },
+                            "wireValue": "objectType"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": [],
+                "inline": true
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestDiscriminatedUnionOne": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestDiscriminatedUnionOne",
+                    "camelCase": {
+                        "unsafeName": "schema2TestDiscriminatedUnionOne",
+                        "safeName": "schema2TestDiscriminatedUnionOne"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_discriminated_union_one",
+                        "safeName": "schema2test_discriminated_union_one"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE",
+                        "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestDiscriminatedUnionOne",
+                        "safeName": "Schema2TestDiscriminatedUnionOne"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestDiscriminatedUnionOne"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "objectType",
+                                "camelCase": {
+                                    "unsafeName": "objectType",
+                                    "safeName": "objectType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "object_type",
+                                    "safeName": "object_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OBJECT_TYPE",
+                                    "safeName": "OBJECT_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ObjectType",
+                                    "safeName": "ObjectType"
+                                }
+                            },
+                            "wireValue": "objectType"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": [],
+                "inline": true
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestDiscriminatedUnion": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestDiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "schema2TestDiscriminatedUnion",
+                        "safeName": "schema2TestDiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_discriminated_union",
+                        "safeName": "schema2test_discriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION",
+                        "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestDiscriminatedUnion",
+                        "safeName": "Schema2TestDiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestDiscriminatedUnion"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Schema2TestDiscriminatedUnionZero",
+                                "camelCase": {
+                                    "unsafeName": "schema2TestDiscriminatedUnionZero",
+                                    "safeName": "schema2TestDiscriminatedUnionZero"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "schema2test_discriminated_union_zero",
+                                    "safeName": "schema2test_discriminated_union_zero"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO",
+                                    "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Schema2TestDiscriminatedUnionZero",
+                                    "safeName": "Schema2TestDiscriminatedUnionZero"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "typeId": "type_:Schema2TestDiscriminatedUnionZero",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Schema2TestDiscriminatedUnionOne",
+                                "camelCase": {
+                                    "unsafeName": "schema2TestDiscriminatedUnionOne",
+                                    "safeName": "schema2TestDiscriminatedUnionOne"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "schema2test_discriminated_union_one",
+                                    "safeName": "schema2test_discriminated_union_one"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE",
+                                    "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Schema2TestDiscriminatedUnionOne",
+                                    "safeName": "Schema2TestDiscriminatedUnionOne"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "typeId": "type_:Schema2TestDiscriminatedUnionOne",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ],
+                "inline": true
+            },
+            "referencedTypes": [
+                "type_:Schema2TestDiscriminatedUnionZero",
+                "type_:Schema2TestDiscriminatedUnionOne"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestUnionA": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestUnionA",
+                    "camelCase": {
+                        "unsafeName": "schema2TestUnionA",
+                        "safeName": "schema2TestUnionA"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_union_a",
+                        "safeName": "schema2test_union_a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_UNION_A",
+                        "safeName": "SCHEMA2TEST_UNION_A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestUnionA",
+                        "safeName": "Schema2TestUnionA"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestUnionA"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": [],
+                "inline": true
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestUnionB": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestUnionB",
+                    "camelCase": {
+                        "unsafeName": "schema2TestUnionB",
+                        "safeName": "schema2TestUnionB"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_union_b",
+                        "safeName": "schema2test_union_b"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_UNION_B",
+                        "safeName": "SCHEMA2TEST_UNION_B"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestUnionB",
+                        "safeName": "Schema2TestUnionB"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestUnionB"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "b",
+                                "camelCase": {
+                                    "unsafeName": "b",
+                                    "safeName": "b"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "b",
+                                    "safeName": "b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "B",
+                                    "safeName": "B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "B",
+                                    "safeName": "B"
+                                }
+                            },
+                            "wireValue": "b"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": [],
+                "inline": true
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:Schema2TestUnion": {
+            "inline": true,
+            "name": {
+                "name": {
+                    "originalName": "Schema2TestUnion",
+                    "camelCase": {
+                        "unsafeName": "schema2TestUnion",
+                        "safeName": "schema2TestUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "schema2test_union",
+                        "safeName": "schema2test_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCHEMA2TEST_UNION",
+                        "safeName": "SCHEMA2TEST_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Schema2TestUnion",
+                        "safeName": "Schema2TestUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Schema2TestUnion"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Schema2TestUnionA",
+                                "camelCase": {
+                                    "unsafeName": "schema2TestUnionA",
+                                    "safeName": "schema2TestUnionA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "schema2test_union_a",
+                                    "safeName": "schema2test_union_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCHEMA2TEST_UNION_A",
+                                    "safeName": "SCHEMA2TEST_UNION_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Schema2TestUnionA",
+                                    "safeName": "Schema2TestUnionA"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "typeId": "type_:Schema2TestUnionA",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Schema2TestUnionB",
+                                "camelCase": {
+                                    "unsafeName": "schema2TestUnionB",
+                                    "safeName": "schema2TestUnionB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "schema2test_union_b",
+                                    "safeName": "schema2test_union_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCHEMA2TEST_UNION_B",
+                                    "safeName": "SCHEMA2TEST_UNION_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Schema2TestUnionB",
+                                    "safeName": "Schema2TestUnionB"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "typeId": "type_:Schema2TestUnionB",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ],
+                "inline": true
+            },
+            "referencedTypes": [
+                "type_:Schema2TestUnionA",
+                "type_:Schema2TestUnionB"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_:Schema2": {
             "inline": null,
             "name": {
@@ -1137,256 +1867,29 @@
                         },
                         "availability": null,
                         "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "availability": null,
-            "docs": null
-        },
-        "type_:RootSchema1BarInnerBar": {
-            "inline": true,
-            "name": {
-                "name": {
-                    "originalName": "RootSchema1BarInnerBar",
-                    "camelCase": {
-                        "unsafeName": "rootSchema1BarInnerBar",
-                        "safeName": "rootSchema1BarInnerBar"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_schema1bar_inner_bar",
-                        "safeName": "root_schema1bar_inner_bar"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                        "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootSchema1BarInnerBar",
-                        "safeName": "RootSchema1BarInnerBar"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "typeId": "type_:RootSchema1BarInnerBar"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "wireValue": "foo"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": null
                     },
                     {
                         "name": {
                             "name": {
-                                "originalName": "bar",
+                                "originalName": "testEnum",
                                 "camelCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
+                                    "unsafeName": "testEnum",
+                                    "safeName": "testEnum"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
+                                    "unsafeName": "test_enum",
+                                    "safeName": "test_enum"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "BAR",
-                                    "safeName": "BAR"
+                                    "unsafeName": "TEST_ENUM",
+                                    "safeName": "TEST_ENUM"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Bar",
-                                    "safeName": "Bar"
+                                    "unsafeName": "TestEnum",
+                                    "safeName": "TestEnum"
                                 }
                             },
-                            "wireValue": "bar"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "availability": null,
-            "docs": null
-        },
-        "type_:RootSchema1Bar": {
-            "inline": true,
-            "name": {
-                "name": {
-                    "originalName": "RootSchema1Bar",
-                    "camelCase": {
-                        "unsafeName": "rootSchema1Bar",
-                        "safeName": "rootSchema1Bar"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_schema1bar",
-                        "safeName": "root_schema1bar"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SCHEMA1BAR",
-                        "safeName": "ROOT_SCHEMA1BAR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootSchema1Bar",
-                        "safeName": "RootSchema1Bar"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "typeId": "type_:RootSchema1Bar"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "wireValue": "foo"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "inner_bar",
-                                "camelCase": {
-                                    "unsafeName": "innerBar",
-                                    "safeName": "innerBar"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "inner_bar",
-                                    "safeName": "inner_bar"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "INNER_BAR",
-                                    "safeName": "INNER_BAR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "InnerBar",
-                                    "safeName": "InnerBar"
-                                }
-                            },
-                            "wireValue": "inner_bar"
+                            "wireValue": "testEnum"
                         },
                         "valueType": {
                             "_type": "container",
@@ -1395,22 +1898,22 @@
                                 "optional": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "RootSchema1BarInnerBar",
+                                        "originalName": "Schema2TestEnum",
                                         "camelCase": {
-                                            "unsafeName": "rootSchema1BarInnerBar",
-                                            "safeName": "rootSchema1BarInnerBar"
+                                            "unsafeName": "schema2TestEnum",
+                                            "safeName": "schema2TestEnum"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "root_schema1bar_inner_bar",
-                                            "safeName": "root_schema1bar_inner_bar"
+                                            "unsafeName": "schema2test_enum",
+                                            "safeName": "schema2test_enum"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_SCHEMA1BAR_INNER_BAR",
-                                            "safeName": "ROOT_SCHEMA1BAR_INNER_BAR"
+                                            "unsafeName": "SCHEMA2TEST_ENUM",
+                                            "safeName": "SCHEMA2TEST_ENUM"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "RootSchema1BarInnerBar",
-                                            "safeName": "RootSchema1BarInnerBar"
+                                            "unsafeName": "Schema2TestEnum",
+                                            "safeName": "Schema2TestEnum"
                                         }
                                     },
                                     "fernFilepath": {
@@ -1418,7 +1921,7 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:RootSchema1BarInnerBar",
+                                    "typeId": "type_:Schema2TestEnum",
                                     "default": null,
                                     "inline": null
                                 }
@@ -1426,95 +1929,63 @@
                         },
                         "availability": null,
                         "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
-            },
-            "referencedTypes": [
-                "type_:RootSchema1BarInnerBar"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "availability": null,
-            "docs": null
-        },
-        "type_:RootSchema1": {
-            "inline": null,
-            "name": {
-                "name": {
-                    "originalName": "RootSchema1",
-                    "camelCase": {
-                        "unsafeName": "rootSchema1",
-                        "safeName": "rootSchema1"
                     },
-                    "snakeCase": {
-                        "unsafeName": "root_schema1",
-                        "safeName": "root_schema1"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SCHEMA1",
-                        "safeName": "ROOT_SCHEMA1"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootSchema1",
-                        "safeName": "RootSchema1"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "typeId": "type_:RootSchema1"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
                     {
                         "name": {
                             "name": {
-                                "originalName": "foo",
+                                "originalName": "testDiscriminatedUnion",
                                 "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
+                                    "unsafeName": "testDiscriminatedUnion",
+                                    "safeName": "testDiscriminatedUnion"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
+                                    "unsafeName": "test_discriminated_union",
+                                    "safeName": "test_discriminated_union"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
+                                    "unsafeName": "TEST_DISCRIMINATED_UNION",
+                                    "safeName": "TEST_DISCRIMINATED_UNION"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
+                                    "unsafeName": "TestDiscriminatedUnion",
+                                    "safeName": "TestDiscriminatedUnion"
                                 }
                             },
-                            "wireValue": "foo"
+                            "wireValue": "testDiscriminatedUnion"
                         },
                         "valueType": {
                             "_type": "container",
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Schema2TestDiscriminatedUnion",
+                                        "camelCase": {
+                                            "unsafeName": "schema2TestDiscriminatedUnion",
+                                            "safeName": "schema2TestDiscriminatedUnion"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "schema2test_discriminated_union",
+                                            "safeName": "schema2test_discriminated_union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION",
+                                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Schema2TestDiscriminatedUnion",
+                                            "safeName": "Schema2TestDiscriminatedUnion"
                                         }
-                                    }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:Schema2TestDiscriminatedUnion",
+                                    "default": null,
+                                    "inline": null
                                 }
                             }
                         },
@@ -1524,25 +1995,25 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "bar",
+                                "originalName": "testUnion",
                                 "camelCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
+                                    "unsafeName": "testUnion",
+                                    "safeName": "testUnion"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
+                                    "unsafeName": "test_union",
+                                    "safeName": "test_union"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "BAR",
-                                    "safeName": "BAR"
+                                    "unsafeName": "TEST_UNION",
+                                    "safeName": "TEST_UNION"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Bar",
-                                    "safeName": "Bar"
+                                    "unsafeName": "TestUnion",
+                                    "safeName": "TestUnion"
                                 }
                             },
-                            "wireValue": "bar"
+                            "wireValue": "testUnion"
                         },
                         "valueType": {
                             "_type": "container",
@@ -1551,22 +2022,22 @@
                                 "optional": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "RootSchema1Bar",
+                                        "originalName": "Schema2TestUnion",
                                         "camelCase": {
-                                            "unsafeName": "rootSchema1Bar",
-                                            "safeName": "rootSchema1Bar"
+                                            "unsafeName": "schema2TestUnion",
+                                            "safeName": "schema2TestUnion"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "root_schema1bar",
-                                            "safeName": "root_schema1bar"
+                                            "unsafeName": "schema2test_union",
+                                            "safeName": "schema2test_union"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_SCHEMA1BAR",
-                                            "safeName": "ROOT_SCHEMA1BAR"
+                                            "unsafeName": "SCHEMA2TEST_UNION",
+                                            "safeName": "SCHEMA2TEST_UNION"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "RootSchema1Bar",
-                                            "safeName": "RootSchema1Bar"
+                                            "unsafeName": "Schema2TestUnion",
+                                            "safeName": "Schema2TestUnion"
                                         }
                                     },
                                     "fernFilepath": {
@@ -1574,7 +2045,7 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "typeId": "type_:RootSchema1Bar",
+                                    "typeId": "type_:Schema2TestUnion",
                                     "default": null,
                                     "inline": null
                                 }
@@ -1589,8 +2060,13 @@
                 "inline": null
             },
             "referencedTypes": [
-                "type_:RootSchema1Bar",
-                "type_:RootSchema1BarInnerBar"
+                "type_:Schema2TestEnum",
+                "type_:Schema2TestDiscriminatedUnion",
+                "type_:Schema2TestDiscriminatedUnionZero",
+                "type_:Schema2TestDiscriminatedUnionOne",
+                "type_:Schema2TestUnion",
+                "type_:Schema2TestUnionA",
+                "type_:Schema2TestUnionB"
             ],
             "encoding": {
                 "json": {},
@@ -4052,14 +4528,17 @@
                 "type_:PostRootResponseBar",
                 "type_:PostRootResponse",
                 "type_:Schema1",
+                "type_:Schema2TestEnum",
+                "type_:Schema2TestDiscriminatedUnionZero",
+                "type_:Schema2TestDiscriminatedUnionOne",
+                "type_:Schema2TestDiscriminatedUnion",
+                "type_:Schema2TestUnionA",
+                "type_:Schema2TestUnionB",
+                "type_:Schema2TestUnion",
                 "type_:Schema2"
             ]
         },
-        "sharedTypes": [
-            "type_:RootSchema1BarInnerBar",
-            "type_:RootSchema1Bar",
-            "type_:RootSchema1"
-        ]
+        "sharedTypes": []
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -4083,10 +4562,14 @@
             "type_:PostRootResponseBar",
             "type_:PostRootResponse",
             "type_:Schema1",
-            "type_:Schema2",
-            "type_:RootSchema1BarInnerBar",
-            "type_:RootSchema1Bar",
-            "type_:RootSchema1"
+            "type_:Schema2TestEnum",
+            "type_:Schema2TestDiscriminatedUnionZero",
+            "type_:Schema2TestDiscriminatedUnionOne",
+            "type_:Schema2TestDiscriminatedUnion",
+            "type_:Schema2TestUnionA",
+            "type_:Schema2TestUnionB",
+            "type_:Schema2TestUnion",
+            "type_:Schema2"
         ],
         "errors": [],
         "subpackages": [],

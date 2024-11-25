@@ -47,6 +47,15 @@
     }
   ],
   "definitions": {
+    "InlineEnum": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    },
     "NestedInlineType1": {
       "type": "object",
       "properties": {
@@ -55,11 +64,15 @@
         },
         "bar": {
           "type": "string"
+        },
+        "myEnum": {
+          "$ref": "#/definitions/InlineEnum"
         }
       },
       "required": [
         "foo",
-        "bar"
+        "bar",
+        "myEnum"
       ],
       "additionalProperties": false
     }
