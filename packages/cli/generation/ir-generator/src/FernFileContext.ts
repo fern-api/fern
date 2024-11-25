@@ -60,11 +60,10 @@ export function constructFernFileContext({
         definitionFile,
         parseTypeReference: (type) => {
             if (typeof type === "string") {
-                return parseInlineType({ type, inline: undefined, _default: undefined, validation: undefined, file });
+                return parseInlineType({ type, _default: undefined, validation: undefined, file });
             }
             return parseInlineType({
                 type: type.type,
-                inline: type.inline,
                 _default: type.default,
                 validation: type.validation,
                 file

@@ -1,23 +1,16 @@
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
-import { assertNever, noop, visitObject } from "@fern-api/core-utils";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
-    ContainerType,
     ExampleType,
     HttpEndpoint,
-    HttpService,
-    InlinedRequestBody,
     IntermediateRepresentation,
-    NamedType,
-    ObjectProperty,
     PathParameterLocation,
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
-    TypeDeclaration,
     TypeId,
-    TypeReference,
     Webhook
 } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";

@@ -1,4 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import {
     Availability,
