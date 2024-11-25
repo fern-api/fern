@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectsWithImports", "SeedObjectsWithImports\SeedObjectsWithImports.csproj", "{085CF235-D275-4DC1-94B0-ECDFF4C0D80D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectsWithImports.Test", "SeedObjectsWithImports.Test\SeedObjectsWithImports.Test.csproj", "{5EE05AB5-3DEE-438B-BCAE-38AC9CFDD351}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{085CF235-D275-4DC1-94B0-ECDFF4C0D80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085CF235-D275-4DC1-94B0-ECDFF4C0D80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085CF235-D275-4DC1-94B0-ECDFF4C0D80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{085CF235-D275-4DC1-94B0-ECDFF4C0D80D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE05AB5-3DEE-438B-BCAE-38AC9CFDD351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE05AB5-3DEE-438B-BCAE-38AC9CFDD351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE05AB5-3DEE-438B-BCAE-38AC9CFDD351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE05AB5-3DEE-438B-BCAE-38AC9CFDD351}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

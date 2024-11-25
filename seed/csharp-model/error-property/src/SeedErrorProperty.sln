@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty", "SeedErrorProperty\SeedErrorProperty.csproj", "{F9510B15-3120-48BE-A702-ED8BEC93BF3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty.Test", "SeedErrorProperty.Test\SeedErrorProperty.Test.csproj", "{FE0918D2-B04A-42EC-A684-C5DCA38EF41C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9510B15-3120-48BE-A702-ED8BEC93BF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9510B15-3120-48BE-A702-ED8BEC93BF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9510B15-3120-48BE-A702-ED8BEC93BF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9510B15-3120-48BE-A702-ED8BEC93BF3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE0918D2-B04A-42EC-A684-C5DCA38EF41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE0918D2-B04A-42EC-A684-C5DCA38EF41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE0918D2-B04A-42EC-A684-C5DCA38EF41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE0918D2-B04A-42EC-A684-C5DCA38EF41C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

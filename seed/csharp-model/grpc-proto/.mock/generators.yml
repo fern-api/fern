@@ -1,6 +1,0 @@
-api:
- - proto:
-     root: proto
-     target: proto/user/v1/user.proto
-     overrides: overrides.yml
-     local-generation: true

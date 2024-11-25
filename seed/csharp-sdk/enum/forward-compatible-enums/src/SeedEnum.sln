@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedEnum", "SeedEnum\SeedEnum.csproj", "{1A8EBA74-0972-40EC-B0BF-7B5D01AB6B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedEnum.Test", "SeedEnum.Test\SeedEnum.Test.csproj", "{4B714127-9617-4CD2-B375-E63C99F9720D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A8EBA74-0972-40EC-B0BF-7B5D01AB6B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A8EBA74-0972-40EC-B0BF-7B5D01AB6B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A8EBA74-0972-40EC-B0BF-7B5D01AB6B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A8EBA74-0972-40EC-B0BF-7B5D01AB6B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B714127-9617-4CD2-B375-E63C99F9720D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B714127-9617-4CD2-B375-E63C99F9720D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B714127-9617-4CD2-B375-E63C99F9720D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B714127-9617-4CD2-B375-E63C99F9720D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

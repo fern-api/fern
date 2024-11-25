@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBearerTokenEnvironmentVariable", "SeedBearerTokenEnvironmentVariable\SeedBearerTokenEnvironmentVariable.csproj", "{85929631-6316-4832-9006-43FC3C3BBA1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBearerTokenEnvironmentVariable.Test", "SeedBearerTokenEnvironmentVariable.Test\SeedBearerTokenEnvironmentVariable.Test.csproj", "{2B0E5CDC-3EAC-4221-BCC2-FFD9DB527870}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85929631-6316-4832-9006-43FC3C3BBA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85929631-6316-4832-9006-43FC3C3BBA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85929631-6316-4832-9006-43FC3C3BBA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85929631-6316-4832-9006-43FC3C3BBA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B0E5CDC-3EAC-4221-BCC2-FFD9DB527870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B0E5CDC-3EAC-4221-BCC2-FFD9DB527870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B0E5CDC-3EAC-4221-BCC2-FFD9DB527870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B0E5CDC-3EAC-4221-BCC2-FFD9DB527870}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

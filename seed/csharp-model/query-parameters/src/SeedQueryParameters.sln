@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters", "SeedQueryParameters\SeedQueryParameters.csproj", "{AA4FFA67-05E2-42AB-96DE-2E9579B2B69C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedQueryParameters.Test", "SeedQueryParameters.Test\SeedQueryParameters.Test.csproj", "{B549E886-10BF-4628-B116-AF4460B888B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA4FFA67-05E2-42AB-96DE-2E9579B2B69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4FFA67-05E2-42AB-96DE-2E9579B2B69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4FFA67-05E2-42AB-96DE-2E9579B2B69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4FFA67-05E2-42AB-96DE-2E9579B2B69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B549E886-10BF-4628-B116-AF4460B888B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B549E886-10BF-4628-B116-AF4460B888B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B549E886-10BF-4628-B116-AF4460B888B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B549E886-10BF-4628-B116-AF4460B888B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
