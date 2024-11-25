@@ -83,7 +83,7 @@ export class SnippetResolver {
             keywords: undefined,
             smartCasing: true, // TODO: Resolve from configuration.
             disableExamples: true,
-            audiences: { type: "all"},
+            audiences: { type: "all" },
             readme: undefined,
             packageName: undefined,
             version: undefined, // TODO: Resolve from configuration.
