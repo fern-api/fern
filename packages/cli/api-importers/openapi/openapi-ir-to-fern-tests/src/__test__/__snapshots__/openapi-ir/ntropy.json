@@ -16389,7 +16389,7 @@
                   "key": "&&",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall&&&&Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16397,7 +16397,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall&&&&",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16405,7 +16405,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall&&",
               "title": "&&",
               "groupName": [],
               "additionalProperties": false,
@@ -16424,7 +16424,7 @@
                   "key": "||",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall||||Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16432,7 +16432,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall||||",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16440,7 +16440,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall||",
               "title": "||",
               "groupName": [],
               "additionalProperties": false,
@@ -16459,7 +16459,7 @@
                   "key": "==",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall====Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16467,7 +16467,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall====",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16475,7 +16475,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall==",
               "title": "==",
               "groupName": [],
               "additionalProperties": false,
@@ -16494,7 +16494,7 @@
                   "key": "+",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall++Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16502,7 +16502,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall++",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16510,7 +16510,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall+",
               "title": "+",
               "groupName": [],
               "additionalProperties": false,
@@ -16529,7 +16529,7 @@
                   "key": "-",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall--Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16537,7 +16537,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall--",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16545,7 +16545,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall-",
               "title": "-",
               "groupName": [],
               "additionalProperties": false,
@@ -16564,7 +16564,7 @@
                   "key": "*",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall**Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16572,7 +16572,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall**",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16580,7 +16580,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall*",
               "title": "*",
               "groupName": [],
               "additionalProperties": false,
@@ -16599,7 +16599,7 @@
                   "key": "/",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall//Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16607,7 +16607,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall//",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16615,7 +16615,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall/",
               "title": "/",
               "groupName": [],
               "additionalProperties": false,
@@ -16634,7 +16634,7 @@
                   "key": "//",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall////Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16642,7 +16642,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall////",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16650,7 +16650,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall//",
               "title": "//",
               "groupName": [],
               "additionalProperties": false,
@@ -16669,7 +16669,7 @@
                   "key": "<",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall<<Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16677,7 +16677,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall<<",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16685,7 +16685,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall<",
               "title": "<",
               "groupName": [],
               "additionalProperties": false,
@@ -16704,7 +16704,7 @@
                   "key": "<=",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall<=<=Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16712,7 +16712,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall<=<=",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16720,7 +16720,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall<=",
               "title": "<=",
               "groupName": [],
               "additionalProperties": false,
@@ -16739,7 +16739,7 @@
                   "key": ">",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall>>Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16747,7 +16747,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall>>",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16755,7 +16755,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall>",
               "title": ">",
               "groupName": [],
               "additionalProperties": false,
@@ -16774,7 +16774,7 @@
                   "key": ">=",
                   "schema": {
                     "value": {
-                      "generatedName": "FnCallItem",
+                      "generatedName": "FnCall>=>=Item",
                       "schema": "Expr",
                       "source": {
                         "file": "../openapi.yml",
@@ -16782,7 +16782,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall>=>=",
                     "groupName": [],
                     "type": "array"
                   },
@@ -16790,7 +16790,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall>=",
               "title": ">=",
               "groupName": [],
               "additionalProperties": false,
@@ -16808,7 +16808,7 @@
                   "generatedName": "fnCall",
                   "key": "!",
                   "schema": {
-                    "generatedName": "FnCall",
+                    "generatedName": "FnCall!!",
                     "schema": "Expr",
                     "source": {
                       "file": "../openapi.yml",
@@ -16821,7 +16821,7 @@
                 }
               ],
               "allOfPropertyConflicts": [],
-              "generatedName": "FnCall",
+              "generatedName": "FnCall!",
               "title": "!",
               "groupName": [],
               "additionalProperties": false,

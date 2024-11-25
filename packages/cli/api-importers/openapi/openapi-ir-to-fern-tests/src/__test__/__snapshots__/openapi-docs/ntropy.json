@@ -1684,43 +1684,43 @@ enriched transactions.",
             },
             "union": [
               {
-                "type": "FnCall",
+                "type": "FnCall&&",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall||",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall==",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall+",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall-",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall*",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall/",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall//",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall<",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall<=",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall>",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall>=",
               },
               {
-                "type": "FnCall",
+                "type": "FnCall!",
               },
               {
                 "type": "FnCallIsSubstring",
@@ -1747,6 +1747,128 @@ enriched transactions.",
                 "type": "FnCallGet",
               },
             ],
+          },
+          "FnCall!": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "!": {
+                "type": "expression",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall&&": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "&&": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall*": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "*": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall+": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "+": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall-": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "-": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall/": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "/": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall//": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "//": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall<": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "<": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall<=": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "<=": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall==": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "==": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall>": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              ">": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall>=": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              ">=": "list<expression>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "FnCallEndsWith": {
             "docs": undefined,
@@ -1833,6 +1955,16 @@ enriched transactions.",
               "to_upper": {
                 "type": "expression",
               },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FnCall||": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "||": "list<expression>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4415,32 +4547,85 @@ types:
       - account_holder_name
     source:
       openapi: ../openapi.yml
-  FnCall:
-    discriminated: false
-    union:
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCall
-      - type: FnCallIsSubstring
-      - type: FnCallStartsWith
-      - type: FnCallEndsWith
-      - type: FnCallToLower
-      - type: FnCallToUpper
-      - type: FnCallHasLabel
-      - type: FnCallHasMcc
-      - type: FnCallGet
+  FnCall&&:
+    properties:
+      '&&': list<expression>
     source:
       openapi: ../openapi.yml
+    inline: true
+  FnCall||:
+    properties:
+      '||': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall==:
+    properties:
+      '==': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall+:
+    properties:
+      +: list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall-:
+    properties:
+      '-': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall*:
+    properties:
+      '*': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall/:
+    properties:
+      /: list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall//:
+    properties:
+      //: list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall<:
+    properties:
+      <: list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall<=:
+    properties:
+      <=: list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall>:
+    properties:
+      '>': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall>=:
+    properties:
+      '>=': list<expression>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  FnCall!:
+    properties:
+      '!':
+        type: expression
+    source:
+      openapi: ../openapi.yml
+    inline: true
   FnCallIsSubstring:
     properties:
       is_substring: list<expression>
@@ -4494,6 +4679,32 @@ types:
     source:
       openapi: ../openapi.yml
     inline: true
+  FnCall:
+    discriminated: false
+    union:
+      - type: FnCall&&
+      - type: FnCall||
+      - type: FnCall==
+      - type: FnCall+
+      - type: FnCall-
+      - type: FnCall*
+      - type: FnCall/
+      - type: FnCall//
+      - type: FnCall<
+      - type: FnCall<=
+      - type: FnCall>
+      - type: FnCall>=
+      - type: FnCall!
+      - type: FnCallIsSubstring
+      - type: FnCallStartsWith
+      - type: FnCallEndsWith
+      - type: FnCallToLower
+      - type: FnCallToUpper
+      - type: FnCallHasLabel
+      - type: FnCallHasMcc
+      - type: FnCallGet
+    source:
+      openapi: ../openapi.yml
   action:
     discriminated: false
     union:

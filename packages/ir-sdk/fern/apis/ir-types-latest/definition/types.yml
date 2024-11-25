@@ -173,7 +173,10 @@ types:
       fernFilepath: commons.FernFilepath
       name: commons.Name
       default: optional<NamedTypeDefault>
-      inline: optional<boolean>
+      inline:
+        type: optional<boolean>
+        availability: deprecated
+        docs: Use the inline property on the TypeDeclaration instead.
 
   NamedTypeDefault:
     union:
