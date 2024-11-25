@@ -3,11 +3,12 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
-from .types.user import User
+from .types.organization import Organization
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.user import User
 from ..core.client_wrapper import AsyncClientWrapper
 
 
@@ -17,7 +18,7 @@ class UserClient:
 
     def get_organization(
         self, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    ) -> Organization:
         """
         Parameters
         ----------
@@ -28,7 +29,7 @@ class UserClient:
 
         Returns
         -------
-        User
+        Organization
 
         Examples
         --------
@@ -49,9 +50,9 @@ class UserClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User,
+                    Organization,
                     parse_obj_as(
-                        type_=User,  # type: ignore
+                        type_=Organization,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -151,6 +152,116 @@ class UserClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def search_users(
+        self,
+        user_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        from seed import SeedPathParameters
+
+        client = SeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.search_users(
+            user_id="userId",
+            limit=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"user/users/{jsonable_encoder(user_id)}/search",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[User],
+                    parse_obj_as(
+                        type_=typing.List[User],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def search_organizations(
+        self,
+        organization_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Organization]:
+        """
+        Parameters
+        ----------
+        organization_id : str
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Organization]
+
+        Examples
+        --------
+        from seed import SeedPathParameters
+
+        client = SeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.search_organizations(
+            organization_id="organizationId",
+            limit=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"user/organizations/{jsonable_encoder(organization_id)}/search",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[Organization],
+                    parse_obj_as(
+                        type_=typing.List[Organization],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -158,7 +269,7 @@ class AsyncUserClient:
 
     async def get_organization(
         self, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    ) -> Organization:
         """
         Parameters
         ----------
@@ -169,7 +280,7 @@ class AsyncUserClient:
 
         Returns
         -------
-        User
+        Organization
 
         Examples
         --------
@@ -198,9 +309,9 @@ class AsyncUserClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    User,
+                    Organization,
                     parse_obj_as(
-                        type_=User,  # type: ignore
+                        type_=Organization,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -308,6 +419,132 @@ class AsyncUserClient:
                     User,
                     parse_obj_as(
                         type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def search_users(
+        self,
+        user_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        user_id : str
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPathParameters
+
+        client = AsyncSeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.search_users(
+                user_id="userId",
+                limit=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"user/users/{jsonable_encoder(user_id)}/search",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[User],
+                    parse_obj_as(
+                        type_=typing.List[User],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def search_organizations(
+        self,
+        organization_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Organization]:
+        """
+        Parameters
+        ----------
+        organization_id : str
+
+        limit : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Organization]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPathParameters
+
+        client = AsyncSeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.search_organizations(
+                organization_id="organizationId",
+                limit=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"user/organizations/{jsonable_encoder(organization_id)}/search",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[Organization],
+                    parse_obj_as(
+                        type_=typing.List[Organization],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

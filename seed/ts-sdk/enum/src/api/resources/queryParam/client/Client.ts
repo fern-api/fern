@@ -97,7 +97,7 @@ export class QueryParam {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedEnumTimeoutError();
+                        throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
                     case "unknown":
                         throw new errors.SeedEnumError({
                             message: _response.error.errorMessage,
@@ -199,7 +199,7 @@ export class QueryParam {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedEnumTimeoutError();
+                        throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
                     case "unknown":
                         throw new errors.SeedEnumError({
                             message: _response.error.errorMessage,

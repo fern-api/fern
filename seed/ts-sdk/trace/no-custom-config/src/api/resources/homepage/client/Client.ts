@@ -95,7 +95,7 @@ export class Homepage {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /homepage-problems.");
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -168,7 +168,9 @@ export class Homepage {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling POST /homepage-problems."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,

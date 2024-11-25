@@ -1,4 +1,5 @@
-# default-group: sdks
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
 groups:
   sdks:
     generators:

@@ -1,3 +1,20 @@
+- version: 0.33.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for the `inlinePathParameters` configuration option, which generates
+        path parameters in the generated request type (if any) instead of as separate
+        positional parameters.
+
+        ```yaml
+        # generators.yml
+
+        - name: fern-api/fern-go-sdk
+          version: 0.33.0
+          config:
+            inlinePathParameters: true
+        ```
+  irVersion: 53
 - version: 0.32.1
   changelogEntry:
     - type: internal
@@ -12,6 +29,15 @@
       summary: >-
         Add support for the `inlineFileProperties` configuration option, which generates file
         properties in the generated request type instead of as separate positional parameters.
+
+        ```yaml
+        # generators.yml
+
+        - name: fern-api/fern-go-sdk
+          version: 0.32.0
+          config:
+            inlineFileProperties: true
+        ```
     - type: fix
       summary: >-
         Fixes an issue where the new `core.MultipartWriter` was generated for SDKs that didn't

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v53.20.0] - 2024-11-04
 
+- Internal: Add the `includePathParameters` and `onlyPathParameters` properties to the dynamic
+  IR within the `InlinedRequestMetadata` type.
+
+## [v53.20.0] - 2024-11-04
+
 - Internal: Add `includePathParameters` and `onlyPathParameters` property to the wrapped request.
 
   With this, the generator can determine whether or not the path parameters should be included in

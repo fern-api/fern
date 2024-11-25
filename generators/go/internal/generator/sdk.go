@@ -904,6 +904,7 @@ func (f *fileWriter) WriteClient(
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
+	inlinePathParameters bool,
 	inlineFileProperties bool,
 ) (*GeneratedClient, error) {
 	var (
@@ -918,7 +919,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlineFileProperties, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, receiver)
 		if err != nil {
 			return nil, err
 		}
@@ -1849,6 +1850,7 @@ func getEndpointParameters(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) []ast.Expr {
+	var fields []*ast.Field
 	parameters := []ast.Expr{
 		&ast.CallExpr{
 			FunctionName: &ast.ImportedReference{
@@ -1857,18 +1859,26 @@ func getEndpointParameters(
 			},
 		},
 	}
-
-	allPathParameters := example.RootPathParameters
-	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
-	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
-	for _, pathParameter := range allPathParameters {
-		parameters = append(
-			parameters,
-			f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
-		)
+	allPathParameters := getAllExamplePathParameters(example)
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range allPathParameters {
+			fields = append(
+				fields,
+				&ast.Field{
+					Key:   pathParameter.Name.PascalCase.UnsafeName,
+					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+				},
+			)
+		}
+	} else {
+		for _, pathParameter := range allPathParameters {
+			parameters = append(
+				parameters,
+				f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+			)
+		}
 	}
 
-	var fields []*ast.Field
 	for _, header := range append(example.ServiceHeaders, example.EndpointHeaders...) {
 		if isHeaderLiteral(endpoint, header.Name.WireValue) {
 			continue
@@ -1910,7 +1920,7 @@ func getEndpointParameters(
 		)
 	}
 
-	if !shouldSkipRequestType(endpoint, f.inlineFileProperties) {
+	if !shouldSkipRequestType(endpoint, f.inlinePathParameters, f.inlineFileProperties) {
 		fields = append(
 			fields,
 			exampleRequestBodyToFields(f, endpoint, example.Request)...,
@@ -1936,6 +1946,13 @@ func getEndpointParameters(
 		)
 	}
 	return parameters
+}
+
+func getAllExamplePathParameters(example *ir.ExampleEndpointCall) []*ir.ExamplePathParameter {
+	allPathParameters := example.RootPathParameters
+	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
+	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
+	return allPathParameters
 }
 
 func exampleRequestBodyToFields(
@@ -2149,6 +2166,7 @@ func (f *fileWriter) endpointFromIR(
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
+	inlinePathParameters bool,
 	inlineFileProperties bool,
 	receiver string,
 ) (*endpoint, error) {
@@ -2164,44 +2182,53 @@ func (f *fileWriter) endpointFromIR(
 		pathParamters[pathParameter.Name.OriginalName] = pathParameter
 	}
 
-	var pathParameterNames []string
-	for _, part := range irEndpoint.FullPath.Parts {
-		if part.PathParameter == "" {
-			continue
+	var (
+		pathParameterNames  []string
+		signatureParameters = []*signatureParameter{{parameter: "ctx context.Context"}}
+	)
+	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
+		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			pathParameterNames = append(pathParameterNames, fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName))
 		}
-		pathParameter, ok := pathParamters[part.PathParameter]
-		if !ok {
-			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+	} else {
+		for _, part := range irEndpoint.FullPath.Parts {
+			if part.PathParameter == "" {
+				continue
+			}
+			pathParameter, ok := pathParamters[part.PathParameter]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+			}
+			if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
+				value := literalToValue(literal)
+				pathParameterNames = append(pathParameterNames, value)
+				pathParameterToScopedName[part.PathParameter] = value
+				continue
+			}
+			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
+			pathParameterNames = append(pathParameterNames, pathParameterName)
+			pathParameterToScopedName[part.PathParameter] = pathParameterName
 		}
-		if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
-			value := literalToValue(literal)
-			pathParameterNames = append(pathParameterNames, value)
-			pathParameterToScopedName[part.PathParameter] = value
-			continue
-		}
-		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
-		pathParameterNames = append(pathParameterNames, pathParameterName)
-		pathParameterToScopedName[part.PathParameter] = pathParameterName
-	}
 
-	// Preserve the order of path parameters specified in the API in the function signature.
-	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
-	for _, pathParameter := range irEndpoint.AllPathParameters {
-		pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
-		if !ok {
-			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+		// Preserve the order of path parameters specified in the API in the function signature.
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+			}
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			if isLiteralType(pathParameter.ValueType, f.types) {
+				continue
+			}
+			signatureParameters = append(
+				signatureParameters,
+				&signatureParameter{
+					docs:      pathParameter.Docs,
+					parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
+				},
+			)
 		}
-		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
-		if isLiteralType(pathParameter.ValueType, f.types) {
-			continue
-		}
-		signatureParameters = append(
-			signatureParameters,
-			&signatureParameter{
-				docs:      pathParameter.Docs,
-				parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
-			},
-		)
 	}
 
 	// Add the file parameter(s) after the path parameters, if any.
@@ -2249,8 +2276,9 @@ func (f *fileWriter) endpointFromIR(
 		requestIsOptional         = false
 		headers                   = []*ir.HttpHeader{}
 	)
+
 	if irEndpoint.SdkRequest != nil {
-		if needsRequestParameter(irEndpoint, inlineFileProperties) {
+		if needsRequestParameter(irEndpoint, inlinePathParameters, inlineFileProperties) {
 			var requestType string
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
@@ -2630,6 +2658,13 @@ func (f *fileWriter) WriteRequestType(
 		}
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
+	}
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range endpoint.AllPathParameters {
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			f.WriteDocs(pathParameter.Docs)
+			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
+		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
 		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
@@ -3305,9 +3340,16 @@ func typeReferenceFromStreamingResponse(
 
 // needsRequestParameter returns true if the endpoint needs a request parameter in its
 // function signature.
-func needsRequestParameter(endpoint *ir.HttpEndpoint, inlineFileProperties bool) bool {
+func needsRequestParameter(
+	endpoint *ir.HttpEndpoint,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+) bool {
 	if endpoint.SdkRequest == nil {
 		return false
+	}
+	if includePathParametersInWrappedRequest(endpoint, inlinePathParameters) {
+		return true
 	}
 	if len(endpoint.QueryParameters) > 0 {
 		return true
@@ -3320,7 +3362,24 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint, inlineFileProperties bool)
 			fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload) ||
 			(inlineFileProperties && fileUploadHasFileProperties(endpoint.RequestBody.FileUpload))
 	}
+	onlyPathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetOnlyPathParameters()
+	if onlyPathParameters != nil && *onlyPathParameters {
+		return false
+	}
 	return true
+}
+
+// includePathParametersInWrappedRequest returns true if the endpoint's request should
+// include path parameters in its wrapped request type.
+func includePathParametersInWrappedRequest(
+	endpoint *ir.HttpEndpoint,
+	inlinePathParameters bool,
+) bool {
+	if endpoint.SdkRequest == nil {
+		return false
+	}
+	includePathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetIncludePathParameters()
+	return len(endpoint.PathParameters) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive

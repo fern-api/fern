@@ -98,7 +98,9 @@ export class Sysprop {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling PUT /sysprop/num-warm-instances/{language}/{numWarmInstances}."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,
@@ -171,7 +173,9 @@ export class Sysprop {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedTraceTimeoutError();
+                        throw new errors.SeedTraceTimeoutError(
+                            "Timeout exceeded when calling GET /sysprop/num-warm-instances."
+                        );
                     case "unknown":
                         throw new errors.SeedTraceError({
                             message: _response.error.errorMessage,

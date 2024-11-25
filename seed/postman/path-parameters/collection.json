@@ -265,6 +265,190 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Users",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "users",
+                ":userId",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": null,
+                  "value": "userId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/users/:userId/search?limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "users",
+                    ":userId",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": null,
+                      "value": "userId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    },\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Search Organizations",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "organizations",
+                ":organizationId",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "organizationId",
+                  "description": null,
+                  "value": "organizationId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/organizations/:organizationId/search?limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "organizations",
+                    ":organizationId",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "organizationId",
+                      "description": null,
+                      "value": "organizationId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    },\n    {\n        \"name\": \"name\",\n        \"tags\": [\n            \"tags\",\n            \"tags\"\n        ]\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

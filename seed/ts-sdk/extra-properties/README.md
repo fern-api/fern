@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExtraPropertiesClient, SeedExtraProperties } from "@fern/extra-properties";
+import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
 const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
 await client.user.createUser({

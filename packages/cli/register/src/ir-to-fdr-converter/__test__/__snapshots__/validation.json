@@ -51,7 +51,7 @@
           "value": {
             "type": "string",
             "minLength": 2,
-            "maxLength": 2
+            "maxLength": 26
           }
         }
       }
@@ -65,7 +65,7 @@
           "value": {
             "type": "string",
             "minLength": 4,
-            "maxLength": 4
+            "maxLength": 256
           }
         }
       }
@@ -127,7 +127,7 @@
                 "type": "string",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
-                "maxLength": 3,
+                "maxLength": 10,
                 "default": "fern"
               }
             }
@@ -210,7 +210,7 @@
                       "type": "string",
                       "regex": "^[a-z]+$",
                       "minLength": 3,
-                      "maxLength": 3,
+                      "maxLength": 10,
                       "default": "fern"
                     }
                   }
@@ -329,7 +329,7 @@
                 "type": "string",
                 "regex": "^[a-z]+$",
                 "minLength": 3,
-                "maxLength": 3,
+                "maxLength": 10,
                 "default": "fern"
               }
             }

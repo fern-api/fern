@@ -116,12 +116,14 @@ export function convertReferenceObject(
               namespace,
               new Set()
           )
-        : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
+        : SchemaWithExample.reference(
+              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
+          );
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             title: undefined,
             nameOverride: undefined,
-            generatedName: getGeneratedTypeName(breadcrumbs),
+            generatedName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
             value: referenceSchema,
             description: undefined,
             availability: undefined,
@@ -167,7 +169,7 @@ export function convertSchemaObject(
     let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
     groupName = context.resolveGroupName(groupName);
 
-    const generatedName = getGeneratedTypeName(breadcrumbs);
+    const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds);
     const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
@@ -936,10 +938,11 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
 export function convertToReferencedSchema(
     schema: OpenAPIV3.ReferenceObject,
     breadcrumbs: string[],
-    source: Source
+    source: Source,
+    preserveSchemaIds: boolean
 ): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
-    const generatedName = getGeneratedTypeName(breadcrumbs);
+    const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const description = (schema as any).description;
     const availability = convertAvailability(schema);

@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedUnionsClient, SeedUnions } from "@fern/unions";
+import { SeedUnionsClient } from "@fern/unions";
 
 const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
 await client.union.get("id");

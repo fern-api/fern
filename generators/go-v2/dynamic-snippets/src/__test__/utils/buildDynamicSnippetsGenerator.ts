@@ -13,6 +13,8 @@ export function buildDynamicSnippetsGenerator({
     config: FernGeneratorExec.GeneratorConfig;
 }): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
-    const ir = DynamicSnippets.DynamicIntermediateRepresentation.parseOrThrow(JSON.parse(content));
+    const ir = DynamicSnippets.DynamicIntermediateRepresentation.parseOrThrow(JSON.parse(content), {
+        unrecognizedObjectKeys: "passthrough"
+    });
     return new DynamicSnippetsGenerator({ ir, config, formatter: new GoFormatter() });
 }

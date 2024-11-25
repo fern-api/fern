@@ -112,7 +112,7 @@ export class Reference {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedLiteralTimeoutError();
+                        throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /reference.");
                     case "unknown":
                         throw new errors.SeedLiteralError({
                             message: _response.error.errorMessage,

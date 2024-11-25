@@ -91,7 +91,7 @@ export function generateIr({
         source,
         namespace
     });
-    const variables = getVariableDefinitions(openApi);
+    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
@@ -465,7 +465,10 @@ function maybeAddBackDiscriminantsFromSchemas(
                         ...property,
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
-                            generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            generatedName: getGeneratedTypeName(
+                                [schema.generatedName, discriminantValue],
+                                context.options.preserveSchemaIds
+                            ),
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,

@@ -127,7 +127,12 @@ export function convertObject({
             }
             parents.push({
                 schemaId,
-                convertedSchema: convertToReferencedSchema(allOfElement, [schemaId], source),
+                convertedSchema: convertToReferencedSchema(
+                    allOfElement,
+                    [schemaId],
+                    source,
+                    context.options.preserveSchemaIds
+                ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);

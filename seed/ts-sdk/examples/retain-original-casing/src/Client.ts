@@ -88,7 +88,7 @@ export class SeedExamplesClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,
@@ -157,7 +157,7 @@ export class SeedExamplesClient {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedExamplesTimeoutError();
+                        throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedExamplesError({
                             message: _response.error.errorMessage,

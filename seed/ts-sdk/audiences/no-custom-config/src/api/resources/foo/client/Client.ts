@@ -96,7 +96,7 @@ export class Foo {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedAudiencesTimeoutError();
+                        throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedAudiencesError({
                             message: _response.error.errorMessage,

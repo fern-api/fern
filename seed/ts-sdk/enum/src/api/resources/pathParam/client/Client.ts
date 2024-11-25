@@ -87,7 +87,9 @@ export class PathParam {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedEnumTimeoutError();
+                        throw new errors.SeedEnumTimeoutError(
+                            "Timeout exceeded when calling POST /path/{operand}/{operandOrColor}."
+                        );
                     case "unknown":
                         throw new errors.SeedEnumError({
                             message: _response.error.errorMessage,

@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/grpc-proto";
+import { SeedApiClient } from "@fern/grpc-proto";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.userservice.create();

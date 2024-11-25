@@ -87,7 +87,7 @@ export class Union {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUndiscriminatedUnionsTimeoutError();
+                        throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedUndiscriminatedUnionsError({
                             message: _response.error.errorMessage,
@@ -151,7 +151,9 @@ export class Union {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUndiscriminatedUnionsTimeoutError();
+                        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                            "Timeout exceeded when calling GET /metadata."
+                        );
                     case "unknown":
                         throw new errors.SeedUndiscriminatedUnionsError({
                             message: _response.error.errorMessage,

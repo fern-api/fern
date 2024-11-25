@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedVersionClient, SeedVersion } from "@fern/version";
+import { SeedVersionClient } from "@fern/version";
 
 const client = new SeedVersionClient({ environment: "YOUR_BASE_URL" });
 await client.user.getUser("userId");

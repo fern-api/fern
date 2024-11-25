@@ -1,0 +1,86 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`file-upload (success) > 'POST /' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	io "io"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.Post(
+		context.TODO(),
+		&acme.MyRequest{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+			FileList: []io.Reader{
+				strings.NewReader(
+					"First",
+				),
+				strings.NewReader(
+					"Second",
+				),
+			},
+		},
+	)
+}
+"
+`;
+
+exports[`file-upload (success) > 'POST /just-file (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.JustFile(
+		context.TODO(),
+		&acme.JustFileRequet{
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;
+
+exports[`file-upload (success) > 'POST /just-file-with-query-params (si…' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	strings "strings"
+)
+
+func do() {
+	client := client.NewClient()
+	client.Service.JustFileWithQueryParams(
+		context.TODO(),
+		&acme.JustFileWithQueryParamsRequet{
+			Integer: 42,
+			MaybeString: acme.String(
+				"exists",
+			),
+			File: strings.NewReader(
+				"Hello, world!",
+			),
+		},
+	)
+}
+"
+`;

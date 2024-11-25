@@ -18,6 +18,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate an instance method", async () => {
@@ -28,6 +29,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a class method", async () => {
@@ -38,6 +40,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with one argument", async () => {
@@ -47,6 +50,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with multiple arguments", async () => {
@@ -59,6 +63,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with a specified return type", async () => {
@@ -69,6 +74,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method without a specified return type", async () => {
@@ -78,6 +84,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with a body", async () => {
@@ -88,6 +95,7 @@ describe("Method", () => {
             method.addStatement(python.codeBlock("return True"));
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method without a body", async () => {
@@ -97,6 +105,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with a docstring", async () => {
@@ -107,6 +116,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method without a docstring", async () => {
@@ -116,6 +126,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
         });
 
         it("should generate a method with a decorator", async () => {
@@ -133,6 +144,7 @@ describe("Method", () => {
             });
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(1);
         });
 
         it("should generate a method with local classes", async () => {
@@ -163,6 +175,7 @@ describe("Method", () => {
 
             method.write(writer);
             expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(1);
         });
     });
 });

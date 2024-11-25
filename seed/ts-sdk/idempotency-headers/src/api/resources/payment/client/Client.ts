@@ -98,7 +98,9 @@ export class Payment {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedIdempotencyHeadersTimeoutError();
+                        throw new errors.SeedIdempotencyHeadersTimeoutError(
+                            "Timeout exceeded when calling POST /payment."
+                        );
                     case "unknown":
                         throw new errors.SeedIdempotencyHeadersError({
                             message: _response.error.errorMessage,
@@ -161,7 +163,9 @@ export class Payment {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedIdempotencyHeadersTimeoutError();
+                        throw new errors.SeedIdempotencyHeadersTimeoutError(
+                            "Timeout exceeded when calling DELETE /payment/{paymentId}."
+                        );
                     case "unknown":
                         throw new errors.SeedIdempotencyHeadersError({
                             message: _response.error.errorMessage,

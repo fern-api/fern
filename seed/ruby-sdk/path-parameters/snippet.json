@@ -35,6 +35,28 @@
         },
         {
             "id": {
+                "path": "/user/users/{userId}/search",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.search_users(user_id: \"userId\", limit: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/search",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.search_organizations(organization_id: \"organizationId\", limit: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/user/organizations/{organizationId}",
                 "method": "GET",
                 "identifierOverride": "endpoint_user.getOrganization"
@@ -63,6 +85,28 @@
             },
             "snippet": {
                 "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.get_organization_user(organization_id: \"organizationId\", user_id: \"userId\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/users/{userId}/search",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.search_users(user_id: \"userId\", limit: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/search",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "client": "require \"fern_path_parameters\"\n\npath_parameters = SeedPathParametersClient::Client.new(base_url: \"https://api.example.com\")\npath_parameters.user.search_organizations(organization_id: \"organizationId\", limit: 1)",
                 "type": "ruby"
             }
         }

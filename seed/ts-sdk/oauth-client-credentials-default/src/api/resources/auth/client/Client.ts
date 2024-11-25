@@ -94,7 +94,9 @@ export class Auth {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedOauthClientCredentialsDefaultTimeoutError();
+                        throw new errors.SeedOauthClientCredentialsDefaultTimeoutError(
+                            "Timeout exceeded when calling POST /token."
+                        );
                     case "unknown":
                         throw new errors.SeedOauthClientCredentialsDefaultError({
                             message: _response.error.errorMessage,

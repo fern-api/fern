@@ -85,7 +85,7 @@ export class Unknown {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUnknownAsAnyTimeoutError();
+                        throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
                     case "unknown":
                         throw new errors.SeedUnknownAsAnyError({
                             message: _response.error.errorMessage,
@@ -157,7 +157,9 @@ export class Unknown {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedUnknownAsAnyTimeoutError();
+                        throw new errors.SeedUnknownAsAnyTimeoutError(
+                            "Timeout exceeded when calling POST /with-object."
+                        );
                     case "unknown":
                         throw new errors.SeedUnknownAsAnyError({
                             message: _response.error.errorMessage,

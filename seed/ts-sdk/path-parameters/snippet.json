@@ -32,6 +32,28 @@
                 "type": "typescript",
                 "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getOrganizationUser(\"organizationId\", \"userId\");\n"
             }
+        },
+        {
+            "id": {
+                "path": "/user/users/{userId}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers(\"userId\", {\n    limit: 1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/organizations/{organizationId}/search",
+                "method": "GET",
+                "identifier_override": "endpoint_user.searchOrganizations"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient, SeedPathParameters } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchOrganizations(\"organizationId\", {\n    limit: 1\n});\n"
+            }
         }
     ],
     "types": {}

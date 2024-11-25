@@ -76,7 +76,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedBytesTimeoutError();
+                        throw new errors.SeedBytesTimeoutError("Timeout exceeded when calling POST /upload-content.");
                     case "unknown":
                         throw new errors.SeedBytesError({
                             message: _response.error.errorMessage,

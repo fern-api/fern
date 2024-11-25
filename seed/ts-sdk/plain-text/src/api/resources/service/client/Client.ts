@@ -72,7 +72,7 @@ export class Service {
                             body: _response.error.rawBody,
                         });
                     case "timeout":
-                        throw new errors.SeedPlainTextTimeoutError();
+                        throw new errors.SeedPlainTextTimeoutError("Timeout exceeded when calling POST /text.");
                     case "unknown":
                         throw new errors.SeedPlainTextError({
                             message: _response.error.errorMessage,
