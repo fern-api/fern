@@ -297,7 +297,7 @@ navigation:
             path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
           - page: Publish a Public-Facing SDK
             path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
-            hidden: true
+            slug: publish-a-public-facing-sdk
           - section: Publish to package managers
             contents: 
               - page: NPM (TypeScript)
