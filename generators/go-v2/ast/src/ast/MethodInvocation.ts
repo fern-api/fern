@@ -1,5 +1,4 @@
 import { AstNode } from "./core/AstNode";
-import { UnnamedArgument } from "@fern-api/generator-commons";
 import { Writer } from "./core/Writer";
 import { writeArguments } from "./utils/writeArguments";
 

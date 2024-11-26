@@ -34,6 +34,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "^53.21.0",

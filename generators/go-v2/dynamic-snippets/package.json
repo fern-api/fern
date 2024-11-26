@@ -36,7 +36,6 @@
     "@fern-api/go-formatter": "workspace:*",
     "@fern-fern/ir-sdk": "^53.21.0",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
