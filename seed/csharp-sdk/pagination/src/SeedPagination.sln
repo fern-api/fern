@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination", "SeedPagination\SeedPagination.csproj", "{922616D3-400D-4924-AAA6-3069B4E39310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination", "SeedPagination\SeedPagination.csproj", "{E88E84F9-61F1-479A-B4F7-B14167ACC8B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination.Test", "SeedPagination.Test\SeedPagination.Test.csproj", "{8C3AF3F4-B1D5-4224-A3B2-AB5F38175A0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination.Test", "SeedPagination.Test\SeedPagination.Test.csproj", "{3B5C879C-3FCA-46B0-AC92-A9EABD456CC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{922616D3-400D-4924-AAA6-3069B4E39310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{922616D3-400D-4924-AAA6-3069B4E39310}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{922616D3-400D-4924-AAA6-3069B4E39310}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{922616D3-400D-4924-AAA6-3069B4E39310}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C3AF3F4-B1D5-4224-A3B2-AB5F38175A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C3AF3F4-B1D5-4224-A3B2-AB5F38175A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C3AF3F4-B1D5-4224-A3B2-AB5F38175A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C3AF3F4-B1D5-4224-A3B2-AB5F38175A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E88E84F9-61F1-479A-B4F7-B14167ACC8B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E88E84F9-61F1-479A-B4F7-B14167ACC8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E88E84F9-61F1-479A-B4F7-B14167ACC8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E88E84F9-61F1-479A-B4F7-B14167ACC8B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5C879C-3FCA-46B0-AC92-A9EABD456CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5C879C-3FCA-46B0-AC92-A9EABD456CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5C879C-3FCA-46B0-AC92-A9EABD456CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5C879C-3FCA-46B0-AC92-A9EABD456CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

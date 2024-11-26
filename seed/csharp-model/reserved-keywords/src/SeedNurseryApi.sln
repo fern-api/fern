@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi", "SeedNurseryApi\SeedNurseryApi.csproj", "{7D65CC59-FCE6-4899-8293-778CC0C94A5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi", "SeedNurseryApi\SeedNurseryApi.csproj", "{8A3319C3-E088-4435-A287-198FBF8360F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi.Test", "SeedNurseryApi.Test\SeedNurseryApi.Test.csproj", "{8FC0609A-8550-4D55-ABE6-4872455DB4B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi.Test", "SeedNurseryApi.Test\SeedNurseryApi.Test.csproj", "{3E6217E9-14F5-41B7-B847-3A88C735484F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7D65CC59-FCE6-4899-8293-778CC0C94A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D65CC59-FCE6-4899-8293-778CC0C94A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D65CC59-FCE6-4899-8293-778CC0C94A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D65CC59-FCE6-4899-8293-778CC0C94A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FC0609A-8550-4D55-ABE6-4872455DB4B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FC0609A-8550-4D55-ABE6-4872455DB4B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FC0609A-8550-4D55-ABE6-4872455DB4B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FC0609A-8550-4D55-ABE6-4872455DB4B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3319C3-E088-4435-A287-198FBF8360F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3319C3-E088-4435-A287-198FBF8360F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3319C3-E088-4435-A287-198FBF8360F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3319C3-E088-4435-A287-198FBF8360F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6217E9-14F5-41B7-B847-3A88C735484F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6217E9-14F5-41B7-B847-3A88C735484F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6217E9-14F5-41B7-B847-3A88C735484F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6217E9-14F5-41B7-B847-3A88C735484F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

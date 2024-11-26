@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth", "SeedCustomAuth\SeedCustomAuth.csproj", "{9F281AFD-0EE3-40C7-94D2-7CC14E7F687C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth", "SeedCustomAuth\SeedCustomAuth.csproj", "{518486D5-EB30-4D09-8250-378CBA7ABCE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth.Test", "SeedCustomAuth.Test\SeedCustomAuth.Test.csproj", "{79EEA28D-7051-4054-A083-7C833BB3C1BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCustomAuth.Test", "SeedCustomAuth.Test\SeedCustomAuth.Test.csproj", "{F46E020E-5B86-4461-BF5D-71092C72C505}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F281AFD-0EE3-40C7-94D2-7CC14E7F687C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F281AFD-0EE3-40C7-94D2-7CC14E7F687C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F281AFD-0EE3-40C7-94D2-7CC14E7F687C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F281AFD-0EE3-40C7-94D2-7CC14E7F687C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79EEA28D-7051-4054-A083-7C833BB3C1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79EEA28D-7051-4054-A083-7C833BB3C1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79EEA28D-7051-4054-A083-7C833BB3C1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79EEA28D-7051-4054-A083-7C833BB3C1BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{518486D5-EB30-4D09-8250-378CBA7ABCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{518486D5-EB30-4D09-8250-378CBA7ABCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{518486D5-EB30-4D09-8250-378CBA7ABCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{518486D5-EB30-4D09-8250-378CBA7ABCE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46E020E-5B86-4461-BF5D-71092C72C505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46E020E-5B86-4461-BF5D-71092C72C505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46E020E-5B86-4461-BF5D-71092C72C505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46E020E-5B86-4461-BF5D-71092C72C505}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

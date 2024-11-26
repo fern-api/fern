@@ -16,6 +16,7 @@
         - Break up the job into more steps to make it clearer where errors occur.
         - Update GitHub Actions actions to the latest version.
         - Using the .NET 9 SDK for building, testing, and publishing.
+          This won't affect the TFM outputs, and tests still execute on .NET 8 runtime.
         - Reduce irrelevant logs.
   irVersion: 53
 - version: 1.9.11

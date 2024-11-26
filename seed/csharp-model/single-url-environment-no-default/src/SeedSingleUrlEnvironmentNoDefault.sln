@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentNoDefault", "SeedSingleUrlEnvironmentNoDefault\SeedSingleUrlEnvironmentNoDefault.csproj", "{CA62CBC1-D979-4C22-81C1-DE829123CF5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentNoDefault", "SeedSingleUrlEnvironmentNoDefault\SeedSingleUrlEnvironmentNoDefault.csproj", "{B374F6CB-3D5D-4CFF-86F9-3208A30FC6C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentNoDefault.Test", "SeedSingleUrlEnvironmentNoDefault.Test\SeedSingleUrlEnvironmentNoDefault.Test.csproj", "{436622CC-4957-4254-BBF7-3685EE475029}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentNoDefault.Test", "SeedSingleUrlEnvironmentNoDefault.Test\SeedSingleUrlEnvironmentNoDefault.Test.csproj", "{573266A2-C81E-4C9A-86B7-AB0FCC80ED8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CA62CBC1-D979-4C22-81C1-DE829123CF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA62CBC1-D979-4C22-81C1-DE829123CF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA62CBC1-D979-4C22-81C1-DE829123CF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA62CBC1-D979-4C22-81C1-DE829123CF5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{436622CC-4957-4254-BBF7-3685EE475029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{436622CC-4957-4254-BBF7-3685EE475029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{436622CC-4957-4254-BBF7-3685EE475029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{436622CC-4957-4254-BBF7-3685EE475029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B374F6CB-3D5D-4CFF-86F9-3208A30FC6C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B374F6CB-3D5D-4CFF-86F9-3208A30FC6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B374F6CB-3D5D-4CFF-86F9-3208A30FC6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B374F6CB-3D5D-4CFF-86F9-3208A30FC6C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{573266A2-C81E-4C9A-86B7-AB0FCC80ED8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573266A2-C81E-4C9A-86B7-AB0FCC80ED8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{573266A2-C81E-4C9A-86B7-AB0FCC80ED8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{573266A2-C81E-4C9A-86B7-AB0FCC80ED8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

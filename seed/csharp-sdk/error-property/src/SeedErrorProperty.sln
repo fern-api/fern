@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty", "SeedErrorProperty\SeedErrorProperty.csproj", "{769E0182-D360-42ED-8D2F-DA4C4733774A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty", "SeedErrorProperty\SeedErrorProperty.csproj", "{DC8AFD3B-3961-485E-A1E8-9CDA1D389FC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty.Test", "SeedErrorProperty.Test\SeedErrorProperty.Test.csproj", "{E249FB56-AF5D-4AF5-A499-566A4FF4A3DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedErrorProperty.Test", "SeedErrorProperty.Test\SeedErrorProperty.Test.csproj", "{FEC85E7B-FA7C-44DB-80F4-865C1192CAA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{769E0182-D360-42ED-8D2F-DA4C4733774A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{769E0182-D360-42ED-8D2F-DA4C4733774A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{769E0182-D360-42ED-8D2F-DA4C4733774A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{769E0182-D360-42ED-8D2F-DA4C4733774A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E249FB56-AF5D-4AF5-A499-566A4FF4A3DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E249FB56-AF5D-4AF5-A499-566A4FF4A3DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E249FB56-AF5D-4AF5-A499-566A4FF4A3DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E249FB56-AF5D-4AF5-A499-566A4FF4A3DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8AFD3B-3961-485E-A1E8-9CDA1D389FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8AFD3B-3961-485E-A1E8-9CDA1D389FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8AFD3B-3961-485E-A1E8-9CDA1D389FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8AFD3B-3961-485E-A1E8-9CDA1D389FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC85E7B-FA7C-44DB-80F4-865C1192CAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC85E7B-FA7C-44DB-80F4-865C1192CAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC85E7B-FA7C-44DB-80F4-865C1192CAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC85E7B-FA7C-44DB-80F4-865C1192CAA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
