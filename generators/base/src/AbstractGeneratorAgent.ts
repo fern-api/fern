@@ -1,12 +1,11 @@
 import { Logger } from "@fern-api/logger";
-import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
+import { AbstractGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { ReferenceConfigBuilder } from "./reference";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
 

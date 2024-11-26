@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 import path from "path";
-import { AbstractGeneratorContext } from "../AbstractGeneratorContext";
+import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
 import { SourceFetcher } from "../SourceFetcher";
 
 const AWS_BUCKET_NAME = "fdr-api-definition-source-test";

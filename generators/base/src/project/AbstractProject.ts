@@ -1,4 +1,4 @@
-import { AbstractGeneratorContext } from "../AbstractGeneratorContext";
+import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { File } from "./File";
 
