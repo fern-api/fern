@@ -504,23 +504,8 @@ class CsProj {
 
 ${projectGroup.join("\n")}
 
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
-    </PropertyGroup>
-
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-        <Reference Include="System.Net.Http" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="PolySharp" Version="1.14.1">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -544,9 +529,17 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
     private getDependencies(): string[] {
         const result: string[] = [];
-        result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
-        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
+        result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
+        result.push(
+            `${FOUR_SPACES}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
+        );
+        result.push(`${FOUR_SPACES}<PrivateAssets>all</PrivateAssets>`);
+        result.push("</PackageReference>");
+        result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
+        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
+        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
@@ -599,7 +592,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             `${FOUR_SPACES}${FOUR_SPACES}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<ImplicitUsings>enable</ImplicitUsings>`);
-        result.push(`${FOUR_SPACES}${FOUR_SPACES}<NuGetAudit>false</NuGetAudit>`);
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<LangVersion>12</LangVersion>`);
         result.push(`${FOUR_SPACES}${FOUR_SPACES}<Nullable>enable</Nullable>`);
 
@@ -638,6 +630,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         if (this.githubUrl != null) {
             result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
         }
+        result.push("<PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>");
         return result;
     }
 
