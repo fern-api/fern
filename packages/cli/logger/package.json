@@ -28,12 +28,10 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
-    "chalk": "^5.3.0"
+    "@fern-api/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",
