@@ -487,9 +487,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6

@@ -3,7 +3,7 @@
     "output": {
         "mode": {
             "type": "github",
-            "repoUrl": "https://github.com/square/square-go-sdk",
+            "repoUrl": "https://github.com/acme/acme-go-sdk",
             "version": "0.0.1",
             "publishInfo": null
         },
@@ -15,12 +15,12 @@
     "publish": null,
     "customConfig": {
         "union": "v1",
-        "packageName": "square",
+        "packageName": "acme",
         "inlinePathParameters": true,
         "inlineFileProperties": true
     },
-    "workspaceName": "square",
-    "organization": "square",
+    "workspaceName": "acme",
+    "organization": "acme",
     "environment": {
         "_type": "local"
     },
