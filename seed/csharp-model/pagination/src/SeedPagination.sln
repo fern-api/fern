@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination", "SeedPagination\SeedPagination.csproj", "{52465946-C278-48AD-AD1C-E4FD55E0DB16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedPagination.Test", "SeedPagination.Test\SeedPagination.Test.csproj", "{BEE708C0-544B-4265-AF67-0A4EF2DDBA60}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52465946-C278-48AD-AD1C-E4FD55E0DB16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52465946-C278-48AD-AD1C-E4FD55E0DB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52465946-C278-48AD-AD1C-E4FD55E0DB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52465946-C278-48AD-AD1C-E4FD55E0DB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEE708C0-544B-4265-AF67-0A4EF2DDBA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEE708C0-544B-4265-AF67-0A4EF2DDBA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEE708C0-544B-4265-AF67-0A4EF2DDBA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEE708C0-544B-4265-AF67-0A4EF2DDBA60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

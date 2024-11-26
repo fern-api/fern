@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath", "SeedApiWideBasePath\SeedApiWideBasePath.csproj", "{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedApiWideBasePath.Test", "SeedApiWideBasePath.Test\SeedApiWideBasePath.Test.csproj", "{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99ECD09-07C2-4B0A-B6DF-D258E1F7CC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B205E1F-6CC4-4D86-A8BE-093B77BB2942}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
