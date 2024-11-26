@@ -47,11 +47,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "ChatFullResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "chat_stream": {
@@ -92,12 +96,16 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "ChatStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -151,6 +159,8 @@
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
+      source:
+        openapi: ../openapi.yml
       display-name: Start a chat
       request:
         name: ChatStreamRequest
@@ -181,6 +191,8 @@
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
+      source:
+        openapi: ../openapi.yml
       display-name: Start a chat
       request:
         name: ChatRequest

@@ -33,7 +33,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public readonly endpoint: HttpEndpoint;
 
-    private response: GeneratedEndpointResponse;
+    public response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -62,6 +62,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    public isPaginated(context: SdkContext): boolean {
+        return false;
     }
 
     public getExample(args: {

@@ -109,11 +109,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get_stream": {
@@ -152,12 +156,16 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserGetStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "root.StreamUser",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -176,6 +184,8 @@ service:
       path: /user/{userId}
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       request:
@@ -201,6 +211,8 @@ service:
       path: /user/{userId}
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       request:

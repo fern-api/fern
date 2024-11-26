@@ -10535,10 +10535,24 @@ errors:
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -10549,6 +10563,9 @@ errors:
               "response": {
                 "docs": "collection of bookings",
                 "type": "BookingsIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create": {
@@ -11016,11 +11033,15 @@ errors:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBooking",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created booking",
                 "type": "BookingCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -11325,6 +11346,9 @@ errors:
                 "docs": "Success",
                 "type": "BookingShowResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -11496,6 +11520,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of bookings.
+      source:
+        openapi: ../openapi.yml
       display-name: List all bookings
       request:
         name: BookingsIndexRequest
@@ -11503,11 +11529,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<BookingsIndexRequestSort>
             docs: Sort results by the specified field.
@@ -11761,6 +11792,8 @@ service:
       path: /bookings
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create and return a booking
       request:
         name: CreateBooking
@@ -12158,6 +12191,8 @@ service:
       auth: false
       docs: |
         Retrieves the details of a single booking.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -12687,11 +12722,15 @@ docs: Endpoints relating to Booking objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookingAmendment",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created booking amendment",
                 "type": "BookingAmendmentCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -12733,6 +12772,8 @@ service:
       path: /booking_amendments
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new booking amendment.
       request:
         name: CreateBookingAmendment
@@ -13053,11 +13094,15 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateBookingLineItem",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created booking line item",
                 "type": "BookingLineItemCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "booking_line_item_index": {
@@ -13135,16 +13180,33 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of booking line items",
                 "type": "BookingLineItemIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "booking_line_item_show": {
@@ -13198,6 +13260,9 @@ docs: >-
               "response": {
                 "docs": "A collection of booking line items",
                 "type": "BookingLineItemShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -13317,6 +13382,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of booking line items linked to submitted bookings
+      source:
+        openapi: ../openapi.yml
       display-name: List all booking line items
       request:
         name: BookingLineItemIndexRequest
@@ -13324,11 +13391,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           direction:
             type: optional<BookingLineItemIndexRequestDirection>
             docs: Set sort order. Allows "asc" (ascending) or "desc"  (descending)
@@ -13385,6 +13457,8 @@ service:
       method: POST
       auth: false
       docs: Creates and returns a booking line item
+      source:
+        openapi: ../openapi.yml
       display-name: Create a booking line item
       request:
         name: CreateBookingLineItem
@@ -13437,6 +13511,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of booking line items
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -13605,11 +13681,15 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCarbonCalculation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success",
                 "type": "CarbonCalculationCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -13730,6 +13810,8 @@ service:
       method: POST
       auth: false
       docs: Rate limited to 2,000 requests per hour
+      source:
+        openapi: ../openapi.yml
       display-name: Calculate carbon emissions
       request:
         name: CreateCarbonCalculation
@@ -14053,11 +14135,15 @@ docs: Endpoints relating to Carbon Calculations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCommercialInvoice",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created commercial invoice",
                 "type": "CommercialInvoicesCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "index": {
@@ -14213,16 +14299,33 @@ docs: Endpoints relating to Carbon Calculations
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Success",
                 "type": "CommercialInvoicesIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -14369,6 +14472,9 @@ docs: Endpoints relating to Carbon Calculations
               "response": {
                 "docs": "Success",
                 "type": "CommercialInvoicesShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -14528,11 +14634,15 @@ docs: Endpoints relating to Carbon Calculations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCommercialInvoice",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The updated commercial invoice",
                 "type": "CommercialInvoicesUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -14655,6 +14765,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of commercial invoices
+      source:
+        openapi: ../openapi.yml
       display-name: List commercial invoices
       request:
         name: CommercialInvoicesIndexRequest
@@ -14662,11 +14774,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: The unique id for the shipment.
@@ -14782,6 +14899,8 @@ service:
         **The Commercial Invoices POST endpoint needs special permission to
         access. Please contact your Flexport Sales representative if you are
         interested in using this endpoint.**
+      source:
+        openapi: ../openapi.yml
       display-name: Create and return a new commercial invoice
       request:
         name: CreateCommercialInvoice
@@ -14939,6 +15058,8 @@ service:
         **The Commercial Invoices PATCH endpoint needs special permission to
         access. Please contact your Flexport Sales representative if you are
         interested in using this endpoint.**
+      source:
+        openapi: ../openapi.yml
       display-name: Update an existing commercial invoice
       request:
         name: UpdateCommercialInvoice
@@ -15066,6 +15187,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single commercial invoice.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -15281,11 +15404,15 @@ docs: Endpoints relating to Commercial Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCompany",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created company",
                 "type": "NetworkCompanyCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_index": {
@@ -15384,16 +15511,33 @@ docs: Endpoints relating to Commercial Invoice objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of companies",
                 "type": "NetworkCompanyIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_me": {
@@ -15475,6 +15619,9 @@ docs: Endpoints relating to Commercial Invoice objects
                 "docs": "Success",
                 "type": "NetworkCompanyMeResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "network_company_show": {
               "auth": false,
@@ -15555,6 +15702,9 @@ docs: Endpoints relating to Commercial Invoice objects
               "response": {
                 "docs": "Success",
                 "type": "NetworkCompanyShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_update": {
@@ -15658,11 +15808,15 @@ docs: Endpoints relating to Commercial Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompany",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The updated company",
                 "type": "NetworkCompanyUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -15807,6 +15961,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of companies in the network.
+      source:
+        openapi: ../openapi.yml
       display-name: List company objects
       request:
         name: NetworkCompanyIndexRequest
@@ -15814,11 +15970,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the company.
@@ -15891,6 +16052,8 @@ service:
       path: /network/companies
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new company object
       request:
         name: CreateCompany
@@ -15964,6 +16127,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single company.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -16022,6 +16187,8 @@ service:
       path: /network/companies/{id}
       method: PATCH
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -16100,6 +16267,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of your own organization.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve your company
       response:
         docs: Success
@@ -16249,16 +16418,33 @@ docs: Endpoints relating to Company objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of company entities",
                 "type": "CompanyEntityIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_entity_create": {
@@ -16345,11 +16531,15 @@ docs: Endpoints relating to Company objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateCompanyEntity",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created company entity",
                 "type": "NetworkCompanyEntityCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_entity_show": {
@@ -16412,6 +16602,9 @@ docs: Endpoints relating to Company objects
               "response": {
                 "docs": "Success",
                 "type": "NetworkCompanyEntityShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_company_entity_update": {
@@ -16493,11 +16686,15 @@ docs: Endpoints relating to Company objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateCompanyEntity",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success",
                 "type": "NetworkCompanyEntityUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -16622,6 +16819,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of the company entity objects in the network.
+      source:
+        openapi: ../openapi.yml
       display-name: List of company entity objects
       request:
         name: CompanyEntityIndexRequest
@@ -16629,11 +16828,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the company entity
@@ -16690,6 +16894,8 @@ service:
       path: /network/company_entities
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create and return a new company entity
       request:
         name: CreateCompanyEntity
@@ -16765,6 +16971,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single company entity
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -16809,6 +17017,8 @@ service:
       path: /network/company_entities/{id}
       method: PATCH
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -16954,11 +17164,15 @@ docs: Endpoints relating to CompanyEntity objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateContact",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created contact",
                 "type": "NetworkContactCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_contact_index": {
@@ -17031,16 +17245,33 @@ docs: Endpoints relating to CompanyEntity objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of contacts",
                 "type": "NetworkContactIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_contact_show": {
@@ -17095,6 +17326,9 @@ docs: Endpoints relating to CompanyEntity objects
               "response": {
                 "docs": "Success",
                 "type": "NetworkContactShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_contact_update": {
@@ -17167,11 +17401,15 @@ docs: Endpoints relating to CompanyEntity objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateContact",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The updated contact",
                 "type": "NetworkContactUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -17296,6 +17534,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of contacts in the network.
+      source:
+        openapi: ../openapi.yml
       display-name: List contact objects
       request:
         name: NetworkContactIndexRequest
@@ -17303,11 +17543,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.company_ref:
             type: optional<string>
             docs: The ref for the company.
@@ -17357,6 +17602,8 @@ service:
       path: /network/contacts
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new contact object
       request:
         name: CreateContact
@@ -17415,6 +17662,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single contact.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -17454,6 +17703,8 @@ service:
       path: /network/contacts/{id}
       method: PATCH
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -17638,16 +17889,33 @@ docs: Endpoints relating to Contact objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Success",
                 "type": "ContainerListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -17750,6 +18018,9 @@ docs: Endpoints relating to Contact objects
                 "docs": "Success",
                 "type": "ContainerShowResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -17833,6 +18104,8 @@ service:
       docs: >-
         Returns a list of containers. The containers are sorted descending by
         creation date.
+      source:
+        openapi: ../openapi.yml
       display-name: List all containers.
       request:
         name: ContainerListRequest
@@ -17840,11 +18113,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<integer>
             docs: >-
@@ -17940,6 +18218,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single container.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -18104,16 +18384,33 @@ docs: Endpoints relating to Container objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Success",
                 "type": "OceanContainerLegsIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ocean_container_legs_show": {
@@ -18170,6 +18467,9 @@ docs: Endpoints relating to Container objects
               "response": {
                 "docs": "Success",
                 "type": "OceanContainerLegsShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -18251,6 +18551,8 @@ service:
       path: /ocean/shipment_container_legs
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: List all container legs
       request:
         name: OceanContainerLegsIndexRequest
@@ -18258,11 +18560,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.leg.id:
             type: optional<integer>
             docs: >-
@@ -18315,6 +18622,8 @@ service:
       path: /ocean/shipment_container_legs/{id}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -18422,16 +18731,33 @@ docs: Endpoints relating to ContainerLeg objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of customs entries",
                 "type": "CustomsEntryIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -18481,6 +18807,9 @@ docs: Endpoints relating to ContainerLeg objects
               "response": {
                 "docs": "Success",
                 "type": "CustomsEntriesShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -18563,6 +18892,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of customs entries.
+      source:
+        openapi: ../openapi.yml
       display-name: List customs entry objects
       request:
         name: CustomsEntryIndexRequest
@@ -18570,11 +18901,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: The unique id for the shipment.
@@ -18613,6 +18949,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single customs entry.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -18707,6 +19045,9 @@ docs: Endpoints relating to Customs Entry objects
                 "docs": "Created",
                 "type": "DocumentsCreateResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "documents_download": {
               "auth": false,
@@ -18727,6 +19068,9 @@ docs: Endpoints relating to Customs Entry objects
               "response": {
                 "docs": "Success",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documents_index": {
@@ -18815,16 +19159,33 @@ docs: Endpoints relating to Customs Entry objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of documents",
                 "type": "DocumentsIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documents_show": {
@@ -18881,6 +19242,9 @@ docs: Endpoints relating to Customs Entry objects
               "response": {
                 "docs": "Success",
                 "type": "DocumentsShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -18985,6 +19349,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of all documents associated with shipments.
+      source:
+        openapi: ../openapi.yml
       display-name: List document objects
       request:
         name: DocumentsIndexRequest
@@ -18992,11 +19358,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<string>
             docs: Filters the list for documents that belong to the given shipment
@@ -19066,6 +19437,8 @@ service:
       method: POST
       auth: false
       docs: Create a new document for this client using the request payload
+      source:
+        openapi: ../openapi.yml
       display-name: Create a document
       request:
         body: root.CreateDocument
@@ -19101,6 +19474,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -19144,6 +19519,8 @@ service:
       docs: >-
         Retrieves the contents of a specified file. Returns the file as a stream
         of bytes.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -19241,6 +19618,9 @@ docs: Endpoints relating to Document objects
               "response": {
                 "docs": "Success",
                 "type": "EventsIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "events_show": {
@@ -19362,6 +19742,9 @@ docs: Endpoints relating to Document objects
               "response": {
                 "docs": "Success",
                 "type": "EventsShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -19493,6 +19876,8 @@ service:
       docs: >-
         Returns a list of all events delivered to any webhook registered by this
         client
+      source:
+        openapi: ../openapi.yml
       display-name: List all webhook events
       request:
         name: EventsIndexRequest
@@ -19545,6 +19930,8 @@ service:
       method: GET
       auth: false
       docs: Returns the webhook event with ID ":id"
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -19977,10 +20364,24 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -19991,6 +20392,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "response": {
                 "docs": "collection of invoices",
                 "type": "InvoiceIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -20252,6 +20656,9 @@ Other details about this invoice",
                 "docs": "Success",
                 "type": "InvoicesShowResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20369,6 +20776,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of invoices.
+      source:
+        openapi: ../openapi.yml
       display-name: List all invoices
       request:
         name: InvoiceIndexRequest
@@ -20376,11 +20785,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<literal<"due_date">>
             docs: Sort results by the specified field.
@@ -20651,6 +21065,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single invoice
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -20955,16 +21371,33 @@ docs: Endpoints relating to Invoice objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of locations",
                 "type": "LocationIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_location_create": {
@@ -21058,11 +21491,15 @@ docs: Endpoints relating to Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateLocation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The created location",
                 "type": "NetworkLocationCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "network_location_show": {
@@ -21134,6 +21571,9 @@ docs: Endpoints relating to Invoice objects
               "response": {
                 "docs": "Success",
                 "type": "NetworkLocationShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -21228,11 +21668,15 @@ docs: Endpoints relating to Invoice objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateLocation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success",
                 "type": "LocationUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -21357,6 +21801,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of location objects in the network.
+      source:
+        openapi: ../openapi.yml
       display-name: List of location objects
       request:
         name: LocationIndexRequest
@@ -21364,11 +21810,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.ref:
             type: optional<string>
             docs: The ref for the location.
@@ -21442,6 +21893,8 @@ service:
       path: /network/locations
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create and return a new location
       request:
         name: CreateLocation
@@ -21518,6 +21971,8 @@ service:
       method: GET
       auth: false
       docs: Retrieves the details of a single location
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -21572,6 +22027,8 @@ service:
       path: /network/locations/{id}
       method: PATCH
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -21772,16 +22229,33 @@ docs: Endpoints relating to Location objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of ports",
                 "type": "PortsIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -21864,6 +22338,8 @@ service:
       path: /ports
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: List of ports
       request:
         name: PortsIndexRequest
@@ -21871,11 +22347,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           f.port_type:
             type: optional<PortsIndexRequestFPortType>
             docs: Filter by the type of port. Ports can have more than one type
@@ -22071,11 +22552,15 @@ docs: Endpoints relating to Ports objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateProduct",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "ProductCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "index": {
@@ -22162,6 +22647,9 @@ docs: Endpoints relating to Ports objects
                 "docs": "Success",
                 "type": "ProductIndexResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "show": {
               "auth": false,
@@ -22231,6 +22719,9 @@ docs: Endpoints relating to Ports objects
               "response": {
                 "docs": "Success",
                 "type": "ProductShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -22343,11 +22834,15 @@ docs: Endpoints relating to Ports objects
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateProduct",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Updated",
                 "type": "ProductUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -22470,6 +22965,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of all products belonging to this client
+      source:
+        openapi: ../openapi.yml
       display-name: List all products for a client
       request:
         name: ProductIndexRequest
@@ -22536,6 +23033,8 @@ service:
       method: POST
       auth: false
       docs: Create a new product for this client using the request payload
+      source:
+        openapi: ../openapi.yml
       display-name: Create a product
       request:
         name: CreateProduct
@@ -22622,6 +23121,8 @@ service:
       method: GET
       auth: false
       docs: Returns the client's product with this ID
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -22669,6 +23170,8 @@ service:
       method: PATCH
       auth: false
       docs: Update this product to represent the request payload
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -23054,6 +23557,9 @@ docs: Endpoints relating to Product objects
                 "docs": "The created purchase order",
                 "type": "root.PurchaseOrder",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "purchase_order_index": {
               "auth": false,
@@ -23355,10 +23861,24 @@ docs: Endpoints relating to Product objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field (only `id` is supported at this time)",
@@ -23369,6 +23889,9 @@ docs: Endpoints relating to Product objects
               "response": {
                 "docs": "collection of purchase orders",
                 "type": "PurchaseOrderIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "purchase_order_show": {
@@ -23518,6 +24041,9 @@ docs: Endpoints relating to Product objects
               "response": {
                 "docs": "Success",
                 "type": "PurchaseOrderShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "purchase_order_update": {
@@ -23744,6 +24270,9 @@ docs: Endpoints relating to Product objects
                 "docs": "The update purchase order",
                 "type": "root.PurchaseOrder",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -23894,6 +24423,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of purchase orders
+      source:
+        openapi: ../openapi.yml
       display-name: List all purchase orders
       request:
         name: PurchaseOrderIndexRequest
@@ -23901,11 +24432,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<literal<"id">>
             docs: >-
@@ -24135,6 +24671,8 @@ service:
       path: /purchase_orders
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create and return a purchase order
       request:
         body: root.CreateOrUpdatePurchaseOrder
@@ -24355,6 +24893,8 @@ service:
       auth: false
       docs: |
         Retrieves the details of a single purchase order.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -24470,6 +25010,8 @@ service:
       path: /purchase_orders/{id}
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -24823,16 +25365,33 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive)",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "collection of purchase order line items",
                 "type": "PurchaseOrderLineItemIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "purchase_order_line_item_show": {
@@ -25020,6 +25579,9 @@ docs: >-
                 "docs": "collection of purchase order line items",
                 "type": "PurchaseOrderLineItemShowResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -25118,6 +25680,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of purchase order line items
+      source:
+        openapi: ../openapi.yml
       display-name: List all purchase order line items.
       request:
         name: PurchaseOrderLineItemIndexRequest
@@ -25125,11 +25689,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive)
+            validation:
+              min: 1
+              max: 100
           direction:
             type: optional<PurchaseOrderLineItemIndexRequestDirection>
             docs: Set sort order. Allows "asc"(ascending) or "desc" (descending)
@@ -25255,6 +25824,8 @@ service:
       method: GET
       auth: false
       docs: Returns the details of a purchase order line item
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -25835,10 +26406,24 @@ docs: >-
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "sort": {
                     "docs": "Sort results by the specified field.",
@@ -25849,6 +26434,9 @@ docs: >-
               "response": {
                 "docs": "collection of shipments",
                 "type": "ShipmentIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "shipments_shareable": {
@@ -25906,11 +26494,15 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ShipmentsShareableRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "collection of shipments shareable status url",
                 "type": "ShipmentsShareableResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "show": {
@@ -26242,6 +26834,9 @@ docs: >-
               "response": {
                 "docs": "Success",
                 "type": "ShipmentShowResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -26584,11 +27179,15 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateShipment",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "The updated shipment",
                 "type": "ShipmentUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -26785,6 +27384,8 @@ service:
       method: GET
       auth: false
       docs: Returns a list of shipments.
+      source:
+        openapi: ../openapi.yml
       display-name: List all shipments
       request:
         name: ShipmentIndexRequest
@@ -26792,11 +27393,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           sort:
             type: optional<ShipmentIndexRequestSort>
             docs: Sort results by the specified field.
@@ -27171,6 +27777,8 @@ service:
       auth: false
       docs: |
         Retrieves the details of a single shipment.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -27429,6 +28037,8 @@ service:
       path: /shipments/{id}
       method: PATCH
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer
@@ -27701,6 +28311,8 @@ service:
       method: POST
       auth: false
       docs: Returns a list of shipments status shareable url
+      source:
+        openapi: ../openapi.yml
       display-name: Create shareable URLs for shipments
       request:
         name: ShipmentsShareableRequest
@@ -27932,16 +28544,33 @@ docs: Endpoints relating to Shipment objects
                   "page": {
                     "docs": "Page number of the page to retrieve",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per": {
                     "docs": "Count of items in each page. Should be between 1 and 100 (inclusive).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Success",
                 "type": "ShipmentLegIndexResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "shipment_leg_show": {
@@ -28147,6 +28776,9 @@ docs: Endpoints relating to Shipment objects
                 "docs": "Success",
                 "type": "ShipmentLegShowResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -28230,6 +28862,8 @@ service:
       docs: >-
         Returns a list of shipment route legs. The legs are sorted descending by
         creation date.
+      source:
+        openapi: ../openapi.yml
       display-name: List all shipment route legs
       request:
         name: ShipmentLegIndexRequest
@@ -28237,11 +28871,16 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the page to retrieve
+            validation:
+              min: 1
           per:
             type: optional<integer>
             docs: >-
               Count of items in each page. Should be between 1 and 100
               (inclusive).
+            validation:
+              min: 1
+              max: 100
           f.shipment.id:
             type: optional<integer>
             docs: Only return legs for the shipment specified by this id.
@@ -28376,6 +29015,8 @@ service:
       path: /shipment_legs/{id}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: integer

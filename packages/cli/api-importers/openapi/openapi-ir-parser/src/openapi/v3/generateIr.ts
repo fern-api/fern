@@ -91,7 +91,7 @@ export function generateIr({
         source,
         namespace
     });
-    const variables = getVariableDefinitions(openApi);
+    const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
@@ -190,7 +190,7 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants);
+    const exampleTypeFactory = new ExampleTypeFactory(schemasWithDiscriminants, context);
 
     const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
         const extensionExamples = webhookWithExample.examples;
@@ -224,7 +224,7 @@ export function generateIr({
         };
     });
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context.logger);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
@@ -465,7 +465,10 @@ function maybeAddBackDiscriminantsFromSchemas(
                         ...property,
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
-                            generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            generatedName: getGeneratedTypeName(
+                                [schema.generatedName, discriminantValue],
+                                context.options.preserveSchemaIds
+                            ),
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,

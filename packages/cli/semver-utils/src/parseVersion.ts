@@ -1,9 +1,23 @@
 const POST_RELEASE_COMMIT_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-([0-9]+)-([a-z0-9])+$/;
-const POST_RC_COMMIT_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)-([0-9]+)-([a-z0-9])+$/;
-const RC_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/;
+const POST_RC_COMMIT_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc[.-]?([0-9]+)-([0-9]+)-([a-z0-9])+$/;
+const RC_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc[.-]?([0-9]+)$/;
 const RELEASE_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)$/;
+const ALPHA_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-alpha[.-]?([0-9]+)$/;
+const BETA_VERSION_REGEX = /^([0-9]+)\.([0-9]+)\.([0-9]+)-beta[.-]?([0-9]+)$/;
 
-export type ParsedVersion = Release | PostReleaseCommit | ReleaseCandidate | PostReleaseCandidateCommit;
+export interface BaseVersion {
+    major: number;
+    minor: number;
+    patch: number;
+}
+
+export type ParsedVersion =
+    | Release
+    | PostReleaseCommit
+    | ReleaseCandidate
+    | PostReleaseCandidateCommit
+    | AlphaRelease
+    | BetaRelease;
 
 export interface ReleaseCandidate extends BaseVersion {
     type: "rc";
@@ -25,13 +39,54 @@ export interface PostReleaseCommit extends BaseVersion {
     commitIndex: number;
 }
 
-export interface BaseVersion {
-    major: number;
-    minor: number;
-    patch: number;
+export interface AlphaRelease extends BaseVersion {
+    type: "alpha";
+    index: number;
+}
+export interface BetaRelease extends BaseVersion {
+    type: "beta";
+    index: number;
 }
 
 export function parseVersion(versionString: string): ParsedVersion {
+    const alphaMatch = versionString.match(ALPHA_VERSION_REGEX);
+    if (alphaMatch != null) {
+        const [_, major, minor, patch, index] = alphaMatch;
+        const parsedMajor = parseNumber(major);
+        const parsedMinor = parseNumber(minor);
+        const parsedPatch = parseNumber(patch);
+        const parsedIndex = parseNumber(index);
+        if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedIndex == null) {
+            throw new Error("Cannot parse alpha version: " + versionString);
+        }
+        return {
+            type: "alpha",
+            major: parsedMajor,
+            minor: parsedMinor,
+            patch: parsedPatch,
+            index: parsedIndex
+        };
+    }
+
+    const betaMatch = versionString.match(BETA_VERSION_REGEX);
+    if (betaMatch != null) {
+        const [_, major, minor, patch, index] = betaMatch;
+        const parsedMajor = parseNumber(major);
+        const parsedMinor = parseNumber(minor);
+        const parsedPatch = parseNumber(patch);
+        const parsedIndex = parseNumber(index);
+        if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedIndex == null) {
+            throw new Error("Cannot parse beta version: " + versionString);
+        }
+        return {
+            type: "beta",
+            major: parsedMajor,
+            minor: parsedMinor,
+            patch: parsedPatch,
+            index: parsedIndex
+        };
+    }
+
     const postReleaseCommitMatch = versionString.match(POST_RELEASE_COMMIT_VERSION_REGEX);
     if (postReleaseCommitMatch != null) {
         const [_, major, minor, patch, commitIndex] = postReleaseCommitMatch;

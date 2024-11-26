@@ -36,7 +36,11 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostV1UsersRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -75,6 +79,8 @@
       path: /v1/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostV1UsersRequest
         body:

@@ -80,7 +80,8 @@ export function validateExampleEndpointCallParameters<T>({
                             workspace,
                             typeResolver,
                             exampleResolver,
-                            breadcrumbs
+                            breadcrumbs,
+                            depth: 0
                         }).map((val): RuleViolation => {
                             return { severity: "error", message: val.message };
                         })

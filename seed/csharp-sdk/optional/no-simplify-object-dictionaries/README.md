@@ -19,7 +19,15 @@ Instantiate and use the client with the following:
 using SeedObjectsWithImports;
 
 var client = new SeedObjectsWithImportsClient();
-await client.Optional.SendOptionalBodyAsync(null);
+await client.Optional.SendOptionalBodyAsync(
+    new Dictionary<string, object>()
+    {
+        {
+            "string",
+            new Dictionary<object, object?>() { { "key", "value" } }
+        },
+    }
+);
 ```
 
 ## Exception Handling

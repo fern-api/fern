@@ -5,7 +5,7 @@ package stream
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/stream-go/v2/core"
+	internal "github.com/fern-api/stream-go/v2/internal"
 )
 
 type Generateequest struct {
@@ -77,7 +77,21 @@ type StreamResponse struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (s *StreamResponse) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *StreamResponse) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
 }
 
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
@@ -91,24 +105,22 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *StreamResponse) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

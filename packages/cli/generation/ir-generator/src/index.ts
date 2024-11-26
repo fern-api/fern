@@ -36,3 +36,5 @@ export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/pars
 export { IdGenerator } from "./IdGenerator";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
 export { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
+export { getEndpointPathParameters } from "./utils/getEndpointPathParameters";
+export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";

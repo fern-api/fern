@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { DynamicSnippetsTestSuite } from "@fern-api/dynamic-snippets";
+import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";

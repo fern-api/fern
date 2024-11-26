@@ -4,7 +4,6 @@ import { Project } from "@fern-api/project-loader";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";
-import { convertIrToDynamicSnippetsIr } from "@fern-api/dynamic-snippets";
 
 export async function generateDynamicIrForWorkspaces({
     project,
@@ -42,12 +41,12 @@ export async function generateDynamicIrForWorkspaces({
                     readme: undefined
                 });
 
-                const dynamicIntermediateRepresentation = await convertIrToDynamicSnippetsIr(
-                    intermediateRepresentation
-                );
+                if (intermediateRepresentation.dynamic == null) {
+                    throw new Error("Internal error; dynamic IR was not generated");
+                }
 
                 const irOutputFilePath = path.resolve(irFilepath);
-                await streamObjectToFile(AbsoluteFilePath.of(irOutputFilePath), dynamicIntermediateRepresentation);
+                await streamObjectToFile(AbsoluteFilePath.of(irOutputFilePath), intermediateRepresentation.dynamic);
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

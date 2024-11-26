@@ -107,7 +107,10 @@
                       }
                     }
                   }
-                ]
+                ],
+                "extraProperties": {
+                  "type": "unknown"
+                }
               }
             }
           },

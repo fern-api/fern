@@ -4423,11 +4423,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TenantCreateBulkOperation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TenantCreateBulkOperationResult",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "bulk_create_users": {
@@ -4490,11 +4494,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserCreateBulkOperation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.UserCreateBulkOperationResult",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "bulk_delete_tenants": {
@@ -4544,11 +4552,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TenantDeleteBulkOperation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TenantDeleteBulkOperationResult",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "bulk_delete_users": {
@@ -4598,11 +4610,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserDeleteBulkOperation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.UserDeleteBulkOperationResult",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "bulk_replace_users": {
@@ -4665,11 +4681,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserReplaceBulkOperation",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.UserReplaceBulkOperationResult",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -4688,6 +4708,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -4734,6 +4756,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -4780,6 +4804,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -4817,6 +4843,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/bulk/tenants
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -4859,6 +4887,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/bulk/tenants
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -5002,11 +5032,15 @@ If the permission is already granted, it is skipped.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConditionSetRuleCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ConditionSetRuleRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_set_permissions": {
@@ -5062,10 +5096,24 @@ If the permission is already granted, it is skipped.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "permission": {
                     "docs": "optional permission filter, will only return condition set rules granting this permission",
@@ -5084,6 +5132,9 @@ If the permission is already granted, it is skipped.",
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ConditionSetRuleRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "unassign_set_permissions": {
@@ -5151,7 +5202,11 @@ If the permission is not granted, it is skipped.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConditionSetRuleRemove",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -5181,6 +5236,8 @@ service:
 
         - If the `resource_set` filter is present, will only return the
         permissions set of that resource set.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -5214,9 +5271,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRuleRead>
@@ -5246,6 +5308,8 @@ service:
         Grant permissions to a user set *on* a resource set.
 
         If the permission is already granted, it is skipped.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -5325,6 +5389,8 @@ service:
         Revokes permissions to a user set *on* a resource set.
 
         If the permission is not granted, it is skipped.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -5610,11 +5676,15 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConditionSetCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ConditionSetRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_condition_set": {
@@ -5650,6 +5720,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_condition_set": {
@@ -5762,6 +5835,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ConditionSetRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_condition_set_ancestors": {
@@ -5879,16 +5955,33 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ConditionSetRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_condition_set_descendants": {
@@ -6006,16 +6099,33 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ConditionSetRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_condition_sets": {
@@ -6131,10 +6241,24 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the condition sets name or key",
@@ -6149,6 +6273,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "response": {
                 "docs": "Successful Response",
                 "type": "ListConditionSetsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_condition_set": {
@@ -6307,11 +6434,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConditionSetUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ConditionSetRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -6355,6 +6486,8 @@ service:
       method: GET
       auth: true
       docs: Lists all condition sets matching a filter.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6384,9 +6517,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListConditionSetsResponse
@@ -6458,6 +6596,8 @@ service:
       docs: >-
         Creates a new condition set (can be either a user set or a resource
         set).
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6590,6 +6730,8 @@ service:
       method: GET
       auth: true
       docs: Gets a single condition set, if such condition set exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6679,6 +6821,8 @@ service:
 
         This includes any permissions granted to said condition set (i.e: any
         matching condition set rules).
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6710,6 +6854,8 @@ service:
       docs: |-
         Partially updates a condition set.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6827,6 +6973,8 @@ service:
       method: GET
       auth: true
       docs: Gets all ancestors (parent, parent of parent, and so on)
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6850,9 +6998,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
@@ -6924,6 +7077,8 @@ service:
       method: GET
       auth: true
       docs: Gets all descendants (children, children of children, and so on)
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -6947,9 +7102,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ConditionSetRead>
@@ -7168,11 +7328,15 @@ allowed.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnvironmentCopy",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.EnvironmentRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "create_environment": {
@@ -7235,6 +7399,9 @@ allowed.",
                 "docs": "Successful Response",
                 "type": "root.EnvironmentRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete_environment": {
               "auth": true,
@@ -7263,6 +7430,9 @@ allowed.",
                   "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_environment": {
@@ -7320,6 +7490,9 @@ allowed.",
                 "docs": "Successful Response",
                 "type": "root.EnvironmentRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_environments": {
               "auth": true,
@@ -7375,16 +7548,33 @@ allowed.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.EnvironmentRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "stats_environments": {
@@ -7511,6 +7701,9 @@ allowed.",
                 "docs": "Successful Response",
                 "type": "root.EnvironmentStats",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "update_environment": {
               "auth": true,
@@ -7592,11 +7785,15 @@ allowed.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EnvironmentUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.EnvironmentRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -7628,6 +7825,8 @@ service:
       path: /v2/projects/{proj_id}/envs/{env_id}/stats
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7723,6 +7922,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the environments under a given project.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7736,9 +7937,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.EnvironmentRead>
@@ -7768,6 +7974,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new environment under a given project.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7813,6 +8021,8 @@ service:
       docs: >-
         Gets a single environment matching the given env_id, if such environment
         exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7855,6 +8065,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes an environment and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7878,6 +8090,8 @@ service:
       method: PATCH
       auth: true
       docs: Updates the environment.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -7969,6 +8183,8 @@ service:
         Copying environments across projects or organizations is not
 
         allowed.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -8147,11 +8363,15 @@ authenticated actor (i.e: human team member or api key).",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationReadWithAPIKey",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_organization": {
@@ -8176,6 +8396,9 @@ authenticated actor (i.e: human team member or api key).",
                   "docs": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_active_organization": {
@@ -8209,6 +8432,9 @@ if such org exists and can be accessed by the authenticated actor.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_organization": {
@@ -8252,6 +8478,9 @@ if such org exists and can be accessed by the authenticated actor.",
                 "docs": "Successful Response",
                 "type": "root.OrganizationRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_organizations": {
               "auth": true,
@@ -8289,16 +8518,33 @@ authenticated actor (i.e: human team member or api key).",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.OrganizationRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_organization": {
@@ -8360,11 +8606,15 @@ authenticated actor (i.e: human team member or api key).",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -8386,6 +8636,8 @@ service:
       docs: |-
         Lists all the organizations that can be accessed by the
         authenticated actor (i.e: human team member or api key).
+      source:
+        openapi: ../openapi.json
       display-name: List Organizations
       request:
         name: ListOrganizationsRequest
@@ -8393,9 +8645,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.OrganizationRead>
@@ -8419,6 +8676,8 @@ service:
       docs: |-
         Creates a new organization that will be owned by the
         authenticated actor (i.e: human team member or api key).
+      source:
+        openapi: ../openapi.json
       display-name: Create Organization
       request:
         name: OrganizationCreate
@@ -8471,6 +8730,8 @@ service:
         org_id,
 
         if such org exists and can be accessed by the authenticated actor.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         org_id:
           type: string
@@ -8501,6 +8762,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes an organization (Permit.io account) and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         org_id:
           type: string
@@ -8518,6 +8781,8 @@ service:
       method: PATCH
       auth: true
       docs: Updates the organization's profile.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         org_id:
           type: string
@@ -8566,6 +8831,8 @@ service:
         org_id,
 
         if such org exists and can be accessed by the authenticated actor.
+      source:
+        openapi: ../openapi.json
       display-name: Get Active Organization
       response:
         docs: Successful Response
@@ -8703,11 +8970,15 @@ Every project is a separate silo, and has its own unique set of environments and
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ProjectRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_project": {
@@ -8732,6 +9003,9 @@ Every project is a separate silo, and has its own unique set of environments and
                   "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_project": {
@@ -8777,6 +9051,9 @@ Every project is a separate silo, and has its own unique set of environments and
                 "docs": "Successful Response",
                 "type": "root.ProjectRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_projects": {
               "auth": true,
@@ -8816,16 +9093,33 @@ Every project is a separate silo, and has its own unique set of environments and
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ProjectRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_project": {
@@ -8898,11 +9192,15 @@ Every project is a separate silo, and has its own unique set of environments and
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ProjectRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -8922,6 +9220,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the projects under the active organization.
+      source:
+        openapi: ../openapi.json
       display-name: List Projects
       request:
         name: ListProjectsRequest
@@ -8929,9 +9229,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ProjectRead>
@@ -8956,6 +9261,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new project under the active organization.
+      source:
+        openapi: ../openapi.json
       display-name: Create Project
       request:
         name: ProjectCreate
@@ -9020,6 +9327,8 @@ service:
       docs: >-
         Gets a single project matching the given proj_id, if such project
         exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9053,6 +9362,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes the project and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9070,6 +9381,8 @@ service:
       method: PATCH
       auth: true
       docs: Updates the project.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9245,11 +9558,15 @@ to a role as one action.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceActionGroupCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceActionGroupRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_resource_action_group": {
@@ -9290,6 +9607,9 @@ This includes any permissions granted to perform the action.",
                   "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_action_group": {
@@ -9355,6 +9675,9 @@ This includes any permissions granted to perform the action.",
                 "docs": "Successful Response",
                 "type": "root.ResourceActionGroupRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resource_action_groups": {
               "auth": true,
@@ -9418,16 +9741,33 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceActionGroupRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource_action_group": {
@@ -9514,11 +9854,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceActionGroupUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceActionGroupRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -9538,6 +9882,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the action groups defined on the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9561,9 +9907,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceActionGroupRead>
@@ -9596,6 +9947,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new action group that can affect the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9685,6 +10038,8 @@ service:
       docs: >-
         Gets a single action group defined on the resource, if such action
         exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9743,6 +10098,8 @@ service:
       docs: |-
         Deletes the action and all its related data.
         This includes any permissions granted to perform the action.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -9781,6 +10138,8 @@ service:
       docs: |-
         Partially updates the action defined on a resource.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         resource_id:
           type: string
@@ -9964,11 +10323,15 @@ Each (resource, action) pair defines a unique permission level.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceActionCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceActionRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_resource_action": {
@@ -10009,6 +10372,9 @@ This includes any permissions granted to perform the action.",
                   "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_action": {
@@ -10071,6 +10437,9 @@ This includes any permissions granted to perform the action.",
                 "docs": "Successful Response",
                 "type": "root.ResourceActionRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resource_actions": {
               "auth": true,
@@ -10131,16 +10500,33 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceActionRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource_action": {
@@ -10223,11 +10609,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceActionUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceActionRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -10247,6 +10637,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the actions defined on the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10270,9 +10662,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceActionRead>
@@ -10303,6 +10700,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new action that can affect the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10382,6 +10781,8 @@ service:
       method: GET
       auth: true
       docs: Gets a single action defined on the resource, if such action exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10438,6 +10839,8 @@ service:
       docs: |-
         Deletes the action and all its related data.
         This includes any permissions granted to perform the action.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10476,6 +10879,8 @@ service:
       docs: |-
         Partially updates the action defined on a resource.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10641,6 +11046,9 @@ define a boolean `private` attributes that we can now use in our policies.
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete_resource_attribute": {
               "auth": true,
@@ -10689,12 +11097,29 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_attribute": {
@@ -10755,6 +11180,9 @@ attribute to evaluate as `undefined`.",
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resource_attributes": {
               "auth": true,
@@ -10813,16 +11241,33 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceAttributeRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource_attribute": {
@@ -10893,6 +11338,9 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -10911,6 +11359,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the attributes defined on the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -10934,9 +11384,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
@@ -10966,6 +11421,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new attribute as part of the resource definition.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11023,6 +11480,8 @@ service:
       docs: >-
         Gets a single attribute defined on the resource, if such attribute
         exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11080,6 +11539,8 @@ service:
 
         Note: If the attribute is used by policies, removing it will cause the
         attribute to evaluate as `undefined`.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11108,9 +11569,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -11127,6 +11593,8 @@ service:
       docs: |-
         Partially updates the attribute defined on a resource.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11309,11 +11777,15 @@ and will return the existing instance object in the response body.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceInstanceCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceInstanceRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_resource_instance": {
@@ -11348,6 +11820,9 @@ and will return the existing instance object in the response body.",
                   "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_instance": {
@@ -11406,6 +11881,9 @@ and will return the existing instance object in the response body.",
                 "docs": "Successful Response",
                 "type": "root.ResourceInstanceRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resource_instances": {
               "auth": true,
@@ -11462,16 +11940,33 @@ and will return the existing instance object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceInstanceRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource_instance": {
@@ -11545,11 +12040,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceInstanceUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceInstanceRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -11569,6 +12068,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the resource instances defined within an environment.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11587,9 +12088,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceInstanceRead>
@@ -11624,6 +12130,8 @@ service:
 
         If the instance is already created: will return 200 instead of 201,
         and will return the existing instance object in the response body.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11705,6 +12213,8 @@ service:
       method: GET
       auth: true
       docs: Gets a instance, if such instance exists. Otherwise returns 404.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11753,6 +12263,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes the instance and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11784,6 +12296,8 @@ service:
       docs: |-
         Partially updates the instance definition.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -11955,6 +12469,9 @@ If some of the permissions specified are already assigned, will skip them.",
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create_resource_role": {
               "auth": true,
@@ -12061,11 +12578,15 @@ If some of the permissions specified are already assigned, will skip them.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceRoleCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_resource_role": {
@@ -12106,6 +12627,9 @@ This includes any permissions granted to said role.",
                   "docs": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_role": {
@@ -12172,6 +12696,9 @@ This includes any permissions granted to said role.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource_role_ancestors": {
@@ -12243,6 +12770,9 @@ This includes any permissions granted to said role.",
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleList",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get_resource_role_descendants": {
               "auth": true,
@@ -12313,6 +12843,9 @@ This includes any permissions granted to said role.",
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleList",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resource_roles": {
               "auth": true,
@@ -12378,16 +12911,33 @@ This includes any permissions granted to said role.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceRoleRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "remove_permissions_from_resource_role": {
@@ -12467,6 +13017,9 @@ If some of the permissions specified are already unassigned, will skip them.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource_role": {
@@ -12565,11 +13118,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -12589,6 +13146,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the roles defined on the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -12612,9 +13171,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceRoleRead>
@@ -12648,6 +13212,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new role associated with the resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -12744,6 +13310,8 @@ service:
       method: GET
       auth: true
       docs: Gets a single role defined on the resource, if such role exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -12802,6 +13370,8 @@ service:
       docs: |-
         Deletes the role and all its related data.
         This includes any permissions granted to said role.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -12839,6 +13409,8 @@ service:
       docs: |-
         Partially updates the role defined on a resource.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -12936,6 +13508,8 @@ service:
 
         If some of the permissions specified are already assigned, will skip
         them.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -13005,6 +13579,8 @@ service:
 
         If some of the permissions specified are already unassigned, will skip
         them.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -13068,6 +13644,8 @@ service:
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/ancestors
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -13125,6 +13703,8 @@ service:
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/descendants
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -13374,11 +13954,15 @@ A resource may also contain:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_resource": {
@@ -13413,6 +13997,9 @@ A resource may also contain:
                   "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_resource": {
@@ -13514,6 +14101,9 @@ A resource may also contain:
                 "docs": "Successful Response",
                 "type": "root.ResourceRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_resources": {
               "auth": true,
@@ -13605,10 +14195,24 @@ A resource may also contain:
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the resources name or key",
@@ -13619,6 +14223,9 @@ A resource may also contain:
               "response": {
                 "docs": "Successful Response",
                 "type": "ListResourcesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "replace_resource": {
@@ -13759,11 +14366,15 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceReplace",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_resource": {
@@ -13894,11 +14505,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ResourceUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ResourceRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -13942,6 +14557,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the resources defined in your schema.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -13969,9 +14586,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListResourcesResponse
@@ -14024,6 +14646,8 @@ service:
       docs: >-
         Creates a new resource (a type of object you may protect with
         permissions).
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14150,6 +14774,8 @@ service:
       method: GET
       auth: true
       docs: Gets a single resource, if such resource exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14244,6 +14870,8 @@ service:
 
         TODO: we need to decide if we are auto-revoking, or if we are rejecting
         the PUT completely while there are permissions that can be affected.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14358,6 +14986,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes the resource and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14389,6 +15019,8 @@ service:
       docs: |-
         Partially updates the resource definition.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14603,6 +15235,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "docs": "Successful Response",
                 "type": "root.RoleAssignmentRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "bulk_assign_role": {
               "auth": true,
@@ -14654,6 +15289,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "docs": "Successful Response",
                 "type": "root.BulkRoleAssignmentReport",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "bulk_unassign_role": {
               "auth": true,
@@ -14704,6 +15342,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               "response": {
                 "docs": "Successful Response",
                 "type": "root.BulkRoleUnAssignmentReport",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_role_assignments": {
@@ -14761,10 +15402,24 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "optional role filter, will only return role assignments granting this role.",
@@ -14783,6 +15438,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.RoleAssignmentRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "unassign_role": {
@@ -14828,6 +15486,9 @@ If the role is not actually assigned, will return 404.",
                 },
                 "content-type": "application/json",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -14857,6 +15518,8 @@ service:
 
         - If the `role` filter is present, will only return role assignments
         that are granting that role.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14890,9 +15553,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.RoleAssignmentRead>
@@ -14925,6 +15593,8 @@ service:
 
         The tenant defines the scope of the assignment. In other words, the role
         is effective only within the tenant.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -14980,6 +15650,8 @@ service:
 
 
         If the role is not actually assigned, will return 404.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -15010,6 +15682,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -15046,6 +15720,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -15184,6 +15860,9 @@ If some of the permissions specified are already assigned, will skip them.",
                 "docs": "Successful Response",
                 "type": "root.RoleRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "create_role": {
               "auth": true,
@@ -15284,11 +15963,15 @@ If some of the permissions specified are already assigned, will skip them.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RoleCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_role": {
@@ -15324,6 +16007,9 @@ This includes any permissions granted to said role.",
                   "docs": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_role": {
@@ -15384,6 +16070,9 @@ This includes any permissions granted to said role.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_role_ancestors": {
@@ -15449,6 +16138,9 @@ This includes any permissions granted to said role.",
                 "docs": "Successful Response",
                 "type": "root.RoleList",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "get_role_descendants": {
               "auth": true,
@@ -15512,6 +16204,9 @@ This includes any permissions granted to said role.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleList",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_roles": {
@@ -15580,10 +16275,24 @@ This includes any permissions granted to said role.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the roles name or key",
@@ -15594,6 +16303,9 @@ This includes any permissions granted to said role.",
               "response": {
                 "docs": "Successful Response",
                 "type": "ListRolesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "remove_permissions_from_role": {
@@ -15667,6 +16379,9 @@ If some of the permissions specified are already unassigned, will skip them.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_role": {
@@ -15759,11 +16474,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -15807,6 +16526,8 @@ service:
       method: GET
       auth: true
       docs: Lists all tenant roles.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -15831,9 +16552,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListRolesResponse
@@ -15868,6 +16594,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new tenant role.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -15957,6 +16685,8 @@ service:
       method: GET
       auth: true
       docs: Gets a single tenant role, if such role exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16008,6 +16738,8 @@ service:
       docs: |-
         Deletes a tenant role and all its related data.
         This includes any permissions granted to said role.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16039,6 +16771,8 @@ service:
       docs: |-
         Partially updates a tenant role.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16128,6 +16862,8 @@ service:
 
         If some of the permissions specified are already assigned, will skip
         them.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16189,6 +16925,8 @@ service:
 
         If some of the permissions specified are already unassigned, will skip
         them.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16244,6 +16982,8 @@ service:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/ancestors
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16293,6 +17033,8 @@ service:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/descendants
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16451,6 +17193,9 @@ and will return the existing tenant object in the response body.",
                 "docs": "Successful Response",
                 "type": "root.TenantRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete_tenant": {
               "auth": true,
@@ -16484,6 +17229,9 @@ and will return the existing tenant object in the response body.",
                   "docs": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "delete_tenant_user": {
@@ -16523,6 +17271,9 @@ and will return the existing tenant object in the response body.",
                   "docs": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_tenant": {
@@ -16581,6 +17332,9 @@ and will return the existing tenant object in the response body.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TenantRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_tenant_users": {
@@ -16674,10 +17428,24 @@ and will return the existing tenant object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Match users with a specific role",
@@ -16692,6 +17460,9 @@ and will return the existing tenant object in the response body.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultUserRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_tenants": {
@@ -16758,10 +17529,24 @@ and will return the existing tenant object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Text search for the tenant name or key",
@@ -16772,6 +17557,9 @@ and will return the existing tenant object in the response body.",
               "response": {
                 "docs": "Successful Response",
                 "type": "ListTenantsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_tenant": {
@@ -16849,11 +17637,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TenantUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TenantRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -16888,6 +17680,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16917,9 +17711,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
@@ -16968,6 +17767,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the tenants defined within an environment.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -16992,9 +17793,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: ListTenantsResponse
@@ -17032,6 +17838,8 @@ service:
 
         If the tenant is already created: will return 200 instead of 201,
         and will return the existing tenant object in the response body.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17085,6 +17893,8 @@ service:
       method: GET
       auth: true
       docs: Gets a tenant, if such tenant exists. Otherwise returns 404.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17133,6 +17943,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes the tenant and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17164,6 +17976,8 @@ service:
       docs: |-
         Partially updates the tenant definition.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17229,6 +18043,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes a user under a tenant.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17380,6 +18196,9 @@ define a string `owner` attribute that we can now use in our policies.
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete_user_attribute": {
               "auth": true,
@@ -17423,13 +18242,30 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resource_id": "optional<string>",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_user_attribute": {
@@ -17491,6 +18327,9 @@ attribute to evaluate as `undefined`.",
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "list_user_attributes": {
               "auth": true,
@@ -17544,10 +18383,24 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resource_id": "optional<string>",
                 },
@@ -17555,6 +18408,9 @@ attribute to evaluate as `undefined`.",
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ResourceAttributeRead>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_user_attribute": {
@@ -17624,6 +18480,9 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Successful Response",
                 "type": "root.ResourceAttributeRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -17642,6 +18501,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the attributes defined on the User resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17661,9 +18522,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: list<root.ResourceAttributeRead>
@@ -17692,6 +18558,8 @@ service:
       method: POST
       auth: true
       docs: Creates a new attribute for the User resource.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17745,6 +18613,8 @@ service:
       docs: >-
         Gets a single attribute defined on the User resource, if such attribute
         exists.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17799,6 +18669,8 @@ service:
 
         Note: If the attribute is used by policies, removing it will cause the
         attribute to evaluate as `undefined`.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -17823,9 +18695,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       errors:
         - root.UnprocessableEntityError
       examples:
@@ -17840,6 +18717,8 @@ service:
       docs: |-
         Partially updates the attribute defined on the User resource.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18006,11 +18885,15 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserRoleCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.RoleAssignmentRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "create_user": {
@@ -18115,6 +18998,9 @@ and will return the existing user object in the response body.",
                 "docs": "Successful Response",
                 "type": "root.UserRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "delete_user": {
               "auth": true,
@@ -18148,6 +19034,9 @@ and will return the existing user object in the response body.",
                   "docs": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "get_user": {
@@ -18232,6 +19121,9 @@ and will return the existing user object in the response body.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.UserRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "list_users": {
@@ -18320,10 +19212,24 @@ and will return the existing user object in the response body.",
                   "page": {
                     "docs": "Page number of the results to fetch, starting at 1.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "per_page": {
                     "docs": "The number of results per page (max 100).",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "role": {
                     "docs": "Match users with a specific role",
@@ -18338,6 +19244,9 @@ and will return the existing user object in the response body.",
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultUserRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "replace_user": {
@@ -18443,6 +19352,9 @@ and will return the existing user object in the response body.",
                 "docs": "An existing user was replaced",
                 "type": "root.UserRead",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "unassign_role_from_user": {
               "auth": true,
@@ -18501,7 +19413,11 @@ If the role is not actually assigned, will return 404.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserRoleRemove",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "update_user": {
@@ -18615,11 +19531,15 @@ Fields that will be provided will be completely overwritten.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.UserRead",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -18639,6 +19559,8 @@ service:
       method: GET
       auth: true
       docs: Lists all the users defined within an environment.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18663,9 +19585,14 @@ service:
           page:
             type: optional<integer>
             docs: Page number of the results to fetch, starting at 1.
+            validation:
+              min: 1
           per_page:
             type: optional<integer>
             docs: The number of results per page (max 100).
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultUserRead
@@ -18718,6 +19645,8 @@ service:
 
         If the user is already created: will return 200 instead of 201,
         and will return the existing user object in the response body.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18789,6 +19718,8 @@ service:
       method: GET
       auth: true
       docs: Gets a user, if such user exists. Otherwise returns 404.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18850,6 +19781,8 @@ service:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}
       method: PUT
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18927,6 +19860,8 @@ service:
       method: DELETE
       auth: true
       docs: Deletes the user and all its related data.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -18958,6 +19893,8 @@ service:
       docs: |-
         Partially updates the user definition.
         Fields that will be provided will be completely overwritten.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -19049,6 +19986,8 @@ service:
 
         The tenant defines the scope of the assignment. In other words, the role
         is effective only within the tenant.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string
@@ -19120,6 +20059,8 @@ service:
 
 
         If the role is not actually assigned, will return 404.
+      source:
+        openapi: ../openapi.json
       path-parameters:
         proj_id:
           type: string

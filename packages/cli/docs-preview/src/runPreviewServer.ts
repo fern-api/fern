@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { FernNavigation, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { dirname, doesPathExist, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -19,10 +19,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
-        navigation: {
-            landingPage: undefined,
-            items: []
-        },
+        navigation: undefined,
+        root: undefined,
         title: undefined,
         defaultLanguage: undefined,
         announcement: undefined,
@@ -39,8 +37,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         analyticsConfig: undefined,
         integrations: undefined,
         css: undefined,
-        js: undefined,
-        playground: undefined
+        js: undefined
     },
     search: {
         type: "legacyMultiAlgoliaIndex",
@@ -115,7 +112,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;
@@ -142,8 +139,9 @@ export async function runPreviewServer({
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
             if (err instanceof Error) {
+                context.logger.error(err.message);
                 if (err instanceof Error && err.stack) {
-                    context.logger.debug(`${err.message}\n${err.stack}`);
+                    context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
             return docsDefinition;
@@ -191,7 +189,8 @@ export async function runPreviewServer({
                     basePath: instance.pathname
                 },
                 definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+                orgId: FernNavigation.OrgId(initialProject.config.organization)
             };
             res.send(response);
         } catch (error) {

@@ -1,3 +1,3 @@
-FROM node:18.1.0-alpine
+FROM node:20.18-alpine3.20
 COPY dist /dist
 ENTRYPOINT ["node", "/dist/cli.cjs", "openapi"]

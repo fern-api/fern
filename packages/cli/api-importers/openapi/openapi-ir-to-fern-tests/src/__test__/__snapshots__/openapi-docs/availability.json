@@ -94,6 +94,9 @@
                 "docs": "OK",
                 "type": "WholeDeprecatedSettings",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "postSuccessInlineBetaBody": {
               "auth": false,
@@ -121,11 +124,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineBetaBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "postSuccessInlineObjectDeprecation": {
@@ -154,11 +161,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineObjectDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "postSuccessInlinePropertyDeprecation": {
@@ -190,11 +201,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlinePropertyDeprecationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "postSuccessRef": {
@@ -226,11 +241,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Settings",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
                 "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -270,6 +289,8 @@
         /collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -333,6 +354,8 @@
       path: /success-ref
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: Settings
         body:
@@ -354,6 +377,8 @@
       path: /success-inline-property-deprecation
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlinePropertyDeprecationRequest
         body:
@@ -375,6 +400,8 @@
       path: /success-inline-object-deprecation
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlineObjectDeprecationRequest
         body:
@@ -394,6 +421,8 @@
       path: /success-inline-beta-body
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: PostSuccessInlineBetaBodyRequest
         body:

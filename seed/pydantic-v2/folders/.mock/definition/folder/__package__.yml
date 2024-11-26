@@ -1,0 +1,7 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    foo:
+      method: POST
+      path: ""

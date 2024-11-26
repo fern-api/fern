@@ -105,6 +105,15 @@ fixtures:
     - customConfig:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
+  license:
+    - license:
+        type: basic
+        id: MIT
+      outputFolder: mit-license
+    - license:
+        type: custom
+        filename: "../../LICENSE"
+      outputFolder: custom-license
 allowedFailures:
   ## COMPILE FAILURES
   - alias-extends

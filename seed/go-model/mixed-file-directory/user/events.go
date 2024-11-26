@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
-	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type Event struct {
@@ -14,6 +14,20 @@ type Event struct {
 	Name string  `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *Event) GetId() fern.Id {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *Event) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
 }
 
 func (e *Event) GetExtraProperties() map[string]interface{} {
@@ -27,18 +41,16 @@ func (e *Event) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Event(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *Event) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)

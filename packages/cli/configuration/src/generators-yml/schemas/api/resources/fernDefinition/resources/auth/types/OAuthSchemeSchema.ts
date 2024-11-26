@@ -10,7 +10,10 @@ export interface OAuthSchemeSchema extends FernDefinition.fernDefinition.WithDoc
     scopes?: string[];
     "client-id-env"?: string;
     "client-secret-env"?: string;
+    /** Sets the token header value prefix. Defaults to 'Bearer' */
     "token-prefix"?: string;
+    /** Sets the token header key name. Defaults to 'Authorization' */
+    "token-header"?: string;
     "get-token": FernDefinition.fernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: FernDefinition.fernDefinition.OAuthRefreshTokenEndpointSchema;
 }

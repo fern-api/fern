@@ -8765,6 +8765,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "docs": "Request was successful",
                 "type": "AccessGroupsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -8918,6 +8921,8 @@ service:
       docs: >-
         Get a list of access groups for a site <br><br> Required scope |
         `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -9062,11 +9067,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create-folder": {
@@ -9129,11 +9138,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsCreateFolderRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsCreateFolderResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete": {
@@ -9162,6 +9175,9 @@ service:
                   "docs": "Unique identifier for an Asset on a site",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -9221,6 +9237,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-folder": {
               "auth": true,
@@ -9266,6 +9285,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsGetFolderResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -9328,6 +9350,9 @@ service:
                 "docs": "Request was successful",
                 "type": "AssetsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-folders": {
               "auth": true,
@@ -9382,6 +9407,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsListFoldersResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -9452,11 +9480,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AssetsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "AssetsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -10376,6 +10408,8 @@ service:
       method: GET
       auth: true
       docs: List assets for a given site </br></br> Required scope | `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -10431,6 +10465,8 @@ service:
         request to the `uploadUrl` with the `uploadDetails` object as your
         header information in the request. </br></br>  Required scope |
         `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -10496,6 +10532,8 @@ service:
       method: GET
       auth: true
       docs: Get an Asset </br></br> Required scope | `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -10539,6 +10577,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete an Asset
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -10558,6 +10598,8 @@ service:
       method: PATCH
       auth: true
       docs: Update an Asset </br></br> Required scope | `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_id:
           type: string
@@ -10613,6 +10655,8 @@ service:
       docs: >-
         List Asset Folders within a given site <br><br> Required scope |
         `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -10653,6 +10697,8 @@ service:
       docs: >-
         Create an Asset Folder within a given site <br><br> Required scope |
         `assets:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -10703,6 +10749,8 @@ service:
       docs: >-
         Get details about a specific Asset Folder <br><br> Required scope |
         `assets:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         asset_folder_id:
           type: string
@@ -10820,11 +10868,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "CollectionsCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete": {
@@ -10859,6 +10911,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete-collection": {
               "auth": true,
@@ -10886,6 +10941,9 @@ service:
                   "docs": "Unique identifier for a Collection",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -10939,6 +10997,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "CollectionsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -11001,6 +11062,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "CollectionsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -11435,6 +11499,8 @@ service:
       docs: >-
         List of all Collections within a Site. </br></br> Required scope |
         `cms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -11478,6 +11544,8 @@ service:
       method: POST
       auth: true
       docs: Create a Collection for a site. </br></br> Required scope | `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -11536,6 +11604,8 @@ service:
       docs: >-
         Get the full details of a collection from its ID. </br></br> Required
         scope | `cms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -11576,6 +11646,8 @@ service:
       docs: >-
         Delete a collection using its ID. </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -11597,6 +11669,8 @@ service:
       docs: >-
         Delete a custom field in a collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -11699,11 +11773,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FieldsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "FieldsCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -11774,11 +11852,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FieldsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "FieldsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -12053,6 +12135,8 @@ service:
         field types can be created through the API.  This endpoint does not
         currently support bulk creation.  </br></br>  Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -12108,6 +12192,8 @@ service:
       docs: >-
         Update a custom field in a collection.  </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -12244,11 +12330,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create-item-for-multiple-locales": {
@@ -12321,11 +12411,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemForMultipleLocalesRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemForMultipleLocalesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create-item-live": {
@@ -12402,11 +12496,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsCreateItemLiveRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsCreateItemLiveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete-item": {
@@ -12450,6 +12548,9 @@ service:
                   },
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete-item-live": {
               "auth": true,
@@ -12491,6 +12592,9 @@ service:
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get-item": {
@@ -12553,6 +12657,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsGetItemResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-item-live": {
               "auth": true,
@@ -12613,6 +12720,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsGetItemLiveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list-items": {
@@ -12716,6 +12826,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsListItemsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-items-live": {
               "auth": true,
@@ -12818,6 +12931,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ItemsListItemsLiveResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish-item": {
               "auth": true,
@@ -12871,11 +12987,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsPublishItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsPublishItemResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-item": {
@@ -12977,11 +13097,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsUpdateItemRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsUpdateItemResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-item-live": {
@@ -13083,11 +13207,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ItemsUpdateItemLiveRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ItemsUpdateItemLiveResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -14387,6 +14515,8 @@ service:
       docs: >-
         List of all Items within a Collection. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14472,6 +14602,8 @@ service:
         href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales">
         please use the bulk item endpoint.</a> </br></br> Required scope |
         <code>CMS:write</code>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14532,6 +14664,8 @@ service:
       docs: >-
         List of all live Items within a Collection. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14615,6 +14749,8 @@ service:
         live site. </br></br> To create items across multiple locales, <a
         href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales">
         please use this endpoint.</a> </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14675,6 +14811,8 @@ service:
       docs: >-
         Create single Item in a Collection with multiple corresponding locales.
         </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14734,6 +14872,8 @@ service:
       docs: >-
         Get details of a selected Collection Item. </br></br> Required scope |
         `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14784,6 +14924,8 @@ service:
       docs: >-
         Delete an Item from a Collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14819,6 +14961,8 @@ service:
       docs: >-
         Update a selected Item in a Collection. </br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14899,6 +15043,8 @@ service:
       docs: >-
         Get details of a selected Collection live Item. </br></br> Required
         scope | `CMS:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14951,6 +15097,8 @@ service:
         unpublish the item from the live site and set it to draft. This endpoint
         does not currently support bulk deletion.</br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -14987,6 +15135,8 @@ service:
         Update a selected live Item in a Collection. The updates for this Item
         will be published to the live site. </br></br> Required scope |
         `CMS:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -15067,6 +15217,8 @@ service:
       docs: >-
         Publish an item or multiple items. </br></br> Required scope |
         `cms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -15157,6 +15309,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "EcommerceGetSettingsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -15215,6 +15370,8 @@ service:
         Retrieve ecommerce settings for a site.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -15320,6 +15477,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-submission": {
               "auth": true,
@@ -15365,6 +15525,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "FormsGetSubmissionResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -15474,6 +15637,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list-submissions": {
               "auth": true,
@@ -15553,6 +15719,9 @@ service:
                 "docs": "Request was successful",
                 "type": "FormsListSubmissionsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-submission": {
               "auth": true,
@@ -15609,11 +15778,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "FormsUpdateSubmissionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "FormsUpdateSubmissionResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -16469,6 +16642,8 @@ service:
       method: GET
       auth: true
       docs: List forms for a given site </br></br> Required scope | `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -16552,6 +16727,8 @@ service:
       docs: >-
         Get information about a given form</br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_id:
           type: string
@@ -16605,6 +16782,8 @@ service:
       docs: >-
         List form submissions for a given form </br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_id:
           type: string
@@ -16664,6 +16843,8 @@ service:
       docs: >-
         Get information about a given form submission</br></br> Required scope |
         `forms:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_submission_id:
           type: string
@@ -16699,6 +16880,8 @@ service:
       docs: >-
         Update hidden fields on a form submission</br></br> Required scope |
         `forms:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         form_submission_id:
           type: string
@@ -16840,6 +17023,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "InventoryListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -16908,11 +17094,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InventoryUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "InventoryUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -17135,6 +17325,8 @@ service:
         List the current inventory levels for a particular SKU item.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -17176,6 +17368,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         collection_id:
           type: string
@@ -18042,6 +18236,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "OrdersGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "list": {
               "auth": true,
@@ -18517,6 +18714,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "OrdersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "refund": {
               "auth": true,
@@ -18799,11 +18999,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersRefundRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersRefundResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -19097,11 +19301,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-fulfill": {
@@ -19384,11 +19592,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrdersUpdateFulfillRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersUpdateFulfillResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-unfulfill": {
@@ -19660,6 +19872,9 @@ Required scope | `ecommerce:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "OrdersUpdateUnfulfillResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -33375,6 +33590,8 @@ service:
         List all orders created for a given site.
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -33764,6 +33981,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -33987,6 +34206,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -34225,6 +34446,8 @@ service:
         Updates an order's status to fulfilled
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -34455,6 +34678,8 @@ service:
         Updates an order's status to unfulfilled
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -34677,6 +34902,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -35375,6 +35602,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "PagesGetContentResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-metadata": {
               "auth": true,
@@ -35446,6 +35676,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "PagesGetMetadataResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -35562,6 +35795,9 @@ webhooks:
                 "docs": "Request was successful",
                 "type": "PagesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update-page-settings": {
               "auth": true,
@@ -35659,6 +35895,7 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdatePageSettingsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
@@ -35669,6 +35906,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "UpdatePageSettingsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-static-content": {
@@ -35738,6 +35978,7 @@ Required scope | `pages:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateStaticContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "locale": {
                     "docs": "The locale identifier.",
@@ -35748,6 +35989,9 @@ Required scope | `pages:write`
               "response": {
                 "docs": "Request was successful",
                 "type": "UpdateStaticContentResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -36991,6 +37235,8 @@ service:
       method: GET
       auth: true
       docs: List of all pages for a site </br></br> Required scope | `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -37094,6 +37340,8 @@ service:
       docs: >-
         Get metadata information for a single page </br></br> Required scope |
         `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -37156,6 +37404,8 @@ service:
       docs: >-
         Update Page-level metadata, including SEO and Open Graph fields.
         </br></br> Required scope | `pages:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -37250,6 +37500,8 @@ service:
         Locale ID in your request, the response will return any content that can
         be localized from the Primary locale</br></br> Required scope |
         `pages:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -37331,6 +37583,8 @@ service:
 
 
         Required scope | `pages:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -37466,6 +37720,9 @@ webhooks:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-custom-code": {
               "auth": true,
@@ -37514,6 +37771,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsGetCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "upsert-custom-code": {
@@ -37597,11 +37857,15 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsUpsertCustomCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsUpsertCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -37900,6 +38164,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -37940,6 +38206,8 @@ service:
         to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -38004,6 +38272,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote> Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         page_id:
           type: string
@@ -38181,11 +38451,15 @@ Required scope | `ecommerce:write`",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "create-sku": {
@@ -38274,11 +38548,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsCreateSkuRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsCreateSkuResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -38411,6 +38689,9 @@ Required scope | `ecommerce:read`
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -38558,6 +38839,9 @@ Required scope | `ecommerce:read`
                 "docs": "Request was successful",
                 "type": "ProductsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -38685,11 +38969,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update-sku": {
@@ -38789,11 +39077,15 @@ Required scope | `ecommerce:write`
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProductsUpdateSkuRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ProductsUpdateSkuResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -44440,6 +44732,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -44567,6 +44861,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -44674,6 +44970,8 @@ service:
 
 
         Required scope | `ecommerce:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -44770,6 +45068,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -44873,6 +45173,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -44944,6 +45246,8 @@ service:
 
 
         Required scope | `ecommerce:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -45096,6 +45400,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ScriptsListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "register-hosted": {
               "auth": true,
@@ -45173,11 +45480,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsRegisterHostedRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsRegisterHostedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "register-inline": {
@@ -45254,11 +45565,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsRegisterInlineRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "ScriptsRegisterInlineResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -45536,6 +45851,8 @@ service:
         theme="📘">Access to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -45596,6 +45913,8 @@ service:
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     </br></br>  Required scope |
         `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -45672,6 +45991,8 @@ service:
         theme="📘">Access to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -45826,6 +46147,9 @@ service:
                 "docs": "Request was successful",
                 "type": "SitesGetResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-custom-domain": {
               "auth": true,
@@ -45871,6 +46195,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "SitesGetCustomDomainResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -46028,6 +46355,9 @@ service:
                 "docs": "Request was successful",
                 "type": "SitesListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "publish": {
               "auth": true,
@@ -46085,11 +46415,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SitesPublishRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request accepted",
                 "type": "SitesPublishResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -46894,6 +47228,8 @@ service:
       docs: >-
         List of all sites the provided access token is able to access.
         </br></br> Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       display-name: List Sites
       response:
         docs: Request was successful
@@ -47011,6 +47347,8 @@ service:
       method: GET
       auth: true
       docs: Get a site by site id </br></br>  Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -47071,6 +47409,8 @@ service:
       docs: >-
         Get a list of all custom domains related to site. </br></br>  Required
         scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -47106,6 +47446,8 @@ service:
         class="callout-icon">📘</span><p>Endpoint-specific rate
         limit</p></h2><p>This endpoint has a limit of one successful publish
         queue per minute.</p></blockquote>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -47246,6 +47588,9 @@ webhooks:
               "response": {
                 "docs": "A list of site activity logs",
                 "type": "ActivityLogsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -47396,6 +47741,8 @@ service:
       docs: >-
         Retrieve Activity Logs for a specific Site. Requires Site to be on an
         Enterprise plan. </br></br>  Required scope | `site_activity:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -47486,6 +47833,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-custom-code": {
               "auth": true,
@@ -47542,6 +47892,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsGetCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list-custom-code-blocks": {
@@ -47642,6 +47995,9 @@ service:
                 "docs": "Request was successful",
                 "type": "ScriptsListCustomCodeBlocksResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "upsert-custom-code": {
               "auth": true,
@@ -47724,11 +48080,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ScriptsUpsertCustomCodeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "ScriptsUpsertCustomCodeResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -48221,6 +48581,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -48266,6 +48628,8 @@ service:
         to this endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -48326,6 +48690,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -48350,6 +48716,8 @@ service:
         endpoint requires a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `custom_code:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -48453,6 +48821,9 @@ service:
                 "docs": "Request was successful",
                 "type": "TokenAuthorizedByResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "introspect": {
               "auth": true,
@@ -48501,6 +48872,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "TokenIntrospectResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -48684,6 +49058,8 @@ service:
       docs: >-
         Information about the Authorized User <br><br> Required Scope |
         `authorized_user:read`
+      source:
+        openapi: ../openapi.yml
       display-name: Get Authorization User Info
       response:
         docs: Request was successful
@@ -48708,6 +49084,8 @@ service:
         from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>    
+      source:
+        openapi: ../openapi.yml
       display-name: Get Authorization Info
       response:
         docs: Request was successful
@@ -48783,6 +49161,9 @@ service:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -48846,6 +49227,9 @@ service:
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "invite": {
@@ -48932,11 +49316,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersInviteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersInviteResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -49078,6 +49466,9 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "docs": "Request was successful",
                 "type": "UsersListResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "update": {
               "auth": true,
@@ -49166,11 +49557,15 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UsersUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "UsersUpdateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -51196,6 +51591,8 @@ service:
       method: GET
       auth: true
       docs: Get a list of users for a site <br><br> Required scope | `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -51295,6 +51692,8 @@ service:
       method: GET
       auth: true
       docs: Get a User by ID <br><br> Required scope | `users:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -51341,6 +51740,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a User by ID <br><br> Required scope | `users:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -51369,6 +51770,8 @@ service:
 
         <aside class="notice">The <code>email</code> and <code>password</code>
         fields cannot be updated using this endpoint</aside>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -51439,6 +51842,8 @@ service:
         Create and invite a user with an email address. The user will be sent
         and invite via email, which they will need to accept in order to join
         paid Access Groups. <br><br> Required scope | `users:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -51648,11 +52053,15 @@ webhooks:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Request was successful",
                 "type": "WebhooksCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete": {
@@ -51681,6 +52090,9 @@ webhooks:
                   "docs": "Unique identifier for a Webhook",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -51727,6 +52139,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "WebhooksGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -51807,6 +52222,9 @@ webhooks:
               "response": {
                 "docs": "Request was successful",
                 "type": "WebhooksListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -52744,6 +53162,8 @@ service:
       docs: >
         List all App-created Webhooks registered for a given site </br></br>
         Required scope | `sites:read`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -52806,6 +53226,8 @@ service:
         a bearer token from a <a
         href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data
         Client App</a>.</blockquote>     Required scope | `sites:write`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         site_id:
           type: string
@@ -52900,6 +53322,8 @@ service:
       method: GET
       auth: true
       docs: Get a specific Webhook instance
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         webhook_id:
           type: string
@@ -52933,6 +53357,8 @@ service:
       method: DELETE
       auth: true
       docs: Remove a Webhook
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         webhook_id:
           type: string

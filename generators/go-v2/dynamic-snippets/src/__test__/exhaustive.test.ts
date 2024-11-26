@@ -59,3 +59,36 @@ describe("exhaustive", () => {
         expect(response.snippet).toMatchSnapshot();
     });
 });
+
+describe("exhaustive (errors)", () => {
+    it("invalid request body", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("exhaustive.json")),
+            config: buildGeneratorConfig()
+        });
+        const response = await generator.generate({
+            endpoint: {
+                method: "POST",
+                path: "/container/list-of-objects"
+            },
+            auth: AuthValues.bearer({
+                token: "<YOUR_API_KEY>"
+            }),
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: [
+                {
+                    string: true
+                },
+                {
+                    invalid: "two"
+                },
+                {
+                    string: 42
+                }
+            ]
+        });
+        expect(response.errors).toMatchSnapshot();
+    });
+});

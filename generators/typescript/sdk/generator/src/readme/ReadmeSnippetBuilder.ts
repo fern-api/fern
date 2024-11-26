@@ -1,19 +1,11 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    EndpointId,
-    FeatureId,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    ReadmeConfig,
-    SdkRequestWrapper,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, NpmPackage } from "@fern-typescript/commons";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { code, Code } from "ts-poet";
 import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
+import { isNonNullish } from "@fern-api/core-utils";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -32,6 +24,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSES";
+    private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -71,13 +65,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
 
         if (this.isPaginationEnabled) {
-            snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
@@ -88,24 +85,50 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
-    private buildSnippetsForFeature(featureId: FernGeneratorCli.feature.FeatureId): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(featureId);
-        if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
+    private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
+        const endpointIds = this.getEndpointIdsForFeature(featureId);
+        if (endpointIds != null) {
+            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter(isNonNullish);
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+        return undefined;
     }
 
     private buildStreamingSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Streaming);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
+            FernGeneratorCli.StructuredFeatureId.Streaming
+        );
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        const streamingEndpoint = this.getEndpointWithStreaming();
+        if (streamingEndpoint != null) {
+            const snippet = this.getSnippetForEndpointId(streamingEndpoint.endpoint.id);
+            return snippet != null ? [snippet] : [];
+        }
+        return [];
     }
 
     private buildPaginationSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Pagination);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
+            FernGeneratorCli.StructuredFeatureId.Pagination
+        );
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        const paginationEndpoint = this.getEndpointWithPagination();
+        if (paginationEndpoint != null) {
+            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id);
+            return snippet != null ? [snippet] : [];
+        }
+        return [];
     }
 
     private buildUsageSnippets(): string[] {
-        return this.buildSnippetsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
+        const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(FernGeneratorCli.StructuredFeatureId.Usage);
+        if (explicitlyConfigured != null) {
+            return explicitlyConfigured;
+        }
+        return [this.getSnippetForEndpointIdOrThrow(this.defaultEndpointId)];
     }
 
     private buildExceptionHandlingSnippets(): string[] {
@@ -150,6 +173,35 @@ const request: ${requestTypeName} = {
 `
             )
         ];
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(rawResponseEndpoint)}(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+`
+            )
+        );
+    }
+
+    private buildAdditionalHeadersSnippets(): string[] {
+        const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
+        return headerEndpoints.map((headerEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(headerEndpoint)}(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+`
+            )
+        );
     }
 
     private buildRetrySnippets(): string[] {
@@ -250,21 +302,53 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippets;
     }
 
-    private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.snippets[endpointId];
+    private getSnippetForEndpointIdOrThrow(endpointId: EndpointId): string {
+        const snippet = this.getSnippetForEndpointId(endpointId);
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
 
+    private getSnippetForEndpointId(endpointId: EndpointId): string | undefined {
+        return this.snippets[endpointId];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        return this.filterEndpoint((endpointWithFilepath) => {
+            if (endpointWithFilepath.endpoint.pagination != null) {
+                return endpointWithFilepath;
+            }
+            return undefined;
+        });
+    }
+
+    private getEndpointWithStreaming(): EndpointWithFilepath | undefined {
+        return this.filterEndpoint((endpointWithFilepath) => {
+            if (endpointWithFilepath.endpoint.response?.body?.type === "streaming") {
+                return endpointWithFilepath;
+            }
+            return undefined;
+        });
+    }
+
     private getEndpointWithRequest(): EndpointWithRequest | undefined {
-        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+        return this.filterEndpoint((endpointWithFilepath) => {
             if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === "wrapper") {
                 return {
                     endpoint: endpointWithFilepath.endpoint,
                     requestWrapper: endpointWithFilepath.endpoint.sdkRequest.shape
                 };
+            }
+            return undefined;
+        });
+    }
+
+    private filterEndpoint<T>(transform: (endpoint: EndpointWithFilepath) => T | undefined): T | undefined {
+        for (const endpointWithFilepath of Object.values(this.endpoints)) {
+            const result = transform(endpointWithFilepath);
+            if (result !== undefined) {
+                return result;
             }
         }
         return undefined;

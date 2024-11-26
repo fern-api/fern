@@ -49,6 +49,26 @@ types:
       queryParameters: optional<list<types.NamedParameter>>
       headers: optional<list<types.NamedParameter>>
       body: optional<InlinedRequestBody>
+      metadata: optional<InlinedRequestMetadata>
+
+  InlinedRequestMetadata:
+    properties:
+      includePathParameters:
+        docs: |
+          If true, the path parameters should be included as properties in the
+          inlined request type, but only if the generator is explicitly configured
+          to do so.
+
+          By default, the path parameters are generated as positional parameters.
+        type: boolean
+      onlyPathParameters:
+        docs: |
+          If true, the path parameters are the only parameters specified in the
+          inlined request.
+
+          In combination with inludePathParameters, this influences whether or not the
+          inlined request type should be generated at all.
+        type: boolean
 
   InlinedRequestBody:
     union:

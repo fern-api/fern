@@ -11,6 +11,8 @@ service:
         - {}
       method: POST
       path: /pets
+      source:
+        openapi: openapi/openapi.yml
     listPets:
       auth: false
       display-name: List all pets
@@ -28,9 +30,13 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: root.Pets
+      source:
+        openapi: openapi/openapi.yml
     showPetById:
       auth: false
       display-name: Info for a specific pet
@@ -51,5 +57,7 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      source:
+        openapi: openapi/openapi.yml
   source:
     openapi: openapi/openapi.yml

@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { BaseGoCustomConfigSchema } from "@fern-api/go-codegen";
+import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -19,7 +19,8 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     generateOauthClients: false,
     customConfig: {
         packageName: "acme",
-        union: "v1"
+        union: "v1",
+        inlineFileProperties: true
     } as BaseGoCustomConfigSchema
 };
 

@@ -1141,6 +1141,9 @@ types:
                 },
                 "name": "AuthAndRedirectRequest",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1157,6 +1160,8 @@ types:
       method: GET
       auth: false
       docs: Auth and redirect sessions by ID
+      source:
+        openapi: ../openapi.yml
       display-name: Auth and redirect sessions
       request:
         name: AuthAndRedirectRequest
@@ -1210,6 +1215,9 @@ types:
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -1275,6 +1283,9 @@ types:
                 "docs": "OK",
                 "type": "root.ListExtensionV1EnvelopeDefaultMetaWrapper",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getById": {
               "audiences": [
@@ -1339,6 +1350,9 @@ types:
                 "docs": "OK",
                 "type": "root.ExtensionV1EnvelopeDefaultMetaWrapper",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "post": {
               "audiences": [
@@ -1400,11 +1414,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExtensionsPostRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "root.ExtensionV1EnvelopeDefaultMetaWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1424,6 +1442,8 @@ service:
       method: GET
       auth: false
       docs: Get extensions, searching by name
+      source:
+        openapi: ../openapi.yml
       display-name: Get extensions
       request:
         name: ExtensionsGetRequest
@@ -1462,6 +1482,8 @@ service:
       path: /extensions
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create an extension
       request:
         name: ExtensionsPostRequest
@@ -1503,6 +1525,8 @@ service:
       method: DELETE
       auth: false
       docs: Delete an extension by ID
+      source:
+        openapi: ../openapi.yml
       display-name: Delete extensions matching name query
       request:
         name: ExtensionsDeleteRequest
@@ -1520,6 +1544,8 @@ service:
       method: GET
       auth: false
       docs: Get an extension by ID
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -1601,6 +1627,9 @@ service:
                   },
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "audiences": [
@@ -1673,6 +1702,9 @@ service:
                 "docs": "OK",
                 "type": "root.ListProfileV1EnvelopeDefaultMetaWrapper",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getById": {
               "audiences": [
@@ -1739,6 +1771,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "root.ProfileV1EnvelopeDefaultMetaWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "post": {
@@ -1814,11 +1849,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProfileInput",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "root.ProfileV1EnvelopeDefaultMetaWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1838,6 +1877,8 @@ service:
       method: GET
       auth: false
       docs: Get profiles, searching by name or tags
+      source:
+        openapi: ../openapi.yml
       display-name: Get profiles
       request:
         name: ProfilesGetRequest
@@ -1884,6 +1925,8 @@ service:
       path: /profiles
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a profile
       request:
         name: ProfileInput
@@ -1933,6 +1976,8 @@ service:
       method: DELETE
       auth: false
       docs: Delete profiles matching query
+      source:
+        openapi: ../openapi.yml
       display-name: Delete profiles matching query
       request:
         name: ProfilesDeleteRequest
@@ -1956,6 +2001,8 @@ service:
       method: GET
       auth: false
       docs: Get a profile by ID
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -2033,6 +2080,9 @@ service:
                 "docs": "OK",
                 "format": "sse",
                 "type": "SessionsEventsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getinfo": {
@@ -2115,6 +2165,9 @@ service:
               "response": {
                 "docs": "OK",
                 "type": "root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -2215,6 +2268,9 @@ service:
                 "docs": "OK",
                 "type": "root.SessionsWithPaginationEnvelopeDefaultMetaWrapper",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "post": {
               "audiences": [
@@ -2292,11 +2348,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SessionRestInputV1",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "root.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "terminate": {
@@ -2321,6 +2381,9 @@ service:
                   "docs": "UUID of the session to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -2452,6 +2515,8 @@ service:
       method: GET
       auth: false
       docs: Get a list of sessions by ID
+      source:
+        openapi: ../openapi.yml
       display-name: Get a list of sessions
       request:
         name: SessionsListRequest
@@ -2518,6 +2583,8 @@ service:
       path: /sessions
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Create a session
       request:
         name: SessionRestInputV1
@@ -2573,6 +2640,8 @@ service:
       method: GET
       auth: false
       docs: Get a session by ID
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -2631,6 +2700,8 @@ service:
       docs: >-
         Ends a session by ID. If a given session id does not exist within the
         organization, it is ignored.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -2646,6 +2717,8 @@ service:
       method: GET
       auth: false
       docs: Get a session event stream for a given session ID
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -2757,6 +2830,9 @@ service:
                 "docs": "Created",
                 "type": "root.WindowEnvelopeDefaultMetaWrapper",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "prompt-content": {
               "audiences": [
@@ -2846,11 +2922,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PromptContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "root.ModelResponseExternalSessionAiResponseMetadataWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "scrape-content": {
@@ -2928,6 +3008,9 @@ service:
               "response": {
                 "docs": "Created",
                 "type": "root.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "summarize-content": {
@@ -3011,11 +3094,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SummarizeContentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "root.ModelResponseExternalSessionAiResponseMetadataWrapper",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3034,6 +3121,8 @@ service:
       path: /sessions/{sessionId}/windows/{windowId}/get-window-info
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         sessionId:
           type: string
@@ -3094,6 +3183,8 @@ service:
       path: /sessions/{sessionId}/windows/{windowId}/prompt-content
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         sessionId:
           type: string
@@ -3157,6 +3248,8 @@ service:
       path: /sessions/{sessionId}/windows/{windowId}/scrape-content
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         sessionId:
           type: string
@@ -3206,6 +3299,8 @@ service:
       path: /sessions/{sessionId}/windows/{windowId}/summarize-content
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         sessionId:
           type: string

@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.Foo.FindAsync(new FindRequest { PublicProperty = null, PrivateProperty = null });\n"
+                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"optionalString\",\n        PublicProperty = \"publicProperty\",\n        PrivateProperty = 1,\n    }\n);\n"
             }
         }
     ]

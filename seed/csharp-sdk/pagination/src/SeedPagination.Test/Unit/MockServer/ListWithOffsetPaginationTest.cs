@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
 
 #nullable enable
 
@@ -42,7 +39,16 @@ public class ListWithOffsetPaginationTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/users")
+                    .WithParam("page", "1")
+                    .WithParam("per_page", "1")
+                    .WithParam("order", "asc")
+                    .WithParam("starting_after", "starting_after")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -50,13 +56,20 @@ public class ListWithOffsetPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithOffsetPaginationAsync(
-            new ListUsersOffsetPaginationRequest(),
+        var pager = Client.Users.ListWithOffsetPaginationAsync(
+            new ListUsersOffsetPaginationRequest
+            {
+                Page = 1,
+                PerPage = 1,
+                Order = Order.Asc,
+                StartingAfter = "starting_after",
+            },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        await foreach (var item in pager)
+        {
+            Assert.That(item, Is.Not.Null);
+            break; // Only check the first item
+        }
     }
 }

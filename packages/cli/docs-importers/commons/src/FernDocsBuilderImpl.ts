@@ -151,6 +151,21 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             })
         );
     }
+
+    public setInstance({ companyName }: { companyName: string }): string {
+        // We may append a suffix to the company name string to make it harder for
+        // other companies to build migrators for our docs. For now, we're not doing
+        // so but we can add that easily in the future.
+        const formattedCompanyString = companyName.toLowerCase().replace(" ", "-");
+
+        const fernDocsUrl = `https://${formattedCompanyString}.docs.buildwithfern.com`;
+
+        this.docsYml.instances.push({
+            url: fernDocsUrl
+        });
+
+        return fernDocsUrl;
+    }
 }
 
 export class TabbedNavigationBuilderImpl implements FernDocsNavigationBuilder {

@@ -29001,6 +29001,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailAccount": {
               "auth": true,
@@ -29964,6 +29967,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "optional<root.Account>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListAccounts": {
               "auth": true,
@@ -30266,6 +30272,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return accounts only for these `link.id`s.",
@@ -30301,6 +30313,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "public_identification_name": {
                     "docs": "Return information only for this type of account ID. For example, CLABE accounts.",
@@ -30319,6 +30338,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.AccountsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchAccounts": {
@@ -31342,6 +31364,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<optional<root.Account>>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveAccounts": {
               "auth": true,
@@ -32319,6 +32344,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<optional<root.Account>>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -32339,6 +32367,8 @@ service:
       docs: >-
         Get a paginated list of all existing accounts in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all accounts
       request:
         name: ListAccountsRequest
@@ -32356,6 +32386,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -32378,6 +32411,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           balance__available:
             type: optional<string>
             docs: >-
@@ -32716,6 +32751,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve accounts for a link
       request:
         body: root.StandardRequest
@@ -33517,6 +33554,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an accounts request
       request:
         body: root.PatchBody
@@ -34362,6 +34401,8 @@ service:
           > - `limit_date`: replaced by the `payment_day ` field.
           > - `no_interest_payment`
           > - `payment_due_day`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -35131,6 +35172,8 @@ service:
       docs: >-
         Delete a specific account and all associated transactions, as well as
         owners, from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -35544,6 +35587,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailBalance": {
               "auth": true,
@@ -35757,6 +35803,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.Balance",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListBalances": {
               "auth": true,
@@ -35935,6 +35984,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return balances only for these `account.id`s.",
@@ -36006,6 +36061,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return balances only for these `link.id`s.",
@@ -36025,6 +36086,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "value_date": {
                     "docs": "Return balances for exactly this date (`YYYY-MM-DD` or full ISO-8601 timestamp).",
@@ -36055,6 +36123,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.BalancesPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchBalances": {
@@ -36256,6 +36327,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Balance>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveBalances": {
@@ -36503,6 +36577,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BalancesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -36517,6 +36592,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Balance>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -36538,6 +36616,8 @@ service:
       docs: >-
         Get a paginated list of all existing balances in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all balances
       request:
         name: ListBalancesRequest
@@ -36555,6 +36635,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -36577,6 +36660,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -36585,6 +36670,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return balances only for these `account.id`s.
@@ -36822,6 +36909,8 @@ service:
       docs: >-
         Retrieve balances from one or more accounts for a specific link within a
         specified date range.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve balances for a link
       request:
         name: BalancesRequest
@@ -37045,6 +37134,8 @@ service:
       docs: >-
         Used to resume a Balance retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a balances request
       request:
         body: root.PatchBody
@@ -37217,6 +37308,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific balance.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -37395,6 +37488,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific balance from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -37703,10 +37798,8 @@ docs: >-
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                       "customer": "customer",
                       "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
                         "country": "BRA",
-                        "number": "45722-0",
+                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                       },
                       "holder": {
                         "information": {
@@ -37747,133 +37840,6 @@ docs: >-
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                       "customer": "customer",
                       "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Info)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "account_type": "CHECKINGS",
-                        "agency": "0444",
-                        "country": "BRA",
-                        "number": "45722-0",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PIX Key)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
-                        "country": "BRA",
-                        "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
-                      },
-                      "holder": {
-                        "information": {
-                          "identifier": "00.000.000/0001-91",
-                          "identifier_type": "CNPJ",
-                          "name": "Music Production Brazil",
-                        },
-                        "type": "BUSINESS",
-                      },
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                    },
-                  },
-                },
-                {
-                  "name": "Organization (PSE)",
-                  "request": {
-                    "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
-                    },
-                    "holder": {
-                      "information": {
-                        "identifier": "00.000.000/0001-91",
-                        "identifier_type": "CNPJ",
-                        "name": "Music Production Brazil",
-                      },
-                      "type": "BUSINESS",
-                    },
-                    "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
-                  },
-                  "response": {
-                    "body": {
-                      "created_at": "2023-02-15T07:52:31Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer": "customer",
-                      "details": {
                         "key": "value",
                       },
                       "holder": {
@@ -37902,6 +37868,9 @@ docs: >-
               "response": {
                 "docs": "OK (Created)",
                 "type": "CreateBankAccountResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailBankAccount": {
@@ -38010,6 +37979,9 @@ docs: >-
               "response": {
                 "docs": "OK",
                 "type": "DetailBankAccountResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListBankAccount": {
@@ -38240,6 +38212,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.BankAccountPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -38304,6 +38279,8 @@ service:
       method: GET
       auth: true
       docs: List all bank accounts associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all bank accounts
       request:
         name: ListBankAccountRequest
@@ -38486,6 +38463,8 @@ service:
       method: POST
       auth: true
       docs: Create a new bank account from which to send or request funds.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new bank account
       request:
         body: CreateBankAccountRequest
@@ -38552,9 +38531,7 @@ service:
               institution: f512d996-583a-4a91-8b5b-eba2e103b068
               details:
                 country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
+                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
               holder:
                 type: BUSINESS
                 information:
@@ -38580,100 +38557,6 @@ service:
               created_at: '2023-02-15T07:52:31Z'
               created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
               customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Info)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                account_type: CHECKINGS
-                agency: '0444'
-                number: 45722-0
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PIX Key)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
-              institution: f512d996-583a-4a91-8b5b-eba2e103b068
-              details:
-                country: BRA
-                pix_key: RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab
-              holder:
-                type: BUSINESS
-                information:
-                  name: Music Production Brazil
-                  identifier_type: CNPJ
-                  identifier: 00.000.000/0001-91
-        - name: Organization (PSE)
-          request:
-            institution: f512d996-583a-4a91-8b5b-eba2e103b068
-            holder:
-              type: BUSINESS
-              information:
-                name: Music Production Brazil
-                identifier_type: CNPJ
-                identifier: 00.000.000/0001-91
-            details:
-              country: BRA
-              account_type: CHECKINGS
-              agency: '0444'
-              number: 45722-0
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2023-02-15T07:52:31Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer: customer
               institution: institution
               number: '******5633'
               holder:
@@ -38689,6 +38572,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific bank account
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -38917,11 +38802,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CategorizationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.Categorization",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -38953,6 +38842,8 @@ service:
         transactions per request.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Categorize transactions
       request:
         name: CategorizationRequest
@@ -39115,12 +39006,12 @@ docs: >-
                       "country": "BRA",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
+                      "customer_type": "BUSINESS",
+                      "email": "finance@musicabrazil.br",
                       "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
+                      "identifier": "00.000.000/0001-91",
+                      "identifier_type": "CNPJ",
+                      "name": "Music Production Brazil",
                       "phone": "3210-9876",
                     },
                   },
@@ -39136,84 +39027,6 @@ docs: >-
                     "identifier_type": "CC",
                     "name": "Carlos Vives",
                     "phone": "3210-9876",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "INDIVIDUAL",
-                      "email": "caetano.veloso@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "23******00",
-                      "identifier_type": "CPF",
-                      "name": "Caetano Veloso",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "OFPI Business",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
-                  },
-                  "response": {
-                    "body": {
-                      "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
-                      "country": "BRA",
-                      "created_at": "2022-02-09T08:45:50Z",
-                      "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
-                      "customer_type": "BUSINESS",
-                      "email": "finance@musicabrazil.br",
-                      "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
-                      "identifier": "00.000.000/0001-91",
-                      "identifier_type": "CNPJ",
-                      "name": "Music Production Brazil",
-                      "phone": "3210-9876",
-                    },
-                  },
-                },
-                {
-                  "name": "PSE Individual",
-                  "request": {
-                    "country": "BRA",
-                    "customer_type": "INDIVIDUAL",
-                    "email": "caetano.veloso@musicabrazil.br",
-                    "identifier": "231.002.999-00",
-                    "identifier_type": "CPF",
-                    "name": "Caetano Veloso",
                   },
                   "response": {
                     "body": {
@@ -39242,6 +39055,9 @@ docs: >-
               "response": {
                 "docs": "OK (Created)",
                 "type": "CreateCustomerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailCustomer": {
@@ -39329,6 +39145,9 @@ docs: >-
               "response": {
                 "docs": "OK",
                 "type": "DetailCustomerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListCustomers": {
@@ -39548,6 +39367,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.CustomerPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -39616,6 +39438,8 @@ service:
       method: GET
       auth: true
       docs: List all customers associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all customers
       request:
         name: ListCustomersRequest
@@ -39803,6 +39627,8 @@ service:
       method: POST
       auth: true
       docs: Create a new customer to send or request funds.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new customer
       request:
         body: CreateCustomerRequest
@@ -39849,12 +39675,12 @@ service:
               id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
               created_at: '2022-02-09T08:45:50Z'
               created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
+              customer_type: BUSINESS
+              name: Music Production Brazil
               country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
+              email: finance@musicabrazil.br
+              identifier: 00.000.000/0001-91
+              identifier_type: CNPJ
               address: Rua de Caetano Veloso 432, 70200 Brasilia
               phone: 3210-9876
         - name: PSE Individual
@@ -39867,69 +39693,6 @@ service:
             identifier_type: CC
             address: Calle Carlos Vives 432, 80300 Bogota
             phone: 3210-9876
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: INDIVIDUAL
-              name: Caetano Veloso
-              country: BRA
-              email: caetano.veloso@musicabrazil.br
-              identifier: 23******00
-              identifier_type: CPF
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: OFPI Business
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
-          response:
-            body:
-              id: 7c2be016-37e3-44e2-8643-db2eb1129a3f
-              created_at: '2022-02-09T08:45:50Z'
-              created_by: 417514fe-50f6-42e9-a3eb-c71da00f014c
-              customer_type: BUSINESS
-              name: Music Production Brazil
-              country: BRA
-              email: finance@musicabrazil.br
-              identifier: 00.000.000/0001-91
-              identifier_type: CNPJ
-              address: Rua de Caetano Veloso 432, 70200 Brasilia
-              phone: 3210-9876
-        - name: PSE Individual
-          request:
-            customer_type: INDIVIDUAL
-            name: Caetano Veloso
-            country: BRA
-            email: caetano.veloso@musicabrazil.br
-            identifier: 231.002.999-00
-            identifier_type: CPF
           response:
             body:
               id: 0110c70a-5faf-4d72-94b6-307473e86af7
@@ -39948,6 +39711,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific customer
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -40088,6 +39853,9 @@ At the moment, the employment records resource is available for:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailEmploymentRecord": {
               "auth": true,
@@ -40191,6 +39959,9 @@ At the moment, the employment records resource is available for:
                 "docs": "Ok",
                 "type": "root.EmploymentRecord",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListEmploymentRecords": {
               "auth": true,
@@ -40269,12 +40040,22 @@ At the moment, the employment records resource is available for:
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.EmploymentRecordsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveEmploymentRecordDetails": {
@@ -40382,6 +40163,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EmploymentRecordRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -40396,6 +40178,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok",
                 "type": "list<root.EmploymentRecord>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -40417,6 +40202,8 @@ service:
       docs: >-
         Get a paginated list of all existing employment records in your Belvo
         account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all employment records
       request:
         name: ListEmploymentRecordsRequest
@@ -40434,6 +40221,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -40490,6 +40280,8 @@ service:
       auth: true
       docs: |
         Retrieve employment record details for an individual.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve employment record details
       request:
         name: EmploymentRecordRequest
@@ -40588,6 +40380,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific employment record.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -40671,6 +40465,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific employment record from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -40852,11 +40648,15 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EyodIncomeVerificationRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "list<root.Income>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -40888,6 +40688,8 @@ service:
         transactions per request.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Verify incomes
       request:
         name: EyodIncomeVerificationRequest
@@ -41197,6 +40999,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailIncome": {
               "auth": true,
@@ -41342,6 +41147,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "list<root.Income>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListIncomes": {
               "auth": true,
@@ -41482,6 +41290,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return incomes for these `account.id`s.",
@@ -41516,12 +41330,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.IncomesPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchIncomes": {
@@ -41684,6 +41508,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Income>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveIncome": {
@@ -41897,6 +41724,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "IncomesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -41911,6 +41739,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.Income",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -41932,6 +41763,8 @@ service:
       docs: >-
         Get a paginated list of all incomes in your Belvo account. By default,
         we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all incomes
       request:
         name: ListIncomesRequest
@@ -41949,6 +41782,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -41971,6 +41807,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return incomes for these `account.id`s.
@@ -42101,6 +41939,8 @@ service:
         specific link. You can receive insights for a period of up to 365 days,
         depending on the transaction history available for each
         [bank](https://developers.belvo.com/docs/institution).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve incomes for a link
       request:
         name: IncomesRequest
@@ -42305,6 +42145,8 @@ service:
       docs: >-
         Used to resume an Income retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an incomes request
       request:
         body: root.PatchBody
@@ -42446,6 +42288,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific income.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -42568,6 +42412,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific income from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -42939,6 +42785,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.Institution",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListInstitutions": {
               "auth": true,
@@ -43133,6 +42982,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "resources__allin": {
                     "docs": "Return institutions that support these resources.",
@@ -43164,6 +43020,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.InstitutionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -43184,6 +43043,8 @@ service:
       docs: >-
         Get a paginated list of all the institutions currently supported by
         Belvo. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all institutions
       request:
         name: ListInstitutionsRequest
@@ -43201,6 +43062,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -43389,6 +43253,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific institution.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -43697,6 +43563,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailPortfolio": {
               "auth": true,
@@ -43861,6 +43730,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "root.InvestmentsPortfolio",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPortfolio": {
               "auth": true,
@@ -44008,6 +43880,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": "optional<string>",
                   "omit": {
@@ -44024,12 +43902,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.InvestmentsPortfoliosPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchPortfolio": {
@@ -44202,6 +44090,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.InvestmentsPortfolio",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrievePortfolio": {
               "auth": true,
@@ -44366,6 +44257,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.InvestmentsPortfolio",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -44387,6 +44281,8 @@ service:
         Get a paginated list of all the existing portfolios (and their
         instruments) in your Belvo account. By default, we return up to 100
         results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all portfolios
       request:
         name: ListPortfolioRequest
@@ -44404,6 +44300,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -44426,6 +44325,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt: optional<string>
           created_at__gte: optional<string>
           created_at__lt: optional<string>
@@ -44540,6 +44441,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve all portfolios for an existing link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve portfolios for a link
       request:
         body: root.StandardRequest
@@ -44678,6 +44581,8 @@ service:
       docs: >-
         Used to resume a portfolio retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a portfolios request
       request:
         body: root.PatchBodyWithoutSaveData
@@ -44821,6 +44726,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific portfolio.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -44962,6 +44869,8 @@ service:
       docs: >-
         Delete a specific investment portfolio and all associated instruments,
         transactions, and owners from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -45310,6 +45219,9 @@ client.connect()
                   "docs": "The `invoice.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailInvoice": {
@@ -46282,6 +46194,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailInvoiceResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListInvoices": {
@@ -47461,6 +47376,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return invoices only for these `link.id`s.",
@@ -47480,6 +47401,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "status": {
                     "docs": "Return invoices with this status. Can be either `Vigente` (valid) or `Cancelado` (cancelled).",
@@ -47526,6 +47454,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.InvoicesResponsePaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchInvoices": {
@@ -47757,6 +47688,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<PatchInvoicesResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveInvoices": {
@@ -48860,6 +48794,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoicesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -48874,6 +48809,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveInvoicesResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -48945,6 +48883,8 @@ service:
       docs: >-
         Get a paginated list of all existing invoices in your Belvo account. By
         default, we return 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all invoices
       request:
         name: ListInvoicesRequest
@@ -48962,6 +48902,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -48984,6 +48927,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -50055,6 +50000,8 @@ service:
         margin-right: 25px"> <strong>Info: </strong> You can ask for up to
         **one** year (365 days) of invoices per request. If you need invoices
         for more than one year, just make another request. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve invoices for a link
       request:
         name: InvoicesRequest
@@ -51005,6 +50952,8 @@ service:
       docs: >-
         Used to resume an Invoice retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an invoices request
       request:
         body: root.PatchBody
@@ -51208,6 +51157,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific invoice.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -52027,6 +51978,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific invoice from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -52345,6 +52298,7 @@ For single links, you have to perform POST calls to an institution **every time*
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChangeAccessMode",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -52359,6 +52313,9 @@ For single links, you have to perform POST calls to an institution **every time*
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DestroyLink": {
@@ -52466,6 +52423,9 @@ client.connect()
                   "docs": "The `link.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailLink": {
@@ -52599,6 +52559,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListLinks": {
@@ -52821,6 +52784,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "refresh_rate": {
                     "docs": "Return links with this refresh rate. Choose between `6h`, `12h`, `24h`, `7d`, or `30d`.",
@@ -52839,6 +52809,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.PaginatedResponseLink",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchLinks": {
@@ -52988,6 +52961,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RegisterLink": {
@@ -53268,6 +53244,7 @@ For a list of standards codes, see the table below.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LinksRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -53282,6 +53259,9 @@ For a list of standards codes, see the table below.
               "response": {
                 "docs": "Created",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "UpdateLink": {
@@ -53496,6 +53476,7 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LinksPutRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -53510,6 +53491,9 @@ Belvo supports a base64 encoded `private_key`. If the `private_key` parameter is
               "response": {
                 "docs": "Ok",
                 "type": "root.Link",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -53531,6 +53515,8 @@ service:
       docs: >-
         Get a paginated list of all the existing links in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all links
       request:
         name: ListLinksRequest
@@ -53548,6 +53534,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -53776,6 +53765,8 @@ service:
         status updates.
 
         </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Register a new link
       request:
         name: LinksRequest
@@ -54117,6 +54108,8 @@ service:
       docs: >-
         Used to resume a Link register session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a links request
       request:
         body: root.PatchBodyWithoutSaveData
@@ -54248,6 +54241,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific link.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54372,6 +54367,8 @@ service:
         href="https://developers.belvo.com/docs/connect-widget"
         target="_blank">Connect Widget</a> to handle updating
         <code>invalid</code> or <code>token_required</code> links. </div>
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54597,6 +54594,8 @@ service:
           > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
           > 
           > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54680,6 +54679,8 @@ service:
 
         ℹ️ **Note**: When you change a link from `single`` to `recurrent`, they
         will only be updated the next day at the scheduled interval.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -54962,6 +54963,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailOwner": {
               "auth": true,
@@ -55102,6 +55106,9 @@ Cancun, COL 10447",
               "response": {
                 "docs": "Ok",
                 "type": "root.Owner",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListOwners": {
@@ -55304,12 +55311,22 @@ Cancun, COL 10447",
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.OwnersPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchOwners": {
@@ -55471,6 +55488,9 @@ Cancun, COL 10447",
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Owner>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveOwners": {
               "auth": true,
@@ -55622,6 +55642,9 @@ Cancun, COL 10447",
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Owner>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -55642,6 +55665,8 @@ service:
       docs: >-
         Get a paginated list of all existing owners in your Belvo account. We
         return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all owners
       request:
         name: ListOwnersRequest
@@ -55659,6 +55684,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -55837,6 +55865,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve owner information from a specific link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve owners for a link
       request:
         body: root.StandardRequest
@@ -55970,6 +56000,8 @@ service:
       docs: >-
         Used to resume an Owner retrieve session that was paused because an MFA
         token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete an owners request
       request:
         body: root.PatchBody
@@ -56110,6 +56142,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific owner.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -56231,6 +56265,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific owner from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -56469,6 +56505,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.PaymentInstitution",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentInstitutions": {
               "auth": true,
@@ -56574,6 +56613,9 @@ docs: >-
                 "docs": "OK",
                 "type": "root.PaymentsInstitutionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -56592,6 +56634,8 @@ service:
       method: GET
       auth: true
       docs: List all available payment institutions.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment institutions
       request:
         name: ListPaymentInstitutionsRequest
@@ -56677,6 +56721,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment institution
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -56930,11 +56976,15 @@ A payment intent captures all payment information (such as the amount to be char
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreatePaymentIntentPse",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK (Created)",
                 "type": "root.PaymentIntentPse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailPaymentIntent": {
@@ -57068,6 +57118,9 @@ A payment intent captures all payment information (such as the amount to be char
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentIntentPse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListPaymentIntents": {
@@ -57277,6 +57330,9 @@ A payment intent captures all payment information (such as the amount to be char
                 "docs": "OK",
                 "type": "root.PaymentIntentPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "PatchPaymentIntent": {
               "auth": true,
@@ -57428,11 +57484,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PatchPaymentIntentPse",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK (Created)",
                 "type": "root.PaymentIntentPse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -57477,6 +57537,8 @@ service:
       method: GET
       auth: true
       docs: List all payment intents associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment intents
       request:
         name: ListPaymentIntentsRequest
@@ -57647,6 +57709,8 @@ service:
       method: POST
       auth: true
       docs: Create a payment intent.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a new payment intent
       request:
         name: CreatePaymentIntentPse
@@ -57806,6 +57870,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment intent.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -57923,6 +57989,8 @@ service:
         intent, check our <a
         href="https://developers.belvo.com/docs/colombia-pse#payment-intents"
         target="_blank">PSE payment initiation</a> guides for  🇨🇴 Colombia.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -58219,6 +58287,9 @@ types:
                 "docs": "OK (Created)",
                 "type": "CreatePaymentlinkResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailCreatePaymentlink": {
               "auth": true,
@@ -58341,6 +58412,9 @@ types:
                 "docs": "OK (Created)",
                 "type": "DetailCreatePaymentlinkResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentLinks": {
               "auth": true,
@@ -58436,6 +58510,13 @@ types:
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 100. If you enter a value greater than 100, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "search": {
                     "docs": "Return results for one or more payment links that match the description you searched for. 
@@ -58455,6 +58536,9 @@ types:
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentLinkPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -58586,6 +58670,8 @@ service:
       docs: >-
         List all payment links associated with your Belvo account. By default,
         we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment links
       request:
         name: ListPaymentLinksRequest
@@ -58603,6 +58689,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 100. If you enter a value greater than 100, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 100
           created_at:
             type: optional<string>
             docs: Return results only for this date (in `YYYY-MM-DD` format).
@@ -58691,6 +58780,8 @@ service:
       method: POST
       auth: true
       docs: Create a new payment link to start a hosted-widget payment.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a payment link
       request:
         body: CreatePaymentlinkRequest
@@ -58792,6 +58883,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a payment link.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         access_token:
           type: string
@@ -58953,6 +59046,9 @@ You can use the Payment Transactions resource in order to get useful information
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentTransaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListPaymentTransactions": {
@@ -59119,6 +59215,9 @@ You can use the Payment Transactions resource in order to get useful information
                 "docs": "OK",
                 "type": "root.PaymentsTransactionsPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -59137,6 +59236,8 @@ service:
       method: GET
       auth: true
       docs: List all payment transactions associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment transactions
       request:
         name: ListPaymentTransactionsRequest
@@ -59279,6 +59380,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -59358,6 +59461,9 @@ docs: >
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailPaymentWebhooks": {
               "auth": true,
@@ -59400,6 +59506,9 @@ docs: >
                 "docs": "OK",
                 "type": "root.PaymentWebhook",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListPaymentWebhooks": {
               "auth": true,
@@ -59438,6 +59547,9 @@ docs: >
               "response": {
                 "docs": "OK",
                 "type": "root.PaymentsWebhooksPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RegisterPaymentWebhook": {
@@ -59505,11 +59617,15 @@ docs: >
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PaymentWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "list<root.PaymentWebhook>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -59529,6 +59645,8 @@ service:
       method: GET
       auth: true
       docs: List all payment webhooks associated with your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: List all payment webhooks
       response:
         docs: OK
@@ -59556,6 +59674,8 @@ service:
       auth: true
       docs: |
         Register a new payments webhook for your Belvo account.
+      source:
+        openapi: ../openapi.yml
       display-name: Register a new payment webhook
       request:
         name: PaymentWebhookRequest
@@ -59609,6 +59729,8 @@ service:
       method: GET
       auth: true
       docs: Get the details about a specific payment webhook.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -59638,6 +59760,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific payment webhook from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -59701,6 +59825,9 @@ docs: >+
                   "docs": "The `transaction.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailReceivableTransaction": {
@@ -59779,6 +59906,9 @@ docs: >+
               "response": {
                 "docs": "Ok",
                 "type": "root.ReceivablesTransaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListReceivableTransactions": {
@@ -59862,6 +59992,12 @@ docs: >+
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__in": {
                     "docs": "Return receivable transactions only for these `account.id`s.",
@@ -59897,6 +60033,12 @@ docs: >+
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -59916,6 +60058,13 @@ docs: >+
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "value_date": {
                     "docs": "Return receivable transactions for exactly this date (`YYYY-MM-DD` or full ISO-8601 timestamp).",
@@ -59946,6 +60095,9 @@ docs: >+
               "response": {
                 "docs": "Ok",
                 "type": "root.ReceivablesTransactionsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveReceivableTransactions": {
@@ -60058,6 +60210,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ReceivableTransactionRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -60072,6 +60225,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.ReceivablesTransaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -60093,6 +60249,8 @@ service:
       docs: >-
         Get a paginated list of all the existing receivable transactions in your
         Belvo account. We return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all receivable transactions
       request:
         name: ListReceivableTransactionsRequest
@@ -60110,6 +60268,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -60132,6 +60293,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -60140,6 +60303,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account__in:
             type: optional<string>
             docs: Return receivable transactions only for these `account.id`s.
@@ -60265,6 +60430,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve all receivable transactions for an existing link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve receivable transactions for a link
       request:
         name: ReceivableTransactionRequest
@@ -60370,6 +60537,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific receivable transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -60433,6 +60602,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific receivable transaction from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -60603,6 +60774,9 @@ client.connect()
                   "docs": "The `recurring-expenses.id` that you want to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailRecurringExpense": {
@@ -60787,6 +60961,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "list<root.RecurringExpenses>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListRecurringExpenses": {
               "auth": true,
@@ -60940,6 +61117,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account_in": {
                     "docs": "Return recurring expenses for these `accound.id`s.",
@@ -60963,6 +61146,12 @@ client.connect()
 ℹ️ We highly recommend adding either the `link.id` or the `account.id` filters in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -60982,12 +61171,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.RecurringExpensesPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchRecurringExpenses": {
@@ -61179,6 +61378,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RecurringExpenses>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveRecurringExpenses": {
@@ -61401,6 +61603,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RecurringExpensesRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -61415,6 +61618,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RecurringExpenses>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -61436,6 +61642,8 @@ service:
       docs: >-
         Get a paginated list of all recurring expenses in your Belvo account. By
         default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all recurring expenses
       request:
         name: ListRecurringExpensesRequest
@@ -61453,6 +61661,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -61475,6 +61686,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -61483,6 +61696,8 @@ service:
 
               ℹ️ We highly recommend adding either the `link.id` or the
               `account.id` filters in order to improve your performance.
+            validation:
+              format: uuid
           account_in:
             type: optional<string>
             docs: Return recurring expenses for these `accound.id`s.
@@ -61625,6 +61840,8 @@ service:
         accounts</b> from a specific link. You can receive insights for a period
         of up to 365 days, depending on the transaction history available for
         each [bank](https://developers.belvo.com/docs/institution).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve recurring expenses for a link
       request:
         name: RecurringExpensesRequest
@@ -61830,6 +62047,8 @@ service:
       docs: >-
         Used to resume an Recurring Expenses retrieve session that was paused
         because an MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a recurring expenses request
       request:
         body: root.PatchBody
@@ -61994,6 +62213,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific recurring expense.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -62150,6 +62371,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific recurring expense from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -62449,6 +62672,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailRiskInsights": {
               "auth": true,
@@ -62650,6 +62876,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "list<root.RiskInsights>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListRiskInsights": {
@@ -62860,6 +63089,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -62879,12 +63114,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.RiskInsightsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchRiskInsights": {
@@ -63105,6 +63350,9 @@ client.connect()
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RiskInsights>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveRiskInsights": {
               "auth": true,
@@ -63317,6 +63565,9 @@ client.connect()
                 "docs": "Ok (when save_data=false)",
                 "type": "list<root.RiskInsights>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -63337,6 +63588,8 @@ service:
       docs: >-
         Get a paginated list of all risk insight analyses in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all risk insights
       request:
         name: ListRiskInsightsRequest
@@ -63354,6 +63607,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -63376,6 +63632,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           id:
             type: optional<string>
             docs: Return information for this `risk-insight.id`.
@@ -63557,6 +63815,8 @@ service:
         If you need to know the currency of the account, just do a GET Details
         to the accounts endpoint (using the ID you receive from the accounts
         response).
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve risk insights for a link
       request:
         body: root.StandardRequest
@@ -63744,6 +64004,8 @@ service:
       docs: >-
         Used to resume an Risk insights retrieve session that was paused because
         an MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a risk insights request
       request:
         body: root.PatchBody
@@ -63938,6 +64200,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific risk insight.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -64113,6 +64377,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific risk insight from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -64349,6 +64615,9 @@ For example:
                 "docs": "Ok",
                 "type": "list<root.SecretKeys>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListSecretKeys": {
               "auth": true,
@@ -64386,6 +64655,9 @@ For example:
                 "docs": "OK",
                 "type": "root.SecretKeysPaginatedResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -64409,6 +64681,8 @@ service:
 
 
           **Note**: We only return the ID of the secret keys.
+      source:
+        openapi: ../openapi.yml
       display-name: List all secret keys
       response:
         docs: OK
@@ -64444,6 +64718,8 @@ service:
           POST https://api.belvo.com/payments/secret-keys/
           Authorization: Basic username:password
           ```
+      source:
+        openapi: ../openapi.yml
       display-name: Request API keys
       response:
         docs: Ok
@@ -64670,6 +64946,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxComplianceStatus": {
               "auth": true,
@@ -64799,6 +65078,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxComplianceStatus",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxComplianceStatus": {
@@ -64962,6 +65244,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -64981,12 +65269,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxComplianceStatusPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxComplianceStatus": {
@@ -65136,6 +65434,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxComplianceStatusRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -65150,6 +65449,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "root.TaxComplianceStatus",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -65171,6 +65473,8 @@ service:
       docs: >-
         Get a paginated list of all existing Tax compliance statuses in your
         Belvo account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax compliance statuses
       request:
         name: ListTaxComplianceStatusRequest
@@ -65188,6 +65492,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -65210,6 +65517,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -65353,6 +65662,8 @@ service:
       docs: >-
         Retrieve the Tax compliance status information for a specific fiscal
         link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax compliance statuses for a link
       request:
         name: TaxComplianceStatusRequest
@@ -65495,6 +65806,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific Tax compliance status.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -65607,6 +65920,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific Tax compliance status from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -65900,6 +66215,9 @@ client.connect()
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxDeclaration": {
               "auth": true,
@@ -66095,6 +66413,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailTaxDeclarationResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxDeclarations": {
@@ -66332,6 +66653,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -66351,6 +66678,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "year": {
                     "docs": "Return tax declarations for this year (`YYYY`).",
@@ -66381,6 +66715,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "ListTaxDeclarationsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxDeclarations": {
@@ -66610,6 +66947,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxDeclarationsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -66624,6 +66962,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveTaxDeclarationsResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -66717,6 +67058,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax declarations in your Belvo
         account. By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax declarations
       request:
         name: ListTaxDeclarationsRequest
@@ -66734,6 +67077,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -66756,6 +67102,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           link__in:
             type: optional<string>
             docs: Return information for these `link.id`s.
@@ -66978,6 +67326,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax declaration information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax declarations for a link
       request:
         name: TaxDeclarationsRequest
@@ -67199,6 +67549,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific Tax declaration.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -67367,6 +67719,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific Tax declaration from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -67552,6 +67906,9 @@ client.tax_retentions.list(params: {
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "DetailTaxRetentions": {
               "auth": true,
@@ -67629,6 +67986,9 @@ client.tax_retentions.list(params: {
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxRetentions",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxRetentions": {
@@ -67729,6 +68089,12 @@ client.tax_retentions.list(params: {
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -67748,12 +68114,22 @@ client.tax_retentions.list(params: {
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxRetentionsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxRetentions": {
@@ -67873,6 +68249,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxRetentionsRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -67887,6 +68264,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.TaxRetentions>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -67908,6 +68288,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax retentions in your Belvo
         account. We return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax retentions
       request:
         name: ListTaxRetentionsRequest
@@ -67925,6 +68307,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -67947,6 +68332,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -68032,6 +68419,8 @@ service:
       docs: >-
         Retrieve tax retention information from a specific link. The maximum
         number of tax retentions that can be returned for a period is 500.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax retentions for a link
       request:
         name: TaxRetentionsRequest
@@ -68145,6 +68534,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax retention.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -68211,6 +68602,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax retention from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -68499,6 +68892,9 @@ client.connect()
                   "docs": "The ID of the tax return you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTaxReturn": {
@@ -69916,6 +70312,9 @@ client.connect()
                 "docs": "Ok",
                 "type": "DetailTaxReturnResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "ListTaxReturns": {
               "auth": true,
@@ -71145,6 +71544,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -71164,6 +71569,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "tipo_declaracion": {
                     "docs": "Return tax returns with this declaration type.",
@@ -71178,6 +71590,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "ListTaxReturnsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxReturns": {
@@ -72948,6 +73363,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<RetrieveTaxReturnsResponseItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -73088,6 +73506,8 @@ service:
         Get a paginated list of all existing tax returns in your Belvo account.
         By default, we return up to 100 results per page. The results will
         include a mix of both monthly and yearly tax returns.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax returns
       request:
         name: ListTaxReturnsRequest
@@ -73105,6 +73525,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -73127,6 +73550,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -74150,6 +74575,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax return information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax returns for a link
       request:
         body: RetrieveTaxReturnsRequestBody
@@ -75611,6 +76038,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax return.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -76702,6 +77131,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax return from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -77038,6 +77469,9 @@ client.connect()
                   "docs": "the `tax-status.id` that you want to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTaxStatus": {
@@ -77391,6 +77825,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "DetailTaxStatusResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTaxStatus": {
@@ -77776,6 +78213,12 @@ client.connect()
 ℹ️ We highly recommend adding the `link.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "link__in": {
                     "docs": "Return information for these `link.id`s.",
@@ -77795,12 +78238,22 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.TaxStatusPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTaxStatus": {
@@ -78183,6 +78636,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaxStatusRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": {
                     "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -78197,6 +78651,9 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "RetrieveTaxStatusResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -78252,6 +78709,8 @@ service:
       docs: >-
         Get a paginated list of all existing tax status in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all tax statuses
       request:
         name: ListTaxStatusRequest
@@ -78269,6 +78728,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -78291,6 +78753,8 @@ service:
 
               ℹ️ We highly recommend adding the `link.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           created_at__gt:
             type: optional<string>
             docs: >-
@@ -78613,6 +79077,8 @@ service:
       method: POST
       auth: true
       docs: Retrieve tax status information for a specific fiscal link.
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve tax statuses for a link
       request:
         name: TaxStatusRequest
@@ -78951,6 +79417,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific tax status.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -79247,6 +79715,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific tax status from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -79594,6 +80064,9 @@ client.connect()
                   "docs": "The `transaction.id` that you want to delete.",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "DetailTransaction": {
@@ -80225,6 +80698,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.Transaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "ListTransactions": {
@@ -80865,6 +81341,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter in order to improve your performance.
 ",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "account__balance__available": {
                     "docs": "Return transactions that have a `account.balance.available` matching exactly this value.",
@@ -81036,6 +81518,12 @@ client.connect()
 ℹ️ We highly recommend adding the `account.id` filter as well in order to improve your performance.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "omit": {
                     "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -81051,6 +81539,13 @@ client.connect()
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 1000,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "reference": {
                     "docs": "Returns transactions with this institution-assigned reference number.",
@@ -81105,6 +81600,9 @@ client.connect()
               "response": {
                 "docs": "Ok",
                 "type": "root.TransactionsPaginatedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "PatchTransactions": {
@@ -81702,6 +82200,9 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Transaction>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "RetrieveTransactions": {
@@ -82318,6 +82819,9 @@ client.connect()
                 "docs": "Ok (when `save_data=false`)",
                 "type": "list<root.Transaction>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "RetrieveTransactions_async": {
               "auth": true,
@@ -82476,6 +82980,9 @@ client.connect()
                 "docs": "Accepted (when `X-Belvo-Request-Mode` is `async`)",
                 "type": "root.AsynchronousAccepted202",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -82496,6 +83003,8 @@ service:
       docs: >-
         Get a paginated list of all existing transactions in your Belvo account.
         By default, we return up to 100 results per page.
+      source:
+        openapi: ../openapi.yml
       display-name: List all transactions
       request:
         name: ListTransactionsRequest
@@ -82513,6 +83022,9 @@ service:
               ℹ️ The minimum number of results returned per page is 1 and the
               maximum is 1000. If you enter a value greater than 1000, our API
               will default to the maximum value (1000).
+            validation:
+              min: 1
+              max: 1000
           omit:
             type: optional<string>
             docs: >-
@@ -82535,6 +83047,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter as well in
               order to improve your performance.
+            validation:
+              format: uuid
           account:
             type: optional<string>
             docs: >
@@ -82543,6 +83057,8 @@ service:
 
               ℹ️ We highly recommend adding the `account.id` filter in order to
               improve your performance.
+            validation:
+              format: uuid
           account__balance__available:
             type: optional<string>
             docs: >-
@@ -83358,6 +83874,8 @@ service:
         you request transactions for the last year and we can only access the
         last six months, we will return the information corresponding to these
         six months of data. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve transactions for a link
       request:
         body: root.TransactionsRequest
@@ -83892,6 +84410,8 @@ service:
         you request transactions for the last year and we can only access the
         last six months, we will return the information corresponding to these
         six months of data. </div>
+      source:
+        openapi: ../openapi.yml
       display-name: Retrieve transactions for a link
       request:
         body: root.TransactionsRequest
@@ -84028,6 +84548,8 @@ service:
       docs: >-
         Used to resume a Transaction retrieve session that was paused because an
         MFA token was required by the institution.
+      source:
+        openapi: ../openapi.yml
       display-name: Complete a transactions request
       request:
         body: root.PatchBody
@@ -84534,6 +85056,8 @@ service:
       method: GET
       auth: true
       docs: Get the details of a specific transaction.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -85060,6 +85584,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific transaction from your Belvo account.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string

@@ -38,11 +38,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
                 "type": "Response",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -75,6 +79,8 @@
       path: /get
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: Request
         body:

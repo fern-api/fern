@@ -126,9 +126,11 @@ module SeedFileUploadClient
     # @param foo [String]
     # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
     #   * :foo (String)
+    # @param foobar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    def with_content_type(file:, foo:, bar:, request_options: nil)
+    def with_content_type(file:, foo:, bar:, foobar: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -143,7 +145,8 @@ module SeedFileUploadClient
           **(request_options&.additional_body_parameters || {}),
           file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
           foo: foo,
-          bar: bar
+          bar: bar,
+          foobar: foobar
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
       end
@@ -275,9 +278,11 @@ module SeedFileUploadClient
     # @param foo [String]
     # @param bar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
     #   * :foo (String)
+    # @param foobar [Hash] Request of type SeedFileUploadClient::Service::MyObject, as a Hash
+    #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
-    def with_content_type(file:, foo:, bar:, request_options: nil)
+    def with_content_type(file:, foo:, bar:, foobar: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -293,7 +298,8 @@ module SeedFileUploadClient
             **(request_options&.additional_body_parameters || {}),
             file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
             foo: foo,
-            bar: bar
+            bar: bar,
+            foobar: foobar
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/with-content-type"
         end

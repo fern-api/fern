@@ -37,6 +37,7 @@ import { ValidGenericRule } from "./rules/valid-generic";
 import { ValidNavigationRule } from "./rules/valid-navigation";
 import { ValidOauthRule } from "./rules/valid-oauth";
 import { ValidPaginationRule } from "./rules/valid-pagination";
+import { ValidPathParametersConfigurationRule } from "./rules/valid-path-parameters-configuration";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
 import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
@@ -89,7 +90,8 @@ export function getAllRules(): Rule[] {
         NoUnusedGenericRule,
         ValidGenericRule,
         CompatibleIrVersionsRule,
-        ContentTypeOnlyForMultipartRule
+        ContentTypeOnlyForMultipartRule,
+        ValidPathParametersConfigurationRule
     ];
 }
 

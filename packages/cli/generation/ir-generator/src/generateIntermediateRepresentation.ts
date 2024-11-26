@@ -7,6 +7,7 @@ import {
     IntermediateRepresentation,
     PathParameterLocation,
     ResponseErrors,
+    SdkConfig,
     ServiceId,
     ServiceTypeReferenceInfo,
     Type,
@@ -50,6 +51,7 @@ import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
 import { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
+import { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 
 export async function generateIntermediateRepresentation({
     fdrApiDefinitionId,
@@ -174,7 +176,8 @@ export async function generateIntermediateRepresentation({
         websocketChannels: {},
         readmeConfig: undefined,
         sourceConfig: undefined,
-        publishConfig: undefined
+        publishConfig: undefined,
+        dynamic: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -488,35 +491,42 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
+    const sdkConfig: SdkConfig = {
+        isAuthMandatory,
+        hasStreamingEndpoints,
+        hasPaginatedEndpoints,
+        hasFileDownloadEndpoints,
+        platformHeaders: {
+            language: "X-Fern-Language",
+            sdkName: "X-Fern-SDK-Name",
+            sdkVersion: "X-Fern-SDK-Version",
+            userAgent:
+                version != null && packageName != null
+                    ? {
+                          header: "User-Agent",
+                          value: `${packageName}/${version}`
+                      }
+                    : undefined
+        }
+    };
+
     const readmeConfig =
         readme != null ? convertReadmeConfig({ readme, services: intermediateRepresentation.services }) : undefined;
 
     const { types, services } = addExtendedPropertiesToIr(intermediateRepresentationForAudiences);
 
-    return {
+    const finalIR = {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         types,
         services,
-        sdkConfig: {
-            isAuthMandatory,
-            hasStreamingEndpoints,
-            hasPaginatedEndpoints,
-            hasFileDownloadEndpoints,
-            platformHeaders: {
-                language: "X-Fern-Language",
-                sdkName: "X-Fern-SDK-Name",
-                sdkVersion: "X-Fern-SDK-Version",
-                userAgent:
-                    version != null && packageName != null
-                        ? {
-                              header: "User-Agent",
-                              value: `${packageName}/${version}`
-                          }
-                        : undefined
-            }
-        },
+        sdkConfig,
         readmeConfig
+    };
+
+    return {
+        ...finalIR,
+        dynamic: await convertIrToDynamicSnippetsIr(finalIR)
     };
 }
 

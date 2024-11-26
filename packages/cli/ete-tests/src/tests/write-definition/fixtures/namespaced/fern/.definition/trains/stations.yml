@@ -61,5 +61,7 @@ service:
       response:
         docs: A list of train stations
         type: GetStationsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
   source:
     openapi: openapi/trains/openapi.yml

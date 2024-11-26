@@ -5,13 +5,20 @@ package basicauthenvironmentvariables
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/basic-auth-environment-variables/fern/core"
+	internal "github.com/basic-auth-environment-variables/fern/internal"
 )
 
 type UnauthorizedRequestErrorBody struct {
 	Message string `json:"message" url:"message"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *UnauthorizedRequestErrorBody) GetMessage() string {
+	if u == nil {
+		return ""
+	}
+	return u.Message
 }
 
 func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface{} {
@@ -25,18 +32,16 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnauthorizedRequestErrorBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

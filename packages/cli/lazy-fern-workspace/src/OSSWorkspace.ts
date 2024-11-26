@@ -64,6 +64,10 @@ export interface SpecImportSettings {
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
     cooerceEnumsToLiterals: boolean;
+    objectQueryParameters: boolean;
+    respectReadonlySchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -99,6 +103,14 @@ export declare namespace OSSWorkspace {
          * Whether or not to cooerce enums to undiscriminated union literals.
          */
         cooerceEnumsToLiterals?: boolean;
+        /*
+         * Whether or not to parse object query parameters.
+         */
+        objectQueryParameters?: boolean;
+        /*
+         * Whether or not to preserve original schema ids.
+         */
+        preserveSchemaIds?: boolean;
     }
 }
 
@@ -106,10 +118,19 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public specs: Spec[];
     public sources: IdentifiableSource[];
 
+    private respectReadonlySchemas: boolean;
+    private onlyIncludeReferencedSchemas: boolean;
+    private inlinePathParameters: boolean;
+
     constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
         this.specs = specs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
+        this.respectReadonlySchemas = this.specs.every((spec) => spec.settings?.respectReadonlySchemas ?? false);
+        this.onlyIncludeReferencedSchemas = this.specs.every(
+            (spec) => spec.settings?.onlyIncludeReferencedSchemas ?? false
+        );
+        this.inlinePathParameters = this.specs.every((spec) => spec.settings?.inlinePathParameters ?? false);
     }
 
     public async getOpenAPIIr(
@@ -123,11 +144,16 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        const optionOverrides = getOptionsOverridesFromSettings(settings);
         return await parse({
             absoluteFilePathToWorkspace: this.absoluteFilePath,
             specs: openApiSpecs,
             taskContext: context,
-            optionOverrides: getOptionsOverridesFromSettings(settings)
+            optionOverrides: {
+                ...optionOverrides,
+                respectReadonlySchemas: this.respectReadonlySchemas,
+                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas
+            }
         });
     }
 
@@ -146,6 +172,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         // Ideally you are still at the individual spec level here, so you can still modify the fern definition
         // file paths with the inputted namespace, however given auth and other shared settings I think we have to
         // resolve to the IR first, and namespace there.
+        const objectQueryParameters = this.specs.every((spec) => spec.settings?.objectQueryParameters);
         const definition = convert({
             authOverrides:
                 this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
@@ -160,7 +187,11 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
+            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
+            objectQueryParameters,
+            respectReadonlySchemas: this.respectReadonlySchemas,
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            inlinePathParameters: this.inlinePathParameters
         });
 
         return {
@@ -274,6 +305,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     }
     if (settings.cooerceEnumsToLiterals) {
         result.cooerceEnumsToLiterals = true;
+    }
+    if (settings.preserveSchemaIds) {
+        result.preserveSchemaIds = true;
     }
     return result;
 }

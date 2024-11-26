@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedMixedFileDirectory\SeedMixedFileDirectory.csproj" />
+        <ProjectReference Include="..\SeedMixedFileDirectory\SeedMixedFileDirectory.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedMixedFileDirectory.Test.Custom.props" Condition="Exists('SeedMixedFileDirectory.Test.Custom.props')" />
 </Project>
