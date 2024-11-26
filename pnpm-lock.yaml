@@ -4047,8 +4047,6 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/cli/dist/local: {}
-
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -6142,6 +6140,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../path-utils
       glob:
         specifier: ^11.0.0
         version: 11.0.0
@@ -6247,6 +6248,30 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/commons/path-utils:
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/core:
     dependencies:

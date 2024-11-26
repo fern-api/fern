@@ -1,0 +1,9 @@
+{
+    "ignores": [
+        "@types/jest",
+        "globals"
+    ],
+    "ignore-patterns": [
+        "lib"
+    ]
+}
