@@ -7,7 +7,7 @@
  *     {
  *         decimal: 2.2,
  *         even: 100,
- *         name: "string...."
+ *         name: "foo"
  *     }
  */
 export interface GetRequest {

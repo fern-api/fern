@@ -245,7 +245,7 @@
             "requestBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "string....",
+              "name": "foo",
               "shape": "SQUARE"
             },
             "requestBodyV3": {
@@ -253,7 +253,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "string....",
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
@@ -261,7 +261,7 @@
             "responseBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "string....",
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
@@ -269,7 +269,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "string....",
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
@@ -353,14 +353,14 @@
             "queryParameters": {
               "decimal": 2.2,
               "even": 100,
-              "name": "string...."
+              "name": "foo"
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
               "decimal": 2.2,
               "even": 100,
-              "name": "string....",
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
@@ -368,7 +368,7 @@
               "value": {
                 "decimal": 2.2,
                 "even": 100,
-                "name": "string....",
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },

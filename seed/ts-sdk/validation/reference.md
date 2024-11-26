@@ -16,7 +16,7 @@
 await client.get({
     decimal: 2.2,
     even: 100,
-    name: "string....",
+    name: "foo",
 });
 ```
 

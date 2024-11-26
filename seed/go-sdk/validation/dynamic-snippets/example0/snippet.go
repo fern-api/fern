@@ -13,7 +13,7 @@ func do() () {
         &fern.CreateRequest{
             Decimal: 2.2,
             Even: 100,
-            Name: "string....",
+            Name: "foo",
             Shape: fern.ShapeSquare,
         },
     )
