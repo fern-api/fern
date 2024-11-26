@@ -101,8 +101,7 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -225,8 +224,7 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {

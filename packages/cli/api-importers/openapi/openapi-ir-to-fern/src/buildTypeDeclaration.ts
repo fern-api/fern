@@ -653,6 +653,12 @@ function convertPropertyTypeReferenceToTypeDefinition({
     }
 }
 
+/**
+ * Returns whether the declaration should be inlined.
+ * If a declaration is nested within another declaration, it should be inlined.
+ * @param declarationDepth Keeps track of how nested the declaration is.
+ * @returns `true` if the declaration should be inlined, `undefined` otherwise.
+ */
 function getInline(declarationDepth: number): boolean | undefined {
     return declarationDepth > 0 ? true : undefined;
 }

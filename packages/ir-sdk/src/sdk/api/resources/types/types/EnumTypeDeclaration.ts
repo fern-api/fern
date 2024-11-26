@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface EnumTypeDeclaration extends FernIr.WithInline {
+export interface EnumTypeDeclaration {
     default: FernIr.EnumValue | undefined;
     values: FernIr.EnumValue[];
 }

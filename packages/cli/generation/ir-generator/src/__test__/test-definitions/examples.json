@@ -153,8 +153,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:BasicType",
@@ -335,8 +334,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Type",
@@ -438,8 +436,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -563,8 +560,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -1010,8 +1006,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -2040,8 +2035,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_commons/types:Metadata",
@@ -2928,8 +2922,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -4023,8 +4016,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:MovieId",
@@ -5720,8 +5712,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_types:Actor",
@@ -6508,8 +6499,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -6669,8 +6659,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -7064,8 +7053,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -7857,8 +7845,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_types:Movie",
@@ -9327,8 +9314,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -9801,8 +9787,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -10604,8 +10589,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:File",
@@ -12632,8 +12616,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -14846,8 +14829,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -15842,8 +15824,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -16170,8 +16151,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_types:ExceptionInfo"
@@ -16759,8 +16739,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -17258,8 +17237,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -17573,8 +17551,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:MigrationStatus"
@@ -17991,8 +17968,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -18296,8 +18272,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Identifier",
@@ -19352,8 +19327,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Type",
@@ -19582,8 +19556,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -19935,8 +19908,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Type",
@@ -21760,8 +21732,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_types:CastMember",

@@ -90,6 +90,7 @@ types:
       examples: optional<list<examples.ExampleTypeSchema>>
       encoding: optional<encoding.EncodingSchema>
       source: optional<source.SourceSchema>
+      inline: optional<boolean>
 
   ### Aliases ####
 
@@ -102,9 +103,7 @@ types:
   #### Objects ####
 
   ObjectSchema:
-    extends:
-      - BaseTypeDeclarationSchema
-      - commons.WithInline
+    extends: BaseTypeDeclarationSchema
     properties:
       extends: optional<ObjectExtendsSchema>
       properties: optional<map<string, ObjectPropertySchema>>
@@ -127,9 +126,7 @@ types:
   #### Enums ####
 
   EnumSchema:
-    extends:
-      - BaseTypeDeclarationSchema
-      - commons.WithInline
+    extends: BaseTypeDeclarationSchema
     properties:
       default: optional<string>
       enum: list<EnumValue>
@@ -186,9 +183,7 @@ types:
       value: string
 
   DiscriminatedUnionSchema:
-    extends:
-      - BaseTypeDeclarationSchema
-      - commons.WithInline
+    extends: BaseTypeDeclarationSchema
     properties:
       discriminant: optional<UnionDiscriminant>
       extends: optional<ObjectExtendsSchema>
@@ -210,9 +205,7 @@ types:
   #### Undiscriminated Union ####
 
   UndiscriminatedUnionSchema:
-    extends:
-      - BaseTypeDeclarationSchema
-      - commons.WithInline
+    extends: BaseTypeDeclarationSchema
     properties:
       discriminated: literal<false>
       union: list<SingleUndiscriminatedUnionTypeSchema>

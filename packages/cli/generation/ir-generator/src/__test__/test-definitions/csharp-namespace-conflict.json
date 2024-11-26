@@ -142,8 +142,7 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -268,8 +267,7 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -663,8 +661,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_a/aa:A",
@@ -1023,8 +1020,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_a/aa:A",
@@ -1150,8 +1146,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {

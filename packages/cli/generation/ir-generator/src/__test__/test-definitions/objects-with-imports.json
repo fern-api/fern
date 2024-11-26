@@ -284,8 +284,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_commons/metadata:Metadata"
@@ -2152,8 +2151,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Node",
@@ -4383,8 +4381,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -5069,8 +5066,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_file:FileInfo"
@@ -6047,8 +6043,7 @@
                         "availability": null,
                         "docs": "A directory (e.g. foo/)."
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -6558,8 +6553,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_file:File",

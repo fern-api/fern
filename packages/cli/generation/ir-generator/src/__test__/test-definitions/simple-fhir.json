@@ -164,8 +164,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Account",
@@ -376,8 +375,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:ResourceList",
@@ -562,8 +560,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:Account",
@@ -1000,8 +997,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -1376,8 +1372,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -1690,8 +1685,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:BaseResource",
@@ -2004,8 +1998,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:BaseResource",

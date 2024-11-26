@@ -84,7 +84,6 @@ types:
       - UNION
       - UNDISCRIMINATED_UNION
   EnumTypeDeclaration:
-    extends: commons.WithInline
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -94,7 +93,6 @@ types:
       name: commons.NameAndWireValue
 
   ObjectTypeDeclaration:
-    extends: commons.WithInline
     properties:
       extends:
         docs: A list of other types to inherit from
@@ -113,7 +111,6 @@ types:
       valueType: TypeReference
 
   UnionTypeDeclaration:
-    extends: commons.WithInline
     properties:
       discriminant: commons.NameAndWireValue
       extends:
@@ -142,7 +139,6 @@ types:
       type: TypeReference
 
   UndiscriminatedUnionTypeDeclaration:
-    extends: commons.WithInline
     properties:
       members: list<UndiscriminatedUnionMember>
   UndiscriminatedUnionMember:

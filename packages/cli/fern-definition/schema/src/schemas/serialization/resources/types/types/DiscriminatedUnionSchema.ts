@@ -10,7 +10,6 @@ import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 import { TypeReferenceSchema } from "./TypeReferenceSchema";
 import { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
-import { WithInline } from "../../commons/types/WithInline";
 
 export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
     serializers.DiscriminatedUnionSchema.Raw,
@@ -22,11 +21,10 @@ export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
         "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         union: core.serialization.record(core.serialization.string(), SingleUnionTypeSchema),
     })
-    .extend(BaseTypeDeclarationSchema)
-    .extend(WithInline);
+    .extend(BaseTypeDeclarationSchema);
 
 export declare namespace DiscriminatedUnionSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw, WithInline.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminant?: UnionDiscriminant.Raw | null;
         extends?: ObjectExtendsSchema.Raw | null;
         "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;

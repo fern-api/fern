@@ -146,8 +146,7 @@
                     "availability": null,
                     "docs": null
                 }
-            ],
-            "inline": null
+            ]
         }
     },
     "apiName": {
@@ -486,8 +485,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_user:UserId"

@@ -203,8 +203,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_union:MyUnion"
@@ -403,8 +402,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -1406,8 +1404,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_union:KeyType"
@@ -1545,8 +1542,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {

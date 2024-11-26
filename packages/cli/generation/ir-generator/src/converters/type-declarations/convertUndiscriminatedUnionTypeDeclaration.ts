@@ -21,7 +21,6 @@ export function convertUndiscriminatedUnionTypeDeclaration({
                 type: file.parseTypeReference(unionMember),
                 docs: unionMember.docs
             };
-        }),
-        inline: union.inline
+        })
     });
 }

@@ -8,9 +8,6 @@ types:
     extends: WithDocs
     properties:
       availability: optional<Availability>
-  WithInline:
-    properties:
-      inline: optional<boolean>
   FernFilepath:
     properties:
       allParts: list<Name>

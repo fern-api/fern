@@ -127,8 +127,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:UserModel",
@@ -439,8 +438,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -594,8 +592,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:MetadataValue"
@@ -688,8 +685,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {

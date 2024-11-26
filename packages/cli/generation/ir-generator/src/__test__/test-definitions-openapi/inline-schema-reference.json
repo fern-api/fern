@@ -128,8 +128,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:Schema1",
@@ -273,8 +272,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -427,8 +425,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:PostRootRequestBarInnerBar"
@@ -564,8 +561,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -718,8 +714,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:PostRootResponseBarInnerBar"
@@ -874,8 +869,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:PostRootResponseBar",
@@ -1012,8 +1006,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1137,8 +1130,7 @@
                         "availability": null,
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -1229,8 +1221,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1321,8 +1312,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1433,8 +1423,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": true
+                ]
             },
             "referencedTypes": [
                 "type_:Schema2TestDiscriminatedUnionZero",
@@ -1528,8 +1517,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1620,8 +1608,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": true
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1732,8 +1719,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": true
+                ]
             },
             "referencedTypes": [
                 "type_:Schema2TestUnionA",
@@ -2056,8 +2042,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Schema2TestEnum",
@@ -4548,68 +4533,6 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:NotFound": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "NotFound",
-                        "camelCase": {
-                            "unsafeName": "notFound",
-                            "safeName": "notFound"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "not_found",
-                            "safeName": "not_found"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "NOT_FOUND",
-                            "safeName": "NOT_FOUND"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "NotFound",
-                            "safeName": "NotFound"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
-                            "wireValue": "message"
-                        },
-                        "typeReference": {
-                            "_type": "optional",
-                            "value": {
-                                "_type": "primitive",
-                                "value": "STRING"
-                            }
-                        }
-                    }
-                ]
-            },
             "type_:GetExampleResponse": {
                 "type": "undiscriminatedUnion",
                 "declaration": {
@@ -4641,15 +4564,476 @@
                 "types": [
                     {
                         "_type": "named",
-                        "value": "type_:NotFound"
-                    },
-                    {
-                        "_type": "named",
                         "value": "type_:Schema1"
                     },
                     {
                         "_type": "named",
                         "value": "type_:Schema2"
+                    }
+                ]
+            },
+            "type_:PostRootRequestBarInnerBar": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootRequestBarInnerBar",
+                        "camelCase": {
+                            "unsafeName": "postRootRequestBarInnerBar",
+                            "safeName": "postRootRequestBarInnerBar"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_request_bar_inner_bar",
+                            "safeName": "post_root_request_bar_inner_bar"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_REQUEST_BAR_INNER_BAR",
+                            "safeName": "POST_ROOT_REQUEST_BAR_INNER_BAR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootRequestBarInnerBar",
+                            "safeName": "PostRootRequestBarInnerBar"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:PostRootRequestBar": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootRequestBar",
+                        "camelCase": {
+                            "unsafeName": "postRootRequestBar",
+                            "safeName": "postRootRequestBar"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_request_bar",
+                            "safeName": "post_root_request_bar"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_REQUEST_BAR",
+                            "safeName": "POST_ROOT_REQUEST_BAR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootRequestBar",
+                            "safeName": "PostRootRequestBar"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "inner_bar",
+                                "camelCase": {
+                                    "unsafeName": "innerBar",
+                                    "safeName": "innerBar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inner_bar",
+                                    "safeName": "inner_bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INNER_BAR",
+                                    "safeName": "INNER_BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InnerBar",
+                                    "safeName": "InnerBar"
+                                }
+                            },
+                            "wireValue": "inner_bar"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:PostRootRequestBarInnerBar"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:PostRootResponseBarInnerBar": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootResponseBarInnerBar",
+                        "camelCase": {
+                            "unsafeName": "postRootResponseBarInnerBar",
+                            "safeName": "postRootResponseBarInnerBar"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_response_bar_inner_bar",
+                            "safeName": "post_root_response_bar_inner_bar"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR",
+                            "safeName": "POST_ROOT_RESPONSE_BAR_INNER_BAR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootResponseBarInnerBar",
+                            "safeName": "PostRootResponseBarInnerBar"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:PostRootResponseBar": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootResponseBar",
+                        "camelCase": {
+                            "unsafeName": "postRootResponseBar",
+                            "safeName": "postRootResponseBar"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_response_bar",
+                            "safeName": "post_root_response_bar"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_RESPONSE_BAR",
+                            "safeName": "POST_ROOT_RESPONSE_BAR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootResponseBar",
+                            "safeName": "PostRootResponseBar"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "inner_bar",
+                                "camelCase": {
+                                    "unsafeName": "innerBar",
+                                    "safeName": "innerBar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inner_bar",
+                                    "safeName": "inner_bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INNER_BAR",
+                                    "safeName": "INNER_BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InnerBar",
+                                    "safeName": "InnerBar"
+                                }
+                            },
+                            "wireValue": "inner_bar"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:PostRootResponseBarInnerBar"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:PostRootResponse": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "PostRootResponse",
+                        "camelCase": {
+                            "unsafeName": "postRootResponse",
+                            "safeName": "postRootResponse"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root_response",
+                            "safeName": "post_root_response"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT_RESPONSE",
+                            "safeName": "POST_ROOT_RESPONSE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRootResponse",
+                            "safeName": "PostRootResponse"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "bar",
+                                "camelCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "bar",
+                                    "safeName": "bar"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BAR",
+                                    "safeName": "BAR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Bar",
+                                    "safeName": "Bar"
+                                }
+                            },
+                            "wireValue": "bar"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:PostRootResponseBar"
+                            }
+                        }
                     }
                 ]
             },
@@ -4746,6 +5130,429 @@
                     }
                 ]
             },
+            "type_:Schema2TestEnum": {
+                "type": "enum",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestEnum",
+                        "camelCase": {
+                            "unsafeName": "schema2TestEnum",
+                            "safeName": "schema2TestEnum"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_enum",
+                            "safeName": "schema2test_enum"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_ENUM",
+                            "safeName": "SCHEMA2TEST_ENUM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestEnum",
+                            "safeName": "Schema2TestEnum"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "values": [
+                    {
+                        "name": {
+                            "originalName": "test1",
+                            "camelCase": {
+                                "unsafeName": "test1",
+                                "safeName": "test1"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test1",
+                                "safeName": "test1"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST1",
+                                "safeName": "TEST1"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Test1",
+                                "safeName": "Test1"
+                            }
+                        },
+                        "wireValue": "test1"
+                    },
+                    {
+                        "name": {
+                            "originalName": "test2",
+                            "camelCase": {
+                                "unsafeName": "test2",
+                                "safeName": "test2"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test2",
+                                "safeName": "test2"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST2",
+                                "safeName": "TEST2"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Test2",
+                                "safeName": "Test2"
+                            }
+                        },
+                        "wireValue": "test2"
+                    },
+                    {
+                        "name": {
+                            "originalName": "test3",
+                            "camelCase": {
+                                "unsafeName": "test3",
+                                "safeName": "test3"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test3",
+                                "safeName": "test3"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST3",
+                                "safeName": "TEST3"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Test3",
+                                "safeName": "Test3"
+                            }
+                        },
+                        "wireValue": "test3"
+                    }
+                ]
+            },
+            "type_:Schema2TestDiscriminatedUnionZero": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestDiscriminatedUnionZero",
+                        "camelCase": {
+                            "unsafeName": "schema2TestDiscriminatedUnionZero",
+                            "safeName": "schema2TestDiscriminatedUnionZero"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_discriminated_union_zero",
+                            "safeName": "schema2test_discriminated_union_zero"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO",
+                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestDiscriminatedUnionZero",
+                            "safeName": "Schema2TestDiscriminatedUnionZero"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "objectType",
+                                "camelCase": {
+                                    "unsafeName": "objectType",
+                                    "safeName": "objectType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "object_type",
+                                    "safeName": "object_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OBJECT_TYPE",
+                                    "safeName": "OBJECT_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ObjectType",
+                                    "safeName": "ObjectType"
+                                }
+                            },
+                            "wireValue": "objectType"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:Schema2TestDiscriminatedUnionOne": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestDiscriminatedUnionOne",
+                        "camelCase": {
+                            "unsafeName": "schema2TestDiscriminatedUnionOne",
+                            "safeName": "schema2TestDiscriminatedUnionOne"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_discriminated_union_one",
+                            "safeName": "schema2test_discriminated_union_one"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE",
+                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestDiscriminatedUnionOne",
+                            "safeName": "Schema2TestDiscriminatedUnionOne"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "objectType",
+                                "camelCase": {
+                                    "unsafeName": "objectType",
+                                    "safeName": "objectType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "object_type",
+                                    "safeName": "object_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OBJECT_TYPE",
+                                    "safeName": "OBJECT_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ObjectType",
+                                    "safeName": "ObjectType"
+                                }
+                            },
+                            "wireValue": "objectType"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:Schema2TestDiscriminatedUnion": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestDiscriminatedUnion",
+                        "camelCase": {
+                            "unsafeName": "schema2TestDiscriminatedUnion",
+                            "safeName": "schema2TestDiscriminatedUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_discriminated_union",
+                            "safeName": "schema2test_discriminated_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION",
+                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestDiscriminatedUnion",
+                            "safeName": "Schema2TestDiscriminatedUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "types": [
+                    {
+                        "_type": "named",
+                        "value": "type_:Schema2TestDiscriminatedUnionZero"
+                    },
+                    {
+                        "_type": "named",
+                        "value": "type_:Schema2TestDiscriminatedUnionOne"
+                    }
+                ]
+            },
+            "type_:Schema2TestUnionA": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestUnionA",
+                        "camelCase": {
+                            "unsafeName": "schema2TestUnionA",
+                            "safeName": "schema2TestUnionA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_union_a",
+                            "safeName": "schema2test_union_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_UNION_A",
+                            "safeName": "SCHEMA2TEST_UNION_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestUnionA",
+                            "safeName": "Schema2TestUnionA"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "a",
+                                "camelCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "a",
+                                    "safeName": "a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "A",
+                                    "safeName": "A"
+                                }
+                            },
+                            "wireValue": "a"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:Schema2TestUnionB": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestUnionB",
+                        "camelCase": {
+                            "unsafeName": "schema2TestUnionB",
+                            "safeName": "schema2TestUnionB"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_union_b",
+                            "safeName": "schema2test_union_b"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_UNION_B",
+                            "safeName": "SCHEMA2TEST_UNION_B"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestUnionB",
+                            "safeName": "Schema2TestUnionB"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "b",
+                                "camelCase": {
+                                    "unsafeName": "b",
+                                    "safeName": "b"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "b",
+                                    "safeName": "b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "B",
+                                    "safeName": "B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "B",
+                                    "safeName": "B"
+                                }
+                            },
+                            "wireValue": "b"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:Schema2TestUnion": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "Schema2TestUnion",
+                        "camelCase": {
+                            "unsafeName": "schema2TestUnion",
+                            "safeName": "schema2TestUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "schema2test_union",
+                            "safeName": "schema2test_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCHEMA2TEST_UNION",
+                            "safeName": "SCHEMA2TEST_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Schema2TestUnion",
+                            "safeName": "Schema2TestUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "types": [
+                    {
+                        "_type": "named",
+                        "value": "type_:Schema2TestUnionA"
+                    },
+                    {
+                        "_type": "named",
+                        "value": "type_:Schema2TestUnionB"
+                    }
+                ]
+            },
             "type_:Schema2": {
                 "type": "object",
                 "declaration": {
@@ -4836,6 +5643,99 @@
                                 "value": "INTEGER"
                             }
                         }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "testEnum",
+                                "camelCase": {
+                                    "unsafeName": "testEnum",
+                                    "safeName": "testEnum"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test_enum",
+                                    "safeName": "test_enum"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST_ENUM",
+                                    "safeName": "TEST_ENUM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TestEnum",
+                                    "safeName": "TestEnum"
+                                }
+                            },
+                            "wireValue": "testEnum"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:Schema2TestEnum"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "testDiscriminatedUnion",
+                                "camelCase": {
+                                    "unsafeName": "testDiscriminatedUnion",
+                                    "safeName": "testDiscriminatedUnion"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test_discriminated_union",
+                                    "safeName": "test_discriminated_union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST_DISCRIMINATED_UNION",
+                                    "safeName": "TEST_DISCRIMINATED_UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TestDiscriminatedUnion",
+                                    "safeName": "TestDiscriminatedUnion"
+                                }
+                            },
+                            "wireValue": "testDiscriminatedUnion"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:Schema2TestDiscriminatedUnion"
+                            }
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "testUnion",
+                                "camelCase": {
+                                    "unsafeName": "testUnion",
+                                    "safeName": "testUnion"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test_union",
+                                    "safeName": "test_union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST_UNION",
+                                    "safeName": "TEST_UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TestUnion",
+                                    "safeName": "TestUnion"
+                                }
+                            },
+                            "wireValue": "testUnion"
+                        },
+                        "typeReference": {
+                            "_type": "optional",
+                            "value": {
+                                "_type": "named",
+                                "value": "type_:Schema2TestUnion"
+                            }
+                        }
                     }
                 ]
             }
@@ -4878,6 +5778,145 @@
                     "type": "body",
                     "pathParameters": [],
                     "body": null
+                },
+                "response": {
+                    "type": "json"
+                }
+            },
+            "endpoint_.postRoot": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "postRoot",
+                        "camelCase": {
+                            "unsafeName": "postRoot",
+                            "safeName": "postRoot"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_root",
+                            "safeName": "post_root"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_ROOT",
+                            "safeName": "POST_ROOT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRoot",
+                            "safeName": "PostRoot"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/root"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "PostRootRequest",
+                            "camelCase": {
+                                "unsafeName": "postRootRequest",
+                                "safeName": "postRootRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "post_root_request",
+                                "safeName": "post_root_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POST_ROOT_REQUEST",
+                                "safeName": "POST_ROOT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PostRootRequest",
+                                "safeName": "PostRootRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    },
+                                    "wireValue": "foo"
+                                },
+                                "typeReference": {
+                                    "_type": "optional",
+                                    "value": {
+                                        "_type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "bar",
+                                        "camelCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "BAR",
+                                            "safeName": "BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Bar",
+                                            "safeName": "Bar"
+                                        }
+                                    },
+                                    "wireValue": "bar"
+                                },
+                                "typeReference": {
+                                    "_type": "optional",
+                                    "value": {
+                                        "_type": "named",
+                                        "value": "type_:PostRootRequestBar"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
                 },
                 "response": {
                     "type": "json"

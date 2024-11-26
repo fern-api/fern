@@ -497,6 +497,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -524,16 +534,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -710,6 +710,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -737,16 +747,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -1053,6 +1053,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1080,16 +1090,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -1219,6 +1219,16 @@
             }
           ]
         },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1246,16 +1256,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "inline": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -1308,6 +1308,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

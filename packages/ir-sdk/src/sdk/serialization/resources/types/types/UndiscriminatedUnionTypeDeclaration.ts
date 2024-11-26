@@ -6,19 +6,16 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { UndiscriminatedUnionMember } from "./UndiscriminatedUnionMember";
-import { WithInline } from "../../commons/types/WithInline";
 
 export const UndiscriminatedUnionTypeDeclaration: core.serialization.ObjectSchema<
     serializers.UndiscriminatedUnionTypeDeclaration.Raw,
     FernIr.UndiscriminatedUnionTypeDeclaration
-> = core.serialization
-    .objectWithoutOptionalProperties({
-        members: core.serialization.list(UndiscriminatedUnionMember),
-    })
-    .extend(WithInline);
+> = core.serialization.objectWithoutOptionalProperties({
+    members: core.serialization.list(UndiscriminatedUnionMember),
+});
 
 export declare namespace UndiscriminatedUnionTypeDeclaration {
-    interface Raw extends WithInline.Raw {
+    interface Raw {
         members: UndiscriminatedUnionMember.Raw[];
     }
 }

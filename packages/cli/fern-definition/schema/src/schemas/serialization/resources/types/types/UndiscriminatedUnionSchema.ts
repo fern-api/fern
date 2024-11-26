@@ -7,7 +7,6 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { SingleUndiscriminatedUnionTypeSchema } from "./SingleUndiscriminatedUnionTypeSchema";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
-import { WithInline } from "../../commons/types/WithInline";
 
 export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
     serializers.UndiscriminatedUnionSchema.Raw,
@@ -17,11 +16,10 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
         discriminated: core.serialization.booleanLiteral(false),
         union: core.serialization.list(SingleUndiscriminatedUnionTypeSchema),
     })
-    .extend(BaseTypeDeclarationSchema)
-    .extend(WithInline);
+    .extend(BaseTypeDeclarationSchema);
 
 export declare namespace UndiscriminatedUnionSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw, WithInline.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminated: false;
         union: SingleUndiscriminatedUnionTypeSchema.Raw[];
     }

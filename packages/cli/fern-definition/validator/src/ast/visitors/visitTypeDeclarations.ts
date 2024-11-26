@@ -72,7 +72,8 @@ export async function visitTypeDeclaration({
                     examples: visitExamples,
                     validation: noop,
                     encoding: noop,
-                    source: noop
+                    source: noop,
+                    inline: noop
                 });
             }
         },

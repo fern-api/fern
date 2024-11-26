@@ -20,6 +20,7 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
         examples: core.serialization.list(ExampleTypeSchema).optional(),
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
+        inline: core.serialization.boolean().optional(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
@@ -30,5 +31,6 @@ export declare namespace BaseTypeDeclarationSchema {
         examples?: ExampleTypeSchema.Raw[] | null;
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;
+        inline?: boolean | null;
     }
 }

@@ -22,10 +22,6 @@ types:
     properties:
       audiences: optional<list<string>>
 
-  WithInline:
-    properties:
-      inline: optional<boolean>
-
   DeclarationSchema:
     extends:
       - WithDocsSchema

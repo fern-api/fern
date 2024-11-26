@@ -80,8 +80,7 @@ export async function convertDiscriminatedUnionTypeDeclaration({
                 displayName: getDisplayName(rawSingleUnionType),
                 availability: getAvailability(rawSingleUnionType)
             };
-        }),
-        inline: union.inline
+        })
     });
 }
 

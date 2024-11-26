@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 import { ObjectPropertySchema } from "./ObjectPropertySchema";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
-import { WithInline } from "../../commons/types/WithInline";
 
 export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSchema.Raw, FernDefinition.ObjectSchema> =
     core.serialization
@@ -17,11 +16,10 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
             properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).optional(),
             "extra-properties": core.serialization.boolean().optional(),
         })
-        .extend(BaseTypeDeclarationSchema)
-        .extend(WithInline);
+        .extend(BaseTypeDeclarationSchema);
 
 export declare namespace ObjectSchema {
-    interface Raw extends BaseTypeDeclarationSchema.Raw, WithInline.Raw {
+    interface Raw extends BaseTypeDeclarationSchema.Raw {
         extends?: ObjectExtendsSchema.Raw | null;
         properties?: Record<string, ObjectPropertySchema.Raw> | null;
         "extra-properties"?: boolean | null;

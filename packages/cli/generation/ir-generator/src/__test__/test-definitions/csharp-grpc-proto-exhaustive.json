@@ -265,8 +265,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -350,8 +349,7 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -628,8 +626,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:NamespaceSummary"
@@ -896,8 +893,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Column",
@@ -1062,8 +1058,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1187,8 +1182,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1504,8 +1498,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:ListElement",
@@ -1629,8 +1622,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -1754,8 +1746,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -2081,8 +2072,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -2408,8 +2398,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:QueryResult",
@@ -2608,8 +2597,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:ScoredColumn",
@@ -2940,8 +2928,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [
                 "type_:Metadata",
@@ -3025,8 +3012,7 @@
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -3146,8 +3132,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -3267,8 +3252,7 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": [],
-                "inline": null
+                "extendedProperties": []
             },
             "referencedTypes": [],
             "encoding": {
@@ -3419,8 +3403,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [
                 "type_:MetadataValue"
@@ -3513,8 +3496,7 @@
                         },
                         "docs": null
                     }
-                ],
-                "inline": null
+                ]
             },
             "referencedTypes": [],
             "encoding": {
@@ -6038,7 +6020,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "3ecab4426ce6d95c94c8dc746ee95c7a4b9c7828",
+                                "id": "005237105b93ad65d88134071ca2be649618351d",
                                 "url": "/data/delete",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -7149,7 +7131,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "0e4ca190037c6b29b81183fc602ae8f27f52fcc1",
+                                "id": "e8371d94fa58f4b125ff5a2680a34dae539c34fd",
                                 "url": "/data/describe",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -9392,7 +9374,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "fe2ec19b1c4c9c0d89a5aa5062061a6d7dab1c50",
+                                "id": "b6a313102d6486073540f516aba014ac628d3b6d",
                                 "url": "/data/fetch",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -11949,7 +11931,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "01389caecb26c5f9861a12330671184b03edac42",
+                                "id": "0ce8544c4eb09be916024a6c197068c471074f03",
                                 "url": "/data/list",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -15530,7 +15512,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "cf83b9730aba6343f6be4815392e3fbea2ed165f",
+                                "id": "f07cb28de739a8f6d40b467de94ad689ce6713dc",
                                 "url": "/data/query",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -23368,7 +23350,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "61c92c618804a66c027ac06bb9a39d7b88a7d2c9",
+                                "id": "a60801ad6d1eb8149b087880ce3a12cd9924870a",
                                 "url": "/data/update",
                                 "name": null,
                                 "endpointHeaders": [],
