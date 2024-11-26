@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict", "SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj", "{63E272FE-5362-40B9-896F-5C6CF6709FD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict", "SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj", "{7F730939-7691-4FAB-82DC-77EE0149583A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict.Test", "SeedCsharpNamespaceConflict.Test\SeedCsharpNamespaceConflict.Test.csproj", "{C362F893-26FD-4DC2-B34C-55EF7F22D790}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict.Test", "SeedCsharpNamespaceConflict.Test\SeedCsharpNamespaceConflict.Test.csproj", "{73E805EA-C549-4FFC-9E7F-E24FCD804F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{63E272FE-5362-40B9-896F-5C6CF6709FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63E272FE-5362-40B9-896F-5C6CF6709FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63E272FE-5362-40B9-896F-5C6CF6709FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63E272FE-5362-40B9-896F-5C6CF6709FD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C362F893-26FD-4DC2-B34C-55EF7F22D790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C362F893-26FD-4DC2-B34C-55EF7F22D790}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C362F893-26FD-4DC2-B34C-55EF7F22D790}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C362F893-26FD-4DC2-B34C-55EF7F22D790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F730939-7691-4FAB-82DC-77EE0149583A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F730939-7691-4FAB-82DC-77EE0149583A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F730939-7691-4FAB-82DC-77EE0149583A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F730939-7691-4FAB-82DC-77EE0149583A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73E805EA-C549-4FFC-9E7F-E24FCD804F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73E805EA-C549-4FFC-9E7F-E24FCD804F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73E805EA-C549-4FFC-9E7F-E24FCD804F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73E805EA-C549-4FFC-9E7F-E24FCD804F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

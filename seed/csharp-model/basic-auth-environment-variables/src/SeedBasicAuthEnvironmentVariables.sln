@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables", "SeedBasicAuthEnvironmentVariables\SeedBasicAuthEnvironmentVariables.csproj", "{3AC09C26-18E3-48BD-8B9C-AE69CF274764}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables", "SeedBasicAuthEnvironmentVariables\SeedBasicAuthEnvironmentVariables.csproj", "{B4A7D432-F3D2-427F-A5E7-76CE85C808AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables.Test", "SeedBasicAuthEnvironmentVariables.Test\SeedBasicAuthEnvironmentVariables.Test.csproj", "{B6656E1B-0204-4424-B961-86F90AAFDFF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedBasicAuthEnvironmentVariables.Test", "SeedBasicAuthEnvironmentVariables.Test\SeedBasicAuthEnvironmentVariables.Test.csproj", "{3EAA8324-C9CA-41E8-959B-9C64B6BE58FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AC09C26-18E3-48BD-8B9C-AE69CF274764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AC09C26-18E3-48BD-8B9C-AE69CF274764}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AC09C26-18E3-48BD-8B9C-AE69CF274764}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AC09C26-18E3-48BD-8B9C-AE69CF274764}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6656E1B-0204-4424-B961-86F90AAFDFF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6656E1B-0204-4424-B961-86F90AAFDFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6656E1B-0204-4424-B961-86F90AAFDFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6656E1B-0204-4424-B961-86F90AAFDFF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4A7D432-F3D2-427F-A5E7-76CE85C808AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A7D432-F3D2-427F-A5E7-76CE85C808AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A7D432-F3D2-427F-A5E7-76CE85C808AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A7D432-F3D2-427F-A5E7-76CE85C808AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EAA8324-C9CA-41E8-959B-9C64B6BE58FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EAA8324-C9CA-41E8-959B-9C64B6BE58FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EAA8324-C9CA-41E8-959B-9C64B6BE58FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EAA8324-C9CA-41E8-959B-9C64B6BE58FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using OneOf;
 using SeedEnum;
 
 #nullable enable
@@ -32,7 +31,7 @@ public class SendListTest : BaseMockServerTest
                         Operand = [Operand.GreaterThan],
                         MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [new OneOf<Color, Operand>()],
+                        MaybeOperandOrColor = [null],
                     },
                     RequestOptions
                 )
