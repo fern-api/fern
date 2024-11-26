@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernGeneratorExec } from "@fern-api/generator-commons";
+import { FernGeneratorExec } from "@fern-api/base-generator";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { FernFilepath, dynamic as DynamicSnippets, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
@@ -10,7 +10,7 @@ import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper
 import { go } from "@fern-api/go-ast";
 import { ErrorReporter, Severity } from "./ErrorReporter";
 import { FilePropertyMapper } from "./FilePropertyMapper";
-import { AbstractDynamicSnippetsGeneratorContext } from "@fern-api/generator-commons";
+import { AbstractDynamicSnippetsGeneratorContext } from "@fern-api/base-generator";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext<DynamicSnippets.DynamicIntermediateRepresentation> {
     public customConfig: BaseGoCustomConfigSchema | undefined;

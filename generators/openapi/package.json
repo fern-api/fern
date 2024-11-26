@@ -34,7 +34,7 @@
   "devDependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/base-generator": "workspace:*",
     "@fern-fern/ir-sdk": "53.9.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",

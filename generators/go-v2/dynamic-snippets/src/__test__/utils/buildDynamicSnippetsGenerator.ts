@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
-import { FernGeneratorExec } from "@fern-api/generator-commons";
+import { FernGeneratorExec } from "@fern-api/base-generator";
 import { readFileSync } from "fs";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/serialization";
 import { GoFormatter } from "@fern-api/go-formatter";

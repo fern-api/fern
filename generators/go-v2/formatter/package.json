@@ -27,11 +27,11 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/base-generator": "workspace:*",
     "@wasm-fmt/gofmt": "^0.4.9"
   },
   "devDependencies": {
-    "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/base-generator": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",

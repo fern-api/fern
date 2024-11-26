@@ -14,7 +14,7 @@ import { SdkErrorSchemaContext } from "./sdk-error-schema";
 import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema";
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
-import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 export interface SdkContext extends ModelContext {

@@ -1,4 +1,4 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";

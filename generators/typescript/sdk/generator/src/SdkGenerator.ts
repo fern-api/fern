@@ -57,7 +57,7 @@ import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";

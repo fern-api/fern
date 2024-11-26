@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/generator-commons";
+import { AbstractWriter } from "@fern-api/base-generator";
 import { Reference } from "../Reference";
 
 type ModuleName = string;
