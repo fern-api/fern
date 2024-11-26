@@ -6,6 +6,18 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.12
+  createdAt: "2024-11-26"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Optimize the GitHub Actions workflow and update its dependencies.
+        - Merge build, test, and publish into a single job to avoid redoing the same work three times.
+        - Break up the job into more steps to make it clearer where errors occur.
+        - Update GitHub Actions actions to the latest version.
+        - Using the .NET 9 SDK for building, testing, and publishing.
+        - Reduce irrelevant logs.
+  irVersion: 53
 - version: 1.9.11
   createdAt: "2024-11-25"
   changelogEntry:
