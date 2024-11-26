@@ -53,7 +53,15 @@ export class SnippetResolver {
         switch (language) {
             case "go": {
                 const config = this.getGeneratorConfigForLanguage(language);
-                return new EndpointProvider({ ir, generator: new Go({ ir, config }) });
+                return new EndpointProvider(
+                    {
+                        ir,
+                        generator: new Go({
+                            ir: ir as unknown as DynamicSnippets.DynamicIntermediateRepresentation,
+                            config
+                        })
+                    }
+                );
             }
             default:
                 throw new Error(`Unsupported language: ${language}`);

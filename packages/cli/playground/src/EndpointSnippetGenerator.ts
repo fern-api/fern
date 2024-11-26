@@ -4,14 +4,24 @@ import { AbstractDynamicSnippetsGenerator } from "./core/AbstractDynamicSnippets
 import { AbstractDynamicSnippetsGeneratorContext } from "./core/AbstractDynamicSnippetsGeneratorContext";
 
 export class EndpointSnippetGenerator {
-    private generator: AbstractDynamicSnippetsGenerator<AbstractDynamicSnippetsGeneratorContext>;
+    private generator: AbstractDynamicSnippetsGenerator<
+        dynamic.DynamicIntermediateRepresentation,
+        AbstractDynamicSnippetsGeneratorContext<dynamic.DynamicIntermediateRepresentation>,
+        dynamic.EndpointSnippetRequest,
+        dynamic.EndpointSnippetResponse
+    >;
     private endpoint: dynamic.Endpoint;
 
     constructor({
         generator,
         endpoint
     }: {
-        generator: AbstractDynamicSnippetsGenerator<AbstractDynamicSnippetsGeneratorContext>;
+        generator: AbstractDynamicSnippetsGenerator<
+            dynamic.DynamicIntermediateRepresentation,
+            AbstractDynamicSnippetsGeneratorContext<dynamic.DynamicIntermediateRepresentation>,
+            dynamic.EndpointSnippetRequest,
+            dynamic.EndpointSnippetResponse
+        >;
         endpoint: dynamic.Endpoint;
     }) {
         this.generator = generator;

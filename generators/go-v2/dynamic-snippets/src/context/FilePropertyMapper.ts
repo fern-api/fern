@@ -1,6 +1,6 @@
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
+import { dynamic as DynamicSnippets } from "@fern-api/dynamic-ir-sdk/api";
 import { assertNever } from "@fern-api/core-utils";
 import { Severity } from "./ErrorReporter";
 
