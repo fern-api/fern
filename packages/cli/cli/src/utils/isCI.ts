@@ -1,10 +1,10 @@
 export function isCI(): boolean {
     return Boolean(
-        process.env.CI || // Generic CI
-            process.env.GITHUB_ACTIONS || // GitHub Actions
-            process.env.GITLAB_CI || // GitLab CI
-            process.env.CIRCLECI || // CircleCI
-            process.env.JENKINS_URL || // Jenkins
-            process.env.TRAVIS // Travis CI
+        process.env.CI === "true" || // Generic CI
+            process.env.GITHUB_ACTIONS === "true" || // GitHub Actions
+            process.env.GITLAB_CI === "true" || // GitLab CI
+            process.env.CIRCLECI === "true" || // CircleCI
+            process.env.JENKINS_URL === "true" || // Jenkins
+            process.env.TRAVIS === "true" // Travis CI
     );
 }

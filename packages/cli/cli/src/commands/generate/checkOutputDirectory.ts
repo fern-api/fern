@@ -6,7 +6,6 @@ import { storeOutputDirectories } from "../../persistence/storeOutputDirectories
 
 export interface CheckOutputDirectoryResult {
     shouldProceed: boolean;
-    didSaveDirectory: boolean;
 }
 
 /**
@@ -21,8 +20,7 @@ export async function checkOutputDirectory(
 ): Promise<CheckOutputDirectoryResult> {
     if (!outputPath) {
         return {
-            shouldProceed: true,
-            didSaveDirectory: false
+            shouldProceed: true
         };
     }
 
@@ -30,8 +28,7 @@ export async function checkOutputDirectory(
     const savedDirectories = await getOutputDirectories();
     if (savedDirectories?.includes(outputPath)) {
         return {
-            shouldProceed: true,
-            didSaveDirectory: false
+            shouldProceed: true
         };
     }
 
@@ -39,16 +36,14 @@ export async function checkOutputDirectory(
     const doesExist = await doesPathExist(outputPath);
     if (!doesExist) {
         return {
-            shouldProceed: true,
-            didSaveDirectory: false
+            shouldProceed: true
         };
     }
 
     const files = await readdir(outputPath);
     if (files.length === 0) {
         return {
-            shouldProceed: true,
-            didSaveDirectory: false
+            shouldProceed: true
         };
     }
 
@@ -60,23 +55,13 @@ export async function checkOutputDirectory(
 
     if (!shouldOverwrite) {
         return {
-            shouldProceed: false,
-            didSaveDirectory: false
+            shouldProceed: false
         };
     }
 
-    // Ask if they want to save this as a valid output path
-    const shouldSave = await cliContext.confirmPrompt(
-        "Would you like to save this as a valid output directory for future generations?",
-        true
-    );
-
-    if (shouldSave) {
-        await storeOutputDirectories([...(savedDirectories ?? []), outputPath]);
-    }
+    await storeOutputDirectories([...(savedDirectories ?? []), outputPath]);
 
     return {
-        shouldProceed: true,
-        didSaveDirectory: shouldSave
+        shouldProceed: true
     };
 }

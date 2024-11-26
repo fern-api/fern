@@ -64,7 +64,7 @@ export async function generateAPIWorkspaces({
                         cliContext
                     );
                     if (!shouldProceed) {
-                        cliContext.failAndThrow("Generation cancelled - output directory not empty");
+                        cliContext.failAndThrow("Generation cancelled");
                     }
                 }
             }
