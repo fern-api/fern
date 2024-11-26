@@ -19,7 +19,7 @@ export async function checkOutputDirectory(
     outputPath: AbsoluteFilePath | undefined,
     cliContext: CliContext
 ): Promise<CheckOutputDirectoryResult> {
-    if (outputPath == null) {
+    if (!outputPath) {
         return {
             shouldProceed: true,
             didSaveDirectory: false
