@@ -1,7 +1,5 @@
-import { AbstractWriter, NopFormatter } from "@fern-api/generator-commons";
+import { AbstractFormatter, AbstractWriter, getBasename, NopFormatter } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
-import path from "path";
-import { AbstractFormatter } from "@fern-api/generator-commons";
 
 type Alias = string;
 type ImportPath = string;
@@ -59,7 +57,7 @@ export class Writer extends AbstractWriter {
         if (maybeAlias != null) {
             return maybeAlias;
         }
-        let alias = this.getValidAlias(path.basename(importPath));
+        let alias = this.getValidAlias(getBasename(importPath));
         while (alias in this.imports) {
             alias = "_" + alias;
         }
