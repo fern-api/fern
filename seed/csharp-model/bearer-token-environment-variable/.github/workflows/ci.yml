@@ -2,26 +2,40 @@ name: ci
 
 on: [push]
 
+env:
+  CI: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_NOLOGO: true
+  MSBUILDTERMINALLOGGER: off
+  DOTNET_VERSIONS: |
+            6.x
+            7.x
+            8.x
+            9.x
+
 jobs:
   compile:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.x
+          dotnet-version: ${{ env.DOTNET_VERSIONS }}
+
+      - name: List SDKs
+        run: dotnet --list-sdks
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
 
-      - name: Build Release
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
   unit-tests:
@@ -29,22 +43,27 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.x
+          dotnet-version: ${{ env.DOTNET_VERSIONS }}
+
+      - name: List SDKs
+        run: dotnet --list-sdks
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
+
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build release
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Run Tests
-        run: |
-          dotnet test src
+        run: dotnet test src --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 
 
   publish:
@@ -54,16 +73,28 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.x
+          dotnet-version: ${{ env.DOTNET_VERSIONS }}
+
+      - name: List SDKs
+        run: dotnet --list-sdks
+
+      - name: Install tools
+        run: dotnet tool restore
+
+      - name: Restore dependencies
+        run: dotnet restore src/SeedBearerTokenEnvironmentVariable
+
+      - name: Build release
+        run: dotnet build src/SeedBearerTokenEnvironmentVariable -c Release /p:ContinuousIntegrationBuild=true  --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src -c Release
+          dotnet pack src/SeedBearerTokenEnvironmentVariable --no-build --no-restore -c Release
           dotnet nuget push src/SeedBearerTokenEnvironmentVariable/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
