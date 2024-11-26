@@ -1,6 +1,6 @@
-import { SnippetResolver } from "./SnippetResolver";
+import { SnippetResolver } from './dist/index.js';
 
-async function generateSnippet(): Promise<string> {
+async function generateSnippet() {
     const resolver = new SnippetResolver();
     const go = await resolver.sdk("go");
     const response = await go.endpoint("POST /v2/cards").generate({
@@ -32,14 +32,10 @@ async function generateSnippet(): Promise<string> {
 async function main() {
     try {
         const result = await generateSnippet();
-        const output = document.createElement("pre");
-        output.textContent = result;
-        document.body.appendChild(output);
+        document.body.innerHTML = `<h1>Result: ${result}</h1>`;
     } catch (error) {
         console.error("Failed to generate snippet:", error);
     }
 }
 
 main();
-
-export {};
