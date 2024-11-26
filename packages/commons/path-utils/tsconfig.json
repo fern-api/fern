@@ -8,12 +8,4 @@
   "include": [
     "./src/**/*"
   ],
-  "references": [
-    {
-      "path": "../core-utils"
-    },
-    {
-      "path": "../path-utils"
-    }
-  ]
 }
