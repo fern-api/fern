@@ -158,12 +158,20 @@ export class Class extends AstNode {
         this.fields.push(field);
     }
 
+    public addFields(fields: Field[]): void {
+        fields.forEach((field) => this.fields.push(field));
+    }
+
     public addConstructor(constructor: Class.Constructor): void {
         this.constructors.push(constructor);
     }
 
     public addMethod(method: Method): void {
         this.methods.push(method);
+    }
+
+    public addMethods(methods: Method[]): void {
+        methods.forEach((method) => this.addMethod(method));
     }
 
     public addNestedClass(subClass: Class): void {
@@ -284,6 +292,10 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(undefined) });
+        writer.dedent();
+
+        writer.indent();
         this.nestedClasses.forEach((nestedClass, index) => {
             nestedClass.write(writer);
             writer.writeNewLineIfLastLineNot();
@@ -315,6 +327,10 @@ export class Class extends AstNode {
 
         writer.indent();
         this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
+        writer.dedent();
+
+        writer.indent();
+        this.writeMethods({ writer, methods: this.getMethodsByAccess(undefined) });
         writer.dedent();
 
         writer.indent();
@@ -358,7 +374,7 @@ export class Class extends AstNode {
         });
     }
 
-    private getMethodsByAccess(access: Access): Method[] {
+    private getMethodsByAccess(access: Access | undefined): Method[] {
         return this.methods.filter((method) => method.access === access);
     }
 
@@ -373,7 +389,7 @@ export class Class extends AstNode {
         });
     }
 
-    private getFieldsByAccess(access: Access): Field[] {
+    private getFieldsByAccess(access: Access | undefined): Field[] {
         return this.fields.filter((field) => field.access === access);
     }
 

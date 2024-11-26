@@ -40,7 +40,11 @@
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadFileRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -57,6 +61,8 @@
       path: /upload-with-content-type
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Upload a file
       request:
         name: UploadFileRequest

@@ -64,6 +64,9 @@ service:
             bar: 
               type: MyObject
               content-type: application/json
+            foobar: 
+              type: optional<MyObject>
+              content-type: application/json
 
 types:
   Id: string

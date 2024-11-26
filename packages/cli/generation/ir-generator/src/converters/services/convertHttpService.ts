@@ -32,7 +32,8 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
-import { convertTransport } from "./convertTransport";
+import { getTransportForService, getTransportForEndpoint } from "./convertTransport";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 
 export async function convertHttpService({
     rootDefaultUrl,
@@ -68,7 +69,7 @@ export async function convertHttpService({
         variableResolver
     });
 
-    const transport = await convertTransport({
+    const transport = await getTransportForService({
         file,
         serviceDeclaration: serviceDefinition,
         sourceResolver
@@ -89,12 +90,12 @@ export async function convertHttpService({
                   )
                 : [],
         pathParameters: servicePathParameters,
-        encoding: convertTransportToEncoding(transport),
+        encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
                 const endpointPathParameters = await convertPathParameters({
-                    pathParameters: endpoint["path-parameters"],
+                    pathParameters: getEndpointPathParameters(endpoint),
                     location: PathParameterLocation.Endpoint,
                     file,
                     variableResolver
@@ -183,6 +184,12 @@ export async function convertHttpService({
                         file,
                         endpointName: endpointKey,
                         endpointSchema: endpoint
+                    }),
+                    transport: await getTransportForEndpoint({
+                        file,
+                        serviceTransport: transport,
+                        endpointDeclaration: endpoint,
+                        sourceResolver
                     })
                 };
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
@@ -371,7 +378,7 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
     };
 }
 
-function convertTransportToEncoding(transport: Transport): Encoding {
+function convertTransportToEncoding(transport: Transport, service: RawSchemas.HttpServiceSchema): Encoding {
     switch (transport.type) {
         case "http":
             return {

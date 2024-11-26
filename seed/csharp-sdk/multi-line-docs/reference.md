@@ -86,7 +86,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```csharp
-await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = null });
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 </dd>
 </dl>

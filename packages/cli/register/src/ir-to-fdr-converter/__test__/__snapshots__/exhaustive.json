@@ -490,6 +490,7 @@
       "types": [],
       "subpackages": [
         "subpackage_endpoints/container",
+        "subpackage_endpoints/content-type",
         "subpackage_endpoints/enum",
         "subpackage_endpoints/http-methods",
         "subpackage_endpoints/object",
@@ -1121,6 +1122,118 @@
                   "string": "string"
                 }
               },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_endpoints/content-type": {
+      "subpackageId": "subpackage_endpoints/content-type",
+      "name": "content-type",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "postJsonPatchContentType",
+          "originalEndpointId": "endpoint_endpoints/content-type.postJsonPatchContentType",
+          "name": "Post Json Patch Content Type",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/foo"
+              },
+              {
+                "type": "literal",
+                "value": "/bar"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json-patch+json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_types/object:ObjectWithOptionalField"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/foo/bar",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "POST",
+          "id": "postJsonPatchContentWithCharsetType",
+          "originalEndpointId": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType",
+          "name": "Post Json Patch Content With Charset Type",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/foo"
+              },
+              {
+                "type": "literal",
+                "value": "/baz"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json-patch+json; charset=utf-8",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_types/object:ObjectWithOptionalField"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/foo/baz",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 204,
               "codeSamples": []
             }
           ]

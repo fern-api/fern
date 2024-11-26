@@ -4922,6 +4922,9 @@ types:
                 "docs": "File uploaded successfully",
                 "type": "root.UploadedFile",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -4942,6 +4945,8 @@ service:
       docs: >-
         Upload your audio or video file directly to the AssemblyAI API if it
         isn't accessible via a URL already.
+      source:
+        openapi: ../openapi.yml
       display-name: Upload an audio or video file which can be transcribed.
       request:
         body: bytes
@@ -5012,6 +5017,9 @@ service:
                 "docs": "LeMUR action items response",
                 "type": "root.LemurActionItemsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "purgeRequestData": {
               "auth": true,
@@ -5054,6 +5062,9 @@ The LLM response data, as well as any context provided in the original request w
               "response": {
                 "docs": "LeMUR request data deleted.",
                 "type": "root.PurgeLemurRequestDataResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "questionAnswer": {
@@ -5112,11 +5123,15 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurQuestionAnswerParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "LeMUR question & answer response",
                 "type": "root.LemurQuestionAnswerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "summary": {
@@ -5166,11 +5181,15 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurSummaryParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "LeMUR summary response",
                 "type": "root.LemurSummaryResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "task": {
@@ -5220,11 +5239,15 @@ The LLM response data, as well as any context provided in the original request w
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LemurTaskParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "LeMUR task response",
                 "type": "root.LemurTaskResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -5248,6 +5271,8 @@ service:
         impactful sentences. You can give the model context to obtain more
         targeted results while outputting the results in a variety of formats
         described in human language.
+      source:
+        openapi: ../openapi.yml
       display-name: Generate a custom summary from one or more transcripts.
       request:
         name: LemurSummaryParameters
@@ -5290,6 +5315,8 @@ service:
         answers you find useful, such as judging whether a caller is likely to
         become a customer or whether all items on a meeting's agenda were
         covered.
+      source:
+        openapi: ../openapi.yml
       display-name: Create answers to one or more questions about one or more transcripts.
       request:
         name: LemurQuestionAnswerParameters
@@ -5329,6 +5356,8 @@ service:
       method: POST
       auth: true
       docs: Use LeMUR to generate a list of Action Items from a transcript
+      source:
+        openapi: ../openapi.yml
       display-name: Extract action items from one or more meeting transcripts.
       request:
         body: root.LemurActionItemsParameters
@@ -5357,6 +5386,8 @@ service:
       method: POST
       auth: true
       docs: Use LeMUR to ask anything with Custom Task
+      source:
+        openapi: ../openapi.yml
       display-name: >-
         Ask LeMUR to use one or more transcripts with a Custom Task to handle
         your specialized task.
@@ -5401,6 +5432,8 @@ service:
 
         The LLM response data, as well as any context provided in the original
         request will be removed.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         request_id:
           type: string
@@ -5492,11 +5525,15 @@ docs: LeMUR related operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRealtimeTemporaryTokenParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Temporary authentication token generated.",
                 "type": "root.RealtimeTemporaryTokenResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -5516,6 +5553,8 @@ service:
       method: POST
       auth: true
       docs: Create a temporary authentication token for real-time transcription
+      source:
+        openapi: ../openapi.yml
       display-name: Create a temporary authentication token for real-time transcription
       request:
         name: CreateRealtimeTemporaryTokenParameters
@@ -5774,11 +5813,15 @@ docs: Real-time transcription
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateTranscriptParameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Transcript created and queued for processing.",
                 "type": "root.Transcript",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete": {
@@ -5988,6 +6031,9 @@ docs: Real-time transcription
                 "docs": "The deleted transcript response.",
                 "type": "root.Transcript",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": true,
@@ -6196,6 +6242,9 @@ docs: Real-time transcription
                 "docs": "The transcript resource",
                 "type": "root.Transcript",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getParagraphs": {
               "auth": true,
@@ -6253,6 +6302,9 @@ docs: Real-time transcription
                 "docs": "Exported paragraphs",
                 "type": "root.ParagraphsResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRedactedAudio": {
               "auth": true,
@@ -6292,6 +6344,9 @@ docs: Real-time transcription
               "response": {
                 "docs": "The redacted audio object containing the status and URL to the redacted audio.",
                 "type": "root.RedactedAudioResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getSentences": {
@@ -6350,6 +6405,9 @@ docs: Real-time transcription
                 "docs": "Exported sentences",
                 "type": "root.SentencesResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getSubtitles": {
               "auth": true,
@@ -6389,6 +6447,9 @@ docs: Real-time transcription
               "response": {
                 "docs": "The exported captions as text",
                 "type": "text",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -6446,6 +6507,12 @@ docs: Real-time transcription
                   "created_on": {
                     "docs": "Only get transcripts created on this date",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "date",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": {
                     "docs": "Maximum amount of transcripts to retrieve",
@@ -6464,6 +6531,9 @@ docs: Real-time transcription
               "response": {
                 "docs": "A list of transcripts filtered by `limit` and `status`",
                 "type": "root.TranscriptList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "wordSearch": {
@@ -6501,6 +6571,9 @@ docs: Real-time transcription
               "response": {
                 "docs": "Word search response",
                 "type": "root.WordSearchResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -6562,6 +6635,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of transcripts you have created.
+      source:
+        openapi: ../openapi.yml
       display-name: List transcripts
       request:
         name: TranscriptListRequest
@@ -6575,6 +6650,8 @@ service:
           created_on:
             type: optional<string>
             docs: Only get transcripts created on this date
+            validation:
+              format: date
           before_id:
             type: optional<string>
             docs: Get transcripts that were created before this transcript ID
@@ -6618,6 +6695,8 @@ service:
       docs: >-
         Create a transcript from an audio or video file that is accessible via a
         URL.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a transcript from an audio file
       request:
         name: CreateTranscriptParameters
@@ -6774,6 +6853,8 @@ service:
       docs: >-
         Get the transcript resource. The transcript is ready when the "status"
         is "completed".
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -6922,6 +7003,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete the transcript
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -7072,6 +7155,8 @@ service:
       docs: >-
         Export your transcript in SRT or VTT format, to be plugged into a video
         player for subtitles and closed captions.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -7105,6 +7190,8 @@ service:
         Get the transcript split by sentences. The API will attempt to
         semantically segment the transcript into sentences to create more
         reader-friendly transcripts.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -7147,6 +7234,8 @@ service:
         Get the transcript split by paragraphs. The API will attempt to
         semantically segment your transcript into paragraphs to create more
         reader-friendly transcripts.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -7189,6 +7278,8 @@ service:
         Search through the transcript for a specific set of keywords. You can
         search for individual words, numbers, or phrases containing up to five
         words or numbers.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string
@@ -7219,6 +7310,8 @@ service:
       docs: >-
         Retrieves the redacted audio object containing the status and URL to the
         redacted audio.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transcript_id:
           type: string

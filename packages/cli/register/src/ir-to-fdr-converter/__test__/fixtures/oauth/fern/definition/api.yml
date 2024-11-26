@@ -1,0 +1,14 @@
+name: oauth
+
+auth: OAuth
+auth-schemes:
+  OAuth:
+    scheme: oauth
+    type: client-credentials
+    token-prefix: Fern-Bearer
+    token-header: Fern-Authorization
+    get-token:
+      endpoint: POST /auth
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret

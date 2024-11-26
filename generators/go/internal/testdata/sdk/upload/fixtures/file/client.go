@@ -3,20 +3,19 @@
 package file
 
 import (
-	bytes "bytes"
 	context "context"
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/upload/fixtures/option"
 	io "io"
-	multipart "mime/multipart"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -24,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -41,30 +40,18 @@ func (c *Client) Upload(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/file/upload"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if err := writer.WriteField("fern", fmt.Sprintf("%v", "fern")); err != nil {
@@ -76,19 +63,20 @@ func (c *Client) Upload(
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {
@@ -103,48 +91,37 @@ func (c *Client) UploadSimple(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/file/upload-simple"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {
@@ -161,42 +138,22 @@ func (c *Client) UploadMultiple(
 	opts ...option.RequestOption,
 ) (string, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/file/upload-multi"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	var response string
-	requestBuffer := bytes.NewBuffer(nil)
-	writer := multipart.NewWriter(requestBuffer)
-	fileFilename := "file_filename"
-	if named, ok := file.(interface{ Name() string }); ok {
-		fileFilename = named.Name()
-	}
-	filePart, err := writer.CreateFormFile("file", fileFilename)
-	if err != nil {
-		return "", err
-	}
-	if _, err := io.Copy(filePart, file); err != nil {
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
 		return "", err
 	}
 	if optionalFile != nil {
-		optionalFileFilename := "optionalFile_filename"
-		if named, ok := optionalFile.(interface{ Name() string }); ok {
-			optionalFileFilename = named.Name()
-		}
-		optionalFilePart, err := writer.CreateFormFile("optionalFile", optionalFileFilename)
-		if err != nil {
-			return "", err
-		}
-		if _, err := io.Copy(optionalFilePart, optionalFile); err != nil {
+		if err := writer.WriteFile("optionalFile", optionalFile); err != nil {
 			return "", err
 		}
 	}
@@ -206,19 +163,20 @@ func (c *Client) UploadMultiple(
 	if err := writer.Close(); err != nil {
 		return "", err
 	}
-	headers.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.ContentType())
 
+	var response string
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         requestBuffer,
+			Request:         writer.Buffer(),
 			Response:        &response,
 		},
 	); err != nil {

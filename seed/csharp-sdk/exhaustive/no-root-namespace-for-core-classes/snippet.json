@@ -82,7 +82,31 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnOptionalAsync(null);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnOptionalAsync(\n    new ObjectWithRequiredField { String = \"string\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
             }
         },
         {
@@ -142,7 +166,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestPatchAsync(\n    \"id\",\n    new ObjectWithOptionalField\n    {\n        String = null,\n        Integer = null,\n        Long = null,\n        Double = null,\n        Bool = null,\n        Datetime = null,\n        Date = null,\n        Uuid = null,\n        Base64 = null,\n        List = null,\n        Set = null,\n        Map = null,\n        Bigint = null,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestPatchAsync(\n    \"id\",\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
             }
         },
         {
@@ -166,7 +190,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new ObjectWithOptionalField\n    {\n        String = null,\n        Integer = null,\n        Long = null,\n        Double = null,\n        Bool = null,\n        Datetime = null,\n        Date = null,\n        Uuid = null,\n        Base64 = null,\n        List = null,\n        Set = null,\n        Map = null,\n        Bigint = null,\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
             }
         },
         {
@@ -202,7 +226,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(\n    new NestedObjectWithOptionalField { String = null, NestedObject = null }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(\n    new NestedObjectWithOptionalField\n    {\n        String = \"string\",\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
             }
         },
         {
@@ -214,7 +238,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(\n    \"string\",\n    new NestedObjectWithRequiredField\n    {\n        String = \"string\",\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = null,\n            Integer = null,\n            Long = null,\n            Double = null,\n            Bool = null,\n            Datetime = null,\n            Date = null,\n            Uuid = null,\n            Base64 = null,\n            List = null,\n            Set = null,\n            Map = null,\n            Bigint = null,\n        },\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(\n    \"string\",\n    new NestedObjectWithRequiredField\n    {\n        String = \"string\",\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
             }
         },
         {
@@ -226,7 +250,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(\n    new List<NestedObjectWithRequiredField>()\n    {\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = null,\n                Integer = null,\n                Long = null,\n                Double = null,\n                Bool = null,\n                Datetime = null,\n                Date = null,\n                Uuid = null,\n                Base64 = null,\n                List = null,\n                Set = null,\n                Map = null,\n                Bigint = null,\n            },\n        },\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = null,\n                Integer = null,\n                Long = null,\n                Double = null,\n                Bool = null,\n                Datetime = null,\n                Date = null,\n                Uuid = null,\n                Base64 = null,\n                List = null,\n                Set = null,\n                Map = null,\n                Bigint = null,\n            },\n        },\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(\n    new List<NestedObjectWithRequiredField>()\n    {\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = \"string\",\n                Integer = 1,\n                Long = 1000000,\n                Double = 1.1,\n                Bool = true,\n                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                Date = new DateOnly(2023, 1, 15),\n                Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                Base64 = \"SGVsbG8gd29ybGQh\",\n                List = new List<string>() { \"list\", \"list\" },\n                Set = new HashSet<string>() { \"set\" },\n                Map = new Dictionary<int, string>() { { 1, \"map\" } },\n                Bigint = \"1000000\",\n            },\n        },\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = \"string\",\n                Integer = 1,\n                Long = 1000000,\n                Double = 1.1,\n                Bool = true,\n                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                Date = new DateOnly(2023, 1, 15),\n                Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                Base64 = \"SGVsbG8gd29ybGQh\",\n                List = new List<string>() { \"list\", \"list\" },\n                Set = new HashSet<string>() { \"set\" },\n                Map = new Dictionary<int, string>() { { 1, \"map\" } },\n                Bigint = \"1000000\",\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -418,7 +442,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithObjectBodyandResponseAsync(\n    new PostWithObjectBody\n    {\n        String = \"string\",\n        Integer = 1,\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = null,\n            Integer = null,\n            Long = null,\n            Double = null,\n            Bool = null,\n            Datetime = null,\n            Date = null,\n            Uuid = null,\n            Base64 = null,\n            List = null,\n            Set = null,\n            Map = null,\n            Bigint = null,\n        },\n    }\n);\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithObjectBodyandResponseAsync(\n    new PostWithObjectBody\n    {\n        String = \"string\",\n        Integer = 1,\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
             }
         },
         {

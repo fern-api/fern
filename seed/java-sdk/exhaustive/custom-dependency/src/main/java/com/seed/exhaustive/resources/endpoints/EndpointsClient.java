@@ -6,6 +6,7 @@ package com.seed.exhaustive.resources.endpoints;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Suppliers;
 import com.seed.exhaustive.resources.endpoints.container.ContainerClient;
+import com.seed.exhaustive.resources.endpoints.contenttype.ContentTypeClient;
 import com.seed.exhaustive.resources.endpoints.enum_.EnumClient;
 import com.seed.exhaustive.resources.endpoints.httpmethods.HttpMethodsClient;
 import com.seed.exhaustive.resources.endpoints.object.ObjectClient;
@@ -18,6 +19,8 @@ public class EndpointsClient {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ContainerClient> containerClient;
+
+    protected final Supplier<ContentTypeClient> contentTypeClient;
 
     protected final Supplier<EnumClient> enumClient;
 
@@ -34,6 +37,7 @@ public class EndpointsClient {
     public EndpointsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.containerClient = Suppliers.memoize(() -> new ContainerClient(clientOptions));
+        this.contentTypeClient = Suppliers.memoize(() -> new ContentTypeClient(clientOptions));
         this.enumClient = Suppliers.memoize(() -> new EnumClient(clientOptions));
         this.httpMethodsClient = Suppliers.memoize(() -> new HttpMethodsClient(clientOptions));
         this.objectClient = Suppliers.memoize(() -> new ObjectClient(clientOptions));
@@ -44,6 +48,10 @@ public class EndpointsClient {
 
     public ContainerClient container() {
         return this.containerClient.get();
+    }
+
+    public ContentTypeClient contentType() {
+        return this.contentTypeClient.get();
     }
 
     public EnumClient enum_() {

@@ -3,6 +3,7 @@
 namespace Seed\Endpoints;
 
 use Seed\Endpoints\Container\ContainerClient;
+use Seed\Endpoints\ContentType\ContentTypeClient;
 use Seed\Endpoints\Enum\EnumClient;
 use Seed\Endpoints\HttpMethods\HttpMethodsClient;
 use Seed\Endpoints\Object\ObjectClient;
@@ -17,6 +18,11 @@ class EndpointsClient
      * @var ContainerClient $container
      */
     public ContainerClient $container;
+
+    /**
+     * @var ContentTypeClient $contentType
+     */
+    public ContentTypeClient $contentType;
 
     /**
      * @var EnumClient $enum
@@ -61,6 +67,7 @@ class EndpointsClient
     ) {
         $this->client = $client;
         $this->container = new ContainerClient($this->client);
+        $this->contentType = new ContentTypeClient($this->client);
         $this->enum = new EnumClient($this->client);
         $this->httpMethods = new HttpMethodsClient($this->client);
         $this->object = new ObjectClient($this->client);

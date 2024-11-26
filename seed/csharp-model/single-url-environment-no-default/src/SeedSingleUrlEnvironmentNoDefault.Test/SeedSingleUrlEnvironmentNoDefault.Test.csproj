@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedSingleUrlEnvironmentNoDefault\SeedSingleUrlEnvironmentNoDefault.csproj" />
+        <ProjectReference Include="..\SeedSingleUrlEnvironmentNoDefault\SeedSingleUrlEnvironmentNoDefault.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedSingleUrlEnvironmentNoDefault.Test.Custom.props" Condition="Exists('SeedSingleUrlEnvironmentNoDefault.Test.Custom.props')" />
 </Project>

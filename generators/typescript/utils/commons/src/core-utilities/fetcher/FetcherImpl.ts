@@ -51,9 +51,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependencyManager.addDependency("@types/readable-stream", "^4.0.15", {
                 type: DependencyType.DEV
             });
-            dependencyManager.addDependency("fetch-mock-jest", "^1.5.1", {
-                type: DependencyType.DEV
-            });
             dependencyManager.addDependency("webpack", "^5.94.0", {
                 type: DependencyType.DEV
             });

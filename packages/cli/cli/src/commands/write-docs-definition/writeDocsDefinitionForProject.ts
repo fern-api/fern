@@ -30,7 +30,7 @@ export async function writeDocsDefinitionForProject({
         );
 
         const docsResolver = new DocsDefinitionResolver(
-            `https://${docsWorkspace.config.instances[0]?.url ?? "https://localhost:8080"}`,
+            docsWorkspace.config.instances[0]?.url ?? "http://localhost:8080",
             docsWorkspace,
             fernWorkspaces,
             context

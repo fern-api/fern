@@ -94,9 +94,9 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.auth.get_token_with_client_credentials(..., request_options={
-    "max_retries": 1
-})
-```
+        "max_retries": 1
+    })
+    ```
 
 ### Timeouts
 
@@ -104,7 +104,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedOauthClientCredentials
+    from seed import SeedOauthClientCredentials
 
 client = SeedOauthClientCredentials(
     ...,
@@ -112,11 +112,11 @@ client = SeedOauthClientCredentials(
 )
 
 
-# Override timeout for a specific method
-client.auth.get_token_with_client_credentials(..., request_options={
-    "timeout_in_seconds": 1
-})
-```
+    # Override timeout for a specific method
+    client.auth.get_token_with_client_credentials(..., request_options={
+        "timeout_in_seconds": 1
+    })
+    ```
 
 ### Custom Client
 

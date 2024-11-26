@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
 import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 
 /**
@@ -8,7 +8,7 @@ import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
  * is (optionally) used within the dynamic snippet, e.g. for named fields.
  */
 export interface TypeInstance {
-    name: Name;
+    name: NameAndWireValue;
     typeReference: DynamicSnippets.TypeReference;
     value: unknown;
 }

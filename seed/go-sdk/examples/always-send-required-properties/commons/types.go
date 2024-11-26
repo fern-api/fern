@@ -5,7 +5,7 @@ package commons
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/examples/fern/core"
+	internal "github.com/examples/fern/internal"
 )
 
 type Data struct {
@@ -20,6 +20,27 @@ func NewDataFromString(value string) *Data {
 
 func NewDataFromBase64(value []byte) *Data {
 	return &Data{Type: "base64", Base64: value}
+}
+
+func (d *Data) GetType() string {
+	if d == nil {
+		return ""
+	}
+	return d.Type
+}
+
+func (d *Data) GetString() string {
+	if d == nil {
+		return ""
+	}
+	return d.String
+}
+
+func (d *Data) GetBase64() []byte {
+	if d == nil {
+		return nil
+	}
+	return d.Base64
 }
 
 func (d *Data) UnmarshalJSON(data []byte) error {
@@ -109,6 +130,27 @@ func NewEventInfoFromTag(value Tag) *EventInfo {
 	return &EventInfo{Type: "tag", Tag: value}
 }
 
+func (e *EventInfo) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *EventInfo) GetMetadata() *Metadata {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
+}
+
+func (e *EventInfo) GetTag() Tag {
+	if e == nil {
+		return ""
+	}
+	return e.Tag
+}
+
 func (e *EventInfo) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -144,7 +186,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
-		return core.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
+		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
 	case "tag":
 		var marshaler = struct {
 			Type string `json:"type"`
@@ -179,7 +221,28 @@ type Metadata struct {
 	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (m *Metadata) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Metadata) GetData() map[string]string {
+	if m == nil {
+		return nil
+	}
+	return m.Data
+}
+
+func (m *Metadata) GetJsonString() *string {
+	if m == nil {
+		return nil
+	}
+	return m.JsonString
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
@@ -193,24 +256,22 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Metadata(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
-	m._rawJSON = json.RawMessage(data)
+	m.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (m *Metadata) String() string {
-	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

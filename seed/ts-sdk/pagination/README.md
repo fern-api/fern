@@ -20,8 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient, SeedPagination } from "@fern/pagination";
-import * as core from "../src/core";
+import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.users.listWithBodyCursorPagination({
@@ -76,7 +75,61 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const response = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.users.listWithCursorPagination({
+    page: 1,
+    perPage: 1,
+    order: "asc",
+    startingAfter: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
 ## Advanced
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
+the parsed response body will be available in the `body` field, along with the response headers:
+
+```typescript
+const response = await client.users.listWithBodyCursorPagination(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.users.listWithBodyCursorPagination(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

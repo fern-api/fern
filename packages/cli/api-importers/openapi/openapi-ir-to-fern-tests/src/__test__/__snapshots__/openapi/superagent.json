@@ -148,11 +148,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Agent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteAgent": {
@@ -184,6 +188,9 @@ types:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getAgent": {
               "auth": true,
@@ -214,6 +221,9 @@ types:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listAllAgents": {
               "auth": true,
@@ -234,6 +244,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "patchAgent": {
@@ -273,6 +286,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "promptAgent": {
@@ -320,11 +336,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PredictAgent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -342,6 +362,8 @@ types:
       method: GET
       auth: true
       docs: List all agents
+      source:
+        openapi: ../openapi.yml
       display-name: List All Agents
       response:
         docs: Successful Response
@@ -355,6 +377,8 @@ types:
       method: POST
       auth: true
       docs: Create a new agent
+      source:
+        openapi: ../openapi.yml
       display-name: Create Agent
       request:
         name: Agent
@@ -391,6 +415,8 @@ types:
       method: GET
       auth: true
       docs: Get a specific agent
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         agentId: string
       display-name: Get Agent
@@ -410,6 +436,8 @@ types:
       method: DELETE
       auth: true
       docs: Delete a specific agent
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         agentId: string
       display-name: Delete Agent
@@ -429,6 +457,8 @@ types:
       method: PATCH
       auth: true
       docs: Patch a specific agent
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         agentId: string
       display-name: Patch Agent
@@ -454,6 +484,8 @@ types:
       method: POST
       auth: true
       docs: Invoke a specific agent
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         agentId: string
       display-name: Prompt Agent
@@ -528,11 +560,15 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ApiToken",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteApiToken": {
@@ -564,6 +600,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getApiToken": {
               "auth": true,
@@ -594,6 +633,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listApiTokens": {
               "auth": true,
@@ -615,6 +657,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -631,6 +676,8 @@ imports:
       method: GET
       auth: true
       docs: List all API tokens
+      source:
+        openapi: ../openapi.yml
       display-name: List Api Tokens
       response:
         docs: Successful Response
@@ -644,6 +691,8 @@ imports:
       method: POST
       auth: true
       docs: Create a new API token
+      source:
+        openapi: ../openapi.yml
       display-name: Create Api Token
       request:
         name: ApiToken
@@ -667,6 +716,8 @@ imports:
       method: GET
       auth: true
       docs: Get a specific API token
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tokenId: string
       display-name: Get Api Token
@@ -686,6 +737,8 @@ imports:
       method: DELETE
       auth: true
       docs: Delete a specific API token
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         tokenId: string
       display-name: Delete Api Token
@@ -749,11 +802,15 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignIn",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "signUp": {
@@ -795,11 +852,15 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignUp",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -818,6 +879,8 @@ service:
       path: /api/v1/auth/sign-in
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Sign In
       request:
         name: SignIn
@@ -842,6 +905,8 @@ service:
       path: /api/v1/auth/sign-up
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Sign Up
       request:
         name: SignUp
@@ -930,11 +995,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Document",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteDocument": {
@@ -966,6 +1035,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getDocument": {
               "auth": true,
@@ -996,6 +1068,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listDocuments": {
               "auth": true,
@@ -1017,6 +1092,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1033,6 +1111,8 @@ service:
       method: GET
       auth: true
       docs: List all documents
+      source:
+        openapi: ../openapi.yml
       display-name: List Documents
       response:
         docs: Successful Response
@@ -1046,6 +1126,8 @@ service:
       method: POST
       auth: true
       docs: Create a new document
+      source:
+        openapi: ../openapi.yml
       display-name: Create Document
       request:
         name: Document
@@ -1083,6 +1165,8 @@ service:
       method: GET
       auth: true
       docs: Get a specific document
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         documentId: string
       display-name: Get Document
@@ -1102,6 +1186,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific document
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         documentId: string
       display-name: Delete Document
@@ -1169,11 +1255,15 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Prompt",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deletePrompt": {
@@ -1205,6 +1295,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getPrompt": {
               "auth": true,
@@ -1235,6 +1328,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listPrompts": {
               "auth": true,
@@ -1255,6 +1351,9 @@ imports:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "patchPrompt": {
@@ -1295,6 +1394,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1311,6 +1413,8 @@ imports:
       method: GET
       auth: true
       docs: List all prompts
+      source:
+        openapi: ../openapi.yml
       display-name: List Prompts
       response:
         docs: Successful Response
@@ -1324,6 +1428,8 @@ imports:
       method: POST
       auth: true
       docs: Create a new prompt
+      source:
+        openapi: ../openapi.yml
       display-name: Create A Prompt
       request:
         name: Prompt
@@ -1352,6 +1458,8 @@ imports:
       method: GET
       auth: true
       docs: Get a specific prompt
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         promptId: string
       display-name: Get Prompt
@@ -1371,6 +1479,8 @@ imports:
       method: DELETE
       auth: true
       docs: Delete a specific prompt
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         promptId: string
       display-name: Delete Prompt
@@ -1390,6 +1500,8 @@ imports:
       method: PATCH
       auth: true
       docs: Patch a specific prompt
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         promptId: string
       display-name: Patch Prompt
@@ -1462,11 +1574,15 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Tool",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteTool": {
@@ -1498,6 +1614,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTool": {
               "auth": true,
@@ -1528,6 +1647,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listTools": {
               "auth": true,
@@ -1549,6 +1671,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1565,6 +1690,8 @@ imports:
       method: GET
       auth: true
       docs: List all tools
+      source:
+        openapi: ../openapi.yml
       display-name: List Tools
       response:
         docs: Successful Response
@@ -1578,6 +1705,8 @@ imports:
       method: POST
       auth: true
       docs: Create a new tool
+      source:
+        openapi: ../openapi.yml
       display-name: Create A Tool
       request:
         name: Tool
@@ -1605,6 +1734,8 @@ imports:
       method: GET
       auth: true
       docs: Get a specific tool
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         toolId: string
       display-name: Get Tool
@@ -1624,6 +1755,8 @@ imports:
       method: DELETE
       auth: true
       docs: Delete a specific tool
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         toolId: string
       display-name: Delete Tool
@@ -1671,6 +1804,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1687,6 +1823,8 @@ imports:
       method: GET
       auth: true
       docs: List all agent traces
+      source:
+        openapi: ../openapi.yml
       display-name: List Agent Traces
       response:
         docs: Successful Response
@@ -1738,6 +1876,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "readUserMe": {
               "auth": true,
@@ -1759,6 +1900,9 @@ imports:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -1774,6 +1918,8 @@ imports:
       path: /api/v1/users/me
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Read User Me
       response:
         docs: Successful Response
@@ -1786,6 +1932,8 @@ imports:
       path: /api/v1/users/{userId}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId: string
       display-name: Read User

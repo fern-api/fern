@@ -23,6 +23,18 @@ export function getExamplesFromExtension(
             // [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
+    const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = exampleEndpointCalls.filter(
+        (example) => {
+            const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
+            if (!maybeFernExample.ok) {
+                context.logger.error(
+                    `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
+                );
+            }
+            return maybeFernExample.ok;
+        }
+    );
+
     const redoclyCodeSamplesKebabCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
             operationObject,
@@ -47,7 +59,7 @@ export function getExamplesFromExtension(
     ];
 
     if (redoclyCodeSamples.length > 0) {
-        exampleEndpointCalls.push({
+        validatedExampleEndpointCalls.push({
             "code-samples": redoclyCodeSamples.map(
                 (value): RawSchemas.ExampleCodeSampleSchema => ({
                     name: value.label ?? value.lang,
@@ -62,10 +74,10 @@ export function getExamplesFromExtension(
 
     const readmeCodeSamples = getRawReadmeCodeSamples(operationObject);
     if (readmeCodeSamples.length > 0) {
-        exampleEndpointCalls.push({
+        validatedExampleEndpointCalls.push({
             "code-samples": readmeCodeSamples
         });
     }
 
-    return exampleEndpointCalls.map(EndpointExample.unknown);
+    return validatedExampleEndpointCalls.map(EndpointExample.unknown);
 }

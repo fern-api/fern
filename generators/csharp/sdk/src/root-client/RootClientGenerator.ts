@@ -116,7 +116,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -124,7 +124,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 

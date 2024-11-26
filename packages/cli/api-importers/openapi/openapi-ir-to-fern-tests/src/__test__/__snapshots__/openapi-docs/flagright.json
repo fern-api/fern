@@ -479,6 +479,9 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                 "docs": "OK",
                 "type": "Business",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get-consumer-transaction": {
               "auth": true,
@@ -630,6 +633,9 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
               "response": {
                 "docs": "OK",
                 "type": "TransactionWithRulesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get-consumer-user": {
@@ -786,6 +792,9 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
                 "docs": "OK",
                 "type": "User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "post-business-user": {
               "auth": true,
@@ -861,6 +870,9 @@ Each consumer Business entity needs three mandatory fields:
               "response": {
                 "docs": "Created",
                 "type": "PostBusinessUserResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "post-business-user-event": {
@@ -1288,11 +1300,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BusinessUserEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "BusinessWithRulesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "post-consumer-transaction": {
@@ -1457,6 +1473,9 @@ Here are some of the most used payload fields explained (you can find the full p
                 "docs": "Created",
                 "type": "PostConsumerTransactionResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "post-consumer-user": {
               "auth": true,
@@ -1592,6 +1611,9 @@ Each consumer User entity needs three mandatory fields:
               "response": {
                 "docs": "Created",
                 "type": "PostConsumerUserResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "post-transaction-event": {
@@ -1812,11 +1834,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TransactionEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "TransactionEventMonitoringResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "post-user-event": {
@@ -2050,11 +2076,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ConsumerUserEvent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
                 "type": "UserWithRulesResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -7590,6 +7620,8 @@ service:
         destination (ex: `CARD`, `IBAN`, `WALLET` etc). You can click on the
         dropdown next to the field in the schema below to view all supported
         payment types.
+      source:
+        openapi: ../openapi.yml
       display-name: Verify a Transaction
       request:
         body: Transaction
@@ -7711,6 +7743,8 @@ service:
         Calling `GET /transactions/{transactionId}` will return the entire
         transaction payload and rule execution results for the transaction with
         the corresponding `transactionId`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         transactionId:
           type: string
@@ -7866,6 +7900,8 @@ service:
 
         In order to make individual events retrievable, you also need to pass in
         a unique `eventId` to the request body.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a Transaction Event
       request:
         name: TransactionEvent
@@ -8040,6 +8076,8 @@ service:
 
         * `createdTimestamp` - UNIX timestamp in *milliseconds* for when the
         User is created in your system
+      source:
+        openapi: ../openapi.yml
       display-name: Create a Consumer User
       request:
         body:
@@ -8136,6 +8174,8 @@ service:
         Calling `GET /consumer/user/{userId}` will return the entire user
         payload and rule execution results for the user with the corresponding
         `userId`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId:
           type: string
@@ -8266,6 +8306,8 @@ service:
 
         * `createdTimestamp` - UNIX timestamp in *milliseconds* for when the
         User is created in your system
+      source:
+        openapi: ../openapi.yml
       display-name: Create a Business User
       request:
         body: Business
@@ -8324,6 +8366,8 @@ service:
         Calling `GET /business/user/{userId}` will return the entire User
         payload and rule execution results for the User with the corresponding
         `userId`
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         userId:
           type: string
@@ -8582,6 +8626,8 @@ service:
 
         In order to make individual events retrievable, you also need to pass in
         a unique `eventId` to the request body.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a Consumer User Event
       request:
         name: ConsumerUserEvent
@@ -8768,6 +8814,8 @@ service:
 
         In order to make individual events retrievable, you also need to pass in
         a unique `eventId` to the request body.
+      source:
+        openapi: ../openapi.yml
       display-name: Create a Business User Event
       request:
         name: BusinessUserEvent

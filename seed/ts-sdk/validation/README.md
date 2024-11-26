@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedValidationClient, SeedValidation } from "@fern/validation";
+import { SeedValidationClient } from "@fern/validation";
 
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
@@ -64,6 +64,30 @@ try {
 ```
 
 ## Advanced
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
+the parsed response body will be available in the `body` field, along with the response headers:
+
+```typescript
+const response = await client.create(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.create(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

@@ -95,6 +95,13 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             }
         }
         this.context.logger.debug("Imported OpenAPI specs");
+
+        // We're currently setting one instance so that clients can generate docs out of the box,
+        // but they'll have the option to add additional instances and custom domains later.
+        const instanceUrl = builder.setInstance({
+            companyName: mint.name
+        });
+        this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
     }
 
     private async getNavigationBuilder({

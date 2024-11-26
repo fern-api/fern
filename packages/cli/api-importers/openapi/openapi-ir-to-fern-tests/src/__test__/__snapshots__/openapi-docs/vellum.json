@@ -373,12 +373,16 @@ Executes a deployed Workflow and streams back its results.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ExecuteWorkflowStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "WorkflowStreamEvent",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Predict",
             },
@@ -467,11 +471,15 @@ Generate a completion using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "GenerateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Predict",
             },
@@ -560,12 +568,16 @@ Generate a stream of completions using a previously defined deployment.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "GenerateStreamBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "GenerateStreamResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Predict",
             },
@@ -650,11 +662,15 @@ Perform a search against a document index.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SearchRequestBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "SearchResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Predict",
             },
@@ -714,7 +730,11 @@ Used to submit feedback regarding the quality of previously generated completion
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SubmitCompletionActualsRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Predict",
             },
@@ -2661,6 +2681,8 @@ Used to submit feedback regarding the quality of previously generated completion
 
 
         Executes a deployed Workflow and streams back its results.
+      source:
+        openapi: ../openapi.yml
       request:
         name: ExecuteWorkflowStreamRequest
         body:
@@ -2742,6 +2764,8 @@ Used to submit feedback regarding the quality of previously generated completion
 
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
+      source:
+        openapi: ../openapi.yml
       request:
         name: GenerateBodyRequest
         body:
@@ -2808,6 +2832,8 @@ Used to submit feedback regarding the quality of previously generated completion
 
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
+      source:
+        openapi: ../openapi.yml
       request:
         name: GenerateStreamBodyRequest
         body:
@@ -2877,6 +2903,8 @@ Used to submit feedback regarding the quality of previously generated completion
 
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
+      source:
+        openapi: ../openapi.yml
       request:
         name: SearchRequestBodyRequest
         body:
@@ -2939,6 +2967,8 @@ Used to submit feedback regarding the quality of previously generated completion
 
 
         **Note:** Uses a base url of `https://predict.vellum.ai`.
+      source:
+        openapi: ../openapi.yml
       request:
         name: SubmitCompletionActualsRequest
         body:
@@ -4479,6 +4509,9 @@ Used to retrieve a deployment given its ID or name.
                 "docs": "",
                 "type": "root.DeploymentRead",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
               "url": "Default",
             },
           },
@@ -4504,6 +4537,8 @@ service:
 
 
         Used to retrieve a deployment given its ID or name.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -4713,11 +4748,15 @@ Creates a new document index.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIndexCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.DocumentIndexRead",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -4743,6 +4782,8 @@ service:
 
 
         Creates a new document index.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DocumentIndexCreateRequest
         body:
@@ -4925,6 +4966,12 @@ Used to list documents. Optionally filter on supported fields.
                   "document_index_id": {
                     "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "limit": {
                     "docs": "Number of results to return per page.",
@@ -4943,6 +4990,9 @@ Used to list documents. Optionally filter on supported fields.
               "response": {
                 "docs": "",
                 "type": "root.PaginatedSlimDocumentList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -5013,11 +5063,15 @@ Upload a document to be indexed and used for search.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "UploadDocumentBodyRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.UploadDocumentResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Documents",
             },
@@ -5044,6 +5098,8 @@ service:
 
 
         Used to list documents. Optionally filter on supported fields.
+      source:
+        openapi: ../openapi.yml
       request:
         name: DocumentsListRequest
         query-parameters:
@@ -5053,6 +5109,8 @@ service:
               Filter down to only those documents that are included in the
               specified index. You may provide either the Vellum-generated ID or
               the unique name of the index specified upon initial creation.
+            validation:
+              format: uuid
           limit:
             type: optional<integer>
             docs: Number of results to return per page.
@@ -5098,6 +5156,8 @@ service:
 
 
         **Note:** Uses a base url of `https://documents.vellum.ai`.
+      source:
+        openapi: ../openapi.yml
       request:
         name: UploadDocumentBodyRequest
         body:
@@ -5203,11 +5263,15 @@ Compiles the prompt backing the model version using the provided input values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ModelVersionCompilePromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.ModelVersionCompilePromptResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -5288,6 +5352,9 @@ Used to retrieve a model version given its ID.
                 "docs": "",
                 "type": "root.ModelVersionRead",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
               "url": "Default",
             },
           },
@@ -5313,6 +5380,8 @@ service:
 
 
         Used to retrieve a model version given its ID.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -5371,6 +5440,8 @@ service:
 
         Compiles the prompt backing the model version using the provided input
         values.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -5549,11 +5620,15 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RegisterPromptRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.RegisterPromptResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -5586,6 +5661,8 @@ service:
 
         Under the hood, this endpoint creates a new sandbox, a new model
         version, and a new deployment.
+      source:
+        openapi: ../openapi.yml
       request:
         name: RegisterPromptRequestRequest
         body:
@@ -5717,6 +5794,9 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
                   "docs": "An id identifying the scenario that you'd like to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -5863,11 +5943,15 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSandboxScenarioRequestRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.SandboxScenario",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -5906,6 +5990,8 @@ service:
         not provided will be removed
 
         or overwritten with default values.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -5998,6 +6084,8 @@ service:
 
         Deletes an existing scenario from a sandbox, keying off of the provided
         scenario id.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -6049,6 +6137,9 @@ Deletes an existing test case for a test suite, keying off of the test case id."
                   "docs": "An id identifying the test case that you'd like to delete",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -6127,11 +6218,15 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestSuiteTestCaseRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.TestSuiteTestCase",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
               "url": "Default",
             },
@@ -6170,6 +6265,8 @@ service:
         fields not provided will be removed
 
         or overwritten with default values.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string
@@ -6229,6 +6326,8 @@ service:
 
         Deletes an existing test case for a test suite, keying off of the test
         case id.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         id:
           type: string

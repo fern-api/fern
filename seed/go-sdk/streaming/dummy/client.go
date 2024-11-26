@@ -6,13 +6,14 @@ import (
 	context "context"
 	v2 "github.com/fern-api/stream-go/v2"
 	core "github.com/fern-api/stream-go/v2/core"
+	internal "github.com/fern-api/stream-go/v2/internal"
 	option "github.com/fern-api/stream-go/v2/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -36,28 +37,27 @@ func (c *Client) GenerateStream(
 	opts ...option.RequestOption,
 ) (*core.Stream[v2.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/generate-stream"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	streamer := core.NewStreamer[v2.StreamResponse](c.caller)
+	streamer := internal.NewStreamer[v2.StreamResponse](c.caller)
 	return streamer.Stream(
 		ctx,
-		&core.StreamParams{
+		&internal.StreamParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
+			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
-			Headers:         headers,
 			Client:          options.HTTPClient,
 			Request:         request,
 		},
@@ -70,26 +70,25 @@ func (c *Client) Generate(
 	opts ...option.RequestOption,
 ) (*v2.StreamResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/generate"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *v2.StreamResponse
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

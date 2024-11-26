@@ -11,6 +11,8 @@ service:
         - {}
       method: POST
       path: /pets
+      source:
+        openapi: openapi/petstore/openapi.yml
     listPets:
       auth: false
       display-name: List all pets
@@ -30,9 +32,13 @@ service:
           limit:
             docs: How many items to return at one time (max 100)
             type: optional<integer>
+            validation:
+              max: 100
       response:
         docs: A paged array of pets
         type: neopetsRoot.Pets
+      source:
+        openapi: openapi/petstore/openapi.yml
     showPetById:
       auth: false
       display-name: Info for a specific pet
@@ -55,5 +61,7 @@ service:
       response:
         docs: Expected response to a valid request
         type: neopetsRoot.Pet
+      source:
+        openapi: openapi/petstore/openapi.yml
   source:
     openapi: openapi/petstore/openapi.yml

@@ -57,6 +57,9 @@
                 "docs": "",
                 "type": "list<SourceResult>",
               },
+              "source": {
+                "openapi": "../openapi.yaml",
+              },
             },
             "List Jobs": {
               "auth": true,
@@ -130,6 +133,9 @@
                 "docs": "",
                 "type": "list<JobRequest>",
               },
+              "source": {
+                "openapi": "../openapi.yaml",
+              },
             },
             "Start Job": {
               "auth": true,
@@ -173,11 +179,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "content-type": "application/json; charset=utf-8",
                 "headers": undefined,
                 "name": "BaseRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "JobId",
+              },
+              "source": {
+                "openapi": "../openapi.yaml",
               },
             },
           },
@@ -1254,6 +1264,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       method: GET
       auth: true
       docs: Sort and filter jobs.
+      source:
+        openapi: ../openapi.yaml
       display-name: List Jobs
       request:
         name: ListJobsRequest
@@ -1305,6 +1317,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       method: POST
       auth: true
       docs: Start a new batch job.
+      source:
+        openapi: ../openapi.yaml
       display-name: Start Job
       request:
         name: BaseRequest
@@ -1349,6 +1363,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       method: GET
       auth: true
       docs: Get the JSON predictions of a completed job.
+      source:
+        openapi: ../openapi.yaml
       path-parameters:
         id: string
       display-name: Get Job Predictions
@@ -2220,6 +2236,9 @@ types:
                 "docs": "",
                 "type": "root.JobRequest",
               },
+              "source": {
+                "openapi": "../openapi.yaml",
+              },
             },
             "get_job_artifacts": {
               "auth": true,
@@ -2234,6 +2253,9 @@ types:
               "response": {
                 "docs": "",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.yaml",
               },
             },
           },
@@ -2251,6 +2273,8 @@ types:
       method: GET
       auth: true
       docs: Get the artifacts ZIP of a completed job.
+      source:
+        openapi: ../openapi.yaml
       path-parameters:
         id: string
       display-name: Get Job Artifacts
@@ -2262,6 +2286,8 @@ types:
       method: GET
       auth: true
       docs: Get the request details and state of a given job.
+      source:
+        openapi: ../openapi.yaml
       path-parameters:
         id: string
       display-name: Get Job Details

@@ -8,6 +8,7 @@ import * as core from "../../../../../../core";
 import { Declaration } from "../../declaration/types/Declaration";
 import { NamedParameter } from "../../types/types/NamedParameter";
 import { InlinedRequestBody } from "./InlinedRequestBody";
+import { InlinedRequestMetadata } from "./InlinedRequestMetadata";
 
 export const InlinedRequest: core.serialization.ObjectSchema<
     serializers.dynamic.InlinedRequest.Raw,
@@ -18,6 +19,7 @@ export const InlinedRequest: core.serialization.ObjectSchema<
     queryParameters: core.serialization.list(NamedParameter).optional(),
     headers: core.serialization.list(NamedParameter).optional(),
     body: InlinedRequestBody.optional(),
+    metadata: InlinedRequestMetadata.optional(),
 });
 
 export declare namespace InlinedRequest {
@@ -27,5 +29,6 @@ export declare namespace InlinedRequest {
         queryParameters?: NamedParameter.Raw[] | null;
         headers?: NamedParameter.Raw[] | null;
         body?: InlinedRequestBody.Raw | null;
+        metadata?: InlinedRequestMetadata.Raw | null;
     }
 }

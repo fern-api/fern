@@ -8,6 +8,7 @@ export interface OAuthClientCredentials {
     clientIdEnvVar: FernIr.EnvironmentVariable | undefined;
     clientSecretEnvVar: FernIr.EnvironmentVariable | undefined;
     tokenPrefix: string | undefined;
+    tokenHeader: string | undefined;
     scopes: string[] | undefined;
     tokenEndpoint: FernIr.OAuthTokenEndpoint;
     refreshEndpoint: FernIr.OAuthRefreshEndpoint | undefined;

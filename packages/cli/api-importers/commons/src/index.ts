@@ -4,4 +4,4 @@ export {
     FernDefinitionBuilderImpl,
     type FernDefinition,
     type HttpServiceInfo
-} from "./FernDefnitionBuilder";
+} from "./FernDefinitionBuilder";

@@ -40,11 +40,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "user_stream": {
@@ -80,12 +84,16 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserStreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "StreamUser",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "user_v2": {
@@ -121,11 +129,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV2Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "User2",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "user_v2_stream": {
@@ -163,12 +175,16 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV2StreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "StreamUser2",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "user_v3": {
@@ -203,11 +219,15 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV3Request",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "UserV3Response",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "user_v3_stream": {
@@ -245,12 +265,16 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserV3StreamRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
                 "type": "UserV3StreamResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -378,6 +402,8 @@
       path: /v1/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserStreamRequest
         body:
@@ -401,6 +427,8 @@
       path: /v1/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserRequest
         body:
@@ -423,6 +451,8 @@
       path: /v2/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserV2StreamRequest
         body:
@@ -448,6 +478,8 @@
       path: /v2/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserV2Request
         body:
@@ -472,6 +504,8 @@
       path: /v3/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserV3StreamRequest
         body:
@@ -497,6 +531,8 @@
       path: /v3/users
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       request:
         name: UserV3Request
         body:

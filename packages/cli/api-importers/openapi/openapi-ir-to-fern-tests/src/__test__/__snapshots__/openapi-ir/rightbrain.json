@@ -22302,6 +22302,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -22387,6 +22406,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -25167,6 +25203,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -25252,6 +25307,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -28032,6 +28104,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -28117,6 +28208,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -30897,6 +31005,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -30982,6 +31109,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -33762,6 +33906,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -33847,6 +34010,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -36627,6 +36807,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -36712,6 +36911,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {
@@ -39492,6 +39708,25 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "FetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "FetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPostRequest",
+          "schema": "Body_fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/x-www-form-urlencoded",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "additionalProperties": false,
+        "type": "json"
+      },
       "response": {
         "description": "Successful Response",
         "schema": {
@@ -39577,6 +39812,23 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {

@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedLiteral\SeedLiteral.csproj" />
+        <ProjectReference Include="..\SeedLiteral\SeedLiteral.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedLiteral.Test.Custom.props" Condition="Exists('SeedLiteral.Test.Custom.props')" />
 </Project>

@@ -13,7 +13,6 @@ export const DocsInstance: core.serialization.ObjectSchema<serializers.DocsInsta
             "custom-domain",
             core.serialization.lazy(async () => (await import("../../..")).CustomDomain).optional()
         ),
-        audiences: core.serialization.lazy(async () => (await import("../../..")).AudiencesConfig).optional(),
         private: core.serialization.boolean().optional(),
         editThisPage: core.serialization.property(
             "edit-this-page",
@@ -25,7 +24,6 @@ export declare namespace DocsInstance {
     interface Raw {
         url: string;
         "custom-domain"?: serializers.CustomDomain.Raw | null;
-        audiences?: serializers.AudiencesConfig.Raw | null;
         private?: boolean | null;
         "edit-this-page"?: serializers.EditThisPageConfig.Raw | null;
     }

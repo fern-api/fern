@@ -4,7 +4,6 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../cli/configuration" },
-    { "path": "../cli/dynamic-snippets" },
     { "path": "../cli/generation/local-generation/local-workspace-runner" },
     { "path": "../cli/logger" },
     { "path": "../cli/login" },

@@ -5353,6 +5353,9 @@
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "whoami_whoami_get": {
               "auth": true,
@@ -5376,6 +5379,9 @@
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -10455,6 +10461,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       method: GET
       auth: false
       docs: Root endpoint that returns a "Hello World" message.
+      source:
+        openapi: ../openapi.yml
       display-name: Root
       response:
         docs: Successful Response
@@ -10467,6 +10475,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       path: /whoami
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Whoami
       response:
         docs: Successful Response
@@ -16573,11 +16583,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Chat",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getChat": {
@@ -16618,6 +16632,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Chat",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getChatConfig": {
@@ -16669,6 +16686,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.ChatConfig",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getMember": {
               "auth": true,
@@ -16709,6 +16729,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getRecentChatsForUser": {
               "auth": true,
@@ -16748,6 +16771,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.Chat>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamListMembers": {
@@ -16802,6 +16828,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "iamTestPermissions": {
               "auth": true,
@@ -16854,11 +16883,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamUpdateMemberRoles": {
@@ -16922,11 +16955,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "queryChat": {
@@ -16972,6 +17009,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ChatDocumentQueryResult>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "setChatConfig": {
@@ -17059,11 +17099,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatConfig",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ChatConfig",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateChat": {
@@ -17113,11 +17157,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Chat",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -17241,6 +17289,8 @@ service:
       path: /chat/recent
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Get Recent Chats For User
       request:
         name: GetRecentChatsForUserChatRecentGetRequest
@@ -17267,6 +17317,8 @@ service:
       path: /chat/{chat_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: Get Chat
@@ -17295,6 +17347,8 @@ service:
       path: /chat/{chat_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: Update Chat
@@ -17331,6 +17385,8 @@ service:
       path: /chat/{chat_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: Get Chat Config
@@ -17361,6 +17417,8 @@ service:
       path: /chat/{chat_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: Set Chat Config
@@ -17424,6 +17482,8 @@ service:
       path: /chat
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Create Chat
       request:
         name: ChatCreate
@@ -17465,6 +17525,8 @@ service:
       path: /chat/{chat_id}/query
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: Query Chat
@@ -17494,6 +17556,8 @@ service:
       method: GET
       auth: true
       docs: Lists all members that have been granted direct access to the chat.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: IAM - List Chat Members
@@ -17531,6 +17595,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         chat.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
         member: string
@@ -17559,6 +17625,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the chat.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
         member: string
@@ -17616,6 +17684,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         chat.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         chat_id: string
       display-name: IAM - Test Chat Permissions
@@ -17788,6 +17858,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.Collection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "collectionEdit": {
               "auth": true,
@@ -17847,11 +17920,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Collection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "collectionRemove": {
@@ -17915,6 +17992,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.Collection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "collectionStats": {
               "auth": true,
@@ -17956,6 +18036,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.CollectionStatsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createCollection": {
@@ -18017,11 +18100,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Collection",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getCollection": {
@@ -18074,6 +18161,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.Collection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getMember": {
               "auth": true,
@@ -18117,6 +18207,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamListMembers": {
@@ -18175,6 +18268,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "iamTestPermissions": {
               "auth": true,
@@ -18231,11 +18327,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamUpdateMemberRoles": {
@@ -18303,11 +18403,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listChats": {
@@ -18369,6 +18473,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetChat",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listCollections": {
@@ -18433,6 +18540,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetCollection",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "queryCollection": {
               "auth": true,
@@ -18477,11 +18587,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CollectionQuery",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateSummary": {
@@ -18521,6 +18635,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "response": {
                 "docs": "Successful Response",
                 "type": "root.AsyncJobResult",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -18592,6 +18709,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18637,6 +18756,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18683,6 +18804,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18722,6 +18845,8 @@ service:
       method: POST
       auth: true
       docs: Edit collection details
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18768,6 +18893,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/stats
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18798,6 +18925,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/chat
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18844,6 +18973,8 @@ service:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/query
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18881,6 +19012,8 @@ service:
       method: POST
       auth: true
       docs: Generate and update the summary for a collection
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18911,6 +19044,8 @@ service:
       method: POST
       auth: true
       docs: Add an embedding instance to the collection
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -18957,6 +19092,8 @@ service:
       method: POST
       auth: true
       docs: Remove an embedding instance from the collection
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19006,6 +19143,8 @@ service:
       docs: >-
         Lists all members that have been granted direct access to the
         collection.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19048,6 +19187,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         collection.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19081,6 +19222,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the collection.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19142,6 +19285,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         collection.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19288,11 +19433,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyGenerateOrgOrgIdProjectProjectIdComposeGeneratePost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "initialise": {
@@ -19336,6 +19485,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "sectionTalkingPoints": {
@@ -19395,11 +19547,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodySectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "topic": {
@@ -19447,11 +19603,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ComposeTopicPoint",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateSection": {
@@ -19515,11 +19675,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodyUpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPost",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -19538,6 +19702,8 @@ service:
       path: /org/{org_id}/project/{project_id}/compose
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19569,6 +19735,8 @@ service:
       path: /org/{org_id}/project/{project_id}/compose/generate
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19610,6 +19778,8 @@ service:
       path: /org/{org_id}/project/{project_id}/compose/update_section
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19656,6 +19826,8 @@ service:
       path: /org/{org_id}/project/{project_id}/compose/section_talking_points
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19700,6 +19872,8 @@ service:
       path: /org/{org_id}/project/{project_id}/compose/topic
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -19777,6 +19951,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -19807,6 +19984,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -19871,6 +20051,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -19907,6 +20090,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -19921,6 +20107,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -19955,9 +20146,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -19996,6 +20196,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -20048,6 +20251,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -20111,6 +20317,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -20157,6 +20366,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20175,6 +20387,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20212,11 +20426,18 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -20228,6 +20449,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -20251,6 +20475,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20276,6 +20502,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20303,6 +20531,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20349,6 +20579,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20398,6 +20630,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20427,6 +20661,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20461,6 +20697,8 @@ service:
       path: /datasource/box/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceBoxCallbackGetRequest
@@ -20521,6 +20759,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -20551,6 +20792,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -20615,6 +20859,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -20651,6 +20898,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -20665,6 +20915,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -20699,9 +20954,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -20740,6 +21004,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -20792,6 +21059,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -20855,6 +21125,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -20901,6 +21174,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -20919,6 +21195,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -20957,11 +21235,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -20973,6 +21258,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -20996,6 +21284,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21021,6 +21311,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21049,6 +21341,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21096,6 +21390,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21146,6 +21442,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21176,6 +21474,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21210,6 +21510,8 @@ service:
       path: /datasource/confluence/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceConfluenceCallbackGetRequest
@@ -21271,6 +21573,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -21301,6 +21606,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -21365,6 +21673,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -21401,6 +21712,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -21415,6 +21729,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -21449,9 +21768,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -21490,6 +21818,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -21542,6 +21873,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -21605,6 +21939,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -21651,6 +21988,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -21669,6 +22009,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21707,11 +22049,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -21723,6 +22072,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -21746,6 +22098,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21771,6 +22125,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21799,6 +22155,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21846,6 +22204,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21896,6 +22256,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21926,6 +22288,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -21960,6 +22324,8 @@ service:
       path: /datasource/dropbox/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceDropboxCallbackGetRequest
@@ -22021,6 +22387,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -22051,6 +22420,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -22115,6 +22487,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -22151,6 +22526,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -22165,6 +22543,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -22199,9 +22582,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -22240,6 +22632,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -22292,6 +22687,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -22355,6 +22753,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -22401,6 +22802,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -22419,6 +22823,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22457,11 +22863,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -22473,6 +22886,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -22496,6 +22912,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22521,6 +22939,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22549,6 +22969,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22595,6 +23017,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22645,6 +23069,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22675,6 +23101,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -22709,6 +23137,8 @@ service:
       path: /datasource/gdrive/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceGdriveCallbackGetRequest
@@ -22770,6 +23200,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -22800,6 +23233,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -22864,6 +23300,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -22900,6 +23339,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -22914,6 +23356,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -22948,9 +23395,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -22989,6 +23445,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -23041,6 +23500,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -23104,6 +23566,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -23150,6 +23615,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -23168,6 +23636,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23206,11 +23676,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -23222,6 +23699,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -23245,6 +23725,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23270,6 +23752,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23298,6 +23782,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23344,6 +23830,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23394,6 +23882,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23424,6 +23914,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23458,6 +23950,8 @@ service:
       path: /datasource/notion/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceNotionCallbackGetRequest
@@ -23519,6 +24013,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -23549,6 +24046,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -23613,6 +24113,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -23649,6 +24152,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -23663,6 +24169,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -23697,9 +24208,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -23738,6 +24258,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -23790,6 +24313,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -23853,6 +24379,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -23899,6 +24428,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -23917,6 +24449,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -23955,11 +24489,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -23971,6 +24512,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -23994,6 +24538,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24019,6 +24565,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24047,6 +24595,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24094,6 +24644,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24144,6 +24696,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24174,6 +24728,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24208,6 +24764,8 @@ service:
       path: /datasource/onedrive/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceOnedriveCallbackGetRequest
@@ -24269,6 +24827,9 @@ service:
                   "redirect_to": "optional<string>",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "callback": {
               "auth": true,
@@ -24299,6 +24860,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "checkStatus": {
@@ -24363,6 +24927,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "delete": {
               "auth": true,
@@ -24399,6 +24966,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "fetch": {
               "auth": true,
@@ -24413,6 +24983,11 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "request": {
+                    "id": [
+                      "id",
+                    ],
                   },
                   "response": {
                     "body": {
@@ -24447,9 +25022,18 @@ service:
                 "org_id": "string",
                 "project_id": "string",
               },
+              "request": {
+                "body": {
+                  "type": "root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost",
+                },
+                "content-type": "application/x-www-form-urlencoded",
+              },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getConfiguration": {
@@ -24488,6 +25072,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceConfiguration",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listFiles": {
@@ -24540,6 +25127,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ObjectList",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -24603,6 +25193,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "setConfiguration": {
               "auth": true,
@@ -24649,6 +25242,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -24667,6 +25263,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/list-files
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24705,11 +25303,18 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
         connection_id: string
       display-name: Fetch
+      request:
+        body:
+          type: >-
+            root.BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost
+        content-type: application/x-www-form-urlencoded
       response:
         docs: Successful Response
         type: root.DatasourceSyncRun
@@ -24721,6 +25326,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          request:
+            id:
+              - id
           response:
             body:
               task_id: task_id
@@ -24744,6 +25352,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24769,6 +25379,8 @@ service:
       path: /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24797,6 +25409,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24844,6 +25458,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24894,6 +25510,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24924,6 +25542,8 @@ service:
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -24958,6 +25578,8 @@ service:
       path: /datasource/sharepoint/callback
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Callback
       request:
         name: CallbackDatasourceSharepointCallbackGetRequest
@@ -25040,11 +25662,15 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_document_create_org__org_id__project__project_id__document_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DocumentStatusResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentDelete": {
@@ -25082,6 +25708,9 @@ service:
                 "docs": "Successful Response",
                 "type": "unknown",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "documentEmbeddingGet": {
               "auth": false,
@@ -25118,6 +25747,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ChatDocumentEmbeddingRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentEmbeddingQuery": {
@@ -25171,6 +25803,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetChatDocumentEmbeddingRecord",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentFetch": {
@@ -25228,6 +25863,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ChatDocument",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentList": {
@@ -25302,6 +25940,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetChatDocument",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "documentQuery": {
               "auth": true,
@@ -25350,6 +25991,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ChatDocumentQueryResult>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentUpdate": {
@@ -25419,11 +26063,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ChatDocumentUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ChatDocument",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "documentUpload": {
@@ -25489,11 +26137,15 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_document_upload_org__org_id__project__project_id__document_upload_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "list<root.ChatDocument>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getMember": {
@@ -25538,6 +26190,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamListMembers": {
@@ -25596,6 +26251,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "iamTestPermissions": {
               "auth": true,
@@ -25652,11 +26310,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamUpdateMemberRoles": {
@@ -25724,11 +26386,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DocumentIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "taskStatus": {
@@ -25775,6 +26441,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DocumentStatusResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -25907,6 +26576,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -25962,6 +26633,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26002,6 +26675,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/upload
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26052,6 +26727,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/create/status/{group_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26085,6 +26762,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/query
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26120,6 +26799,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26163,6 +26844,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26216,6 +26899,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26243,6 +26928,8 @@ service:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/embeddings
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26286,6 +26973,8 @@ service:
       docs: >-
         Fetch an individual embedding record by its ID. Useful for examining the
         source submitted to an LLM
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26313,6 +27002,8 @@ service:
       method: GET
       auth: true
       docs: Lists all members that have been granted direct access to the document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26355,6 +27046,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26388,6 +27081,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26449,6 +27144,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         document.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -26556,11 +27253,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OAuthClientCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OAuthClientCreateResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "webhookHydraTokenHook": {
@@ -26603,11 +27304,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "HydraWebhookTokenHook",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "webhookKratosSignupCheck": {
@@ -26656,6 +27361,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.KratosWebhookResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "webhookKratosSignupCommit": {
               "auth": false,
@@ -26703,6 +27411,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.KratosWebhookResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -26720,6 +27431,8 @@ service:
       path: /internal/webhook/hydra/token_hook
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Webhook Hydra Token Hook
       request:
         name: HydraWebhookTokenHook
@@ -26748,6 +27461,8 @@ service:
       path: /internal/project/{project_id}/register_oauth_client
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         project_id: string
       display-name: Register Oauth Client
@@ -26791,6 +27506,8 @@ service:
       path: /internal/webhook/kratos/signup_check
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Webhook Kratos Signup Check
       request:
         body:
@@ -26819,6 +27536,8 @@ service:
       path: /internal/webhook/kratos/signup_commit
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.yml
       display-name: Webhook Kratos Signup Commit
       request:
         body:
@@ -26977,6 +27696,9 @@ service:
                 "docs": "Successful Response",
                 "type": "list<root.ChatModel>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "listAvailableGuardrails": {
               "auth": false,
@@ -27014,6 +27736,9 @@ service:
                 "docs": "Successful Response",
                 "type": "list<root.ChatGuardrail>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -27034,6 +27759,8 @@ service:
       docs: >-
         All supported LLM providers and models. Not all models have the same
         functionality.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -27145,6 +27872,8 @@ service:
       path: /org/{org_id}/project/{project_id}/guardrail
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -27223,11 +27952,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Org",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgDomainDelete": {
@@ -27264,6 +27997,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationDomain",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgDomainsList": {
@@ -27308,6 +28044,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetOrganizationDomain",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "orgDomainsPost": {
               "auth": true,
@@ -27350,11 +28089,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationDomainCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationDomain",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgGet": {
@@ -27390,6 +28133,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Org",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgInvitesCreate": {
@@ -27446,11 +28192,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgInviteBase",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.OrganizationInvite",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgInvitesDelete": {
@@ -27476,6 +28226,9 @@ service:
               "path-parameters": {
                 "org_id": "string",
                 "org_invite_id": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgInvitesList": {
@@ -27530,6 +28283,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetOrganizationInvite",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "orgJoin": {
               "auth": true,
@@ -27568,6 +28324,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "orgList": {
               "auth": true,
@@ -27599,6 +28358,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgUpdate": {
@@ -27649,11 +28411,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrgUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Org",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "orgUpdateAvatar": {
@@ -27696,11 +28462,15 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_org_update_avatar_org__org_id__avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Org",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "organization_get_member": {
@@ -27741,6 +28511,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "organization_iam_list_members": {
@@ -27795,6 +28568,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "organization_iam_test_permissions": {
               "auth": true,
@@ -27847,11 +28623,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "organization_iam_update_member_roles": {
@@ -27915,11 +28695,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OrganizationIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -28026,6 +28810,8 @@ service:
       docs: >-
         Lists all members that have been granted direct access to the
         organization.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: IAM - List Organization Members
@@ -28063,6 +28849,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         organization.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         member: string
@@ -28091,6 +28879,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the organization.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         member: string
@@ -28148,6 +28938,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         organization.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: IAM - Test Organization Permissions
@@ -28184,6 +28976,8 @@ service:
       path: /org
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Org List
       request:
         name: OrgListOrgGetRequest
@@ -28204,6 +28998,8 @@ service:
       path: /org
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: Org Create
       request:
         name: OrgCreate
@@ -28234,6 +29030,8 @@ service:
       path: /org/{org_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Get
@@ -28257,6 +29055,8 @@ service:
       path: /org/{org_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Update
@@ -28290,6 +29090,8 @@ service:
       path: /org/{org_id}/join
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Join
@@ -28315,6 +29117,8 @@ service:
       path: /org/{org_id}/invite
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Invites List
@@ -28349,6 +29153,8 @@ service:
       path: /org/{org_id}/invite
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Invites Create
@@ -28385,6 +29191,8 @@ service:
       path: /org/{org_id}/invite/{org_invite_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         org_invite_id: string
@@ -28404,6 +29212,8 @@ service:
       path: /org/{org_id}/domains
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Domains List
@@ -28431,6 +29241,8 @@ service:
       path: /org/{org_id}/domains
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Domains Post
@@ -28461,6 +29273,8 @@ service:
       path: /org/{org_id}/domains/{domain_id}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         domain_id: string
@@ -28487,6 +29301,8 @@ service:
       path: /org/{org_id}/avatar
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Org Update Avatar
@@ -28570,11 +29386,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Project",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getMember": {
@@ -28617,6 +29437,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getProject": {
@@ -28674,6 +29497,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.ProjectWithDatasources",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getProjectConfig": {
               "auth": false,
@@ -28723,6 +29549,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ProjectConfig",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamListMembers": {
@@ -28779,6 +29608,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "iamTestPermissions": {
               "auth": true,
@@ -28833,11 +29665,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "iamUpdateMemberRoles": {
@@ -28903,11 +29739,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listProject": {
@@ -28961,6 +29801,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetProject",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "projectUpdateAvatar": {
               "auth": true,
@@ -29005,11 +29848,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_project_update_avatar_org__org_id__project__project_id__avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Project",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "setProjectConfig": {
@@ -29098,11 +29945,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectConfig",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.ProjectConfig",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateProject": {
@@ -29150,11 +30001,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ProjectUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Project",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -29304,6 +30159,8 @@ service:
       path: /org/{org_id}/project
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: List Project
@@ -29338,6 +30195,8 @@ service:
       path: /org/{org_id}/project
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
       display-name: Create Project
@@ -29370,6 +30229,8 @@ service:
       path: /org/{org_id}/project/{project_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29410,6 +30271,8 @@ service:
       path: /org/{org_id}/project/{project_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29445,6 +30308,8 @@ service:
       path: /org/{org_id}/project/{project_id}/config
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29476,6 +30341,8 @@ service:
       path: /org/{org_id}/project/{project_id}/config
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29540,6 +30407,8 @@ service:
       path: /org/{org_id}/project/{project_id}/avatar
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29578,6 +30447,8 @@ service:
       method: GET
       auth: true
       docs: Lists all members that have been granted direct access to the project.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29617,6 +30488,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         project.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29647,6 +30520,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the project.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29706,6 +30581,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         project.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -29896,6 +30773,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "enable": {
               "auth": true,
@@ -29927,6 +30807,9 @@ types:
               "response": {
                 "docs": "Successful Response",
                 "type": "unknown",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "fetch": {
@@ -30001,11 +30884,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SiteScrapeRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.DatasourceSyncRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "listRuns": {
@@ -30065,6 +30952,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetDatasourceSyncRun",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
           },
           "source": {
@@ -30082,6 +30972,8 @@ service:
       path: /org/{org_id}/project/{project_id}/scrape
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -30103,6 +30995,8 @@ service:
       path: /org/{org_id}/project/{project_id}/scrape/start
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -30154,6 +31048,8 @@ service:
       path: /org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -30192,6 +31088,8 @@ service:
       path: /org/{org_id}/project/{project_id}/scrape/runs
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -30326,11 +31224,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskForwarderCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TaskForwarder",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getAllTaskForwarders": {
@@ -30399,16 +31301,32 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetTaskForwarder",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTaskForwarder": {
@@ -30470,6 +31388,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TaskForwarder",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "updateTaskForwarder": {
@@ -30553,11 +31474,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskForwarderUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TaskForwarder",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -30576,6 +31501,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task_forwarder
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -30592,11 +31519,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskForwarder
@@ -30639,6 +31571,8 @@ service:
         A Task Forwarder will receive the output of a Task and forward it to the
         specified destination. This can be used to send data to external
         systems, or to trigger other actions based on the output of a Task.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -30712,6 +31646,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -30757,6 +31693,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -30977,11 +31915,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Task",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "editTask": {
@@ -31119,11 +32061,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.Task",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getAllTasks": {
@@ -31204,6 +32150,12 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "name": {
                     "docs": "Filter tasks by name. Supports partial matches.",
@@ -31212,12 +32164,22 @@ service:
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetTask",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTask": {
@@ -31298,6 +32260,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.Task",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "getTaskRun": {
               "audiences": [
@@ -31369,6 +32334,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TaskRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getTaskRuns": {
@@ -31448,20 +32416,42 @@ service:
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "task_revision_id": {
                     "docs": "The specific Task Revision to reference.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetTaskRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "runTask": {
@@ -31544,11 +32534,15 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_Task_Run_Parameters",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.TaskRun",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "task_get_member": {
@@ -31593,6 +32587,9 @@ service:
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "task_iam_list_members": {
@@ -31651,6 +32648,9 @@ service:
                 "docs": "Successful Response",
                 "type": "root.PaginatedResultSetIamMember",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "task_iam_test_permissions": {
               "auth": true,
@@ -31707,11 +32707,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskIAMPermissionTest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMPermissionTest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "task_iam_update_member_roles": {
@@ -31779,11 +32783,15 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TaskIAMMemberRoleUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.IAMMember",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -31990,6 +32998,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32009,11 +33019,16 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTask
@@ -32079,6 +33094,8 @@ service:
       docs: >-
         Tasks are the core of the platform and define the prompts and models
         used to generate responses.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32232,6 +33249,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task/{task_id}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32305,6 +33324,8 @@ service:
       path: /org/{org_id}/project/{project_id}/task/{task_id}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32438,6 +33459,8 @@ service:
       method: GET
       auth: true
       docs: Individual Task Runs provide an audit trail for all Task executions.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32457,14 +33480,21 @@ service:
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
+            validation:
+              min: 1
+              max: 100
           cursor:
             type: optional<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
+            validation:
+              format: uuid
           task_revision_id:
             type: optional<string>
             docs: The specific Task Revision to reference.
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: root.PaginatedResultSetTaskRun
@@ -32517,6 +33547,8 @@ service:
         Run a specified Task against provided text and/or image input. The
         response is controlled by the `output_format` of the Task. Note that a
         Task must be `enabled` to be run.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32588,6 +33620,8 @@ service:
       method: GET
       auth: true
       docs: Lists all members that have been granted direct access to the task.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -32629,6 +33663,8 @@ service:
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         task.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -32661,6 +33697,8 @@ service:
       method: POST
       auth: true
       docs: Update the roles that a member holds on the task.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -32722,6 +33760,8 @@ service:
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         task.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id: string
         project_id: string
@@ -32763,6 +33803,8 @@ service:
       method: GET
       auth: true
       docs: Fetch an individual Task Run.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         org_id:
           type: string
@@ -32973,6 +34015,9 @@ types:
                 "docs": "Successful Response",
                 "type": "root.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "userPost": {
               "auth": true,
@@ -33012,11 +34057,15 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserProfileUpdate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "userUpdateAvatar": {
@@ -33052,11 +34101,15 @@ types:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "Body_user_update_avatar_user_avatar_post",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
                 "type": "root.User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -33076,6 +34129,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve the profile of the current user.
+      source:
+        openapi: ../openapi.yml
       display-name: User Get
       response:
         docs: Successful Response
@@ -33095,6 +34150,8 @@ service:
       method: POST
       auth: true
       docs: Update the profile of the current user.
+      source:
+        openapi: ../openapi.yml
       display-name: User Post
       request:
         name: UserProfileUpdate
@@ -33123,6 +34180,8 @@ service:
       path: /user/avatar
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.yml
       display-name: User Update Avatar
       request:
         name: Body_user_update_avatar_user_avatar_post

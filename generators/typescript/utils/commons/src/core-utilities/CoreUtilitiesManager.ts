@@ -27,6 +27,7 @@ import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
+import { PromiseUtilsImpl } from "./promise/PromiseUtilsImpl";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -53,7 +54,8 @@ export class CoreUtilitiesManager {
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
-            utils: new UtilsImpl({ getReferenceToExport })
+            utils: new UtilsImpl({ getReferenceToExport }),
+            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport })
         };
     }
 

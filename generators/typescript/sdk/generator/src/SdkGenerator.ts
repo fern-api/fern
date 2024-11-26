@@ -18,6 +18,7 @@ import {
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
+    getFullPathForEndpoint,
     getTextOfTsNode,
     ImportsManager,
     JavaScriptRuntime,
@@ -43,7 +44,6 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
-import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
@@ -900,7 +900,7 @@ export class SdkGenerator {
                     }).generateSnippetTemplate();
 
                     if (snippetTemplate != null) {
-                        const endpointPath = FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint));
+                        const endpointPath = FernGeneratorExec.EndpointPath(getFullPathForEndpoint(endpoint));
                         this.context.logger.debug(
                             `Snippet template created for endpoint: ${endpoint.method} ${endpointPath}`
                         );
@@ -950,7 +950,7 @@ export class SdkGenerator {
                     if (snippet != null) {
                         const endpointSnippet: FernGeneratorExec.Endpoint = {
                             id: {
-                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                path: FernGeneratorExec.EndpointPath(getFullPathForEndpoint(endpoint)),
                                 method: endpoint.method,
                                 identifierOverride: endpoint.id
                             },
@@ -1068,21 +1068,6 @@ export class SdkGenerator {
             .filter((param) => param.name !== "requestOptions")
             .map((param) => (param.name === "request" ? "{ ...params }" : param.name))
             .join(", ")})`;
-    }
-
-    // TODO(dsinghvi): HACKHACK Move this to IR
-    private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-        let url = "";
-        if (endpoint.fullPath.head.length > 0) {
-            url = urlJoin(url, endpoint.fullPath.head);
-        }
-        for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, "{" + part.pathParameter + "}");
-            if (part.tail.length > 0) {
-                url = urlJoin(url, part.tail);
-            }
-        }
-        return url.startsWith("/") ? url : `/${url}`;
     }
 
     private generateVersion(): void {
@@ -1298,7 +1283,8 @@ export class SdkGenerator {
             inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients,
             omitUndefined: this.config.omitUndefined,
-            useBigInt: this.config.useBigInt
+            useBigInt: this.config.useBigInt,
+            neverThrowErrors: this.config.neverThrowErrors
         });
     }
 }

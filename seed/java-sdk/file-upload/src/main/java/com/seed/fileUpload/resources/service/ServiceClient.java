@@ -245,6 +245,9 @@ public class ServiceClient {
             body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
             body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
             body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+            if (request.getFoobar().isPresent()) {
+                body.addFormDataPart("foobar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoobar()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

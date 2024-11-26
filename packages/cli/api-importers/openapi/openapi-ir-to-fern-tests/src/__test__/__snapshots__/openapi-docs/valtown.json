@@ -1034,6 +1034,9 @@ API endpoints",
                 "docs": "Default Response",
                 "type": "root.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "val": {
               "auth": false,
@@ -1087,6 +1090,9 @@ API endpoints",
               "response": {
                 "docs": "A Val",
                 "type": "AliasValResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1280,6 +1286,8 @@ service:
       method: GET
       auth: false
       docs: Get basic details about a user, given their username
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         username:
           type: string
@@ -1304,6 +1312,8 @@ service:
       method: GET
       auth: false
       docs: Get a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         username:
           type: string
@@ -1490,6 +1500,9 @@ types:
                   "type": "string",
                 },
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "get": {
               "auth": false,
@@ -1506,6 +1519,9 @@ types:
               "response": {
                 "docs": "Binary contents of the returned file",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -1540,6 +1556,9 @@ types:
                 "docs": "List of blobs that you’ve stored",
                 "type": "list<BlobListingItem>",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "store": {
               "auth": true,
@@ -1573,6 +1592,9 @@ types:
                   },
                 },
                 "content-type": "application/json",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1621,6 +1643,8 @@ service:
       method: GET
       auth: false
       docs: List blobs in your account
+      source:
+        openapi: ../openapi.yml
       request:
         name: BlobsListRequest
         query-parameters:
@@ -1641,6 +1665,8 @@ service:
       method: GET
       auth: false
       docs: Get a blob’s contents.
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1653,6 +1679,8 @@ service:
       method: POST
       auth: true
       docs: Store data in blob storage
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1673,6 +1701,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a blob
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         key:
           type: string
@@ -1762,11 +1792,15 @@ docs: Blobs
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EmailsSendRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successfully sent email",
                 "type": "EmailsSendResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -1930,6 +1964,8 @@ service:
       method: POST
       auth: true
       docs: Send emails
+      source:
+        openapi: ../openapi.yml
       request:
         name: EmailsSendRequest
         body:
@@ -2040,10 +2076,24 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "relationship": {
                     "docs": "Whether to get comments you have received, given, or both",
@@ -2062,6 +2112,9 @@ give access to details and data from the requesting user.",
               "response": {
                 "docs": "A paginated result set",
                 "type": "MeCommentsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -2091,6 +2144,9 @@ give access to details and data from the requesting user.",
               "response": {
                 "docs": "Your user information, with tier and email included",
                 "type": "MeGetResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "likes": {
@@ -2144,16 +2200,33 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "A paginated result set",
                 "type": "MeLikesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "references": {
@@ -2198,10 +2271,24 @@ give access to details and data from the requesting user.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "since": {
                     "docs": "Include items created after this date",
@@ -2216,6 +2303,9 @@ give access to details and data from the requesting user.",
               "response": {
                 "docs": "A paginated result set",
                 "type": "MeReferencesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -2763,6 +2853,8 @@ service:
       method: GET
       auth: false
       docs: Get profile information for the current user
+      source:
+        openapi: ../openapi.yml
       response:
         docs: Your user information, with tier and email included
         type: MeGetResponse
@@ -2783,15 +2875,22 @@ service:
       method: GET
       auth: false
       docs: Get vals liked by the current user
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeLikesRequest
         query-parameters:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: MeLikesResponse
@@ -2827,15 +2926,22 @@ service:
       method: GET
       auth: false
       docs: Get comments related to current user, either given or received
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeCommentsRequest
         query-parameters:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           since:
             type: optional<datetime>
             docs: Include items created after this date
@@ -2875,15 +2981,22 @@ service:
       method: GET
       auth: false
       docs: Get vals that depend on any of the user's vals
+      source:
+        openapi: ../openapi.yml
       request:
         name: MeReferencesRequest
         query-parameters:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           since:
             type: optional<datetime>
             docs: Include items created after this date
@@ -2985,20 +3098,43 @@ imports:
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                   "query": {
                     "docs": "Search query",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 512,
+                      "minLength": 1,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "A paginated result set",
                 "type": "SearchValsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3038,18 +3174,28 @@ service:
       method: GET
       auth: false
       docs: Search for vals across the platform
+      source:
+        openapi: ../openapi.yml
       request:
         name: SearchValsRequest
         query-parameters:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
           query:
             type: string
             docs: Search query
+            validation:
+              minLength: 1
+              maxLength: 512
       response:
         docs: A paginated result set
         type: SearchValsResponse
@@ -3144,11 +3290,15 @@ docs: Search
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SqliteBatchRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Array of results from the statements executed",
                 "type": "list<root.ResultSet>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "execute": {
@@ -3223,11 +3373,15 @@ docs: Search
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SqliteExecuteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Default Response",
                 "type": "root.ResultSet",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3400,6 +3554,8 @@ service:
       method: POST
       auth: true
       docs: Execute a single SQLite statement and return results
+      source:
+        openapi: ../openapi.yml
       request:
         name: SqliteExecuteRequest
         body:
@@ -3444,6 +3600,8 @@ service:
       method: POST
       auth: true
       docs: Execute a batch of SQLite statements and return results for all of them
+      source:
+        openapi: ../openapi.yml
       request:
         name: SqliteBatchRequest
         body:
@@ -3522,6 +3680,9 @@ docs: SQLite
                 "docs": "Default Response",
                 "type": "root.User",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "vals": {
               "auth": false,
@@ -3583,16 +3744,33 @@ docs: SQLite
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "A paginated result set",
                 "type": "UsersValsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -3624,6 +3802,8 @@ service:
       method: GET
       auth: false
       docs: Get basic information about a user
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         user_id:
           type: string
@@ -3648,6 +3828,8 @@ service:
       method: GET
       auth: false
       docs: List a user's vals
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         user_id:
           type: string
@@ -3658,9 +3840,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: UsersValsResponse
@@ -3756,6 +3943,9 @@ let you get, create, and run vals.",
                 "docs": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
                 "type": "ValsCancelResponse",
               },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
             },
             "create": {
               "auth": true,
@@ -3846,11 +4036,15 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "createVersion": {
@@ -3951,11 +4145,15 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsCreateVersionRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "delete": {
@@ -3979,6 +4177,9 @@ let you get, create, and run vals.",
                   "docs": "Id of a val",
                   "type": "string",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "deleteVersion": {
@@ -4007,6 +4208,9 @@ let you get, create, and run vals.",
                   "docs": "The val version",
                   "type": "integer",
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "evalGet": {
@@ -4043,6 +4247,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "type": "optional<EvalGetResponse>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "evalPost": {
@@ -4099,11 +4306,15 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EvalPostRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Default Response",
                 "type": "optional<EvalPostResponse>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "get": {
@@ -4153,6 +4364,9 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "getVersion": {
@@ -4214,16 +4428,33 @@ let you get, create, and run vals.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "Default Response",
                 "type": "root.ExtendedVal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "list": {
@@ -4271,16 +4502,33 @@ let you get, create, and run vals.",
                   "limit": {
                     "docs": "Maximum items to return in each paginated response",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 100,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Number of items to skip in order to deliver paginated results",
                     "type": "integer",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": 0,
+                      "multipleOf": undefined,
+                    },
                   },
                 },
               },
               "response": {
                 "docs": "A paginated result set",
                 "type": "ValsListResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "put": {
@@ -4325,7 +4573,11 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsPutRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "runGet": {
@@ -4356,6 +4608,9 @@ let you get, create, and run vals.",
                     "type": "optional<string>",
                   },
                 },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "runPost": {
@@ -4392,7 +4647,11 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RunPostRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
             "update": {
@@ -4464,7 +4723,11 @@ let you get, create, and run vals.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ValsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
               },
             },
           },
@@ -4751,6 +5014,8 @@ service:
       method: POST
       auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
+      source:
+        openapi: ../openapi.yml
       request:
         name: EvalPostRequest
         body:
@@ -4793,6 +5058,8 @@ service:
       method: GET
       auth: false
       docs: Run JavaScript or TypeScript without saving it permanently as a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         code:
           type: string
@@ -4816,6 +5083,8 @@ service:
       method: GET
       auth: false
       docs: Run a val, specify any parameters in a querystring
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         valname:
           type: string
@@ -4837,6 +5106,8 @@ service:
       method: POST
       auth: false
       docs: Run a val, with arguments in the request body
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         valname:
           type: string
@@ -4859,6 +5130,8 @@ service:
       method: POST
       auth: true
       docs: Create a new val
+      source:
+        openapi: ../openapi.yml
       request:
         name: ValsCreateRequest
         body:
@@ -4929,6 +5202,8 @@ service:
       method: PUT
       auth: true
       docs: Run an existing val or create a new one
+      source:
+        openapi: ../openapi.yml
       request:
         name: ValsPutRequest
         body:
@@ -4955,6 +5230,8 @@ service:
       method: GET
       auth: false
       docs: Get a val by id
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -4991,6 +5268,8 @@ service:
       method: PUT
       auth: true
       docs: Update an existing val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5039,6 +5318,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5053,6 +5334,8 @@ service:
       method: GET
       auth: false
       docs: List versions of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5063,9 +5346,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: A paginated result set
         type: ValsListResponse
@@ -5090,6 +5378,8 @@ service:
       method: POST
       auth: true
       docs: Create a new version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5166,6 +5456,8 @@ service:
       method: GET
       auth: false
       docs: Get a specific version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5179,9 +5471,14 @@ service:
           offset:
             type: integer
             docs: Number of items to skip in order to deliver paginated results
+            validation:
+              min: 0
           limit:
             type: integer
             docs: Maximum items to return in each paginated response
+            validation:
+              min: 1
+              max: 100
       response:
         docs: Default Response
         type: root.ExtendedVal
@@ -5218,6 +5515,8 @@ service:
       method: DELETE
       auth: true
       docs: Delete a specific version of a val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string
@@ -5236,6 +5535,8 @@ service:
       method: POST
       auth: true
       docs: Cancel a running val
+      source:
+        openapi: ../openapi.yml
       path-parameters:
         val_id:
           type: string

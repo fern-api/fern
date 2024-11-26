@@ -26,7 +26,13 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
   "servers": [
     {
       "url": "https://api.example.com",
-      "description": "Production"
+      "description": "Production",
+      "x-internal": false
+    },
+    {
+      "url": "https://try.microcks.io/rest/Train+Travel+API/1.0.0",
+      "description": "Mock Server",
+      "x-internal": false
     }
   ],
   "security": [
@@ -73,16 +79,10 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "The page number to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            },
-            "example": 1
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
           },
           {
             "name": "coordinates",
@@ -106,6 +106,17 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
                 "Paris"
               ]
             }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Filter stations by country code",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "iso-country-code"
+            },
+            "example": "DE"
           }
         ],
         "responses": {
@@ -122,15 +133,35 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Station"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Wrapper-Collection"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Station"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Links-Self"
+                            },
+                            {
+                              "$ref": "#/components/schemas/Links-Pagination"
+                            }
+                          ]
+                        }
                       }
                     }
-                  }
+                  ]
                 },
                 "example": {
                   "data": [
@@ -223,6 +254,12 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
             "name": "origin",
             "in": "query",
             "description": "The ID of the origin station",
@@ -273,16 +310,6 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
             "schema": {
               "type": "boolean",
               "default": false
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "The page of results to be returned",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "default": 1
             }
           }
         ],
@@ -428,16 +455,10 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
         ],
         "parameters": [
           {
-            "name": "page",
-            "in": "query",
-            "description": "The page number to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            },
-            "example": 1
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
           }
         ],
         "responses": {
@@ -1015,6 +1036,33 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
     }
   },
   "components": {
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "The page number to return",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "example": 1
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The number of items to return per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        },
+        "example": 10
+      }
+    },
     "securitySchemes": {
       "OAuth2": {
         "type": "oauth2",
@@ -1120,27 +1168,37 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
           "type": {
             "type": "string",
             "description": "A URI reference that identifies the problem type",
-            "example": "https://example.com/probs/out-of-credit"
+            "examples": [
+              "https://example.com/probs/out-of-credit"
+            ]
           },
           "title": {
             "type": "string",
             "description": "A short, human-readable summary of the problem type",
-            "example": "You do not have enough credit."
+            "examples": [
+              "You do not have enough credit."
+            ]
           },
           "detail": {
             "type": "string",
             "description": "A human-readable explanation specific to this occurrence of the problem",
-            "example": "Your current balance is 30, but that costs 50."
+            "examples": [
+              "Your current balance is 30, but that costs 50."
+            ]
           },
           "instance": {
             "type": "string",
             "description": "A URI reference that identifies the specific occurrence of the problem",
-            "example": "/account/12345/msgs/abc"
+            "examples": [
+              "/account/12345/msgs/abc"
+            ]
           },
           "status": {
             "type": "integer",
             "description": "The HTTP status code",
-            "example": 400
+            "examples": [
+              400
+            ]
           }
         }
       },

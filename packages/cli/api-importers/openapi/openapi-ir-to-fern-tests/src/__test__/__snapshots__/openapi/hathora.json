@@ -947,6 +947,9 @@ types:
                 "docs": "",
                 "type": "root.Application",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "DeleteApp": {
               "auth": true,
@@ -967,6 +970,9 @@ types:
               "path": "/apps/v1/delete/{appId}",
               "path-parameters": {
                 "appId": "root.AppId",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetAppInfo": {
@@ -1008,6 +1014,9 @@ types:
               "response": {
                 "docs": "Ok",
                 "type": "root.Application",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetApps": {
@@ -1062,6 +1071,9 @@ types:
                 "docs": "Ok",
                 "type": "list<root.ApplicationWithDeployment>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "UpdateApp": {
               "auth": true,
@@ -1112,6 +1124,9 @@ types:
                 "docs": "Ok",
                 "type": "root.Application",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -1129,6 +1144,8 @@ service:
       path: /apps/v1/list
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       response:
         docs: Ok
         type: list<root.ApplicationWithDeployment>
@@ -1165,6 +1182,8 @@ service:
       path: /apps/v1/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       request:
         body: root.AppConfig
         content-type: application/json
@@ -1195,6 +1214,8 @@ service:
       path: /apps/v1/update/{appId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -1229,6 +1250,8 @@ service:
       path: /apps/v1/info/{appId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       response:
@@ -1256,6 +1279,8 @@ service:
       path: /apps/v1/delete/{appId}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       errors:
@@ -1306,6 +1331,9 @@ service:
                 "docs": "Ok",
                 "type": "LoginAnonymousResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "LoginGoogle": {
               "auth": false,
@@ -1344,11 +1372,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginGoogleRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "LoginGoogleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "LoginNickname": {
@@ -1387,11 +1419,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "LoginNicknameRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "LoginNicknameResponse",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -1455,6 +1491,8 @@ service:
       path: /auth/v1/{appId}/login/anonymous
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       response:
@@ -1472,6 +1510,8 @@ service:
       path: /auth/v1/{appId}/login/nickname
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -1497,6 +1537,8 @@ service:
       path: /auth/v1/{appId}/login/google
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -1577,6 +1619,9 @@ service:
                 "docs": "",
                 "type": "root.Build",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "DeleteBuild": {
               "auth": true,
@@ -1600,6 +1645,9 @@ service:
               "path-parameters": {
                 "appId": "root.AppId",
                 "buildId": "root.BuildId",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetBuildInfo": {
@@ -1646,6 +1694,9 @@ service:
                 "docs": "Ok",
                 "type": "root.Build",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetBuilds": {
               "auth": true,
@@ -1691,6 +1742,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.Build>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "RunBuild": {
               "auth": true,
@@ -1715,11 +1769,15 @@ service:
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "RunBuildRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "file",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -1738,6 +1796,8 @@ service:
       path: /builds/v1/{appId}/list
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       response:
@@ -1766,6 +1826,8 @@ service:
       path: /builds/v1/{appId}/info/{buildId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         buildId: root.BuildId
@@ -1796,6 +1858,8 @@ service:
       path: /builds/v1/{appId}/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       response:
@@ -1826,6 +1890,8 @@ service:
       path: /builds/v1/{appId}/run/{buildId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         buildId: root.BuildId
@@ -1845,6 +1911,8 @@ service:
       path: /builds/v1/{appId}/delete/{buildId}
       method: DELETE
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         buildId: root.BuildId
@@ -1934,6 +2002,9 @@ service:
                 "docs": "",
                 "type": "root.Deployment",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetDeploymentInfo": {
               "auth": true,
@@ -1980,6 +2051,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "root.Deployment",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetDeployments": {
@@ -2028,6 +2102,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.Deployment>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -2045,6 +2122,8 @@ service:
       path: /deployments/v1/{appId}/list
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       response:
@@ -2075,6 +2154,8 @@ service:
       path: /deployments/v1/{appId}/info/{deploymentId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         deploymentId: root.DeploymentId
@@ -2107,6 +2188,8 @@ service:
       path: /deployments/v1/{appId}/create/{buildId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         buildId: root.BuildId
@@ -2185,6 +2268,9 @@ service:
                 "docs": "Ok",
                 "type": "root.DiscoveryResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -2202,6 +2288,8 @@ service:
       path: /discovery/v1/ping
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.json
       response:
         docs: Ok
         type: root.DiscoveryResponse
@@ -2272,6 +2360,9 @@ service:
                 "docs": "Ok",
                 "type": "root.RoomId",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "CreatePublicLobbyDeprecated": {
               "auth": false,
@@ -2319,6 +2410,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "root.RoomId",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "ListActivePublicLobbiesDeprecated": {
@@ -2381,6 +2475,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.Lobby>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -2398,6 +2495,8 @@ service:
       path: /lobby/v1/{appId}/create/private
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -2430,6 +2529,8 @@ service:
       path: /lobby/v1/{appId}/create/public
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -2462,6 +2563,8 @@ service:
       path: /lobby/v1/{appId}/list
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -2578,6 +2681,7 @@ service:
                   },
                 },
                 "name": "CreateLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2585,6 +2689,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "CreateLocalLobby": {
@@ -2652,6 +2759,7 @@ service:
                   },
                 },
                 "name": "CreateLocalLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2659,6 +2767,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "CreatePrivateLobby": {
@@ -2726,6 +2837,7 @@ service:
                   },
                 },
                 "name": "CreatePrivateLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2733,6 +2845,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "CreatePublicLobby": {
@@ -2800,6 +2915,7 @@ service:
                   },
                 },
                 "name": "CreatePublicLobbyRequest",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "roomId": "optional<root.RoomId>",
                 },
@@ -2807,6 +2923,9 @@ service:
               "response": {
                 "docs": "",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetLobbyInfo": {
@@ -2850,6 +2969,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "ListActivePublicLobbies": {
@@ -2896,6 +3018,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "list<root.Lobby>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "SetLobbyState": {
@@ -2951,11 +3076,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SetLobbyStateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ok",
                 "type": "root.Lobby",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
           },
@@ -2986,6 +3115,8 @@ service:
       path: /lobby/v2/{appId}/create/private
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3037,6 +3168,8 @@ service:
       path: /lobby/v2/{appId}/create/public
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3088,6 +3221,8 @@ service:
       path: /lobby/v2/{appId}/create/local
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3139,6 +3274,8 @@ service:
       path: /lobby/v2/{appId}/create
       method: POST
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3191,6 +3328,8 @@ service:
       path: /lobby/v2/{appId}/list/public
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3220,6 +3359,8 @@ service:
       path: /lobby/v2/{appId}/info/{roomId}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId
@@ -3249,6 +3390,8 @@ service:
       path: /lobby/v2/{appId}/setState/{roomId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId
@@ -3330,6 +3473,9 @@ types:
                 "docs": "Ok",
                 "type": "file",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetLogsForDeployment": {
               "auth": true,
@@ -3354,6 +3500,9 @@ types:
               "response": {
                 "docs": "Ok",
                 "type": "text",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetLogsForProcess": {
@@ -3380,6 +3529,9 @@ types:
                 "docs": "Ok",
                 "type": "file",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -3397,6 +3549,8 @@ service:
       path: /logs/v1/{appId}/all
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3414,6 +3568,8 @@ service:
       path: /logs/v1/{appId}/process/{processId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         processId: root.ProcessId
@@ -3431,6 +3587,8 @@ service:
       path: /logs/v1/{appId}/deployment/{deploymentId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         deploymentId: root.DeploymentId
@@ -3524,6 +3682,9 @@ service:
                 "docs": "Ok",
                 "type": "root.MetricsResponse",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -3541,6 +3702,8 @@ service:
       path: /metrics/v1/{appId}/process/{processId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         processId: root.ProcessId
@@ -3636,6 +3799,9 @@ service:
                 "docs": "Ok",
                 "type": "root.Process",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetRunningProcesses": {
               "auth": true,
@@ -3696,6 +3862,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.ProcessWithRooms>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetStoppedProcesses": {
               "auth": true,
@@ -3748,6 +3917,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.Process>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -3765,6 +3937,8 @@ service:
       path: /processes/v1/{appId}/list/running
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3806,6 +3980,8 @@ service:
       path: /processes/v1/{appId}/list/stopped
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -3842,6 +4018,8 @@ service:
       path: /processes/v1/{appId}/info/{processId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         processId: root.ProcessId
@@ -3921,11 +4099,15 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateRoomRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
                 "type": "root.RoomId",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "DestroyRoom": {
@@ -3949,6 +4131,9 @@ service:
               "path-parameters": {
                 "appId": "root.AppId",
                 "roomId": "root.RoomId",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetActiveRoomsForProcess": {
@@ -3991,6 +4176,9 @@ service:
                 "docs": "Ok",
                 "type": "list<root.RoomWithoutAllocations>",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "GetConnectionInfo": {
               "auth": false,
@@ -4027,6 +4215,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "root.ConnectionInfo",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetInactiveRoomsForProcess": {
@@ -4068,6 +4259,9 @@ service:
               "response": {
                 "docs": "Ok",
                 "type": "list<root.RoomWithoutAllocations>",
+              },
+              "source": {
+                "openapi": "../openapi.json",
               },
             },
             "GetRoomInfo": {
@@ -4116,6 +4310,9 @@ service:
                 "docs": "Ok",
                 "type": "root.Room",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
             "SuspendRoom": {
               "auth": true,
@@ -4139,6 +4336,9 @@ service:
                 "appId": "root.AppId",
                 "roomId": "root.RoomId",
               },
+              "source": {
+                "openapi": "../openapi.json",
+              },
             },
           },
           "source": {
@@ -4156,6 +4356,8 @@ service:
       path: /rooms/v1/{appId}/create
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
       request:
@@ -4181,6 +4383,8 @@ service:
       path: /rooms/v1/{appId}/info/{roomId}
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId
@@ -4212,6 +4416,8 @@ service:
       path: /rooms/v1/{appId}/list/{processId}/active
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         processId: root.ProcessId
@@ -4238,6 +4444,8 @@ service:
       path: /rooms/v1/{appId}/list/{processId}/inactive
       method: GET
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         processId: root.ProcessId
@@ -4264,6 +4472,8 @@ service:
       path: /rooms/v1/{appId}/destroy/{roomId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId
@@ -4278,6 +4488,8 @@ service:
       path: /rooms/v1/{appId}/suspend/{roomId}
       method: POST
       auth: true
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId
@@ -4292,6 +4504,8 @@ service:
       path: /rooms/v1/{appId}/connectioninfo/{roomId}
       method: GET
       auth: false
+      source:
+        openapi: ../openapi.json
       path-parameters:
         appId: root.AppId
         roomId: root.RoomId

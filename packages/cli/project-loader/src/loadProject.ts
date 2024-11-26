@@ -30,6 +30,7 @@ export declare namespace loadProject {
         context: TaskContext;
         nameOverride?: string;
         sdkLanguage?: generatorsYml.GenerationLanguage;
+        preserveSchemaIds?: boolean;
     }
 
     export interface LoadProjectFromDirectoryArgs extends Args {

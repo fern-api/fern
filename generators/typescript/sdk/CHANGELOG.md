@@ -5,13 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.5] - 2024-11-23
+
+- Fix: Remove extraenous import in pagination snippets.
+
+## [0.42.4] - 2024-11-21
+
+- Fix: Improve `GeneratedTimeoutSdkError` error to include endpoint name in message.
+
+## [0.42.3] - 2024-11-22
+
+- Fix: Fixed issue with snippets used for pagination endpoints.
+
+## [0.42.2] - 2024-11-21
+
+- Improvement: Added documentation for pagination in the README. The snippet below will
+  now show up on generated READMEs.
+
+  ```typescript
+  // Iterate through all items
+  const response = await client.users.list();
+  for await (const item of response) {
+    console.log(item);
+  }
+
+  // Or manually paginate
+  let page = await client.users.list();
+  while (page.hasNextPage()) {
+    page = await page.getNextPage();
+  }
+  ```
+
+## [0.42.1] - 2024-11-20
+
+- Feat: Added support for passing additional headers in request options. For example:
+
+  ```ts
+  const response = await client.someEndpoint(..., {
+    headers: {
+      'X-Custom-Header': 'custom value'
+    }
+  });
+  ```
+
+## [0.42.0] - 2024-11-15
+
+- Feat: Added support for `.asRaw()` which allows users to access raw response data including headers. For example:
+
+  ```ts
+  const response = await client.someEndpoint().asRaw();
+  console.log(response.headers["X-My-Header"]);
+  console.log(response.body);
+  ```
+
+## [0.41.2] - 2024-11-18
+
+- Fix: Actually remove `jest-fetch-mock` from package.json.
+
 ## [0.41.1] - 2024-11-02
 
-- Fix: Remove dev dependency on `jest-fetch-mock`. 
+- Fix: Remove dev dependency on `jest-fetch-mock`.
 
 ## [0.41.0] - 2024-10-08
 
-- Improvement: Add a variable jitter to the exponential backoff and retry. 
+- Improvement: Add a variable jitter to the exponential backoff and retry.
 
 ## [0.41.0-rc2] - 2024-10-08
 
@@ -67,7 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     // serialize to json
 
     const json = serializers.Plant.toJson({
-      name: "fern",
+      name: "fern"
     });
 
     const parsed = serializers.Plant.parseOrThrow(`{ "name": "fern" }`);

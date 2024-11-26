@@ -1,5 +1,34 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`exhaustive (errors) > invalid request body 1`] = `
+[
+  {
+    "message": "Expected string but got boolean",
+    "path": [
+      "requestBody[0]",
+      "string",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": ""invalid" is not a recognized parameter for this endpoint",
+    "path": [
+      "requestBody[1]",
+      "invalid",
+    ],
+    "severity": "CRITICAL",
+  },
+  {
+    "message": "Expected string but got number",
+    "path": [
+      "requestBody[2]",
+      "string",
+    ],
+    "severity": "CRITICAL",
+  },
+]
+`;
+
 exports[`exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "package example
 

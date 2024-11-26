@@ -52,7 +52,7 @@ export async function generateDocsWorkspace({
             project.apiWorkspaces.map(async (workspace) => {
                 return workspace.toFernWorkspace(
                     { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
                 );
             })
         );

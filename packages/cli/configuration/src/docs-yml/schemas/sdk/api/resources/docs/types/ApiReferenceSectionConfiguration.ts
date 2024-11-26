@@ -4,7 +4,7 @@
 
 import * as FernDocsConfig from "../../..";
 
-export interface ApiReferenceSectionConfiguration {
+export interface ApiReferenceSectionConfiguration extends FernDocsConfig.WithPermissions {
     /** The title of the api package that will be displayed in the sidebar. */
     section: string;
     /** This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged. */

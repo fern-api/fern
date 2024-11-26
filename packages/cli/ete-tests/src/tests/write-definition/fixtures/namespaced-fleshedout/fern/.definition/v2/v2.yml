@@ -46,6 +46,7 @@ service:
         - v2Root.NotFoundError
         - v2Root.UnprocessableEntityError
         - v2Root.TooManyRequestsError
+        - v2Root.InvalidTokenError
         - v2Root.ClientClosedRequestError
         - v2Root.InternalServerError
         - v2Root.NotImplementedError
@@ -132,5 +133,7 @@ service:
       response:
         docs: OK
         type: list<string>
+      source:
+        openapi: openapi/cohere-v2.yaml
   source:
     openapi: openapi/cohere-v2.yaml

@@ -65,7 +65,9 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                 {
                                     samePropertiesAsObject: (extension) => ({
                                         extends: [FdrCjsSdk.TypeId(extension.typeId)],
-                                        properties: baseProperties
+                                        properties: baseProperties,
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     singleProperty: (singleProperty) => ({
                                         extends: [],
@@ -77,11 +79,15 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                                 availability: undefined
                                             },
                                             ...baseProperties
-                                        ]
+                                        ],
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     noProperties: () => ({
                                         extends: [],
-                                        properties: baseProperties
+                                        properties: baseProperties,
+                                        // TODO: add support for extra properties in discriminated union
+                                        extraProperties: undefined
                                     }),
                                     _other: () => {
                                         throw new Error(
@@ -190,12 +196,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     float: () => {
                         // TODO: Add support for float types in FDR. We render them as double for now
                         // (they have the same JSON representation).
-                        return {
-                            type: "double",
-                            minimum: 2.2250738585072014e-308,
-                            maximum: 1.7976931348623157e308,
-                            default: 0.0
-                        };
+                        return convertDouble(primitive.v2);
                     },
                     double: () => {
                         return convertDouble(primitive.v2);
@@ -281,7 +282,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         type: "string",
         regex: rules != null ? rules.pattern : undefined,
         minLength: rules != null ? rules.minLength : undefined,
-        maxLength: rules != null ? rules.minLength : undefined,
+        maxLength: rules != null ? rules.maxLength : undefined,
         default: primitive != null && primitive.type === "string" ? primitive.default : undefined
     };
 }

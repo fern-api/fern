@@ -25,9 +25,18 @@ import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
-import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
+import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import {
+    IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+    IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import {
+    REQUEST_OPTIONS_INTERFACE_NAME,
+    REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/RequestOptionsInterfaceGenerator";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
@@ -139,6 +148,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
+        if (this.hasPagination()) {
+            files.push(AsIsFiles.Page);
+            files.push(AsIsFiles.Pager);
+        }
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
@@ -149,12 +162,19 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return files;
     }
 
+    public hasPagination(): boolean {
+        return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
+    }
+
     public getCoreTestAsIsFiles(): string[] {
-        const files = [AsIsFiles.RawClientTests];
+        const files = [AsIsFiles.Test.RawClientTests];
         if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
-            files.push(AsIsFiles.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.StringEnumSerializerTests);
         } else {
-            files.push(AsIsFiles.EnumSerializerTests);
+            files.push(AsIsFiles.Test.EnumSerializerTests);
+        }
+        if (this.hasPagination()) {
+            AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
         return files;
     }
@@ -415,8 +435,33 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getRequestOptionsInterfaceReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getIdempotentRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespaceForPublicCoreClasses()
+        });
+    }
+
+    public getIdempotentRequestOptionsInterfaceClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getRequestOptionsParameterName(): string {
         return REQUEST_OPTIONS_PARAMETER_NAME;
+    }
+
+    public getIdempotentRequestOptionsParameterName(): string {
+        return IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME;
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
@@ -430,6 +475,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
+    }
+
+    public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint): boolean {
+        return service.transport?.type === "grpc" && endpoint.transport?.type !== "http";
     }
 
     public getExtraDependencies(): Record<string, string> {
@@ -452,6 +501,56 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.ir.auth.schemes[0];
         }
         return undefined;
+    }
+
+    public getPagerClassReference({ itemType }: { itemType: csharp.Type }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "Pager",
+            generics: [itemType]
+        });
+    }
+
+    public getOffsetPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        offsetType,
+        stepType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
+        responseType: csharp.Type;
+        offsetType: csharp.Type;
+        stepType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "OffsetPager",
+            generics: [requestType, requestOptionsType, responseType, offsetType, stepType, itemType]
+        });
+    }
+
+    public getCursorPagerClassReference({
+        requestType,
+        requestOptionsType,
+        responseType,
+        cursorType,
+        itemType
+    }: {
+        requestType: csharp.Type;
+        requestOptionsType: csharp.Type;
+        responseType: csharp.Type;
+        cursorType: csharp.Type;
+        itemType: csharp.Type;
+    }): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: "CursorPager",
+            generics: [requestType, requestOptionsType, responseType, cursorType, itemType]
+        });
     }
 
     public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {

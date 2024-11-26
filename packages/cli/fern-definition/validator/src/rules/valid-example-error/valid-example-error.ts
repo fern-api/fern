@@ -31,7 +31,8 @@ export const ValidExampleErrorRule: Rule = {
                         workspace,
                         typeResolver,
                         exampleResolver,
-                        breadcrumbs: ["response", "body"]
+                        breadcrumbs: ["response", "body"],
+                        depth: 0
                     });
                     return violations.map((violation) => {
                         return {

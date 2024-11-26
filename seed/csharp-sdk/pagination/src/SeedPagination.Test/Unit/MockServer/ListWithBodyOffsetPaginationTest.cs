@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
 
 #nullable enable
 
@@ -16,7 +13,11 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {}
+            {
+              "pagination": {
+                "page": 1
+              }
+            }
             """;
 
         const string mockResponse = """
@@ -60,13 +61,14 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.ListWithBodyOffsetPaginationAsync(
-            new ListUsersBodyOffsetPaginationRequest { Pagination = null },
+        var pager = Client.Users.ListWithBodyOffsetPaginationAsync(
+            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } },
             RequestOptions
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        await foreach (var item in pager)
+        {
+            Assert.That(item, Is.Not.Null);
+            break; // Only check the first item
+        }
     }
 }

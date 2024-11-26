@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj" />
+        <ProjectReference Include="..\SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj" />
     </ItemGroup>
 
+    <Import Project="SeedCsharpNamespaceConflict.Test.Custom.props" Condition="Exists('SeedCsharpNamespaceConflict.Test.Custom.props')" />
 </Project>
