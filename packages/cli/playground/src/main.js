@@ -1,4 +1,4 @@
-import { SnippetResolver } from './dist/index.js';
+const { SnippetResolver } = require('../dist/index.cjs');
 
 async function generateSnippet() {
     const resolver = new SnippetResolver();
