@@ -1,11 +1,5 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "lib",
-    "rootDir": "src",
-    "resolveJsonModule": true
-  },
   "include": [
     "./src/**/*",
     "./src/config/go/config.json",

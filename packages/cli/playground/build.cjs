@@ -7,16 +7,18 @@ main();
 
 async function main() {
     await tsup.build({
-        entry: ['src/**/*.ts'],
-        format: ['esm', 'cjs', 'iife'],
+        entry: [
+            'src/**/*.ts',
+            'src/config/go/config.json',
+            'src/config/ir/ir.json'
+        ],
+        format: ['cjs'],
         target: 'esnext',
         outDir: 'dist',
         sourcemap: true,
         splitting: false,
         minify: true,
         dts: true,
-        external: ['fs', 'path', 'os'],
-        platform: 'browser',
         tsconfig: "./tsconfig.json"
     });
 }
