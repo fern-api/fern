@@ -23,12 +23,10 @@ export function generatePrimitiveExample({
 }: generatePrimitiveExample.Args): ExampleGenerationSuccess<ExamplePrimitive> {
     switch (primitiveType.v1) {
         case "STRING": {
-            let validation = undefined;
-            if (primitiveType.v2?.type === "string") {
-                const stringType = primitiveType.v2 as PrimitiveTypeV2.String;
-                validation = stringType.validation;
-            }
-            return generatePrimitiveStringExample(fieldName, validation);
+            return generatePrimitiveStringExample({
+                fieldName,
+                validation: maybeStringValidation(primitiveType.v2)
+            });
         }
         case "BASE_64": {
             return { type: "success", example: ExamplePrimitive.base64(Examples.BASE64), jsonExample: Examples.BASE64 };
@@ -54,23 +52,19 @@ export function generatePrimitiveExample({
             };
         }
         case "DOUBLE": {
-            let validation = undefined;
-            if (primitiveType.v2?.type === "double") {
-                const doubleType = primitiveType.v2 as PrimitiveTypeV2.Double;
-                validation = doubleType.validation;
-            }
-            return generatePrimitiveDoubleExample(fieldName, validation);
+            return generatePrimitiveDoubleExample({
+                fieldName,
+                validation: maybeDoubleValidation(primitiveType.v2)
+            });
         }
         case "FLOAT": {
             return { type: "success", example: ExamplePrimitive.float(Examples.FLOAT), jsonExample: Examples.FLOAT };
         }
         case "INTEGER": {
-            let validation = undefined;
-            if (primitiveType.v2?.type === "integer") {
-                const integerType = primitiveType.v2 as PrimitiveTypeV2.Integer;
-                validation = integerType.validation;
-            }
-            return generatePrimitiveIntegerExample(fieldName, validation);
+            return generatePrimitiveIntegerExample({
+                fieldName,
+                validation: maybeIntegerValidation(primitiveType.v2)
+            });
         }
         case "UINT_64": {
             return { type: "success", example: ExamplePrimitive.uint64(Examples.INT64), jsonExample: Examples.INT64 };
@@ -96,22 +90,59 @@ export function generatePrimitiveExample({
     }
 }
 
-function generatePrimitiveStringExample(
-    fieldName: string | undefined,
-    validation: StringValidationRules | undefined
-): ExampleGenerationSuccess<ExamplePrimitive> {
+function maybeStringValidation(v2: PrimitiveTypeV2 | undefined): StringValidationRules | undefined {
+    if (v2?.type === "string") {
+        const stringType = v2 as PrimitiveTypeV2.String;
+        return stringType.validation;
+    }
+    return undefined;
+}
+
+function maybeDoubleValidation(v2: PrimitiveTypeV2 | undefined): DoubleValidationRules | undefined {
+    if (v2?.type === "double") {
+        const doubleType = v2 as PrimitiveTypeV2.Double;
+        return doubleType.validation;
+    }
+    return undefined;
+}
+
+function maybeIntegerValidation(v2: PrimitiveTypeV2 | undefined): IntegerValidationRules | undefined {
+    if (v2?.type === "integer") {
+        const integerType = v2 as PrimitiveTypeV2.Integer;
+        return integerType.validation;
+    }
+    return undefined;
+}
+
+function getStringExampleOfLength(length: number): string {
+    if (length <= Examples.SAMPLE_STRINGS.length) {
+        return Examples.SAMPLE_STRINGS[length - 1]!;
+    }
+    return (
+        Examples.SAMPLE_STRINGS[Examples.SAMPLE_STRINGS.length - 1] +
+        ".".repeat(length - Examples.SAMPLE_STRINGS.length)
+    );
+}
+
+function generatePrimitiveStringExample({
+    fieldName,
+    validation
+}: {
+    fieldName: string | undefined;
+    validation: StringValidationRules | undefined;
+}): ExampleGenerationSuccess<ExamplePrimitive> {
     if (validation) {
         const minLength = validation.minLength;
         const maxLength = validation.maxLength;
         if (maxLength) {
-            const maxLengthExample = "a".repeat(maxLength);
+            const maxLengthExample = getStringExampleOfLength(maxLength);
             return {
                 type: "success",
                 example: ExamplePrimitive.string({ original: maxLengthExample }),
                 jsonExample: maxLengthExample
             };
         } else if (minLength) {
-            const minLengthExample = "a".repeat(minLength);
+            const minLengthExample = getStringExampleOfLength(minLength);
             return {
                 type: "success",
                 example: ExamplePrimitive.string({ original: minLengthExample }),
@@ -123,10 +154,13 @@ function generatePrimitiveStringExample(
     return { type: "success", example: ExamplePrimitive.string({ original: jsonExample }), jsonExample };
 }
 
-function generatePrimitiveDoubleExample(
-    fieldName: string | undefined,
-    validation: DoubleValidationRules | undefined
-): ExampleGenerationSuccess<ExamplePrimitive> {
+function generatePrimitiveDoubleExample({
+    fieldName,
+    validation
+}: {
+    fieldName: string | undefined;
+    validation: DoubleValidationRules | undefined;
+}): ExampleGenerationSuccess<ExamplePrimitive> {
     if (validation) {
         const maximum = validation.max;
         const minimum = validation.min;
@@ -140,10 +174,13 @@ function generatePrimitiveDoubleExample(
     return { type: "success", example: ExamplePrimitive.double(Examples.DOUBLE), jsonExample: Examples.DOUBLE };
 }
 
-function generatePrimitiveIntegerExample(
-    fieldName: string | undefined,
-    validation: IntegerValidationRules | undefined
-): ExampleGenerationSuccess<ExamplePrimitive> {
+function generatePrimitiveIntegerExample({
+    fieldName,
+    validation
+}: {
+    fieldName: string | undefined;
+    validation: IntegerValidationRules | undefined;
+}): ExampleGenerationSuccess<ExamplePrimitive> {
     if (validation) {
         const maximum = validation.max;
         const minimum = validation.min;
