@@ -15,6 +15,7 @@ async function main() {
         format: ['cjs'],
         target: 'esnext',
         outDir: 'dist',
+        bundle: true,
         minify: true,
         dts: true,
         tsconfig: "./tsconfig.json"

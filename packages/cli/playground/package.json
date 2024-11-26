@@ -32,9 +32,6 @@
   "dependencies": {
     "@fern-api/dynamic-ir-sdk": "^53.21.0",
     "@fern-api/go-dynamic-snippets": "0.0.4",
-    "@fern-api/ir-generator": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "openapi-types": "^12.1.3"
   },
   "devDependencies": {

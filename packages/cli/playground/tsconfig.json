@@ -5,6 +5,9 @@
     "./src/config/go/config.json",
     "./src/config/ir/ir.json"
   ],
+  "compilerOptions": {
+    "outDir": "lib",
+  },
   "references": [
     {
       "path": "../generation/ir-generator"
