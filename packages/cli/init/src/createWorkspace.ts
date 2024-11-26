@@ -95,6 +95,7 @@ async function getDefaultGeneratorsConfiguration({
         );
     }
     const config: generatorsYml.GeneratorsConfigurationSchema = {
+        # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
         "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
