@@ -4805,6 +4805,9 @@ importers:
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(postcss@8.4.47)(typescript@4.6.4)(yaml@2.3.3)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
