@@ -1,8 +1,8 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { dynamic as DynamicSnippets, generatorExec as GeneratorExec } from "@fern-api/dynamic-ir-sdk/api";
 
-export abstract class AbstractDynamicSnippetsGeneratorContext<DynamicIntermediateRepresentation> {
+export abstract class AbstractDynamicSnippetsGeneratorContext {
     public constructor(
-        public readonly ir: DynamicIntermediateRepresentation,
-        public readonly config: FernGeneratorExec.GeneratorConfig
+        public readonly ir: DynamicSnippets.DynamicIntermediateRepresentation,
+        public readonly config: GeneratorExec.GeneratorConfig
     ) {}
 }

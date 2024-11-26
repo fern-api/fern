@@ -1,7 +1,7 @@
 import { AbstractDynamicSnippetsGenerator, AbstractFormatter, FernGeneratorExec } from "@fern-api/generator-commons";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets } from "@fern-api/dynamic-ir-sdk/api";
+import { dynamic as DynamicSnippets } from "@fern-fern/ir-sdk/api";
 import { ErrorReporter, Severity } from "./context/ErrorReporter";
 import { Scope } from "./Scope";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";

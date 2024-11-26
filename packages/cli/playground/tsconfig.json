@@ -13,9 +13,6 @@
   ],
   "references": [
     {
-      "path": "../../../generators/go-v2/dynamic-snippets"
-    },
-    {
       "path": "../generation/ir-generator"
     },
     {

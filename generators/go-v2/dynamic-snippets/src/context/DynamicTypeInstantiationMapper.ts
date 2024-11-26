@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-api/dynamic-ir-sdk/api";
+import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { Severity } from "./ErrorReporter";
 
@@ -28,7 +28,7 @@ export class DynamicTypeInstantiationMapper {
         if (args.value == null) {
             return go.TypeInstantiation.nop();
         }
-        switch (args.typeReference._type) {
+        switch (args.typeReference.type) {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
             case "literal":
@@ -373,7 +373,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         typeReference: DynamicSnippets.TypeReference;
     }): string | undefined {
-        switch (typeReference._type) {
+        switch (typeReference.type) {
             case "list":
                 return this.getUndiscriminatedUnionFieldNameForList({ list: typeReference });
             case "literal":

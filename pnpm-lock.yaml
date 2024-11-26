@@ -397,8 +397,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.22.0
-        version: 53.22.0
+        specifier: ^53.21.0
+        version: 53.21.0
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -466,9 +466,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.22.0
-        version: 53.22.0
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../../packages/cli/fern-definition/schema
@@ -485,8 +482,8 @@ importers:
         specifier: workspace:*
         version: link:../formatter
       '@fern-fern/ir-sdk':
-        specifier: ^53.22.0
-        version: 53.22.0
+        specifier: ^53.21.0
+        version: 53.21.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -5649,11 +5646,11 @@ importers:
   packages/cli/playground:
     dependencies:
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^53.22.0
+        specifier: ^53.21.0
         version: 53.22.0
       '@fern-api/go-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../../../generators/go-v2/dynamic-snippets
+        specifier: 0.0.4
+        version: 0.0.4
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../generation/ir-generator
@@ -7571,6 +7568,9 @@ packages:
   '@fern-api/fdr-sdk@0.126.1-444264056':
     resolution: {integrity: sha512-Xl1Ctteav1GOulX40756FLEoJAI7VCn6zgkdDb6RRSZhm9Z8fjaBRv/cdMo1saupqHNd62Hm5b8FdmGjwWFAPw==}
 
+  '@fern-api/go-dynamic-snippets@0.0.4':
+    resolution: {integrity: sha512-7ILcR44QA42Zdzvw7MwtfylcqSz6vvCU6raePISxCYBJHBIZl7L1G2Wo64wgYSSSkUAXDjXsLZBWYcEaqAsytA==}
+
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
 
@@ -7616,8 +7616,8 @@ packages:
   '@fern-fern/ir-sdk@53.18.0':
     resolution: {integrity: sha512-KXHiAn8wjL9VIjjR9z8fXso0O2oaCMUSy9BSYRiGjEOmbIBUhplxSXjM3wSEXQ19hiPpsRYJTCCjnaZVP0OVrw==}
 
-  '@fern-fern/ir-sdk@53.22.0':
-    resolution: {integrity: sha512-NAQ9t6nFGxRCDQqufJHnUicMetgCuSMwO3eXLJfsvFaVQt4cDx1BVp/1bsD3pz6qdJ10lX0kjf7qQDYT8QGG1A==}
+  '@fern-fern/ir-sdk@53.21.0':
+    resolution: {integrity: sha512-zZUoQ2zP9c6+4BUTZkkzVWhhmn56nnl1rG5I/SvEh2EUXAqPTktIXfFiSG84PYur6x42pG1L8Eu3Hxp3ls6luA==}
 
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
@@ -14580,6 +14580,8 @@ snapshots:
       - encoding
       - typescript
 
+  '@fern-api/go-dynamic-snippets@0.0.4': {}
+
   '@fern-api/sdk@0.12.3':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
@@ -14685,7 +14687,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@53.18.0': {}
 
-  '@fern-fern/ir-sdk@53.22.0': {}
+  '@fern-fern/ir-sdk@53.21.0': {}
 
   '@fern-fern/ir-sdk@53.7.0': {}
 
