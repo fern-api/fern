@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/generator-commons";
+import { AbstractWriter } from "@fern-api/base-generator";
 import { Config } from "@wasm-fmt/ruff_fmt";
 
 export declare namespace Writer {}

@@ -1,4 +1,4 @@
-import { File } from "@fern-api/generator-commons";
+import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Enum } from "../ast/Enum";
 import { Struct } from "../ast/Struct";

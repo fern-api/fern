@@ -1,4 +1,4 @@
-import { Ternary } from "@fern-api/generator-commons";
+import { Ternary } from "@fern-api/base-generator";
 import {
     Array as Array_,
     Attribute,

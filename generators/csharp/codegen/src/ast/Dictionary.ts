@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { UnnamedArgument } from "@fern-api/generator-commons";
+import { UnnamedArgument } from "@fern-api/base-generator";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";

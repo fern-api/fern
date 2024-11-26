@@ -1,5 +1,4 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
+import { FernGeneratorExec, GeneratorExecParsing } from "@fern-api/browser-compatible-base-generator";
 import { readFile } from "fs/promises";
 
 export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGeneratorExec.GeneratorConfig> {

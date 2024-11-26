@@ -26,7 +26,7 @@ import {
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
-import { isNonNullish } from "../../../commons/node_modules/@fern-api/core-utils/src";
+import { isNonNullish } from "@fern-api/core-utils";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";

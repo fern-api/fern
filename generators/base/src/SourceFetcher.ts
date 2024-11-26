@@ -4,7 +4,7 @@ import { createWriteStream } from "fs";
 import { mkdir, readdir } from "fs/promises";
 import { pipeline } from "stream";
 import { promisify } from "util";
-import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
+import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
 
 const LOCAL_FILE_SCHEME = "file:///";
 const PROTOBUF_ZIP_FILENAME = "proto.zip";

@@ -5,7 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../../../packages/commons/fs-utils" },
-    { "path": "../../../commons" },
+    { "path": "../../../base" },
     { "path": "../../utils/abstract-generator-cli" },
     { "path": "../../utils/commons" },
     { "path": "../../utils/contexts" },
