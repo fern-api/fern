@@ -8,7 +8,6 @@ import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstanc
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { go } from "@fern-api/go-ast";
-import path from "path";
 import { ErrorReporter, Severity } from "./ErrorReporter";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 import { AbstractDynamicSnippetsGeneratorContext } from "@fern-api/generator-commons";
@@ -329,11 +328,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClientImportPath(): string {
-        return path.join(this.rootImportPath, "client");
+        return `${this.rootImportPath}/client`;
     }
 
     public getOptionImportPath(): string {
-        return path.join(this.rootImportPath, "option");
+        return `${this.rootImportPath}/option`;
     }
 
     public resolveEndpointOrThrow(rawEndpoint: string): DynamicSnippets.Endpoint[] {
