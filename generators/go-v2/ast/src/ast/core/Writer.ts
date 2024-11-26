@@ -1,6 +1,5 @@
-import { AbstractWriter, NopFormatter } from "@fern-api/generator-commons";
+import { AbstractFormatter, AbstractWriter, getBasename, NopFormatter } from "@fern-api/generator-commons";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
-import { AbstractFormatter, getBasename } from "@fern-api/generator-commons";
 
 type Alias = string;
 type ImportPath = string;
