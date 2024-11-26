@@ -209,31 +209,13 @@ importers:
 
   generators/browser-compatible-base:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../packages/commons/core-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
-      '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.17
-        version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
