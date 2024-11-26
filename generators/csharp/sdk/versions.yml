@@ -6,6 +6,20 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.9.11
+  createdAt: "2024-11-25"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add two dependencies who previously were transitive dependencies to ensure the generated SDKs use the patched versions without vulnerabilities.
+        - `System.Net.Http` >= `4.3.4`
+        - `System.Text.RegularExpressions` >= `4.3.1`
+        Update other dependencies to the latest version:
+        - `Portable.System.DateTimeOnly` = `8.0.2` (on net462 & netstandard2.0)
+        - `PolySharp` = `1.15.0`
+        - `OneOf` = `3.0.271`
+        - `OneOf.Extended` = `3.0.271`
+  irVersion: 53
 - version: 1.9.10
   createdAt: "2024-11-20"
   changelogEntry:

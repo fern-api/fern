@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExtraProperties", "SeedExtraProperties\SeedExtraProperties.csproj", "{0BEB86B9-53CC-400D-841E-4E79A548B8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExtraProperties.Test", "SeedExtraProperties.Test\SeedExtraProperties.Test.csproj", "{F5577C1F-8BAB-45BB-BBBB-4AE177AAD49C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BEB86B9-53CC-400D-841E-4E79A548B8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEB86B9-53CC-400D-841E-4E79A548B8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEB86B9-53CC-400D-841E-4E79A548B8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEB86B9-53CC-400D-841E-4E79A548B8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5577C1F-8BAB-45BB-BBBB-4AE177AAD49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5577C1F-8BAB-45BB-BBBB-4AE177AAD49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5577C1F-8BAB-45BB-BBBB-4AE177AAD49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5577C1F-8BAB-45BB-BBBB-4AE177AAD49C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -491,6 +491,12 @@
     "readmeConfig": null,
     "sourceConfig": null,
     "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {}
+    },
     "subpackages": {
         "subpackage_realtime": {
             "name": {

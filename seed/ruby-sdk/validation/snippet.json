@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_.create"
             },
             "snippet": {
-                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.create(\n  decimal: 1.1,\n  even: 1,\n  name: \"name\",\n  shape: SQUARE\n)",
+                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.create(\n  decimal: 2.2,\n  even: 100,\n  name: \"foo\",\n  shape: SQUARE\n)",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_.get"
             },
             "snippet": {
-                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.get(\n  decimal: 1.1,\n  even: 1,\n  name: \"name\"\n)",
+                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.get(\n  decimal: 2.2,\n  even: 100,\n  name: \"foo\"\n)",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_.create"
             },
             "snippet": {
-                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.create(\n  decimal: 1.1,\n  even: 1,\n  name: \"name\",\n  shape: SQUARE\n)",
+                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.create(\n  decimal: 2.2,\n  even: 100,\n  name: \"foo\",\n  shape: SQUARE\n)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_.get"
             },
             "snippet": {
-                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.get(\n  decimal: 1.1,\n  even: 1,\n  name: \"name\"\n)",
+                "client": "require \"fern_validation\"\n\nvalidation = SeedValidationClient::Client.new(base_url: \"https://api.example.com\")\nvalidation.get(\n  decimal: 2.2,\n  even: 100,\n  name: \"foo\"\n)",
                 "type": "ruby"
             }
         }

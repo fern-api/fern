@@ -243,33 +243,33 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },
@@ -351,24 +351,24 @@
             "path": "",
             "pathParameters": {},
             "queryParameters": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name"
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo"
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "name",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "decimal": 1.1,
-                "even": 1,
-                "name": "name",
+                "decimal": 2.2,
+                "even": 100,
+                "name": "foo",
                 "shape": "SQUARE"
               }
             },

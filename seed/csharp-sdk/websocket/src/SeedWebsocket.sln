@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedWebsocket", "SeedWebsocket\SeedWebsocket.csproj", "{61FDB802-61C3-42BD-90DA-99ACD34BAC31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedWebsocket.Test", "SeedWebsocket.Test\SeedWebsocket.Test.csproj", "{11C9A093-B3CD-4397-BB50-177A56B34DAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61FDB802-61C3-42BD-90DA-99ACD34BAC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61FDB802-61C3-42BD-90DA-99ACD34BAC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61FDB802-61C3-42BD-90DA-99ACD34BAC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61FDB802-61C3-42BD-90DA-99ACD34BAC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C9A093-B3CD-4397-BB50-177A56B34DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C9A093-B3CD-4397-BB50-177A56B34DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C9A093-B3CD-4397-BB50-177A56B34DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C9A093-B3CD-4397-BB50-177A56B34DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

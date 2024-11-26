@@ -17,6 +17,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "..";
 import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
+
 export interface FileLocation {
     importPath: string;
     directory: RelativeFilePath;

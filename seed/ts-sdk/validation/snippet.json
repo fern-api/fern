@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"name\",\n    shape: \"SQUARE\"\n});\n"
+                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.create({\n    decimal: 2.2,\n    even: 100,\n    name: \"foo\",\n    shape: \"SQUARE\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"name\"\n});\n"
+                "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst client = new SeedValidationClient({ environment: \"YOUR_BASE_URL\" });\nawait client.get({\n    decimal: 2.2,\n    even: 100,\n    name: \"foo\"\n});\n"
             }
         }
     ],

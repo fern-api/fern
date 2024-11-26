@@ -5,12 +5,7 @@
   "references": [
     { "path": "../../../packages/commons/core-utils" },
     { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/cli/generation/ir-generator" },
-    { "path": "../../../packages/cli/dynamic-snippets" },
     { "path": "../../../packages/cli/fern-definition/schema" },
-    { "path": "../../../packages/cli/project-loader" },
-    { "path": "../../../packages/cli/task-context" },
-    { "path": "../../../packages/cli/workspace-loader" },
     { "path": "../../../packages/ir-sdk" },
     { "path": "../../commons" },
     { "path": "../ast" },

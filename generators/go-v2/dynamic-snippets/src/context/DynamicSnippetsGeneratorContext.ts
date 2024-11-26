@@ -8,13 +8,11 @@ import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstanc
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { go } from "@fern-api/go-ast";
-import path from "path";
 import { ErrorReporter, Severity } from "./ErrorReporter";
 import { FilePropertyMapper } from "./FilePropertyMapper";
+import { AbstractDynamicSnippetsGeneratorContext } from "@fern-api/generator-commons";
 
-export class DynamicSnippetsGeneratorContext {
-    public ir: DynamicSnippets.DynamicIntermediateRepresentation;
-    public config: FernGeneratorExec.config.GeneratorConfig;
+export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext<DynamicSnippets.DynamicIntermediateRepresentation> {
     public customConfig: BaseGoCustomConfigSchema | undefined;
     public errors: ErrorReporter;
     public dynamicTypeMapper: DynamicTypeMapper;
@@ -31,8 +29,7 @@ export class DynamicSnippetsGeneratorContext {
         ir: DynamicSnippets.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.config.GeneratorConfig;
     }) {
-        this.ir = ir;
-        this.config = config;
+        super(ir, config);
         this.customConfig = config.customConfig != null ? (config.customConfig as BaseGoCustomConfigSchema) : undefined;
         this.errors = new ErrorReporter();
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
@@ -331,11 +328,11 @@ export class DynamicSnippetsGeneratorContext {
     }
 
     public getClientImportPath(): string {
-        return path.join(this.rootImportPath, "client");
+        return `${this.rootImportPath}/client`;
     }
 
     public getOptionImportPath(): string {
-        return path.join(this.rootImportPath, "option");
+        return `${this.rootImportPath}/option`;
     }
 
     public resolveEndpointOrThrow(rawEndpoint: string): DynamicSnippets.Endpoint[] {
