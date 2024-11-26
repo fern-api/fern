@@ -139,19 +139,19 @@ function generatePrimitiveStringExample({
     if (validation) {
         const minLength = validation.minLength;
         const maxLength = validation.maxLength;
-        if (maxLength) {
-            const maxLengthExample = getStringExampleOfLength(maxLength);
-            return {
-                type: "success",
-                example: ExamplePrimitive.string({ original: maxLengthExample }),
-                jsonExample: maxLengthExample
-            };
-        } else if (minLength) {
+        if (minLength) {
             const minLengthExample = getStringExampleOfLength(minLength);
             return {
                 type: "success",
                 example: ExamplePrimitive.string({ original: minLengthExample }),
                 jsonExample: minLengthExample
+            };
+        } else if (maxLength) {
+            const maxLengthExample = getStringExampleOfLength(maxLength);
+            return {
+                type: "success",
+                example: ExamplePrimitive.string({ original: maxLengthExample }),
+                jsonExample: maxLengthExample
             };
         }
     }
