@@ -116,7 +116,12 @@ function maybeIntegerValidation(v2: PrimitiveTypeV2 | undefined): IntegerValidat
 
 function getStringExampleOfLength(length: number): string {
     if (length <= Examples.SAMPLE_STRINGS.length) {
-        return Examples.SAMPLE_STRINGS[length - 1]!;
+        const sampleString = Examples.SAMPLE_STRINGS[length - 1];
+        if (sampleString) {
+            return sampleString;
+        } else {
+            throw new Error(`Unexpected undefined value in SAMPLE_STRINGS at index ${length - 1}`);
+        }
     }
     return (
         Examples.SAMPLE_STRINGS[Examples.SAMPLE_STRINGS.length - 1] +
@@ -170,7 +175,6 @@ function generatePrimitiveDoubleExample({
             return { type: "success", example: ExamplePrimitive.double(minimum), jsonExample: minimum };
         }
     }
-    const jsonExample = fieldName ?? Examples.DOUBLE;
     return { type: "success", example: ExamplePrimitive.double(Examples.DOUBLE), jsonExample: Examples.DOUBLE };
 }
 
@@ -190,6 +194,5 @@ function generatePrimitiveIntegerExample({
             return { type: "success", example: ExamplePrimitive.integer(minimum), jsonExample: minimum };
         }
     }
-    const jsonExample = fieldName ?? Examples.DOUBLE;
     return { type: "success", example: ExamplePrimitive.integer(Examples.INT), jsonExample: Examples.INT };
 }
