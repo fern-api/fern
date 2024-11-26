@@ -321,7 +321,7 @@ export class User {
                         });
                     case "timeout":
                         throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/users/{userId}."
+                            "Timeout exceeded when calling GET /user/users/{userId}/search."
                         );
                     case "unknown":
                         throw new errors.SeedPathParametersError({
@@ -403,7 +403,7 @@ export class User {
                         });
                     case "timeout":
                         throw new errors.SeedPathParametersTimeoutError(
-                            "Timeout exceeded when calling GET /user/organizations/{organizationId}."
+                            "Timeout exceeded when calling GET /user/organizations/{organizationId}/search."
                         );
                     case "unknown":
                         throw new errors.SeedPathParametersError({

@@ -24,9 +24,9 @@ import { SeedValidationClient } from "@fern/validation";
 
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
-    decimal: 1.1,
-    even: 1,
-    name: "name",
+    decimal: 2.2,
+    even: 100,
+    name: "foo",
     shape: "SQUARE",
 });
 ```

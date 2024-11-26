@@ -37,17 +37,16 @@ func (c *Client) Upload(
 	opts ...option.RequestOption,
 ) (*fern.UploadResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.UploadResponse
@@ -56,8 +55,8 @@ func (c *Client) Upload(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -76,17 +75,16 @@ func (c *Client) Delete(
 	opts ...option.RequestOption,
 ) (*fern.DeleteResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/delete"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.DeleteResponse
@@ -95,8 +93,8 @@ func (c *Client) Delete(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -115,17 +113,16 @@ func (c *Client) Describe(
 	opts ...option.RequestOption,
 ) (*fern.DescribeResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/describe"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.DescribeResponse
@@ -134,8 +131,8 @@ func (c *Client) Describe(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -154,16 +151,12 @@ func (c *Client) Fetch(
 	opts ...option.RequestOption,
 ) (*fern.FetchResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/fetch"
-
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
@@ -171,8 +164,10 @@ func (c *Client) Fetch(
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *fern.FetchResponse
 	if err := c.caller.Call(
@@ -180,8 +175,8 @@ func (c *Client) Fetch(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -199,16 +194,12 @@ func (c *Client) List(
 	opts ...option.RequestOption,
 ) (*fern.ListResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/list"
-
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
@@ -216,8 +207,10 @@ func (c *Client) List(
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	var response *fern.ListResponse
 	if err := c.caller.Call(
@@ -225,8 +218,8 @@ func (c *Client) List(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -244,17 +237,16 @@ func (c *Client) Query(
 	opts ...option.RequestOption,
 ) (*fern.QueryResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/query"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.QueryResponse
@@ -263,8 +255,8 @@ func (c *Client) Query(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -283,17 +275,16 @@ func (c *Client) Update(
 	opts ...option.RequestOption,
 ) (*fern.UpdateResponse, error) {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
 	endpointURL := baseURL + "/data/update"
-
-	headers := internal.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.UpdateResponse
@@ -302,8 +293,8 @@ func (c *Client) Update(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

@@ -20,7 +20,7 @@ type CreateResponse struct {
 	User *UserModel `json:"user,omitempty" url:"user,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (c *CreateResponse) GetUser() *UserModel {
@@ -41,20 +41,18 @@ func (c *CreateResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = CreateResponse(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
-	c._rawJSON = json.RawMessage(data)
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (c *CreateResponse) String() string {
-	if len(c._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c._rawJSON); err == nil {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
 		}
 	}
@@ -237,7 +235,7 @@ type UserModel struct {
 	Metadata *Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UserModel) GetUsername() *string {
@@ -286,20 +284,18 @@ func (u *UserModel) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserModel(value)
-
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UserModel) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
