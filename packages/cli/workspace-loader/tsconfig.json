@@ -8,6 +8,7 @@
     { "path": "../../commons/logging-execa" },
     { "path": "../../core" },
     { "path": "../configuration" },
+    { "path": "../cli-logger" },
     { "path": "../logger" },
     { "path": "../api-importers/openapi/openapi-ir-parser" },
     { "path": "../semver-utils" },

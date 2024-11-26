@@ -16,6 +16,7 @@
     { "path": "../generation/local-generation/local-workspace-runner" },
     { "path": "../generation/remote-generation/remote-workspace-runner" },
     { "path": "../init" },
+    { "path": "../cli-logger" },
     { "path": "../logger" },
     { "path": "../login" },
     { "path": "../mock" },

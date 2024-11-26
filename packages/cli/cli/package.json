@@ -41,6 +41,7 @@
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
+    "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
