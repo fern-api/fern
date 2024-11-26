@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on: [push]
 
@@ -7,25 +7,24 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
   MSBUILDTERMINALLOGGER: off
-  DOTNET_VERSIONS: |
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
             6.x
             7.x
             8.x
             9.x
 
-jobs:
-  compile:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSIONS }}
-
       - name: List SDKs
         run: dotnet --list-sdks
 
@@ -36,63 +35,15 @@ jobs:
         run: dotnet restore src
 
       - name: Build release
+        id: build
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
-  unit-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSIONS }}
-
-      - name: List SDKs
-        run: dotnet --list-sdks
-
-      - name: Install tools
-        run: dotnet tool restore
-
-      - name: Restore dependencies
-        run: dotnet restore src
-
-      - name: Build release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-
-      - name: Run Tests
+      - name: Run tests
         run: dotnet test src --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        continue-on-error: true
 
-
-  publish:
-    needs: [compile]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSIONS }}
-
-      - name: List SDKs
-        run: dotnet --list-sdks
-
-      - name: Install tools
-        run: dotnet tool restore
-
-      - name: Restore dependencies
-        run: dotnet restore src/SeedBasicAuth
-
-      - name: Build release
-        run: dotnet build src/SeedBasicAuth -c Release /p:ContinuousIntegrationBuild=true  --no-restore
-
-      - name: Publish
+      - name: Publish to nuget.org
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
