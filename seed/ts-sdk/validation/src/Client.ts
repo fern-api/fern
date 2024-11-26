@@ -34,9 +34,9 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.create({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name",
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "aaaaaaaaaa",
      *         shape: "SQUARE"
      *     })
      */
@@ -107,9 +107,9 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.get({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "name"
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "aaaaaaaaaa"
      *     })
      */
     public get(
