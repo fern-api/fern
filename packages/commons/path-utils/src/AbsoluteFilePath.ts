@@ -9,7 +9,7 @@ export type AbsoluteFilePath = string & {
 
 export const AbsoluteFilePath = {
     of: (value: string): AbsoluteFilePath => {
-        if (!path.isAbsolutePath(value)) {
+        if (!path.isAbsolute(value)) {
             throw new Error("Filepath is not absolute: " + value);
         }
         return convertToOsPath(value) as AbsoluteFilePath;
