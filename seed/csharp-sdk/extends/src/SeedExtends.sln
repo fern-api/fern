@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExtends", "SeedExtends\SeedExtends.csproj", "{3CD221B7-7324-47A6-BF4E-11CA297C5DA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedExtends.Test", "SeedExtends.Test\SeedExtends.Test.csproj", "{1FB58C9E-30DA-42E5-AC07-E09B2ABCC57C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CD221B7-7324-47A6-BF4E-11CA297C5DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD221B7-7324-47A6-BF4E-11CA297C5DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD221B7-7324-47A6-BF4E-11CA297C5DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD221B7-7324-47A6-BF4E-11CA297C5DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB58C9E-30DA-42E5-AC07-E09B2ABCC57C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB58C9E-30DA-42E5-AC07-E09B2ABCC57C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB58C9E-30DA-42E5-AC07-E09B2ABCC57C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB58C9E-30DA-42E5-AC07-E09B2ABCC57C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedResponseProperty", "SeedResponseProperty\SeedResponseProperty.csproj", "{AE007795-95D7-4527-9F78-087630183961}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedResponseProperty.Test", "SeedResponseProperty.Test\SeedResponseProperty.Test.csproj", "{3DA8922E-74AA-4513-A5CC-1EF76E27E936}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE007795-95D7-4527-9F78-087630183961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE007795-95D7-4527-9F78-087630183961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE007795-95D7-4527-9F78-087630183961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE007795-95D7-4527-9F78-087630183961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA8922E-74AA-4513-A5CC-1EF76E27E936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA8922E-74AA-4513-A5CC-1EF76E27E936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA8922E-74AA-4513-A5CC-1EF76E27E936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA8922E-74AA-4513-A5CC-1EF76E27E936}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

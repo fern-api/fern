@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiLineDocs", "SeedMultiLineDocs\SeedMultiLineDocs.csproj", "{B4567904-2D24-4B14-800E-4924E9EEC312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiLineDocs.Test", "SeedMultiLineDocs.Test\SeedMultiLineDocs.Test.csproj", "{500C8785-B0D2-4246-9A1D-45243C6C7927}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4567904-2D24-4B14-800E-4924E9EEC312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4567904-2D24-4B14-800E-4924E9EEC312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4567904-2D24-4B14-800E-4924E9EEC312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4567904-2D24-4B14-800E-4924E9EEC312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{500C8785-B0D2-4246-9A1D-45243C6C7927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{500C8785-B0D2-4246-9A1D-45243C6C7927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{500C8785-B0D2-4246-9A1D-45243C6C7927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{500C8785-B0D2-4246-9A1D-45243C6C7927}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

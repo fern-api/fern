@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironment", "SeedMultiUrlEnvironment\SeedMultiUrlEnvironment.csproj", "{0633BFE2-1AEC-4896-AF73-25A52313636A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiUrlEnvironment.Test", "SeedMultiUrlEnvironment.Test\SeedMultiUrlEnvironment.Test.csproj", "{591DFDE5-C090-4DD1-A0AC-1702DAAC2F4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0633BFE2-1AEC-4896-AF73-25A52313636A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0633BFE2-1AEC-4896-AF73-25A52313636A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0633BFE2-1AEC-4896-AF73-25A52313636A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0633BFE2-1AEC-4896-AF73-25A52313636A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{591DFDE5-C090-4DD1-A0AC-1702DAAC2F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{591DFDE5-C090-4DD1-A0AC-1702DAAC2F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{591DFDE5-C090-4DD1-A0AC-1702DAAC2F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{591DFDE5-C090-4DD1-A0AC-1702DAAC2F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

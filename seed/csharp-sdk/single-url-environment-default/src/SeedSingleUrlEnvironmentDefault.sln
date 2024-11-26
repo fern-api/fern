@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentDefault", "SeedSingleUrlEnvironmentDefault\SeedSingleUrlEnvironmentDefault.csproj", "{844B9910-7282-4B85-B0A8-818D8DD7DA35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedSingleUrlEnvironmentDefault.Test", "SeedSingleUrlEnvironmentDefault.Test\SeedSingleUrlEnvironmentDefault.Test.csproj", "{AA757F5A-8C56-445C-A3A1-E7447C01812C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{844B9910-7282-4B85-B0A8-818D8DD7DA35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844B9910-7282-4B85-B0A8-818D8DD7DA35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844B9910-7282-4B85-B0A8-818D8DD7DA35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844B9910-7282-4B85-B0A8-818D8DD7DA35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA757F5A-8C56-445C-A3A1-E7447C01812C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA757F5A-8C56-445C-A3A1-E7447C01812C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA757F5A-8C56-445C-A3A1-E7447C01812C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA757F5A-8C56-445C-A3A1-E7447C01812C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
