@@ -36,6 +36,8 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/mintlify-importer": "workspace:*",
+
     "axios": "^1.7.7",
     "chalk": "^5.3.0",
     "fs-extra": "^11.1.1",

@@ -10,6 +10,7 @@
     { "path": "../login" },
     { "path": "../task-context" },
     { "path": "../fern-definition/formatter" },
-    { "path": "../fern-definition/schema" }
+    { "path": "../fern-definition/schema" },
+    { "path": "../docs-importers/mintlify" }
   ]
 }

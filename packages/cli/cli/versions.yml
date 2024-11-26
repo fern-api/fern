@@ -1,3 +1,13 @@
+
+- changelogEntry: 
+  - summary: |
+      The `fern init` command now supports a `--mintlify` option. You can pass in 
+      the path to your `mint.json` and the Fern CLI will generate a fern documentation 
+      website. 
+    type: feat
+  irVersion: 53
+  version: 0.45.0-rc33
+
 - changelogEntry:
     - summary: |
         Several improvements to docs, conjure importer, and the cli.
@@ -195,8 +205,6 @@
                 path: ./internal/page.mdx
         ```
       type: feat
-  irVersion: 53
-  version: 0.45.0-rc33
 
 - changelogEntry:
     - summary: |
