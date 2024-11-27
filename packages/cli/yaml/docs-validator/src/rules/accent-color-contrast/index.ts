@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import tinycolor from "tinycolor2";
 import { Rule, RuleViolation } from "../../Rule";
 
