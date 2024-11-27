@@ -1,5 +1,6 @@
 export { constructCasingsGenerator, type CasingsGenerator } from "./casings/CasingsGenerator";
 export { constructHttpPath } from "./converters/services/constructHttpPath";
+export { convertResponseErrors } from "./converters/services/convertResponseErrors";
 export {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     DEFAULT_REQUEST_PARAMETER_NAME,
@@ -22,6 +23,7 @@ export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
+export { SourceResolverImpl, type SourceResolver } from "./resolvers/SourceResolver";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
 export {
@@ -32,6 +34,7 @@ export {
 } from "./utils/getAllPropertiesForObject";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
+export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
 export { IdGenerator } from "./IdGenerator";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
