@@ -2,10 +2,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import tinycolor from "tinycolor2";
-import { FernDocsConfig as RawDocs } from "./schemas";
+import { docsYml } from "@fern-api/configuration";
 
 export function convertColorsConfiguration(
-    rawConfig: RawDocs.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
+    rawConfig: docsYml.RawSchemas.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
     context: TaskContext
 ): CjsFdrSdk.docs.v1.write.ColorsConfigV3 {
     rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;
@@ -38,7 +38,7 @@ export function getColorType({
     background,
     accentPrimary,
     accentPrimaryDeprecated
-}: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
+}: docsYml.RawSchemas.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
     // if both background and accent colors are provided as strings,
     // we can determine the theme using just the background color
 
@@ -83,7 +83,7 @@ export function getColorType({
 }
 
 export function convertThemedColorConfig(
-    rawConfig: RawDocs.ColorsConfiguration,
+    rawConfig: docsYml.RawSchemas.ColorsConfiguration,
     context: TaskContext,
     theme: "dark" | "light"
 ): CjsFdrSdk.docs.v1.write.ThemeConfig {
@@ -128,7 +128,7 @@ export function convertThemedColorConfig(
 }
 
 export function getColorFromRawConfig(
-    raw: RawDocs.ColorConfig | undefined,
+    raw: docsYml.RawSchemas.ColorConfig | undefined,
     key: string,
     theme: "dark" | "light"
 ): string | undefined {
@@ -151,7 +151,7 @@ export function getColorFromRawConfig(
 }
 
 export function getColorInstanceFromRawConfigOrThrow(
-    raw: RawDocs.ColorConfig | undefined,
+    raw: docsYml.RawSchemas.ColorConfig | undefined,
     context: TaskContext,
     key: string,
     theme: "dark" | "light"

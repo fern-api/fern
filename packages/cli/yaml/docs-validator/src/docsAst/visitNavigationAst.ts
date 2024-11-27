@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { APIWorkspaceLoader } from "./APIWorkspaceLoader";

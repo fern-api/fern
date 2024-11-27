@@ -1,4 +1,4 @@
-import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -84,7 +84,7 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
-        this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
+        this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,

@@ -1,5 +1,5 @@
 import { FernRegistry } from "@fern-fern/generators-sdk";
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { Argv } from "yargs";
 import { CliContext } from "./cli-context/CliContext";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";

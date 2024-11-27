@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";

@@ -1,38 +1,10 @@
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
-import {
-    APIDefinition,
-    APIDefinitionLocation,
-    GenerationLanguage,
-    GeneratorGroup,
-    GeneratorInvocation,
-    GeneratorsConfiguration
-} from "./GeneratorsConfiguration";
-import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-import { ApiConfigurationSchemaInternal, ApiConfigurationV2Schema } from "./schemas";
-import { GeneratorGroupSchema } from "./schemas";
-import { GeneratorInvocationSchema } from "./schemas";
-import { GeneratorOutputSchema } from "./schemas";
-import { isApiConfigurationV2Schema, isConjureSchema, isNamespacedApiConfiguration, isOpenAPISchema } from "./utils";
-import {
-    API_ORIGIN_LOCATION_KEY,
-    API_SETTINGS_KEY,
-    ASYNC_API_LOCATION_KEY,
-    GeneratorsConfigurationSchema,
-    OPENAPI_LOCATION_KEY,
-    OPENAPI_OVERRIDES_LOCATION_KEY
-} from "./schemas";
-import { GithubLicenseSchema } from "./schemas";
-import { GithubPullRequestSchema } from "./schemas";
-import { MavenOutputLocationSchema } from "./schemas";
-import { OutputMetadataSchema } from "./schemas";
-import { PypiOutputMetadataSchema } from "./schemas";
-import { ReadmeSchema } from "./schemas";
-import { ReviewersSchema } from "./schemas";
+import { generatorsYml } from "@fern-api/configuration";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
 export async function convertGeneratorsConfiguration({
@@ -40,8 +12,8 @@ export async function convertGeneratorsConfiguration({
     rawGeneratorsConfiguration
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
-    rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
-}): Promise<GeneratorsConfiguration> {
+    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
+}): Promise<generatorsYml.GeneratorsConfiguration> {
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     const readme = rawGeneratorsConfiguration.readme;
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
@@ -76,10 +48,10 @@ export async function convertGeneratorsConfiguration({
 }
 
 async function parseAPIConfigurationToApiLocations(
-    apiConfiguration: ApiConfigurationSchemaInternal | undefined,
-    rawConfiguration: GeneratorsConfigurationSchema
-): Promise<APIDefinitionLocation[]> {
-    const apiDefinitions: APIDefinitionLocation[] = [];
+    apiConfiguration: generatorsYml.ApiConfigurationSchemaInternal | undefined,
+    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
+): Promise<generatorsYml.APIDefinitionLocation[]> {
+    const apiDefinitions: generatorsYml.APIDefinitionLocation[] = [];
 
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
@@ -103,7 +75,7 @@ async function parseAPIConfigurationToApiLocations(
                     inlinePathParameters: undefined
                 }
             });
-        } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+        } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
                 schema: {
                     type: "protobuf",
@@ -149,7 +121,7 @@ async function parseAPIConfigurationToApiLocations(
                             inlinePathParameters: undefined
                         }
                     });
-                } else if (isRawProtobufAPIDefinitionSchema(definition)) {
+                } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
                         schema: {
                             type: "protobuf",
@@ -218,11 +190,11 @@ async function parseAPIConfigurationToApiLocations(
             });
         }
     } else {
-        const openapi = rawConfiguration[OPENAPI_LOCATION_KEY];
-        const apiOrigin = rawConfiguration[API_ORIGIN_LOCATION_KEY];
-        const openapiOverrides = rawConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
-        const asyncapi = rawConfiguration[ASYNC_API_LOCATION_KEY];
-        const settings = rawConfiguration[API_SETTINGS_KEY];
+        const openapi = rawConfiguration[generatorsYml.OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawConfiguration[generatorsYml.API_ORIGIN_LOCATION_KEY];
+        const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY];
+        const asyncapi = rawConfiguration[generatorsYml.ASYNC_API_LOCATION_KEY];
+        const settings = rawConfiguration[generatorsYml.API_SETTINGS_KEY];
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 schema: {
@@ -298,9 +270,9 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration,
     rawConfiguration
 }: {
-    apiConfiguration: ApiConfigurationV2Schema;
-    rawConfiguration: GeneratorsConfigurationSchema;
-}): Promise<APIDefinition> {
+    apiConfiguration: generatorsYml.ApiConfigurationV2Schema;
+    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema;
+}): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
         "auth-schemes":
             apiConfiguration.auth != null
@@ -323,7 +295,7 @@ async function parseApiConfigurationV2Schema({
         ...apiConfiguration
     };
 
-    if (isConjureSchema(apiConfiguration.specs)) {
+    if (generatorsYml.isConjureSchema(apiConfiguration.specs)) {
         return {
             type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
@@ -331,12 +303,12 @@ async function parseApiConfigurationV2Schema({
         };
     }
 
-    const rootDefinitions: APIDefinitionLocation[] = [];
-    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+    const rootDefinitions: generatorsYml.APIDefinitionLocation[] = [];
+    const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
 
     for (const spec of apiConfiguration.specs ?? []) {
-        if (isOpenAPISchema(spec)) {
-            const definitionLocation: APIDefinitionLocation = {
+        if (generatorsYml.isOpenAPISchema(spec)) {
+            const definitionLocation: generatorsYml.APIDefinitionLocation = {
                 schema: {
                     type: "oss",
                     path: spec.openapi
@@ -384,16 +356,16 @@ async function parseApiConfigurationV2Schema({
 }
 
 async function parseAPIConfiguration(
-    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
-): Promise<APIDefinition> {
+    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema
+): Promise<generatorsYml.APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
 
-    if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
+    if (apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
         return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
-    if (apiConfiguration != null && isNamespacedApiConfiguration(apiConfiguration)) {
-        const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+    if (apiConfiguration != null && generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
+        const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
             namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
                 configuration,
@@ -423,11 +395,11 @@ async function convertGroup({
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
-    group: GeneratorGroupSchema;
+    group: generatorsYml.GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
-    maybeTopLevelReviewers: ReviewersSchema | undefined;
-    readme: ReadmeSchema | undefined;
-}): Promise<GeneratorGroup> {
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
+}): Promise<generatorsYml.GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
@@ -459,13 +431,13 @@ async function convertGenerator({
     readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
-    generator: GeneratorInvocationSchema;
+    generator: generatorsYml.GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
-    maybeGroupLevelReviewers: ReviewersSchema | undefined;
-    maybeTopLevelReviewers: ReviewersSchema | undefined;
-    readme: ReadmeSchema | undefined;
-}): Promise<GeneratorInvocation> {
+    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
+}): Promise<generatorsYml.GeneratorInvocation> {
     return {
         raw: generator,
         name: generator.name,
@@ -501,7 +473,7 @@ async function convertGenerator({
 function getPublishMetadata({
     generatorInvocation
 }: {
-    generatorInvocation: GeneratorInvocationSchema;
+    generatorInvocation: generatorsYml.GeneratorInvocationSchema;
 }): PublishingMetadata | undefined {
     const publishMetadata = generatorInvocation["publish-metadata"];
     if (publishMetadata != null) {
@@ -527,7 +499,7 @@ function _getPypiMetadata({
     maybeGroupLevelMetadata,
     maybeTopLevelMetadata
 }: {
-    pypiOutputMetadata: PypiOutputMetadataSchema | undefined;
+    pypiOutputMetadata: generatorsYml.PypiOutputMetadataSchema | undefined;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
 }): PypiMetadata | undefined {
@@ -544,9 +516,9 @@ function _getReviewers({
     groupLevelReviewers,
     outputModeReviewers
 }: {
-    topLevelReviewers: ReviewersSchema | undefined;
-    groupLevelReviewers: ReviewersSchema | undefined;
-    outputModeReviewers: ReviewersSchema | undefined;
+    topLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    groupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    outputModeReviewers: generatorsYml.ReviewersSchema | undefined;
 }): GithubPullRequestReviewer[] {
     const teamNames = new Set<string>();
     const userNames = new Set<string>();
@@ -590,11 +562,11 @@ async function convertOutputMode({
     maybeTopLevelReviewers
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
-    generator: GeneratorInvocationSchema;
+    generator: generatorsYml.GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
-    maybeGroupLevelReviewers: ReviewersSchema | undefined;
-    maybeTopLevelReviewers: ReviewersSchema | undefined;
+    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
@@ -630,7 +602,7 @@ async function convertOutputMode({
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
-                    outputModeReviewers: (generator.github as GithubPullRequestSchema).reviewers
+                    outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
                 });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
@@ -744,7 +716,7 @@ async function getGithubLicense({
     githubLicense
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
-    githubLicense: GithubLicenseSchema;
+    githubLicense: generatorsYml.GithubLicenseSchema;
 }): Promise<FernFiddle.GithubLicense> {
     if (typeof githubLicense === "string") {
         switch (githubLicense) {
@@ -771,7 +743,7 @@ async function getGithubLicense({
 }
 
 function getGithubPublishInfo(
-    output: GeneratorOutputSchema,
+    output: generatorsYml.GeneratorOutputSchema,
     maybeGroupLevelMetadata: OutputMetadata | undefined,
     maybeTopLevelMetadata: OutputMetadata | undefined
 ): FernFiddle.GithubPublishInfo {
@@ -848,33 +820,33 @@ function getGithubPublishInfo(
 
 function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("csharp")) {
-        return GenerationLanguage.CSHARP;
+        return generatorsYml.GenerationLanguage.CSHARP;
     }
     if (generatorName.includes("go")) {
-        return GenerationLanguage.GO;
+        return generatorsYml.GenerationLanguage.GO;
     }
     if (generatorName.includes("java") || generatorName.includes("spring")) {
-        return GenerationLanguage.JAVA;
+        return generatorsYml.GenerationLanguage.JAVA;
     }
     if (generatorName.includes("php")) {
-        return GenerationLanguage.PHP;
+        return generatorsYml.GenerationLanguage.PHP;
     }
     if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
-        return GenerationLanguage.PYTHON;
+        return generatorsYml.GenerationLanguage.PYTHON;
     }
     if (generatorName.includes("ruby")) {
-        return GenerationLanguage.RUBY;
+        return generatorsYml.GenerationLanguage.RUBY;
     }
     if (generatorName.includes("swift")) {
-        return GenerationLanguage.SWIFT;
+        return generatorsYml.GenerationLanguage.SWIFT;
     }
     if (generatorName.includes("typescript")) {
-        return GenerationLanguage.TYPESCRIPT;
+        return generatorsYml.GenerationLanguage.TYPESCRIPT;
     }
     return undefined;
 }
 
-function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
+function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema) {
     if (maven.url != null) {
         return maven.url;
     }
@@ -883,7 +855,9 @@ function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
         : "https://s01.oss.sonatype.org/content/repositories/releases/";
 }
 
-function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLicenseSchema | undefined {
+function getGithubLicenseSchema(
+    generator: generatorsYml.GeneratorInvocationSchema
+): generatorsYml.GithubLicenseSchema | undefined {
     if (generator["publish-metadata"]?.license != null) {
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
@@ -892,7 +866,7 @@ function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLic
     return generator.github?.license;
 }
 
-function getOutputMetadata(metadata: OutputMetadataSchema | undefined): OutputMetadata | undefined {
+function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefined): OutputMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,
@@ -901,7 +875,7 @@ function getOutputMetadata(metadata: OutputMetadataSchema | undefined): OutputMe
         : undefined;
 }
 
-function getPyPiMetadata(metadata: PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
+function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,

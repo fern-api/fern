@@ -3,11 +3,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { validateSchema } from "../commons/validateSchema";
-import { GENERATORS_CONFIGURATION_FILENAME } from "../constants";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
-import { GeneratorsConfiguration } from "./GeneratorsConfiguration";
-import { GeneratorsConfigurationSchema, serialization } from "./schemas";
+import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
@@ -15,7 +12,7 @@ export async function loadRawGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<GeneratorsConfigurationSchema | undefined> {
+}): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
     const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
         return undefined;
@@ -23,7 +20,7 @@ export async function loadRawGeneratorsConfiguration({
     const contentsStr = await readFile(filepath);
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
-        const parsed = serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
+        const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
             allowUnrecognizedEnumValues: false,
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedUnionMembers: false,
@@ -52,7 +49,7 @@ export async function loadGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<GeneratorsConfiguration | undefined> {
+}): Promise<generatorsYml.GeneratorsConfiguration | undefined> {
     const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
     if (rawGeneratorsConfiguration == null) {
         return undefined;

@@ -1,10 +1,9 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import path from "path";
-import { DependenciesConfiguration, Dependency } from "./DependenciesConfiguration";
-import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
+import { dependenciesYml } from "@fern-api/configuration";
 
-const EMPTY_DEPENDENCIES_CONFIGURATION: DependenciesConfiguration = {
+const EMPTY_DEPENDENCIES_CONFIGURATION: dependenciesYml.DependenciesConfiguration = {
     dependencies: {}
 };
 
@@ -14,14 +13,14 @@ export async function convertDependenciesConfiguration({
     context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
-    rawDependenciesConfiguration: DependenciesConfigurationSchema | undefined;
+    rawDependenciesConfiguration: dependenciesYml.DependenciesConfigurationSchema | undefined;
     context: TaskContext;
-}): Promise<DependenciesConfiguration> {
+}): Promise<dependenciesYml.DependenciesConfiguration> {
     if (rawDependenciesConfiguration == null) {
         return EMPTY_DEPENDENCIES_CONFIGURATION;
     }
 
-    const dependencies: Record<string, Dependency> = {};
+    const dependencies: Record<string, dependenciesYml.Dependency> = {};
     for (const [coordinate, versionOrPath] of Object.entries(rawDependenciesConfiguration.dependencies)) {
         if (isPath(versionOrPath)) {
             const pathToApi = AbsoluteFilePath.of(path.join(absolutePathToWorkspace, versionOrPath));

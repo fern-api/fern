@@ -1,18 +1,17 @@
 import { TaskContext } from "@fern-api/task-context";
-import { GeneratorGroupSchema } from "./schemas";
-import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GeneratorsConfigurationSchema } from "./schemas";
+import { generatorsYml } from "@fern-api/configuration";
 
 export async function updateGeneratorGroup({
     generatorsConfiguration,
-    groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
+    groupName = generatorsConfiguration[generatorsYml.DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
     context,
     update
 }: {
-    generatorsConfiguration: GeneratorsConfigurationSchema;
+    generatorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
     groupName: string | undefined;
     context: TaskContext;
-    update: (draft: GeneratorGroupSchema, groupName: string) => Promise<void>;
-}): Promise<GeneratorsConfigurationSchema> {
+    update: (draft: generatorsYml.GeneratorGroupSchema, groupName: string) => Promise<void>;
+}): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     if (groupName == null) {
         return context.failAndThrow("No group specified.");
     }

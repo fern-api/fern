@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { validateSchema } from "../commons/validateSchema";
-import { DEPENDENCIES_CONFIGURATION_FILENAME } from "../constants";
+import { DEPENDENCIES_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
 
 export async function loadRawDependenciesConfiguration({
