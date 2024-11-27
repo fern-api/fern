@@ -4829,15 +4829,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      '@fern-api/project-loader':
-        specifier: workspace:*
-        version: link:../../project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4881,6 +4875,52 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/generation/ir-generator-tests:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../project-loader
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+    devDependencies:
+      '@types/node':
+        specifier: 18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/ir-migrations:
     dependencies:
