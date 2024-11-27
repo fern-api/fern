@@ -491,24 +491,24 @@ importers:
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../../packages/cli/fern-definition/schema
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
       '@fern-api/go-formatter':
         specifier: workspace:*
         version: link:../formatter
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: ^53.21.0
         version: 53.21.0

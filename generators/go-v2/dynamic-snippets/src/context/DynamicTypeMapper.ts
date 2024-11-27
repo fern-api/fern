@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { dynamic, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: dynamic.TypeReference;
     }
 }
 
@@ -47,7 +47,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertLiteral({ literal }: { literal: DynamicSnippets.LiteralType }): go.Type {
+    private convertLiteral({ literal }: { literal: dynamic.LiteralType }): go.Type {
         switch (literal.type) {
             case "boolean":
                 return go.Type.bool();
@@ -56,7 +56,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DynamicSnippets.NamedType }): go.Type {
+    private convertNamed({ named }: { named: dynamic.NamedType }): go.Type {
         const goTypeReference = go.Type.reference(
             go.typeReference({
                 name: this.context.getTypeName(named.declaration.name),

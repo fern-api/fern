@@ -1,13 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
-import { dynamic as DynamicSnippets, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { dynamic, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { DiscriminatedUnionTypeInstance } from "../DiscriminatedUnionTypeInstance";
 import { Severity } from "./ErrorReporter";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: dynamic.TypeReference;
         value: unknown;
         as?: ConvertedAs;
     }
@@ -61,7 +61,7 @@ export class DynamicTypeInstantiationMapper {
         list,
         value
     }: {
-        list: DynamicSnippets.TypeReference;
+        list: dynamic.TypeReference;
         value: unknown;
     }): go.TypeInstantiation {
         if (!Array.isArray(value)) {
@@ -84,7 +84,7 @@ export class DynamicTypeInstantiationMapper {
         });
     }
 
-    private convertMap({ map, value }: { map: DynamicSnippets.MapType; value: unknown }): go.TypeInstantiation {
+    private convertMap({ map, value }: { map: dynamic.MapType; value: unknown }): go.TypeInstantiation {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -114,7 +114,7 @@ export class DynamicTypeInstantiationMapper {
         value,
         as
     }: {
-        named: DynamicSnippets.NamedType;
+        named: dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
@@ -141,7 +141,7 @@ export class DynamicTypeInstantiationMapper {
         discriminatedUnion,
         value
     }: {
-        discriminatedUnion: DynamicSnippets.DiscriminatedUnionType;
+        discriminatedUnion: dynamic.DiscriminatedUnionType;
         value: unknown;
     }): go.TypeInstantiation {
         const structTypeReference = this.context.getGoTypeReferenceFromDeclaration({
@@ -224,7 +224,7 @@ export class DynamicTypeInstantiationMapper {
         singleDiscriminatedUnionType
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
-        singleDiscriminatedUnionType: DynamicSnippets.SingleDiscriminatedUnionType;
+        singleDiscriminatedUnionType: dynamic.SingleDiscriminatedUnionType;
     }): go.StructField[] {
         const properties = this.context.associateByWireValue({
             parameters: singleDiscriminatedUnionType.properties ?? [],
@@ -251,7 +251,7 @@ export class DynamicTypeInstantiationMapper {
         object_,
         value
     }: {
-        object_: DynamicSnippets.ObjectType;
+        object_: dynamic.ObjectType;
         value: unknown;
     }): go.TypeInstantiation {
         const properties = this.context.associateByWireValue({
@@ -277,7 +277,7 @@ export class DynamicTypeInstantiationMapper {
         });
     }
 
-    private convertEnum({ enum_, value }: { enum_: DynamicSnippets.EnumType; value: unknown }): go.TypeInstantiation {
+    private convertEnum({ enum_, value }: { enum_: dynamic.EnumType; value: unknown }): go.TypeInstantiation {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return go.TypeInstantiation.nop();
@@ -294,7 +294,7 @@ export class DynamicTypeInstantiationMapper {
         enum_,
         value
     }: {
-        enum_: DynamicSnippets.EnumType;
+        enum_: dynamic.EnumType;
         value: unknown;
     }): string | undefined {
         if (typeof value !== "string") {
@@ -319,7 +319,7 @@ export class DynamicTypeInstantiationMapper {
         undicriminatedUnion,
         value
     }: {
-        undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
+        undicriminatedUnion: dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): go.TypeInstantiation {
         const result = this.findMatchingUndiscriminatedUnionType({
@@ -350,9 +350,9 @@ export class DynamicTypeInstantiationMapper {
         undicriminatedUnion,
         value
     }: {
-        undicriminatedUnion: DynamicSnippets.UndiscriminatedUnionType;
+        undicriminatedUnion: dynamic.UndiscriminatedUnionType;
         value: unknown;
-    }): { valueTypeReference: DynamicSnippets.TypeReference; typeInstantiation: go.TypeInstantiation } | undefined {
+    }): { valueTypeReference: dynamic.TypeReference; typeInstantiation: go.TypeInstantiation } | undefined {
         for (const typeReference of undicriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
@@ -371,7 +371,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldName({
         typeReference
     }: {
-        typeReference: DynamicSnippets.TypeReference;
+        typeReference: dynamic.TypeReference;
     }): string | undefined {
         switch (typeReference.type) {
             case "list":
@@ -401,7 +401,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForList({
         list
     }: {
-        list: DynamicSnippets.TypeReference.List;
+        list: dynamic.TypeReference.List;
     }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list });
         if (fieldName == null) {
@@ -410,7 +410,7 @@ export class DynamicTypeInstantiationMapper {
         return `${fieldName}List`;
     }
 
-    private getUndiscriminatedUnionFieldNameForMap({ map }: { map: DynamicSnippets.MapType }): string | undefined {
+    private getUndiscriminatedUnionFieldNameForMap({ map }: { map: dynamic.MapType }): string | undefined {
         const keyFieldName = this.getUndiscriminatedUnionFieldName({ typeReference: map.key });
         if (keyFieldName == null) {
             return undefined;
@@ -425,7 +425,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForOptional({
         optional
     }: {
-        optional: DynamicSnippets.TypeReference.Optional;
+        optional: dynamic.TypeReference.Optional;
     }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: optional });
         if (fieldName == null) {
@@ -437,7 +437,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForSet({
         set
     }: {
-        set: DynamicSnippets.TypeReference.Set;
+        set: dynamic.TypeReference.Set;
     }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
         if (fieldName == null) {
@@ -449,7 +449,7 @@ export class DynamicTypeInstantiationMapper {
     private getUndiscriminatedUnionFieldNameForLiteral({
         literal
     }: {
-        literal: DynamicSnippets.LiteralType;
+        literal: dynamic.LiteralType;
     }): string | undefined {
         switch (literal.type) {
             case "boolean":

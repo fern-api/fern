@@ -1,8 +1,8 @@
 import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY } from "./utils/constant";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
-import { AuthValues } from "@fern-fern/ir-sdk/api/resources/dynamic";
+import { dynamic } from "@fern-fern/ir-sdk/api";
 import { TestCase } from "./utils/TestCase";
 
 describe("exhaustive", () => {
@@ -14,7 +14,7 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-primitives"
                 },
-                auth: AuthValues.bearer({
+                auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
                 pathParameters: undefined,
@@ -30,7 +30,7 @@ describe("exhaustive", () => {
                     method: "POST",
                     path: "/container/list-of-objects"
                 },
-                auth: AuthValues.bearer({
+                auth: dynamic.AuthValues.bearer({
                     token: "<YOUR_API_KEY>"
                 }),
                 pathParameters: undefined,
@@ -51,7 +51,7 @@ describe("exhaustive", () => {
         }
     ];
     const generator = buildDynamicSnippetsGenerator({
-        irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("exhaustive.json")),
+        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/exhaustive.json`),
         config: buildGeneratorConfig()
     });
     test.each(testCases)("$description", async ({ giveRequest }) => {
@@ -63,7 +63,7 @@ describe("exhaustive", () => {
 describe("exhaustive (errors)", () => {
     it("invalid request body", async () => {
         const generator = buildDynamicSnippetsGenerator({
-            irFilepath: join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, RelativeFilePath.of("exhaustive.json")),
+        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/exhaustive.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({
@@ -71,7 +71,7 @@ describe("exhaustive (errors)", () => {
                 method: "POST",
                 path: "/container/list-of-objects"
             },
-            auth: AuthValues.bearer({
+            auth: dynamic.AuthValues.bearer({
                 token: "<YOUR_API_KEY>"
             }),
             pathParameters: undefined,
