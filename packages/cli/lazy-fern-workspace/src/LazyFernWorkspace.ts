@@ -1,4 +1,9 @@
-import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/configuration-loader";
+import {
+    DEFINITION_DIRECTORY,
+    loadDependenciesConfiguration,
+    dependenciesYml,
+    generatorsYml
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
@@ -46,7 +51,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         if (workspace == null) {
             const defaultedContext = context || this.context;
             const absolutePathToDefinition = join(this.absoluteFilePath, RelativeFilePath.of(DEFINITION_DIRECTORY));
-            const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
+            const dependenciesConfiguration = await loadDependenciesConfiguration({
                 absolutePathToWorkspace: this.absoluteFilePath,
                 context: defaultedContext
             });

@@ -1,4 +1,9 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
+import {
+    addGenerator,
+    generatorsYml,
+    getPathToGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -20,12 +25,12 @@ export async function addGeneratorToWorkspaces({
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration =
-                    (await generatorsYml.loadRawGeneratorsConfiguration({
+                    (await loadRawGeneratorsConfiguration({
                         absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
 
-                const newConfiguration = await generatorsYml.addGenerator({
+                const newConfiguration = await addGenerator({
                     generatorName,
                     generatorsConfiguration,
                     groupName,
@@ -35,7 +40,7 @@ export async function addGeneratorToWorkspaces({
 
                 await writeFile(
                     workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                        generatorsYml.getPathToGeneratorsConfiguration({
+                        getPathToGeneratorsConfiguration({
                             absolutePathToWorkspace: workspace.absoluteFilePath
                         }),
                     yaml.dump(newConfiguration)

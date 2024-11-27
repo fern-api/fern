@@ -1,4 +1,4 @@
-import { fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration-loader";
+import { fernConfigJson, FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { runMigrations } from "@fern-api/cli-migrations";
@@ -96,7 +96,7 @@ export async function upgrade({
             return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
         }
         const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
+            loadProjectConfig({ directory: fernDirectory, context })
         );
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
             draft.version = fernCliUpgradeInfo.latestVersion;

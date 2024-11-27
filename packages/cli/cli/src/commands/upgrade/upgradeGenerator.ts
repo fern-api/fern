@@ -1,4 +1,10 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
+import {
+    generatorsYml,
+    getGeneratorNameOrThrow,
+    getLatestGeneratorVersion,
+    getPathToGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -26,7 +32,7 @@ export async function loadAndUpdateGenerators({
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
 }): Promise<string | undefined> {
-    const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    const filepath = getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
         return undefined;
@@ -91,11 +97,11 @@ export async function loadAndUpdateGenerators({
                 continue;
             }
 
-            const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
             const currentGeneratorVersion = generator.get("version") as string;
 
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+            const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
                 cliVersion,
                 currentGeneratorVersion,
@@ -137,7 +143,7 @@ export async function upgradeGenerator({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // Not totally necessary, but keeping around to ensure the schema is valid
                 const generatorsConfiguration =
-                    (await generatorsYml.loadRawGeneratorsConfiguration({
+                    (await loadRawGeneratorsConfiguration({
                         absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
@@ -167,7 +173,7 @@ export async function upgradeGenerator({
                 if (updatedConfiguration != null) {
                     await writeFile(
                         workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                            generatorsYml.getPathToGeneratorsConfiguration({
+                            getPathToGeneratorsConfiguration({
                                 absolutePathToWorkspace: workspace.absoluteFilePath
                             }),
                         updatedConfiguration

@@ -1,4 +1,4 @@
-import { generatorsYml, getFernDirectory } from "@fern-api/configuration-loader";
+import { generatorsYml, getFernDirectory, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
@@ -45,7 +45,7 @@ export async function updateApiSpec({
 
         await cliContext.runTaskForWorkspace(workspace, async (context) => {
             const generatorConfig: generatorsYml.GeneratorsConfiguration | undefined =
-                await generatorsYml.loadGeneratorsConfiguration({
+                await loadGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });

@@ -7,7 +7,8 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
-    OPENAPI_DIRECTORY
+    OPENAPI_DIRECTORY,
+    loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -82,7 +83,7 @@ export async function loadProjectFromDirectory({
     }
 
     return {
-        config: await fernConfigJson.loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
+        config: await loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {

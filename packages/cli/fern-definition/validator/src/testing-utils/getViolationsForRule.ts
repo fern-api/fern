@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
@@ -25,7 +25,7 @@ export async function getViolationsForRule({
 
     const lazyWorkspace = new LazyFernWorkspace({
         absoluteFilePath: absolutePathToWorkspace,
-        generatorsConfiguration: await generatorsYml.loadGeneratorsConfiguration({
+        generatorsConfiguration: await loadGeneratorsConfiguration({
             absolutePathToWorkspace,
             context
         }),
