@@ -24,7 +24,8 @@ export async function generateAPIWorkspaces({
     keepDocker,
     useLocalDocker,
     preview,
-    mode
+    mode,
+    force
 }: {
     project: Project;
     cliContext: CliContext;
@@ -35,6 +36,7 @@ export async function generateAPIWorkspaces({
     keepDocker: boolean;
     preview: boolean;
     mode: GenerationMode | undefined;
+    force: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -54,19 +56,15 @@ export async function generateAPIWorkspaces({
         token = currentToken;
     }
 
-    if (!isCI()) {
-        for (const workspace of project.apiWorkspaces) {
-            for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ??
-                []) {
-                if (generator.absolutePathToLocalOutput) {
-                    const { shouldProceed } = await checkOutputDirectory(
-                        generator.absolutePathToLocalOutput,
-                        cliContext
-                    );
-                    if (!shouldProceed) {
-                        cliContext.failAndThrow("Generation cancelled");
-                    }
-                }
+    for (const workspace of project.apiWorkspaces) {
+        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+            const { shouldProceed } = await checkOutputDirectory(
+                generator.absolutePathToLocalOutput,
+                cliContext,
+                force
+            );
+            if (!shouldProceed) {
+                cliContext.failAndThrow("Generation cancelled");
             }
         }
     }

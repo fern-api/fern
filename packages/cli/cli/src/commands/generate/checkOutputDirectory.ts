@@ -3,6 +3,7 @@ import { readdir } from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext";
 import { getOutputDirectories } from "../../persistence/getOutputDirectories";
 import { storeOutputDirectories } from "../../persistence/storeOutputDirectories";
+import { isCI } from "../../utils/isCI";
 
 export interface CheckOutputDirectoryResult {
     shouldProceed: boolean;
@@ -16,9 +17,10 @@ export interface CheckOutputDirectoryResult {
  */
 export async function checkOutputDirectory(
     outputPath: AbsoluteFilePath | undefined,
-    cliContext: CliContext
+    cliContext: CliContext,
+    force: boolean
 ): Promise<CheckOutputDirectoryResult> {
-    if (!outputPath) {
+    if (!outputPath || isCI() || force) {
         return {
             shouldProceed: true
         };

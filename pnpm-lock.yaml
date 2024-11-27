@@ -3772,10 +3772,6 @@ importers:
         version: 2.1.4(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli:
-    dependencies:
-      '@inquirer/prompts':
-        specifier: ^7.1.0
-        version: 7.1.0(@types/node@18.7.18)
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -3894,6 +3890,9 @@ importers:
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
+      '@inquirer/prompts':
+        specifier: ^7.1.0
+        version: 7.1.0(@types/node@18.7.18)
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0
