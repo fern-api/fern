@@ -5158,6 +5158,7 @@
         "types": {
           "AccessToResourceDenied": {
             "docs": "This error occurs when you try to access Belvo's resource without the correct permissions.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`access_to_resource_denied`) that allows you to classify and handle the error programmatically.
@@ -5193,6 +5194,7 @@ For `access_to_resource_denied` errors, the description is:
 
 **Note**: For our recurring expenses resource, this account relates to the account that was analyzed to generate the recurring expenses report.
 ",
+            "inline": undefined,
             "properties": {
               "balance": "AccountsBalance",
               "balance_type": {
@@ -5295,6 +5297,7 @@ For example: `0444/45722-0`.
           "AccountsBalance": {
             "docs": "Details regarding the current and available balances for the account.
 ",
+            "inline": undefined,
             "properties": {
               "available": {
                 "docs": "The balance that the account owner can use.
@@ -5332,6 +5335,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
           },
           "AccountsCreditData": {
             "docs": "The credit options associated with this account.",
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -5391,6 +5395,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
           },
           "AccountsFundsData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "balance": {
                 "docs": "The amount in the fund.",
@@ -5423,6 +5428,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
           },
           "AccountsFundsDataPublicIdentifications": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The type of identification number for the fund.",
@@ -5439,6 +5445,7 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
           },
           "AccountsLoanData": {
             "docs": "The loan options associated with this account.",
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -5584,6 +5591,7 @@ The minimum amount required to pay to avoid generating interest.
           },
           "AccountsLoanDataFees": {
             "docs": "Breakdown of the fees applied to the loan.",
+            "inline": undefined,
             "properties": {
               "type": "EnumLoanDataFeeType",
               "value": {
@@ -5598,6 +5606,7 @@ The minimum amount required to pay to avoid generating interest.
           },
           "AccountsLoanDataInterestRate": {
             "docs": "Breakdown of the interest applied to the loan.",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the type of interest rate applied to the loan.",
@@ -5615,6 +5624,7 @@ The minimum amount required to pay to avoid generating interest.
           },
           "AccountsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -5642,6 +5652,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AccountsReceivablesData": {
             "docs": "Additional details regarding the receivables account, if applicable.",
+            "inline": undefined,
             "properties": {
               "anticipated": {
                 "docs": "The amount that the owner of the account received earlier than contracted.",
@@ -5666,6 +5677,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AnnualCostsAndDeductionsStatementBusiness": {
             "docs": "Object containing the reported annual costs and applicable deductions.",
+            "inline": undefined,
             "properties": {
               "administration_expenses": {
                 "docs": "Total costs of the company related to training, company offsites, or similar.",
@@ -5694,6 +5706,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AnnualIncomeStatementBusiness": {
             "docs": "Object containing the reported annual incomes, deductions, and final balances of the tax payer.",
+            "inline": undefined,
             "properties": {
               "dividends": {
                 "docs": "Total income that the company generated from dividends.",
@@ -5726,6 +5739,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AnnualIncomeStatementIndividual": {
             "docs": "Object containing the reported annual incomes, deductions, and final balances of the tax payer.",
+            "inline": undefined,
             "properties": {
               "annual_totals": "AnnualTotalsIndividual",
               "gross_income": "GrossIncomeIndividual",
@@ -5738,6 +5752,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AnnualTotalsIndividual": {
             "docs": "Object containing the tax payers total exempt, deducted, and ordinary net incomes.",
+            "inline": undefined,
             "properties": {
               "total_applicable_deductions": {
                 "docs": "Total deductions that the taxpayer can apply to their income, according to the institution.",
@@ -5762,6 +5777,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "AsynchronousAccepted202": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "request_id": {
                 "docs": "The unique ID for this request. We recommend you store this value to later identify which webhook event relates to an asynchronous request.",
@@ -5774,6 +5790,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "BUSINESS": {
             "docs": "Details about the OFPI payment method.",
+            "inline": undefined,
             "properties": {
               "open_finance": "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi",
             },
@@ -5785,6 +5802,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5826,6 +5844,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Balance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account": "optional<Account>",
               "balance": {
@@ -5881,6 +5900,7 @@ The ISO-8601 timestamp when the data point was collected.
           },
           "BalancesPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -5908,6 +5928,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "BankAccountBusinessPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The ISO-8601 timestamp of when the data point was first created in Belvo's database.",
@@ -5980,6 +6001,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountDetailsOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_type": "EnumBankAccountPixAccountTypeOfpi",
               "agency": {
@@ -5998,6 +6020,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountDetailsOfpiPix": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country": "EnumPaymentsCountry",
               "pix_key": {
@@ -6011,6 +6034,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountDetailsOpenFinance": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_type": "EnumBankAccountPixAccountTypeOfpi",
               "agency": {
@@ -6029,6 +6053,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountDetailsOpenFinancePix": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country": "EnumPaymentsCountry",
               "pix_key": {
@@ -6044,6 +6069,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6058,6 +6084,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountInformationContentPse": {
             "docs": "Information about the payer's institution",
+            "inline": undefined,
             "properties": {
               "payer_institution": {
                 "docs": "Belvo's unique identifier for the payer’s institution.",
@@ -6076,6 +6103,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountInformationPse": {
             "docs": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
+            "inline": undefined,
             "properties": {
               "bank_account_information": {
                 "type": "optional<BankAccountInformationContentPse>",
@@ -6087,6 +6115,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountOfpiResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
@@ -6147,6 +6176,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6161,6 +6191,7 @@ For `BUSINESS` bank accounts that Belvo creates for organizations, this field is
           },
           "BankAccountPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -6190,6 +6221,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6205,6 +6237,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "BeneficiaryBankAccountOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
@@ -6246,6 +6279,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6260,6 +6294,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "BeneficiaryBankAccountPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "holder": {
                 "type": "optional<Business>",
@@ -6295,6 +6330,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Business": {
             "docs": "Details regarding the business bank account holder.",
+            "inline": undefined,
             "properties": {
               "Information": {
                 "type": "optional<PSE>",
@@ -6307,6 +6343,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Categorization": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "transactions": {
                 "docs": "An array of enriched transaction objects.",
@@ -6319,6 +6356,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CategorizationBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_category": "EnumCategorizationAccountCategory",
               "account_holder_id": {
@@ -6380,6 +6418,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CategorizationBodyRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_category": "EnumCategorizationAccountCategory",
               "account_holder_id": {
@@ -6436,6 +6475,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "CategorizationMerchantData": {
             "docs": "Additional data regarding the merchant involved in the transaction.
 ",
+            "inline": undefined,
             "properties": {
               "logo": {
                 "docs": "The URL to the merchant's logo.",
@@ -6456,6 +6496,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Charge": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The amount of the charge.
@@ -6567,6 +6608,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6581,6 +6623,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ChargePaymentMethodDetailsOfpiContent": {
             "docs": "Information about the payer of a PSE payment.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
@@ -6609,6 +6652,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ChargePaymentMethodDetailsPseContent": {
             "docs": "Information about the payer of a PSE payment.",
+            "inline": undefined,
             "properties": {
               "payer_bank_account": {
                 "docs": "Belvo's unique ID used to identify the customer’s bank account.",
@@ -6649,6 +6693,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreateBankAccountOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "details": {
                 "docs": "Information regarding the bank account.",
@@ -6677,6 +6722,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": "Information regarding the bank account.",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6691,6 +6737,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreateBankAccountPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "holder": {
                 "docs": "Information regarding the business bank account holder.",
@@ -6718,6 +6765,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreateCustomerOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The customer's physical address.
@@ -6766,6 +6814,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreateCustomerPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The customer's physical address.
@@ -6814,6 +6863,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreatePaymentLinkOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowed_payment_method_types": {
                 "docs": "A list of payment method types allowed in this payment intent. For OFPI, this value must be set to `open_finance`.",
@@ -6872,6 +6922,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `1234.12`.
 ",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6890,6 +6941,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CreatePaymentLinkPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowed_payment_method_types": {
                 "docs": "A list of payment method types allowed in this payment intent. For PSE, this value must be set to `pse`.",
@@ -6948,6 +7000,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.
 ",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6966,6 +7019,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CustomerOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The customers physical address.
@@ -7038,6 +7092,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CustomerPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -7067,6 +7122,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7081,6 +7137,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "CustomerPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The customers physical address.
@@ -7159,6 +7216,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayConfirmationRequiredContentPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "payer_institution": {
                 "type": "optional<PaymentInstitution>",
@@ -7170,6 +7228,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayConfirmationRequiredOfpi": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "type": "optional<BeneficiaryBankAccountOfpi>",
@@ -7192,6 +7251,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayCredentialsRequiredContentPse": {
             "docs": "Object containing form fields for the required credentials (for example, `username` or `password`) in this step.",
+            "inline": undefined,
             "properties": {
               "payer_institution": {
                 "type": "optional<PaymentInstitution>",
@@ -7203,6 +7263,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayCustomerBankAccountsContentPse": {
             "docs": "Object detailing what payment method information you need to display.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "type": "optional<BeneficiaryBankAccountPse>",
@@ -7218,6 +7279,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayPaymentFailed": {
             "docs": "Details regarding the payer institution.",
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<PaymentInstitution>",
             },
@@ -7227,6 +7289,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayPaymentMethodInformationContentOfpi": {
             "docs": "Object detailing what payment method information you need to display.",
+            "inline": undefined,
             "properties": {
               "institutions": {
                 "docs": "An array of institution objects.",
@@ -7239,6 +7302,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayPaymentMethodInformationContentPse": {
             "docs": "Object detailing what payment method information you need to display.",
+            "inline": undefined,
             "properties": {
               "customer_bank_accounts": {
                 "docs": "Array of bank account objects.
@@ -7257,6 +7321,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayPaymentProcessing": {
             "docs": "Details regarding the payer institution.",
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<PaymentInstitution>",
             },
@@ -7266,6 +7331,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayPaymentSucceeded": {
             "docs": "Details regarding the payer institution.",
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<PaymentInstitution>",
             },
@@ -7275,6 +7341,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DisplayTokenRequiredContentPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<PaymentInstitution>",
             },
@@ -7284,6 +7351,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DocumentIdBusiness": {
             "docs": "Object containing information about the ID document of the tax payer.",
+            "inline": undefined,
             "properties": {
               "document_number": {
                 "docs": "The number of the ID document.",
@@ -7300,6 +7368,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DocumentIdIndividual": {
             "docs": "Object containing information about the ID document of the tax payer.",
+            "inline": undefined,
             "properties": {
               "document_number": {
                 "docs": "The number of the ID document.",
@@ -7316,6 +7385,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DocumentInformationBusiness": {
             "docs": "Object containing detailed information about the fiscal document.",
+            "inline": undefined,
             "properties": {
               "form_number": {
                 "docs": "The institution-provided identifier for the tax declaration.",
@@ -7341,6 +7411,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "DocumentInformationIndividual": {
             "docs": "Object containing detailed information about the fiscal document.",
+            "inline": undefined,
             "properties": {
               "form_number": {
                 "docs": "Institution-provided identifier for the tax declaration.",
@@ -7366,6 +7437,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "EmploymentRecord": {
             "docs": "Emploment record response payload",
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -7426,6 +7498,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "EmploymentRecordDetail": {
             "docs": "Details regarding the individual's employment history.",
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -7501,6 +7574,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordDocumentId": {
             "docs": "Details regarding the individual's ID documents.",
+            "inline": undefined,
             "properties": {
               "document_number": {
                 "docs": "The ID document's number (as a string).
@@ -7515,6 +7589,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordEmploymentStatusUpdates": {
             "docs": "Details regarding any employment changes of the individual.",
+            "inline": undefined,
             "properties": {
               "base_salary": {
                 "docs": "The base salary of the individual, current as of the `update_date`.
@@ -7540,6 +7615,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordEntitlement": {
             "docs": "Details regarding the benefits the individual is entitled to.",
+            "inline": undefined,
             "properties": {
               "entitled_to_company_benefits": {
                 "docs": "Indicates whether or not the individual is entitled to company benefits.
@@ -7570,6 +7646,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordFile": {
             "docs": "Additional PDF binary files relating to the individual's employment.",
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "The title of the document.
@@ -7588,6 +7665,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordPersonalData": {
             "docs": "Details regarding the personal information of the individual.",
+            "inline": undefined,
             "properties": {
               "birth_date": {
                 "docs": "The date of the birth of the individual, in `YYYY-MM-DD` format.
@@ -7632,6 +7710,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordSocialSecuritySummary": {
             "docs": "Details regarding the individual's social security contributions.",
+            "inline": undefined,
             "properties": {
               "weeks_contributed": {
                 "docs": "Number of weeks the individual has contributed to their social security, based on the number of weeks the individual has worked according to IMSS.
@@ -7655,6 +7734,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           },
           "EmploymentRecordsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -8764,6 +8844,7 @@ We return one of the following enum values:
           },
           "EquityStatementBusiness": {
             "docs": "Object containing the general fiscal situation of the taxpayer.",
+            "inline": undefined,
             "properties": {
               "accounts_documents_and_finance_leases_receivable": {
                 "docs": "Total of all payments the company expects to receive (for example, from partial invoices that have not been paid yet).",
@@ -8804,6 +8885,7 @@ We return one of the following enum values:
           },
           "EquityStatementIndividual": {
             "docs": "Object containing the general fiscal situation of the taxpayer.",
+            "inline": undefined,
             "properties": {
               "total_debts": {
                 "docs": "The total debts of the tax_payer",
@@ -8824,6 +8906,7 @@ We return one of the following enum values:
           },
           "EyodIncomeVerificationBodyRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_category": "EnumIncomeVerificationAccountCategory",
               "account_holder_id": {
@@ -8885,6 +8968,7 @@ We return one of the following enum values:
           },
           "GrossIncomeIndividual": {
             "docs": "Object containing the declared gross income of the tax payer.",
+            "inline": undefined,
             "properties": {
               "capital_income": {
                 "docs": "Income received from an investment (such as dividends or from renting a property).",
@@ -8909,6 +8993,7 @@ We return one of the following enum values:
           },
           "HolderBankAccountInformationPse": {
             "docs": "Object with additional information about the individual that holds the bank account.",
+            "inline": undefined,
             "properties": {
               "first_name": {
                 "docs": "The account holder's first name.",
@@ -8925,6 +9010,7 @@ We return one of the following enum values:
           },
           "HolderBankAccountPse": {
             "docs": "Details regarding the bank account holder.",
+            "inline": undefined,
             "properties": {
               "information": "optional<HolderBankAccountInformationPse>",
               "type": "optional<EnumPaymentIntentHolderTypePse>",
@@ -8937,6 +9023,7 @@ We return one of the following enum values:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -8951,6 +9038,7 @@ We return one of the following enum values:
           },
           "INDIVIDUAL": {
             "docs": "Details about the OFPI payment method.",
+            "inline": undefined,
             "properties": {
               "open_finance": "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi",
             },
@@ -8960,6 +9048,7 @@ We return one of the following enum values:
           },
           "Income": {
             "docs": "Income insights",
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The ISO-8601 timestamp of when the data point was created in Belvo's database.",
@@ -9090,6 +9179,7 @@ For each income stream, we provide additional insights such as:
 - Key metrics about the transaction amounts.
 ℹ️ If no income sources are found, we return an empty array.
 ",
+            "inline": undefined,
             "properties": {
               "account_id": {
                 "docs": "Unique ID for the bank account to be verified for income streams.",
@@ -9189,6 +9279,7 @@ For each income stream, we provide additional insights such as:
           },
           "IncomesPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -9216,6 +9307,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Institution": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country_codes": {
                 "docs": "The country codes where the institution is available, for example:
@@ -9296,6 +9388,7 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
           },
           "InstitutionAccount": {
             "docs": "Details regarding the institution.",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the institution, as designated by Belvo.
@@ -9310,6 +9403,7 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
           },
           "InstitutionDownError": {
             "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`institution_down`) that allows you to classify and handle the error programmatically.
@@ -9342,6 +9436,7 @@ For `institution_down` errors, the description is:
           },
           "InstitutionFormField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "label": {
                 "docs": "The label of the form field. For example:
@@ -9390,6 +9485,7 @@ For `institution_down` errors, the description is:
           },
           "InstitutionInactiveError": {
             "docs": "This error occurs when we (Belvo) have deactivated the institution in our API.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`institution_inactive`) that allows you to classify and handle the error programmatically.
@@ -9422,6 +9518,7 @@ For `institution_inactive` errors, the description is:
           },
           "InstitutionUnavailableError": {
             "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`institution_unavailable`) that allows you to classify and handle the error programmatically.
@@ -9454,6 +9551,7 @@ For `institution_unavailable` errors, the description is:
           },
           "InstitutionsFeature": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "The description of the feature.",
@@ -9470,6 +9568,7 @@ For `institution_unavailable` errors, the description is:
           },
           "InstitutionsFormField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "label": {
                 "docs": "The label of the form field. For example:
@@ -9510,6 +9609,7 @@ For `institution_unavailable` errors, the description is:
           },
           "InstitutionsFormFieldValues": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "The code of the document.",
@@ -9542,6 +9642,7 @@ For `institution_unavailable` errors, the description is:
           },
           "InstitutionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -9569,6 +9670,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "InvalidAccessMode": {
             "docs": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`invalid_access_mode_switch`) that allows you to classify and handle the error programmatically.
@@ -9601,6 +9703,7 @@ For `invalid_access_mode_switch` errors, the description is:
           },
           "InvalidLinkError": {
             "docs": "This error occurs when you try to access an account but the user credentials are no longer valid, prompting an error from the institution.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`invalid_link`) that allows you to classify and handle the error programmatically.
@@ -9633,6 +9736,7 @@ For `invalid_link` errors, the description is:
           },
           "InvalidPeriodError": {
             "docs": "This error occurs when you request incomes for a link within a given date range, however, the period between `date_from` and `date_to` is less than 90 days.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`invalid_period`) that allows you to classify and handle the error programmatically.
@@ -9665,6 +9769,7 @@ For `invalid_period` errors, the description is:
           },
           "InvestmentsPortfolio": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "balance_gross": {
                 "docs": "The current gross total value of the entire portfolio and all its underlying instruments, as given by the institution.
@@ -9723,6 +9828,7 @@ Please note that other currencies other than in the list above may be returned.
           },
           "InvestmentsPortfolioInstrument": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "average_acquisition_price": {
                 "docs": "The average price of each share acquired in the instrument.",
@@ -9816,6 +9922,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "InvestmentsPortfolioInstrumentFees": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "The fee type incurred when making the purchase of the instrument.",
@@ -9832,6 +9939,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "InvestmentsPortfolioInstrumentInterestRate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "index": {
                 "docs": "If applicable, the index type that the `interest_rates.value` is calculated against.",
@@ -9856,6 +9964,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "InvestmentsPortfolioInstrumentPublicId": {
             "docs": "The public identifiers for the instrument.",
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "The type of public identifier for the instrument.",
@@ -9872,6 +9981,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "InvestmentsPortfolioInstrumentRedemptionConditions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": {
                 "docs": "The name of the redemption condition.",
@@ -9888,6 +9998,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           },
           "InvestmentsPortfoliosPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -9915,6 +10026,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "InvoiceDetailDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -9974,6 +10086,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "InvoiceDetailRetainedTaxSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -10003,6 +10116,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "InvoiceDetailSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -10070,6 +10184,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "InvoiceDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cancelation_status": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.",
@@ -10294,6 +10409,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
           "InvoiceSenderDetailsDian": {
             "docs": "Details regarding the sender.
 ",
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The sender's address.
@@ -10349,6 +10465,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "InvoiceWarningsDian": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10368,6 +10485,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "InvoiceWarningsSat": {
             "docs": "Object containing information about any warnings related to this invoice.
 ",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "The warning code.
@@ -10386,6 +10504,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "InvoiceWithIdSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cancelation_status": {
                 "docs": "If the invoice is cancelled, this field indicates the status of the cancellation.",
@@ -10610,6 +10729,7 @@ Possible statuses are:
           },
           "InvoicesPaymentsDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10678,6 +10798,7 @@ Possible statuses are:
           },
           "InvoicesPaymentsRelatedDocumentsDian": {
             "docs": "List of all the related deferred invoices affected by the payment.",
+            "inline": undefined,
             "properties": {
               "amount_paid": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10721,6 +10842,7 @@ Possible statuses are:
           },
           "InvoicesPaymentsRelatedDocumentsSat": {
             "docs": "List of all the related deferred invoices affected by the payment.",
+            "inline": undefined,
             "properties": {
               "amount_paid": {
                 "docs": "The amount paid in this installment.
@@ -10770,6 +10892,7 @@ Possible statuses are:
           },
           "InvoicesPaymentsSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The invoice amount, in the currency of the original invoice.
@@ -10847,6 +10970,7 @@ Please note that other currencies other than in the list above may be returned.
           "InvoicesPayrollDian": {
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10913,6 +11037,7 @@ Please note that other currencies other than in the list above may be returned.
           "InvoicesPayrollSat": {
             "docs": "Details regarding the payroll payment. Only applicable for payroll invoices.
 ",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The total amount of the payroll payment.
@@ -10981,6 +11106,7 @@ Please note that other currencies other than in the list above may be returned.
           "InvoicesReceiverDetailsDian": {
             "docs": "Details regarding the receiver.
 ",
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The receiver's address.
@@ -11035,6 +11161,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "InvoicesResponsePaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -11064,6 +11191,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -11078,6 +11206,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorInvalidCredentials": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`invalid_credentials`) that allows you to classify and handle the error programmatically.",
@@ -11094,6 +11223,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorInvalidToken": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the MFA token your customer provides is invalid.",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`invalid_token`) that allows you to classify and handle the error programmatically.",
@@ -11110,6 +11240,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorLoginError": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the `pse_display_credentials_required` next step.",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`login_error`) that allows you to classify and handle the error programmatically.",
@@ -11126,6 +11257,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorPaymentError": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened during the payment intent process.",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`payment_error`) that allows you to classify and handle the error programmatically.",
@@ -11142,6 +11274,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorSessionExpired": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error occurs when you try to send a PATCH request after the session has already expired (the session expires after 10 minutes).",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`session_expired`) that allows you to classify and handle the error programmatically.",
@@ -11158,6 +11291,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "LastErrorTwoFactor": {
             "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the `pse_display_token_required` next step.",
+            "inline": undefined,
             "properties": {
               "error_code": {
                 "docs": "A unique error code (`login_two_factor_error`) that allows you to classify and handle the error programmatically.",
@@ -11174,6 +11308,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "Link": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_mode": "optional<EnumLinkAccessModeResponse>",
               "created_at": {
@@ -11247,6 +11382,7 @@ A unique 44-character string that can be used to identify a user at a given inst
   - the MFA token your user provides is not supported by Belvo.
   - there is an issue with the institution that prevents logins.
   - the user's account is either locked or the user does not have permission to access their internet banking.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`login_error`) that allows you to classify and handle the error programmatically.
@@ -11285,6 +11421,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NeedsRedirectContent": {
             "docs": "Details regarding the payer institution.",
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<PaymentInstitution>",
             },
@@ -11294,6 +11431,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NeedsRedirectContentPse": {
             "docs": "Details regarding the payer institution.",
+            "inline": undefined,
             "properties": {
               "payer_institution": "optional<InstitutionFormField>",
             },
@@ -11303,6 +11441,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NetIncomeIndividual": {
             "docs": "Object containing the declared net income of the tax payer. The values are calculated as the `gross_income` - `non_taxable_income`.",
+            "inline": undefined,
             "properties": {
               "capital_income": {
                 "docs": "Income received from an investment (such as dividends or from renting a property).",
@@ -11327,6 +11466,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayConfirmationRequiredOfpi": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_confirmation_required": {
                 "type": "optional<DisplayConfirmationRequiredOfpi>",
@@ -11345,6 +11485,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayConfirmationRequiredPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "pse_display_confirmation_required": {
                 "type": "optional<DisplayConfirmationRequiredContentPse>",
@@ -11363,6 +11504,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayCredentialsRequiredPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "pse_display_credentials_required": {
                 "type": "optional<DisplayCredentialsRequiredContentPse>",
@@ -11381,6 +11523,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayCustomerBankAccountsPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "pse_display_customer_bank_accounts": {
                 "type": "optional<DisplayCustomerBankAccountsContentPse>",
@@ -11399,6 +11542,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayNeedsRedirectPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "pse_display_needs_redirect": {
                 "type": "optional<NeedsRedirectContentPse>",
@@ -11417,6 +11561,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayPaymentFailed": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_payment_failed": {
                 "type": "optional<DisplayPaymentFailed>",
@@ -11435,6 +11580,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayPaymentMethodInformation": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_payment_method_information": {
                 "type": "optional<DisplayPaymentMethodInformationContentOfpi>",
@@ -11453,6 +11599,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayPaymentMethodInformationPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
+            "inline": undefined,
             "properties": {
               "pse_display_payment_method_information": {
                 "type": "optional<DisplayPaymentMethodInformationContentPse>",
@@ -11471,6 +11618,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayPaymentProcessing": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_payment_processing": {
                 "type": "optional<DisplayPaymentProcessing>",
@@ -11489,6 +11637,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayPaymentSucceeded": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_payment_succeeded": {
                 "type": "optional<DisplayPaymentSucceeded>",
@@ -11507,6 +11656,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepDisplayTokenRequiredPse": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "pse_display_token_required": {
                 "type": "optional<DisplayTokenRequiredContentPse>",
@@ -11528,6 +11678,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NextStepNeedsRedirect": {
             "docs": "Object detailing the next steps you should follow for a specific `next_step` type.",
+            "inline": undefined,
             "properties": {
               "open_finance_display_needs_redirect": {
                 "type": "optional<NeedsRedirectContent>",
@@ -11546,6 +11697,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NonTaxableIncomeIndividual": {
             "docs": "Object containing the declared non-taxable income of the tax payer.",
+            "inline": undefined,
             "properties": {
               "capital_income": {
                 "docs": "Income received from an investment (such as dividends or from renting a property).",
@@ -11570,6 +11722,7 @@ For `login_error` errors, the description can be one of the following:
           },
           "NotFoundErrorBody": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`not_found`) that allows you to classify and handle the error programmatically.
@@ -11602,6 +11755,7 @@ For `not_found` errors, the description is:
           },
           "OFPB": {
             "docs": "Details about the organization's bank account that will receive the payment.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
@@ -11624,6 +11778,7 @@ For `not_found` errors, the description is:
           },
           "OFPI": {
             "docs": "Details about the payment method.",
+            "inline": undefined,
             "properties": {
               "open_finance": {
                 "type": "optional<ChargePaymentMethodDetailsOfpiContent>",
@@ -11635,6 +11790,7 @@ For `not_found` errors, the description is:
           },
           "Owner": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": {
                 "docs": "The accounts owners registered address.",
@@ -11728,6 +11884,7 @@ For `not_found` errors, the description is:
           },
           "OwnerDocumentId": {
             "docs": "Information regarding the identification document the owner provided to the bank.",
+            "inline": undefined,
             "properties": {
               "document_number": {
                 "docs": "The document's identification number.",
@@ -11757,6 +11914,7 @@ For `not_found` errors, the description is:
           },
           "OwnersPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -11784,6 +11942,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PSE": {
             "docs": "Object with payment method details to create a payment intent.",
+            "inline": undefined,
             "properties": {
               "pse": {
                 "type": "PSE",
@@ -11795,6 +11954,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaginatedResponseLink": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -11819,6 +11979,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PatchBody": {
             "docs": "A JSON object containing a session UUID and a MFA token",
+            "inline": undefined,
             "properties": {
               "link": {
                 "docs": "The `link.id` you want to resume. Must be the same `link.id` as the one you receive in the 428 Token Required response that contains the `session` ID.",
@@ -11857,6 +12018,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PatchBodyWithoutSaveData": {
             "docs": "A JSON object containing a session UUID and a MFA token",
+            "inline": undefined,
             "properties": {
               "link": {
                 "docs": "The `link.id` you want to resume. Must be the same `link.id` as the one you receive in the 428 Token Required response that contains the `session` ID.",
@@ -11889,6 +12051,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PatchPaymentIntentsBodyPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "pse": {
                 "type": "optional<PatchPaymentMethodDetailsPse>",
@@ -11900,6 +12063,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PatchPaymentMethodDetailsPse": {
             "docs": "Object with required fields to fill information in the payment intent object. The information you need to send through depends on the next step Belvo returns in the response.",
+            "inline": undefined,
             "properties": {
               "password": {
                 "docs": "The password used to log in to the institution.
@@ -11950,6 +12114,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PaymentInstitution": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "active": {
                 "docs": "Indicates whether this institution is available for use or not.",
@@ -12006,6 +12171,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PaymentIntentOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowed_payment_method_types": {
                 "docs": "A list of payment method types allowed in this payment intent. For OFPI, the value will be `open_finance`.",
@@ -12134,6 +12300,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12148,6 +12315,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "PaymentIntentPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -12175,6 +12343,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi": {
             "docs": "Payment method type selected.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
@@ -12213,6 +12382,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi": {
             "docs": "Payment method type selected.",
+            "inline": undefined,
             "properties": {
               "beneficiary_bank_account": {
                 "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
@@ -12251,6 +12421,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentIntentPaymentMethodDetailsBodyPse": {
             "docs": "Details about the payment method type selected.",
+            "inline": undefined,
             "properties": {
               "belvo_flow": {
                 "default": true,
@@ -12306,6 +12477,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentIntentPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowed_payment_method_types": {
                 "docs": "A list of payment method types allowed in this payment intent. For PSE, the value will be `pse`.",
@@ -12404,6 +12576,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12460,6 +12633,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkCallbackUrls": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cancel": {
                 "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.
@@ -12482,6 +12656,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "docs": "The URLs that the user should be redirected to.
 
 **Note:** This field will return an empty object if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
+            "inline": undefined,
             "properties": {
               "cancel": {
                 "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.",
@@ -12498,6 +12673,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkListOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The Belvo-generated access token for the payment link.
@@ -12574,6 +12750,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkListPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The Belvo-generated access token for the payment link.
@@ -12650,6 +12827,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkOfpi": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The Belvo-generated access token for the payment link.
@@ -12719,6 +12897,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -12748,6 +12927,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12762,6 +12942,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentLinkPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The Belvo-generated access token for the payment link.
@@ -12831,6 +13012,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentMethodInfoCustomerBankAccountsPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "customer": {
                 "docs": "Belvo's unique ID for the current customer.",
@@ -12866,6 +13048,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentMethodInformationBodyOfpi": {
             "docs": "Payment method type selected.",
+            "inline": undefined,
             "properties": {
               "end_to_end_id": {
                 "docs": "A unique ID for the transaction in the Brazil's PIX payment system.",
@@ -12886,6 +13069,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentMethodInformationBodyPse": {
             "docs": "Payment method type selected.",
+            "inline": undefined,
             "properties": {
               "bank_payment_id": {
                 "docs": "Unique payment ID provided the institution.",
@@ -12910,6 +13094,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentMethodInformationDetailsPse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account_type": {
                 "docs": "The type of bank account. For example, `Ahorros` or `Corriente`.",
@@ -12923,6 +13108,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentTransaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The transaction amount.
@@ -13003,6 +13189,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -13017,6 +13204,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentWebhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "auth_header": {
                 "docs": "The authentication header for the request. **Must** be set to `Authorization`.",
@@ -13063,6 +13251,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentsInstitutionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13090,6 +13279,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentsTransactionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13117,6 +13307,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentsWay": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "form_id": {
                 "docs": "Your unique Payments Way form ID.
@@ -13137,6 +13328,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PaymentsWebhooksPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13164,6 +13356,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "PensionIncomeStatementIndividual": {
             "docs": "Object containing the tax payer's total pension income.",
+            "inline": undefined,
             "properties": {
               "net_pension_income": {
                 "docs": "The total net pension of the taxpayer.",
@@ -13180,6 +13373,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ReceivablesTransaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account": "ReceivablesTransactionAccount",
               "collected_at": {
@@ -13247,6 +13441,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ReceivablesTransactionAccount": {
             "docs": "Basic information about the account associated with the transaction.",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Belvo's unique ID for the account associated with the transaction.",
@@ -13266,6 +13461,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ReceivablesTransactionNumberOfInstallments": {
             "docs": "Details regarding the number of installments for the transaction, if applicable.",
+            "inline": undefined,
             "properties": {
               "paid": {
                 "docs": "The number of payments already made to pay the cost of the transaction.",
@@ -13282,6 +13478,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ReceivablesTransactionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13309,6 +13506,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "RecevablesTransactionFees": {
             "docs": "Details regarding the fees applied to the transaction.",
+            "inline": undefined,
             "properties": {
               "type": "optional<EnumReceivableTransactionFeeType>",
               "value": {
@@ -13322,6 +13520,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "RecurringExpenseSourceTransaction": {
             "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "The transaction amount.",
@@ -13352,6 +13551,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 
 ℹ️ If no recurring expense insights are found, we return an empty array.
 ",
+            "inline": undefined,
             "properties": {
               "account": "optional<Account>",
               "average_transaction_amount": {
@@ -13400,6 +13600,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
           "RecurringExpensesPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13427,6 +13628,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "ReportingId": {
             "docs": "Object containing information about where the tax payer reports their income.",
+            "inline": undefined,
             "properties": {
               "reporting_type": {
                 "docs": "The type of reporting ID. For DIAN, this is the sectional address code (*Codigo Dirrecion Seccional*)",
@@ -13443,6 +13645,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "RequestTimeoutErrorBody": {
             "docs": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`request_timeout`) that allows you to classify and handle the error programmatically.
@@ -13475,6 +13678,7 @@ For `request_timeout` errors, the description is:
           },
           "RetentionBreakdown": {
             "docs": "A breakdown of the retained taxes",
+            "inline": undefined,
             "properties": {
               "base_amount": {
                 "docs": "The base amount that was used to calculate the tax retention.
@@ -13499,6 +13703,7 @@ For `request_timeout` errors, the description is:
           },
           "RiskInsights": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accounts": {
                 "docs": "An array of Belvo-generated account numbers (UUIDs) that were used during the risk insights analysis. If no accounts were found, we return an empty array.",
@@ -13540,6 +13745,7 @@ For `request_timeout` errors, the description is:
           },
           "RiskInsightsBalanceMetrics": {
             "docs": "Balance metrics calculated based on the user's balances from checking and savings accounts.",
+            "inline": undefined,
             "properties": {
               "balance_threshold_x": {
                 "docs": "The threshold used to compute `days_balance_below_x_period`. Please note, this is value is country specific (both in terms of the amount and the currency).
@@ -13621,6 +13827,7 @@ For `request_timeout` errors, the description is:
 
 However, internal transfers (transfers between accounts belonging to the same link) are not used in the calculation.
 ",
+            "inline": undefined,
             "properties": {
               "positive_to_negative_ratio_1m": {
                 "docs": "The ratio between sum_positive / sum_negative  in the last month (counted from the time of the request).
@@ -13682,6 +13889,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           },
           "RiskInsightsCreditCardMetrics": {
             "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
+            "inline": undefined,
             "properties": {
               "num_accounts": {
                 "docs": "Number of credit cards accounts associated to the link.
@@ -13712,6 +13920,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           },
           "RiskInsightsLoansMetrics": {
             "docs": "Aggregated metrics calculated based on the user's loan accounts.",
+            "inline": undefined,
             "properties": {
               "num_accounts": {
                 "docs": "Number of loan accounts associated with the link.
@@ -13740,6 +13949,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           },
           "RiskInsightsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -13767,6 +13977,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "RiskInsightsTransactionMetrics": {
             "docs": "Aggregated metrics calculated band on the user's transactions from checking, savings, credit card, and loan accounts.",
+            "inline": undefined,
             "properties": {
               "max_incoming_amount_1m": {
                 "docs": "The highest value inflow transaction in the last month.
@@ -13943,6 +14154,7 @@ If the account has not been open long enough to have the transaction data for a 
           },
           "SecretKeys": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "The ISO-8601 timestamp of when the secret key was created.
@@ -13975,6 +14187,7 @@ If the account has not been open long enough to have the transaction data for a 
           },
           "SecretKeysPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14002,6 +14215,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "SessionExpiredError": {
             "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`session_expired`) that allows you to classify and handle the error programmatically.
@@ -14034,6 +14248,7 @@ For `session_expired` errors, the description is:
           },
           "StandardRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "link": {
                 "docs": "The `link.id` that you want to get information for.",
@@ -14062,6 +14277,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "TaxAssessmentBusiness": {
             "docs": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
+            "inline": undefined,
             "properties": {
               "fortuitous_profit_tax": {
                 "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
@@ -14106,6 +14322,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "TaxAssessmentIndividual": {
             "docs": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
+            "inline": undefined,
             "properties": {
               "balance_payable": {
                 "docs": "How much the tax payer is required to pay.",
@@ -14154,6 +14371,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
           },
           "TaxComplianceStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -14199,6 +14417,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
           },
           "TaxComplianceStatusPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14226,6 +14445,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxDeclarationBusiness": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "annual_costs_and_deductions_statement": "AnnualCostsAndDeductionsStatementBusiness",
               "annual_income_statement": "AnnualIncomeStatementBusiness",
@@ -14282,6 +14502,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxDeclarationBusinessPaginated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14309,6 +14530,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxDeclarationIndividual": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "annual_income_statement": "AnnualIncomeStatementIndividual",
               "collected_at": {
@@ -14365,6 +14587,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxDeclarationIndividualPaginated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14392,6 +14615,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxPayerInformationBusiness": {
             "docs": "Object containing information about the tax payer.",
+            "inline": undefined,
             "properties": {
               "company_name": {
                 "docs": "The name of the company, as registered at the institution.",
@@ -14426,6 +14650,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxPayerInformationIndividual": {
             "docs": "Object containing information about the tax payer.",
+            "inline": undefined,
             "properties": {
               "document_id": "DocumentIdIndividual",
               "first_last_name": {
@@ -14456,6 +14681,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxRetentions": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cancelled_at": {
                 "docs": "The ISO-8601 timestamp of when the tax retention was canceled (if applicable).
@@ -14580,6 +14806,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxRetentionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14608,6 +14835,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnBusiness": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "cifras_cierre_ejercicio": {
                 "docs": "Details regarding key numbers at the end of the fiscal exercise.",
@@ -14695,6 +14923,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnBusinessMonthly": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -14766,6 +14995,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnPersonal": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -14855,6 +15085,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnPersonalMonthly": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -14918,6 +15149,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnsBusinessMonthlyPaginated": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14946,6 +15178,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnsBusinessPaginated": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -14973,6 +15206,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxReturnsMonthlyRequest": {
             "docs": "Request body for monthly tax returns",
+            "inline": undefined,
             "properties": {
               "attach_pdf": {
                 "default": false,
@@ -15021,6 +15255,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           "TaxReturnsPersonalMonthlyPaginated": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -15049,6 +15284,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           "TaxReturnsPersonalPaginated": {
             "docs": undefined,
             "extra-properties": true,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -15076,6 +15312,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxReturnsYearlyRequest": {
             "docs": "Request body for yearly tax returns",
+            "inline": undefined,
             "properties": {
               "attach_pdf": {
                 "default": false,
@@ -15123,6 +15360,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
           "TaxStatusAddressBetweenStreetDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "street_one": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -15141,6 +15379,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
           "TaxStatusAddressBetweenStreetSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "street_one": {
                 "docs": "The first street that `street` is located between.",
@@ -15157,6 +15396,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
           "TaxStatusAddressDian": {
             "docs": "The tax payer's address details.",
+            "inline": undefined,
             "properties": {
               "between_street": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -15209,6 +15449,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
           "TaxStatusAddressSat": {
             "docs": "The tax payer's address details.",
+            "inline": undefined,
             "properties": {
               "between_street": {
                 "docs": "Additional information about where the `street` is located.
@@ -15261,6 +15502,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
           "TaxStatusDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": "optional<TaxStatusAddressDian>",
               "collected_at": {
@@ -15351,6 +15593,7 @@ Note: For individuals in Colombia, this field will return `null`.
           },
           "TaxStatusEconomicActivityDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "economic_activity": {
                 "docs": "The economic activity code, according to the fiscal institution.
@@ -15396,6 +15639,7 @@ For detailed information regarding DIAN's economic activities, please see their 
           },
           "TaxStatusEconomicActivitySat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "economic_activity": {
                 "docs": "The description of the economic activity.",
@@ -15441,6 +15685,7 @@ For detailed information regarding DIAN's economic activities, please see their 
 
 ℹ️ For non-business accounts, this field will return empty.
 ",
+            "inline": undefined,
             "properties": {
               "end_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -15484,6 +15729,7 @@ For detailed information regarding DIAN's economic activities, please see their 
 
 ℹ️ For non-business accounts, this field will return empty.
 ",
+            "inline": undefined,
             "properties": {
               "end_date": {
                 "docs": "The date when obligation ended.
@@ -15524,6 +15770,7 @@ For detailed information regarding DIAN's economic activities, please see their 
           },
           "TaxStatusPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -15553,6 +15800,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -15567,6 +15815,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxStatusRegimensDian": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "end_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -15601,6 +15850,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxStatusRegimensSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "end_date": {
                 "docs": "The end date of the regimen.
@@ -15635,6 +15885,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxStatusSat": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "address": "optional<TaxStatusAddressSat>",
               "collected_at": {
@@ -15722,6 +15973,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxStatusTaxPayerInformationDian": {
             "docs": "Details regarding the taxpayer.",
+            "inline": undefined,
             "properties": {
               "commercial_name": {
                 "docs": "The name of the business designated for consumers and the general public.
@@ -15798,6 +16050,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TaxStatusTaxPayerInformationSat": {
             "docs": "Details regarding the taxpayer.",
+            "inline": undefined,
             "properties": {
               "commercial_name": {
                 "docs": "The name of the business designated for consumers and the general public.
@@ -15874,6 +16127,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TokenRequiredResponse": {
             "docs": "MFA Token Required",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`token_required`) that allows you to classify and handle the error programmatically.
@@ -15931,6 +16185,7 @@ For `token_required` errors, the description is:
           },
           "TokenRequiredResponseTokenGenerationData": {
             "docs": "Details on how to generate the token.",
+            "inline": undefined,
             "properties": {
               "expects_user_input": {
                 "default": true,
@@ -15962,6 +16217,7 @@ You will still need to make a PATCH call to complete the request.",
 
   - a user is attempting to log in to their institution via Belvo while also already being logged in to their institution on a web browser or mobile app.
   - you make a request for information while Belvo is scraping data from the institution for that user.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`too_many_sessions`) that allows you to classify and handle the error programmatically.
@@ -15994,6 +16250,7 @@ For `too_many_sessions` errors, the description is:
           },
           "Transaction": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account": "optional<Account>",
               "accounting_date": {
@@ -16091,6 +16348,7 @@ For `too_many_sessions` errors, the description is:
           },
           "TransactionBankAccountBodyPse": {
             "docs": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
+            "inline": undefined,
             "properties": {
               "bank_account": {
                 "docs": "Belvo's unique identifier for the payer’s bank account.",
@@ -16115,6 +16373,7 @@ For `too_many_sessions` errors, the description is:
             "discriminated": false,
             "docs": "Object containing the payer's bank account information.",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -16129,6 +16388,7 @@ For `too_many_sessions` errors, the description is:
           },
           "TransactionCreditCardData": {
             "docs": "Additional data provided by the institution for credit card transactions.",
+            "inline": undefined,
             "properties": {
               "bill_amount": {
                 "docs": "The aggregate bill amount, as of `collected_at`.",
@@ -16163,6 +16423,7 @@ We only return merchant information for new transactions made from *checking* or
 > **Get merchant information**
  We retrieve the merchant information for a transaction as part of our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) product, turning raw data into actionable insights. To enable this product, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
 ",
+            "inline": undefined,
             "properties": {
               "logo": {
                 "docs": "The URL to the merchant's logo.",
@@ -16183,6 +16444,7 @@ We only return merchant information for new transactions made from *checking* or
           },
           "TransactionsPaginatedResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The total number of results in your Belvo account.",
@@ -16210,6 +16472,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
           },
           "TransactionsRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "account": {
                 "docs": "If provided, we return transactions only from this account.",
@@ -16272,6 +16535,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
           },
           "UnauthorizedErrorBody": {
             "docs": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`authentication_failed`) that allows you to classify and handle the error programmatically.
@@ -16305,6 +16569,7 @@ For `authentication_failed` errors, the description is:
           "UnconfirmedLinkError": {
             "docs": "This error occurs when you try to access a link that was paused previously (and as such is not active now).
 A Link's status is set to `unconfirmed_link` when your user has not completed the Link creation process successfully (for example, they might not provide a valid MFA token).",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`unconfirmed_link`) that allows you to classify and handle the error programmatically.
@@ -16337,6 +16602,7 @@ For `unconfirmed_link` errors, the description is:
           },
           "UnexpectedError": {
             "docs": "This error occurs when we (Belvo) have encountered an internal system error (sorry about that) or due to an unsupported response from the institution.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`unexpected_error`) that allows you to classify and handle the error programmatically.
@@ -16369,6 +16635,7 @@ For `unexpected_error` errors, the description is:
           },
           "UnsupportedOperationError": {
             "docs": "This error occurs when you try to access some data operation that Belvo does not support for an institution. For example, trying to access the Balances resource for fiscal institutions.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`unsupported_operation`) that allows you to classify and handle the error programmatically.
@@ -16401,6 +16668,7 @@ For `unsupported_operation` errors, the description is:
           },
           "ValidationError": {
             "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "A unique error code (`null`, `does_not_exist`, `required`) that allows you to classify and handle the error programmatically.
@@ -22422,6 +22690,7 @@ types:
       - type: InvoiceDian
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoicesResponsePaginatedResponse:
     properties:
       count:
@@ -23413,6 +23682,7 @@ types:
       - type: TaxStatusDian
     source:
       openapi: ../openapi.yml
+    inline: true
   TaxStatusPaginatedResponse:
     properties:
       count:
@@ -26656,6 +26926,7 @@ types:
       - type: CustomerPse
     source:
       openapi: ../openapi.yml
+    inline: true
   CustomerPaginatedResponse:
     properties:
       count:
@@ -26810,6 +27081,7 @@ types:
       - type: INDIVIDUAL
     source:
       openapi: ../openapi.yml
+    inline: true
   OFPI:
     docs: Details about the payment method.
     properties:
@@ -26824,6 +27096,7 @@ types:
       - type: BankAccountDetailsOfpiPix
     source:
       openapi: ../openapi.yml
+    inline: true
   BankAccountOfpiResponse:
     properties:
       id:
@@ -26948,6 +27221,7 @@ types:
       - BankAccountPseResponse
     source:
       openapi: ../openapi.yml
+    inline: true
   BankAccountPaginatedResponse:
     properties:
       count:
@@ -26982,6 +27256,7 @@ types:
       - type: INDIVIDUAL
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateBankAccountOfpiDetails:
     discriminated: false
     docs: Information regarding the bank account.
@@ -26990,6 +27265,7 @@ types:
       - type: BankAccountDetailsOfpiPix
     source:
       openapi: ../openapi.yml
+    inline: true
   CreateBankAccountOfpi:
     properties:
       institution:
@@ -27219,6 +27495,7 @@ types:
       - type: PaymentLinkListPse
     source:
       openapi: ../openapi.yml
+    inline: true
   PaymentLinkPaginatedResponse:
     properties:
       count:
@@ -27327,6 +27604,7 @@ types:
       - float
     source:
       openapi: ../openapi.yml
+    inline: true
   CreatePaymentLinkOfpi:
     properties:
       amount:
@@ -27393,6 +27671,7 @@ types:
       - long
     source:
       openapi: ../openapi.yml
+    inline: true
   CreatePaymentLinkPse:
     properties:
       amount:
@@ -27529,6 +27808,7 @@ types:
       - type: BankAccountDetailsOpenFinancePix
     source:
       openapi: ../openapi.yml
+    inline: true
   BeneficiaryBankAccountOfpi:
     properties:
       id:
@@ -27851,6 +28131,7 @@ types:
       - type: TransactionBankAccountPse
     source:
       openapi: ../openapi.yml
+    inline: true
   PaymentTransaction:
     properties:
       id:
@@ -27917,6 +28198,7 @@ types:
       - type: OFPI
     source:
       openapi: ../openapi.yml
+    inline: true
   Charge:
     properties:
       id:
@@ -28033,6 +28315,7 @@ types:
       - type: BUSINESS
     source:
       openapi: ../openapi.yml
+    inline: true
   PaymentIntentOfpi:
     properties:
       id:
@@ -28561,6 +28844,7 @@ types:
       - type: LastErrorSessionExpired
     source:
       openapi: ../openapi.yml
+    inline: true
   PaymentIntentPse:
     properties:
       id:
@@ -38226,6 +38510,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -38242,6 +38527,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -38256,6 +38542,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -39381,6 +39668,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -39397,6 +39685,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -39413,6 +39702,7 @@ docs: >-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -48824,6 +49114,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -48840,6 +49131,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -48856,6 +49148,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -57508,6 +57801,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.
 ",
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -58142,6 +58436,7 @@ types:
       - long
     source:
       openapi: ../openapi.yml
+    inline: true
 ",
     },
     "paymentLinks.yml": {
@@ -58551,6 +58846,7 @@ types:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -58567,6 +58863,7 @@ types:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -58583,6 +58880,7 @@ types:
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -66977,6 +67275,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -66993,6 +67292,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -67009,6 +67309,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -73377,6 +73678,7 @@ client.connect()
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -73399,6 +73701,7 @@ client.connect()
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -73421,6 +73724,7 @@ client.connect()
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -73437,6 +73741,7 @@ client.connect()
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -78666,6 +78971,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -78682,6 +78988,7 @@ When set to `false`, the data won't be persisted and we return a 200 OK response
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

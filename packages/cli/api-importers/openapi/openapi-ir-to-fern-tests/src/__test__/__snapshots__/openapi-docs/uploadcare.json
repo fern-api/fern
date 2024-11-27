@@ -878,6 +878,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -906,6 +907,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -924,6 +926,7 @@
           },
           "ContentInfo": {
             "docs": "Information about file content.",
+            "inline": undefined,
             "properties": {
               "image": "optional<SchemasImageInfo>",
               "mime": {
@@ -938,6 +941,7 @@
           },
           "ContentInfoMime": {
             "docs": "MIME type.",
+            "inline": true,
             "properties": {
               "mime": {
                 "docs": "Full MIME type.",
@@ -960,6 +964,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -979,6 +984,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1045,6 +1051,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "FileUploadInfo": {
             "docs": "Information about an uploaded file.",
+            "inline": undefined,
             "properties": {
               "content_info": "optional<ContentInfo>",
               "done": {
@@ -1117,6 +1124,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "FileUploadInfoErrorStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "error": {
                 "docs": "Human readable description of the issue with the fetch/upload task.
@@ -1146,6 +1154,7 @@ page for a full list of all possible error codes.
             "extends": [
               "FileUploadInfo",
             ],
+            "inline": undefined,
             "properties": {
               "type": "optional<literal<"file_info">>",
             },
@@ -1155,6 +1164,7 @@ page for a full list of all possible error codes.
           },
           "FileUploadInfoProgressStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "done": {
                 "docs": "How many bytes of the file have been fetched so far.
@@ -1184,6 +1194,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1197,6 +1208,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1210,6 +1222,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "extends": [
               "FileUploadInfo",
             ],
+            "inline": undefined,
             "properties": {
               "status": {
                 "docs": "The file has been fetched/uploaded successfully.",
@@ -1222,6 +1235,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           },
           "FileUploadInfoUnknownStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "status": {
                 "docs": "The system does not have information about the task.
@@ -1239,6 +1253,7 @@ that are tool old (or that have not been created at all).
           },
           "FileUploadInfoWaitingStatus": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "status": {
                 "docs": "The system is preparing to handle the request.
@@ -1254,6 +1269,7 @@ that are tool old (or that have not been created at all).
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1266,6 +1282,7 @@ that are tool old (or that have not been created at all).
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1281,6 +1298,7 @@ that are tool old (or that have not been created at all).
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1314,6 +1332,7 @@ that are tool old (or that have not been created at all).
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1332,6 +1351,7 @@ that are tool old (or that have not been created at all).
           },
           "FromUrlUploadResponseSchema": {
             "docs": "`/from_url/` upload response.",
+            "inline": undefined,
             "properties": {
               "token": {
                 "docs": "Token to identify a `/from_url/` request.",
@@ -1363,6 +1383,7 @@ that are tool old (or that have not been created at all).
           },
           "GroupInfo": {
             "docs": "File group information object.",
+            "inline": undefined,
             "properties": {
               "cdn_url": {
                 "docs": "Group's CDN URL.",
@@ -1419,6 +1440,7 @@ that are tool old (or that have not been created at all).
           },
           "ImageInfo": {
             "docs": "Image metadata.",
+            "inline": undefined,
             "properties": {
               "color_mode": {
                 "docs": "Image color mode.",
@@ -1489,6 +1511,7 @@ that are tool old (or that have not been created at all).
           },
           "ImageInfoGeoLocation": {
             "docs": "Geo-location of image from EXIF.",
+            "inline": true,
             "properties": {
               "latitude": {
                 "docs": "Location latitude.",
@@ -1505,6 +1528,7 @@ that are tool old (or that have not been created at all).
           },
           "LegacyVideoInfo": {
             "docs": "Video metadata.",
+            "inline": undefined,
             "properties": {
               "audio": {
                 "docs": "Audio stream's metadata.",
@@ -1533,6 +1557,7 @@ that are tool old (or that have not been created at all).
           },
           "LegacyVideoInfoAudio": {
             "docs": "Audio stream's metadata.",
+            "inline": true,
             "properties": {
               "bitrate": {
                 "docs": "Audio stream's bitrate.",
@@ -1557,6 +1582,7 @@ that are tool old (or that have not been created at all).
           },
           "LegacyVideoInfoVideo": {
             "docs": "Video stream's metadata.",
+            "inline": true,
             "properties": {
               "bitrate": {
                 "docs": "Video stream's bitrate.",
@@ -1618,6 +1644,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1639,6 +1666,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1651,6 +1679,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1682,6 +1711,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1743,6 +1773,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
           "SchemasImageInfo": {
             "docs": "Image metadata.",
+            "inline": undefined,
             "properties": {
               "color_mode": {
                 "docs": "Image color mode.",
@@ -1813,6 +1844,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
           "SchemasImageInfoGeoLocation": {
             "docs": "Geo-location of image from EXIF.",
+            "inline": true,
             "properties": {
               "latitude": {
                 "docs": "Location latitude.",
@@ -1926,6 +1958,7 @@ change the value to `auto`.
           },
           "VideoInfo": {
             "docs": "Video metadata.",
+            "inline": undefined,
             "properties": {
               "audio": "list<VideoInfoAudioItem>",
               "bitrate": {
@@ -1948,6 +1981,7 @@ change the value to `auto`.
           },
           "VideoInfoAudioItem": {
             "docs": "Audio stream's metadata.",
+            "inline": true,
             "properties": {
               "bitrate": {
                 "docs": "Audio stream's bitrate.",
@@ -1972,6 +2006,7 @@ change the value to `auto`.
           },
           "VideoInfoVideoItem": {
             "docs": "Video stream's metadata.",
+            "inline": true,
             "properties": {
               "bitrate": {
                 "docs": "Video stream's bitrate.",
@@ -2619,6 +2654,7 @@ change the value to `auto`.
         docs: Location longitude.
     source:
       openapi: ../openapi.json
+    inline: true
   ImageInfo:
     docs: Image metadata.
     properties:
@@ -2673,6 +2709,7 @@ change the value to `auto`.
         docs: Audio stream's number of channels.
     source:
       openapi: ../openapi.json
+    inline: true
   LegacyVideoInfoVideo:
     docs: Video stream's metadata.
     properties:
@@ -2693,6 +2730,7 @@ change the value to `auto`.
         docs: Video stream codec.
     source:
       openapi: ../openapi.json
+    inline: true
   LegacyVideoInfo:
     docs: Video metadata.
     properties:
@@ -2740,6 +2778,7 @@ change the value to `auto`.
         docs: Location longitude.
     source:
       openapi: ../openapi.json
+    inline: true
   SchemasImageInfo:
     docs: Image metadata.
     properties:
@@ -2794,6 +2833,7 @@ change the value to `auto`.
         docs: Audio stream's number of channels.
     source:
       openapi: ../openapi.json
+    inline: true
   VideoInfoVideoItem:
     docs: Video stream's metadata.
     properties:
@@ -2814,6 +2854,7 @@ change the value to `auto`.
         docs: Video stream's codec.
     source:
       openapi: ../openapi.json
+    inline: true
   VideoInfo:
     docs: Video metadata.
     properties:
@@ -2844,6 +2885,7 @@ change the value to `auto`.
         docs: Subtype of MIME type.
     source:
       openapi: ../openapi.json
+    inline: true
   ContentInfo:
     docs: Information about file content.
     properties:
@@ -6107,6 +6149,7 @@ to us as a value of the `part_size` parameter (in bytes).
             "docs": "JSON object where the key is the file name of the uploaded file and
 the value is the unique ID of the file on our systems.
 ",
+            "inline": undefined,
             "properties": {
               "filename": {
                 "type": "optional<string>",
@@ -6165,6 +6208,7 @@ to the value of the `check_URL_duplicates` parameter.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6177,6 +6221,7 @@ to the value of the `check_URL_duplicates` parameter.
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -6190,6 +6235,7 @@ to the value of the `check_URL_duplicates` parameter.
           },
           "MultipartFileUploadStartResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "parts": "list<string>",
               "uuid": {

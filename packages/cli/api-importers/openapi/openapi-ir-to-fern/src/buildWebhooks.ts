@@ -38,7 +38,8 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 schema: webhook.payload,
                 context,
                 fileContainingReference: webhookLocation.file,
-                namespace: maybeWebhookNamespace
+                namespace: maybeWebhookNamespace,
+                declarationDepth: 0
             }),
             examples:
                 webhook.examples != null

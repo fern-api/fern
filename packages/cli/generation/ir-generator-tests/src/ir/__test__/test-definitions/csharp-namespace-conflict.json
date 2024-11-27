@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_a/aa:A": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "A",
@@ -156,7 +156,7 @@
             "docs": null
         },
         "type_a/aa:B": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "B",
@@ -281,7 +281,7 @@
             "docs": null
         },
         "type_a/aa:SubTestType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "SubTestType",
@@ -678,7 +678,7 @@
             "docs": null
         },
         "type_b:TestType": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "TestType",
@@ -1037,7 +1037,7 @@
             "docs": null
         },
         "type_tasktest:Task": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Task",

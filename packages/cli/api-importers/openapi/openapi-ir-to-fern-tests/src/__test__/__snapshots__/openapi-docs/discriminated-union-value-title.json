@@ -58,6 +58,7 @@
           "Response": {
             "docs": "A generic response type used throughout the API.
 ",
+            "inline": undefined,
             "properties": {
               "value": {
                 "docs": "An optional numerical value.

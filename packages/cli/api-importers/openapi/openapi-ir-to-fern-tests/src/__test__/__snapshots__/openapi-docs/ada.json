@@ -277,6 +277,7 @@
           "EndUser": "unknown",
           "EndUserCreatedWebhookPayload": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<unknown>",
               "timestamp": "optional<string>",
@@ -289,6 +290,7 @@
           "EndUserRequest": "unknown",
           "EndUserUpdatedWebhookPayload": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<unknown>",
               "timestamp": "optional<string>",

@@ -31,7 +31,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:Memo": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Memo",
@@ -186,7 +186,7 @@
             "docs": null
         },
         "type_:BaseResource": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "BaseResource",
@@ -397,7 +397,7 @@
             "docs": null
         },
         "type_:ResourceList": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ResourceList",
@@ -582,7 +582,7 @@
             "docs": null
         },
         "type_:Account": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Account",
@@ -1019,7 +1019,7 @@
             "docs": null
         },
         "type_:Patient": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Patient",
@@ -1394,7 +1394,7 @@
             "docs": null
         },
         "type_:Practitioner": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Practitioner",
@@ -1707,7 +1707,7 @@
             "docs": null
         },
         "type_:Script": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Script",

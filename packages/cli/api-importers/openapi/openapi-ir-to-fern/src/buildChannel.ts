@@ -94,7 +94,8 @@ export function buildChannel({
                     schema: channel.subscribe,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace
+                    namespace: maybeChannelNamespace,
+                    declarationDepth: 0
                 })
             }
         });
@@ -109,7 +110,8 @@ export function buildChannel({
                     schema: channel.publish,
                     context,
                     fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace
+                    namespace: maybeChannelNamespace,
+                    declarationDepth: 0
                 })
             }
         });

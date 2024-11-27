@@ -56,7 +56,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:UsernameCursor": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernameCursor",
@@ -162,7 +162,7 @@
             "docs": null
         },
         "type_:UsernamePage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernamePage",
@@ -296,7 +296,7 @@
             "docs": null
         },
         "type_users:Order": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Order",
@@ -432,7 +432,7 @@
             "docs": null
         },
         "type_users:WithPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithPage",
@@ -561,7 +561,7 @@
             "docs": null
         },
         "type_users:WithCursor": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "WithCursor",
@@ -690,7 +690,7 @@
             "docs": null
         },
         "type_users:UserListContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserListContainer",
@@ -878,7 +878,7 @@
             "docs": null
         },
         "type_users:UserPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserPage",
@@ -1100,7 +1100,7 @@
             "docs": null
         },
         "type_users:UserOptionalListContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListContainer",
@@ -1294,7 +1294,7 @@
             "docs": null
         },
         "type_users:UserOptionalListPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UserOptionalListPage",
@@ -1516,7 +1516,7 @@
             "docs": null
         },
         "type_users:UsernameContainer": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "UsernameContainer",
@@ -1645,7 +1645,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedResponse",
@@ -1972,7 +1972,7 @@
             "docs": null
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersExtendedOptionalListResponse",
@@ -2299,7 +2299,7 @@
             "docs": null
         },
         "type_users:ListUsersPaginationResponse": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ListUsersPaginationResponse",
@@ -2665,7 +2665,7 @@
             "docs": null
         },
         "type_users:Page": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Page",
@@ -2964,7 +2964,7 @@
             "docs": null
         },
         "type_users:NextPage": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "NextPage",
@@ -3124,7 +3124,7 @@
             "docs": null
         },
         "type_users:User": {
-            "inline": false,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "User",

@@ -20,7 +20,7 @@ types:
 
   ProtoEncoding:
     properties: {}
-      
+
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
     extends: commons.Declaration
@@ -34,7 +34,7 @@ types:
         type: set<commons.TypeId>
       encoding: optional<Encoding>
       source: optional<Source>
-      inline: 
+      inline:
         type: optional<boolean>
         docs: Whether to try and inline the type declaration
 
@@ -98,9 +98,9 @@ types:
         docs: A list of other types to inherit from
         type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
-      extendedProperties: 
+      extendedProperties:
         type: optional<list<ObjectProperty>>
-        docs: A list of properties that all the parents of this object have. 
+        docs: A list of properties that all the parents of this object have.
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean
@@ -169,7 +169,10 @@ types:
       fernFilepath: commons.FernFilepath
       name: commons.Name
       default: optional<NamedTypeDefault>
-      inline: optional<boolean>
+      inline:
+        type: optional<boolean>
+        availability: deprecated
+        docs: Use the inline property on the TypeDeclaration instead.
 
   NamedTypeDefault:
     union:
@@ -348,23 +351,23 @@ types:
     properties:
       discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
-  
-  ExampleUndiscriminatedUnionType: 
-    properties: 
+
+  ExampleUndiscriminatedUnionType:
+    properties:
       index:
         type: integer
-        docs: | 
-          The zero-based index of the undiscriminated union variant.  
-          For the following undiscriminated union 
+        docs: |
+          The zero-based index of the undiscriminated union variant.
+          For the following undiscriminated union
           ```
-          MyUnion: 
+          MyUnion:
             discriminated: false
-            union: 
+            union:
               - string
               - integer
           ```
           a string example would have an index 0 and an integer example
-          would have an index 1. 
+          would have an index 1.
       singleUnionType: ExampleTypeReference
 
   ExampleSingleUnionType:
@@ -473,9 +476,9 @@ types:
       bigInteger:
         type: bigint
         key: bigInteger
-  
-  ExampleDatetime: 
-    properties: 
+
+  ExampleDatetime:
+    properties:
       datetime: datetime
       raw: optional<string>
 
