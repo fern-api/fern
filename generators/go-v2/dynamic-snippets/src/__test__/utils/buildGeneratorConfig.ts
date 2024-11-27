@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-api/base-generator";
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
