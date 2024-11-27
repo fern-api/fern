@@ -1,4 +1,4 @@
-import { docsYml, DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { docsYml, DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
