@@ -1,9 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { constructCasingsGenerator } from "../../../casings/CasingsGenerator";
-import { constructFernFileContext } from "../../../FernFileContext";
-import { SourceResolverImpl } from "../../SourceResolver";
+import { constructCasingsGenerator, constructFernFileContext, SourceResolverImpl } from "@fern-api/ir-generator";
 
 describe("SourceResolver", () => {
     it("non-existant proto source throws", async () => {
