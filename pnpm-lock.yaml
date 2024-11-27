@@ -4120,9 +4120,9 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
-      '@fern-api/fs-utils':
+      '@fern-api/path-utils':
         specifier: workspace:*
-        version: link:../../commons/fs-utils
+        version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.126.1-444264056
         version: 0.126.1-444264056
@@ -4136,9 +4136,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6

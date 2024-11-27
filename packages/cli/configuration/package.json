@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.126.1-444264056",
     "@fern-fern/fiddle-sdk": "0.0.584",
@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
