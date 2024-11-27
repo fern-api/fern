@@ -30,7 +30,7 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "lodash-es": "^4.17.21"
@@ -38,7 +38,6 @@
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "vitest": "^2.1.4",
