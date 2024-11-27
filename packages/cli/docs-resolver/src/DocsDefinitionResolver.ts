@@ -911,7 +911,7 @@ function createEditThisPageUrl(
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
+    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 }
 
 function convertAvailability(
