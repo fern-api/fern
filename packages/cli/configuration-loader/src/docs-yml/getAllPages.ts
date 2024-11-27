@@ -2,11 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { compact } from "lodash-es";
-import {
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    ParsedApiReferenceLayoutItem
-} from "./ParsedDocsConfiguration";
+import { docsYml } from "@fern-api/configuration";
 
 const BATCH_SIZE = 100; // Define a reasonable batch size
 
@@ -53,13 +49,13 @@ export function getAllPages({
     landingPage,
     navigation
 }: {
-    landingPage: DocsNavigationItem.Page | undefined;
-    navigation: DocsNavigationConfiguration;
+    landingPage: docsYml.DocsNavigationItem.Page | undefined;
+    navigation: docsYml.DocsNavigationConfiguration;
 }): AbsoluteFilePath[] {
     return compact([landingPage?.absolutePath, ...getAllPagesFromNavigationConfig(navigation)]);
 }
 
-function getAllPagesFromNavigationConfig(navigation: DocsNavigationConfiguration): AbsoluteFilePath[] {
+function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfiguration): AbsoluteFilePath[] {
     switch (navigation.type) {
         case "tabbed":
             return navigation.items.flatMap((tab) => {
@@ -92,7 +88,7 @@ function getAllPagesFromNavigationConfig(navigation: DocsNavigationConfiguration
     }
 }
 
-export function getAllPagesFromNavigationItem({ item }: { item: DocsNavigationItem }): AbsoluteFilePath[] {
+export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavigationItem }): AbsoluteFilePath[] {
     switch (item.type) {
         case "apiSection":
             return compact([
@@ -123,7 +119,11 @@ export function getAllPagesFromNavigationItem({ item }: { item: DocsNavigationIt
 //     return maps.reduce((acc, record) => ({ ...acc, ...record }), {});
 // }
 
-function getAllPagesFromApiReferenceLayoutItem({ item }: { item: ParsedApiReferenceLayoutItem }): AbsoluteFilePath[] {
+function getAllPagesFromApiReferenceLayoutItem({
+    item
+}: {
+    item: docsYml.ParsedApiReferenceLayoutItem;
+}): AbsoluteFilePath[] {
     if (item.type === "page") {
         return [item.absolutePath];
     } else if (item.type === "package" || item.type === "section") {

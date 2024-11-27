@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/configuration",
+  "name": "@fern-api/configuration-loader",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/configuration"
+    "directory": "packages/cli/configuration-loader"
   },
   "private": true,
   "files": [

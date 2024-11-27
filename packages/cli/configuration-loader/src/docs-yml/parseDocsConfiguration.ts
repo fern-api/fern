@@ -4,27 +4,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { Audiences } from "../commons/Audiences";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
-import {
-    AbsoluteJsFileConfig,
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    FilepathOrUrl,
-    FontConfig,
-    JavascriptConfig,
-    ParsedApiReferenceLayoutItem,
-    ParsedDocsConfiguration,
-    ParsedMetadataConfig,
-    TabbedDocsNavigation,
-    TabbedNavigation,
-    TypographyConfig,
-    UntabbedDocsNavigation,
-    VersionInfo
-} from "./ParsedDocsConfiguration";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
+import { Audiences, docsYml } from "@fern-api/configuration";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -32,11 +15,11 @@ export async function parseDocsConfiguration({
     absoluteFilepathToDocsConfig,
     context
 }: {
-    rawDocsConfiguration: RawDocs.DocsConfiguration;
+    rawDocsConfiguration: docsYml.FernDocsConfig.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<WithoutQuestionMarks<ParsedDocsConfiguration>> {
+}): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
     const {
         instances,
         title,
@@ -195,9 +178,9 @@ export async function parseDocsConfiguration({
 }
 
 function convertLogoReference(
-    rawLogo: RawDocs.LogoConfiguration | undefined,
+    rawLogo: docsYml.FernDocsConfig.LogoConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): ParsedDocsConfiguration["logo"] {
+): docsYml.ParsedDocsConfiguration["logo"] {
     return rawLogo != null
         ? {
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
@@ -209,9 +192,9 @@ function convertLogoReference(
 }
 
 function convertBackgroundImage(
-    rawBackgroundImage: RawDocs.BackgroundImageConfiguration | undefined,
+    rawBackgroundImage: docsYml.FernDocsConfig.BackgroundImageConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): ParsedDocsConfiguration["backgroundImage"] {
+): docsYml.ParsedDocsConfiguration["backgroundImage"] {
     if (rawBackgroundImage == null) {
         return undefined;
     } else if (typeof rawBackgroundImage === "string") {
@@ -227,9 +210,9 @@ function convertBackgroundImage(
 }
 
 async function convertCssConfig(
-    css: RawDocs.CssConfig | undefined,
+    css: docsYml.FernDocsConfig.CssConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<ParsedDocsConfiguration["css"]> {
+): Promise<docsYml.ParsedDocsConfiguration["css"]> {
     if (css == null) {
         return undefined;
     }
@@ -245,19 +228,19 @@ async function convertCssConfig(
 }
 
 function isRemoteJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsRemoteConfig {
+    config: docsYml.FernDocsConfig.JsRemoteConfig | docsYml.FernDocsConfig.JsFileConfigSettings
+): config is docsYml.FernDocsConfig.JsRemoteConfig {
     return Object.hasOwn(config, "url");
 }
 
 function isFileJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsFileConfigSettings {
+    config: docsYml.FernDocsConfig.JsRemoteConfig | docsYml.FernDocsConfig.JsFileConfigSettings
+): config is docsYml.FernDocsConfig.JsFileConfigSettings {
     return Object.hasOwn(config, "path");
 }
 
 async function convertJsConfig(
-    js: RawDocs.JsConfig | undefined,
+    js: docsYml.FernDocsConfig.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
     const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
