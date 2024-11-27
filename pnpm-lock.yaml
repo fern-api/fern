@@ -212,6 +212,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -4112,8 +4115,6 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/cli/dist/local: {}
-
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -5973,9 +5974,9 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
-      '@fern-api/fs-utils':
+      '@fern-api/path-utils':
         specifier: workspace:*
-        version: link:../../commons/fs-utils
+        version: link:../../commons/path-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -5989,9 +5990,6 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
-      '@types/node':
-        specifier: 18.7.18
-        version: 18.7.18
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6

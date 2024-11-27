@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { ParsedFernFile } from "./FernFile";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { FernWorkspace } from "./FernWorkspace";
