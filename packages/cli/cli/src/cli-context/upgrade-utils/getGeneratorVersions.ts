@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";

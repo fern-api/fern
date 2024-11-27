@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";

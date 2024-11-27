@@ -6,7 +6,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
     PROJECT_CONFIG_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";

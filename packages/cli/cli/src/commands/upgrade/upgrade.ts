@@ -1,4 +1,4 @@
-import { fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
+import { fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration-loader";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { runMigrations } from "@fern-api/cli-migrations";
