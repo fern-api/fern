@@ -4,11 +4,12 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
 import { getAllOpenAPISpecs, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { OpenApiDocumentConverterNode } from "@fern-api/docs-parsers/dist/openapi/3.1/OpenApiDocumentConverter.node";
-import { ErrorCollector } from "@fern-api/docs-parsers/dist/ErrorCollector";
+// TODO: clean up imports
+import { OpenApiDocumentConverterNode } from "@fern-api/docs-parsers";
+import { ErrorCollector } from "@fern-api/docs-parsers";
 import fs from "fs";
 import yaml from "js-yaml";
-import { BaseOpenApiV3_1ConverterNodeContext } from "@fern-api/docs-parsers/dist/openapi/BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeContext } from "@fern-api/docs-parsers";
 import { OpenAPIV3_1 } from "openapi-types";
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
