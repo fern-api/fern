@@ -18,7 +18,7 @@ export const ApiReferenceLayoutItem: core.serialization.Schema<
     core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceSectionConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).ApiReferenceEndpointConfiguration),
     core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration),
-    core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).LinkConfiguration)
 ]);
 
 export declare namespace ApiReferenceLayoutItem {

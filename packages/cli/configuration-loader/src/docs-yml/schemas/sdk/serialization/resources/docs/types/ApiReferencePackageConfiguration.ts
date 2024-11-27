@@ -11,7 +11,7 @@ export const ApiReferencePackageConfiguration: core.serialization.Schema<
     FernDocsConfig.ApiReferencePackageConfiguration
 > = core.serialization.undiscriminatedUnion([
     core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ApiReferenceLayoutItem)),
-    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferencePackageConfigurationWithOptions),
+    core.serialization.lazyObject(async () => (await import("../../..")).ApiReferencePackageConfigurationWithOptions)
 ]);
 
 export declare namespace ApiReferencePackageConfiguration {

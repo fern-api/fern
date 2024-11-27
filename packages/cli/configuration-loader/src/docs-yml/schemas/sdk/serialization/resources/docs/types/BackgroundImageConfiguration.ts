@@ -11,7 +11,7 @@ export const BackgroundImageConfiguration: core.serialization.Schema<
     FernDocsConfig.BackgroundImageConfiguration
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    core.serialization.lazyObject(async () => (await import("../../..")).BackgroundImageThemedConfig),
+    core.serialization.lazyObject(async () => (await import("../../..")).BackgroundImageThemedConfig)
 ]);
 
 export declare namespace BackgroundImageConfiguration {

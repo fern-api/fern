@@ -5528,9 +5528,9 @@ importers:
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger
-      '@fern-api/configuration':
+      '@fern-api/configuration-loader':
         specifier: workspace:*
-        version: link:../configuration
+        version: link:../configuration-loader
       '@fern-api/conjure-to-fern':
         specifier: workspace:*
         version: link:../api-importers/conjure/conjure-to-fern

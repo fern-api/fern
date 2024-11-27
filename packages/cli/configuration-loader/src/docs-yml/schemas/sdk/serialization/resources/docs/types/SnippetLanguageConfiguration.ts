@@ -11,7 +11,7 @@ export const SnippetLanguageConfiguration: core.serialization.Schema<
     FernDocsConfig.SnippetLanguageConfiguration
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    core.serialization.lazyObject(async () => (await import("../../..")).VersionedSnippetLanguageConfiguration),
+    core.serialization.lazyObject(async () => (await import("../../..")).VersionedSnippetLanguageConfiguration)
 ]);
 
 export declare namespace SnippetLanguageConfiguration {

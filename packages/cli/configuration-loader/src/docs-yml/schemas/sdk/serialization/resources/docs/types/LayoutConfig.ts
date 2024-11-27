@@ -28,7 +28,7 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "header-position",
             core.serialization.lazy(async () => (await import("../../..")).HeaderPosition).optional()
         ),
-        disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
+        disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional())
     });
 
 export declare namespace LayoutConfig {

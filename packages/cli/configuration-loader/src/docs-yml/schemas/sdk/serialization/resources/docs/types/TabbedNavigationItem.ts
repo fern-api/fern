@@ -13,7 +13,7 @@ export const TabbedNavigationItem: core.serialization.ObjectSchema<
     tab: core.serialization.lazy(async () => (await import("../../..")).TabId),
     layout: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem))
-        .optional(),
+        .optional()
 });
 
 export declare namespace TabbedNavigationItem {

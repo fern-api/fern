@@ -15,7 +15,7 @@ export const AnalyticsConfig: core.serialization.ObjectSchema<
         .lazyObject(async () => (await import("../../..")).FullStoryAnalyticsConfig)
         .optional(),
     intercom: core.serialization.lazyObject(async () => (await import("../../..")).IntercomConfig).optional(),
-    posthog: core.serialization.lazyObject(async () => (await import("../../..")).PostHogConfig).optional(),
+    posthog: core.serialization.lazyObject(async () => (await import("../../..")).PostHogConfig).optional()
 });
 
 export declare namespace AnalyticsConfig {

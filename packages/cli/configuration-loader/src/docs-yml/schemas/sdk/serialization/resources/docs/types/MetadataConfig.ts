@@ -28,7 +28,7 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     twitterCard: core.serialization.property(
         "twitter:card",
         core.serialization.lazy(async () => (await import("../../..")).TwitterCardSetting).optional()
-    ),
+    )
 });
 
 export declare namespace MetadataConfig {

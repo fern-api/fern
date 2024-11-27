@@ -10,7 +10,7 @@ export const PlaygroundButtonSettings: core.serialization.ObjectSchema<
     serializers.PlaygroundButtonSettings.Raw,
     FernDocsConfig.PlaygroundButtonSettings
 > = core.serialization.object({
-    href: core.serialization.string().optional(),
+    href: core.serialization.string().optional()
 });
 
 export declare namespace PlaygroundButtonSettings {

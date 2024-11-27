@@ -10,7 +10,7 @@ export const SegmentConfig: core.serialization.ObjectSchema<
     serializers.SegmentConfig.Raw,
     FernDocsConfig.SegmentConfig
 > = core.serialization.object({
-    writeKey: core.serialization.property("write-key", core.serialization.string()),
+    writeKey: core.serialization.property("write-key", core.serialization.string())
 });
 
 export declare namespace SegmentConfig {

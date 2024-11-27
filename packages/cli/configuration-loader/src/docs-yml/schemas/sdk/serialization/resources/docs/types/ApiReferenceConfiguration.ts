@@ -31,7 +31,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         alphabetized: core.serialization.boolean().optional(),
         flattened: core.serialization.boolean().optional(),
         paginated: core.serialization.boolean().optional(),
-        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional()
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 

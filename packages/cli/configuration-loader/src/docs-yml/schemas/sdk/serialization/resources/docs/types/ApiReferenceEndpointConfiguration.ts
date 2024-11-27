@@ -16,7 +16,7 @@ export const ApiReferenceEndpointConfiguration: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
-        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional(),
+        playground: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundSettings).optional()
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 

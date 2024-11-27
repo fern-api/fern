@@ -7,7 +7,7 @@ import { ObjectLikeSchema, ObjectLikeUtils } from "./types";
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
-        withParsedProperties: (properties) => withParsedProperties(schema, properties),
+        withParsedProperties: (properties) => withParsedProperties(schema, properties)
     };
 }
 
@@ -30,7 +30,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                 (processed, [key, value]) => {
                     return {
                         ...processed,
-                        [key]: typeof value === "function" ? value(parsedObject.value) : value,
+                        [key]: typeof value === "function" ? value(parsedObject.value) : value
                     };
                 },
                 {}
@@ -40,8 +40,8 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                 ok: true,
                 value: {
                     ...parsedObject.value,
-                    ...(additionalProperties as Properties),
-                },
+                    ...(additionalProperties as Properties)
+                }
             };
         },
 
@@ -52,9 +52,9 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(parsed, "object"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(parsed, "object")
+                        }
+                    ]
                 };
             }
 
@@ -68,12 +68,12 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
             return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);
         },
 
-        getType: () => objectLike.getType(),
+        getType: () => objectLike.getType()
     };
 
     return {
         ...objectSchema,
         ...getSchemaUtils(objectSchema),
-        ...getObjectLikeUtils(objectSchema),
+        ...getObjectLikeUtils(objectSchema)
     };
 }

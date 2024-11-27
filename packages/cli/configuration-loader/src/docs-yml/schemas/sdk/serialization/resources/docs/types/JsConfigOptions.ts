@@ -11,7 +11,7 @@ export const JsConfigOptions: core.serialization.Schema<
     FernDocsConfig.JsConfigOptions
 > = core.serialization.undiscriminatedUnion([
     core.serialization.lazyObject(async () => (await import("../../..")).JsRemoteConfig),
-    core.serialization.lazy(async () => (await import("../../..")).JsFileConfig),
+    core.serialization.lazy(async () => (await import("../../..")).JsFileConfig)
 ]);
 
 export declare namespace JsConfigOptions {

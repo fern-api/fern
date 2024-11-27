@@ -10,7 +10,7 @@ export const AnnouncementConfig: core.serialization.ObjectSchema<
     serializers.AnnouncementConfig.Raw,
     FernDocsConfig.AnnouncementConfig
 > = core.serialization.object({
-    message: core.serialization.string(),
+    message: core.serialization.string()
 });
 
 export declare namespace AnnouncementConfig {

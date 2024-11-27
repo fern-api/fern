@@ -20,7 +20,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
-        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional())
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 

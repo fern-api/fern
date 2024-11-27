@@ -59,7 +59,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     layout: core.serialization.lazyObject(async () => (await import("../../..")).LayoutConfig).optional(),
     integrations: core.serialization.lazyObject(async () => (await import("../../..")).IntegrationsConfig).optional(),
     css: core.serialization.lazy(async () => (await import("../../..")).CssConfig).optional(),
-    js: core.serialization.lazy(async () => (await import("../../..")).JsConfig).optional(),
+    js: core.serialization.lazy(async () => (await import("../../..")).JsConfig).optional()
 });
 
 export declare namespace DocsConfiguration {

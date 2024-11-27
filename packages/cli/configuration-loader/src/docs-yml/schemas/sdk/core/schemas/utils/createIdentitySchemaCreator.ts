@@ -10,12 +10,12 @@ export function createIdentitySchemaCreator<T>(
         const baseSchema: BaseSchema<T, T> = {
             parse: validate,
             json: validate,
-            getType: () => schemaType,
+            getType: () => schemaType
         };
 
         return {
             ...maybeSkipValidation(baseSchema),
-            ...getSchemaUtils(baseSchema),
+            ...getSchemaUtils(baseSchema)
         };
     };
 }

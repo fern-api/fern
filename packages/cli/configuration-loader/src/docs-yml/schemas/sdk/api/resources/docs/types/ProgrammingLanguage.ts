@@ -32,5 +32,5 @@ export const ProgrammingLanguage = {
     Curl: "curl",
     Jvm: "jvm",
     Ts: "ts",
-    Js: "js",
+    Js: "js"
 } as const;

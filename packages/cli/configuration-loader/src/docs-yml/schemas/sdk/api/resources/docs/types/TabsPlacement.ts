@@ -6,5 +6,5 @@ export type TabsPlacement = "header" | "sidebar";
 
 export const TabsPlacement = {
     Header: "header",
-    Sidebar: "sidebar",
+    Sidebar: "sidebar"
 } as const;

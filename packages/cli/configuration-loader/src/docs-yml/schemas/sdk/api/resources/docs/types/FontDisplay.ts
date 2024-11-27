@@ -9,5 +9,5 @@ export const FontDisplay = {
     Block: "block",
     Swap: "swap",
     Fallback: "fallback",
-    Optional: "optional",
+    Optional: "optional"
 } as const;

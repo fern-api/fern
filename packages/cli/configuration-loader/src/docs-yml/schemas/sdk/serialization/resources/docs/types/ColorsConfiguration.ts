@@ -31,7 +31,7 @@ export const ColorsConfiguration: core.serialization.ObjectSchema<
     cardBackground: core.serialization.property(
         "card-background",
         core.serialization.lazy(async () => (await import("../../..")).ColorConfig).optional()
-    ),
+    )
 });
 
 export declare namespace ColorsConfiguration {

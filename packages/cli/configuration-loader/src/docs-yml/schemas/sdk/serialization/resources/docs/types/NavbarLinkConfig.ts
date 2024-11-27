@@ -15,7 +15,7 @@ export const NavbarLinkConfig: core.serialization.ObjectSchema<
     text: core.serialization.string().optional(),
     icon: core.serialization.string().optional(),
     rightIcon: core.serialization.string().optional(),
-    rounded: core.serialization.boolean().optional(),
+    rounded: core.serialization.boolean().optional()
 });
 
 export declare namespace NavbarLinkConfig {

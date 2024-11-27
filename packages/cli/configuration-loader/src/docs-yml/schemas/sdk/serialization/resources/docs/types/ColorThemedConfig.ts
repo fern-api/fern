@@ -11,7 +11,7 @@ export const ColorThemedConfig: core.serialization.ObjectSchema<
     FernDocsConfig.ColorThemedConfig
 > = core.serialization.object({
     dark: core.serialization.string().optional(),
-    light: core.serialization.string().optional(),
+    light: core.serialization.string().optional()
 });
 
 export declare namespace ColorThemedConfig {

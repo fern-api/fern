@@ -6,5 +6,5 @@ export type ContentAlignment = "center" | "left";
 
 export const ContentAlignment = {
     Center: "center",
-    Left: "left",
+    Left: "left"
 } as const;

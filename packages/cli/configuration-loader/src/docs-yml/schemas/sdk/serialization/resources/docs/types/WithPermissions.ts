@@ -11,7 +11,7 @@ export const WithPermissions: core.serialization.ObjectSchema<
     FernDocsConfig.WithPermissions
 > = core.serialization.object({
     viewers: core.serialization.lazy(async () => (await import("../../..")).Role).optional(),
-    orphaned: core.serialization.boolean().optional(),
+    orphaned: core.serialization.boolean().optional()
 });
 
 export declare namespace WithPermissions {

@@ -11,7 +11,7 @@ export const VersionedSnippetLanguageConfiguration: core.serialization.ObjectSch
     FernDocsConfig.VersionedSnippetLanguageConfiguration
 > = core.serialization.object({
     version: core.serialization.string(),
-    package: core.serialization.string(),
+    package: core.serialization.string()
 });
 
 export declare namespace VersionedSnippetLanguageConfiguration {

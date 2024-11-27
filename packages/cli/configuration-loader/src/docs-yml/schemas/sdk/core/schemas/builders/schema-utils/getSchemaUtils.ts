@@ -31,7 +31,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
                 return raw.value;
             }
             throw new JsonError(raw.errors);
-        },
+        }
     };
 }
 
@@ -47,7 +47,7 @@ export function optional<Raw, Parsed>(
             if (raw == null) {
                 return {
                     ok: true,
-                    value: undefined,
+                    value: undefined
                 };
             }
             return schema.parse(raw, opts);
@@ -56,17 +56,17 @@ export function optional<Raw, Parsed>(
             if (parsed == null) {
                 return {
                     ok: true,
-                    value: null,
+                    value: null
                 };
             }
             return schema.json(parsed, opts);
         },
-        getType: () => SchemaType.OPTIONAL,
+        getType: () => SchemaType.OPTIONAL
     };
 
     return {
         ...baseSchema,
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -82,18 +82,18 @@ export function transform<Raw, Parsed, Transformed>(
             }
             return {
                 ok: true,
-                value: transformer.transform(parsed.value),
+                value: transformer.transform(parsed.value)
             };
         },
         json: async (transformed, opts) => {
             const parsed = await transformer.untransform(transformed);
             return schema.json(parsed, opts);
         },
-        getType: () => schema.getType(),
+        getType: () => schema.getType()
     };
 
     return {
         ...baseSchema,
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }

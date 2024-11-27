@@ -15,7 +15,7 @@ export const ChangelogConfiguration: core.serialization.ObjectSchema<
         title: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
-        hidden: core.serialization.boolean().optional(),
+        hidden: core.serialization.boolean().optional()
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 

@@ -17,7 +17,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             href: core.serialization.string().optional(),
             changelog: core.serialization
                 .lazy(async () => (await import("../../..")).ChangelogFolderRelativePath)
-                .optional(),
+                .optional()
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithPermissions));
 

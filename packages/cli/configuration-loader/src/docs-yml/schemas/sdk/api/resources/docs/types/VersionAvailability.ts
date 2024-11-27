@@ -8,5 +8,5 @@ export const VersionAvailability = {
     Deprecated: "deprecated",
     Ga: "ga",
     Stable: "stable",
-    Beta: "beta",
+    Beta: "beta"
 } as const;

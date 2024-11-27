@@ -1,4 +1,4 @@
-import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";

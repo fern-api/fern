@@ -20,7 +20,7 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
         "landing-page",
         core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration).optional()
     ),
-    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig),
+    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig)
 });
 
 export declare namespace VersionFileConfig {

@@ -16,7 +16,7 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
     limitWebsocketMessagesPerConnection: core.serialization.property(
         "limit-websocket-messages-per-connection",
         core.serialization.number().optional()
-    ),
+    )
 });
 
 export declare namespace PlaygroundSettings {

@@ -10,22 +10,22 @@ export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Pa
             validateAndTransformArray(raw, (item, index) =>
                 schema.parse(item, {
                     ...opts,
-                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`]
                 })
             ),
         json: (parsed, opts) =>
             validateAndTransformArray(parsed, (item, index) =>
                 schema.json(item, {
                     ...opts,
-                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`]
                 })
             ),
-        getType: () => SchemaType.LIST,
+        getType: () => SchemaType.LIST
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -39,9 +39,9 @@ async function validateAndTransformArray<Raw, Parsed>(
             errors: [
                 {
                     message: getErrorMessageForIncorrectType(value, "list"),
-                    path: [],
-                },
-            ],
+                    path: []
+                }
+            ]
         };
     }
 
@@ -52,7 +52,7 @@ async function validateAndTransformArray<Raw, Parsed>(
             if (acc.ok && item.ok) {
                 return {
                     ok: true,
-                    value: [...acc.value, item.value],
+                    value: [...acc.value, item.value]
                 };
             }
 
@@ -66,7 +66,7 @@ async function validateAndTransformArray<Raw, Parsed>(
 
             return {
                 ok: false,
-                errors,
+                errors
             };
         },
         { ok: true, value: [] }

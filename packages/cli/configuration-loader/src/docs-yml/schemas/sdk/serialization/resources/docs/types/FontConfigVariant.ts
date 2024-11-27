@@ -12,7 +12,7 @@ export const FontConfigVariant: core.serialization.ObjectSchema<
 > = core.serialization.object({
     path: core.serialization.string(),
     weight: core.serialization.lazy(async () => (await import("../../..")).FontWeight).optional(),
-    style: core.serialization.lazy(async () => (await import("../../..")).FontStyle).optional(),
+    style: core.serialization.lazy(async () => (await import("../../..")).FontStyle).optional()
 });
 
 export declare namespace FontConfigVariant {

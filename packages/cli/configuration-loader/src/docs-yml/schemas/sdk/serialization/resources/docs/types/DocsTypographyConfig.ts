@@ -12,7 +12,7 @@ export const DocsTypographyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     headingsFont: core.serialization.lazyObject(async () => (await import("../../..")).FontConfig).optional(),
     bodyFont: core.serialization.lazyObject(async () => (await import("../../..")).FontConfig).optional(),
-    codeFont: core.serialization.lazyObject(async () => (await import("../../..")).FontConfig).optional(),
+    codeFont: core.serialization.lazyObject(async () => (await import("../../..")).FontConfig).optional()
 });
 
 export declare namespace DocsTypographyConfig {

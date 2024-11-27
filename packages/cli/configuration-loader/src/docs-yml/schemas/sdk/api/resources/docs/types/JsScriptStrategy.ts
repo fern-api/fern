@@ -7,5 +7,5 @@ export type JsScriptStrategy = "beforeInteractive" | "afterInteractive" | "lazyO
 export const JsScriptStrategy = {
     BeforeInteractive: "beforeInteractive",
     AfterInteractive: "afterInteractive",
-    LazyOnload: "lazyOnload",
+    LazyOnload: "lazyOnload"
 } as const;

@@ -22,13 +22,13 @@ export class FernDocsConfigError extends Error {
 function buildMessage({
     message,
     statusCode,
-    body,
+    body
 }: {
     message: string | undefined;
     statusCode: number | undefined;
     body: unknown | undefined;
 }): string {
-    let lines: string[] = [];
+    const lines: string[] = [];
     if (message != null) {
         lines.push(message);
     }

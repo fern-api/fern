@@ -21,7 +21,7 @@ export const FooterLinksConfig: core.serialization.ObjectSchema<
     slack: core.serialization.string().optional(),
     hackernews: core.serialization.string().optional(),
     medium: core.serialization.string().optional(),
-    website: core.serialization.string().optional(),
+    website: core.serialization.string().optional()
 });
 
 export declare namespace FooterLinksConfig {

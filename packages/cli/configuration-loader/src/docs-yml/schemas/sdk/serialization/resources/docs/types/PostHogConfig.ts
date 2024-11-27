@@ -11,7 +11,7 @@ export const PostHogConfig: core.serialization.ObjectSchema<
     FernDocsConfig.PostHogConfig
 > = core.serialization.object({
     apiKey: core.serialization.property("api-key", core.serialization.string()),
-    endpoint: core.serialization.string().optional(),
+    endpoint: core.serialization.string().optional()
 });
 
 export declare namespace PostHogConfig {

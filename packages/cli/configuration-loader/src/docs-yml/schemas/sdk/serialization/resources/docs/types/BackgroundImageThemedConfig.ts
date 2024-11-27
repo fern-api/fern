@@ -11,7 +11,7 @@ export const BackgroundImageThemedConfig: core.serialization.ObjectSchema<
     FernDocsConfig.BackgroundImageThemedConfig
 > = core.serialization.object({
     dark: core.serialization.string().optional(),
-    light: core.serialization.string().optional(),
+    light: core.serialization.string().optional()
 });
 
 export declare namespace BackgroundImageThemedConfig {

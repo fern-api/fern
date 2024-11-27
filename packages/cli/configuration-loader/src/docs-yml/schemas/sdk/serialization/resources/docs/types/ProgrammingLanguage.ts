@@ -23,7 +23,7 @@ export const ProgrammingLanguage: core.serialization.Schema<
     "curl",
     "jvm",
     "ts",
-    "js",
+    "js"
 ]);
 
 export declare namespace ProgrammingLanguage {

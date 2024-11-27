@@ -20,7 +20,7 @@ export const FontConfig: core.serialization.ObjectSchema<serializers.FontConfig.
         fontVariationSettings: core.serialization.property(
             "font-variation-settings",
             core.serialization.string().optional()
-        ),
+        )
     });
 
 export declare namespace FontConfig {

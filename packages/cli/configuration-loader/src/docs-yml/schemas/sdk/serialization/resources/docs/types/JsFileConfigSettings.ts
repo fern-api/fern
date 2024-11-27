@@ -11,7 +11,7 @@ export const JsFileConfigSettings: core.serialization.ObjectSchema<
     FernDocsConfig.JsFileConfigSettings
 > = core.serialization.object({
     path: core.serialization.string(),
-    strategy: core.serialization.lazy(async () => (await import("../../..")).JsScriptStrategy).optional(),
+    strategy: core.serialization.lazy(async () => (await import("../../..")).JsScriptStrategy).optional()
 });
 
 export declare namespace JsFileConfigSettings {

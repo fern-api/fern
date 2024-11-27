@@ -11,7 +11,7 @@ export const IntercomConfig: core.serialization.ObjectSchema<
     FernDocsConfig.IntercomConfig
 > = core.serialization.object({
     appId: core.serialization.property("app-id", core.serialization.string()),
-    apiBase: core.serialization.property("api-base", core.serialization.string().optional()),
+    apiBase: core.serialization.property("api-base", core.serialization.string().optional())
 });
 
 export declare namespace IntercomConfig {

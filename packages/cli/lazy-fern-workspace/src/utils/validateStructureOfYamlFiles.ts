@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { entries, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { PackageMarkerFileSchema, RootApiFileSchema, RawSchemas } from "@fern-api/fern-definition-schema";
