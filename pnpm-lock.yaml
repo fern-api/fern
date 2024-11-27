@@ -4157,6 +4157,9 @@ importers:
 
   packages/cli/configuration-loader:
     dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
