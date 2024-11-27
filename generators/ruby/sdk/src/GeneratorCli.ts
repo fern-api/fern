@@ -1,6 +1,6 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/base-generator";
 import { loggingExeca } from "@fern-api/logging-execa";
 import {
     ClassReferenceFactory,

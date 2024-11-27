@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher, File, AbstractProject, FernGeneratorExec } from "@fern-api/generator-commons";
+import { SourceFetcher, File, AbstractProject, FernGeneratorExec } from "@fern-api/base-generator";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";

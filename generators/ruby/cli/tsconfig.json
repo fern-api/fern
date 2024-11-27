@@ -6,6 +6,6 @@
     { "path": "../../../packages/cli/logger" },
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../../packages/commons/logging-execa" },
-    { "path": "../../commons" }
+    { "path": "../../base" }
   ]
 }

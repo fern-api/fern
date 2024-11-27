@@ -2,7 +2,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
-import { File } from "@fern-api/generator-commons";
+import { File } from "@fern-api/base-generator";
 import { Class } from "../ast/Class";
 import { Enum, Trait } from "../ast";
 import { DataClass } from "../ast/DataClass";

@@ -1,7 +1,8 @@
 import { DEPENDENCIES_FILENAME } from "@fern-api/configuration";
 import { assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { formatLog, Logger } from "@fern-api/logger";
+import { Logger } from "@fern-api/logger";
+import { formatLog } from "@fern-api/cli-logger";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";

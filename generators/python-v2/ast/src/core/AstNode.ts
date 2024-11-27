@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "@fern-api/generator-commons";
+import { AbstractAstNode } from "@fern-api/base-generator";
 import { Writer } from "./Writer";
 import { Reference } from "../Reference";
 import { Config } from "@wasm-fmt/ruff_fmt";

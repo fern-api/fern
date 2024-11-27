@@ -1,4 +1,4 @@
-import { AbstractGeneratorContext } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import {
     ClassReferenceFactory,
     Class_,

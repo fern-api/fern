@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { formatLog, LogLevel } from "@fern-api/logger";
+import { LogLevel } from "@fern-api/logger";
+import { formatLog } from "@fern-api/cli-logger";
 import { TaskContext } from "@fern-api/task-context";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import chalk from "chalk";

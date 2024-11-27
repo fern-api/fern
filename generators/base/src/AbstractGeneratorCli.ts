@@ -1,9 +1,12 @@
 /* eslint-disable no-console */
 import { assertNever } from "@fern-api/core-utils";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { readFile } from "fs/promises";
-import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
-import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
+import {
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorExecParsing,
+    GeneratorNotificationService
+} from "@fern-api/browser-compatible-base-generator";
 
 export abstract class AbstractGeneratorCli<
     CustomConfig,

@@ -1,5 +1,3 @@
-import { GoTypeReference } from "./GoTypeReference";
-import { Comment } from "./Comment";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";

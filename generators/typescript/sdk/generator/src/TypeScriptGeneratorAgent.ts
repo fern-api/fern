@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent } from "@fern-api/generator-commons";
+import { AbstractGeneratorAgent } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
