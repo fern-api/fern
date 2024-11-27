@@ -1,4 +1,4 @@
-import { AbstractAstNode, AbstractFormatter } from "@fern-api/base-generator";
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 import { GoFile } from "./GoFile";
 

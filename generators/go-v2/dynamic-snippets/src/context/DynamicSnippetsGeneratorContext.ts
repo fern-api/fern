@@ -1,5 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractDynamicSnippetsGeneratorContext,
+    FernGeneratorExec
+} from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { FernFilepath, dynamic, TypeId, Name } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
@@ -107,9 +110,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return instances;
     }
 
-    public isFileUploadRequestBody(
-        body: dynamic.InlinedRequestBody
-    ): body is dynamic.InlinedRequestBody.FileUpload {
+    public isFileUploadRequestBody(body: dynamic.InlinedRequestBody): body is dynamic.InlinedRequestBody.FileUpload {
         switch (body.type) {
             case "fileUpload":
                 return true;
@@ -167,11 +168,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         );
     }
 
-    private fileUploadHasBodyProperties({
-        fileUpload
-    }: {
-        fileUpload: dynamic.FileUploadRequestBody;
-    }): boolean {
+    private fileUploadHasBodyProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
                 case "file":
@@ -185,11 +182,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    private fileUploadHasFileProperties({
-        fileUpload
-    }: {
-        fileUpload: dynamic.FileUploadRequestBody;
-    }): boolean {
+    private fileUploadHasFileProperties({ fileUpload }: { fileUpload: dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
                 case "file":
@@ -355,11 +348,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return endpoints;
     }
 
-    public getGoTypeReferenceFromDeclaration({
-        declaration
-    }: {
-        declaration: dynamic.Declaration;
-    }): go.TypeReference {
+    public getGoTypeReferenceFromDeclaration({ declaration }: { declaration: dynamic.Declaration }): go.TypeReference {
         return go.typeReference({
             name: declaration.name.pascalCase.unsafeName,
             importPath: this.getImportPath(declaration.fernFilepath)

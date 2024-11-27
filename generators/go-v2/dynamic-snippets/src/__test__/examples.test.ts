@@ -117,7 +117,7 @@ describe("examples", () => {
 describe("examples (errors)", () => {
     it("invalid request body", async () => {
         const generator = buildDynamicSnippetsGenerator({
-        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/examples.json`),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/examples.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({

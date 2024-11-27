@@ -415,15 +415,15 @@ importers:
 
   generators/go-v2/ast:
     dependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
+      '@fern-api/path-utils':
         specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
+        version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: ^53.21.0
         version: 53.21.0
@@ -434,9 +434,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -458,6 +455,15 @@ importers:
 
   generators/go-v2/base:
     devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/go-ast':
+        specifier: workspace:*
+        version: link:../ast
       '@types/node':
         specifier: 18.7.18
         version: 18.7.18

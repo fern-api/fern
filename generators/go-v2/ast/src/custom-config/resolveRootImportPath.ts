@@ -1,4 +1,4 @@
-import { FernGeneratorExec, getBasename } from "@fern-api/base-generator";
+import { FernGeneratorExec, getBasename } from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema";
 
 const DEFAULT_MODULE_PATH = "sdk";

@@ -1,4 +1,9 @@
-import { AbstractFormatter, AbstractWriter, getBasename, NopFormatter } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    AbstractWriter,
+    getBasename,
+    NopFormatter
+} from "@fern-api/browser-compatible-base-generator";
 import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
 
 type Alias = string;

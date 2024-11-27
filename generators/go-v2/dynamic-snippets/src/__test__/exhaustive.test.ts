@@ -63,7 +63,7 @@ describe("exhaustive", () => {
 describe("exhaustive (errors)", () => {
     it("invalid request body", async () => {
         const generator = buildDynamicSnippetsGenerator({
-        irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/exhaustive.json`),
+            irFilepath: AbsoluteFilePath.of(`${DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY}/exhaustive.json`),
             config: buildGeneratorConfig()
         });
         const response = await generator.generate({

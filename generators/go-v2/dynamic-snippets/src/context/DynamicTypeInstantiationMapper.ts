@@ -57,13 +57,7 @@ export class DynamicTypeInstantiationMapper {
         }
     }
 
-    private convertList({
-        list,
-        value
-    }: {
-        list: dynamic.TypeReference;
-        value: unknown;
-    }): go.TypeInstantiation {
+    private convertList({ list, value }: { list: dynamic.TypeReference; value: unknown }): go.TypeInstantiation {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -247,13 +241,7 @@ export class DynamicTypeInstantiationMapper {
         });
     }
 
-    private convertObject({
-        object_,
-        value
-    }: {
-        object_: dynamic.ObjectType;
-        value: unknown;
-    }): go.TypeInstantiation {
+    private convertObject({ object_, value }: { object_: dynamic.ObjectType; value: unknown }): go.TypeInstantiation {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
@@ -290,13 +278,7 @@ export class DynamicTypeInstantiationMapper {
         );
     }
 
-    private getEnumValueName({
-        enum_,
-        value
-    }: {
-        enum_: dynamic.EnumType;
-        value: unknown;
-    }): string | undefined {
+    private getEnumValueName({ enum_, value }: { enum_: dynamic.EnumType; value: unknown }): string | undefined {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -434,11 +416,7 @@ export class DynamicTypeInstantiationMapper {
         return `${fieldName}Optional`;
     }
 
-    private getUndiscriminatedUnionFieldNameForSet({
-        set
-    }: {
-        set: dynamic.TypeReference.Set;
-    }): string | undefined {
+    private getUndiscriminatedUnionFieldNameForSet({ set }: { set: dynamic.TypeReference.Set }): string | undefined {
         const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
         if (fieldName == null) {
             return undefined;
