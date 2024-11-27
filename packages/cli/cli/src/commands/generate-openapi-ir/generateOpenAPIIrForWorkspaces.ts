@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";

@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 
 export function convertDocsSnippetsConfigToFdr(

@@ -19,7 +19,7 @@
       "path": "../../../ir-sdk"
     },
     {
-      "path": "../../configuration"
+      "path": "../../configuration-loader"
     },
     {
       "path": "../../project-loader"

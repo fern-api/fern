@@ -1,4 +1,4 @@
-import { dependenciesYml } from "@fern-api/configuration";
+import { dependenciesYml } from "@fern-api/configuration-loader";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
