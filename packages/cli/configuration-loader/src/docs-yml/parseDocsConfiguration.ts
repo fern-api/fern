@@ -4,27 +4,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { Audiences } from "../commons/Audiences";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
-import {
-    AbsoluteJsFileConfig,
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    FilepathOrUrl,
-    FontConfig,
-    JavascriptConfig,
-    ParsedApiReferenceLayoutItem,
-    ParsedDocsConfiguration,
-    ParsedMetadataConfig,
-    TabbedDocsNavigation,
-    TabbedNavigation,
-    TypographyConfig,
-    UntabbedDocsNavigation,
-    VersionInfo
-} from "./ParsedDocsConfiguration";
-import { FernDocsConfig as RawDocs, NavigationConfig, Serializer, VersionConfig } from "./schemas";
+import { docsYml } from "@fern-api/configuration";
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -32,11 +15,11 @@ export async function parseDocsConfiguration({
     absoluteFilepathToDocsConfig,
     context
 }: {
-    rawDocsConfiguration: RawDocs.DocsConfiguration;
+    rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<WithoutQuestionMarks<ParsedDocsConfiguration>> {
+}): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
     const {
         instances,
         title,
@@ -195,9 +178,9 @@ export async function parseDocsConfiguration({
 }
 
 function convertLogoReference(
-    rawLogo: RawDocs.LogoConfiguration | undefined,
+    rawLogo: docsYml.RawSchemas.LogoConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): ParsedDocsConfiguration["logo"] {
+): docsYml.ParsedDocsConfiguration["logo"] {
     return rawLogo != null
         ? {
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
@@ -209,9 +192,9 @@ function convertLogoReference(
 }
 
 function convertBackgroundImage(
-    rawBackgroundImage: RawDocs.BackgroundImageConfiguration | undefined,
+    rawBackgroundImage: docsYml.RawSchemas.BackgroundImageConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): ParsedDocsConfiguration["backgroundImage"] {
+): docsYml.ParsedDocsConfiguration["backgroundImage"] {
     if (rawBackgroundImage == null) {
         return undefined;
     } else if (typeof rawBackgroundImage === "string") {
@@ -227,9 +210,9 @@ function convertBackgroundImage(
 }
 
 async function convertCssConfig(
-    css: RawDocs.CssConfig | undefined,
+    css: docsYml.RawSchemas.CssConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<ParsedDocsConfiguration["css"]> {
+): Promise<docsYml.ParsedDocsConfiguration["css"]> {
     if (css == null) {
         return undefined;
     }
@@ -245,23 +228,23 @@ async function convertCssConfig(
 }
 
 function isRemoteJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsRemoteConfig {
+    config: docsYml.RawSchemas.JsRemoteConfig | docsYml.RawSchemas.JsFileConfigSettings
+): config is docsYml.RawSchemas.JsRemoteConfig {
     return Object.hasOwn(config, "url");
 }
 
 function isFileJsConfig(
-    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
-): config is RawDocs.JsFileConfigSettings {
+    config: docsYml.RawSchemas.JsRemoteConfig | docsYml.RawSchemas.JsFileConfigSettings
+): config is docsYml.RawSchemas.JsFileConfigSettings {
     return Object.hasOwn(config, "path");
 }
 
 async function convertJsConfig(
-    js: RawDocs.JsConfig | undefined,
+    js: docsYml.RawSchemas.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<JavascriptConfig> {
+): Promise<docsYml.JavascriptConfig> {
     const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
-    const files: AbsoluteJsFileConfig[] = [];
+    const files: docsYml.AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
     }
@@ -289,7 +272,9 @@ async function convertJsConfig(
     return { remote, files };
 }
 
-function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfiguration["layout"] {
+function convertLayoutConfig(
+    layout: docsYml.RawSchemas.LayoutConfig | undefined
+): docsYml.ParsedDocsConfiguration["layout"] {
     if (layout == null) {
         return undefined;
     }
@@ -357,13 +342,13 @@ async function getNavigationConfiguration({
     absolutePathToConfig,
     context
 }: {
-    tabs?: Record<string, RawDocs.TabConfig>;
-    versions?: VersionConfig[];
-    navigation?: NavigationConfig;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
+    versions?: docsYml.RawSchemas.VersionConfig[];
+    navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<DocsNavigationConfiguration> {
+}): Promise<docsYml.DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
             tabs,
@@ -373,11 +358,11 @@ async function getNavigationConfiguration({
             context
         });
     } else if (versions != null) {
-        const versionedNavbars: VersionInfo[] = [];
+        const versionedNavbars: docsYml.VersionInfo[] = [];
         for (const version of versions) {
             const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
             const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-            const result = await Serializer.VersionFileConfig.parseOrThrow(content);
+            const result = await docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
                 tabs: result.tabs,
                 rawNavigationConfig: result.navigation,
@@ -407,9 +392,9 @@ async function convertTypographyConfiguration({
     rawTypography,
     absoluteFilepathToDocsConfig
 }: {
-    rawTypography: RawDocs.DocsTypographyConfig;
+    rawTypography: docsYml.RawSchemas.DocsTypographyConfig;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
-}): Promise<TypographyConfig> {
+}): Promise<docsYml.TypographyConfig> {
     return {
         headingsFont:
             rawTypography.headingsFont != null
@@ -439,9 +424,9 @@ async function convertFontConfig({
     rawFontConfig,
     absoluteFilepathToDocsConfig
 }: {
-    rawFontConfig: RawDocs.FontConfig;
+    rawFontConfig: docsYml.RawSchemas.FontConfig;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
-}): Promise<FontConfig> {
+}): Promise<docsYml.FontConfig> {
     return {
         name: rawFontConfig.name,
         variants: await constructVariants(rawFontConfig, absoluteFilepathToDocsConfig),
@@ -452,10 +437,10 @@ async function convertFontConfig({
 }
 
 function constructVariants(
-    rawFontConfig: RawDocs.FontConfig,
+    rawFontConfig: docsYml.RawSchemas.FontConfig,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<FontConfig["variants"]> {
-    const variants: RawDocs.FontConfigVariant[] = [];
+): Promise<docsYml.FontConfig["variants"]> {
+    const variants: docsYml.RawSchemas.FontConfigVariant[] = [];
 
     if (rawFontConfig.path != null) {
         variants.push({
@@ -515,12 +500,12 @@ async function convertNavigationTabConfiguration({
     absolutePathToConfig,
     context
 }: {
-    tabs: Record<string, RawDocs.TabConfig>;
-    item: RawDocs.TabbedNavigationItem;
+    tabs: Record<string, docsYml.RawSchemas.TabConfig>;
+    item: docsYml.RawSchemas.TabbedNavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<TabbedNavigation> {
+}): Promise<docsYml.TabbedNavigation> {
     const tab = tabs[item.tab];
     if (tab == null) {
         throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
@@ -589,12 +574,12 @@ async function convertNavigationConfiguration({
     absolutePathToConfig,
     context
 }: {
-    tabs?: Record<string, RawDocs.TabConfig>;
-    rawNavigationConfig: RawDocs.NavigationConfig;
+    tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
+    rawNavigationConfig: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
+}): Promise<docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
             rawNavigationConfig.map((item) =>
@@ -631,11 +616,11 @@ async function convertNavigationItem({
     absolutePathToConfig,
     context
 }: {
-    rawConfig: RawDocs.NavigationItem;
+    rawConfig: docsYml.RawSchemas.NavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<DocsNavigationItem> {
+}): Promise<docsYml.DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
@@ -709,17 +694,17 @@ async function convertNavigationItem({
 }
 
 function parsePageConfig(
-    item: RawDocs.PageConfiguration,
+    item: docsYml.RawSchemas.PageConfiguration,
     absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page;
+): docsYml.DocsNavigationItem.Page;
 function parsePageConfig(
-    item: RawDocs.PageConfiguration | undefined,
+    item: docsYml.RawSchemas.PageConfiguration | undefined,
     absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page | undefined;
+): docsYml.DocsNavigationItem.Page | undefined;
 function parsePageConfig(
-    item: RawDocs.PageConfiguration | undefined,
+    item: docsYml.RawSchemas.PageConfiguration | undefined,
     absolutePathToConfig: AbsoluteFilePath
-): DocsNavigationItem.Page | undefined {
+): docsYml.DocsNavigationItem.Page | undefined {
     if (item == null) {
         return undefined;
     }
@@ -738,9 +723,9 @@ function parsePageConfig(
 }
 
 function parseApiReferenceLayoutItem(
-    item: RawDocs.ApiReferenceLayoutItem,
+    item: docsYml.RawSchemas.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath
-): ParsedApiReferenceLayoutItem[] {
+): docsYml.ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
     }
@@ -790,7 +775,7 @@ function parseApiReferenceLayoutItem(
             }
         ];
     }
-    return Object.entries(item).map(([key, value]): ParsedApiReferenceLayoutItem.Package => {
+    return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
             return {
                 type: "package",
@@ -828,8 +813,8 @@ function parseApiReferenceLayoutItem(
 function convertSnippetsConfiguration({
     rawConfig
 }: {
-    rawConfig: RawDocs.SnippetsConfiguration;
-}): DocsNavigationItem.SnippetsConfiguration {
+    rawConfig: docsYml.RawSchemas.SnippetsConfiguration;
+}): docsYml.DocsNavigationItem.SnippetsConfiguration {
     return {
         python: rawConfig.python,
         typescript: rawConfig.typescript,
@@ -839,41 +824,43 @@ function convertSnippetsConfiguration({
     };
 }
 
-function isRawPageConfig(item: unknown): item is RawDocs.PageConfiguration {
+function isRawPageConfig(item: unknown): item is docsYml.RawSchemas.PageConfiguration {
     return isPlainObject(item) && typeof item.page === "string" && typeof item.path === "string";
 }
 
-function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {
+function isRawSectionConfig(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.SectionConfiguration).section != null;
+    return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
 }
 
-function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiReferenceConfiguration {
+function isRawApiSectionConfig(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.ApiReferenceConfiguration).api != null;
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null;
 }
 
-function isRawLinkConfig(item: unknown): item is RawDocs.LinkConfiguration {
+function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    RawDocs;
+    docsYml.RawSchemas;
     return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string";
 }
 
-function isRawChangelogConfig(item: unknown): item is RawDocs.ChangelogConfiguration {
+function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
 }
 
-function isRawApiRefSectionConfiguration(item: unknown): item is RawDocs.ApiReferenceSectionConfiguration {
+function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {
     return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
 }
 
-function isRawApiRefEndpointConfiguration(item: unknown): item is RawDocs.ApiReferenceEndpointConfiguration {
+function isRawApiRefEndpointConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceEndpointConfiguration {
     return isPlainObject(item) && typeof item.endpoint === "string";
 }
 
 function isRawApiRefPackageConfiguration(
-    item: RawDocs.ApiReferencePackageConfiguration
-): item is RawDocs.ApiReferencePackageConfigurationWithOptions {
+    item: docsYml.RawSchemas.ApiReferencePackageConfiguration
+): item is docsYml.RawSchemas.ApiReferencePackageConfigurationWithOptions {
     return !Array.isArray(item);
 }
 
@@ -893,18 +880,18 @@ export function resolveFilepath(
 }
 
 function isTabbedNavigationConfig(
-    navigationConfig: RawDocs.NavigationConfig
-): navigationConfig is RawDocs.TabbedNavigationConfig {
+    navigationConfig: docsYml.RawSchemas.NavigationConfig
+): navigationConfig is docsYml.RawSchemas.TabbedNavigationConfig {
     return (
         Array.isArray(navigationConfig) &&
         navigationConfig.length > 0 &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (navigationConfig[0] as RawDocs.TabbedNavigationItem).tab != null
+        (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
 }
 
 function convertNavbarLinks(
-    navbarLinks: RawDocs.NavbarLink[] | undefined
+    navbarLinks: docsYml.RawSchemas.NavbarLink[] | undefined
 ): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
         if (navbarLink.type === "github") {
@@ -923,7 +910,7 @@ function convertNavbarLinks(
 }
 
 function convertFooterLinks(
-    footerLinks: RawDocs.FooterLinksConfig | undefined
+    footerLinks: docsYml.RawSchemas.FooterLinksConfig | undefined
 ): CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined {
     if (footerLinks == null) {
         return undefined;
@@ -931,7 +918,7 @@ function convertFooterLinks(
 
     const links: CjsFdrSdk.docs.v1.commons.FooterLink[] = [];
 
-    (Object.keys(footerLinks) as (keyof RawDocs.FooterLinksConfig)[]).forEach((key) => {
+    (Object.keys(footerLinks) as (keyof docsYml.RawSchemas.FooterLinksConfig)[]).forEach((key) => {
         const link = footerLinks[key];
         if (link == null) {
             return;
@@ -947,9 +934,9 @@ function convertFooterLinks(
 }
 
 async function convertMetadata(
-    metadata: RawDocs.MetadataConfig | undefined,
+    metadata: docsYml.RawSchemas.MetadataConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<ParsedMetadataConfig | undefined> {
+): Promise<docsYml.ParsedMetadataConfig | undefined> {
     if (metadata == null) {
         return undefined;
     }
@@ -979,7 +966,7 @@ async function convertMetadata(
 async function convertFilepathOrUrl(
     value: string | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<FilepathOrUrl | undefined> {
+): Promise<docsYml.FilepathOrUrl | undefined> {
     if (value == null) {
         return undefined;
     }

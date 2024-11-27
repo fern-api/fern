@@ -10,6 +10,7 @@ export {
     OPENAPI_LOCATION_KEY
 } from "./schemas";
 export {
+    type APIDefinition,
     type APIDefinitionLocation,
     type GeneratorGroup,
     type GeneratorInvocation,
