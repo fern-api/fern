@@ -1,5 +1,5 @@
 import { Name } from "@fern-api/ir-sdk";
-import { constructCasingsGenerator } from "../casings/CasingsGenerator";
+import { constructCasingsGenerator } from "@fern-api/ir-generator";
 
 describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
