@@ -2,10 +2,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import tinycolor from "tinycolor2";
-import { docsYml } from "@fern-api/configuration";
+import { FernDocsConfig as RawDocs } from "./schemas";
 
 export function convertColorsConfiguration(
-    rawConfig: docsYml.RawSchemas.RawDocs.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
+    rawConfig: RawDocs.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
     context: TaskContext
 ): CjsFdrSdk.docs.v1.write.ColorsConfigV3 {
     rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;

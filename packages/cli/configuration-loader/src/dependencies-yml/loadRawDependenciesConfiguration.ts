@@ -3,7 +3,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { validateSchema } from "../commons/validateSchema";
-import { DEPENDENCIES_CONFIGURATION_FILENAME, dependenciesYml } from "@fern-api/configuration";
+import { DEPENDENCIES_CONFIGURATION_FILENAME } from "../constants";
+import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
 
 export async function loadRawDependenciesConfiguration({
     absolutePathToWorkspace,
@@ -11,7 +12,7 @@ export async function loadRawDependenciesConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<dependenciesYml.DependenciesConfigurationSchema | undefined> {
+}): Promise<DependenciesConfigurationSchema | undefined> {
     const absolutePathToDependenciesConfiguration = join(
         absolutePathToWorkspace,
         RelativeFilePath.of(DEPENDENCIES_CONFIGURATION_FILENAME)

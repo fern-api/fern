@@ -5,7 +5,6 @@ import { validateSchema } from "../commons/validateSchema";
 import { PROJECT_CONFIG_FILENAME } from "../constants";
 import { ProjectConfigSchema } from "./schema/ProjectConfigSchema";
 
-// TODO: Move this to @fern-api/configuration.
 export interface ProjectConfig {
     _absolutePath: AbsoluteFilePath;
     rawConfig: ProjectConfigSchema;

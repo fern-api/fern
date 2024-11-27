@@ -1,5 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { docsYml } from "@fern-api/configuration";
+import {
+    DocsNavigationItem,
+    ParsedDocsConfiguration,
+    TabbedDocsNavigation,
+    UntabbedDocsNavigation
+} from "./ParsedDocsConfiguration";
 
 export type ReferencedApisResponse = DefaultAPIReferenced | NamedAPIReferenced;
 
@@ -18,7 +23,7 @@ export interface NamedAPIReferenced {
     apiNames: string[];
 }
 
-export function getReferencedApiSections(config: docsYml.ParsedDocsConfiguration): ReferencedApisResponse | undefined {
+export function getReferencedApiSections(config: ParsedDocsConfiguration): ReferencedApisResponse | undefined {
     const collector = new ApiSectionCollector();
     switch (config.navigation.type) {
         case "tabbed":
@@ -40,7 +45,7 @@ export function visitNavigation({
     navigation,
     collector
 }: {
-    navigation: docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation;
+    navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     collector: ApiSectionCollector;
 }): void {
     switch (navigation.type) {
@@ -67,7 +72,7 @@ export function visitDocsNavigationItem({
     item,
     collector
 }: {
-    item: docsYml.DocsNavigationItem;
+    item: DocsNavigationItem;
     collector: ApiSectionCollector;
 }): void {
     switch (item.type) {
@@ -92,7 +97,7 @@ class ApiSectionCollector {
     private namedApis: Set<string> = new Set();
     private defaultApi = false;
 
-    collect(section: docsYml.DocsNavigationItem.ApiSection): void {
+    collect(section: DocsNavigationItem.ApiSection): void {
         if (section.apiName != null) {
             this.namedApis.add(section.apiName);
         } else {
