@@ -8,7 +8,7 @@ import {
     generatorsYml,
     getFernDirectory,
     OPENAPI_DIRECTORY
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
