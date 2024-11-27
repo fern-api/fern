@@ -6,26 +6,25 @@ import { getOutputDirectories } from "../persistence/getOutputDirectories";
 import { storeOutputDirectories } from "../persistence/storeOutputDirectories";
 import { describe, it, expect, beforeEach, vi, Mock, afterEach } from "vitest";
 import { CliContext } from "../cli-context/CliContext";
+import { isCI } from "../utils/isCI";
+
+vi.mock("../utils/isCI", () => ({
+    isCI: vi.fn().mockReturnValue(false)
+}));
 
 describe("checkOutputDirectory", () => {
     let mockCliContext: {
         confirmPrompt: Mock & ((message: string, defaultValue?: boolean) => Promise<boolean>);
     };
-    let originalEnv: NodeJS.ProcessEnv;
 
     beforeEach(() => {
         mockCliContext = {
             confirmPrompt: vi.fn().mockImplementation(async () => true)
         };
-        originalEnv = process.env;
-        process.env = {
-            ...process.env,
-            CI: "false"
-        };
     });
 
     afterEach(() => {
-        process.env = originalEnv;
+        vi.clearAllMocks();
     });
 
     it("doesn't prompt if directory doesn't exist", async () => {

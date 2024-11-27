@@ -4,25 +4,23 @@ import tmp from "tmp-promise";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { CliContext } from "../cli-context/CliContext";
+import { isCI } from "../utils/isCI";
+
+vi.mock("../utils/isCI", () => ({
+    isCI: vi.fn().mockReturnValue(true)
+}));
 
 describe("checkOutputDirectory in CI", () => {
-    let originalEnv: NodeJS.ProcessEnv;
     let mockCliContext: Partial<CliContext>;
 
     beforeEach(() => {
-        originalEnv = process.env;
-        process.env = {
-            ...process.env,
-            CI: "true"
-        };
-
         mockCliContext = {
             confirmPrompt: vi.fn()
         };
     });
 
     afterEach(() => {
-        process.env = originalEnv;
+        vi.clearAllMocks();
     });
 
     it("doesn't prompt in CI environment even with files present", async () => {
