@@ -4,7 +4,7 @@ import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
-import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 
 export async function generateAndSnapshotIRFromPath({
     absolutePathToWorkspace,

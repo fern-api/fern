@@ -1,9 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk";
-import { constructCasingsGenerator } from "../casings/CasingsGenerator";
-import { constructFernFileContext } from "../FernFileContext";
-import { convertToFernFilepath } from "../utils/convertToFernFilepath";
-import { parseInlineType } from "../utils/parseInlineType";
+import {
+    constructCasingsGenerator,
+    constructFernFileContext,
+    convertToFernFilepath,
+    parseInlineType
+} from "@fern-api/ir-generator";
 
 describe("parse inline types", () => {
     it("nested containers", async () => {

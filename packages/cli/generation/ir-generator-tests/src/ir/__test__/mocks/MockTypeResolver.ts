@@ -1,4 +1,4 @@
-import { TypeResolver } from "../../resolvers/TypeResolver";
+import { TypeResolver } from "@fern-api/ir-generator";
 
 export const MockTypeResolver: TypeResolver = {
     getDeclarationOfNamedType: () => {
