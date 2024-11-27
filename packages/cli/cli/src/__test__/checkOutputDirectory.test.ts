@@ -4,24 +4,35 @@ import tmp from "tmp-promise";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
 import { getOutputDirectories } from "../persistence/getOutputDirectories";
 import { storeOutputDirectories } from "../persistence/storeOutputDirectories";
-import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
+import { describe, it, expect, beforeEach, vi, Mock, afterEach } from "vitest";
+import { CliContext } from "../cli-context/CliContext";
 
 describe("checkOutputDirectory", () => {
     let mockCliContext: {
-        confirmPrompt: Mock;
+        confirmPrompt: Mock & ((message: string, defaultValue?: boolean) => Promise<boolean>);
     };
+    let originalEnv: NodeJS.ProcessEnv;
 
     beforeEach(() => {
         mockCliContext = {
-            confirmPrompt: vi.fn()
+            confirmPrompt: vi.fn().mockImplementation(async () => true)
         };
+        originalEnv = process.env;
+        process.env = {
+            ...process.env,
+            CI: "false"
+        };
+    });
+
+    afterEach(() => {
+        process.env = originalEnv;
     });
 
     it("doesn't prompt if directory doesn't exist", async () => {
         const tmpDir = await tmp.dir();
         const nonExistentPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("non-existent"));
 
-        const result = await checkOutputDirectory(nonExistentPath, mockCliContext as any, false);
+        const result = await checkOutputDirectory(nonExistentPath, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
@@ -34,7 +45,7 @@ describe("checkOutputDirectory", () => {
         const emptyDir = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("empty"));
         await mkdir(emptyDir);
 
-        const result = await checkOutputDirectory(emptyDir, mockCliContext as any, false);
+        const result = await checkOutputDirectory(emptyDir, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
@@ -50,7 +61,7 @@ describe("checkOutputDirectory", () => {
 
         mockCliContext.confirmPrompt.mockResolvedValueOnce(true);
 
-        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as any, false);
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
@@ -67,7 +78,7 @@ describe("checkOutputDirectory", () => {
         // Add to safelist
         await storeOutputDirectories([safelistedDir]);
 
-        const result = await checkOutputDirectory(safelistedDir, mockCliContext as any, false);
+        const result = await checkOutputDirectory(safelistedDir, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
@@ -83,7 +94,7 @@ describe("checkOutputDirectory", () => {
 
         mockCliContext.confirmPrompt.mockResolvedValueOnce(true);
 
-        const result = await checkOutputDirectory(dirToSafelist, mockCliContext as any, false);
+        const result = await checkOutputDirectory(dirToSafelist, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
@@ -102,7 +113,7 @@ describe("checkOutputDirectory", () => {
 
         mockCliContext.confirmPrompt.mockResolvedValueOnce(false); // overwrite prompt
 
-        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as any, false);
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: false
@@ -116,7 +127,7 @@ describe("checkOutputDirectory", () => {
         await mkdir(dirWithFiles);
         await writeFile(join(dirWithFiles, RelativeFilePath.of("test.txt")), "test");
 
-        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as any, true);
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as unknown as CliContext, true);
 
         expect(result).toEqual({ shouldProceed: true });
         expect(mockCliContext.confirmPrompt).not.toHaveBeenCalled();

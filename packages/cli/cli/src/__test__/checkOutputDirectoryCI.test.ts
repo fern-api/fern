@@ -2,13 +2,12 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
-import { describe, it, expect, beforeEach, afterEach, vi, Mock } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { CliContext } from "../cli-context/CliContext";
 
 describe("checkOutputDirectory in CI", () => {
     let originalEnv: NodeJS.ProcessEnv;
-    let mockCliContext: {
-        confirmPrompt: Mock;
-    };
+    let mockCliContext: Partial<CliContext>;
 
     beforeEach(() => {
         originalEnv = process.env;
@@ -32,7 +31,7 @@ describe("checkOutputDirectory in CI", () => {
         await mkdir(dirWithFiles);
         await writeFile(join(dirWithFiles, RelativeFilePath.of("test.txt")), "test");
 
-        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as any, false);
+        const result = await checkOutputDirectory(dirWithFiles, mockCliContext as CliContext, false);
 
         expect(result).toEqual({
             shouldProceed: true
