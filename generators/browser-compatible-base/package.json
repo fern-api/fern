@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@fern-api/logger": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.898"
   },
   "devDependencies": {
