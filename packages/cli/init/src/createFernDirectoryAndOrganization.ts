@@ -1,5 +1,5 @@
 import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME, fernConfigJson } from "@fern-api/configuration";
+import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME, fernConfigJson } from "@fern-api/configuration-loader";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";

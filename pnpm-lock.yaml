@@ -5446,9 +5446,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
-      '@fern-api/configuration':
+      '@fern-api/configuration-loader':
         specifier: workspace:*
-        version: link:../configuration
+        version: link:../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core

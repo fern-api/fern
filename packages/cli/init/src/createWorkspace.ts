@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     OPENAPI_DIRECTORY,
     ROOT_API_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
