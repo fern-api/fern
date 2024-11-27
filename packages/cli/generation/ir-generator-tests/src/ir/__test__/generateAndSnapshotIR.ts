@@ -1,4 +1,4 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
