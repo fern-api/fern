@@ -45,6 +45,16 @@ def _export(version_compatibility: PydanticVersionCompatibility, *export: str) -
 
 
 class Pydantic:
+    class Extra:
+        def __init__(self, version_compatibility: PydanticVersionCompatibility):
+            self.version_compatibility = version_compatibility
+
+        def forbid(self) -> AST.Expression:
+            return AST.Expression(_export(self.version_compatibility, "Extra", "forbid"))
+
+        def allow(self) -> AST.Expression:
+            return AST.Expression(_export(self.version_compatibility, "Extra", "allow"))
+
     def __init__(self, version_compatibility: PydanticVersionCompatibility):
         self.version_compatibility = version_compatibility
 
@@ -66,18 +76,15 @@ class Pydantic:
     def validator(self, pre: bool = False) -> AST.Expression:
         if self.version_compatibility == PydanticVersionCompatibility.V2:
             return AST.Expression(f'validator("*", pre={str(pre).lower()})')
+        # V1 and V1_ON_V2 use root_validator
         return AST.Expression(f"root_validator(pre={str(pre).lower()})")
 
     def model_validate_method(self) -> str:
         if self.version_compatibility == PydanticVersionCompatibility.V2:
             return "model_validate"
+        # V1 and V1_ON_V2 use parse_obj
         return "parse_obj"
 
-    class Extra:
-        @staticmethod
-        def forbid() -> AST.Expression:
-            return AST.Expression(_export(PydanticVersionCompatibility.V1, "Extra", "forbid"))
-
-        @staticmethod
-        def allow() -> AST.Expression:
-            return AST.Expression(_export(PydanticVersionCompatibility.V1, "Extra", "allow"))
+    @property
+    def extra(self) -> 'Pydantic.Extra':
+        return Pydantic.Extra(self.version_compatibility)

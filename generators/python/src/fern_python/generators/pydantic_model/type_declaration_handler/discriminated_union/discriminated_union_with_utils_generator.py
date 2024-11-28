@@ -79,7 +79,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         root_type_annotation = (
             AST.Expression(
                 AST.FunctionInvocation(
-                    function_definition=Pydantic.Field(),
+                    function_definition=Pydantic(self._custom_config.version).Field(),
                     kwargs=[
                         (
                             "discriminator",
@@ -368,7 +368,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     root_type=root_type,
                     annotation=AST.Expression(
                         AST.FunctionInvocation(
-                            function_definition=Pydantic.Field(),
+                            function_definition=Pydantic(self._custom_config.version).Field(),
                             kwargs=[
                                 (
                                     "discriminator",

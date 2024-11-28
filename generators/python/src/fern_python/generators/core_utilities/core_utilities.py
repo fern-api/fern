@@ -28,6 +28,8 @@ class CoreUtilities:
         self._pydantic_compatibility = pydantic_compatibility
 
     def copy_to_project(self, *, project: Project) -> None:
+        is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
+        
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="datetime_utils.py",
@@ -38,11 +40,13 @@ class CoreUtilities:
             exports={"serialize_datetime"},
         )
 
+        utilities_path = "with_pydantic_v1_on_v2/pydantic_utilities.py" if is_v1_on_v2 \
+            else "with_pydantic_aliases/pydantic_utilities.py" if self._use_pydantic_field_aliases \
+            else "pydantic_utilities.py"
+            
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
-            if self._use_pydantic_field_aliases
-            else "pydantic_utilities.py",
+            relative_filepath_on_disk=utilities_path,
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
@@ -243,15 +247,14 @@ class CoreUtilities:
         )
 
     def get_universal_root_model(self) -> AST.ClassReference:
-        return (
-            AST.ClassReference(
+        if self._pydantic_compatibility == PydanticVersionCompatibility.Both:
+            return AST.ClassReference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
                     module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
                 ),
             )
-            if self._pydantic_compatibility == PydanticVersionCompatibility.Both
-            else Pydantic.RootModel()
-            if self._pydantic_compatibility == PydanticVersionCompatibility.V2
-            else Pydantic.BaseModel()
-        )
+        elif self._pydantic_compatibility == PydanticVersionCompatibility.V2:
+            return Pydantic(self._pydantic_compatibility).RootModel()
+        else:  # V1 or V1_ON_V2
+            return Pydantic(self._pydantic_compatibility).BaseModel()
