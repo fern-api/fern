@@ -4,7 +4,7 @@ import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fer
 import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { SourceResolver } from "../../resolvers/SourceResolver";
+import { SourceResolver } from "@fern-api/source-resolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getPropertiesByAudience } from "../../utils/getPropertiesByAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -14,7 +14,6 @@ import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertTypeExample } from "./convertExampleType";
-import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
@@ -146,7 +145,7 @@ async function convertTypeDeclarationSource({
     }
     const resolvedSource = await sourceResolver.resolveSourceOrThrow({
         source: typeDeclaration.source,
-        file
+        relativeFilepath: file.relativeFilepath
     });
     if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined;

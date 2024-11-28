@@ -19,6 +19,9 @@
       "path": "../../../ir-sdk"
     },
     {
+      "path": "../../cli-source-resolver"
+    },
+    {
       "path": "../../configuration-loader"
     },
     {
