@@ -81,10 +81,6 @@ export class ExampleTypeFactory {
         options: ExampleTypeFactory.Options;
         skipReadonly: boolean;
     }): FullExample | undefined {
-        // If we're provided a schema with example set to null, we should not populate the example.
-        if (Object.is(example, null)) {
-            return undefined;
-        }
         switch (schema.type) {
             case "enum":
                 if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
@@ -127,6 +123,9 @@ export class ExampleTypeFactory {
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
                     (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
                 ) {
+                    return undefined;
+                }
+                if (Object.is(example, null)) {
                     return undefined;
                 }
                 const result = this.buildExampleHelper({
