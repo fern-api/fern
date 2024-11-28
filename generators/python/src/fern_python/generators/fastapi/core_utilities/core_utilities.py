@@ -2,11 +2,10 @@ import os
 from typing import List, Optional, Set, Tuple
 
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
-from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY, PydanticVersionCompatibility
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
-
 
 class FernHTTPException:
     CLASS_NAME = "FernHTTPException"
@@ -99,6 +98,7 @@ class CoreUtilities:
         self._module_path = tuple(part.module_name for part in self.filepath)
         self.exceptions = Exceptions(filepath=self.filepath)
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
+        self._pydantic_compatibility = custom_config.pydantic_config.version
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -128,11 +128,16 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"},
         )
+
+        is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
+        utilities_path = "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py" if is_v1_on_v2 and self._use_pydantic_field_aliases \
+            else "with_pydantic_v1_on_v2/pydantic_utilities.py" if is_v1_on_v2 \
+            else "with_pydantic_aliases/pydantic_utilities.py" if self._use_pydantic_field_aliases \
+            else "pydantic_utilities.py"
+
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
-            if self._use_pydantic_field_aliases
-            else "pydantic_utilities.py",
+            relative_filepath_on_disk=utilities_path,
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),

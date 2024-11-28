@@ -2,33 +2,48 @@
 import datetime as dt
 import typing
 from collections import defaultdict
+import os
 
 import typing_extensions
 
 import pydantic
 
-from .datetime_utils import serialize_datetime
-from .serialization import convert_and_respect_annotation_metadata
-
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
-from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
-from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
-from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
-from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # Pydantic v1
-from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
-from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
-from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
-from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
-    # isort: on
+from .datetime_utils import serialize_datetime
+
+# isort will try to reformat the comments on these imports, which breaks mypy
+# isort: off
+from pydantic.v1.datetime_parse import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    parse_date as parse_date,
+)
+from pydantic.v1.datetime_parse import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+    parse_datetime as parse_datetime,
+)
+from pydantic.v1.json import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    ENCODERS_BY_TYPE as encoders_by_type,
+)
+from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    get_args as get_args,
+)
+from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+    get_origin as get_origin,
+)
+from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+    is_literal_type as is_literal_type,
+)
+from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+    is_union as is_union,
+)
+from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+
 
 T = typing.TypeVar("T")
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
-    return pydantic.parse_obj_as(type_, dealiased_object)
+    return pydantic.parse_obj_as(type_, object_)
 
 
 def to_jsonable_with_fallback(
@@ -39,22 +54,12 @@ def to_jsonable_with_fallback(
 
 class UniversalBaseModel(pydantic.v1.BaseModel):
     class Config:
+        populate_by_name = True
         smart_union = True
+        allow_population_by_field_name = True
         json_encoders = {dt.datetime: serialize_datetime}
-
-    @classmethod
-    def model_construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> "Model":
-        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
-        return cls.construct(_fields_set, **dealiased_object)
-
-    @classmethod
-    def construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> "Model":
-        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
-        return super().construct(_fields_set, **dealiased_object)
+        # Allow fields begining with `model_` to be used in the model
+        protected_namespaces = ()
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {
@@ -97,9 +102,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
             **kwargs,
         }
 
-        dict_dump = super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
-
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
+        return super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
 
 
 def _union_list_of_pydantic_dicts(

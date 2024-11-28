@@ -29,7 +29,7 @@ class CoreUtilities:
 
     def copy_to_project(self, *, project: Project) -> None:
         is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
-        
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="datetime_utils.py",
@@ -40,10 +40,11 @@ class CoreUtilities:
             exports={"serialize_datetime"},
         )
 
-        utilities_path = "with_pydantic_v1_on_v2/pydantic_utilities.py" if is_v1_on_v2 \
+        utilities_path = "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py" if is_v1_on_v2 and self._use_pydantic_field_aliases \
+            else "with_pydantic_v1_on_v2/pydantic_utilities.py" if is_v1_on_v2 \
             else "with_pydantic_aliases/pydantic_utilities.py" if self._use_pydantic_field_aliases \
             else "pydantic_utilities.py"
-            
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk=utilities_path,
