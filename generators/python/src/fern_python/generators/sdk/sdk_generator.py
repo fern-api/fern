@@ -285,10 +285,13 @@ class SdkGenerator(AbstractGenerator):
                         project=project,
                         generated_root_client=generated_root_client,
                     )
-                except Exception:
+                except Exception as e:
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate README.md; this is OK")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
+                            )
                         )
                     )
 
@@ -299,10 +302,13 @@ class SdkGenerator(AbstractGenerator):
                         snippets=snippets,
                         project=project,
                     )
-                except Exception:
+                except Exception as e:
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Failed to generate reference.md; this is OK")
+                            LogUpdate(
+                                level=LogLevel.DEBUG,
+                                message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
+                            ),
                         )
                     )
 
@@ -605,9 +611,9 @@ __version__ = metadata.version("{project._project_config.package_name}")
         contents = generator_cli.generate_readme(
             snippets=snippets,
             github_repo_url=project._github_output_mode.repo_url if project._github_output_mode is not None else None,
-            github_installation_token=project._github_output_mode.installation_token
-            if project._github_output_mode is not None
-            else None,
+            github_installation_token=(
+                project._github_output_mode.installation_token if project._github_output_mode is not None else None
+            ),
             pagination_enabled=context.generator_config.generate_paginated_clients,
             generated_root_client=generated_root_client,
         )

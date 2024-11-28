@@ -99,6 +99,7 @@
         "types": {
           "Agreement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "agreement_title": "string",
               "agreement_type": "string",
@@ -113,6 +114,7 @@
           },
           "AgreementClientLegalEntity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "double",
               "name": "string",
@@ -124,6 +126,7 @@
           "AgreementList": "list<Agreement>",
           "AgreementListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "AgreementList",
               "page": "optional<PageInfoWithoutCursor>",
@@ -134,6 +137,7 @@
           },
           "AgreementMsa": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "string",
               "title": "string",
@@ -144,6 +148,7 @@
           },
           "AgreementProviderLegalEntity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "double",
               "name": "string",
@@ -162,6 +167,7 @@
           },
           "AgreementsSearchForm": {
             "docs": "Convenient model to encapsulate query parameters to get a list of agreements.",
+            "inline": undefined,
             "properties": {
               "contract_id": "optional<string>",
               "limit": "optional<AgreementsParamLimit>",
@@ -173,6 +179,7 @@
           },
           "AlternateEmailItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email": "optional<EmailType>",
               "isVerified": "boolean",
@@ -187,6 +194,7 @@
           },
           "ApiError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "A description of the returned error",
@@ -203,6 +211,7 @@
           },
           "ApiErrorContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "errors": "optional<list<ApiError>>",
               "request": "optional<ApiErrorRequest>",
@@ -213,6 +222,7 @@
           },
           "ApiErrorRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "api_req_id": {
                 "docs": "The request ID of the failed request",
@@ -249,6 +259,7 @@
           },
           "BasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": "ClientOfBasicContract",
               "created_at": "optional<DateTimeString>",
@@ -291,6 +302,7 @@
           },
           "BasicInvoiceAdjustment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attachment": "optional<FileAttachmentInfo>",
               "contract": "BasicInvoiceAdjustmentContract",
@@ -317,6 +329,7 @@
           },
           "BasicInvoiceAdjustmentContract": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "string",
               "title": "string",
@@ -328,6 +341,7 @@
           },
           "BasicInvoiceAdjustmentPaymentCycle": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "end_date": "optional<DateTimeStringRequired>",
               "start_date": "optional<DateTimeStringRequired>",
@@ -338,6 +352,7 @@
           },
           "BasicInvoiceAdjustmentReportedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": "string",
               "id": "double",
@@ -348,6 +363,7 @@
           },
           "BasicInvoiceAdjustmentReviewedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": "string",
               "id": "double",
@@ -360,6 +376,7 @@
           },
           "BasicInvoiceAdjustmentWorksheet": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "days": {
                 "type": "double",
@@ -408,6 +425,7 @@
           },
           "BasicLegalEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "entity_subtype": "LegalEntitySubType",
               "entity_type": "LegalEntityType",
@@ -420,6 +438,7 @@
           },
           "BasicOrganization": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "double",
               "name": {
@@ -438,6 +457,7 @@
           },
           "BasicTeam": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "double",
               "name": {
@@ -456,6 +476,7 @@
           },
           "BasicTimesheet": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attachment": "optional<FileAttachmentInfo>",
               "contract": "BasicTimesheetContract",
@@ -488,6 +509,7 @@
           },
           "BasicTimesheetContract": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "string",
               "title": "string",
@@ -499,6 +521,7 @@
           },
           "BasicTimesheetPaymentCycle": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "end_date": "optional<DateTimeString>",
               "start_date": "optional<DateTimeString>",
@@ -509,6 +532,7 @@
           },
           "BasicTimesheetReportedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": "string",
               "id": "double",
@@ -519,6 +543,7 @@
           },
           "BasicTimesheetReviewedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": "string",
               "id": "double",
@@ -531,6 +556,7 @@
           },
           "BasicTimesheetWorksheet": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "days": {
                 "type": "double",
@@ -579,6 +605,7 @@
           },
           "ClientLegalEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email": "optional<EmailType>",
               "id": "long",
@@ -594,6 +621,7 @@
           },
           "ClientOfBasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "team": "optional<TeamOfBasicContract>",
             },
@@ -603,6 +631,7 @@
           },
           "ClientOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email": "optional<EmailType>",
               "full_name": "string",
@@ -616,6 +645,7 @@
           },
           "CompensationDetailsOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "string",
               "currency_code": "CurrencyCodeRequired",
@@ -633,6 +663,7 @@
           },
           "CompensationDetailsOfContractToCreateOngoingTimeBased": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "double",
               "scale": "WorkStatementScaleEnum",
@@ -643,6 +674,7 @@
           },
           "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": "double",
               "scale": "WorkStatementScaleEnum",
@@ -653,6 +685,7 @@
           },
           "CompensationDetailsOfContractToCreateShared": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -708,6 +741,7 @@
           },
           "Contract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": "optional<ClientOfContract>",
               "compensation_details": "CompensationDetailsOfContract",
@@ -757,6 +791,7 @@
           },
           "ContractContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Contract",
             },
@@ -766,6 +801,7 @@
           },
           "ContractContainerOngoingTimeBased": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Contract",
             },
@@ -775,6 +811,7 @@
           },
           "ContractContainerPayAsYouGoTimeBased": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Contract",
             },
@@ -784,6 +821,7 @@
           },
           "ContractContainerPaygMilestones": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Contract",
             },
@@ -793,6 +831,7 @@
           },
           "ContractContainerPaygTasks": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Contract",
             },
@@ -802,6 +841,7 @@
           },
           "ContractCustomField": {
             "docs": "Customized attributes on contracts (Employee ID, Project code, etc).",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Custom field property name.",
@@ -818,6 +858,7 @@
           },
           "ContractDetailsToAmend": {
             "docs": "You can specify any combination of data points that need changing.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "type": "optional<double>",
@@ -897,6 +938,7 @@
           },
           "ContractDocumentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<FileAttachmentInfo>",
             },
@@ -906,6 +948,7 @@
           },
           "ContractExternalIdPatchedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ContractExternalIdToPatch",
             },
@@ -916,6 +959,7 @@
           "ContractExternalIdPatchedResponseContainer": "ContractExternalIdToPatch",
           "ContractExternalIdToPatch": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "external_id": {
                 "docs": "A unique identifier for the object provided by an external system.",
@@ -938,6 +982,7 @@
           },
           "ContractInvitationToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "email": "EmailTypeRequired",
               "message": {
@@ -958,6 +1003,7 @@
           "ContractList": "list<BasicContract>",
           "ContractListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ContractList",
               "page": "PageInfo",
@@ -971,6 +1017,7 @@
             "discriminated": false,
             "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -981,6 +1028,7 @@
           },
           "ContractSearchFormWithCursor": {
             "docs": "This is a model to make it easier to understand and restrict search parameters",
+            "inline": undefined,
             "properties": {
               "after_cursor": {
                 "docs": "Return next page of results after given cursor.",
@@ -1004,6 +1052,7 @@
           },
           "ContractSearchFormWithoutCursor": {
             "docs": "This is a model to make it easier to understand and restrict search parameters",
+            "inline": undefined,
             "properties": {
               "countries": "optional<ContractSearchFormWithoutCursorCountries>",
               "currencies": "optional<ContractSearchFormWithoutCursorCurrencies>",
@@ -1055,6 +1104,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1067,6 +1117,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1079,6 +1130,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1091,6 +1143,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1101,6 +1154,7 @@
           },
           "ContractSignatureToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_signature": {
                 "docs": "Signature of client.",
@@ -1151,6 +1205,7 @@
           "ContractTemplateList": "list<ContractTemplateSummary>",
           "ContractTemplateListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<ContractTemplateList>",
             },
@@ -1160,6 +1215,7 @@
           },
           "ContractTemplateSummary": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique identifier of a contract template",
@@ -1176,6 +1232,7 @@
           },
           "ContractTerminationResult": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "completion_date": {
                 "docs": "Date the contract is marked for completion",
@@ -1192,6 +1249,7 @@
           },
           "ContractTerminationResultContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ContractTerminationResult",
             },
@@ -1203,6 +1261,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1218,6 +1277,7 @@
             "extends": [
               "ContractToCreateShared",
             ],
+            "inline": undefined,
             "properties": {
               "compensation_details": "ContractToCreateOngoingTimeBasedCompensationDetails",
               "type": "literal<"ongoing_time_based">",
@@ -1228,6 +1288,7 @@
           },
           "ContractToCreateOngoingTimeBasedCompensationDetails": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -1287,6 +1348,7 @@
             "extends": [
               "ContractToCreateShared",
             ],
+            "inline": undefined,
             "properties": {
               "compensation_details": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
               "type": "literal<"pay_as_you_go_time_based">",
@@ -1297,6 +1359,7 @@
           },
           "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -1356,6 +1419,7 @@
             "extends": [
               "ContractToCreateShared",
             ],
+            "inline": undefined,
             "properties": {
               "compensation_details": "CompensationDetailsOfContractToCreateShared",
               "type": "literal<"payg_milestones">",
@@ -1369,6 +1433,7 @@
             "extends": [
               "ContractToCreateShared",
             ],
+            "inline": undefined,
             "properties": {
               "compensation_details": "CompensationDetailsOfContractToCreateShared",
               "type": "literal<"payg_tasks">",
@@ -1379,6 +1444,7 @@
           },
           "ContractToCreateShared": {
             "docs": "Details of contract to create",
+            "inline": undefined,
             "properties": {
               "client": "ContractToCreateSharedClient",
               "country_code": "optional<CountryCode>",
@@ -1426,6 +1492,7 @@
           },
           "ContractToCreateSharedClient": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "legal_entity": {
                 "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
@@ -1442,6 +1509,7 @@
           },
           "ContractToCreateSharedClientLegalEntity": {
             "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
+            "inline": true,
             "properties": {
               "id": "double",
             },
@@ -1451,6 +1519,7 @@
           },
           "ContractToCreateSharedClientTeam": {
             "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
+            "inline": true,
             "properties": {
               "id": "double",
             },
@@ -1460,6 +1529,7 @@
           },
           "ContractToCreateSharedJobTitle": {
             "docs": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
+            "inline": true,
             "properties": {
               "id": {
                 "docs": "Id of an predefined job title.",
@@ -1482,6 +1552,7 @@
           },
           "ContractToCreateSharedSeniority": {
             "docs": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
+            "inline": true,
             "properties": {
               "id": "optional<double>",
             },
@@ -1491,6 +1562,7 @@
           },
           "ContractToCreateSharedWorker": {
             "docs": "Worker properties",
+            "inline": true,
             "properties": {
               "expected_email": "optional<WorkerEmailType>",
               "first_name": {
@@ -1520,6 +1592,7 @@
           },
           "ContractToTerminate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "completion_date": "optional<DateString>",
               "message": {
@@ -1581,6 +1654,7 @@
           },
           "Contractor": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "name": {
                 "default": "",
@@ -1605,6 +1679,7 @@
           },
           "Country": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": "CountryCode",
               "eor_support": {
@@ -1659,6 +1734,7 @@
           "CountryList": "list<Country>",
           "CountryListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "CountryList",
             },
@@ -1668,6 +1744,7 @@
           },
           "CreateTimeoff": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "end_date": {
                 "docs": "End date of employee's time off.",
@@ -1708,6 +1785,7 @@
           },
           "CreateTimeoffContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "CreateTimeoff",
             },
@@ -1728,6 +1806,7 @@
           },
           "Currency": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "code": "CurrencyCodeRequired",
               "name": {
@@ -1767,6 +1846,7 @@
           "CurrencyList": "list<Currency>",
           "CurrencyListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "CurrencyList",
             },
@@ -1834,6 +1914,7 @@
           },
           "EmployeeList": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "birth_date": "optional<string>",
               "client_legal_entity": "optional<EmployeeListClientLegalEntity>",
@@ -1865,6 +1946,7 @@
           },
           "EmployeeListClientLegalEntity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "optional<double>",
               "name": "optional<string>",
@@ -1875,6 +1957,7 @@
           },
           "EmployeeListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "list<EmployeeList>",
             },
@@ -1884,6 +1967,7 @@
           },
           "EmployeeListMonthlyPayment": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "count": "optional<double>",
             },
@@ -1893,6 +1977,7 @@
           },
           "EmployeeListPaymentsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "contract_name": "optional<string>",
               "currency": "optional<string>",
@@ -1905,6 +1990,7 @@
           },
           "Employment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_legal_entity": {
                 "docs": "The client legal entity associated with the employment.",
@@ -1997,6 +2083,7 @@
           },
           "EmploymentDetailsOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country": "optional<CountryCode>",
               "days_per_week": "double",
@@ -2015,6 +2102,7 @@
           },
           "EorClientTimeoffRequests": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "current_approved": {
                 "docs": "Days off approved.",
@@ -2048,6 +2136,7 @@
           },
           "EorClientTimeoffs": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "employees": {
                 "docs": "List of employee time offs.",
@@ -2061,6 +2150,7 @@
           },
           "EorClientTimeoffsContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorClientTimeoffs",
             },
@@ -2070,6 +2160,7 @@
           },
           "EorContractCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": "optional<EorContractCreatedClient>",
               "compensation_details": "optional<EorContractCreatedCompensationDetails>",
@@ -2095,6 +2186,7 @@
           },
           "EorContractCreatedClient": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "legal_entity": "optional<EorContractCreatedClientLegalEntity>",
             },
@@ -2104,6 +2196,7 @@
           },
           "EorContractCreatedClientLegalEntity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "name": {
                 "docs": "Legal entity name.",
@@ -2116,6 +2209,7 @@
           },
           "EorContractCreatedCompensationDetails": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "currency": {
                 "docs": "Currency of gross annual salary.",
@@ -2140,6 +2234,7 @@
           },
           "EorContractCreatedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorContractCreated",
             },
@@ -2149,6 +2244,7 @@
           },
           "EorContractCreatedEmployee": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "email": {
                 "docs": "Employee's email.",
@@ -2173,6 +2269,7 @@
           },
           "EorContractCreatedEmployment": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "calculated_holidays": {
                 "docs": "Number of calculate holidays for this contract.",
@@ -2211,6 +2308,7 @@
           },
           "EorContractCreatedHealthPlan": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": {
                 "docs": "Health plan ID",
@@ -2227,6 +2325,7 @@
           },
           "EorContractToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client": "EorContractToCreateClient",
               "compensation_details": "EorContractToCreateCompensationDetails",
@@ -2252,6 +2351,7 @@
           },
           "EorContractToCreateClient": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "legal_entity": "optional<EorContractToCreateClientLegalEntity>",
               "team": "optional<EorContractToCreateClientTeam>",
@@ -2262,6 +2362,7 @@
           },
           "EorContractToCreateClientLegalEntity": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": {
                 "docs": "Enter the Id of legal entity under which you want to hire this person. Use /legal-entities endpoint to retrieve a list of legal entities in your organization.",
@@ -2274,6 +2375,7 @@
           },
           "EorContractToCreateClientTeam": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": {
                 "docs": "Enter the Id of team this person will be hired in. Use /teams endpoint to retrieve a list of teams in your organization.",
@@ -2286,6 +2388,7 @@
           },
           "EorContractToCreateCompensationDetails": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "currency": {
                 "docs": "Salary currency.",
@@ -2310,6 +2413,7 @@
           },
           "EorContractToCreateEmployee": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "address": "optional<EorContractToCreateEmployeeAddress>",
               "email": {
@@ -2335,6 +2439,7 @@
           },
           "EorContractToCreateEmployeeAddress": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "city": {
                 "docs": "City name.",
@@ -2360,6 +2465,7 @@
           },
           "EorContractToCreateEmployment": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "country": "optional<CountryCode>",
               "end_date": "optional<DateString>",
@@ -2426,6 +2532,7 @@
           },
           "EorContractToCreateQuoteAdditionalFields": {
             "docs": "Some countries require additional employee information for employment contracts.",
+            "inline": true,
             "properties": {
               "dob": {
                 "docs": "Employee's date of birth.",
@@ -2456,6 +2563,7 @@
           },
           "EorContractToCreateSeniority": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": {
                 "docs": "Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
@@ -2468,6 +2576,7 @@
           },
           "EorCountryValidations": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "adjustments_information_box": {
                 "docs": "Country specific notes and information.",
@@ -2526,6 +2635,7 @@
           },
           "EorCountryValidationsContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorCountryValidations",
             },
@@ -2535,6 +2645,7 @@
           },
           "EorCountryValidationsDefiniteContract": {
             "docs": "Conditions to make definitive contract.",
+            "inline": true,
             "properties": {
               "maximum_limitation": "optional<double>",
               "type": "optional<EorCountryValidationsDefiniteContractType>",
@@ -2555,6 +2666,7 @@
           },
           "EorCountryValidationsHealthInsurance": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "providers": "optional<list<HealthInsuranceProvider>>",
               "status": "optional<HealthInsuranceStatusEnum>",
@@ -2565,6 +2677,7 @@
           },
           "EorCountryValidationsHoliday": {
             "docs": "Range of the number of holidays.",
+            "inline": true,
             "properties": {
               "min": {
                 "docs": "Minimum number of holidays required for a legally compliant contract.",
@@ -2577,6 +2690,7 @@
           },
           "EorCountryValidationsPartTimeHoliday": {
             "docs": "Holiday type and range for part-time contracts.",
+            "inline": true,
             "properties": {
               "min": {
                 "docs": "Minimum number of holidays required for a legally compliant contract.",
@@ -2600,6 +2714,7 @@
           },
           "EorCountryValidationsPartTimeProbation": {
             "docs": "Probation period range for part-time contracts.",
+            "inline": true,
             "properties": {
               "max": {
                 "docs": "Maximum probation days allowed for a legally compliant contract.",
@@ -2616,6 +2731,7 @@
           },
           "EorCountryValidationsProbation": {
             "docs": "Probation period range.",
+            "inline": true,
             "properties": {
               "max": {
                 "docs": "Maximum probation days allowed for a legally compliant contract.",
@@ -2632,6 +2748,7 @@
           },
           "EorCountryValidationsSalary": {
             "docs": "Salary range.",
+            "inline": true,
             "properties": {
               "max": {
                 "docs": "Maximum wage allowed for a legally compliant contract.",
@@ -2648,6 +2765,7 @@
           },
           "EorCountryValidationsSickDays": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "max": {
                 "docs": "Maximum number of sick days allowed for a legally compliant contract.",
@@ -2664,6 +2782,7 @@
           },
           "EorCountryValidationsWorkSchedule": {
             "docs": "Employee's Work schedule in days and hours.",
+            "inline": true,
             "properties": {
               "days": "optional<EorCountryValidationsWorkScheduleDays>",
               "hours": "optional<EorCountryValidationsWorkScheduleHours>",
@@ -2674,6 +2793,7 @@
           },
           "EorCountryValidationsWorkScheduleDays": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "max": "optional<string>",
             },
@@ -2683,6 +2803,7 @@
           },
           "EorCountryValidationsWorkScheduleHours": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "max": "optional<string>",
             },
@@ -2692,6 +2813,7 @@
           },
           "EorEntitlementListItem": {
             "docs": "Entitlement Item for a given year.",
+            "inline": undefined,
             "properties": {
               "max_rollover_yearly": "optional<string>",
               "other_leave_approved": {
@@ -2759,6 +2881,7 @@
           },
           "EorEntitlements": {
             "docs": "Time-off Entitlements for EOR contracts.",
+            "inline": undefined,
             "properties": {
               "entitlements": {
                 "docs": "List of entitlements.",
@@ -2771,6 +2894,7 @@
           },
           "EorEntitlementsContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorEntitlements",
             },
@@ -2796,6 +2920,7 @@
           },
           "EorTimeoffsBaseItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "attachments": "optional<TimeoffsAttachments>",
               "date_is_half_day": {
@@ -2870,6 +2995,7 @@
           },
           "EorTimeoffsContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorTimeoffs",
             },
@@ -2879,6 +3005,7 @@
           },
           "EorTimeoffsEmployeeItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contract_id": "string",
               "eor_contract_id": "double",
@@ -2907,6 +3034,7 @@
             "extends": [
               "EorTimeoffsBaseItem",
             ],
+            "inline": undefined,
             "properties": {
               "applied_changes": {
                 "docs": "List of changes applied to the time off.",
@@ -2937,6 +3065,7 @@
           },
           "EorTimeoffsItemContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "EorTimeoffsItem",
             },
@@ -2946,6 +3075,7 @@
           },
           "EstimateFirstPayment": {
             "docs": "Details of pro rata payment to create.",
+            "inline": undefined,
             "properties": {
               "compensation_details": "EstimateFirstPaymentCompensationDetails",
               "country_code": "CountryCode",
@@ -2958,6 +3088,7 @@
           },
           "EstimateFirstPaymentCompensationDetails": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. Must be a positive number.",
@@ -3020,6 +3151,7 @@
           },
           "ExchangeRates": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rates": "optional<map<string, unknown>>",
               "risk": "optional<double>",
@@ -3030,6 +3162,7 @@
           },
           "FileAttachmentInfo": {
             "docs": "This object is used for linking file attachments to your records.",
+            "inline": undefined,
             "properties": {
               "filename": {
                 "docs": "Original filename you used to upload using attachments end-point.",
@@ -3046,6 +3179,7 @@
           },
           "FileObject": {
             "docs": "This is the file you will upload in a multi-part form.",
+            "inline": undefined,
             "properties": {
               "file": {
                 "docs": "Upload the file you want to attach to this entry.",
@@ -3092,6 +3226,7 @@
           },
           "FinalPaymentCalculated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "calculation_type": {
                 "docs": "Either works days or calendar days",
@@ -3142,6 +3277,7 @@
           },
           "FinalPaymentCalculatedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "FinalPaymentCalculated",
             },
@@ -3151,6 +3287,7 @@
           },
           "FinalPaymentCalculatedLastCycle": {
             "docs": "The last payment cycle.",
+            "inline": true,
             "properties": {
               "completion_date": "optional<DateTimeStringRequired>",
               "end": "optional<DateTimeStringRequired>",
@@ -3162,6 +3299,7 @@
           },
           "FirstPaymentDate": {
             "docs": "First payment date",
+            "inline": undefined,
             "properties": {
               "due": "optional<DateStringRequired>",
             },
@@ -3171,6 +3309,7 @@
           },
           "GenericReportReviewCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "UniqueObjectIdentifier",
               "public_id": "optional<PublicId>",
@@ -3182,6 +3321,7 @@
           },
           "GenericReportReviewCreatedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "GenericReportReviewCreatedList",
             },
@@ -3192,6 +3332,7 @@
           "GenericReportReviewCreatedList": "list<GenericReportReviewCreated>",
           "GenericResultCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "GenericResultCreatedData",
             },
@@ -3201,6 +3342,7 @@
           },
           "GenericResultCreatedData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "created": "boolean",
             },
@@ -3210,6 +3352,7 @@
           },
           "GenericResultDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "GenericResultDeletedData",
             },
@@ -3219,6 +3362,7 @@
           },
           "GenericResultDeletedData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "deleted": {
                 "docs": "Confirms the deletion.",
@@ -3231,6 +3375,7 @@
           },
           "GenericResultUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "GenericResultUpdatedData",
             },
@@ -3240,6 +3385,7 @@
           },
           "GenericResultUpdatedData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "updated": "boolean",
             },
@@ -3249,6 +3395,7 @@
           },
           "HealthInsuranceProvider": {
             "docs": "Health insurance provider.",
+            "inline": undefined,
             "properties": {
               "attachments": {
                 "docs": "File attachments.",
@@ -3300,6 +3447,7 @@
           },
           "HealthInsuranceProviderAttachmentsItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "optional<double>",
               "label": "optional<string>",
@@ -3310,6 +3458,7 @@
           },
           "HealthInsuranceProviderPlansItem": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "currency": {
                 "docs": "Insurance payment currency.",
@@ -3346,6 +3495,7 @@
           },
           "HrisCompensation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "currency": {
                 "type": "string",
@@ -3364,6 +3514,7 @@
           },
           "HrisContractBase": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contract_oid": {
                 "docs": "The Hris Direct employee contract ID",
@@ -3382,6 +3533,7 @@
             "extends": [
               "HrisContractBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3392,6 +3544,7 @@
             "extends": [
               "HrisContractBase",
             ],
+            "inline": undefined,
             "properties": {
               "part_time_percentage": {
                 "docs": "required if employmentType is "PART_TIME"",
@@ -3411,6 +3564,7 @@
           },
           "HrisDirectEmployee": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "compensation": "HrisCompensation",
               "contract": "HrisDirectEmployeeContract",
@@ -3425,6 +3579,7 @@
           },
           "HrisDirectEmployeeContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "HrisDirectEmployeeResponse",
             },
@@ -3448,6 +3603,7 @@
           },
           "HrisDirectEmployeeDetails": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "country": {
                 "type": "string",
@@ -3521,6 +3677,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3534,6 +3691,7 @@
             "extends": [
               "HrisDirectEmployee",
             ],
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The Hris Direct employee ID",
@@ -3546,6 +3704,7 @@
           },
           "HrisDirectEmployeeVacationInfo": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "vacation_accrual_start_date": {
                 "type": "string",
@@ -3573,6 +3732,7 @@
           },
           "HrisJobInformationBase": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "seniority_id": "double",
             },
@@ -3585,6 +3745,7 @@
             "extends": [
               "HrisJobInformationBase",
             ],
+            "inline": undefined,
             "properties": {
               "job_title_id": "double",
             },
@@ -3597,6 +3758,7 @@
             "extends": [
               "HrisJobInformationBase",
             ],
+            "inline": undefined,
             "properties": {
               "job_title_name": "string",
             },
@@ -3606,6 +3768,7 @@
           },
           "HrisTeamInformation": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "legal_entity_id": "double",
               "team_id": "double",
@@ -3616,6 +3779,7 @@
           },
           "InputToDeletePgoTask": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "PgoTaskToDelete",
             },
@@ -3625,6 +3789,7 @@
           },
           "InputToShieldContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InputToShieldContractData",
             },
@@ -3634,6 +3799,7 @@
           },
           "InputToShieldContractData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "agreement_id": {
                 "docs": "MSA contract id (agreement).",
@@ -3646,6 +3812,7 @@
           },
           "InvitationsOfBasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_email": "optional<EmailType>",
               "worker_email": "optional<EmailType>",
@@ -3656,6 +3823,7 @@
           },
           "Invoice": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Billed amount.",
@@ -3718,6 +3886,7 @@
               "BasicInvoiceAdjustment",
               "InvoiceAdjustmentApproversContainer",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3725,6 +3894,7 @@
           },
           "InvoiceAdjustmentApprover": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "approved": "boolean",
               "email": "string",
@@ -3737,6 +3907,7 @@
           "InvoiceAdjustmentApproverList": "list<InvoiceAdjustmentApprover>",
           "InvoiceAdjustmentApproversContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "approvers": "InvoiceAdjustmentApproverList",
             },
@@ -3746,6 +3917,7 @@
           },
           "InvoiceAdjustmentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InvoiceAdjustment",
             },
@@ -3755,6 +3927,7 @@
           },
           "InvoiceAdjustmentCreated": {
             "docs": "Details of invoice adjustment created.",
+            "inline": undefined,
             "properties": {
               "created": "boolean",
               "created_at": "optional<DateTimeStringRequired>",
@@ -3768,6 +3941,7 @@
           },
           "InvoiceAdjustmentCreatedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InvoiceAdjustmentCreated",
             },
@@ -3778,6 +3952,7 @@
           "InvoiceAdjustmentList": "list<BasicInvoiceAdjustment>",
           "InvoiceAdjustmentListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InvoiceAdjustmentList",
               "page": "PageInfoWithoutCursorNew",
@@ -3788,6 +3963,7 @@
           },
           "InvoiceAdjustmentReviewToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": "optional<string>",
               "status": "InvoiceAdjustmentReviewToCreateStatus",
@@ -3807,6 +3983,7 @@
           },
           "InvoiceAdjustmentReviewsToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": "TimesheetIdItems",
               "reason": "optional<string>",
@@ -3827,6 +4004,7 @@
           },
           "InvoiceAdjustmentSearchContainer": {
             "docs": "This is a model to make it easier to understand and restrict search parameters",
+            "inline": undefined,
             "properties": {
               "contract_id": "optional<string>",
               "contract_types": "optional<InvoiceAdjustmentSearchContainerContractTypes>",
@@ -3883,6 +4061,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3895,6 +4074,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3907,6 +4087,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3922,6 +4103,7 @@
           "InvoiceAdjustmentStatusEnumList": "list<optional<InvoiceAdjustmentStatusEnum>>",
           "InvoiceAdjustmentToCreate": {
             "docs": "Details of invoice adjustment to create.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. Must be a positive number.",
@@ -3959,6 +4141,7 @@
               "InvoiceAdjustmentToCreate",
               "FileObject",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -3966,6 +4149,7 @@
           },
           "InvoiceAdjustmentToUpdate": {
             "docs": "Details of invoice adjustment to update.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "type": "optional<double>",
@@ -4042,6 +4226,7 @@
           },
           "InvoiceContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contract_type": {
                 "docs": "Type of Deel contract.",
@@ -4077,6 +4262,7 @@
           },
           "InvoiceDownloadContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InvoiceDownloadObject",
             },
@@ -4086,6 +4272,7 @@
           },
           "InvoiceDownloadObject": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "expires_at": {
                 "docs": "Expiration date time of download URL.",
@@ -4107,6 +4294,7 @@
           "InvoiceList": "list<Invoice>",
           "InvoiceListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "InvoiceObject",
             },
@@ -4116,6 +4304,7 @@
           },
           "InvoiceObject": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rows": "optional<InvoiceList>",
               "total": "optional<double>",
@@ -4165,6 +4354,7 @@
           },
           "JobTitle": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique identifier for the job title in Deel platform.",
@@ -4182,6 +4372,7 @@
           "JobTitleList": "list<JobTitle>",
           "JobTitleListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "JobTitleList",
               "page": "JobTitleListContainerPage",
@@ -4192,6 +4383,7 @@
           },
           "JobTitleListContainerPage": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "cursor": {
                 "docs": "Use for pagination to get next set of records after the given cursor.",
@@ -4206,6 +4398,7 @@
           "LegalEntityList": "list<BasicLegalEntity>",
           "LegalEntityListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "optional<LegalEntityList>",
             },
@@ -4225,6 +4418,7 @@
           },
           "MetaDataOfContractToCreate": {
             "docs": "Additional custom info about a contract",
+            "inline": undefined,
             "properties": {
               "documents_required": {
                 "docs": "Require the contractor to upload necessary compliance documents as per their country’s labor laws.",
@@ -4238,6 +4432,7 @@
           },
           "Milestone": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid for the milestone.",
@@ -4279,6 +4474,7 @@
           },
           "MilestoneContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Milestone",
             },
@@ -4289,6 +4485,7 @@
           "MilestoneList": "list<Milestone>",
           "MilestoneListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "MilestoneList",
             },
@@ -4298,6 +4495,7 @@
           },
           "MilestoneProperties": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid for the milestone.",
@@ -4318,6 +4516,7 @@
           },
           "MilestoneReportedBy": {
             "docs": "Milestone creator.",
+            "inline": true,
             "properties": {
               "full_name": {
                 "docs": "Reporter's full name.",
@@ -4334,6 +4533,7 @@
           },
           "MilestoneReviewToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": "optional<string>",
               "status": "MilestoneReviewToCreateStatus",
@@ -4353,6 +4553,7 @@
           },
           "MilestoneReviewedBy": {
             "docs": "Reviewer's information.",
+            "inline": true,
             "properties": {
               "full_name": {
                 "docs": "Reviewer's full name.",
@@ -4369,6 +4570,7 @@
           },
           "MilestoneReviewsToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": "list<double>",
               "reason": "optional<string>",
@@ -4394,6 +4596,7 @@
               "MilestoneProperties",
               "FileObject",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4401,6 +4604,7 @@
           },
           "MonthlyPayment": {
             "docs": "Monthly payment details for the user",
+            "inline": undefined,
             "properties": {
               "count": {
                 "docs": "The number of monthly payments",
@@ -4506,6 +4710,7 @@
           },
           "OffCyclePayment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount of off-cycle payment.",
@@ -4530,6 +4735,7 @@
           },
           "OffCyclePaymentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "OffCyclePayment",
             },
@@ -4540,6 +4746,7 @@
           "OffCyclePaymentList": "list<OffCyclePayment>",
           "OffCyclePaymentListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "OffCyclePaymentList",
             },
@@ -4549,6 +4756,7 @@
           },
           "OffCyclePaymentReportedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": {
                 "docs": "Full name of the creator.",
@@ -4565,6 +4773,7 @@
           },
           "OffCyclePaymentReviewedBy": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "full_name": {
                 "docs": "Full name of the reviewer.",
@@ -4589,6 +4798,7 @@
           },
           "OffCyclePaymentToCreate": {
             "docs": "Details of invoice adjustment to create.",
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Amount to be paid. Must be a positive number.",
@@ -4618,6 +4828,7 @@
           "OrganizationList": "list<BasicOrganization>",
           "OrganizationListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "OrganizationList",
             },
@@ -4627,6 +4838,7 @@
           },
           "OutputToCreateFileRef": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": "string",
               "url": "string",
@@ -4637,6 +4849,7 @@
           },
           "OutputToCreateFileRefContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "OutputToCreateFileRef",
             },
@@ -4646,6 +4859,7 @@
           },
           "PageInfo": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "cursor": "string",
               "total_rows": "double",
@@ -4656,6 +4870,7 @@
           },
           "PageInfoWithoutCursor": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "total_rows": "double",
             },
@@ -4665,6 +4880,7 @@
           },
           "PageInfoWithoutCursorNew": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "items_per_page": {
                 "type": "double",
@@ -4694,6 +4910,7 @@
           },
           "Payment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_at": {
                 "docs": "Timestamp when the record was created.",
@@ -4723,6 +4940,7 @@
           },
           "PaymentBreakDown": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "adjustment": "optional<string>",
               "approve_date": "optional<string>",
@@ -4789,6 +5007,7 @@
           },
           "PaymentBreakDownContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "list<PaymentBreakDown>",
             },
@@ -4799,6 +5018,7 @@
           "PaymentList": "list<Payment>",
           "PaymentListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "PaymentObject",
             },
@@ -4808,6 +5028,7 @@
           },
           "PaymentMethod": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "type": "PaymentMethodEnum",
             },
@@ -4843,6 +5064,7 @@
           },
           "PaymentObject": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rows": "optional<PaymentList>",
               "total": "optional<double>",
@@ -4853,6 +5075,7 @@
           },
           "PaymentStatementInitiatedWebhook": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "billing_invoices": "list<double>",
               "invoices": "list<double>",
@@ -4874,6 +5097,7 @@
           "PaymentStatusEnumList": "list<PaymentStatusEnum>",
           "PaymentWorker": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contract_id": {
                 "docs": "The worker's Deel contract Id.",
@@ -4896,6 +5120,7 @@
           "PaymentWorkerList": "list<PaymentWorker>",
           "People": {
             "docs": "People object representing a Deel",
+            "inline": undefined,
             "properties": {
               "birth_date": {
                 "docs": "Date of birth of the user in ISO format (yyyy-mm-dd)",
@@ -5036,6 +5261,7 @@
           },
           "PeopleClientLegalEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique identifier for the client legal entity.",
@@ -5052,6 +5278,7 @@
           },
           "PeopleContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "list<People>",
             },
@@ -5061,6 +5288,7 @@
           },
           "PeopleMe": {
             "docs": "People object representing a Deel",
+            "inline": undefined,
             "properties": {
               "avatar_url": {
                 "docs": "URL of the user's avatar",
@@ -5125,6 +5353,7 @@
           "PeopleMeContainer": "PeopleMe",
           "PeoplePayment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "contract_name": {
                 "docs": "The name of the contract associated with the payment",
@@ -5149,6 +5378,7 @@
           },
           "PgoTask": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Fixed rate for this task.",
@@ -5172,6 +5402,7 @@
           },
           "PgoTaskReviewsByIdToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": {
                 "docs": "Review comments.",
@@ -5198,6 +5429,7 @@
           },
           "PgoTaskReviewsToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": "list<double>",
               "reason": {
@@ -5225,6 +5457,7 @@
           },
           "PgoTaskToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "amount": {
                 "docs": "Fixed rate for this task.",
@@ -5249,6 +5482,7 @@
           },
           "PgoTaskToDelete": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "delete_recurring_report": {
                 "docs": "Request to delete recurring report.",
@@ -5265,6 +5499,7 @@
           },
           "PremiumResultAdded": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "calculated_premium": {
                 "docs": "Cost for Deel Premium.",
@@ -5284,6 +5519,7 @@
           },
           "PremiumResultAddedContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "PremiumResultAdded",
             },
@@ -5293,6 +5529,7 @@
           },
           "PremiumResultAddedMisclassificationGuarantee": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "description": {
                 "docs": "Cover your legal defense costs.",
@@ -5309,6 +5546,7 @@
           },
           "PremiumResultAddedPenalties": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "description": {
                 "docs": "Get indemnity against tax authority penalties, liabilities and fines.",
@@ -5325,6 +5563,7 @@
           },
           "PremiumResultAddedThirdPartyLiabilities": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "description": {
                 "docs": "Get indemnity against third parties up to $10k depending on the court's decision.",
@@ -5341,6 +5580,7 @@
           },
           "PremiumToAdd": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "agreement_reflects_relation": {
                 "docs": "Is the Contractor Agreement selected on the Deel Platform perfectly reflecting your organizations relation and actual working practices with the contractor?",
@@ -5357,6 +5597,7 @@
           },
           "ProRata": {
             "docs": "Details of the pro rata for the first payment",
+            "inline": undefined,
             "properties": {
               "calculation_type": {
                 "docs": "Either works days or calendar days",
@@ -5446,6 +5687,7 @@
           },
           "ResponseEstimateFirstPayment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "first_payment_dates": "optional<list<FirstPaymentDate>>",
               "pro_rata": "optional<ProRata>",
@@ -5456,6 +5698,7 @@
           },
           "ResponseEstimateFirstPaymentContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "ResponseEstimateFirstPayment",
             },
@@ -5465,6 +5708,7 @@
           },
           "Seniority": {
             "docs": "Seniority describes level of expertise at a job e.g. junior",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique identifier for seniority record",
@@ -5492,6 +5736,7 @@
           "SeniorityList": "list<SeniorityRequired>",
           "SeniorityListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "SeniorityList",
             },
@@ -5501,6 +5746,7 @@
           },
           "SeniorityRequired": {
             "docs": "Seniority describes level of expertise at a job e.g. junior",
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique identifier for seniority record.",
@@ -5527,6 +5773,7 @@
           },
           "SignaturesOfBasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_signed_at": "optional<DateTimeString>",
               "worker_signature": {
@@ -5541,6 +5788,7 @@
           },
           "SignaturesOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "client_signature": {
                 "docs": "normally name of client is used as signature",
@@ -5569,6 +5817,7 @@
           },
           "StateOfCountry": {
             "docs": "It may be called states, provinces, prefectures or regions, or none at all",
+            "inline": undefined,
             "properties": {
               "code": {
                 "docs": "Territory code.",
@@ -5598,6 +5847,7 @@
           "TaskList": "list<PgoTask>",
           "TaskListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "TaskList",
             },
@@ -5607,6 +5857,7 @@
           },
           "Team": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The unique identifier for the team.",
@@ -5624,6 +5875,7 @@
           "TeamList": "list<BasicTeam>",
           "TeamListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "TeamList",
             },
@@ -5633,6 +5885,7 @@
           },
           "TeamOfBasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique reference of a team",
@@ -5649,6 +5902,7 @@
           },
           "TeamOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "Unique reference of a team",
@@ -5665,6 +5919,7 @@
           },
           "TimeoffReview": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "denial_reason": {
                 "docs": "Denial reason for the time off requested.",
@@ -5682,6 +5937,7 @@
           "TimeoffTypeList": "list<string>",
           "TimeoffTypeListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "TimeoffTypeList",
             },
@@ -5695,6 +5951,7 @@
           },
           "TimeoffsAttachmentsItem": {
             "docs": "A item in attachments array. 2022-09-08 FE only allows for "SICK LEAVE"",
+            "inline": undefined,
             "properties": {
               "file_extension": {
                 "docs": "The file name extension",
@@ -5712,6 +5969,7 @@
           },
           "TimeoffsProfile": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": "double",
               "is_employee": {
@@ -5755,6 +6013,7 @@
               "BasicTimesheet",
               "TimesheetApproversContainer",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -5763,6 +6022,7 @@
           "TimesheetAccountingRefs": "optional<list<TimesheetAccountingRefsItem>>",
           "TimesheetAccountingRefsItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "integration": "string",
               "mapping_category": "optional<TimesheetAccountingRefsItemMappingCategory>",
@@ -5773,6 +6033,7 @@
           },
           "TimesheetAccountingRefsItemMappingCategory": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "id": "string",
               "name": "string",
@@ -5783,6 +6044,7 @@
           },
           "TimesheetApprover": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "approved": "boolean",
               "email": "string",
@@ -5795,6 +6057,7 @@
           "TimesheetApproverList": "list<TimesheetApprover>",
           "TimesheetApproversContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "approvers": "TimesheetApproverList",
             },
@@ -5804,6 +6067,7 @@
           },
           "TimesheetContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "Timesheet",
             },
@@ -5816,6 +6080,7 @@
             "discriminated": false,
             "docs": "ID of an existing timesheet record",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5827,6 +6092,7 @@
           "TimesheetList": "list<BasicTimesheet>",
           "TimesheetListContainer": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "TimesheetList",
               "page": "PageInfoWithoutCursor",
@@ -5837,6 +6103,7 @@
           },
           "TimesheetReviewToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "reason": "optional<string>",
               "status": "TimesheetReviewToCreateStatus",
@@ -5856,6 +6123,7 @@
           },
           "TimesheetReviewsToCreate": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "ids": "TimesheetIdItems",
               "reason": "optional<string>",
@@ -5876,6 +6144,7 @@
           },
           "TimesheetSearchContainer": {
             "docs": "This is a model to make it easier to understand and restrict search parameters",
+            "inline": undefined,
             "properties": {
               "contract_id": "optional<string>",
               "contract_types": "optional<TimesheetSearchContainerContractTypes>",
@@ -5932,6 +6201,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5944,6 +6214,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5956,6 +6227,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -5966,6 +6238,7 @@
           },
           "TimesheetSharedProperties": {
             "docs": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
+            "inline": undefined,
             "properties": {
               "contract_id": {
                 "docs": "Id of a Deel contract.",
@@ -5998,6 +6271,7 @@
               "TimesheetSharedProperties",
               "FileObject",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -6005,6 +6279,7 @@
           },
           "TimesheetToUpdate": {
             "docs": "Details of timesheet to create; a client, contractor or EOR may update a timesheet",
+            "inline": undefined,
             "properties": {
               "description": "string",
               "quantity": "double",
@@ -6022,6 +6297,7 @@
             "discriminated": false,
             "docs": "Unique identifier of this resource.",
             "encoding": undefined,
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6050,6 +6326,7 @@
           },
           "WebhookItem": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "api_version": {
                 "default": "v1",
@@ -6103,6 +6380,7 @@
           },
           "WebhookItemResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "WebhookItem",
             },
@@ -6122,6 +6400,7 @@
           },
           "WebhookListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "data": "list<WebhookItem>",
             },
@@ -6224,6 +6503,7 @@
           },
           "WorkerLegalEntity": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "personal_name": "string",
               "registration_number": "string",
@@ -6235,6 +6515,7 @@
           },
           "WorkerOfBasicContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alternate_email": "optional<AlternateEmailList>",
               "email": "optional<EmailType>",
@@ -6256,6 +6537,7 @@
           },
           "WorkerOfContract": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "alternate_email": "optional<AlternateEmailList>",
               "date_of_birth": "optional<DateTimeString>",
@@ -6448,6 +6730,7 @@
       - ContractTypeEnumList
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractSearchFormWithoutCursorStatuses:
     discriminated: false
     union:
@@ -6455,6 +6738,7 @@
       - ContractStatusEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractSearchFormWithoutCursorCountries:
     discriminated: false
     union:
@@ -6462,6 +6746,7 @@
       - CountryCode
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractSearchFormWithoutCursorCurrencies:
     discriminated: false
     union:
@@ -6469,6 +6754,7 @@
       - CurrencyCodeRequired
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractSearchFormWithoutCursor:
     docs: >-
       This is a model to make it easier to understand and restrict search
@@ -6875,6 +7161,7 @@
       scale: WorkStatementScaleEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreatePayAsYouGoTimeBased:
     properties:
       type: literal<"pay_as_you_go_time_based">
@@ -6935,6 +7222,7 @@
       scale: WorkStatementScaleEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateOngoingTimeBased:
     properties:
       type: literal<"ongoing_time_based">
@@ -6951,6 +7239,7 @@
       id: double
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateSharedClientTeam:
     docs: >-
       Choose the Deel team for this contract. Use teams endpoint to retrieve a
@@ -6959,6 +7248,7 @@
       id: double
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateSharedClient:
     properties:
       legal_entity:
@@ -6973,6 +7263,7 @@
           a list of teams in your organization.
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateSharedJobTitle:
     docs: >-
       Worker's job title. You can enter a custom job title or use a pre-defiled
@@ -6988,6 +7279,7 @@
           maxLength: 255
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateSharedSeniority:
     docs: >-
       Job seniority level. Please use the seniority levels endpoint to retrieve
@@ -6996,6 +7288,7 @@
       id: optional<double>
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateSharedWorker:
     docs: Worker properties
     properties:
@@ -7012,6 +7305,7 @@
           maxLength: 255
     source:
       openapi: ../openapi.yml
+    inline: true
   ContractToCreateShared:
     docs: Details of contract to create
     properties:
@@ -7279,6 +7573,7 @@
           min: 0
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicTimesheetReviewedBy:
     properties:
       id: double
@@ -7287,6 +7582,7 @@
       remarks: string
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicTimesheetContract:
     properties:
       id: string
@@ -7294,18 +7590,21 @@
       type: ContractTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicTimesheetPaymentCycle:
     properties:
       start_date: optional<DateTimeString>
       end_date: optional<DateTimeString>
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicTimesheetReportedBy:
     properties:
       id: double
       full_name: string
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicTimesheet:
     properties:
       id: UniqueObjectIdentifier
@@ -7476,6 +7775,7 @@
       - ContractTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   TimesheetSearchContainerTypes:
     discriminated: false
     union:
@@ -7483,6 +7783,7 @@
       - TimesheetTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   TimesheetSearchContainerStatuses:
     discriminated: false
     union:
@@ -7490,6 +7791,7 @@
       - optional<TimesheetStatusEnum>
     source:
       openapi: ../openapi.yml
+    inline: true
   TimesheetSearchContainer:
     docs: >-
       This is a model to make it easier to understand and restrict search
@@ -7533,6 +7835,7 @@
       name: string
     source:
       openapi: ../openapi.yml
+    inline: true
   TimesheetAccountingRefsItem:
     properties:
       integration: string
@@ -7547,6 +7850,7 @@
       - ContractTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoiceAdjustmentSearchContainerTypes:
     discriminated: false
     union:
@@ -7554,6 +7858,7 @@
       - InvoiceAdjustmentTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoiceAdjustmentSearchContainerStatuses:
     discriminated: false
     union:
@@ -7561,6 +7866,7 @@
       - optional<InvoiceAdjustmentStatusEnum>
     source:
       openapi: ../openapi.yml
+    inline: true
   InvoiceAdjustmentSearchContainer:
     docs: >-
       This is a model to make it easier to understand and restrict search
@@ -7625,6 +7931,7 @@
           min: 0
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicInvoiceAdjustmentReviewedBy:
     properties:
       id: double
@@ -7633,6 +7940,7 @@
       remarks: string
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicInvoiceAdjustmentContract:
     properties:
       id: string
@@ -7640,18 +7948,21 @@
       type: ContractTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicInvoiceAdjustmentPaymentCycle:
     properties:
       start_date: optional<DateTimeStringRequired>
       end_date: optional<DateTimeStringRequired>
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicInvoiceAdjustmentReportedBy:
     properties:
       id: double
       full_name: string
     source:
       openapi: ../openapi.yml
+    inline: true
   BasicInvoiceAdjustment:
     properties:
       id: UniqueObjectIdentifier
@@ -7791,6 +8102,7 @@
       created: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   GenericResultCreated:
     properties:
       data: GenericResultCreatedData
@@ -7807,6 +8119,7 @@
       updated: boolean
     source:
       openapi: ../openapi.yml
+    inline: true
   GenericResultUpdated:
     properties:
       data: GenericResultUpdatedData
@@ -7819,6 +8132,7 @@
         docs: Confirms the deletion.
     source:
       openapi: ../openapi.yml
+    inline: true
   GenericResultDeleted:
     properties:
       data: GenericResultDeletedData
@@ -8083,6 +8397,7 @@
         docs: Use for pagination to get next set of records after the given cursor.
     source:
       openapi: ../openapi.yml
+    inline: true
   JobTitleListContainer:
     properties:
       data: JobTitleList
@@ -8307,6 +8622,7 @@
         docs: Reviewer's full name.
     source:
       openapi: ../openapi.yml
+    inline: true
   MilestoneReportedBy:
     docs: Milestone creator.
     properties:
@@ -8318,6 +8634,7 @@
         docs: Reporter's full name.
     source:
       openapi: ../openapi.yml
+    inline: true
   Milestone:
     properties:
       id:
@@ -8431,6 +8748,7 @@
       work_week_end: optional<WeekDaysEnum>
     source:
       openapi: ../openapi.yml
+    inline: true
   EstimateFirstPayment:
     docs: Details of pro rata payment to create.
     properties:
@@ -8509,6 +8827,7 @@
         docs: Remarks made during review process.
     source:
       openapi: ../openapi.yml
+    inline: true
   OffCyclePaymentReportedBy:
     properties:
       id:
@@ -8519,6 +8838,7 @@
         docs: Full name of the creator.
     source:
       openapi: ../openapi.yml
+    inline: true
   OffCyclePayment:
     properties:
       id: UniqueObjectIdentifier
@@ -8677,18 +8997,21 @@
       title: string
     source:
       openapi: ../openapi.yml
+    inline: true
   AgreementClientLegalEntity:
     properties:
       id: double
       name: string
     source:
       openapi: ../openapi.yml
+    inline: true
   AgreementProviderLegalEntity:
     properties:
       id: double
       name: string
     source:
       openapi: ../openapi.yml
+    inline: true
   Agreement:
     properties:
       id: double
@@ -8706,6 +9029,7 @@
         docs: MSA contract id (agreement).
     source:
       openapi: ../openapi.yml
+    inline: true
   InputToShieldContract:
     properties:
       data: InputToShieldContractData
@@ -8768,6 +9092,7 @@
       completion_date: optional<DateTimeStringRequired>
     source:
       openapi: ../openapi.yml
+    inline: true
   FinalPaymentCalculatedCalculationType:
     enum:
       - CUSTOM_AMOUNT
@@ -8814,6 +9139,7 @@
         docs: Cover your legal defense costs.
     source:
       openapi: ../openapi.yml
+    inline: true
   PremiumResultAddedPenalties:
     properties:
       name:
@@ -8824,6 +9150,7 @@
         docs: Get indemnity against tax authority penalties, liabilities and fines.
     source:
       openapi: ../openapi.yml
+    inline: true
   PremiumResultAddedThirdPartyLiabilities:
     properties:
       name:
@@ -8836,6 +9163,7 @@
           court's decision.
     source:
       openapi: ../openapi.yml
+    inline: true
   PremiumResultAdded:
     properties:
       id:
@@ -9001,6 +9329,7 @@
       country: optional<CountryCode>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateEmployee:
     properties:
       first_name:
@@ -9018,6 +9347,7 @@
       address: optional<EorContractToCreateEmployeeAddress>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateEmploymentType:
     enum:
       - value: Full-time
@@ -9073,6 +9403,7 @@
           chooseing "STANDARD" time_off_type.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateSeniority:
     properties:
       id:
@@ -9082,6 +9413,7 @@
           for "Not Applicable".
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateClientLegalEntity:
     properties:
       id:
@@ -9092,6 +9424,7 @@
           your organization.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateClientTeam:
     properties:
       id:
@@ -9101,12 +9434,14 @@
           to retrieve a list of teams in your organization.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateClient:
     properties:
       legal_entity: optional<EorContractToCreateClientLegalEntity>
       team: optional<EorContractToCreateClientTeam>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateCompensationDetails:
     properties:
       salary:
@@ -9127,6 +9462,7 @@
           PERCENTAGE or FIXED.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreateQuoteAdditionalFieldsWorkerType:
     enum:
       - Skilled
@@ -9150,6 +9486,7 @@
         docs: Employee's date of birth.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractToCreate:
     properties:
       employee: optional<EorContractToCreateEmployee>
@@ -9204,6 +9541,7 @@
         docs: Number of calculate holidays for this contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreatedClientLegalEntity:
     properties:
       name:
@@ -9211,11 +9549,13 @@
         docs: Legal entity name.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreatedClient:
     properties:
       legal_entity: optional<EorContractCreatedClientLegalEntity>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreatedCompensationDetails:
     properties:
       salary:
@@ -9232,6 +9572,7 @@
         docs: Type fo variable compensation.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreatedEmployee:
     properties:
       legal_name:
@@ -9248,6 +9589,7 @@
         docs: Employee's email.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreatedHealthPlan:
     properties:
       id:
@@ -9258,6 +9600,7 @@
         docs: Health plan name
     source:
       openapi: ../openapi.yml
+    inline: true
   EorContractCreated:
     properties:
       id:
@@ -9285,6 +9628,7 @@
         docs: Minimum number of holidays required for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsPartTimeHolidayType:
     enum:
       - PRORATED
@@ -9301,6 +9645,7 @@
         docs: Minimum number of holidays required for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsSickDays:
     properties:
       min:
@@ -9311,6 +9656,7 @@
         docs: Maximum number of sick days allowed for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsSalary:
     docs: Salary range.
     properties:
@@ -9322,6 +9668,7 @@
         docs: Maximum wage allowed for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsProbation:
     docs: Probation period range.
     properties:
@@ -9333,6 +9680,7 @@
         docs: Maximum probation days allowed for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsPartTimeProbation:
     docs: Probation period range for part-time contracts.
     properties:
@@ -9344,16 +9692,19 @@
         docs: Maximum probation days allowed for a legally compliant contract.
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsWorkScheduleDays:
     properties:
       max: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsWorkScheduleHours:
     properties:
       max: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsWorkSchedule:
     docs: Employee's Work schedule in days and hours.
     properties:
@@ -9361,6 +9712,7 @@
       hours: optional<EorCountryValidationsWorkScheduleHours>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsDefiniteContractType:
     enum:
       - ALLOWED_WITHOUT_LIMITATION
@@ -9375,12 +9727,14 @@
       maximum_limitation: optional<double>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidationsHealthInsurance:
     properties:
       status: optional<HealthInsuranceStatusEnum>
       providers: optional<list<HealthInsuranceProvider>>
     source:
       openapi: ../openapi.yml
+    inline: true
   EorCountryValidations:
     properties:
       holiday:
@@ -9432,6 +9786,7 @@
       label: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   HealthInsuranceProviderPlansItem:
     properties:
       id:
@@ -9449,6 +9804,7 @@
       is_enabled: optional<boolean>
     source:
       openapi: ../openapi.yml
+    inline: true
   HealthInsuranceProvider:
     docs: Health insurance provider.
     properties:
@@ -9766,17 +10122,20 @@
       contract_name: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   EmployeeListClientLegalEntity:
     properties:
       id: optional<double>
       name: optional<string>
     source:
       openapi: ../openapi.yml
+    inline: true
   EmployeeListMonthlyPayment:
     properties:
       count: optional<double>
     source:
       openapi: ../openapi.yml
+    inline: true
   EmployeeList:
     properties:
       id: optional<string>
@@ -10178,6 +10537,7 @@
       - HrisJobInformationTitleName
     source:
       openapi: ../openapi.yml
+    inline: true
   HrisDirectEmployeeContract:
     discriminant: employment_type
     base-properties: {}
@@ -10199,6 +10559,7 @@
           max: 365
     source:
       openapi: ../openapi.yml
+    inline: true
   HrisDirectEmployee:
     properties:
       employee_details: HrisDirectEmployeeDetails
@@ -11205,6 +11566,7 @@ docs: End-points to retrieve paid invoices and reciepts.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToCreateFileRef",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11223,6 +11585,7 @@ docs: End-points to retrieve paid invoices and reciepts.
         "types": {
           "InputToCreateFileRefData": {
             "docs": undefined,
+            "inline": true,
             "properties": {
               "content_type": "root.FileRefTypeEnum",
             },
@@ -11240,6 +11603,7 @@ types:
       content_type: root.FileRefTypeEnum
     source:
       openapi: ../openapi.yml
+    inline: true
 service:
   auth: false
   base-path: ''
@@ -11434,6 +11798,13 @@ service:
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 200,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results with given number of records.",
@@ -11477,6 +11848,9 @@ service:
           limit:
             type: optional<double>
             docs: Return a page of results with given number of records.
+            validation:
+              min: 1
+              max: 200
       response:
         docs: Successful operation.
         type: root.PeopleContainer
@@ -11657,6 +12031,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PremiumToAddContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11718,6 +12093,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToAmendDetailsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11888,6 +12264,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12055,6 +12432,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerOngoingTimeBased",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12220,6 +12598,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPaygMilestones",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12385,6 +12764,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPaygTasks",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12552,6 +12932,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToCreateContainerPayAsYouGoTimeBased",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12715,6 +13096,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractToTerminateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13644,6 +14026,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "This is the file you will upload in a multi-part form.",
                 "headers": undefined,
                 "name": "AddContractDocumentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13752,6 +14135,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToPatchContractExternalId",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13885,6 +14269,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "docs": "This is the file you will upload in a multi-part form.",
                 "headers": undefined,
                 "name": "EditContractDocumentRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14162,6 +14547,13 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 10,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "order_direction": {
                     "docs": "Order direction of results; ascending or descending.",
@@ -14290,6 +14682,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractInvitationToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14359,6 +14752,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EstimateFirstPaymentContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14422,6 +14816,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ContractSignatureToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14521,6 +14916,9 @@ service:
           limit:
             type: optional<double>
             docs: Return a page of results with given number of records.
+            validation:
+              min: 1
+              max: 10
           order_direction:
             type: optional<root.SortDirEnum>
             docs: Order direction of results; ascending or descending.
@@ -15244,6 +15642,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EorContractToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15777,6 +16176,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15840,6 +16240,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15897,6 +16298,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16067,6 +16469,13 @@ docs: API end-points related to HRIS data.
                   "limit": {
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 99,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
@@ -16205,6 +16614,13 @@ docs: API end-points related to HRIS data.
                   "limit": {
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
                     "type": "optional<double>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 99,
+                      "min": 1,
+                      "multipleOf": undefined,
+                    },
                   },
                   "offset": {
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
@@ -16287,6 +16703,7 @@ docs: API end-points related to HRIS data.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InvoiceAdjustmentToUpdateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16361,6 +16778,9 @@ service:
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
+            validation:
+              min: 1
+              max: 99
           offset:
             type: optional<long>
             docs: >-
@@ -16477,6 +16897,9 @@ service:
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
+            validation:
+              min: 1
+              max: 99
           offset:
             type: optional<long>
             docs: >-
@@ -17254,6 +17677,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17322,6 +17746,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17388,6 +17813,7 @@ docs: Helper end-points for choosing options for other operations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "MilestoneReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -17922,6 +18348,7 @@ docs: Helper end-points for managing milestones of Deel contracts
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OffCyclePaymentToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18656,6 +19083,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "InputToCreatePgoTask",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18733,6 +19161,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -18811,6 +19240,7 @@ docs: Helper end-points for additional information about your organizations
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -19828,6 +20258,7 @@ docs: End-points to manage tasks for a given contract
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimeoffToReviewContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20392,6 +20823,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20455,6 +20887,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetReviewToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20512,6 +20945,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetReviewsToCreateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -20967,6 +21401,7 @@ docs: Manage time off requests.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TimesheetToUpdateContainer",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21595,6 +22030,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PatchWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -21747,6 +22183,7 @@ docs: >-
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateWebhookRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

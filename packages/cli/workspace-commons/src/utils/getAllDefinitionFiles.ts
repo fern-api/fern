@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { ParsedFernFile } from "../FernFile";
 import { FernDefinition } from "../AbstractAPIWorkspace";

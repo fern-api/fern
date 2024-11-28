@@ -7,6 +7,7 @@ package com.fern.sdk.resources.endpoints;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.Suppliers;
 import com.fern.sdk.resources.endpoints.container.ContainerClient;
+import com.fern.sdk.resources.endpoints.contenttype.ContentTypeClient;
 import com.fern.sdk.resources.endpoints.enum_.EnumClient;
 import com.fern.sdk.resources.endpoints.httpmethods.HttpMethodsClient;
 import com.fern.sdk.resources.endpoints.object.ObjectClient;
@@ -19,6 +20,8 @@ public class EndpointsClient {
   protected final ClientOptions clientOptions;
 
   protected final Supplier<ContainerClient> containerClient;
+
+  protected final Supplier<ContentTypeClient> contentTypeClient;
 
   protected final Supplier<EnumClient> enumClient;
 
@@ -35,6 +38,7 @@ public class EndpointsClient {
   public EndpointsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
     this.containerClient = Suppliers.memoize(() -> new ContainerClient(clientOptions));
+    this.contentTypeClient = Suppliers.memoize(() -> new ContentTypeClient(clientOptions));
     this.enumClient = Suppliers.memoize(() -> new EnumClient(clientOptions));
     this.httpMethodsClient = Suppliers.memoize(() -> new HttpMethodsClient(clientOptions));
     this.objectClient = Suppliers.memoize(() -> new ObjectClient(clientOptions));
@@ -45,6 +49,10 @@ public class EndpointsClient {
 
   public ContainerClient container() {
     return this.containerClient.get();
+  }
+
+  public ContentTypeClient contentType() {
+    return this.contentTypeClient.get();
   }
 
   public EnumClient enum_() {

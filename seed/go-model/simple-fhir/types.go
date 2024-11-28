@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/simple-fhir/fern/core"
+	internal "github.com/simple-fhir/fern/internal"
 )
 
 type Account struct {
@@ -86,13 +86,11 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
 	}
 	a.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resource_type")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -109,7 +107,7 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Account) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -155,18 +153,16 @@ func (b *BaseResource) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BaseResource(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
 	return nil
 }
 
 func (b *BaseResource) String() string {
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -204,18 +200,16 @@ func (m *Memo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Memo(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *Memo) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -291,13 +285,11 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -314,7 +306,7 @@ func (p *Patient) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Patient) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -382,13 +374,11 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -405,7 +395,7 @@ func (p *Practitioner) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Practitioner) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -593,13 +583,11 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
 	}
 	s.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resource_type")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
@@ -616,7 +604,7 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Script) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

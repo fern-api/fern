@@ -1,4 +1,4 @@
-import { getFernDirectory } from "@fern-api/configuration";
+import { getFernDirectory } from "@fern-api/configuration-loader";
 import {
     AbsoluteFilePath,
     Directory,

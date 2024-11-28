@@ -30,7 +30,7 @@ types:
       path:
         type: string
         docs: |
-          This string includes templated path parameters. 
+          This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
       operationId: optional<string>

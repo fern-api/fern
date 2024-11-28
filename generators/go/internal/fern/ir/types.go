@@ -19,6 +19,27 @@ type ApiAuth struct {
 	extraProperties map[string]interface{}
 }
 
+func (a *ApiAuth) GetDocs() *string {
+	if a == nil {
+		return nil
+	}
+	return a.Docs
+}
+
+func (a *ApiAuth) GetRequirement() AuthSchemesRequirement {
+	if a == nil {
+		return ""
+	}
+	return a.Requirement
+}
+
+func (a *ApiAuth) GetSchemes() []*AuthScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Schemes
+}
+
 func (a *ApiAuth) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
@@ -69,6 +90,41 @@ func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
 
 func NewAuthSchemeFromOauth(value *OAuthScheme) *AuthScheme {
 	return &AuthScheme{Type: "oauth", Oauth: value}
+}
+
+func (a *AuthScheme) GetType() string {
+	if a == nil {
+		return ""
+	}
+	return a.Type
+}
+
+func (a *AuthScheme) GetBearer() *BearerAuthScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Bearer
+}
+
+func (a *AuthScheme) GetBasic() *BasicAuthScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Basic
+}
+
+func (a *AuthScheme) GetHeader() *HeaderAuthScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Header
+}
+
+func (a *AuthScheme) GetOauth() *OAuthScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Oauth
 }
 
 func (a *AuthScheme) UnmarshalJSON(data []byte) error {
@@ -182,6 +238,41 @@ type BasicAuthScheme struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *BasicAuthScheme) GetDocs() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Docs
+}
+
+func (b *BasicAuthScheme) GetUsername() *Name {
+	if b == nil {
+		return nil
+	}
+	return b.Username
+}
+
+func (b *BasicAuthScheme) GetUsernameEnvVar() *EnvironmentVariable {
+	if b == nil {
+		return nil
+	}
+	return b.UsernameEnvVar
+}
+
+func (b *BasicAuthScheme) GetPassword() *Name {
+	if b == nil {
+		return nil
+	}
+	return b.Password
+}
+
+func (b *BasicAuthScheme) GetPasswordEnvVar() *EnvironmentVariable {
+	if b == nil {
+		return nil
+	}
+	return b.PasswordEnvVar
+}
+
 func (b *BasicAuthScheme) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -217,6 +308,27 @@ type BearerAuthScheme struct {
 	TokenEnvVar *EnvironmentVariable `json:"tokenEnvVar,omitempty" url:"tokenEnvVar,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (b *BearerAuthScheme) GetDocs() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Docs
+}
+
+func (b *BearerAuthScheme) GetToken() *Name {
+	if b == nil {
+		return nil
+	}
+	return b.Token
+}
+
+func (b *BearerAuthScheme) GetTokenEnvVar() *EnvironmentVariable {
+	if b == nil {
+		return nil
+	}
+	return b.TokenEnvVar
 }
 
 func (b *BearerAuthScheme) GetExtraProperties() map[string]interface{} {
@@ -260,6 +372,41 @@ type HeaderAuthScheme struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HeaderAuthScheme) GetDocs() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Docs
+}
+
+func (h *HeaderAuthScheme) GetName() *NameAndWireValue {
+	if h == nil {
+		return nil
+	}
+	return h.Name
+}
+
+func (h *HeaderAuthScheme) GetValueType() *TypeReference {
+	if h == nil {
+		return nil
+	}
+	return h.ValueType
+}
+
+func (h *HeaderAuthScheme) GetPrefix() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Prefix
+}
+
+func (h *HeaderAuthScheme) GetHeaderEnvVar() *EnvironmentVariable {
+	if h == nil {
+		return nil
+	}
+	return h.HeaderEnvVar
+}
+
 func (h *HeaderAuthScheme) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -295,6 +442,27 @@ type OAuthAccessTokenRequestProperties struct {
 	Scopes       *RequestProperty `json:"scopes,omitempty" url:"scopes,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *OAuthAccessTokenRequestProperties) GetClientId() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.ClientId
+}
+
+func (o *OAuthAccessTokenRequestProperties) GetClientSecret() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *OAuthAccessTokenRequestProperties) GetScopes() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.Scopes
 }
 
 func (o *OAuthAccessTokenRequestProperties) GetExtraProperties() map[string]interface{} {
@@ -334,6 +502,27 @@ type OAuthAccessTokenResponseProperties struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OAuthAccessTokenResponseProperties) GetAccessToken() *ResponseProperty {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *OAuthAccessTokenResponseProperties) GetExpiresIn() *ResponseProperty {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresIn
+}
+
+func (o *OAuthAccessTokenResponseProperties) GetRefreshToken() *ResponseProperty {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
+}
+
 func (o *OAuthAccessTokenResponseProperties) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -366,11 +555,61 @@ type OAuthClientCredentials struct {
 	ClientIdEnvVar     *EnvironmentVariable  `json:"clientIdEnvVar,omitempty" url:"clientIdEnvVar,omitempty"`
 	ClientSecretEnvVar *EnvironmentVariable  `json:"clientSecretEnvVar,omitempty" url:"clientSecretEnvVar,omitempty"`
 	TokenPrefix        *string               `json:"tokenPrefix,omitempty" url:"tokenPrefix,omitempty"`
+	TokenHeader        *string               `json:"tokenHeader,omitempty" url:"tokenHeader,omitempty"`
 	Scopes             []string              `json:"scopes,omitempty" url:"scopes,omitempty"`
 	TokenEndpoint      *OAuthTokenEndpoint   `json:"tokenEndpoint,omitempty" url:"tokenEndpoint,omitempty"`
 	RefreshEndpoint    *OAuthRefreshEndpoint `json:"refreshEndpoint,omitempty" url:"refreshEndpoint,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *OAuthClientCredentials) GetClientIdEnvVar() *EnvironmentVariable {
+	if o == nil {
+		return nil
+	}
+	return o.ClientIdEnvVar
+}
+
+func (o *OAuthClientCredentials) GetClientSecretEnvVar() *EnvironmentVariable {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecretEnvVar
+}
+
+func (o *OAuthClientCredentials) GetTokenPrefix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TokenPrefix
+}
+
+func (o *OAuthClientCredentials) GetTokenHeader() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TokenHeader
+}
+
+func (o *OAuthClientCredentials) GetScopes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Scopes
+}
+
+func (o *OAuthClientCredentials) GetTokenEndpoint() *OAuthTokenEndpoint {
+	if o == nil {
+		return nil
+	}
+	return o.TokenEndpoint
+}
+
+func (o *OAuthClientCredentials) GetRefreshEndpoint() *OAuthRefreshEndpoint {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshEndpoint
 }
 
 func (o *OAuthClientCredentials) GetExtraProperties() map[string]interface{} {
@@ -408,6 +647,20 @@ type OAuthConfiguration struct {
 
 func NewOAuthConfigurationFromClientCredentials(value *OAuthClientCredentials) *OAuthConfiguration {
 	return &OAuthConfiguration{Type: "clientCredentials", ClientCredentials: value}
+}
+
+func (o *OAuthConfiguration) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *OAuthConfiguration) GetClientCredentials() *OAuthClientCredentials {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCredentials
 }
 
 func (o *OAuthConfiguration) UnmarshalJSON(data []byte) error {
@@ -462,6 +715,27 @@ type OAuthRefreshEndpoint struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OAuthRefreshEndpoint) GetEndpointReference() *EndpointReference {
+	if o == nil {
+		return nil
+	}
+	return o.EndpointReference
+}
+
+func (o *OAuthRefreshEndpoint) GetRequestProperties() *OAuthRefreshTokenRequestProperties {
+	if o == nil {
+		return nil
+	}
+	return o.RequestProperties
+}
+
+func (o *OAuthRefreshEndpoint) GetResponseProperties() *OAuthAccessTokenResponseProperties {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseProperties
+}
+
 func (o *OAuthRefreshEndpoint) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -495,6 +769,13 @@ type OAuthRefreshTokenRequestProperties struct {
 	RefreshToken *RequestProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (o *OAuthRefreshTokenRequestProperties) GetRefreshToken() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshToken
 }
 
 func (o *OAuthRefreshTokenRequestProperties) GetExtraProperties() map[string]interface{} {
@@ -533,6 +814,20 @@ type OAuthScheme struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OAuthScheme) GetDocs() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Docs
+}
+
+func (o *OAuthScheme) GetConfiguration() *OAuthConfiguration {
+	if o == nil {
+		return nil
+	}
+	return o.Configuration
+}
+
 func (o *OAuthScheme) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -569,6 +864,27 @@ type OAuthTokenEndpoint struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OAuthTokenEndpoint) GetEndpointReference() *EndpointReference {
+	if o == nil {
+		return nil
+	}
+	return o.EndpointReference
+}
+
+func (o *OAuthTokenEndpoint) GetRequestProperties() *OAuthAccessTokenRequestProperties {
+	if o == nil {
+		return nil
+	}
+	return o.RequestProperties
+}
+
+func (o *OAuthTokenEndpoint) GetResponseProperties() *OAuthAccessTokenResponseProperties {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseProperties
+}
+
 func (o *OAuthTokenEndpoint) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -602,6 +918,20 @@ type Availability struct {
 	Message *string            `json:"message,omitempty" url:"message,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (a *Availability) GetStatus() AvailabilityStatus {
+	if a == nil {
+		return ""
+	}
+	return a.Status
+}
+
+func (a *Availability) GetMessage() *string {
+	if a == nil {
+		return nil
+	}
+	return a.Message
 }
 
 func (a *Availability) GetExtraProperties() map[string]interface{} {
@@ -667,6 +997,20 @@ type Declaration struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *Declaration) GetDocs() *string {
+	if d == nil {
+		return nil
+	}
+	return d.Docs
+}
+
+func (d *Declaration) GetAvailability() *Availability {
+	if d == nil {
+		return nil
+	}
+	return d.Availability
+}
+
 func (d *Declaration) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -705,6 +1049,27 @@ type EndpointReference struct {
 	SubpackageId *SubpackageId `json:"subpackageId,omitempty" url:"subpackageId,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *EndpointReference) GetEndpointId() EndpointId {
+	if e == nil {
+		return ""
+	}
+	return e.EndpointId
+}
+
+func (e *EndpointReference) GetServiceId() ServiceId {
+	if e == nil {
+		return ""
+	}
+	return e.ServiceId
+}
+
+func (e *EndpointReference) GetSubpackageId() *SubpackageId {
+	if e == nil {
+		return nil
+	}
+	return e.SubpackageId
 }
 
 func (e *EndpointReference) GetExtraProperties() map[string]interface{} {
@@ -748,6 +1113,13 @@ type EscapedString struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *EscapedString) GetOriginal() string {
+	if e == nil {
+		return ""
+	}
+	return e.Original
+}
+
 func (e *EscapedString) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -784,6 +1156,27 @@ type FernFilepath struct {
 	File        *Name   `json:"file,omitempty" url:"file,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *FernFilepath) GetAllParts() []*Name {
+	if f == nil {
+		return nil
+	}
+	return f.AllParts
+}
+
+func (f *FernFilepath) GetPackagePath() []*Name {
+	if f == nil {
+		return nil
+	}
+	return f.PackagePath
+}
+
+func (f *FernFilepath) GetFile() *Name {
+	if f == nil {
+		return nil
+	}
+	return f.File
 }
 
 func (f *FernFilepath) GetExtraProperties() map[string]interface{} {
@@ -824,6 +1217,41 @@ type Name struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *Name) GetOriginalName() string {
+	if n == nil {
+		return ""
+	}
+	return n.OriginalName
+}
+
+func (n *Name) GetCamelCase() *SafeAndUnsafeString {
+	if n == nil {
+		return nil
+	}
+	return n.CamelCase
+}
+
+func (n *Name) GetPascalCase() *SafeAndUnsafeString {
+	if n == nil {
+		return nil
+	}
+	return n.PascalCase
+}
+
+func (n *Name) GetSnakeCase() *SafeAndUnsafeString {
+	if n == nil {
+		return nil
+	}
+	return n.SnakeCase
+}
+
+func (n *Name) GetScreamingSnakeCase() *SafeAndUnsafeString {
+	if n == nil {
+		return nil
+	}
+	return n.ScreamingSnakeCase
+}
+
 func (n *Name) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -857,6 +1285,20 @@ type NameAndWireValue struct {
 	Name      *Name  `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (n *NameAndWireValue) GetWireValue() string {
+	if n == nil {
+		return ""
+	}
+	return n.WireValue
+}
+
+func (n *NameAndWireValue) GetName() *Name {
+	if n == nil {
+		return nil
+	}
+	return n.Name
 }
 
 func (n *NameAndWireValue) GetExtraProperties() map[string]interface{} {
@@ -894,6 +1336,20 @@ type SafeAndUnsafeString struct {
 	SafeName string `json:"safeName" url:"safeName"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SafeAndUnsafeString) GetUnsafeName() string {
+	if s == nil {
+		return ""
+	}
+	return s.UnsafeName
+}
+
+func (s *SafeAndUnsafeString) GetSafeName() string {
+	if s == nil {
+		return ""
+	}
+	return s.SafeName
 }
 
 func (s *SafeAndUnsafeString) GetExtraProperties() map[string]interface{} {
@@ -942,6 +1398,13 @@ type WithDocs struct {
 	extraProperties map[string]interface{}
 }
 
+func (w *WithDocs) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
 func (w *WithDocs) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -975,6 +1438,20 @@ type WithDocsAndAvailability struct {
 	Availability *Availability `json:"availability,omitempty" url:"availability,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (w *WithDocsAndAvailability) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *WithDocsAndAvailability) GetAvailability() *Availability {
+	if w == nil {
+		return nil
+	}
+	return w.Availability
 }
 
 func (w *WithDocsAndAvailability) GetExtraProperties() map[string]interface{} {
@@ -1011,6 +1488,13 @@ type WithJsonExample struct {
 	extraProperties map[string]interface{}
 }
 
+func (w *WithJsonExample) GetJsonExample() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.JsonExample
+}
+
 func (w *WithJsonExample) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -1043,6 +1527,13 @@ type Constants struct {
 	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty" url:"errorInstanceIdKey,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (c *Constants) GetErrorInstanceIdKey() *NameAndWireValue {
+	if c == nil {
+		return nil
+	}
+	return c.ErrorInstanceIdKey
 }
 
 func (c *Constants) GetExtraProperties() map[string]interface{} {
@@ -1080,6 +1571,20 @@ type EnvironmentBaseUrlWithId struct {
 	Name *Name                `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *EnvironmentBaseUrlWithId) GetId() EnvironmentBaseUrlId {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *EnvironmentBaseUrlWithId) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
 }
 
 func (e *EnvironmentBaseUrlWithId) GetExtraProperties() map[string]interface{} {
@@ -1126,6 +1631,27 @@ func NewEnvironmentsFromSingleBaseUrl(value *SingleBaseUrlEnvironments) *Environ
 
 func NewEnvironmentsFromMultipleBaseUrls(value *MultipleBaseUrlsEnvironments) *Environments {
 	return &Environments{Type: "multipleBaseUrls", MultipleBaseUrls: value}
+}
+
+func (e *Environments) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *Environments) GetSingleBaseUrl() *SingleBaseUrlEnvironments {
+	if e == nil {
+		return nil
+	}
+	return e.SingleBaseUrl
+}
+
+func (e *Environments) GetMultipleBaseUrls() *MultipleBaseUrlsEnvironments {
+	if e == nil {
+		return nil
+	}
+	return e.MultipleBaseUrls
 }
 
 func (e *Environments) UnmarshalJSON(data []byte) error {
@@ -1190,6 +1716,20 @@ type EnvironmentsConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *EnvironmentsConfig) GetDefaultEnvironment() *EnvironmentId {
+	if e == nil {
+		return nil
+	}
+	return e.DefaultEnvironment
+}
+
+func (e *EnvironmentsConfig) GetEnvironments() *Environments {
+	if e == nil {
+		return nil
+	}
+	return e.Environments
+}
+
 func (e *EnvironmentsConfig) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -1227,6 +1767,34 @@ type MultipleBaseUrlsEnvironment struct {
 	extraProperties map[string]interface{}
 }
 
+func (m *MultipleBaseUrlsEnvironment) GetDocs() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Docs
+}
+
+func (m *MultipleBaseUrlsEnvironment) GetId() EnvironmentId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *MultipleBaseUrlsEnvironment) GetName() *Name {
+	if m == nil {
+		return nil
+	}
+	return m.Name
+}
+
+func (m *MultipleBaseUrlsEnvironment) GetUrls() map[EnvironmentBaseUrlId]EnvironmentUrl {
+	if m == nil {
+		return nil
+	}
+	return m.Urls
+}
+
 func (m *MultipleBaseUrlsEnvironment) GetExtraProperties() map[string]interface{} {
 	return m.extraProperties
 }
@@ -1260,6 +1828,20 @@ type MultipleBaseUrlsEnvironments struct {
 	Environments []*MultipleBaseUrlsEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *MultipleBaseUrlsEnvironments) GetBaseUrls() []*EnvironmentBaseUrlWithId {
+	if m == nil {
+		return nil
+	}
+	return m.BaseUrls
+}
+
+func (m *MultipleBaseUrlsEnvironments) GetEnvironments() []*MultipleBaseUrlsEnvironment {
+	if m == nil {
+		return nil
+	}
+	return m.Environments
 }
 
 func (m *MultipleBaseUrlsEnvironments) GetExtraProperties() map[string]interface{} {
@@ -1299,6 +1881,34 @@ type SingleBaseUrlEnvironment struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *SingleBaseUrlEnvironment) GetDocs() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Docs
+}
+
+func (s *SingleBaseUrlEnvironment) GetId() EnvironmentId {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *SingleBaseUrlEnvironment) GetName() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
+func (s *SingleBaseUrlEnvironment) GetUrl() EnvironmentUrl {
+	if s == nil {
+		return ""
+	}
+	return s.Url
+}
+
 func (s *SingleBaseUrlEnvironment) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -1331,6 +1941,13 @@ type SingleBaseUrlEnvironments struct {
 	Environments []*SingleBaseUrlEnvironment `json:"environments,omitempty" url:"environments,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SingleBaseUrlEnvironments) GetEnvironments() []*SingleBaseUrlEnvironment {
+	if s == nil {
+		return nil
+	}
+	return s.Environments
 }
 
 func (s *SingleBaseUrlEnvironments) GetExtraProperties() map[string]interface{} {
@@ -1367,6 +1984,27 @@ type DeclaredErrorName struct {
 	Name         *Name         `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (d *DeclaredErrorName) GetErrorId() ErrorId {
+	if d == nil {
+		return ""
+	}
+	return d.ErrorId
+}
+
+func (d *DeclaredErrorName) GetFernFilepath() *FernFilepath {
+	if d == nil {
+		return nil
+	}
+	return d.FernFilepath
+}
+
+func (d *DeclaredErrorName) GetName() *Name {
+	if d == nil {
+		return nil
+	}
+	return d.Name
 }
 
 func (d *DeclaredErrorName) GetExtraProperties() map[string]interface{} {
@@ -1406,6 +2044,48 @@ type ErrorDeclaration struct {
 	Examples          []*ExampleError    `json:"examples,omitempty" url:"examples,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ErrorDeclaration) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ErrorDeclaration) GetName() *DeclaredErrorName {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ErrorDeclaration) GetDiscriminantValue() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.DiscriminantValue
+}
+
+func (e *ErrorDeclaration) GetType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Type
+}
+
+func (e *ErrorDeclaration) GetStatusCode() int {
+	if e == nil {
+		return 0
+	}
+	return e.StatusCode
+}
+
+func (e *ErrorDeclaration) GetExamples() []*ExampleError {
+	if e == nil {
+		return nil
+	}
+	return e.Examples
 }
 
 func (e *ErrorDeclaration) GetExtraProperties() map[string]interface{} {
@@ -1448,6 +2128,27 @@ func NewErrorDeclarationDiscriminantValueFromProperty(value *NameAndWireValue) *
 
 func NewErrorDeclarationDiscriminantValueFromStatusCode(value interface{}) *ErrorDeclarationDiscriminantValue {
 	return &ErrorDeclarationDiscriminantValue{Type: "statusCode", StatusCode: value}
+}
+
+func (e *ErrorDeclarationDiscriminantValue) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ErrorDeclarationDiscriminantValue) GetProperty() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Property
+}
+
+func (e *ErrorDeclarationDiscriminantValue) GetStatusCode() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.StatusCode
 }
 
 func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
@@ -1521,6 +2222,34 @@ type ExampleError struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleError) GetJsonExample() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.JsonExample
+}
+
+func (e *ExampleError) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleError) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleError) GetShape() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
+}
+
 func (e *ExampleError) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -1553,6 +2282,13 @@ type AutogeneratedEndpointExample struct {
 	Example *ExampleEndpointCall `json:"example,omitempty" url:"example,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (a *AutogeneratedEndpointExample) GetExample() *ExampleEndpointCall {
+	if a == nil {
+		return nil
+	}
+	return a.Example
 }
 
 func (a *AutogeneratedEndpointExample) GetExtraProperties() map[string]interface{} {
@@ -1589,6 +2325,27 @@ type BytesRequest struct {
 	ContentType *string `json:"contentType,omitempty" url:"contentType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (b *BytesRequest) GetDocs() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Docs
+}
+
+func (b *BytesRequest) GetIsOptional() bool {
+	if b == nil {
+		return false
+	}
+	return b.IsOptional
+}
+
+func (b *BytesRequest) GetContentType() *string {
+	if b == nil {
+		return nil
+	}
+	return b.ContentType
 }
 
 func (b *BytesRequest) GetExtraProperties() map[string]interface{} {
@@ -1632,6 +2389,27 @@ type CursorPagination struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *CursorPagination) GetPage() *RequestProperty {
+	if c == nil {
+		return nil
+	}
+	return c.Page
+}
+
+func (c *CursorPagination) GetNext() *ResponseProperty {
+	if c == nil {
+		return nil
+	}
+	return c.Next
+}
+
+func (c *CursorPagination) GetResults() *ResponseProperty {
+	if c == nil {
+		return nil
+	}
+	return c.Results
+}
+
 func (c *CursorPagination) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -1664,6 +2442,13 @@ type DeclaredServiceName struct {
 	FernFilepath *FernFilepath `json:"fernFilepath,omitempty" url:"fernFilepath,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (d *DeclaredServiceName) GetFernFilepath() *FernFilepath {
+	if d == nil {
+		return nil
+	}
+	return d.FernFilepath
 }
 
 func (d *DeclaredServiceName) GetExtraProperties() map[string]interface{} {
@@ -1708,6 +2493,27 @@ func NewExampleCodeSampleFromLanguage(value *ExampleCodeSampleLanguage) *Example
 
 func NewExampleCodeSampleFromSdk(value *ExampleCodeSampleSdk) *ExampleCodeSample {
 	return &ExampleCodeSample{Type: "sdk", Sdk: value}
+}
+
+func (e *ExampleCodeSample) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleCodeSample) GetLanguage() *ExampleCodeSampleLanguage {
+	if e == nil {
+		return nil
+	}
+	return e.Language
+}
+
+func (e *ExampleCodeSample) GetSdk() *ExampleCodeSampleSdk {
+	if e == nil {
+		return nil
+	}
+	return e.Sdk
 }
 
 func (e *ExampleCodeSample) UnmarshalJSON(data []byte) error {
@@ -1779,6 +2585,41 @@ type ExampleCodeSampleLanguage struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleCodeSampleLanguage) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleCodeSampleLanguage) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleCodeSampleLanguage) GetLanguage() string {
+	if e == nil {
+		return ""
+	}
+	return e.Language
+}
+
+func (e *ExampleCodeSampleLanguage) GetCode() string {
+	if e == nil {
+		return ""
+	}
+	return e.Code
+}
+
+func (e *ExampleCodeSampleLanguage) GetInstall() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Install
+}
+
 func (e *ExampleCodeSampleLanguage) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -1816,6 +2657,34 @@ type ExampleCodeSampleSdk struct {
 	Code string               `json:"code" url:"code"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleCodeSampleSdk) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleCodeSampleSdk) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleCodeSampleSdk) GetSdk() SupportedSdkLanguage {
+	if e == nil {
+		return ""
+	}
+	return e.Sdk
+}
+
+func (e *ExampleCodeSampleSdk) GetCode() string {
+	if e == nil {
+		return ""
+	}
+	return e.Code
 }
 
 func (e *ExampleCodeSampleSdk) GetExtraProperties() map[string]interface{} {
@@ -1863,6 +2732,90 @@ type ExampleEndpointCall struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleEndpointCall) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleEndpointCall) GetId() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Id
+}
+
+func (e *ExampleEndpointCall) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleEndpointCall) GetUrl() string {
+	if e == nil {
+		return ""
+	}
+	return e.Url
+}
+
+func (e *ExampleEndpointCall) GetRootPathParameters() []*ExamplePathParameter {
+	if e == nil {
+		return nil
+	}
+	return e.RootPathParameters
+}
+
+func (e *ExampleEndpointCall) GetServicePathParameters() []*ExamplePathParameter {
+	if e == nil {
+		return nil
+	}
+	return e.ServicePathParameters
+}
+
+func (e *ExampleEndpointCall) GetEndpointPathParameters() []*ExamplePathParameter {
+	if e == nil {
+		return nil
+	}
+	return e.EndpointPathParameters
+}
+
+func (e *ExampleEndpointCall) GetServiceHeaders() []*ExampleHeader {
+	if e == nil {
+		return nil
+	}
+	return e.ServiceHeaders
+}
+
+func (e *ExampleEndpointCall) GetEndpointHeaders() []*ExampleHeader {
+	if e == nil {
+		return nil
+	}
+	return e.EndpointHeaders
+}
+
+func (e *ExampleEndpointCall) GetQueryParameters() []*ExampleQueryParameter {
+	if e == nil {
+		return nil
+	}
+	return e.QueryParameters
+}
+
+func (e *ExampleEndpointCall) GetRequest() *ExampleRequestBody {
+	if e == nil {
+		return nil
+	}
+	return e.Request
+}
+
+func (e *ExampleEndpointCall) GetResponse() *ExampleResponse {
+	if e == nil {
+		return nil
+	}
+	return e.Response
+}
+
 func (e *ExampleEndpointCall) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -1896,6 +2849,20 @@ type ExampleEndpointErrorResponse struct {
 	Body  *ExampleTypeReference `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleEndpointErrorResponse) GetError() *DeclaredErrorName {
+	if e == nil {
+		return nil
+	}
+	return e.Error
+}
+
+func (e *ExampleEndpointErrorResponse) GetBody() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Body
 }
 
 func (e *ExampleEndpointErrorResponse) GetExtraProperties() map[string]interface{} {
@@ -1943,6 +2910,34 @@ func NewExampleEndpointSuccessResponseFromStream(value []*ExampleTypeReference) 
 
 func NewExampleEndpointSuccessResponseFromSse(value []*ExampleServerSideEvent) *ExampleEndpointSuccessResponse {
 	return &ExampleEndpointSuccessResponse{Type: "sse", Sse: value}
+}
+
+func (e *ExampleEndpointSuccessResponse) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleEndpointSuccessResponse) GetBody() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Body
+}
+
+func (e *ExampleEndpointSuccessResponse) GetStream() []*ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Stream
+}
+
+func (e *ExampleEndpointSuccessResponse) GetSse() []*ExampleServerSideEvent {
+	if e == nil {
+		return nil
+	}
+	return e.Sse
 }
 
 func (e *ExampleEndpointSuccessResponse) UnmarshalJSON(data []byte) error {
@@ -2045,6 +3040,20 @@ type ExampleHeader struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleHeader) GetName() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleHeader) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
+}
+
 func (e *ExampleHeader) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -2078,6 +3087,20 @@ type ExampleInlinedRequestBody struct {
 	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleInlinedRequestBody) GetJsonExample() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.JsonExample
+}
+
+func (e *ExampleInlinedRequestBody) GetProperties() []*ExampleInlinedRequestBodyProperty {
+	if e == nil {
+		return nil
+	}
+	return e.Properties
 }
 
 func (e *ExampleInlinedRequestBody) GetExtraProperties() map[string]interface{} {
@@ -2118,6 +3141,27 @@ type ExampleInlinedRequestBodyProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleInlinedRequestBodyProperty) GetName() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleInlinedRequestBodyProperty) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
+}
+
+func (e *ExampleInlinedRequestBodyProperty) GetOriginalTypeDeclaration() *DeclaredTypeName {
+	if e == nil {
+		return nil
+	}
+	return e.OriginalTypeDeclaration
+}
+
 func (e *ExampleInlinedRequestBodyProperty) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -2151,6 +3195,20 @@ type ExamplePathParameter struct {
 	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExamplePathParameter) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExamplePathParameter) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
 }
 
 func (e *ExamplePathParameter) GetExtraProperties() map[string]interface{} {
@@ -2187,6 +3245,27 @@ type ExampleQueryParameter struct {
 	Shape *ExampleQueryParameterShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleQueryParameter) GetName() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleQueryParameter) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
+}
+
+func (e *ExampleQueryParameter) GetShape() *ExampleQueryParameterShape {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
 }
 
 func (e *ExampleQueryParameter) GetExtraProperties() map[string]interface{} {
@@ -2234,6 +3313,34 @@ func NewExampleQueryParameterShapeFromExploded(value interface{}) *ExampleQueryP
 
 func NewExampleQueryParameterShapeFromCommaSeparated(value interface{}) *ExampleQueryParameterShape {
 	return &ExampleQueryParameterShape{Type: "commaSeparated", CommaSeparated: value}
+}
+
+func (e *ExampleQueryParameterShape) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleQueryParameterShape) GetSingle() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.Single
+}
+
+func (e *ExampleQueryParameterShape) GetExploded() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.Exploded
+}
+
+func (e *ExampleQueryParameterShape) GetCommaSeparated() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.CommaSeparated
 }
 
 func (e *ExampleQueryParameterShape) UnmarshalJSON(data []byte) error {
@@ -2337,6 +3444,27 @@ func NewExampleRequestBodyFromReference(value *ExampleTypeReference) *ExampleReq
 	return &ExampleRequestBody{Type: "reference", Reference: value}
 }
 
+func (e *ExampleRequestBody) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleRequestBody) GetInlinedRequestBody() *ExampleInlinedRequestBody {
+	if e == nil {
+		return nil
+	}
+	return e.InlinedRequestBody
+}
+
+func (e *ExampleRequestBody) GetReference() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Reference
+}
+
 func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -2404,6 +3532,27 @@ func NewExampleResponseFromOk(value *ExampleEndpointSuccessResponse) *ExampleRes
 
 func NewExampleResponseFromError(value *ExampleEndpointErrorResponse) *ExampleResponse {
 	return &ExampleResponse{Type: "error", Error: value}
+}
+
+func (e *ExampleResponse) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleResponse) GetOk() *ExampleEndpointSuccessResponse {
+	if e == nil {
+		return nil
+	}
+	return e.Ok
+}
+
+func (e *ExampleResponse) GetError() *ExampleEndpointErrorResponse {
+	if e == nil {
+		return nil
+	}
+	return e.Error
 }
 
 func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
@@ -2477,6 +3626,20 @@ type ExampleServerSideEvent struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleServerSideEvent) GetEvent() string {
+	if e == nil {
+		return ""
+	}
+	return e.Event
+}
+
+func (e *ExampleServerSideEvent) GetData() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Data
+}
+
 func (e *ExampleServerSideEvent) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -2509,6 +3672,13 @@ type FileDownloadResponse struct {
 	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *FileDownloadResponse) GetDocs() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Docs
 }
 
 func (f *FileDownloadResponse) GetExtraProperties() map[string]interface{} {
@@ -2551,6 +3721,27 @@ func NewFilePropertyFromFile(value *FilePropertySingle) *FileProperty {
 
 func NewFilePropertyFromFileArray(value *FilePropertyArray) *FileProperty {
 	return &FileProperty{Type: "fileArray", FileArray: value}
+}
+
+func (f *FileProperty) GetType() string {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FileProperty) GetFile() *FilePropertySingle {
+	if f == nil {
+		return nil
+	}
+	return f.File
+}
+
+func (f *FileProperty) GetFileArray() *FilePropertyArray {
+	if f == nil {
+		return nil
+	}
+	return f.FileArray
 }
 
 func (f *FileProperty) UnmarshalJSON(data []byte) error {
@@ -2616,6 +3807,27 @@ type FilePropertyArray struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *FilePropertyArray) GetKey() *NameAndWireValue {
+	if f == nil {
+		return nil
+	}
+	return f.Key
+}
+
+func (f *FilePropertyArray) GetIsOptional() bool {
+	if f == nil {
+		return false
+	}
+	return f.IsOptional
+}
+
+func (f *FilePropertyArray) GetContentType() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ContentType
+}
+
 func (f *FilePropertyArray) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -2650,6 +3862,27 @@ type FilePropertySingle struct {
 	ContentType *string           `json:"contentType,omitempty" url:"contentType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *FilePropertySingle) GetKey() *NameAndWireValue {
+	if f == nil {
+		return nil
+	}
+	return f.Key
+}
+
+func (f *FilePropertySingle) GetIsOptional() bool {
+	if f == nil {
+		return false
+	}
+	return f.IsOptional
+}
+
+func (f *FilePropertySingle) GetContentType() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ContentType
 }
 
 func (f *FilePropertySingle) GetExtraProperties() map[string]interface{} {
@@ -2690,6 +3923,41 @@ type FileUploadBodyProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (f *FileUploadBodyProperty) GetDocs() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Docs
+}
+
+func (f *FileUploadBodyProperty) GetAvailability() *Availability {
+	if f == nil {
+		return nil
+	}
+	return f.Availability
+}
+
+func (f *FileUploadBodyProperty) GetName() *NameAndWireValue {
+	if f == nil {
+		return nil
+	}
+	return f.Name
+}
+
+func (f *FileUploadBodyProperty) GetValueType() *TypeReference {
+	if f == nil {
+		return nil
+	}
+	return f.ValueType
+}
+
+func (f *FileUploadBodyProperty) GetContentType() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ContentType
+}
+
 func (f *FileUploadBodyProperty) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
@@ -2724,6 +3992,27 @@ type FileUploadRequest struct {
 	Properties []*FileUploadRequestProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (f *FileUploadRequest) GetDocs() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Docs
+}
+
+func (f *FileUploadRequest) GetName() *Name {
+	if f == nil {
+		return nil
+	}
+	return f.Name
+}
+
+func (f *FileUploadRequest) GetProperties() []*FileUploadRequestProperty {
+	if f == nil {
+		return nil
+	}
+	return f.Properties
 }
 
 func (f *FileUploadRequest) GetExtraProperties() map[string]interface{} {
@@ -2766,6 +4055,27 @@ func NewFileUploadRequestPropertyFromFile(value *FileProperty) *FileUploadReques
 
 func NewFileUploadRequestPropertyFromBodyProperty(value *FileUploadBodyProperty) *FileUploadRequestProperty {
 	return &FileUploadRequestProperty{Type: "bodyProperty", BodyProperty: value}
+}
+
+func (f *FileUploadRequestProperty) GetType() string {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FileUploadRequestProperty) GetFile() *FileProperty {
+	if f == nil {
+		return nil
+	}
+	return f.File
+}
+
+func (f *FileUploadRequestProperty) GetBodyProperty() *FileUploadBodyProperty {
+	if f == nil {
+		return nil
+	}
+	return f.BodyProperty
 }
 
 func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
@@ -2838,6 +4148,13 @@ type GrpcTransport struct {
 	extraProperties map[string]interface{}
 }
 
+func (g *GrpcTransport) GetService() *ProtobufService {
+	if g == nil {
+		return nil
+	}
+	return g.Service
+}
+
 func (g *GrpcTransport) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
@@ -2896,6 +4213,174 @@ type HttpEndpoint struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HttpEndpoint) GetDocs() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Docs
+}
+
+func (h *HttpEndpoint) GetAvailability() *Availability {
+	if h == nil {
+		return nil
+	}
+	return h.Availability
+}
+
+func (h *HttpEndpoint) GetId() EndpointId {
+	if h == nil {
+		return ""
+	}
+	return h.Id
+}
+
+func (h *HttpEndpoint) GetName() EndpointName {
+	if h == nil {
+		return nil
+	}
+	return h.Name
+}
+
+func (h *HttpEndpoint) GetDisplayName() *string {
+	if h == nil {
+		return nil
+	}
+	return h.DisplayName
+}
+
+func (h *HttpEndpoint) GetMethod() HttpMethod {
+	if h == nil {
+		return ""
+	}
+	return h.Method
+}
+
+func (h *HttpEndpoint) GetHeaders() []*HttpHeader {
+	if h == nil {
+		return nil
+	}
+	return h.Headers
+}
+
+func (h *HttpEndpoint) GetBaseUrl() *EnvironmentBaseUrlId {
+	if h == nil {
+		return nil
+	}
+	return h.BaseUrl
+}
+
+func (h *HttpEndpoint) GetBasePath() *HttpPath {
+	if h == nil {
+		return nil
+	}
+	return h.BasePath
+}
+
+func (h *HttpEndpoint) GetPath() *HttpPath {
+	if h == nil {
+		return nil
+	}
+	return h.Path
+}
+
+func (h *HttpEndpoint) GetFullPath() *HttpPath {
+	if h == nil {
+		return nil
+	}
+	return h.FullPath
+}
+
+func (h *HttpEndpoint) GetPathParameters() []*PathParameter {
+	if h == nil {
+		return nil
+	}
+	return h.PathParameters
+}
+
+func (h *HttpEndpoint) GetAllPathParameters() []*PathParameter {
+	if h == nil {
+		return nil
+	}
+	return h.AllPathParameters
+}
+
+func (h *HttpEndpoint) GetQueryParameters() []*QueryParameter {
+	if h == nil {
+		return nil
+	}
+	return h.QueryParameters
+}
+
+func (h *HttpEndpoint) GetRequestBody() *HttpRequestBody {
+	if h == nil {
+		return nil
+	}
+	return h.RequestBody
+}
+
+func (h *HttpEndpoint) GetSdkRequest() *SdkRequest {
+	if h == nil {
+		return nil
+	}
+	return h.SdkRequest
+}
+
+func (h *HttpEndpoint) GetResponse() *HttpResponse {
+	if h == nil {
+		return nil
+	}
+	return h.Response
+}
+
+func (h *HttpEndpoint) GetErrors() ResponseErrors {
+	if h == nil {
+		return nil
+	}
+	return h.Errors
+}
+
+func (h *HttpEndpoint) GetAuth() bool {
+	if h == nil {
+		return false
+	}
+	return h.Auth
+}
+
+func (h *HttpEndpoint) GetIdempotent() bool {
+	if h == nil {
+		return false
+	}
+	return h.Idempotent
+}
+
+func (h *HttpEndpoint) GetPagination() *Pagination {
+	if h == nil {
+		return nil
+	}
+	return h.Pagination
+}
+
+func (h *HttpEndpoint) GetUserSpecifiedExamples() []*UserSpecifiedEndpointExample {
+	if h == nil {
+		return nil
+	}
+	return h.UserSpecifiedExamples
+}
+
+func (h *HttpEndpoint) GetAutogeneratedExamples() []*AutogeneratedEndpointExample {
+	if h == nil {
+		return nil
+	}
+	return h.AutogeneratedExamples
+}
+
+func (h *HttpEndpoint) GetTransport() *Transport {
+	if h == nil {
+		return nil
+	}
+	return h.Transport
+}
+
 func (h *HttpEndpoint) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -2932,6 +4417,41 @@ type HttpHeader struct {
 	Env          *string           `json:"env,omitempty" url:"env,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (h *HttpHeader) GetDocs() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Docs
+}
+
+func (h *HttpHeader) GetAvailability() *Availability {
+	if h == nil {
+		return nil
+	}
+	return h.Availability
+}
+
+func (h *HttpHeader) GetName() *NameAndWireValue {
+	if h == nil {
+		return nil
+	}
+	return h.Name
+}
+
+func (h *HttpHeader) GetValueType() *TypeReference {
+	if h == nil {
+		return nil
+	}
+	return h.ValueType
+}
+
+func (h *HttpHeader) GetEnv() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Env
 }
 
 func (h *HttpHeader) GetExtraProperties() map[string]interface{} {
@@ -3000,6 +4520,20 @@ type HttpPath struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HttpPath) GetHead() string {
+	if h == nil {
+		return ""
+	}
+	return h.Head
+}
+
+func (h *HttpPath) GetParts() []*HttpPathPart {
+	if h == nil {
+		return nil
+	}
+	return h.Parts
+}
+
 func (h *HttpPath) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -3033,6 +4567,20 @@ type HttpPathPart struct {
 	Tail          string `json:"tail" url:"tail"`
 
 	extraProperties map[string]interface{}
+}
+
+func (h *HttpPathPart) GetPathParameter() string {
+	if h == nil {
+		return ""
+	}
+	return h.PathParameter
+}
+
+func (h *HttpPathPart) GetTail() string {
+	if h == nil {
+		return ""
+	}
+	return h.Tail
 }
 
 func (h *HttpPathPart) GetExtraProperties() map[string]interface{} {
@@ -3085,6 +4633,41 @@ func NewHttpRequestBodyFromFileUpload(value *FileUploadRequest) *HttpRequestBody
 
 func NewHttpRequestBodyFromBytes(value *BytesRequest) *HttpRequestBody {
 	return &HttpRequestBody{Type: "bytes", Bytes: value}
+}
+
+func (h *HttpRequestBody) GetType() string {
+	if h == nil {
+		return ""
+	}
+	return h.Type
+}
+
+func (h *HttpRequestBody) GetInlinedRequestBody() *InlinedRequestBody {
+	if h == nil {
+		return nil
+	}
+	return h.InlinedRequestBody
+}
+
+func (h *HttpRequestBody) GetReference() *HttpRequestBodyReference {
+	if h == nil {
+		return nil
+	}
+	return h.Reference
+}
+
+func (h *HttpRequestBody) GetFileUpload() *FileUploadRequest {
+	if h == nil {
+		return nil
+	}
+	return h.FileUpload
+}
+
+func (h *HttpRequestBody) GetBytes() *BytesRequest {
+	if h == nil {
+		return nil
+	}
+	return h.Bytes
 }
 
 func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
@@ -3172,6 +4755,27 @@ type HttpRequestBodyReference struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HttpRequestBodyReference) GetDocs() *string {
+	if h == nil {
+		return nil
+	}
+	return h.Docs
+}
+
+func (h *HttpRequestBodyReference) GetRequestBodyType() *TypeReference {
+	if h == nil {
+		return nil
+	}
+	return h.RequestBodyType
+}
+
+func (h *HttpRequestBodyReference) GetContentType() *string {
+	if h == nil {
+		return nil
+	}
+	return h.ContentType
+}
+
 func (h *HttpRequestBodyReference) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -3205,6 +4809,20 @@ type HttpResponse struct {
 	Body       *HttpResponseBody `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (h *HttpResponse) GetStatusCode() *int {
+	if h == nil {
+		return nil
+	}
+	return h.StatusCode
+}
+
+func (h *HttpResponse) GetBody() *HttpResponseBody {
+	if h == nil {
+		return nil
+	}
+	return h.Body
 }
 
 func (h *HttpResponse) GetExtraProperties() map[string]interface{} {
@@ -3264,6 +4882,48 @@ func NewHttpResponseBodyFromStreaming(value *StreamingResponse) *HttpResponseBod
 
 func NewHttpResponseBodyFromStreamParameter(value *StreamParameterResponse) *HttpResponseBody {
 	return &HttpResponseBody{Type: "streamParameter", StreamParameter: value}
+}
+
+func (h *HttpResponseBody) GetType() string {
+	if h == nil {
+		return ""
+	}
+	return h.Type
+}
+
+func (h *HttpResponseBody) GetJson() *JsonResponse {
+	if h == nil {
+		return nil
+	}
+	return h.Json
+}
+
+func (h *HttpResponseBody) GetFileDownload() *FileDownloadResponse {
+	if h == nil {
+		return nil
+	}
+	return h.FileDownload
+}
+
+func (h *HttpResponseBody) GetText() *TextResponse {
+	if h == nil {
+		return nil
+	}
+	return h.Text
+}
+
+func (h *HttpResponseBody) GetStreaming() *StreamingResponse {
+	if h == nil {
+		return nil
+	}
+	return h.Streaming
+}
+
+func (h *HttpResponseBody) GetStreamParameter() *StreamParameterResponse {
+	if h == nil {
+		return nil
+	}
+	return h.StreamParameter
 }
 
 func (h *HttpResponseBody) UnmarshalJSON(data []byte) error {
@@ -3386,6 +5046,69 @@ type HttpService struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HttpService) GetAvailability() *Availability {
+	if h == nil {
+		return nil
+	}
+	return h.Availability
+}
+
+func (h *HttpService) GetName() *DeclaredServiceName {
+	if h == nil {
+		return nil
+	}
+	return h.Name
+}
+
+func (h *HttpService) GetDisplayName() *string {
+	if h == nil {
+		return nil
+	}
+	return h.DisplayName
+}
+
+func (h *HttpService) GetBasePath() *HttpPath {
+	if h == nil {
+		return nil
+	}
+	return h.BasePath
+}
+
+func (h *HttpService) GetEndpoints() []*HttpEndpoint {
+	if h == nil {
+		return nil
+	}
+	return h.Endpoints
+}
+
+func (h *HttpService) GetHeaders() []*HttpHeader {
+	if h == nil {
+		return nil
+	}
+	return h.Headers
+}
+
+func (h *HttpService) GetPathParameters() []*PathParameter {
+	if h == nil {
+		return nil
+	}
+	return h.PathParameters
+}
+
+func (h *HttpService) GetEncoding() *Encoding {
+	if h == nil {
+		return nil
+	}
+	return h.Encoding
+}
+
+func (h *HttpService) GetTransport() *Transport {
+	if h == nil {
+		return nil
+	}
+	return h.Transport
+}
+
 func (h *HttpService) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -3428,8 +5151,53 @@ type InlinedRequestBody struct {
 	extraProperties map[string]interface{}
 }
 
-func (i *InlinedRequestBody) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
+func (i *InlinedRequestBody) GetDocs() *string {
+	if i == nil {
+		return nil
+	}
+	return i.Docs
+}
+
+func (i *InlinedRequestBody) GetName() *Name {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedRequestBody) GetExtends() []*DeclaredTypeName {
+	if i == nil {
+		return nil
+	}
+	return i.Extends
+}
+
+func (i *InlinedRequestBody) GetProperties() []*InlinedRequestBodyProperty {
+	if i == nil {
+		return nil
+	}
+	return i.Properties
+}
+
+func (i *InlinedRequestBody) GetExtendedProperties() []*ObjectProperty {
+	if i == nil {
+		return nil
+	}
+	return i.ExtendedProperties
+}
+
+func (i *InlinedRequestBody) GetContentType() *string {
+	if i == nil {
+		return nil
+	}
+	return i.ContentType
+}
+
+func (i *InlinedRequestBody) GetExtraProperties() bool {
+	if i == nil {
+		return false
+	}
+	return i.ExtraProperties
 }
 
 func (i *InlinedRequestBody) UnmarshalJSON(data []byte) error {
@@ -3463,6 +5231,34 @@ type InlinedRequestBodyProperty struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *InlinedRequestBodyProperty) GetDocs() *string {
+	if i == nil {
+		return nil
+	}
+	return i.Docs
+}
+
+func (i *InlinedRequestBodyProperty) GetAvailability() *Availability {
+	if i == nil {
+		return nil
+	}
+	return i.Availability
+}
+
+func (i *InlinedRequestBodyProperty) GetName() *NameAndWireValue {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedRequestBodyProperty) GetValueType() *TypeReference {
+	if i == nil {
+		return nil
+	}
+	return i.ValueType
 }
 
 func (i *InlinedRequestBodyProperty) GetExtraProperties() map[string]interface{} {
@@ -3505,6 +5301,27 @@ func NewJsonResponseFromResponse(value *JsonResponseBody) *JsonResponse {
 
 func NewJsonResponseFromNestedPropertyAsResponse(value *JsonResponseBodyWithProperty) *JsonResponse {
 	return &JsonResponse{Type: "nestedPropertyAsResponse", NestedPropertyAsResponse: value}
+}
+
+func (j *JsonResponse) GetType() string {
+	if j == nil {
+		return ""
+	}
+	return j.Type
+}
+
+func (j *JsonResponse) GetResponse() *JsonResponseBody {
+	if j == nil {
+		return nil
+	}
+	return j.Response
+}
+
+func (j *JsonResponse) GetNestedPropertyAsResponse() *JsonResponseBodyWithProperty {
+	if j == nil {
+		return nil
+	}
+	return j.NestedPropertyAsResponse
 }
 
 func (j *JsonResponse) UnmarshalJSON(data []byte) error {
@@ -3569,6 +5386,20 @@ type JsonResponseBody struct {
 	extraProperties map[string]interface{}
 }
 
+func (j *JsonResponseBody) GetDocs() *string {
+	if j == nil {
+		return nil
+	}
+	return j.Docs
+}
+
+func (j *JsonResponseBody) GetResponseBodyType() *TypeReference {
+	if j == nil {
+		return nil
+	}
+	return j.ResponseBodyType
+}
+
 func (j *JsonResponseBody) GetExtraProperties() map[string]interface{} {
 	return j.extraProperties
 }
@@ -3610,6 +5441,27 @@ type JsonResponseBodyWithProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (j *JsonResponseBodyWithProperty) GetDocs() *string {
+	if j == nil {
+		return nil
+	}
+	return j.Docs
+}
+
+func (j *JsonResponseBodyWithProperty) GetResponseBodyType() *TypeReference {
+	if j == nil {
+		return nil
+	}
+	return j.ResponseBodyType
+}
+
+func (j *JsonResponseBodyWithProperty) GetResponseProperty() *ObjectProperty {
+	if j == nil {
+		return nil
+	}
+	return j.ResponseProperty
+}
+
 func (j *JsonResponseBodyWithProperty) GetExtraProperties() map[string]interface{} {
 	return j.extraProperties
 }
@@ -3644,6 +5496,27 @@ type JsonStreamChunk struct {
 	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (j *JsonStreamChunk) GetDocs() *string {
+	if j == nil {
+		return nil
+	}
+	return j.Docs
+}
+
+func (j *JsonStreamChunk) GetPayload() *TypeReference {
+	if j == nil {
+		return nil
+	}
+	return j.Payload
+}
+
+func (j *JsonStreamChunk) GetTerminator() *string {
+	if j == nil {
+		return nil
+	}
+	return j.Terminator
 }
 
 func (j *JsonStreamChunk) GetExtraProperties() map[string]interface{} {
@@ -3691,6 +5564,34 @@ func NewNonStreamHttpResponseBodyFromFileDownload(value *FileDownloadResponse) *
 
 func NewNonStreamHttpResponseBodyFromText(value *TextResponse) *NonStreamHttpResponseBody {
 	return &NonStreamHttpResponseBody{Type: "text", Text: value}
+}
+
+func (n *NonStreamHttpResponseBody) GetType() string {
+	if n == nil {
+		return ""
+	}
+	return n.Type
+}
+
+func (n *NonStreamHttpResponseBody) GetJson() *JsonResponse {
+	if n == nil {
+		return nil
+	}
+	return n.Json
+}
+
+func (n *NonStreamHttpResponseBody) GetFileDownload() *FileDownloadResponse {
+	if n == nil {
+		return nil
+	}
+	return n.FileDownload
+}
+
+func (n *NonStreamHttpResponseBody) GetText() *TextResponse {
+	if n == nil {
+		return nil
+	}
+	return n.Text
 }
 
 func (n *NonStreamHttpResponseBody) UnmarshalJSON(data []byte) error {
@@ -3783,6 +5684,34 @@ type OffsetPagination struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *OffsetPagination) GetPage() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.Page
+}
+
+func (o *OffsetPagination) GetResults() *ResponseProperty {
+	if o == nil {
+		return nil
+	}
+	return o.Results
+}
+
+func (o *OffsetPagination) GetHasNextPage() *ResponseProperty {
+	if o == nil {
+		return nil
+	}
+	return o.HasNextPage
+}
+
+func (o *OffsetPagination) GetStep() *RequestProperty {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
 func (o *OffsetPagination) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -3824,6 +5753,27 @@ func NewPaginationFromCursor(value *CursorPagination) *Pagination {
 
 func NewPaginationFromOffset(value *OffsetPagination) *Pagination {
 	return &Pagination{Type: "offset", Offset: value}
+}
+
+func (p *Pagination) GetType() string {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *Pagination) GetCursor() *CursorPagination {
+	if p == nil {
+		return nil
+	}
+	return p.Cursor
+}
+
+func (p *Pagination) GetOffset() *OffsetPagination {
+	if p == nil {
+		return nil
+	}
+	return p.Offset
 }
 
 func (p *Pagination) UnmarshalJSON(data []byte) error {
@@ -3891,6 +5841,41 @@ type PathParameter struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PathParameter) GetDocs() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Docs
+}
+
+func (p *PathParameter) GetName() *Name {
+	if p == nil {
+		return nil
+	}
+	return p.Name
+}
+
+func (p *PathParameter) GetValueType() *TypeReference {
+	if p == nil {
+		return nil
+	}
+	return p.ValueType
+}
+
+func (p *PathParameter) GetLocation() PathParameterLocation {
+	if p == nil {
+		return ""
+	}
+	return p.Location
+}
+
+func (p *PathParameter) GetVariable() *VariableId {
+	if p == nil {
+		return nil
+	}
+	return p.Variable
+}
+
 func (p *PathParameter) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -3954,6 +5939,41 @@ type QueryParameter struct {
 	extraProperties map[string]interface{}
 }
 
+func (q *QueryParameter) GetDocs() *string {
+	if q == nil {
+		return nil
+	}
+	return q.Docs
+}
+
+func (q *QueryParameter) GetAvailability() *Availability {
+	if q == nil {
+		return nil
+	}
+	return q.Availability
+}
+
+func (q *QueryParameter) GetName() *NameAndWireValue {
+	if q == nil {
+		return nil
+	}
+	return q.Name
+}
+
+func (q *QueryParameter) GetValueType() *TypeReference {
+	if q == nil {
+		return nil
+	}
+	return q.ValueType
+}
+
+func (q *QueryParameter) GetAllowMultiple() bool {
+	if q == nil {
+		return false
+	}
+	return q.AllowMultiple
+}
+
 func (q *QueryParameter) GetExtraProperties() map[string]interface{} {
 	return q.extraProperties
 }
@@ -3991,6 +6011,20 @@ type RequestProperty struct {
 	Property     *RequestPropertyValue `json:"property,omitempty" url:"property,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *RequestProperty) GetPropertyPath() []*Name {
+	if r == nil {
+		return nil
+	}
+	return r.PropertyPath
+}
+
+func (r *RequestProperty) GetProperty() *RequestPropertyValue {
+	if r == nil {
+		return nil
+	}
+	return r.Property
 }
 
 func (r *RequestProperty) GetExtraProperties() map[string]interface{} {
@@ -4033,6 +6067,27 @@ func NewRequestPropertyValueFromQuery(value *QueryParameter) *RequestPropertyVal
 
 func NewRequestPropertyValueFromBody(value *ObjectProperty) *RequestPropertyValue {
 	return &RequestPropertyValue{Type: "body", Body: value}
+}
+
+func (r *RequestPropertyValue) GetType() string {
+	if r == nil {
+		return ""
+	}
+	return r.Type
+}
+
+func (r *RequestPropertyValue) GetQuery() *QueryParameter {
+	if r == nil {
+		return nil
+	}
+	return r.Query
+}
+
+func (r *RequestPropertyValue) GetBody() *ObjectProperty {
+	if r == nil {
+		return nil
+	}
+	return r.Body
 }
 
 func (r *RequestPropertyValue) UnmarshalJSON(data []byte) error {
@@ -4097,6 +6152,20 @@ type ResponseError struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *ResponseError) GetDocs() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Docs
+}
+
+func (r *ResponseError) GetError() *DeclaredErrorName {
+	if r == nil {
+		return nil
+	}
+	return r.Error
+}
+
 func (r *ResponseError) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -4138,6 +6207,20 @@ type ResponseProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *ResponseProperty) GetPropertyPath() []*Name {
+	if r == nil {
+		return nil
+	}
+	return r.PropertyPath
+}
+
+func (r *ResponseProperty) GetProperty() *ObjectProperty {
+	if r == nil {
+		return nil
+	}
+	return r.Property
+}
+
 func (r *ResponseProperty) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -4173,6 +6256,27 @@ type SdkRequest struct {
 	Shape                *SdkRequestShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SdkRequest) GetStreamParameter() *RequestProperty {
+	if s == nil {
+		return nil
+	}
+	return s.StreamParameter
+}
+
+func (s *SdkRequest) GetRequestParameterName() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.RequestParameterName
+}
+
+func (s *SdkRequest) GetShape() *SdkRequestShape {
+	if s == nil {
+		return nil
+	}
+	return s.Shape
 }
 
 func (s *SdkRequest) GetExtraProperties() map[string]interface{} {
@@ -4215,6 +6319,27 @@ func NewSdkRequestBodyTypeFromTypeReference(value *HttpRequestBodyReference) *Sd
 
 func NewSdkRequestBodyTypeFromBytes(value *BytesRequest) *SdkRequestBodyType {
 	return &SdkRequestBodyType{Type: "bytes", Bytes: value}
+}
+
+func (s *SdkRequestBodyType) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *SdkRequestBodyType) GetTypeReference() *HttpRequestBodyReference {
+	if s == nil {
+		return nil
+	}
+	return s.TypeReference
+}
+
+func (s *SdkRequestBodyType) GetBytes() *BytesRequest {
+	if s == nil {
+		return nil
+	}
+	return s.Bytes
 }
 
 func (s *SdkRequestBodyType) UnmarshalJSON(data []byte) error {
@@ -4286,6 +6411,27 @@ func NewSdkRequestShapeFromWrapper(value *SdkRequestWrapper) *SdkRequestShape {
 	return &SdkRequestShape{Type: "wrapper", Wrapper: value}
 }
 
+func (s *SdkRequestShape) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *SdkRequestShape) GetJustRequestBody() *SdkRequestBodyType {
+	if s == nil {
+		return nil
+	}
+	return s.JustRequestBody
+}
+
+func (s *SdkRequestShape) GetWrapper() *SdkRequestWrapper {
+	if s == nil {
+		return nil
+	}
+	return s.Wrapper
+}
+
 func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -4351,10 +6497,40 @@ func (s *SdkRequestShape) Accept(visitor SdkRequestShapeVisitor) error {
 }
 
 type SdkRequestWrapper struct {
-	WrapperName *Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
-	BodyKey     *Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
+	WrapperName           *Name `json:"wrapperName,omitempty" url:"wrapperName,omitempty"`
+	BodyKey               *Name `json:"bodyKey,omitempty" url:"bodyKey,omitempty"`
+	IncludePathParameters *bool `json:"includePathParameters,omitempty" url:"includePathParameters,omitempty"`
+	OnlyPathParameters    *bool `json:"onlyPathParameters,omitempty" url:"onlyPathParameters,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SdkRequestWrapper) GetWrapperName() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.WrapperName
+}
+
+func (s *SdkRequestWrapper) GetBodyKey() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.BodyKey
+}
+
+func (s *SdkRequestWrapper) GetIncludePathParameters() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.IncludePathParameters
+}
+
+func (s *SdkRequestWrapper) GetOnlyPathParameters() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.OnlyPathParameters
 }
 
 func (s *SdkRequestWrapper) GetExtraProperties() map[string]interface{} {
@@ -4393,6 +6569,27 @@ type SseStreamChunk struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *SseStreamChunk) GetDocs() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Docs
+}
+
+func (s *SseStreamChunk) GetPayload() *TypeReference {
+	if s == nil {
+		return nil
+	}
+	return s.Payload
+}
+
+func (s *SseStreamChunk) GetTerminator() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Terminator
+}
+
 func (s *SseStreamChunk) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -4426,6 +6623,20 @@ type StreamParameterResponse struct {
 	StreamResponse    *StreamingResponse         `json:"streamResponse,omitempty" url:"streamResponse,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *StreamParameterResponse) GetNonStreamResponse() *NonStreamHttpResponseBody {
+	if s == nil {
+		return nil
+	}
+	return s.NonStreamResponse
+}
+
+func (s *StreamParameterResponse) GetStreamResponse() *StreamingResponse {
+	if s == nil {
+		return nil
+	}
+	return s.StreamResponse
 }
 
 func (s *StreamParameterResponse) GetExtraProperties() map[string]interface{} {
@@ -4473,6 +6684,34 @@ func NewStreamingResponseFromText(value *TextStreamChunk) *StreamingResponse {
 
 func NewStreamingResponseFromSse(value *SseStreamChunk) *StreamingResponse {
 	return &StreamingResponse{Type: "sse", Sse: value}
+}
+
+func (s *StreamingResponse) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *StreamingResponse) GetJson() *JsonStreamChunk {
+	if s == nil {
+		return nil
+	}
+	return s.Json
+}
+
+func (s *StreamingResponse) GetText() *TextStreamChunk {
+	if s == nil {
+		return nil
+	}
+	return s.Text
+}
+
+func (s *StreamingResponse) GetSse() *SseStreamChunk {
+	if s == nil {
+		return nil
+	}
+	return s.Sse
 }
 
 func (s *StreamingResponse) UnmarshalJSON(data []byte) error {
@@ -4587,6 +6826,13 @@ type TextResponse struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *TextResponse) GetDocs() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Docs
+}
+
 func (t *TextResponse) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -4619,6 +6865,13 @@ type TextStreamChunk struct {
 	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (t *TextStreamChunk) GetDocs() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Docs
 }
 
 func (t *TextStreamChunk) GetExtraProperties() map[string]interface{} {
@@ -4661,6 +6914,27 @@ func NewTransportFromHttp(value interface{}) *Transport {
 
 func NewTransportFromGrpc(value *GrpcTransport) *Transport {
 	return &Transport{Type: "grpc", Grpc: value}
+}
+
+func (t *Transport) GetType() string {
+	if t == nil {
+		return ""
+	}
+	return t.Type
+}
+
+func (t *Transport) GetHttp() interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.Http
+}
+
+func (t *Transport) GetGrpc() *GrpcTransport {
+	if t == nil {
+		return nil
+	}
+	return t.Grpc
 }
 
 func (t *Transport) UnmarshalJSON(data []byte) error {
@@ -4734,6 +7008,20 @@ type UserSpecifiedEndpointExample struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *UserSpecifiedEndpointExample) GetCodeSamples() []*ExampleCodeSample {
+	if u == nil {
+		return nil
+	}
+	return u.CodeSamples
+}
+
+func (u *UserSpecifiedEndpointExample) GetExample() *ExampleEndpointCall {
+	if u == nil {
+		return nil
+	}
+	return u.Example
+}
+
 func (u *UserSpecifiedEndpointExample) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -4774,6 +7062,27 @@ func NewApiDefinitionSourceFromProto(value *ProtoSource) *ApiDefinitionSource {
 
 func NewApiDefinitionSourceFromOpenapi(value interface{}) *ApiDefinitionSource {
 	return &ApiDefinitionSource{Type: "openapi", Openapi: value}
+}
+
+func (a *ApiDefinitionSource) GetType() string {
+	if a == nil {
+		return ""
+	}
+	return a.Type
+}
+
+func (a *ApiDefinitionSource) GetProto() *ProtoSource {
+	if a == nil {
+		return nil
+	}
+	return a.Proto
+}
+
+func (a *ApiDefinitionSource) GetOpenapi() interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.Openapi
 }
 
 func (a *ApiDefinitionSource) UnmarshalJSON(data []byte) error {
@@ -4853,6 +7162,20 @@ func NewApiVersionSchemeFromHeader(value *HeaderApiVersionScheme) *ApiVersionSch
 	return &ApiVersionScheme{Type: "header", Header: value}
 }
 
+func (a *ApiVersionScheme) GetType() string {
+	if a == nil {
+		return ""
+	}
+	return a.Type
+}
+
+func (a *ApiVersionScheme) GetHeader() *HeaderApiVersionScheme {
+	if a == nil {
+		return nil
+	}
+	return a.Header
+}
+
 func (a *ApiVersionScheme) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -4904,6 +7227,20 @@ type ErrorDiscriminationByPropertyStrategy struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ErrorDiscriminationByPropertyStrategy) GetDiscriminant() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Discriminant
+}
+
+func (e *ErrorDiscriminationByPropertyStrategy) GetContentProperty() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.ContentProperty
+}
+
 func (e *ErrorDiscriminationByPropertyStrategy) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -4944,6 +7281,27 @@ func NewErrorDiscriminationStrategyFromStatusCode(value interface{}) *ErrorDiscr
 
 func NewErrorDiscriminationStrategyFromProperty(value *ErrorDiscriminationByPropertyStrategy) *ErrorDiscriminationStrategy {
 	return &ErrorDiscriminationStrategy{Type: "property", Property: value}
+}
+
+func (e *ErrorDiscriminationStrategy) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ErrorDiscriminationStrategy) GetStatusCode() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.StatusCode
+}
+
+func (e *ErrorDiscriminationStrategy) GetProperty() *ErrorDiscriminationByPropertyStrategy {
+	if e == nil {
+		return nil
+	}
+	return e.Property
 }
 
 func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
@@ -5020,6 +7378,20 @@ type HeaderApiVersionScheme struct {
 	extraProperties map[string]interface{}
 }
 
+func (h *HeaderApiVersionScheme) GetHeader() *HttpHeader {
+	if h == nil {
+		return nil
+	}
+	return h.Header
+}
+
+func (h *HeaderApiVersionScheme) GetValue() *EnumTypeDeclaration {
+	if h == nil {
+		return nil
+	}
+	return h.Value
+}
+
 func (h *HeaderApiVersionScheme) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
 }
@@ -5088,6 +7460,188 @@ type IntermediateRepresentation struct {
 	extraProperties map[string]interface{}
 }
 
+func (i *IntermediateRepresentation) GetFdrApiDefinitionId() *string {
+	if i == nil {
+		return nil
+	}
+	return i.FdrApiDefinitionId
+}
+
+func (i *IntermediateRepresentation) GetApiVersion() *ApiVersionScheme {
+	if i == nil {
+		return nil
+	}
+	return i.ApiVersion
+}
+
+func (i *IntermediateRepresentation) GetApiName() *Name {
+	if i == nil {
+		return nil
+	}
+	return i.ApiName
+}
+
+func (i *IntermediateRepresentation) GetApiDisplayName() *string {
+	if i == nil {
+		return nil
+	}
+	return i.ApiDisplayName
+}
+
+func (i *IntermediateRepresentation) GetApiDocs() *string {
+	if i == nil {
+		return nil
+	}
+	return i.ApiDocs
+}
+
+func (i *IntermediateRepresentation) GetAuth() *ApiAuth {
+	if i == nil {
+		return nil
+	}
+	return i.Auth
+}
+
+func (i *IntermediateRepresentation) GetHeaders() []*HttpHeader {
+	if i == nil {
+		return nil
+	}
+	return i.Headers
+}
+
+func (i *IntermediateRepresentation) GetIdempotencyHeaders() []*HttpHeader {
+	if i == nil {
+		return nil
+	}
+	return i.IdempotencyHeaders
+}
+
+func (i *IntermediateRepresentation) GetTypes() map[TypeId]*TypeDeclaration {
+	if i == nil {
+		return nil
+	}
+	return i.Types
+}
+
+func (i *IntermediateRepresentation) GetServices() map[ServiceId]*HttpService {
+	if i == nil {
+		return nil
+	}
+	return i.Services
+}
+
+func (i *IntermediateRepresentation) GetWebhookGroups() map[WebhookGroupId]WebhookGroup {
+	if i == nil {
+		return nil
+	}
+	return i.WebhookGroups
+}
+
+func (i *IntermediateRepresentation) GetWebsocketChannels() map[WebSocketChannelId]*WebSocketChannel {
+	if i == nil {
+		return nil
+	}
+	return i.WebsocketChannels
+}
+
+func (i *IntermediateRepresentation) GetErrors() map[ErrorId]*ErrorDeclaration {
+	if i == nil {
+		return nil
+	}
+	return i.Errors
+}
+
+func (i *IntermediateRepresentation) GetSubpackages() map[SubpackageId]*Subpackage {
+	if i == nil {
+		return nil
+	}
+	return i.Subpackages
+}
+
+func (i *IntermediateRepresentation) GetRootPackage() *Package {
+	if i == nil {
+		return nil
+	}
+	return i.RootPackage
+}
+
+func (i *IntermediateRepresentation) GetConstants() *Constants {
+	if i == nil {
+		return nil
+	}
+	return i.Constants
+}
+
+func (i *IntermediateRepresentation) GetEnvironments() *EnvironmentsConfig {
+	if i == nil {
+		return nil
+	}
+	return i.Environments
+}
+
+func (i *IntermediateRepresentation) GetBasePath() *HttpPath {
+	if i == nil {
+		return nil
+	}
+	return i.BasePath
+}
+
+func (i *IntermediateRepresentation) GetPathParameters() []*PathParameter {
+	if i == nil {
+		return nil
+	}
+	return i.PathParameters
+}
+
+func (i *IntermediateRepresentation) GetErrorDiscriminationStrategy() *ErrorDiscriminationStrategy {
+	if i == nil {
+		return nil
+	}
+	return i.ErrorDiscriminationStrategy
+}
+
+func (i *IntermediateRepresentation) GetSdkConfig() *SdkConfig {
+	if i == nil {
+		return nil
+	}
+	return i.SdkConfig
+}
+
+func (i *IntermediateRepresentation) GetVariables() []*VariableDeclaration {
+	if i == nil {
+		return nil
+	}
+	return i.Variables
+}
+
+func (i *IntermediateRepresentation) GetServiceTypeReferenceInfo() *ServiceTypeReferenceInfo {
+	if i == nil {
+		return nil
+	}
+	return i.ServiceTypeReferenceInfo
+}
+
+func (i *IntermediateRepresentation) GetReadmeConfig() *ReadmeConfig {
+	if i == nil {
+		return nil
+	}
+	return i.ReadmeConfig
+}
+
+func (i *IntermediateRepresentation) GetSourceConfig() *SourceConfig {
+	if i == nil {
+		return nil
+	}
+	return i.SourceConfig
+}
+
+func (i *IntermediateRepresentation) GetPublishConfig() *PublishingConfig {
+	if i == nil {
+		return nil
+	}
+	return i.PublishConfig
+}
+
 func (i *IntermediateRepresentation) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -5131,6 +7685,76 @@ type Package struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *Package) GetDocs() *string {
+	if p == nil {
+		return nil
+	}
+	return p.Docs
+}
+
+func (p *Package) GetFernFilepath() *FernFilepath {
+	if p == nil {
+		return nil
+	}
+	return p.FernFilepath
+}
+
+func (p *Package) GetService() *ServiceId {
+	if p == nil {
+		return nil
+	}
+	return p.Service
+}
+
+func (p *Package) GetTypes() []TypeId {
+	if p == nil {
+		return nil
+	}
+	return p.Types
+}
+
+func (p *Package) GetErrors() []ErrorId {
+	if p == nil {
+		return nil
+	}
+	return p.Errors
+}
+
+func (p *Package) GetWebhooks() *WebhookGroupId {
+	if p == nil {
+		return nil
+	}
+	return p.Webhooks
+}
+
+func (p *Package) GetWebsocket() *WebSocketChannelId {
+	if p == nil {
+		return nil
+	}
+	return p.Websocket
+}
+
+func (p *Package) GetSubpackages() []SubpackageId {
+	if p == nil {
+		return nil
+	}
+	return p.Subpackages
+}
+
+func (p *Package) GetHasEndpointsInTree() bool {
+	if p == nil {
+		return false
+	}
+	return p.HasEndpointsInTree
+}
+
+func (p *Package) GetNavigationConfig() *PackageNavigationConfig {
+	if p == nil {
+		return nil
+	}
+	return p.NavigationConfig
+}
+
 func (p *Package) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -5163,6 +7787,13 @@ type PackageNavigationConfig struct {
 	PointsTo SubpackageId `json:"pointsTo" url:"pointsTo"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *PackageNavigationConfig) GetPointsTo() SubpackageId {
+	if p == nil {
+		return ""
+	}
+	return p.PointsTo
 }
 
 func (p *PackageNavigationConfig) GetExtraProperties() map[string]interface{} {
@@ -5202,6 +7833,34 @@ type PlatformHeaders struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PlatformHeaders) GetLanguage() string {
+	if p == nil {
+		return ""
+	}
+	return p.Language
+}
+
+func (p *PlatformHeaders) GetSdkName() string {
+	if p == nil {
+		return ""
+	}
+	return p.SdkName
+}
+
+func (p *PlatformHeaders) GetSdkVersion() string {
+	if p == nil {
+		return ""
+	}
+	return p.SdkVersion
+}
+
+func (p *PlatformHeaders) GetUserAgent() *UserAgent {
+	if p == nil {
+		return nil
+	}
+	return p.UserAgent
+}
+
 func (p *PlatformHeaders) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -5237,6 +7896,20 @@ type ProtoSource struct {
 	ProtoRootUrl string `json:"protoRootUrl" url:"protoRootUrl"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *ProtoSource) GetId() ApiDefinitionSourceId {
+	if p == nil {
+		return ""
+	}
+	return p.Id
+}
+
+func (p *ProtoSource) GetProtoRootUrl() string {
+	if p == nil {
+		return ""
+	}
+	return p.ProtoRootUrl
 }
 
 func (p *ProtoSource) GetExtraProperties() map[string]interface{} {
@@ -5284,6 +7957,41 @@ type ReadmeConfig struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *ReadmeConfig) GetDefaultEndpoint() *EndpointId {
+	if r == nil {
+		return nil
+	}
+	return r.DefaultEndpoint
+}
+
+func (r *ReadmeConfig) GetBannerLink() *string {
+	if r == nil {
+		return nil
+	}
+	return r.BannerLink
+}
+
+func (r *ReadmeConfig) GetIntroduction() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Introduction
+}
+
+func (r *ReadmeConfig) GetApiReferenceLink() *string {
+	if r == nil {
+		return nil
+	}
+	return r.ApiReferenceLink
+}
+
+func (r *ReadmeConfig) GetFeatures() map[FeatureId][]EndpointId {
+	if r == nil {
+		return nil
+	}
+	return r.Features
+}
+
 func (r *ReadmeConfig) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -5320,6 +8028,41 @@ type SdkConfig struct {
 	PlatformHeaders          *PlatformHeaders `json:"platformHeaders,omitempty" url:"platformHeaders,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SdkConfig) GetIsAuthMandatory() bool {
+	if s == nil {
+		return false
+	}
+	return s.IsAuthMandatory
+}
+
+func (s *SdkConfig) GetHasStreamingEndpoints() bool {
+	if s == nil {
+		return false
+	}
+	return s.HasStreamingEndpoints
+}
+
+func (s *SdkConfig) GetHasPaginatedEndpoints() bool {
+	if s == nil {
+		return false
+	}
+	return s.HasPaginatedEndpoints
+}
+
+func (s *SdkConfig) GetHasFileDownloadEndpoints() bool {
+	if s == nil {
+		return false
+	}
+	return s.HasFileDownloadEndpoints
+}
+
+func (s *SdkConfig) GetPlatformHeaders() *PlatformHeaders {
+	if s == nil {
+		return nil
+	}
+	return s.PlatformHeaders
 }
 
 func (s *SdkConfig) GetExtraProperties() map[string]interface{} {
@@ -5359,6 +8102,20 @@ type ServiceTypeReferenceInfo struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *ServiceTypeReferenceInfo) GetTypesReferencedOnlyByService() map[ServiceId][]TypeId {
+	if s == nil {
+		return nil
+	}
+	return s.TypesReferencedOnlyByService
+}
+
+func (s *ServiceTypeReferenceInfo) GetSharedTypes() []TypeId {
+	if s == nil {
+		return nil
+	}
+	return s.SharedTypes
+}
+
 func (s *ServiceTypeReferenceInfo) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -5392,6 +8149,13 @@ type SourceConfig struct {
 	Sources []*ApiDefinitionSource `json:"sources,omitempty" url:"sources,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *SourceConfig) GetSources() []*ApiDefinitionSource {
+	if s == nil {
+		return nil
+	}
+	return s.Sources
 }
 
 func (s *SourceConfig) GetExtraProperties() map[string]interface{} {
@@ -5438,6 +8202,83 @@ type Subpackage struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *Subpackage) GetDocs() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Docs
+}
+
+func (s *Subpackage) GetFernFilepath() *FernFilepath {
+	if s == nil {
+		return nil
+	}
+	return s.FernFilepath
+}
+
+func (s *Subpackage) GetService() *ServiceId {
+	if s == nil {
+		return nil
+	}
+	return s.Service
+}
+
+func (s *Subpackage) GetTypes() []TypeId {
+	if s == nil {
+		return nil
+	}
+	return s.Types
+}
+
+func (s *Subpackage) GetErrors() []ErrorId {
+	if s == nil {
+		return nil
+	}
+	return s.Errors
+}
+
+func (s *Subpackage) GetWebhooks() *WebhookGroupId {
+	if s == nil {
+		return nil
+	}
+	return s.Webhooks
+}
+
+func (s *Subpackage) GetWebsocket() *WebSocketChannelId {
+	if s == nil {
+		return nil
+	}
+	return s.Websocket
+}
+
+func (s *Subpackage) GetSubpackages() []SubpackageId {
+	if s == nil {
+		return nil
+	}
+	return s.Subpackages
+}
+
+func (s *Subpackage) GetHasEndpointsInTree() bool {
+	if s == nil {
+		return false
+	}
+	return s.HasEndpointsInTree
+}
+
+func (s *Subpackage) GetNavigationConfig() *PackageNavigationConfig {
+	if s == nil {
+		return nil
+	}
+	return s.NavigationConfig
+}
+
+func (s *Subpackage) GetName() *Name {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
 func (s *Subpackage) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -5475,12 +8316,19 @@ type UserAgent struct {
 	extraProperties map[string]interface{}
 }
 
-func (u *UserAgent) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
+func (u *UserAgent) GetValue() string {
+	if u == nil {
+		return ""
+	}
+	return u.Value
 }
 
 func (u *UserAgent) Header() string {
 	return u.header
+}
+
+func (u *UserAgent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UserAgent) UnmarshalJSON(data []byte) error {
@@ -5542,6 +8390,13 @@ type CsharpProtobufFileOptions struct {
 	extraProperties map[string]interface{}
 }
 
+func (c *CsharpProtobufFileOptions) GetNamespace() string {
+	if c == nil {
+		return ""
+	}
+	return c.Namespace
+}
+
 func (c *CsharpProtobufFileOptions) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -5582,6 +8437,27 @@ type ProtobufFile struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *ProtobufFile) GetFilepath() string {
+	if p == nil {
+		return ""
+	}
+	return p.Filepath
+}
+
+func (p *ProtobufFile) GetPackageName() *string {
+	if p == nil {
+		return nil
+	}
+	return p.PackageName
+}
+
+func (p *ProtobufFile) GetOptions() *ProtobufFileOptions {
+	if p == nil {
+		return nil
+	}
+	return p.Options
+}
+
 func (p *ProtobufFile) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -5614,6 +8490,13 @@ type ProtobufFileOptions struct {
 	Csharp *CsharpProtobufFileOptions `json:"csharp,omitempty" url:"csharp,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *ProtobufFileOptions) GetCsharp() *CsharpProtobufFileOptions {
+	if p == nil {
+		return nil
+	}
+	return p.Csharp
 }
 
 func (p *ProtobufFileOptions) GetExtraProperties() map[string]interface{} {
@@ -5676,6 +8559,20 @@ type ProtobufService struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *ProtobufService) GetFile() *ProtobufFile {
+	if p == nil {
+		return nil
+	}
+	return p.File
+}
+
+func (p *ProtobufService) GetName() *Name {
+	if p == nil {
+		return nil
+	}
+	return p.Name
+}
+
 func (p *ProtobufService) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -5717,6 +8614,27 @@ func NewProtobufTypeFromWellKnown(value *WellKnownProtobufType) *ProtobufType {
 
 func NewProtobufTypeFromUserDefined(value *UserDefinedProtobufType) *ProtobufType {
 	return &ProtobufType{Type: "userDefined", UserDefined: value}
+}
+
+func (p *ProtobufType) GetType() string {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *ProtobufType) GetWellKnown() *WellKnownProtobufType {
+	if p == nil {
+		return nil
+	}
+	return p.WellKnown
+}
+
+func (p *ProtobufType) GetUserDefined() *UserDefinedProtobufType {
+	if p == nil {
+		return nil
+	}
+	return p.UserDefined
 }
 
 func (p *ProtobufType) UnmarshalJSON(data []byte) error {
@@ -5820,6 +8738,20 @@ type UserDefinedProtobufType struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *UserDefinedProtobufType) GetFile() *ProtobufFile {
+	if u == nil {
+		return nil
+	}
+	return u.File
+}
+
+func (u *UserDefinedProtobufType) GetName() *Name {
+	if u == nil {
+		return nil
+	}
+	return u.Name
+}
+
 func (u *UserDefinedProtobufType) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -5853,7 +8785,7 @@ func (u *UserDefinedProtobufType) String() string {
 //
 // The full list of well-known types can be found at https://protobuf.dev/reference/protobuf/google.protobuf
 type WellKnownProtobufType struct {
-	Type             string
+	Type_            string
 	Any              interface{}
 	Api              interface{}
 	BoolValue        interface{}
@@ -5880,130 +8812,347 @@ type WellKnownProtobufType struct {
 	Struct           interface{}
 	Syntax           interface{}
 	Timestamp        interface{}
-	Type_            interface{}
+	Type             interface{}
 	Uint32Value      interface{}
 	Uint64Value      interface{}
 	Value            interface{}
 }
 
 func NewWellKnownProtobufTypeFromAny(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "any", Any: value}
+	return &WellKnownProtobufType{Type_: "any", Any: value}
 }
 
 func NewWellKnownProtobufTypeFromApi(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "api", Api: value}
+	return &WellKnownProtobufType{Type_: "api", Api: value}
 }
 
 func NewWellKnownProtobufTypeFromBoolValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "boolValue", BoolValue: value}
+	return &WellKnownProtobufType{Type_: "boolValue", BoolValue: value}
 }
 
 func NewWellKnownProtobufTypeFromBytesValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "bytesValue", BytesValue: value}
+	return &WellKnownProtobufType{Type_: "bytesValue", BytesValue: value}
 }
 
 func NewWellKnownProtobufTypeFromDoubleValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "doubleValue", DoubleValue: value}
+	return &WellKnownProtobufType{Type_: "doubleValue", DoubleValue: value}
 }
 
 func NewWellKnownProtobufTypeFromDuration(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "duration", Duration: value}
+	return &WellKnownProtobufType{Type_: "duration", Duration: value}
 }
 
 func NewWellKnownProtobufTypeFromEmpty(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "empty", Empty: value}
+	return &WellKnownProtobufType{Type_: "empty", Empty: value}
 }
 
 func NewWellKnownProtobufTypeFromEnum(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "enum", Enum: value}
+	return &WellKnownProtobufType{Type_: "enum", Enum: value}
 }
 
 func NewWellKnownProtobufTypeFromEnumValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "enumValue", EnumValue: value}
+	return &WellKnownProtobufType{Type_: "enumValue", EnumValue: value}
 }
 
 func NewWellKnownProtobufTypeFromField(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "field", Field: value}
+	return &WellKnownProtobufType{Type_: "field", Field: value}
 }
 
 func NewWellKnownProtobufTypeFromFieldCardinality(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "fieldCardinality", FieldCardinality: value}
+	return &WellKnownProtobufType{Type_: "fieldCardinality", FieldCardinality: value}
 }
 
 func NewWellKnownProtobufTypeFromFieldKind(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "fieldKind", FieldKind: value}
+	return &WellKnownProtobufType{Type_: "fieldKind", FieldKind: value}
 }
 
 func NewWellKnownProtobufTypeFromFieldMask(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "fieldMask", FieldMask: value}
+	return &WellKnownProtobufType{Type_: "fieldMask", FieldMask: value}
 }
 
 func NewWellKnownProtobufTypeFromFloatValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "floatValue", FloatValue: value}
+	return &WellKnownProtobufType{Type_: "floatValue", FloatValue: value}
 }
 
 func NewWellKnownProtobufTypeFromInt32Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "int32Value", Int32Value: value}
+	return &WellKnownProtobufType{Type_: "int32Value", Int32Value: value}
 }
 
 func NewWellKnownProtobufTypeFromInt64Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "int64Value", Int64Value: value}
+	return &WellKnownProtobufType{Type_: "int64Value", Int64Value: value}
 }
 
 func NewWellKnownProtobufTypeFromListValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "listValue", ListValue: value}
+	return &WellKnownProtobufType{Type_: "listValue", ListValue: value}
 }
 
 func NewWellKnownProtobufTypeFromMethod(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "method", Method: value}
+	return &WellKnownProtobufType{Type_: "method", Method: value}
 }
 
 func NewWellKnownProtobufTypeFromMixin(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "mixin", Mixin: value}
+	return &WellKnownProtobufType{Type_: "mixin", Mixin: value}
 }
 
 func NewWellKnownProtobufTypeFromNullValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "nullValue", NullValue: value}
+	return &WellKnownProtobufType{Type_: "nullValue", NullValue: value}
 }
 
 func NewWellKnownProtobufTypeFromOption(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "option", Option: value}
+	return &WellKnownProtobufType{Type_: "option", Option: value}
 }
 
 func NewWellKnownProtobufTypeFromSourceContext(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "sourceContext", SourceContext: value}
+	return &WellKnownProtobufType{Type_: "sourceContext", SourceContext: value}
 }
 
 func NewWellKnownProtobufTypeFromStringValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "stringValue", StringValue: value}
+	return &WellKnownProtobufType{Type_: "stringValue", StringValue: value}
 }
 
 func NewWellKnownProtobufTypeFromStruct(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "struct", Struct: value}
+	return &WellKnownProtobufType{Type_: "struct", Struct: value}
 }
 
 func NewWellKnownProtobufTypeFromSyntax(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "syntax", Syntax: value}
+	return &WellKnownProtobufType{Type_: "syntax", Syntax: value}
 }
 
 func NewWellKnownProtobufTypeFromTimestamp(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "timestamp", Timestamp: value}
+	return &WellKnownProtobufType{Type_: "timestamp", Timestamp: value}
 }
 
 func NewWellKnownProtobufTypeFromType(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "type", Type_: value}
+	return &WellKnownProtobufType{Type_: "type", Type: value}
 }
 
 func NewWellKnownProtobufTypeFromUint32Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "uint32Value", Uint32Value: value}
+	return &WellKnownProtobufType{Type_: "uint32Value", Uint32Value: value}
 }
 
 func NewWellKnownProtobufTypeFromUint64Value(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "uint64Value", Uint64Value: value}
+	return &WellKnownProtobufType{Type_: "uint64Value", Uint64Value: value}
 }
 
 func NewWellKnownProtobufTypeFromValue(value interface{}) *WellKnownProtobufType {
-	return &WellKnownProtobufType{Type: "value", Value: value}
+	return &WellKnownProtobufType{Type_: "value", Value: value}
+}
+
+func (w *WellKnownProtobufType) GetType_() string {
+	if w == nil {
+		return ""
+	}
+	return w.Type_
+}
+
+func (w *WellKnownProtobufType) GetAny() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Any
+}
+
+func (w *WellKnownProtobufType) GetApi() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Api
+}
+
+func (w *WellKnownProtobufType) GetBoolValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.BoolValue
+}
+
+func (w *WellKnownProtobufType) GetBytesValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.BytesValue
+}
+
+func (w *WellKnownProtobufType) GetDoubleValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.DoubleValue
+}
+
+func (w *WellKnownProtobufType) GetDuration() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Duration
+}
+
+func (w *WellKnownProtobufType) GetEmpty() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Empty
+}
+
+func (w *WellKnownProtobufType) GetEnum() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Enum
+}
+
+func (w *WellKnownProtobufType) GetEnumValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.EnumValue
+}
+
+func (w *WellKnownProtobufType) GetField() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Field
+}
+
+func (w *WellKnownProtobufType) GetFieldCardinality() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.FieldCardinality
+}
+
+func (w *WellKnownProtobufType) GetFieldKind() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.FieldKind
+}
+
+func (w *WellKnownProtobufType) GetFieldMask() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.FieldMask
+}
+
+func (w *WellKnownProtobufType) GetFloatValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.FloatValue
+}
+
+func (w *WellKnownProtobufType) GetInt32Value() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Int32Value
+}
+
+func (w *WellKnownProtobufType) GetInt64Value() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Int64Value
+}
+
+func (w *WellKnownProtobufType) GetListValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.ListValue
+}
+
+func (w *WellKnownProtobufType) GetMethod() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Method
+}
+
+func (w *WellKnownProtobufType) GetMixin() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Mixin
+}
+
+func (w *WellKnownProtobufType) GetNullValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.NullValue
+}
+
+func (w *WellKnownProtobufType) GetOption() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Option
+}
+
+func (w *WellKnownProtobufType) GetSourceContext() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.SourceContext
+}
+
+func (w *WellKnownProtobufType) GetStringValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.StringValue
+}
+
+func (w *WellKnownProtobufType) GetStruct() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Struct
+}
+
+func (w *WellKnownProtobufType) GetSyntax() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Syntax
+}
+
+func (w *WellKnownProtobufType) GetTimestamp() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Timestamp
+}
+
+func (w *WellKnownProtobufType) GetType() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Type
+}
+
+func (w *WellKnownProtobufType) GetUint32Value() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Uint32Value
+}
+
+func (w *WellKnownProtobufType) GetUint64Value() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Uint64Value
+}
+
+func (w *WellKnownProtobufType) GetValue() interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.Value
 }
 
 func (w *WellKnownProtobufType) UnmarshalJSON(data []byte) error {
@@ -6179,7 +9328,7 @@ func (w *WellKnownProtobufType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		w.Type_ = value
+		w.Type = value
 	case "uint32Value":
 		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -6442,11 +9591,11 @@ func (w WellKnownProtobufType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "type":
 		var marshaler = struct {
-			Type  string      `json:"type"`
-			Type_ interface{} `json:"type,omitempty"`
+			Type_ string      `json:"type"`
+			Type  interface{} `json:"type,omitempty"`
 		}{
-			Type:  "type",
-			Type_: w.Type_,
+			Type_: "type",
+			Type:  w.Type,
 		}
 		return json.Marshal(marshaler)
 	case "uint32Value":
@@ -6585,6 +9734,13 @@ type DirectPublish struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *DirectPublish) GetTarget() *PublishTarget {
+	if d == nil {
+		return nil
+	}
+	return d.Target
+}
+
 func (d *DirectPublish) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -6619,6 +9775,27 @@ type GithubPublish struct {
 	Target *PublishTarget `json:"target,omitempty" url:"target,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (g *GithubPublish) GetOwner() string {
+	if g == nil {
+		return ""
+	}
+	return g.Owner
+}
+
+func (g *GithubPublish) GetRepo() string {
+	if g == nil {
+		return ""
+	}
+	return g.Repo
+}
+
+func (g *GithubPublish) GetTarget() *PublishTarget {
+	if g == nil {
+		return nil
+	}
+	return g.Target
 }
 
 func (g *GithubPublish) GetExtraProperties() map[string]interface{} {
@@ -6657,6 +9834,27 @@ type PostmanPublishTarget struct {
 	extraProperties map[string]interface{}
 }
 
+func (p *PostmanPublishTarget) GetApiKey() string {
+	if p == nil {
+		return ""
+	}
+	return p.ApiKey
+}
+
+func (p *PostmanPublishTarget) GetWorkspaceId() string {
+	if p == nil {
+		return ""
+	}
+	return p.WorkspaceId
+}
+
+func (p *PostmanPublishTarget) GetCollectionId() *string {
+	if p == nil {
+		return nil
+	}
+	return p.CollectionId
+}
+
 func (p *PostmanPublishTarget) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
@@ -6692,6 +9890,20 @@ type PublishTarget struct {
 
 func NewPublishTargetFromPostman(value *PostmanPublishTarget) *PublishTarget {
 	return &PublishTarget{Type: "postman", Postman: value}
+}
+
+func (p *PublishTarget) GetType() string {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *PublishTarget) GetPostman() *PostmanPublishTarget {
+	if p == nil {
+		return nil
+	}
+	return p.Postman
 }
 
 func (p *PublishTarget) UnmarshalJSON(data []byte) error {
@@ -6754,6 +9966,27 @@ func NewPublishingConfigFromDirect(value *DirectPublish) *PublishingConfig {
 	return &PublishingConfig{Type: "direct", Direct: value}
 }
 
+func (p *PublishingConfig) GetType() string {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *PublishingConfig) GetGithub() *GithubPublish {
+	if p == nil {
+		return nil
+	}
+	return p.Github
+}
+
+func (p *PublishingConfig) GetDirect() *DirectPublish {
+	if p == nil {
+		return nil
+	}
+	return p.Direct
+}
+
 func (p *PublishingConfig) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -6814,6 +10047,20 @@ type AliasTypeDeclaration struct {
 	ResolvedType *ResolvedTypeReference `json:"resolvedType,omitempty" url:"resolvedType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (a *AliasTypeDeclaration) GetAliasOf() *TypeReference {
+	if a == nil {
+		return nil
+	}
+	return a.AliasOf
+}
+
+func (a *AliasTypeDeclaration) GetResolvedType() *ResolvedTypeReference {
+	if a == nil {
+		return nil
+	}
+	return a.ResolvedType
 }
 
 func (a *AliasTypeDeclaration) GetExtraProperties() map[string]interface{} {
@@ -6882,6 +10129,13 @@ type BigIntegerType struct {
 	extraProperties map[string]interface{}
 }
 
+func (b *BigIntegerType) GetDefault() *string {
+	if b == nil {
+		return nil
+	}
+	return b.Default
+}
+
 func (b *BigIntegerType) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
@@ -6914,6 +10168,13 @@ type BooleanType struct {
 	Default *bool `json:"default,omitempty" url:"default,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (b *BooleanType) GetDefault() *bool {
+	if b == nil {
+		return nil
+	}
+	return b.Default
 }
 
 func (b *BooleanType) GetExtraProperties() map[string]interface{} {
@@ -6971,6 +10232,48 @@ func NewContainerTypeFromSet(value *TypeReference) *ContainerType {
 
 func NewContainerTypeFromLiteral(value *Literal) *ContainerType {
 	return &ContainerType{Type: "literal", Literal: value}
+}
+
+func (c *ContainerType) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *ContainerType) GetList() *TypeReference {
+	if c == nil {
+		return nil
+	}
+	return c.List
+}
+
+func (c *ContainerType) GetMap() *MapType {
+	if c == nil {
+		return nil
+	}
+	return c.Map
+}
+
+func (c *ContainerType) GetOptional() *TypeReference {
+	if c == nil {
+		return nil
+	}
+	return c.Optional
+}
+
+func (c *ContainerType) GetSet() *TypeReference {
+	if c == nil {
+		return nil
+	}
+	return c.Set
+}
+
+func (c *ContainerType) GetLiteral() *Literal {
+	if c == nil {
+		return nil
+	}
+	return c.Literal
 }
 
 func (c *ContainerType) UnmarshalJSON(data []byte) error {
@@ -7169,6 +10472,27 @@ type DeclaredTypeName struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *DeclaredTypeName) GetTypeId() TypeId {
+	if d == nil {
+		return ""
+	}
+	return d.TypeId
+}
+
+func (d *DeclaredTypeName) GetFernFilepath() *FernFilepath {
+	if d == nil {
+		return nil
+	}
+	return d.FernFilepath
+}
+
+func (d *DeclaredTypeName) GetName() *Name {
+	if d == nil {
+		return nil
+	}
+	return d.Name
+}
+
 func (d *DeclaredTypeName) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -7202,6 +10526,20 @@ type DoubleType struct {
 	Validation *DoubleValidationRules `json:"validation,omitempty" url:"validation,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (d *DoubleType) GetDefault() *float64 {
+	if d == nil {
+		return nil
+	}
+	return d.Default
+}
+
+func (d *DoubleType) GetValidation() *DoubleValidationRules {
+	if d == nil {
+		return nil
+	}
+	return d.Validation
 }
 
 func (d *DoubleType) GetExtraProperties() map[string]interface{} {
@@ -7242,6 +10580,41 @@ type DoubleValidationRules struct {
 	extraProperties map[string]interface{}
 }
 
+func (d *DoubleValidationRules) GetMin() *float64 {
+	if d == nil {
+		return nil
+	}
+	return d.Min
+}
+
+func (d *DoubleValidationRules) GetMax() *float64 {
+	if d == nil {
+		return nil
+	}
+	return d.Max
+}
+
+func (d *DoubleValidationRules) GetExclusiveMin() *bool {
+	if d == nil {
+		return nil
+	}
+	return d.ExclusiveMin
+}
+
+func (d *DoubleValidationRules) GetExclusiveMax() *bool {
+	if d == nil {
+		return nil
+	}
+	return d.ExclusiveMax
+}
+
+func (d *DoubleValidationRules) GetMultipleOf() *float64 {
+	if d == nil {
+		return nil
+	}
+	return d.MultipleOf
+}
+
 func (d *DoubleValidationRules) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
@@ -7275,6 +10648,20 @@ type Encoding struct {
 	Proto *ProtoEncoding `json:"proto,omitempty" url:"proto,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *Encoding) GetJson() *JsonEncoding {
+	if e == nil {
+		return nil
+	}
+	return e.Json
+}
+
+func (e *Encoding) GetProto() *ProtoEncoding {
+	if e == nil {
+		return nil
+	}
+	return e.Proto
 }
 
 func (e *Encoding) GetExtraProperties() map[string]interface{} {
@@ -7312,6 +10699,20 @@ type EnumTypeDeclaration struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *EnumTypeDeclaration) GetDefault() *EnumValue {
+	if e == nil {
+		return nil
+	}
+	return e.Default
+}
+
+func (e *EnumTypeDeclaration) GetValues() []*EnumValue {
+	if e == nil {
+		return nil
+	}
+	return e.Values
+}
+
 func (e *EnumTypeDeclaration) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7345,6 +10746,20 @@ type EnumTypeReference struct {
 	Name    *DeclaredTypeName `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *EnumTypeReference) GetDefault() *EnumValue {
+	if e == nil {
+		return nil
+	}
+	return e.Default
+}
+
+func (e *EnumTypeReference) GetName() *DeclaredTypeName {
+	if e == nil {
+		return nil
+	}
+	return e.Name
 }
 
 func (e *EnumTypeReference) GetExtraProperties() map[string]interface{} {
@@ -7383,6 +10798,27 @@ type EnumValue struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *EnumValue) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *EnumValue) GetAvailability() *Availability {
+	if e == nil {
+		return nil
+	}
+	return e.Availability
+}
+
+func (e *EnumValue) GetName() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
 func (e *EnumValue) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7415,6 +10851,13 @@ type ExampleAliasType struct {
 	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleAliasType) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
 }
 
 func (e *ExampleAliasType) GetExtraProperties() map[string]interface{} {
@@ -7472,6 +10915,48 @@ func NewExampleContainerFromMap(value *ExampleMapContainer) *ExampleContainer {
 
 func NewExampleContainerFromLiteral(value *ExampleLiteralContainer) *ExampleContainer {
 	return &ExampleContainer{Type: "literal", Literal: value}
+}
+
+func (e *ExampleContainer) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleContainer) GetList() *ExampleListContainer {
+	if e == nil {
+		return nil
+	}
+	return e.List
+}
+
+func (e *ExampleContainer) GetSet() *ExampleSetContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Set
+}
+
+func (e *ExampleContainer) GetOptional() *ExampleOptionalContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Optional
+}
+
+func (e *ExampleContainer) GetMap() *ExampleMapContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Map
+}
+
+func (e *ExampleContainer) GetLiteral() *ExampleLiteralContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Literal
 }
 
 func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
@@ -7569,6 +11054,20 @@ type ExampleDatetime struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleDatetime) GetDatetime() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.Datetime
+}
+
+func (e *ExampleDatetime) GetRaw() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Raw
+}
+
 func (e *ExampleDatetime) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7621,6 +11120,13 @@ type ExampleEnumType struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleEnumType) GetValue() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Value
+}
+
 func (e *ExampleEnumType) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7654,6 +11160,20 @@ type ExampleKeyValuePair struct {
 	Value *ExampleTypeReference `json:"value,omitempty" url:"value,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleKeyValuePair) GetKey() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Key
+}
+
+func (e *ExampleKeyValuePair) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
 }
 
 func (e *ExampleKeyValuePair) GetExtraProperties() map[string]interface{} {
@@ -7691,6 +11211,20 @@ type ExampleListContainer struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleListContainer) GetList() []*ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.List
+}
+
+func (e *ExampleListContainer) GetItemType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.ItemType
+}
+
 func (e *ExampleListContainer) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7723,6 +11257,13 @@ type ExampleLiteralContainer struct {
 	Literal *ExamplePrimitive `json:"literal,omitempty" url:"literal,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleLiteralContainer) GetLiteral() *ExamplePrimitive {
+	if e == nil {
+		return nil
+	}
+	return e.Literal
 }
 
 func (e *ExampleLiteralContainer) GetExtraProperties() map[string]interface{} {
@@ -7761,6 +11302,27 @@ type ExampleMapContainer struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleMapContainer) GetMap() []*ExampleKeyValuePair {
+	if e == nil {
+		return nil
+	}
+	return e.Map
+}
+
+func (e *ExampleMapContainer) GetKeyType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.KeyType
+}
+
+func (e *ExampleMapContainer) GetValueType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.ValueType
+}
+
 func (e *ExampleMapContainer) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7794,6 +11356,20 @@ type ExampleNamedType struct {
 	Shape    *ExampleTypeShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleNamedType) GetTypeName() *DeclaredTypeName {
+	if e == nil {
+		return nil
+	}
+	return e.TypeName
+}
+
+func (e *ExampleNamedType) GetShape() *ExampleTypeShape {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
 }
 
 func (e *ExampleNamedType) GetExtraProperties() map[string]interface{} {
@@ -7834,6 +11410,27 @@ type ExampleObjectProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleObjectProperty) GetName() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleObjectProperty) GetValue() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Value
+}
+
+func (e *ExampleObjectProperty) GetOriginalTypeDeclaration() *DeclaredTypeName {
+	if e == nil {
+		return nil
+	}
+	return e.OriginalTypeDeclaration
+}
+
 func (e *ExampleObjectProperty) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7866,6 +11463,13 @@ type ExampleObjectType struct {
 	Properties []*ExampleObjectProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleObjectType) GetProperties() []*ExampleObjectProperty {
+	if e == nil {
+		return nil
+	}
+	return e.Properties
 }
 
 func (e *ExampleObjectType) GetExtraProperties() map[string]interface{} {
@@ -7903,6 +11507,20 @@ type ExampleObjectTypeWithTypeId struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleObjectTypeWithTypeId) GetTypeId() TypeId {
+	if e == nil {
+		return ""
+	}
+	return e.TypeId
+}
+
+func (e *ExampleObjectTypeWithTypeId) GetObject() *ExampleObjectType {
+	if e == nil {
+		return nil
+	}
+	return e.Object
+}
+
 func (e *ExampleObjectTypeWithTypeId) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -7936,6 +11554,20 @@ type ExampleOptionalContainer struct {
 	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleOptionalContainer) GetOptional() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Optional
+}
+
+func (e *ExampleOptionalContainer) GetValueType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.ValueType
 }
 
 func (e *ExampleOptionalContainer) GetExtraProperties() map[string]interface{} {
@@ -8033,6 +11665,104 @@ func NewExamplePrimitiveFromBase64(value []byte) *ExamplePrimitive {
 
 func NewExamplePrimitiveFromBigInteger(value string) *ExamplePrimitive {
 	return &ExamplePrimitive{Type: "bigInteger", BigInteger: value}
+}
+
+func (e *ExamplePrimitive) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExamplePrimitive) GetInteger() int {
+	if e == nil {
+		return 0
+	}
+	return e.Integer
+}
+
+func (e *ExamplePrimitive) GetLong() int64 {
+	if e == nil {
+		return 0
+	}
+	return e.Long
+}
+
+func (e *ExamplePrimitive) GetUint() int {
+	if e == nil {
+		return 0
+	}
+	return e.Uint
+}
+
+func (e *ExamplePrimitive) GetUint64() int64 {
+	if e == nil {
+		return 0
+	}
+	return e.Uint64
+}
+
+func (e *ExamplePrimitive) GetFloat() float64 {
+	if e == nil {
+		return 0
+	}
+	return e.Float
+}
+
+func (e *ExamplePrimitive) GetDouble() float64 {
+	if e == nil {
+		return 0
+	}
+	return e.Double
+}
+
+func (e *ExamplePrimitive) GetBoolean() bool {
+	if e == nil {
+		return false
+	}
+	return e.Boolean
+}
+
+func (e *ExamplePrimitive) GetString() *EscapedString {
+	if e == nil {
+		return nil
+	}
+	return e.String
+}
+
+func (e *ExamplePrimitive) GetDate() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.Date
+}
+
+func (e *ExamplePrimitive) GetDatetime() *ExampleDatetime {
+	if e == nil {
+		return nil
+	}
+	return e.Datetime
+}
+
+func (e *ExamplePrimitive) GetUuid() uuid.UUID {
+	if e == nil {
+		return uuid.UUID{}
+	}
+	return e.Uuid
+}
+
+func (e *ExamplePrimitive) GetBase64() []byte {
+	if e == nil {
+		return nil
+	}
+	return e.Base64
+}
+
+func (e *ExamplePrimitive) GetBigInteger() string {
+	if e == nil {
+		return ""
+	}
+	return e.BigInteger
 }
 
 func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
@@ -8326,6 +12056,20 @@ type ExampleSetContainer struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleSetContainer) GetSet() []*ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Set
+}
+
+func (e *ExampleSetContainer) GetItemType() *TypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.ItemType
+}
+
 func (e *ExampleSetContainer) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -8359,6 +12103,20 @@ type ExampleSingleUnionType struct {
 	Shape                 *ExampleSingleUnionTypeProperties `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleSingleUnionType) GetWireDiscriminantValue() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.WireDiscriminantValue
+}
+
+func (e *ExampleSingleUnionType) GetShape() *ExampleSingleUnionTypeProperties {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
 }
 
 func (e *ExampleSingleUnionType) GetExtraProperties() map[string]interface{} {
@@ -8406,6 +12164,34 @@ func NewExampleSingleUnionTypePropertiesFromSingleProperty(value *ExampleTypeRef
 
 func NewExampleSingleUnionTypePropertiesFromNoProperties(value interface{}) *ExampleSingleUnionTypeProperties {
 	return &ExampleSingleUnionTypeProperties{Type: "noProperties", NoProperties: value}
+}
+
+func (e *ExampleSingleUnionTypeProperties) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleSingleUnionTypeProperties) GetSamePropertiesAsObject() *ExampleObjectTypeWithTypeId {
+	if e == nil {
+		return nil
+	}
+	return e.SamePropertiesAsObject
+}
+
+func (e *ExampleSingleUnionTypeProperties) GetSingleProperty() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.SingleProperty
+}
+
+func (e *ExampleSingleUnionTypeProperties) GetNoProperties() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.NoProperties
 }
 
 func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
@@ -8490,6 +12276,34 @@ type ExampleType struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleType) GetJsonExample() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.JsonExample
+}
+
+func (e *ExampleType) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleType) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleType) GetShape() *ExampleTypeShape {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
+}
+
 func (e *ExampleType) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -8523,6 +12337,20 @@ type ExampleTypeReference struct {
 	Shape       *ExampleTypeReferenceShape `json:"shape,omitempty" url:"shape,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleTypeReference) GetJsonExample() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.JsonExample
+}
+
+func (e *ExampleTypeReference) GetShape() *ExampleTypeReferenceShape {
+	if e == nil {
+		return nil
+	}
+	return e.Shape
 }
 
 func (e *ExampleTypeReference) GetExtraProperties() map[string]interface{} {
@@ -8575,6 +12403,41 @@ func NewExampleTypeReferenceShapeFromUnknown(value interface{}) *ExampleTypeRefe
 
 func NewExampleTypeReferenceShapeFromNamed(value *ExampleNamedType) *ExampleTypeReferenceShape {
 	return &ExampleTypeReferenceShape{Type: "named", Named: value}
+}
+
+func (e *ExampleTypeReferenceShape) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleTypeReferenceShape) GetPrimitive() *ExamplePrimitive {
+	if e == nil {
+		return nil
+	}
+	return e.Primitive
+}
+
+func (e *ExampleTypeReferenceShape) GetContainer() *ExampleContainer {
+	if e == nil {
+		return nil
+	}
+	return e.Container
+}
+
+func (e *ExampleTypeReferenceShape) GetUnknown() interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.Unknown
+}
+
+func (e *ExampleTypeReferenceShape) GetNamed() *ExampleNamedType {
+	if e == nil {
+		return nil
+	}
+	return e.Named
 }
 
 func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
@@ -8710,6 +12573,48 @@ func NewExampleTypeShapeFromUndiscriminatedUnion(value *ExampleUndiscriminatedUn
 	return &ExampleTypeShape{Type: "undiscriminatedUnion", UndiscriminatedUnion: value}
 }
 
+func (e *ExampleTypeShape) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleTypeShape) GetAlias() *ExampleAliasType {
+	if e == nil {
+		return nil
+	}
+	return e.Alias
+}
+
+func (e *ExampleTypeShape) GetEnum() *ExampleEnumType {
+	if e == nil {
+		return nil
+	}
+	return e.Enum
+}
+
+func (e *ExampleTypeShape) GetObject() *ExampleObjectType {
+	if e == nil {
+		return nil
+	}
+	return e.Object
+}
+
+func (e *ExampleTypeShape) GetUnion() *ExampleUnionType {
+	if e == nil {
+		return nil
+	}
+	return e.Union
+}
+
+func (e *ExampleTypeShape) GetUndiscriminatedUnion() *ExampleUndiscriminatedUnionType {
+	if e == nil {
+		return nil
+	}
+	return e.UndiscriminatedUnion
+}
+
 func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -8820,6 +12725,20 @@ type ExampleUndiscriminatedUnionType struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleUndiscriminatedUnionType) GetIndex() int {
+	if e == nil {
+		return 0
+	}
+	return e.Index
+}
+
+func (e *ExampleUndiscriminatedUnionType) GetSingleUnionType() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.SingleUnionType
+}
+
 func (e *ExampleUndiscriminatedUnionType) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -8853,6 +12772,20 @@ type ExampleUnionType struct {
 	SingleUnionType *ExampleSingleUnionType `json:"singleUnionType,omitempty" url:"singleUnionType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleUnionType) GetDiscriminant() *NameAndWireValue {
+	if e == nil {
+		return nil
+	}
+	return e.Discriminant
+}
+
+func (e *ExampleUnionType) GetSingleUnionType() *ExampleSingleUnionType {
+	if e == nil {
+		return nil
+	}
+	return e.SingleUnionType
 }
 
 func (e *ExampleUnionType) GetExtraProperties() map[string]interface{} {
@@ -8922,6 +12855,20 @@ type IntegerType struct {
 	extraProperties map[string]interface{}
 }
 
+func (i *IntegerType) GetDefault() *int {
+	if i == nil {
+		return nil
+	}
+	return i.Default
+}
+
+func (i *IntegerType) GetValidation() *IntegerValidationRules {
+	if i == nil {
+		return nil
+	}
+	return i.Validation
+}
+
 func (i *IntegerType) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
@@ -8958,6 +12905,41 @@ type IntegerValidationRules struct {
 	MultipleOf   *int  `json:"multipleOf,omitempty" url:"multipleOf,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *IntegerValidationRules) GetMin() *int {
+	if i == nil {
+		return nil
+	}
+	return i.Min
+}
+
+func (i *IntegerValidationRules) GetMax() *int {
+	if i == nil {
+		return nil
+	}
+	return i.Max
+}
+
+func (i *IntegerValidationRules) GetExclusiveMin() *bool {
+	if i == nil {
+		return nil
+	}
+	return i.ExclusiveMin
+}
+
+func (i *IntegerValidationRules) GetExclusiveMax() *bool {
+	if i == nil {
+		return nil
+	}
+	return i.ExclusiveMax
+}
+
+func (i *IntegerValidationRules) GetMultipleOf() *int {
+	if i == nil {
+		return nil
+	}
+	return i.MultipleOf
 }
 
 func (i *IntegerValidationRules) GetExtraProperties() map[string]interface{} {
@@ -9032,6 +13014,27 @@ func NewLiteralFromString(value string) *Literal {
 
 func NewLiteralFromBoolean(value bool) *Literal {
 	return &Literal{Type: "boolean", Boolean: value}
+}
+
+func (l *Literal) GetType() string {
+	if l == nil {
+		return ""
+	}
+	return l.Type
+}
+
+func (l *Literal) GetString() string {
+	if l == nil {
+		return ""
+	}
+	return l.String
+}
+
+func (l *Literal) GetBoolean() bool {
+	if l == nil {
+		return false
+	}
+	return l.Boolean
 }
 
 func (l *Literal) UnmarshalJSON(data []byte) error {
@@ -9113,6 +13116,13 @@ type LongType struct {
 	extraProperties map[string]interface{}
 }
 
+func (l *LongType) GetDefault() *int64 {
+	if l == nil {
+		return nil
+	}
+	return l.Default
+}
+
 func (l *LongType) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
@@ -9146,6 +13156,20 @@ type MapType struct {
 	ValueType *TypeReference `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *MapType) GetKeyType() *TypeReference {
+	if m == nil {
+		return nil
+	}
+	return m.KeyType
+}
+
+func (m *MapType) GetValueType() *TypeReference {
+	if m == nil {
+		return nil
+	}
+	return m.ValueType
 }
 
 func (m *MapType) GetExtraProperties() map[string]interface{} {
@@ -9188,6 +13212,41 @@ type NamedType struct {
 	extraProperties map[string]interface{}
 }
 
+func (n *NamedType) GetTypeId() TypeId {
+	if n == nil {
+		return ""
+	}
+	return n.TypeId
+}
+
+func (n *NamedType) GetFernFilepath() *FernFilepath {
+	if n == nil {
+		return nil
+	}
+	return n.FernFilepath
+}
+
+func (n *NamedType) GetName() *Name {
+	if n == nil {
+		return nil
+	}
+	return n.Name
+}
+
+func (n *NamedType) GetDefault() *NamedTypeDefault {
+	if n == nil {
+		return nil
+	}
+	return n.Default
+}
+
+func (n *NamedType) GetInline() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.Inline
+}
+
 func (n *NamedType) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
@@ -9223,6 +13282,20 @@ type NamedTypeDefault struct {
 
 func NewNamedTypeDefaultFromEnum(value *EnumValue) *NamedTypeDefault {
 	return &NamedTypeDefault{Type: "enum", Enum: value}
+}
+
+func (n *NamedTypeDefault) GetType() string {
+	if n == nil {
+		return ""
+	}
+	return n.Type
+}
+
+func (n *NamedTypeDefault) GetEnum() *EnumValue {
+	if n == nil {
+		return nil
+	}
+	return n.Enum
 }
 
 func (n *NamedTypeDefault) UnmarshalJSON(data []byte) error {
@@ -9278,6 +13351,34 @@ type ObjectProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *ObjectProperty) GetDocs() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Docs
+}
+
+func (o *ObjectProperty) GetAvailability() *Availability {
+	if o == nil {
+		return nil
+	}
+	return o.Availability
+}
+
+func (o *ObjectProperty) GetName() *NameAndWireValue {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *ObjectProperty) GetValueType() *TypeReference {
+	if o == nil {
+		return nil
+	}
+	return o.ValueType
+}
+
 func (o *ObjectProperty) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -9318,8 +13419,32 @@ type ObjectTypeDeclaration struct {
 	extraProperties map[string]interface{}
 }
 
-func (o *ObjectTypeDeclaration) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
+func (o *ObjectTypeDeclaration) GetExtends() []*DeclaredTypeName {
+	if o == nil {
+		return nil
+	}
+	return o.Extends
+}
+
+func (o *ObjectTypeDeclaration) GetProperties() []*ObjectProperty {
+	if o == nil {
+		return nil
+	}
+	return o.Properties
+}
+
+func (o *ObjectTypeDeclaration) GetExtendedProperties() []*ObjectProperty {
+	if o == nil {
+		return nil
+	}
+	return o.ExtendedProperties
+}
+
+func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
+	if o == nil {
+		return false
+	}
+	return o.ExtraProperties
 }
 
 func (o *ObjectTypeDeclaration) UnmarshalJSON(data []byte) error {
@@ -9351,6 +13476,20 @@ type PrimitiveType struct {
 	V2 *PrimitiveTypeV2 `json:"v2,omitempty" url:"v2,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (p *PrimitiveType) GetV1() PrimitiveTypeV1 {
+	if p == nil {
+		return ""
+	}
+	return p.V1
+}
+
+func (p *PrimitiveType) GetV2() *PrimitiveTypeV2 {
+	if p == nil {
+		return nil
+	}
+	return p.V2
 }
 
 func (p *PrimitiveType) GetExtraProperties() map[string]interface{} {
@@ -9504,6 +13643,104 @@ func NewPrimitiveTypeV2FromBase64(value *Base64Type) *PrimitiveTypeV2 {
 
 func NewPrimitiveTypeV2FromBigInteger(value *BigIntegerType) *PrimitiveTypeV2 {
 	return &PrimitiveTypeV2{Type: "bigInteger", BigInteger: value}
+}
+
+func (p *PrimitiveTypeV2) GetType() string {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *PrimitiveTypeV2) GetInteger() *IntegerType {
+	if p == nil {
+		return nil
+	}
+	return p.Integer
+}
+
+func (p *PrimitiveTypeV2) GetLong() *LongType {
+	if p == nil {
+		return nil
+	}
+	return p.Long
+}
+
+func (p *PrimitiveTypeV2) GetUint() *UintType {
+	if p == nil {
+		return nil
+	}
+	return p.Uint
+}
+
+func (p *PrimitiveTypeV2) GetUint64() *Uint64Type {
+	if p == nil {
+		return nil
+	}
+	return p.Uint64
+}
+
+func (p *PrimitiveTypeV2) GetFloat() *FloatType {
+	if p == nil {
+		return nil
+	}
+	return p.Float
+}
+
+func (p *PrimitiveTypeV2) GetDouble() *DoubleType {
+	if p == nil {
+		return nil
+	}
+	return p.Double
+}
+
+func (p *PrimitiveTypeV2) GetBoolean() *BooleanType {
+	if p == nil {
+		return nil
+	}
+	return p.Boolean
+}
+
+func (p *PrimitiveTypeV2) GetString() *StringType {
+	if p == nil {
+		return nil
+	}
+	return p.String
+}
+
+func (p *PrimitiveTypeV2) GetDate() *DateType {
+	if p == nil {
+		return nil
+	}
+	return p.Date
+}
+
+func (p *PrimitiveTypeV2) GetDateTime() *DateTimeType {
+	if p == nil {
+		return nil
+	}
+	return p.DateTime
+}
+
+func (p *PrimitiveTypeV2) GetUuid() *UuidType {
+	if p == nil {
+		return nil
+	}
+	return p.Uuid
+}
+
+func (p *PrimitiveTypeV2) GetBase64() *Base64Type {
+	if p == nil {
+		return nil
+	}
+	return p.Base64
+}
+
+func (p *PrimitiveTypeV2) GetBigInteger() *BigIntegerType {
+	if p == nil {
+		return nil
+	}
+	return p.BigInteger
 }
 
 func (p *PrimitiveTypeV2) UnmarshalJSON(data []byte) error {
@@ -9721,6 +13958,20 @@ type ResolvedNamedType struct {
 	extraProperties map[string]interface{}
 }
 
+func (r *ResolvedNamedType) GetName() *DeclaredTypeName {
+	if r == nil {
+		return nil
+	}
+	return r.Name
+}
+
+func (r *ResolvedNamedType) GetShape() ShapeType {
+	if r == nil {
+		return ""
+	}
+	return r.Shape
+}
+
 func (r *ResolvedNamedType) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
 }
@@ -9771,6 +14022,41 @@ func NewResolvedTypeReferenceFromPrimitive(value *PrimitiveType) *ResolvedTypeRe
 
 func NewResolvedTypeReferenceFromUnknown(value interface{}) *ResolvedTypeReference {
 	return &ResolvedTypeReference{Type: "unknown", Unknown: value}
+}
+
+func (r *ResolvedTypeReference) GetType() string {
+	if r == nil {
+		return ""
+	}
+	return r.Type
+}
+
+func (r *ResolvedTypeReference) GetContainer() *ContainerType {
+	if r == nil {
+		return nil
+	}
+	return r.Container
+}
+
+func (r *ResolvedTypeReference) GetNamed() *ResolvedNamedType {
+	if r == nil {
+		return nil
+	}
+	return r.Named
+}
+
+func (r *ResolvedTypeReference) GetPrimitive() *PrimitiveType {
+	if r == nil {
+		return nil
+	}
+	return r.Primitive
+}
+
+func (r *ResolvedTypeReference) GetUnknown() interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Unknown
 }
 
 func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
@@ -9913,6 +14199,41 @@ type SingleUnionType struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *SingleUnionType) GetDocs() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Docs
+}
+
+func (s *SingleUnionType) GetDiscriminantValue() *NameAndWireValue {
+	if s == nil {
+		return nil
+	}
+	return s.DiscriminantValue
+}
+
+func (s *SingleUnionType) GetShape() *SingleUnionTypeProperties {
+	if s == nil {
+		return nil
+	}
+	return s.Shape
+}
+
+func (s *SingleUnionType) GetDisplayName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.DisplayName
+}
+
+func (s *SingleUnionType) GetAvailability() *Availability {
+	if s == nil {
+		return nil
+	}
+	return s.Availability
+}
+
 func (s *SingleUnionType) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -9958,6 +14279,34 @@ func NewSingleUnionTypePropertiesFromSingleProperty(value *SingleUnionTypeProper
 
 func NewSingleUnionTypePropertiesFromNoProperties(value interface{}) *SingleUnionTypeProperties {
 	return &SingleUnionTypeProperties{PropertiesType: "noProperties", NoProperties: value}
+}
+
+func (s *SingleUnionTypeProperties) GetPropertiesType() string {
+	if s == nil {
+		return ""
+	}
+	return s.PropertiesType
+}
+
+func (s *SingleUnionTypeProperties) GetSamePropertiesAsObject() *DeclaredTypeName {
+	if s == nil {
+		return nil
+	}
+	return s.SamePropertiesAsObject
+}
+
+func (s *SingleUnionTypeProperties) GetSingleProperty() *SingleUnionTypeProperty {
+	if s == nil {
+		return nil
+	}
+	return s.SingleProperty
+}
+
+func (s *SingleUnionTypeProperties) GetNoProperties() interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.NoProperties
 }
 
 func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
@@ -10040,6 +14389,20 @@ type SingleUnionTypeProperty struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *SingleUnionTypeProperty) GetName() *NameAndWireValue {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
+func (s *SingleUnionTypeProperty) GetType() *TypeReference {
+	if s == nil {
+		return nil
+	}
+	return s.Type
+}
+
 func (s *SingleUnionTypeProperty) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -10076,6 +14439,20 @@ type Source struct {
 
 func NewSourceFromProto(value *ProtobufType) *Source {
 	return &Source{Type: "proto", Proto: value}
+}
+
+func (s *Source) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *Source) GetProto() *ProtobufType {
+	if s == nil {
+		return nil
+	}
+	return s.Proto
 }
 
 func (s *Source) UnmarshalJSON(data []byte) error {
@@ -10138,6 +14515,20 @@ type StringType struct {
 	extraProperties map[string]interface{}
 }
 
+func (s *StringType) GetDefault() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Default
+}
+
+func (s *StringType) GetValidation() *StringValidationRules {
+	if s == nil {
+		return nil
+	}
+	return s.Validation
+}
+
 func (s *StringType) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
@@ -10173,6 +14564,34 @@ type StringValidationRules struct {
 	MaxLength *int    `json:"maxLength,omitempty" url:"maxLength,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *StringValidationRules) GetFormat() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Format
+}
+
+func (s *StringValidationRules) GetPattern() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Pattern
+}
+
+func (s *StringValidationRules) GetMinLength() *int {
+	if s == nil {
+		return nil
+	}
+	return s.MinLength
+}
+
+func (s *StringValidationRules) GetMaxLength() *int {
+	if s == nil {
+		return nil
+	}
+	return s.MaxLength
 }
 
 func (s *StringValidationRules) GetExtraProperties() map[string]interface{} {
@@ -10230,6 +14649,48 @@ func NewTypeFromUnion(value *UnionTypeDeclaration) *Type {
 
 func NewTypeFromUndiscriminatedUnion(value *UndiscriminatedUnionTypeDeclaration) *Type {
 	return &Type{Type: "undiscriminatedUnion", UndiscriminatedUnion: value}
+}
+
+func (t *Type) GetType() string {
+	if t == nil {
+		return ""
+	}
+	return t.Type
+}
+
+func (t *Type) GetAlias() *AliasTypeDeclaration {
+	if t == nil {
+		return nil
+	}
+	return t.Alias
+}
+
+func (t *Type) GetEnum() *EnumTypeDeclaration {
+	if t == nil {
+		return nil
+	}
+	return t.Enum
+}
+
+func (t *Type) GetObject() *ObjectTypeDeclaration {
+	if t == nil {
+		return nil
+	}
+	return t.Object
+}
+
+func (t *Type) GetUnion() *UnionTypeDeclaration {
+	if t == nil {
+		return nil
+	}
+	return t.Union
+}
+
+func (t *Type) GetUndiscriminatedUnion() *UndiscriminatedUnionTypeDeclaration {
+	if t == nil {
+		return nil
+	}
+	return t.UndiscriminatedUnion
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
@@ -10338,6 +14799,76 @@ type TypeDeclaration struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *TypeDeclaration) GetDocs() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Docs
+}
+
+func (t *TypeDeclaration) GetAvailability() *Availability {
+	if t == nil {
+		return nil
+	}
+	return t.Availability
+}
+
+func (t *TypeDeclaration) GetName() *DeclaredTypeName {
+	if t == nil {
+		return nil
+	}
+	return t.Name
+}
+
+func (t *TypeDeclaration) GetShape() *Type {
+	if t == nil {
+		return nil
+	}
+	return t.Shape
+}
+
+func (t *TypeDeclaration) GetAutogeneratedExamples() []*ExampleType {
+	if t == nil {
+		return nil
+	}
+	return t.AutogeneratedExamples
+}
+
+func (t *TypeDeclaration) GetUserProvidedExamples() []*ExampleType {
+	if t == nil {
+		return nil
+	}
+	return t.UserProvidedExamples
+}
+
+func (t *TypeDeclaration) GetReferencedTypes() []TypeId {
+	if t == nil {
+		return nil
+	}
+	return t.ReferencedTypes
+}
+
+func (t *TypeDeclaration) GetEncoding() *Encoding {
+	if t == nil {
+		return nil
+	}
+	return t.Encoding
+}
+
+func (t *TypeDeclaration) GetSource() *Source {
+	if t == nil {
+		return nil
+	}
+	return t.Source
+}
+
+func (t *TypeDeclaration) GetInline() *bool {
+	if t == nil {
+		return nil
+	}
+	return t.Inline
+}
+
 func (t *TypeDeclaration) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -10388,6 +14919,41 @@ func NewTypeReferenceFromPrimitive(value *PrimitiveType) *TypeReference {
 
 func NewTypeReferenceFromUnknown(value interface{}) *TypeReference {
 	return &TypeReference{Type: "unknown", Unknown: value}
+}
+
+func (t *TypeReference) GetType() string {
+	if t == nil {
+		return ""
+	}
+	return t.Type
+}
+
+func (t *TypeReference) GetContainer() *ContainerType {
+	if t == nil {
+		return nil
+	}
+	return t.Container
+}
+
+func (t *TypeReference) GetNamed() *NamedType {
+	if t == nil {
+		return nil
+	}
+	return t.Named
+}
+
+func (t *TypeReference) GetPrimitive() *PrimitiveType {
+	if t == nil {
+		return nil
+	}
+	return t.Primitive
+}
+
+func (t *TypeReference) GetUnknown() interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.Unknown
 }
 
 func (t *TypeReference) UnmarshalJSON(data []byte) error {
@@ -10563,6 +15129,20 @@ type UndiscriminatedUnionMember struct {
 	extraProperties map[string]interface{}
 }
 
+func (u *UndiscriminatedUnionMember) GetDocs() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Docs
+}
+
+func (u *UndiscriminatedUnionMember) GetType() *TypeReference {
+	if u == nil {
+		return nil
+	}
+	return u.Type
+}
+
 func (u *UndiscriminatedUnionMember) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -10595,6 +15175,13 @@ type UndiscriminatedUnionTypeDeclaration struct {
 	Members []*UndiscriminatedUnionMember `json:"members,omitempty" url:"members,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *UndiscriminatedUnionTypeDeclaration) GetMembers() []*UndiscriminatedUnionMember {
+	if u == nil {
+		return nil
+	}
+	return u.Members
 }
 
 func (u *UndiscriminatedUnionTypeDeclaration) GetExtraProperties() map[string]interface{} {
@@ -10633,6 +15220,34 @@ type UnionTypeDeclaration struct {
 	BaseProperties []*ObjectProperty   `json:"baseProperties,omitempty" url:"baseProperties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *UnionTypeDeclaration) GetDiscriminant() *NameAndWireValue {
+	if u == nil {
+		return nil
+	}
+	return u.Discriminant
+}
+
+func (u *UnionTypeDeclaration) GetExtends() []*DeclaredTypeName {
+	if u == nil {
+		return nil
+	}
+	return u.Extends
+}
+
+func (u *UnionTypeDeclaration) GetTypes() []*SingleUnionType {
+	if u == nil {
+		return nil
+	}
+	return u.Types
+}
+
+func (u *UnionTypeDeclaration) GetBaseProperties() []*ObjectProperty {
+	if u == nil {
+		return nil
+	}
+	return u.BaseProperties
 }
 
 func (u *UnionTypeDeclaration) GetExtraProperties() map[string]interface{} {
@@ -10704,6 +15319,34 @@ type VariableDeclaration struct {
 	extraProperties map[string]interface{}
 }
 
+func (v *VariableDeclaration) GetDocs() *string {
+	if v == nil {
+		return nil
+	}
+	return v.Docs
+}
+
+func (v *VariableDeclaration) GetId() VariableId {
+	if v == nil {
+		return ""
+	}
+	return v.Id
+}
+
+func (v *VariableDeclaration) GetName() *Name {
+	if v == nil {
+		return nil
+	}
+	return v.Name
+}
+
+func (v *VariableDeclaration) GetType() *TypeReference {
+	if v == nil {
+		return nil
+	}
+	return v.Type
+}
+
 func (v *VariableDeclaration) GetExtraProperties() map[string]interface{} {
 	return v.extraProperties
 }
@@ -10745,6 +15388,27 @@ type ExampleWebhookCall struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleWebhookCall) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleWebhookCall) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleWebhookCall) GetPayload() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Payload
+}
+
 func (e *ExampleWebhookCall) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -10779,6 +15443,27 @@ type InlinedWebhookPayload struct {
 	Properties []*InlinedWebhookPayloadProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *InlinedWebhookPayload) GetName() *Name {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedWebhookPayload) GetExtends() []*DeclaredTypeName {
+	if i == nil {
+		return nil
+	}
+	return i.Extends
+}
+
+func (i *InlinedWebhookPayload) GetProperties() []*InlinedWebhookPayloadProperty {
+	if i == nil {
+		return nil
+	}
+	return i.Properties
 }
 
 func (i *InlinedWebhookPayload) GetExtraProperties() map[string]interface{} {
@@ -10816,6 +15501,34 @@ type InlinedWebhookPayloadProperty struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *InlinedWebhookPayloadProperty) GetDocs() *string {
+	if i == nil {
+		return nil
+	}
+	return i.Docs
+}
+
+func (i *InlinedWebhookPayloadProperty) GetAvailability() *Availability {
+	if i == nil {
+		return nil
+	}
+	return i.Availability
+}
+
+func (i *InlinedWebhookPayloadProperty) GetName() *NameAndWireValue {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedWebhookPayloadProperty) GetValueType() *TypeReference {
+	if i == nil {
+		return nil
+	}
+	return i.ValueType
 }
 
 func (i *InlinedWebhookPayloadProperty) GetExtraProperties() map[string]interface{} {
@@ -10858,6 +15571,69 @@ type Webhook struct {
 	Examples     []*ExampleWebhookCall `json:"examples,omitempty" url:"examples,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (w *Webhook) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *Webhook) GetAvailability() *Availability {
+	if w == nil {
+		return nil
+	}
+	return w.Availability
+}
+
+func (w *Webhook) GetId() WebhookId {
+	if w == nil {
+		return ""
+	}
+	return w.Id
+}
+
+func (w *Webhook) GetName() WebhookName {
+	if w == nil {
+		return nil
+	}
+	return w.Name
+}
+
+func (w *Webhook) GetDisplayName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.DisplayName
+}
+
+func (w *Webhook) GetMethod() WebhookHttpMethod {
+	if w == nil {
+		return ""
+	}
+	return w.Method
+}
+
+func (w *Webhook) GetHeaders() []*HttpHeader {
+	if w == nil {
+		return nil
+	}
+	return w.Headers
+}
+
+func (w *Webhook) GetPayload() *WebhookPayload {
+	if w == nil {
+		return nil
+	}
+	return w.Payload
+}
+
+func (w *Webhook) GetExamples() []*ExampleWebhookCall {
+	if w == nil {
+		return nil
+	}
+	return w.Examples
 }
 
 func (w *Webhook) GetExtraProperties() map[string]interface{} {
@@ -10928,6 +15704,27 @@ func NewWebhookPayloadFromReference(value *WebhookPayloadReference) *WebhookPayl
 	return &WebhookPayload{Type: "reference", Reference: value}
 }
 
+func (w *WebhookPayload) GetType() string {
+	if w == nil {
+		return ""
+	}
+	return w.Type
+}
+
+func (w *WebhookPayload) GetInlinedPayload() *InlinedWebhookPayload {
+	if w == nil {
+		return nil
+	}
+	return w.InlinedPayload
+}
+
+func (w *WebhookPayload) GetReference() *WebhookPayloadReference {
+	if w == nil {
+		return nil
+	}
+	return w.Reference
+}
+
 func (w *WebhookPayload) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -10990,6 +15787,20 @@ type WebhookPayloadReference struct {
 	extraProperties map[string]interface{}
 }
 
+func (w *WebhookPayloadReference) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *WebhookPayloadReference) GetPayloadType() *TypeReference {
+	if w == nil {
+		return nil
+	}
+	return w.PayloadType
+}
+
 func (w *WebhookPayloadReference) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -11023,6 +15834,20 @@ type ExampleWebSocketMessage struct {
 	Body *ExampleWebSocketMessageBody `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (e *ExampleWebSocketMessage) GetType() WebSocketMessageId {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleWebSocketMessage) GetBody() *ExampleWebSocketMessageBody {
+	if e == nil {
+		return nil
+	}
+	return e.Body
 }
 
 func (e *ExampleWebSocketMessage) GetExtraProperties() map[string]interface{} {
@@ -11065,6 +15890,27 @@ func NewExampleWebSocketMessageBodyFromInlinedBody(value *ExampleInlinedRequestB
 
 func NewExampleWebSocketMessageBodyFromReference(value *ExampleTypeReference) *ExampleWebSocketMessageBody {
 	return &ExampleWebSocketMessageBody{Type: "reference", Reference: value}
+}
+
+func (e *ExampleWebSocketMessageBody) GetType() string {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
+func (e *ExampleWebSocketMessageBody) GetInlinedBody() *ExampleInlinedRequestBody {
+	if e == nil {
+		return nil
+	}
+	return e.InlinedBody
+}
+
+func (e *ExampleWebSocketMessageBody) GetReference() *ExampleTypeReference {
+	if e == nil {
+		return nil
+	}
+	return e.Reference
 }
 
 func (e *ExampleWebSocketMessageBody) UnmarshalJSON(data []byte) error {
@@ -11134,6 +15980,55 @@ type ExampleWebSocketSession struct {
 	extraProperties map[string]interface{}
 }
 
+func (e *ExampleWebSocketSession) GetDocs() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Docs
+}
+
+func (e *ExampleWebSocketSession) GetName() *Name {
+	if e == nil {
+		return nil
+	}
+	return e.Name
+}
+
+func (e *ExampleWebSocketSession) GetUrl() string {
+	if e == nil {
+		return ""
+	}
+	return e.Url
+}
+
+func (e *ExampleWebSocketSession) GetPathParameters() []*ExamplePathParameter {
+	if e == nil {
+		return nil
+	}
+	return e.PathParameters
+}
+
+func (e *ExampleWebSocketSession) GetHeaders() []*ExampleHeader {
+	if e == nil {
+		return nil
+	}
+	return e.Headers
+}
+
+func (e *ExampleWebSocketSession) GetQueryParameters() []*ExampleQueryParameter {
+	if e == nil {
+		return nil
+	}
+	return e.QueryParameters
+}
+
+func (e *ExampleWebSocketSession) GetMessages() []*ExampleWebSocketMessage {
+	if e == nil {
+		return nil
+	}
+	return e.Messages
+}
+
 func (e *ExampleWebSocketSession) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
@@ -11168,6 +16063,27 @@ type InlinedWebSocketMessageBody struct {
 	Properties []*InlinedWebSocketMessageBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *InlinedWebSocketMessageBody) GetName() *Name {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedWebSocketMessageBody) GetExtends() []*DeclaredTypeName {
+	if i == nil {
+		return nil
+	}
+	return i.Extends
+}
+
+func (i *InlinedWebSocketMessageBody) GetProperties() []*InlinedWebSocketMessageBodyProperty {
+	if i == nil {
+		return nil
+	}
+	return i.Properties
 }
 
 func (i *InlinedWebSocketMessageBody) GetExtraProperties() map[string]interface{} {
@@ -11205,6 +16121,34 @@ type InlinedWebSocketMessageBodyProperty struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (i *InlinedWebSocketMessageBodyProperty) GetDocs() *string {
+	if i == nil {
+		return nil
+	}
+	return i.Docs
+}
+
+func (i *InlinedWebSocketMessageBodyProperty) GetAvailability() *Availability {
+	if i == nil {
+		return nil
+	}
+	return i.Availability
+}
+
+func (i *InlinedWebSocketMessageBodyProperty) GetName() *NameAndWireValue {
+	if i == nil {
+		return nil
+	}
+	return i.Name
+}
+
+func (i *InlinedWebSocketMessageBodyProperty) GetValueType() *TypeReference {
+	if i == nil {
+		return nil
+	}
+	return i.ValueType
 }
 
 func (i *InlinedWebSocketMessageBodyProperty) GetExtraProperties() map[string]interface{} {
@@ -11252,6 +16196,83 @@ type WebSocketChannel struct {
 	extraProperties map[string]interface{}
 }
 
+func (w *WebSocketChannel) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *WebSocketChannel) GetAvailability() *Availability {
+	if w == nil {
+		return nil
+	}
+	return w.Availability
+}
+
+func (w *WebSocketChannel) GetName() WebSocketName {
+	if w == nil {
+		return nil
+	}
+	return w.Name
+}
+
+func (w *WebSocketChannel) GetDisplayName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.DisplayName
+}
+
+func (w *WebSocketChannel) GetPath() *HttpPath {
+	if w == nil {
+		return nil
+	}
+	return w.Path
+}
+
+func (w *WebSocketChannel) GetAuth() bool {
+	if w == nil {
+		return false
+	}
+	return w.Auth
+}
+
+func (w *WebSocketChannel) GetHeaders() []*HttpHeader {
+	if w == nil {
+		return nil
+	}
+	return w.Headers
+}
+
+func (w *WebSocketChannel) GetQueryParameters() []*QueryParameter {
+	if w == nil {
+		return nil
+	}
+	return w.QueryParameters
+}
+
+func (w *WebSocketChannel) GetPathParameters() []*PathParameter {
+	if w == nil {
+		return nil
+	}
+	return w.PathParameters
+}
+
+func (w *WebSocketChannel) GetMessages() []*WebSocketMessage {
+	if w == nil {
+		return nil
+	}
+	return w.Messages
+}
+
+func (w *WebSocketChannel) GetExamples() []*ExampleWebSocketSession {
+	if w == nil {
+		return nil
+	}
+	return w.Examples
+}
+
 func (w *WebSocketChannel) GetExtraProperties() map[string]interface{} {
 	return w.extraProperties
 }
@@ -11289,6 +16310,48 @@ type WebSocketMessage struct {
 	Body         *WebSocketMessageBody  `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (w *WebSocketMessage) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *WebSocketMessage) GetAvailability() *Availability {
+	if w == nil {
+		return nil
+	}
+	return w.Availability
+}
+
+func (w *WebSocketMessage) GetType() WebSocketMessageId {
+	if w == nil {
+		return ""
+	}
+	return w.Type
+}
+
+func (w *WebSocketMessage) GetDisplayName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.DisplayName
+}
+
+func (w *WebSocketMessage) GetOrigin() WebSocketMessageOrigin {
+	if w == nil {
+		return ""
+	}
+	return w.Origin
+}
+
+func (w *WebSocketMessage) GetBody() *WebSocketMessageBody {
+	if w == nil {
+		return nil
+	}
+	return w.Body
 }
 
 func (w *WebSocketMessage) GetExtraProperties() map[string]interface{} {
@@ -11331,6 +16394,27 @@ func NewWebSocketMessageBodyFromInlinedBody(value *InlinedWebSocketMessageBody) 
 
 func NewWebSocketMessageBodyFromReference(value *WebSocketMessageBodyReference) *WebSocketMessageBody {
 	return &WebSocketMessageBody{Type: "reference", Reference: value}
+}
+
+func (w *WebSocketMessageBody) GetType() string {
+	if w == nil {
+		return ""
+	}
+	return w.Type
+}
+
+func (w *WebSocketMessageBody) GetInlinedBody() *InlinedWebSocketMessageBody {
+	if w == nil {
+		return nil
+	}
+	return w.InlinedBody
+}
+
+func (w *WebSocketMessageBody) GetReference() *WebSocketMessageBodyReference {
+	if w == nil {
+		return nil
+	}
+	return w.Reference
 }
 
 func (w *WebSocketMessageBody) UnmarshalJSON(data []byte) error {
@@ -11393,6 +16477,20 @@ type WebSocketMessageBodyReference struct {
 	BodyType *TypeReference `json:"bodyType,omitempty" url:"bodyType,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (w *WebSocketMessageBodyReference) GetDocs() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Docs
+}
+
+func (w *WebSocketMessageBodyReference) GetBodyType() *TypeReference {
+	if w == nil {
+		return nil
+	}
+	return w.BodyType
 }
 
 func (w *WebSocketMessageBodyReference) GetExtraProperties() map[string]interface{} {

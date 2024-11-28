@@ -67,6 +67,12 @@ export function buildQueryParameter({
         queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
+    if (isRawTypeReferenceDetailedSchema(typeReference.value)) {
+        if (typeReference.value.validation !== undefined) {
+            queryParameterSchema.validation = typeReference.value.validation;
+        }
+    }
+
     return queryParameterSchema;
 }
 
@@ -107,7 +113,8 @@ function getQueryParameterTypeReference({
                     context,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -158,7 +165,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -181,7 +189,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -204,7 +213,8 @@ function getQueryParameterTypeReference({
                     context,
                     fileContainingReference,
                     declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: false
             };
@@ -231,7 +241,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: true
                 };
@@ -242,7 +253,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -262,7 +274,8 @@ function getQueryParameterTypeReference({
                     }),
                     context,
                     fileContainingReference,
-                    namespace
+                    namespace,
+                    declarationDepth: 0
                 }),
                 allowMultiple: true
             };
@@ -313,7 +326,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -336,7 +350,8 @@ function getQueryParameterTypeReference({
                             }),
                             context,
                             fileContainingReference,
-                            namespace
+                            namespace,
+                            declarationDepth: 0
                         }),
                         allowMultiple: true
                     };
@@ -368,7 +383,8 @@ function getQueryParameterTypeReference({
                         context,
                         fileContainingReference,
                         declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-                        namespace
+                        namespace,
+                        declarationDepth: 0
                     }),
                     allowMultiple: false
                 };
@@ -380,7 +396,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };
@@ -400,7 +417,8 @@ function getQueryParameterTypeReference({
                 }),
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: true
         };
@@ -410,7 +428,8 @@ function getQueryParameterTypeReference({
                 schema,
                 context,
                 fileContainingReference,
-                namespace
+                namespace,
+                declarationDepth: 0
             }),
             allowMultiple: false
         };
@@ -424,4 +443,10 @@ function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primit
         primitive?.type === "primitive" &&
         array.value.schema.type === primitive.schema.type
     );
+}
+
+function isRawTypeReferenceDetailedSchema(
+    rawTypeReference: RawSchemas.TypeReferenceSchema
+): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
+    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
 }

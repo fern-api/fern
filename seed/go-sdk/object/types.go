@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
-	core "github.com/object/fern/core"
+	internal "github.com/object/fern/internal"
 	time "time"
 )
 
@@ -15,7 +15,7 @@ type Name struct {
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (n *Name) GetId() string {
@@ -43,24 +43,22 @@ func (n *Name) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Name(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *Name) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -93,7 +91,7 @@ type Type struct {
 	eighteen    string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (t *Type) GetOne() int {
@@ -262,9 +260,9 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -278,14 +276,12 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
 	}
 	t.eighteen = unmarshaler.Eighteen
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
+	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
-	t._rawJSON = json.RawMessage(data)
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -293,25 +289,25 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Six      *core.DateTime `json:"six"`
-		Seven    *core.Date     `json:"seven"`
-		Eighteen string         `json:"eighteen"`
+		Six      *internal.DateTime `json:"six"`
+		Seven    *internal.Date     `json:"seven"`
+		Eighteen string             `json:"eighteen"`
 	}{
 		embed:    embed(*t),
-		Six:      core.NewDateTime(t.Six),
-		Seven:    core.NewDate(t.Seven),
+		Six:      internal.NewDateTime(t.Six),
+		Seven:    internal.NewDate(t.Seven),
 		Eighteen: "eighteen",
 	}
 	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {
-	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

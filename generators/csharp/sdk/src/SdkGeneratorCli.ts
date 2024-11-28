@@ -5,7 +5,7 @@ import {
     generateWellKnownProtobufFiles,
     generateVersion
 } from "@fern-api/fern-csharp-model";
-import { File, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
@@ -28,6 +28,9 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { buildReference } from "./reference/buildReference";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
+import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
+import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -137,8 +140,22 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
 
+        const requestOptionsInterace = new RequestOptionsInterfaceGenerator(context, baseOptionsGenerator);
+        context.project.addSourceFiles(requestOptionsInterace.generate());
+
         const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptions.generate());
+
+        if (context.hasIdempotencyHeaders()) {
+            const idempotentRequestOptionsInterface = new IdempotentRequestOptionsInterfaceGenerator(
+                context,
+                baseOptionsGenerator
+            );
+            context.project.addSourceFiles(idempotentRequestOptionsInterface.generate());
+
+            const idempotentRequestOptions = new IdempotentRequestOptionsGenerator(context, baseOptionsGenerator);
+            context.project.addSourceFiles(idempotentRequestOptions.generate());
+        }
 
         const baseException = new BaseExceptionGenerator(context);
         context.project.addSourceFiles(baseException.generate());

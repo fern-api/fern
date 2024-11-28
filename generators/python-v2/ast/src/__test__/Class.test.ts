@@ -75,6 +75,7 @@ describe("class", () => {
         });
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(clazz.getReferences().length).toBe(1);
     });
 
     it("should generate a class with local classes", async () => {
@@ -99,6 +100,44 @@ describe("class", () => {
         innerClassDef.add(innerMethod);
 
         clazz.add(innerClassDef);
+
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+    });
+
+    it("class with generic parent reference", async () => {
+        const clazz = python.class_({
+            name: "MyClass",
+            extends_: [
+                python.reference({
+                    name: "MyParentClass",
+                    modulePath: ["base"],
+                    genericTypes: [
+                        python.reference({
+                            name: "MyParentType",
+                            modulePath: ["models"]
+                        })
+                    ]
+                })
+            ]
+        });
+        clazz.write(writer);
+        expect(await writer.toStringFormatted()).toMatchSnapshot();
+
+        expect(clazz.getReferences().length).toBe(2);
+    });
+
+    it("class with de-indented multi-line string", async () => {
+        const clazz = python.class_({
+            name: "MyClass"
+        });
+        clazz.add(
+            python.field({
+                name: "multiline_string",
+                type: python.Type.str(),
+                initializer: python.TypeInstantiation.str("Hello\nWorld", { multiline: true })
+            })
+        );
 
         clazz.write(writer);
         expect(await writer.toStringFormatted()).toMatchSnapshot();

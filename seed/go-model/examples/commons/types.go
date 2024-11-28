@@ -5,7 +5,7 @@ package commons
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/examples/fern/core"
+	internal "github.com/examples/fern/internal"
 )
 
 type Data struct {
@@ -186,7 +186,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
-		return core.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
+		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
 	case "tag":
 		var marshaler = struct {
 			Type string `json:"type"`
@@ -255,18 +255,16 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Metadata(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *Metadata) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

@@ -1,6 +1,6 @@
 import { Values } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
 import { ApiDefinitionSettingsSchema } from "./schemas";
@@ -54,6 +54,8 @@ export interface APIDefinitionSettings {
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
+    onlyIncludeReferencedSchemas: boolean | undefined;
+    inlinePathParameters: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

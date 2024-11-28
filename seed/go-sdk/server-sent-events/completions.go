@@ -5,7 +5,7 @@ package serversentevents
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/server-sent-events/fern/core"
+	internal "github.com/server-sent-events/fern/internal"
 )
 
 type StreamCompletionRequest struct {
@@ -17,7 +17,7 @@ type StreamedCompletion struct {
 	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (s *StreamedCompletion) GetDelta() string {
@@ -45,24 +45,22 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamedCompletion(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *StreamedCompletion) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

@@ -16,8 +16,6 @@ async function main() {
         external: [
             // Test dependencies should not be included in the published package.
             '@fern-api/go-formatter',
-            '@fern-api/project-loader',
-            '@fern-api/workspace-loader'
         ],
         tsconfig: "./build.tsconfig.json"
     });

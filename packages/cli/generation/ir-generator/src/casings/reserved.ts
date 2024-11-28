@@ -36,6 +36,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
             "function",
             "global",
             "goto",
+            "list",
             "if",
             "implements",
             "include",

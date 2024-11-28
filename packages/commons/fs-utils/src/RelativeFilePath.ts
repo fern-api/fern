@@ -1,15 +1,3 @@
-import path from "path";
-import { convertToOsPath } from "./osPathConverter";
-
-export type RelativeFilePath = string & {
-    __RelativeFilePath: void;
-};
-
-export const RelativeFilePath = {
-    of: (value: string): RelativeFilePath => {
-        if (path.isAbsolute(value)) {
-            throw new Error("Filepath is not relative: " + value);
-        }
-        return convertToOsPath(value) as RelativeFilePath;
-    }
-};
+// For convenience, we re-export the RelativeFilePath type for any caller=
+// that requires fs-utils.
+export { RelativeFilePath } from "@fern-api/path-utils";

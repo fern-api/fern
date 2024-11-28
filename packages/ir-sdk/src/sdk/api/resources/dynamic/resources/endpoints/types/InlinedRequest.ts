@@ -10,4 +10,5 @@ export interface InlinedRequest {
     queryParameters: FernIr.dynamic.NamedParameter[] | undefined;
     headers: FernIr.dynamic.NamedParameter[] | undefined;
     body: FernIr.dynamic.InlinedRequestBody | undefined;
+    metadata: FernIr.dynamic.InlinedRequestMetadata | undefined;
 }

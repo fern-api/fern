@@ -22,6 +22,7 @@
                 "type": "google.protobuf.Value",
               },
             },
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

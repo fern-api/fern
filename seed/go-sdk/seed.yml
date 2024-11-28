@@ -52,6 +52,28 @@ fixtures:
         union: v1
         module:
           path: github.com/fern-api/unions-go
+  file-upload:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-file-properties
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: upload
+        union: v1
+        module:
+          path: github.com/fern-api/file-upload-go
+        inlineFileProperties: true
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: path
+        union: v1
+        module:
+          path: github.com/fern-api/path-parameters-go
+        inlinePathParameters: true
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0

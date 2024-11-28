@@ -11,3 +11,15 @@ service:
       examples:
         - path-parameters:
             endpointPathParam: hello
+
+    inlinedGet:
+      method: GET
+      base-path: "/latest"
+      path: /{endpointPathParam}
+      request:
+        name: InlinedRequest
+        path-parameters:
+          endpointPathParam: string
+      examples:
+        - path-parameters:
+            endpointPathParam: hello

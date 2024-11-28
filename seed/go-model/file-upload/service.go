@@ -5,7 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 )
 
 type Id = string
@@ -34,18 +34,16 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *MyObject) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

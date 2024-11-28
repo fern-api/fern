@@ -3,9 +3,11 @@ import {
     DEFINITION_DIRECTORY,
     generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
+    GENERATOR_INVOCATIONS,
+    getLatestGeneratorVersion,
     OPENAPI_DIRECTORY,
     ROOT_API_FILENAME
-} from "@fern-api/configuration";
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
@@ -77,10 +79,10 @@ async function getDefaultGeneratorsConfiguration({
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
-    const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
+    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
 
     let version = fallbackInvocation.version;
-    const versionFromDB = await generatorsYml.getLatestGeneratorVersion({
+    const versionFromDB = await getLatestGeneratorVersion({
         cliVersion,
         generatorName: defaultGeneratorName,
         channel: undefined

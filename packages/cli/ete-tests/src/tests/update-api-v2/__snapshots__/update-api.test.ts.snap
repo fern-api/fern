@@ -30,7 +30,7 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
       "x-internal": false
     },
     {
-      "url": "https://mocks.example.com/rest",
+      "url": "https://try.microcks.io/rest/Train+Travel+API/1.0.0",
       "description": "Mock Server",
       "x-internal": false
     }
@@ -133,15 +133,35 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Station"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Wrapper-Collection"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Station"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "links": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Links-Self"
+                            },
+                            {
+                              "$ref": "#/components/schemas/Links-Pagination"
+                            }
+                          ]
+                        }
                       }
                     }
-                  }
+                  ]
                 },
                 "example": {
                   "data": [
@@ -1148,27 +1168,37 @@ exports[`fern api update unioned > fern api update unioned 1`] = `
           "type": {
             "type": "string",
             "description": "A URI reference that identifies the problem type",
-            "example": "https://example.com/probs/out-of-credit"
+            "examples": [
+              "https://example.com/probs/out-of-credit"
+            ]
           },
           "title": {
             "type": "string",
             "description": "A short, human-readable summary of the problem type",
-            "example": "You do not have enough credit."
+            "examples": [
+              "You do not have enough credit."
+            ]
           },
           "detail": {
             "type": "string",
             "description": "A human-readable explanation specific to this occurrence of the problem",
-            "example": "Your current balance is 30, but that costs 50."
+            "examples": [
+              "Your current balance is 30, but that costs 50."
+            ]
           },
           "instance": {
             "type": "string",
             "description": "A URI reference that identifies the specific occurrence of the problem",
-            "example": "/account/12345/msgs/abc"
+            "examples": [
+              "/account/12345/msgs/abc"
+            ]
           },
           "status": {
             "type": "integer",
             "description": "The HTTP status code",
-            "example": 400
+            "examples": [
+              400
+            ]
           }
         }
       },

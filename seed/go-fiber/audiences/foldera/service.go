@@ -5,8 +5,8 @@ package foldera
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/audiences/fern/core"
 	folderb "github.com/audiences/fern/folderb"
+	internal "github.com/audiences/fern/internal"
 )
 
 type Response struct {
@@ -33,18 +33,16 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
 func (r *Response) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

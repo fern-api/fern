@@ -5,7 +5,7 @@ package stream
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/stream-go/v2/core"
+	internal "github.com/fern-api/stream-go/v2/internal"
 )
 
 type Generateequest struct {
@@ -104,18 +104,16 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *StreamResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

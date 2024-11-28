@@ -15,7 +15,8 @@ export function buildVariables(context: OpenApiIrConverterContext): void {
             schema: Schema.primitive(variableSchema),
             context,
             fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            namespace
+            namespace,
+            declarationDepth: 0
         });
         context.builder.addVariable({
             name: variable,

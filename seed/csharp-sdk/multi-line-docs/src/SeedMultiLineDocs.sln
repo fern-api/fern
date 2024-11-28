@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiLineDocs", "SeedMultiLineDocs\SeedMultiLineDocs.csproj", "{5C9BB187-186D-452D-A108-E59B3D29EC08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedMultiLineDocs.Test", "SeedMultiLineDocs.Test\SeedMultiLineDocs.Test.csproj", "{FE79A030-4C02-4537-AE97-B12B7BE87D95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C9BB187-186D-452D-A108-E59B3D29EC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9BB187-186D-452D-A108-E59B3D29EC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9BB187-186D-452D-A108-E59B3D29EC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9BB187-186D-452D-A108-E59B3D29EC08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE79A030-4C02-4537-AE97-B12B7BE87D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE79A030-4C02-4537-AE97-B12B7BE87D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE79A030-4C02-4537-AE97-B12B7BE87D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE79A030-4C02-4537-AE97-B12B7BE87D95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

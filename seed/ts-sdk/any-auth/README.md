@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedAnyAuthClient, SeedAnyAuth } from "@fern/any-auth";
+import { SeedAnyAuthClient } from "@fern/any-auth";
 
 const client = new SeedAnyAuthClient({
     environment: "YOUR_BASE_URL",
@@ -69,6 +69,30 @@ try {
 ```
 
 ## Advanced
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `.asRaw()` method. When using `.asRaw()`,
+the parsed response body will be available in the `body` field, along with the response headers:
+
+```typescript
+const response = await client.auth.getToken(...).asRaw();
+
+console.log(response.headers['X-My-Header']);
+console.log(response.body);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `headers` request option.
+
+```typescript
+const response = await client.auth.getToken(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
 
 ### Retries
 

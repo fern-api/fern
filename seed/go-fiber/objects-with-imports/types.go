@@ -6,7 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
-	core "github.com/objects-with-imports/fern/core"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Node struct {
@@ -49,18 +49,16 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Node(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
 	return nil
 }
 
 func (n *Node) String() string {
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
@@ -90,100 +88,17 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Tree(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *Tree) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
-}
-
-type File struct {
-	Name     string   `json:"name" url:"name"`
-	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info" url:"info"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *File) GetName() string {
-	if f == nil {
-		return ""
-	}
-	return f.Name
-}
-
-func (f *File) GetContents() string {
-	if f == nil {
-		return ""
-	}
-	return f.Contents
-}
-
-func (f *File) GetInfo() FileInfo {
-	if f == nil {
-		return ""
-	}
-	return f.Info
-}
-
-func (f *File) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *File) UnmarshalJSON(data []byte) error {
-	type unmarshaler File
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = File(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-
-	return nil
-}
-
-func (f *File) String() string {
-	if value, err := core.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
-
-type FileInfo string
-
-const (
-	// A regular file (e.g. foo.txt).
-	FileInfoRegular FileInfo = "REGULAR"
-	// A directory (e.g. foo/).
-	FileInfoDirectory FileInfo = "DIRECTORY"
-)
-
-func NewFileInfoFromString(s string) (FileInfo, error) {
-	switch s {
-	case "REGULAR":
-		return FileInfoRegular, nil
-	case "DIRECTORY":
-		return FileInfoDirectory, nil
-	}
-	var t FileInfo
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FileInfo) Ptr() *FileInfo {
-	return &f
 }

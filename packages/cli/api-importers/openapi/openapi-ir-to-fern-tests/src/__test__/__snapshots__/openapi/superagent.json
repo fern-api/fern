@@ -22,6 +22,7 @@
         "types": {
           "HTTPValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
@@ -33,6 +34,7 @@
           },
           "ValidationError": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "loc": {
                 "type": "list<ValidationErrorLocItem>",
@@ -48,6 +50,7 @@
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -79,6 +82,7 @@ types:
       - integer
     source:
       openapi: ../openapi.yml
+    inline: true
   ValidationError:
     properties:
       loc:
@@ -148,6 +152,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Agent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -335,6 +340,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PredictAgent",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -558,6 +564,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ApiToken",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -799,6 +806,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignIn",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -848,6 +856,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "SignUp",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -990,6 +999,7 @@ service:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Document",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1249,6 +1259,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Prompt",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -1567,6 +1578,7 @@ imports:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "Tool",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

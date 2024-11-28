@@ -3661,6 +3661,7 @@
           },
           "ArtifactsLocateResponse": {
             "docs": "The response to getting an artifact's download URL.",
+            "inline": undefined,
             "properties": {
               "expires_at": {
                 "docs": "The expiration timestamp of the URL.",
@@ -3677,6 +3678,7 @@
           },
           "ArtifactsPrepareResponse": {
             "docs": "The response to preparing a URL to upload a file.",
+            "inline": undefined,
             "properties": {
               "form_data": {
                 "docs": "The POST policy form data.",
@@ -3697,6 +3699,7 @@
           },
           "ArtifactsPrepareResponseFormData": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "key": {
                 "docs": "Key of the form field.",
@@ -3713,6 +3716,7 @@
           },
           "AtomBase": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "created_by": {
                 "type": "optional<UserSummary>",
@@ -3743,6 +3747,7 @@
           },
           "AtomBaseSummary": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "display_id": {
                 "docs": "Human-readable object ID unique to the Dev organization.",
@@ -3810,6 +3815,7 @@ authentication connection that is set up for a Dev organization.
             "docs": "Object encapsulating the configuration parameters for an Azure AD
 authentication connection.
 ",
+            "inline": undefined,
             "properties": {
               "client_id": {
                 "docs": "Client ID for the Azure authentication connection.",
@@ -3832,6 +3838,7 @@ authentication connection.
             "docs": "Object encapsulating the configuration parameters for a Google Apps
 authentication connection.
 ",
+            "inline": undefined,
             "properties": {
               "client_id": {
                 "docs": "Client ID for the Google Apps authentication connection.",
@@ -3856,6 +3863,7 @@ authentication connection.
             "docs": "Object encapsulating the configuration parameters for an OIDC
 authentication connection.
 ",
+            "inline": undefined,
             "properties": {
               "client_id": {
                 "docs": "Client ID for the OIDC authentication connection.",
@@ -3878,6 +3886,7 @@ authentication connection.
             "docs": "Object encapsulating the configuration parameters for a SAML
 authentication connection.
 ",
+            "inline": undefined,
             "properties": {
               "sign_in_endpoint": {
                 "docs": "Sign In endpoint for the SAML authentication connection.",
@@ -3925,6 +3934,7 @@ for each authentication connection will depend on the type value.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "client_id": {
                 "docs": "An identifier that represents the application that requested the
@@ -4075,6 +4085,7 @@ token. Only applicable for application access tokens.
             "docs": "Response for the request to create a new token corresponding to the
 requested token type.
 ",
+            "inline": undefined,
             "properties": {
               "access_token": {
                 "docs": "The issued JSON Web Token (JWT) corresponding to the requested
@@ -4113,6 +4124,7 @@ of values in which the order of values does not matter.
           },
           "AuthTokensGetResponse": {
             "docs": "The response to get the token metadata.",
+            "inline": undefined,
             "properties": {
               "token": {
                 "type": "AuthToken",
@@ -4124,6 +4136,7 @@ of values in which the order of values does not matter.
           },
           "AuthTokensListResponse": {
             "docs": "The response to list the token metadata.",
+            "inline": undefined,
             "properties": {
               "tokens": {
                 "docs": "The list of token metadata.",
@@ -4136,6 +4149,7 @@ of values in which the order of values does not matter.
           },
           "AuthTokensOrgTraits": {
             "docs": "Carries Rev org info.",
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "The display name of the Rev org.",
@@ -4154,6 +4168,7 @@ of values in which the order of values does not matter.
             "docs": "Carries info corresponding to the Rev user to be provisioned and/or
 issue a Rev session token.
 ",
+            "inline": undefined,
             "properties": {
               "org_ref": {
                 "docs": "An identifier which uniquely identifies a Rev org.",
@@ -4180,6 +4195,7 @@ issue a Rev session token.
           },
           "AuthTokensUpdateResponse": {
             "docs": "Response for the request to update the token metadata.",
+            "inline": undefined,
             "properties": {
               "token": {
                 "type": "AuthToken",
@@ -4191,6 +4207,7 @@ issue a Rev session token.
           },
           "AuthTokensUserTraits": {
             "docs": "Carries Rev user info.",
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "The display name of the Rev user.",
@@ -4267,6 +4284,7 @@ authentication connections have different configuration parameters.
             "docs": "Response for the request to create a new enterprise authentication
 connection.
 ",
+            "inline": undefined,
             "properties": {
               "auth_connection": {
                 "type": "AuthConnection",
@@ -4280,6 +4298,7 @@ connection.
             "docs": "Response object encapsulating the configuration details of an
 authentication connection.
 ",
+            "inline": undefined,
             "properties": {
               "auth_connection": {
                 "type": "AuthConnection",
@@ -4293,6 +4312,7 @@ authentication connection.
             "docs": "Response object for the request to list all the social and enterprise
 authentication connections configured for a Dev organization.
 ",
+            "inline": undefined,
             "properties": {
               "auth_connections": {
                 "docs": "List of all the authentication connections currently configured for
@@ -4368,6 +4388,7 @@ that can be updated.
             "docs": "Response for the request to update an enterprise authentication
 connection.
 ",
+            "inline": undefined,
             "properties": {
               "auth_connection": {
                 "type": "AuthConnection",
@@ -4382,6 +4403,7 @@ connection.
             "extends": [
               "UserBase",
             ],
+            "inline": undefined,
             "properties": {
               "external_identities": {
                 "docs": "IDs of the Dev User outside the DevRev SOR.",
@@ -4397,6 +4419,7 @@ connection.
           },
           "DevUsersListResponse": {
             "docs": "The response to listing the Dev users.",
+            "inline": undefined,
             "properties": {
               "dev_users": {
                 "docs": "The list of Dev users.",
@@ -4422,6 +4445,7 @@ sort order. If not set, then no prior elements exist.
           "DevUsersSelfResponse": {
             "docs": "The response to getting the information for the authenticated user.
 ",
+            "inline": undefined,
             "properties": {
               "dev_user": {
                 "type": "DevUser",
@@ -4439,6 +4463,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4449,6 +4474,7 @@ sort order. If not set, then no prior elements exist.
           },
           "ErrorBadRequestInvalidEnumValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "allowed_values": {
                 "docs": "The allowed values for the field.",
@@ -4469,6 +4495,7 @@ sort order. If not set, then no prior elements exist.
           },
           "ErrorBadRequestMissingRequiredField": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "field_name": {
                 "docs": "The missing field's name.",
@@ -4496,6 +4523,7 @@ sort order. If not set, then no prior elements exist.
           },
           "ErrorBadRequestValueNotPermitted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "field_name": {
                 "docs": "The field whose value is not permitted.",
@@ -4512,6 +4540,7 @@ sort order. If not set, then no prior elements exist.
           },
           "ErrorBase": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "message": {
                 "docs": "The message associated with the error.",
@@ -4527,6 +4556,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4541,6 +4571,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4555,6 +4586,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4569,6 +4601,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4583,6 +4616,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4597,6 +4631,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "ErrorBase",
             ],
+            "inline": undefined,
             "properties": {},
             "source": {
               "openapi": "../openapi.yml",
@@ -4608,6 +4643,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventPartCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "part": {
                 "type": "part",
@@ -4619,6 +4655,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventPartDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the part that was deleted.",
@@ -4631,6 +4668,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventPartUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "part": {
                 "type": "part",
@@ -4642,6 +4680,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventRevOrgCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
@@ -4653,6 +4692,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventRevOrgDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the Rev organization that was deleted.",
@@ -4665,6 +4705,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventRevOrgUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
@@ -4676,6 +4717,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTagCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
@@ -4687,6 +4729,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTagDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the tag that was deleted.",
@@ -4699,6 +4742,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTagUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
@@ -4710,6 +4754,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTimelineEntryCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "entry": {
                 "type": "TimelineEntry",
@@ -4721,6 +4766,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTimelineEntryDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the timeline entry that was deleted.",
@@ -4733,6 +4779,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventTimelineEntryUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "entry": {
                 "type": "TimelineEntry",
@@ -4744,6 +4791,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWebhookCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
@@ -4755,6 +4803,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWebhookDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the webhook that was deleted.",
@@ -4767,6 +4816,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWebhookUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
@@ -4778,6 +4828,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWorkCreated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "work": {
                 "type": "work",
@@ -4789,6 +4840,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWorkDeleted": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the work that was deleted.",
@@ -4801,6 +4853,7 @@ sort order. If not set, then no prior elements exist.
           },
           "EventWorkUpdated": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "work": {
                 "type": "work",
@@ -4855,6 +4908,7 @@ always be returned in the specified sort-by order.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "Name of the Organization.",
@@ -4870,6 +4924,7 @@ always be returned in the specified sort-by order.
             "extends": [
               "AtomBaseSummary",
             ],
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "Name of the Organization.",
@@ -4911,6 +4966,7 @@ always be returned in the specified sort-by order.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "artifacts": {
                 "docs": "The attached artifacts.",
@@ -4942,6 +4998,7 @@ always be returned in the specified sort-by order.
             "extends": [
               "AtomBaseSummary",
             ],
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Name of the part.",
@@ -5018,6 +5075,7 @@ always be returned in the specified sort-by order.
           },
           "PartsCreateRequestCapability": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "parent_part": {
                 "docs": "ID of the parent product for the capability.",
@@ -5030,6 +5088,7 @@ always be returned in the specified sort-by order.
           },
           "PartsCreateRequestEnhancement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "parent_part": {
                 "docs": "ID of the parent part on which the enhancement is to be created.
@@ -5048,6 +5107,7 @@ always be returned in the specified sort-by order.
           },
           "PartsCreateRequestFeature": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "parent_part": {
                 "docs": "ID of the parent capability/feature for the feature.",
@@ -5063,6 +5123,7 @@ always be returned in the specified sort-by order.
           },
           "PartsCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "part": {
                 "type": "part",
@@ -5077,6 +5138,7 @@ always be returned in the specified sort-by order.
           },
           "PartsGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "part": {
                 "type": "part",
@@ -5088,6 +5150,7 @@ always be returned in the specified sort-by order.
           },
           "PartsListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
@@ -5156,6 +5219,7 @@ sort order. If not set, then no prior elements exist.
           },
           "PartsUpdateRequestEnhancement": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "target_close_date": {
                 "docs": "Updates the target close date of the enhancement.",
@@ -5171,6 +5235,7 @@ sort order. If not set, then no prior elements exist.
           },
           "PartsUpdateRequestOwnedBy": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the owner IDs to the provided user IDs. This must not be
@@ -5188,6 +5253,7 @@ empty.
           },
           "PartsUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "part": {
                 "type": "part",
@@ -5208,6 +5274,7 @@ empty.
             "extends": [
               "OrgBase",
             ],
+            "inline": undefined,
             "properties": {
               "description": {
                 "docs": "Description of the Rev organization.",
@@ -5236,6 +5303,7 @@ organization.
           "RevOrgsCreateResponse": {
             "docs": "Response object for request to create a new Rev organization.
 ",
+            "inline": undefined,
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
@@ -5251,6 +5319,7 @@ organization.
           },
           "RevOrgsGetResponse": {
             "docs": "The response to getting a Rev organization's information.",
+            "inline": undefined,
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
@@ -5263,6 +5332,7 @@ organization.
           "RevOrgsListResponse": {
             "docs": "The response to getting a list of Rev organizations' information.
 ",
+            "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
@@ -5287,6 +5357,7 @@ sort order. If not set, then no prior elements exist.
           },
           "RevOrgsUpdateResponse": {
             "docs": "Response object to updating Rev organization's information.",
+            "inline": undefined,
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
@@ -5301,6 +5372,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "UserBaseSummary",
             ],
+            "inline": undefined,
             "properties": {
               "external_ref": {
                 "docs": "External ref is a mutable unique identifier for a user within the
@@ -5319,6 +5391,7 @@ system-generated identifier will be assigned to the user.
           },
           "SetTagWithValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The ID of the tag.",
@@ -5337,6 +5410,7 @@ the value must be one that's specified in the tag's allowed values.
           },
           "StageInit": {
             "docs": "Sets an object's initial stage.",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the stage.",
@@ -5349,6 +5423,7 @@ the value must be one that's specified in the tag's allowed values.
           },
           "StageUpdate": {
             "docs": "Updates an object's stage.",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The updated name of the stage, otherwise unchanged if not set.
@@ -5368,6 +5443,7 @@ the value must be one that's specified in the tag's allowed values.
             "extends": [
               "AtomBaseSummary",
             ],
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "The name of the tag, which denotes the logical concept by which all
@@ -5383,6 +5459,7 @@ unique.
           },
           "TagWithValue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "TagSummary",
@@ -5398,6 +5475,7 @@ unique.
           },
           "TagsCreateResponse": {
             "docs": "The response to creating a new tag.",
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
@@ -5413,6 +5491,7 @@ unique.
           },
           "TagsGetResponse": {
             "docs": "The response to getting a tag's information.",
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
@@ -5424,6 +5503,7 @@ unique.
           },
           "TagsListResponse": {
             "docs": "The response to listing the tags.",
+            "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
@@ -5448,6 +5528,7 @@ sort order. If not set, then no prior elements exist.
           },
           "TagsUpdateAllowedValues": {
             "docs": "Specifies an update to a tag's allowed values.",
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the allowed values for the tag.",
@@ -5460,6 +5541,7 @@ sort order. If not set, then no prior elements exist.
           },
           "TagsUpdateResponse": {
             "docs": "The response for updating a tag.",
+            "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
@@ -5486,6 +5568,7 @@ sort order. If not set, then no prior elements exist.
             "extends": [
               "TimelineEntryBase",
             ],
+            "inline": undefined,
             "properties": {
               "artifacts": {
                 "docs": "The artifacts for the comment.",
@@ -5540,6 +5623,7 @@ will appear in the response.
           },
           "TimelineEntriesCreateRequestTimelineComment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "artifacts": {
                 "docs": "The IDs of the artifacts attached to the comment.",
@@ -5564,6 +5648,7 @@ will appear in the response.
           "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
           "TimelineEntriesCreateResponse": {
             "docs": "The response to creating a timeline entry for an object.",
+            "inline": undefined,
             "properties": {
               "timeline_entry": {
                 "type": "TimelineEntry",
@@ -5575,6 +5660,7 @@ will appear in the response.
           },
           "TimelineEntriesGetResponse": {
             "docs": "The request to getting a timeline entry.",
+            "inline": undefined,
             "properties": {
               "timeline_entry": {
                 "type": "TimelineEntry",
@@ -5586,6 +5672,7 @@ will appear in the response.
           },
           "TimelineEntriesListResponse": {
             "docs": "The response to listing timeline entries for an object.",
+            "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
@@ -5630,6 +5717,7 @@ sort order. If not set, then no prior elements exist.
           },
           "TimelineEntriesUpdateRequestTimelineComment": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "artifacts": {
                 "type": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
@@ -5652,6 +5740,7 @@ sort order. If not set, then no prior elements exist.
           },
           "TimelineEntriesUpdateRequestTimelineCommentArtifacts": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "add": {
                 "docs": "Adds the provided artifacts to the comment. An artifact cannot be
@@ -5678,6 +5767,7 @@ not present, then it's ignored. Mututally exclusive with `set`.
           "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
           "TimelineEntriesUpdateResponse": {
             "docs": "The response to updating a timeline entry.",
+            "inline": undefined,
             "properties": {
               "timeline_entry": {
                 "type": "TimelineEntry",
@@ -5718,6 +5808,7 @@ default visibility.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "The user's display name. The name is non-unique and mutable.
@@ -5748,6 +5839,7 @@ default visibility.
             "extends": [
               "AtomBaseSummary",
             ],
+            "inline": undefined,
             "properties": {
               "display_name": {
                 "docs": "The user's display name. The name is non-unique and mutable.
@@ -5811,6 +5903,7 @@ default visibility.
           },
           "WebhookEventRequest": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "id": {
                 "docs": "The event's ID.",
@@ -5895,6 +5988,7 @@ seconds.
           },
           "WebhookEventResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "docs": "The challenge from the "verify" request, otherwise this should not
@@ -5942,6 +6036,7 @@ be set for other request types.
           },
           "WebhookEventVerify": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "challenge": {
                 "docs": "The challenge that must be echoed in the response.",
@@ -5971,6 +6066,7 @@ be set for other request types.
           },
           "WebhooksCreateResponse": {
             "docs": "The response to creating a new webhook.",
+            "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
@@ -5986,6 +6082,7 @@ be set for other request types.
           },
           "WebhooksGetResponse": {
             "docs": "The response to getting the information for the webhook.",
+            "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
@@ -5997,6 +6094,7 @@ be set for other request types.
           },
           "WebhooksListResponse": {
             "docs": "The response to listing the webhooks.",
+            "inline": undefined,
             "properties": {
               "webhooks": {
                 "docs": "The list of webhooks.",
@@ -6019,6 +6117,7 @@ be set for other request types.
           },
           "WebhooksUpdateRequestEventTypes": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "add": {
                 "docs": "The event types to add. If a provided event type is already set for
@@ -6048,6 +6147,7 @@ event types. Note this is mutually exclusive with 'add' and
           },
           "WebhooksUpdateResponse": {
             "docs": "The response to updating the webhook.",
+            "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
@@ -6062,6 +6162,7 @@ event types. Note this is mutually exclusive with 'add' and
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "applies_to_part": "optional<PartSummary>",
               "artifacts": {
@@ -6165,6 +6266,7 @@ issues.
           },
           "WorksCreateRequestIssue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "priority": {
                 "type": "optional<IssuePriority>",
@@ -6180,6 +6282,7 @@ issues.
           },
           "WorksCreateRequestTicket": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "group": {
                 "docs": "The group that the ticket is associated with.",
@@ -6199,6 +6302,7 @@ issues.
           },
           "WorksCreateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "work": {
                 "type": "work",
@@ -6213,6 +6317,7 @@ issues.
           },
           "WorksExportResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "works": {
                 "docs": "The resulting collection of work items.",
@@ -6225,6 +6330,7 @@ issues.
           },
           "WorksGetResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "work": {
                 "type": "work",
@@ -6236,6 +6342,7 @@ issues.
           },
           "WorksListResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "next_cursor": {
                 "docs": "The cursor used to iterate subsequent results in accordance to the
@@ -6310,6 +6417,7 @@ sort order. If not set, then no prior elements exist.
           },
           "WorksUpdateRequestArtifactIds": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the IDs to the provided artifact IDs.",
@@ -6322,6 +6430,7 @@ sort order. If not set, then no prior elements exist.
           },
           "WorksUpdateRequestIssue": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "priority": {
                 "type": "optional<IssuePriority>",
@@ -6337,6 +6446,7 @@ sort order. If not set, then no prior elements exist.
           },
           "WorksUpdateRequestOwnedBy": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the owner IDs to the provided user IDs. This must not be
@@ -6351,6 +6461,7 @@ empty.
           },
           "WorksUpdateRequestReportedBy": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the users that reported the work to the provided user IDs.
@@ -6364,6 +6475,7 @@ empty.
           },
           "WorksUpdateRequestTags": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "set": {
                 "docs": "Sets the provided tags on the work item.",
@@ -6376,6 +6488,7 @@ empty.
           },
           "WorksUpdateRequestTicket": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "group": {
                 "docs": "The group that the ticket is associated with.",
@@ -6396,6 +6509,7 @@ empty.
           },
           "WorksUpdateResponse": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "work": {
                 "type": "work",
@@ -6413,6 +6527,7 @@ empty.
             "extends": [
               "PartBase",
             ],
+            "inline": undefined,
             "properties": {
               "target_close_date": {
                 "docs": "Timestamp when the enhancement is expected to be closed.",
@@ -6428,6 +6543,7 @@ empty.
             "extends": [
               "WorkBase",
             ],
+            "inline": undefined,
             "properties": {
               "priority": "optional<IssuePriority>",
             },
@@ -6455,6 +6571,7 @@ empty.
           },
           "stage": {
             "docs": "Describes the current stage of a work item.",
+            "inline": undefined,
             "properties": {
               "name": {
                 "docs": "Current stage name of the work item.",
@@ -6470,6 +6587,7 @@ empty.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "allowed_values": {
                 "docs": "The allowed values for the tag, where a value is provided when a
@@ -6501,6 +6619,7 @@ unique.
             "extends": [
               "WorkBase",
             ],
+            "inline": undefined,
             "properties": {
               "group": "optional<GroupSummary>",
               "rev_org": "optional<OrgSummary>",
@@ -6515,6 +6634,7 @@ unique.
             "extends": [
               "AtomBase",
             ],
+            "inline": undefined,
             "properties": {
               "event_types": {
                 "docs": "The event types that the webhook will receive.",
@@ -10409,6 +10529,7 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ArtifactsPrepareRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -10607,6 +10728,7 @@ connections can not be deleted using this method.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -10752,6 +10874,7 @@ disabled.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "DevOrgAuthConnectionsToggleRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11130,6 +11253,7 @@ requesting an application access token (AAT).
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -11177,6 +11301,7 @@ JTI claim of the token in the authorization header.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11385,6 +11510,7 @@ authenticated user.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensSelfDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "source": {
@@ -11477,6 +11603,7 @@ organization.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "AuthTokensUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -12329,6 +12456,7 @@ docs: Dev user interactions.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PartsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13081,6 +13209,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13130,6 +13259,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13432,6 +13562,7 @@ records.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RevOrgsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13905,6 +14036,7 @@ permitted.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -13954,6 +14086,7 @@ permitted.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -14202,6 +14335,7 @@ tags.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TagsUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15229,6 +15363,7 @@ response.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15278,6 +15413,7 @@ response.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -15521,6 +15657,7 @@ won't receive any object events until successfully verified.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhooksUpdateRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -16025,6 +16162,7 @@ docs: Webhook event APIs.
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WorksDeleteRequest",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {

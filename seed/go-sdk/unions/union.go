@@ -5,8 +5,100 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/unions-go/core"
+	internal "github.com/fern-api/unions-go/internal"
 )
+
+type Circle struct {
+	Radius float64 `json:"radius" url:"radius"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *Circle) GetRadius() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Radius
+}
+
+func (c *Circle) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Circle) UnmarshalJSON(data []byte) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Circle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *Circle) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type GetShapeRequest struct {
+	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetShapeRequest) GetId() string {
+	if g == nil {
+		return ""
+	}
+	return g.Id
+}
+
+func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetShapeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetShapeRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetShapeRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
 
 type Shape struct {
 	Type   string
@@ -75,10 +167,10 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 
 func (s Shape) MarshalJSON() ([]byte, error) {
 	if s.Circle != nil {
-		return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
 	}
 	if s.Square != nil {
-		return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -96,4 +188,50 @@ func (s *Shape) Accept(visitor ShapeVisitor) error {
 		return visitor.VisitSquare(s.Square)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type Square struct {
+	Length float64 `json:"length" url:"length"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *Square) GetLength() float64 {
+	if s == nil {
+		return 0
+	}
+	return s.Length
+}
+
+func (s *Square) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *Square) UnmarshalJSON(data []byte) error {
+	type unmarshaler Square
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Square(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *Square) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }

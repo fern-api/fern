@@ -1,7 +1,8 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import {
     FernFilepath,
+    HttpHeader,
     IntermediateRepresentation,
     Name,
     PrimitiveType,
@@ -107,6 +108,14 @@ export abstract class AbstractCsharpGeneratorContext<
     public hasGrpcEndpoints(): boolean {
         // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
+    }
+
+    public hasIdempotencyHeaders(): boolean {
+        return this.getIdempotencyHeaders().length > 0;
+    }
+
+    public getIdempotencyHeaders(): HttpHeader[] {
+        return this.ir.idempotencyHeaders;
     }
 
     public getConstantsClassReference(): csharp.ClassReference {

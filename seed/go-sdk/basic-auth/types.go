@@ -5,14 +5,14 @@ package basicauth
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/basic-auth/fern/core"
+	internal "github.com/basic-auth/fern/internal"
 )
 
 type UnauthorizedRequestErrorBody struct {
 	Message string `json:"message" url:"message"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (u *UnauthorizedRequestErrorBody) GetMessage() string {
@@ -33,24 +33,22 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnauthorizedRequestErrorBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
-	u._rawJSON = json.RawMessage(data)
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {
-	if len(u._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

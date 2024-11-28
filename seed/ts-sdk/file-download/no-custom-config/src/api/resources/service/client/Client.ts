@@ -18,54 +18,64 @@ export declare namespace Service {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable> {
-        const _response = await core.fetcher<stream.Readable>({
-            url: await core.Supplier.get(this._options.environment),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-download",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-download/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            responseType: "streaming",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return _response.body;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileDownloadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileDownloadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
+    public downloadFile(requestOptions?: Service.RequestOptions): core.APIPromise<stream.Readable> {
+        return core.APIPromise.from(
+            (async () => {
+                const _response = await core.fetcher<stream.Readable>({
+                    url: await core.Supplier.get(this._options.environment),
+                    method: "POST",
+                    headers: {
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/file-download",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/file-download/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    responseType: "streaming",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError();
-            case "unknown":
-                throw new errors.SeedFileDownloadError({
-                    message: _response.error.errorMessage,
-                });
-        }
+                if (_response.ok) {
+                    return {
+                        ok: _response.ok,
+                        body: _response.body,
+                        headers: _response.headers,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedFileDownloadError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedFileDownloadError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
+                    case "unknown":
+                        throw new errors.SeedFileDownloadError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            })()
+        );
     }
 }

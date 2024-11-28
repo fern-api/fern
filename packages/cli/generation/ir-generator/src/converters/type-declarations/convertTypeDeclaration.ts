@@ -66,7 +66,7 @@ export async function convertTypeDeclaration({
         propertiesByAudience,
         typeDeclaration: {
             ...declaration,
-            inline: false,
+            inline: getInline(typeDeclaration),
             name: declaredTypeName,
             shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
@@ -194,4 +194,13 @@ function convertSourceToEncoding(source: Source | undefined): Encoding {
               json: {},
               proto: undefined
           };
+}
+function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean | undefined {
+    if (typeof typeDeclaration === "string") {
+        return undefined;
+    }
+    if ("inline" in typeDeclaration) {
+        return typeDeclaration.inline;
+    }
+    return undefined;
 }

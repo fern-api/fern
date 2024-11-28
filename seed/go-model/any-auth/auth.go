@@ -5,7 +5,7 @@ package anyauth
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/any-auth/fern/core"
+	internal "github.com/any-auth/fern/internal"
 )
 
 // An OAuth token response.
@@ -49,18 +49,16 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TokenResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *TokenResponse) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

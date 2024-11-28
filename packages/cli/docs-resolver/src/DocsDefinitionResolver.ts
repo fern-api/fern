@@ -1,4 +1,4 @@
-import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
+import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -84,7 +84,7 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
-        this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
+        this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
@@ -364,7 +364,8 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             authed: undefined,
             viewers: undefined,
-            orphaned: undefined
+            orphaned: undefined,
+            roles: this.parsedDocsConfig.roles?.map((role) => FernNavigation.RoleId(role))
         };
     }
 
@@ -453,7 +454,7 @@ export class DocsDefinitionResolver {
         isDefault: boolean
     ): Promise<FernNavigation.V1.VersionNode> {
         const id = this.#idgen.get(version.version);
-        const slug = parentSlug.setVersionSlug(version.version);
+        const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version));
         const child =
             version.navigation.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, version.navigation.items, slug)
@@ -487,37 +488,38 @@ export class DocsDefinitionResolver {
 
         const children = await Promise.all(items.map((item) => this.toNavigationChild(id, item, parentSlug)));
 
-        const sidebarRootChildren: FernNavigation.V1.SidebarRootChild[] = [];
+        const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
-            switch (child.type) {
-                case "apiReference":
-                case "section":
-                    sidebarRootChildren.push(child);
-                    return;
-                case "changelog":
-                case "link":
-                case "page": {
-                    let last = sidebarRootChildren[sidebarRootChildren.length - 1];
-                    if (last?.type !== "sidebarGroup") {
-                        last = {
-                            id: this.#idgen.get(`${id}/group`),
-                            type: "sidebarGroup",
-                            children: []
-                        };
-                        sidebarRootChildren.push(last);
-                    }
-                    last.children.push(child);
-                    return;
-                }
-                default:
-                    assertNever(child);
+            if (child.type === "apiReference") {
+                grouped.push(child);
+                return;
             }
+
+            if (child.type === "section" && !child.collapsed) {
+                grouped.push(child);
+                return;
+            }
+
+            const lastChild = grouped.length > 0 ? grouped[grouped.length - 1] : undefined;
+            let sidebarGroup: FernNavigation.V1.SidebarGroupNode;
+            if (lastChild?.type === "sidebarGroup") {
+                sidebarGroup = lastChild;
+            } else {
+                sidebarGroup = {
+                    id: this.#idgen.get(`${id}/group`),
+                    type: "sidebarGroup",
+                    children: []
+                };
+                grouped.push(sidebarGroup);
+            }
+
+            sidebarGroup.children.push(child);
         });
 
         return {
             type: "sidebarRoot",
             id,
-            children: sidebarRootChildren
+            children: grouped
         };
     }
 
@@ -909,7 +911,7 @@ function createEditThisPageUrl(
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
+    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 }
 
 function convertAvailability(

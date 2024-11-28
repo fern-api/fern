@@ -5,7 +5,7 @@
   "references": [
     { "path": "../../../../packages/cli/logger" },
     { "path": "../../../../packages/commons/fs-utils" },
-    { "path": "../../../commons" },
+    { "path": "../../../base" },
     { "path": "../commons" },
     { "path": "../contexts" }
   ]

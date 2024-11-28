@@ -5,7 +5,7 @@ package packageyml
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/package-yml/fern/core"
+	internal "github.com/package-yml/fern/internal"
 )
 
 type EchoRequest struct {
@@ -40,18 +40,16 @@ func (e *EchoRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = EchoRequest(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
 	return nil
 }
 
 func (e *EchoRequest) String() string {
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)

@@ -5,7 +5,7 @@ package customauth
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/custom-auth/fern/core"
+	internal "github.com/custom-auth/fern/internal"
 )
 
 type UnauthorizedRequestErrorBody struct {
@@ -32,18 +32,16 @@ func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UnauthorizedRequestErrorBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

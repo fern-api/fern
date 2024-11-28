@@ -29,7 +29,13 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         };
         class_.addField(this.getBaseUrlField());
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
-        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
+        class_.addField(
+            this.baseOptionsGenerator.getHttpHeadersField({
+                optional: false,
+                includeInitializer: true,
+                interfaceReference: undefined
+            })
+        );
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
@@ -177,7 +183,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     MaxRetries = MaxRetries,
     Timeout = Timeout,
     Headers = new Headers(new Dictionary<string, HeaderValue>(Headers))
-};`
+}`
                 );
             }),
             isAsync: false,

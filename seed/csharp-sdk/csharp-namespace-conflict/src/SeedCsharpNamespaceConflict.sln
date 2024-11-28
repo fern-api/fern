@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict", "SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj", "{32FD109B-D546-4251-8E36-053D24DD6407}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedCsharpNamespaceConflict.Test", "SeedCsharpNamespaceConflict.Test\SeedCsharpNamespaceConflict.Test.csproj", "{74CDC0DC-3A4F-4694-A458-64DE7C037198}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32FD109B-D546-4251-8E36-053D24DD6407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32FD109B-D546-4251-8E36-053D24DD6407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32FD109B-D546-4251-8E36-053D24DD6407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32FD109B-D546-4251-8E36-053D24DD6407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CDC0DC-3A4F-4694-A458-64DE7C037198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CDC0DC-3A4F-4694-A458-64DE7C037198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CDC0DC-3A4F-4694-A458-64DE7C037198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CDC0DC-3A4F-4694-A458-64DE7C037198}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

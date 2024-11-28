@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { FernNavigation, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { dirname, doesPathExist, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -139,8 +139,9 @@ export async function runPreviewServer({
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
             if (err instanceof Error) {
+                context.logger.error(err.message);
                 if (err instanceof Error && err.stack) {
-                    context.logger.debug(`${err.message}\n${err.stack}`);
+                    context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
             return docsDefinition;
@@ -188,7 +189,8 @@ export async function runPreviewServer({
                     basePath: instance.pathname
                 },
                 definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+                orgId: FernNavigation.OrgId(initialProject.config.organization)
             };
             res.send(response);
         } catch (error) {

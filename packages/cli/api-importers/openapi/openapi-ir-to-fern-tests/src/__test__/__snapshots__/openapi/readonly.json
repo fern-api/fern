@@ -50,6 +50,7 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UserCreate",
+                "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
@@ -111,6 +112,7 @@
         "types": {
           "UserRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "createdAt": "optional<datetime>",
               "email": "optional<string>",
@@ -125,6 +127,7 @@
           },
           "UserSettingsRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "lastModified": "optional<datetime>",
               "notifications": "optional<boolean>",
@@ -146,6 +149,7 @@
           },
           "UserStatsRead": {
             "docs": undefined,
+            "inline": undefined,
             "properties": {
               "accountStatus": "optional<UserStatsAccountStatus>",
               "lastLoginTime": "optional<datetime>",

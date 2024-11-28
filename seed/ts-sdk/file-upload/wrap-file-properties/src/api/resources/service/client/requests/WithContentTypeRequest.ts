@@ -9,4 +9,5 @@ export interface WithContentTypeRequest {
     file: File | fs.ReadStream | Blob;
     foo: string;
     bar: SeedFileUpload.MyObject;
+    foobar?: SeedFileUpload.MyObject;
 }

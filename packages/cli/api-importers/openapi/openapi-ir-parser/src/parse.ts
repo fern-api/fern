@@ -30,6 +30,8 @@ export interface SpecImportSettings {
     cooerceEnumsToLiterals: boolean;
     objectQueryParameters: boolean;
     respectReadonlySchemas: boolean;
+    onlyIncludeReferencedSchemas: boolean;
+    inlinePathParameters: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -196,7 +198,16 @@ function getParseOptions({
         respectReadonlySchemas:
             overrides?.respectReadonlySchemas ??
             specSettings?.respectReadonlySchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
+        onlyIncludeReferencedSchemas:
+            overrides?.onlyIncludeReferencedSchemas ??
+            specSettings?.onlyIncludeReferencedSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
+        inlinePathParameters:
+            overrides?.inlinePathParameters ??
+            specSettings?.inlinePathParameters ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
+        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds
     };
 }
 

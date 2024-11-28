@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/simple-fhir/fern/core"
+	internal "github.com/simple-fhir/fern/internal"
 )
 
 type Account struct {
@@ -18,7 +18,7 @@ type Account struct {
 	resourceType     string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (a *Account) GetId() string {
@@ -87,14 +87,12 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
 	}
 	a.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resource_type")
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
-	a._rawJSON = json.RawMessage(data)
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -111,12 +109,12 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Account) String() string {
-	if len(a._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(a._rawJSON); err == nil {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
@@ -128,7 +126,7 @@ type BaseResource struct {
 	Memo             *Memo           `json:"memo,omitempty" url:"memo,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (b *BaseResource) GetId() string {
@@ -163,24 +161,22 @@ func (b *BaseResource) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = BaseResource(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
 	if err != nil {
 		return err
 	}
 	b.extraProperties = extraProperties
-
-	b._rawJSON = json.RawMessage(data)
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (b *BaseResource) String() string {
-	if len(b._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(b); err == nil {
+	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
@@ -191,7 +187,7 @@ type Memo struct {
 	Account     *Account `json:"account,omitempty" url:"account,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (m *Memo) GetDescription() string {
@@ -219,24 +215,22 @@ func (m *Memo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Memo(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
-	m._rawJSON = json.RawMessage(data)
+	m.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (m *Memo) String() string {
-	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -251,7 +245,7 @@ type Patient struct {
 	resourceType     string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (p *Patient) GetId() string {
@@ -313,14 +307,12 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
-	p._rawJSON = json.RawMessage(data)
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -337,12 +329,12 @@ func (p *Patient) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Patient) String() string {
-	if len(p._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(p._rawJSON); err == nil {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -356,7 +348,7 @@ type Practitioner struct {
 	resourceType     string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (p *Practitioner) GetId() string {
@@ -411,14 +403,12 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
 	}
 	p.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
-	p._rawJSON = json.RawMessage(data)
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -435,12 +425,12 @@ func (p *Practitioner) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Practitioner) String() string {
-	if len(p._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(p._rawJSON); err == nil {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
@@ -574,7 +564,7 @@ type Script struct {
 	resourceType     string
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
 func (s *Script) GetId() string {
@@ -629,14 +619,12 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
 	}
 	s.resourceType = unmarshaler.ResourceType
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "resource_type")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resource_type")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -653,12 +641,12 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Script) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

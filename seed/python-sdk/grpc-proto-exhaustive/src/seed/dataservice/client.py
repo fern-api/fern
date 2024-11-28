@@ -75,6 +75,9 @@ class DataserviceClient:
                 ),
                 "namespace": namespace,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -140,6 +143,9 @@ class DataserviceClient:
                     object_=filter, annotation=Metadata, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -189,6 +195,9 @@ class DataserviceClient:
                 "filter": convert_and_respect_annotation_metadata(
                     object_=filter, annotation=Metadata, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -397,6 +406,9 @@ class DataserviceClient:
                     object_=indexed_data, annotation=IndexedData, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -469,6 +481,9 @@ class DataserviceClient:
                 "indexedData": convert_and_respect_annotation_metadata(
                     object_=indexed_data, annotation=IndexedData, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -547,6 +562,9 @@ class AsyncDataserviceClient:
                 ),
                 "namespace": namespace,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -620,6 +638,9 @@ class AsyncDataserviceClient:
                     object_=filter, annotation=Metadata, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -677,6 +698,9 @@ class AsyncDataserviceClient:
                 "filter": convert_and_respect_annotation_metadata(
                     object_=filter, annotation=Metadata, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -909,6 +933,9 @@ class AsyncDataserviceClient:
                     object_=indexed_data, annotation=IndexedData, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -989,6 +1016,9 @@ class AsyncDataserviceClient:
                 "indexedData": convert_and_respect_annotation_metadata(
                     object_=indexed_data, annotation=IndexedData, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

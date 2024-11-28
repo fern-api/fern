@@ -5,7 +5,100 @@ package undiscriminatedunions
 import (
 	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/undiscriminated-unions/fern/internal"
 )
+
+type Key struct {
+	KeyType              KeyType
+	defaultStringLiteral string
+
+	typ string
+}
+
+func NewKeyFromKeyType(value KeyType) *Key {
+	return &Key{typ: "KeyType", KeyType: value}
+}
+
+func NewKeyWithDefaultStringLiteral() *Key {
+	return &Key{typ: "defaultStringLiteral", defaultStringLiteral: "default"}
+}
+
+func (k *Key) GetKeyType() KeyType {
+	if k == nil {
+		return ""
+	}
+	return k.KeyType
+}
+
+func (k *Key) DefaultStringLiteral() string {
+	return k.defaultStringLiteral
+}
+
+func (k *Key) UnmarshalJSON(data []byte) error {
+	var valueKeyType KeyType
+	if err := json.Unmarshal(data, &valueKeyType); err == nil {
+		k.typ = "KeyType"
+		k.KeyType = valueKeyType
+		return nil
+	}
+	var valueDefaultStringLiteral string
+	if err := json.Unmarshal(data, &valueDefaultStringLiteral); err == nil {
+		k.typ = "defaultStringLiteral"
+		k.defaultStringLiteral = valueDefaultStringLiteral
+		if k.defaultStringLiteral != "default" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", k, "default", valueDefaultStringLiteral)
+		}
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, k)
+}
+
+func (k Key) MarshalJSON() ([]byte, error) {
+	if k.typ == "KeyType" || k.KeyType != "" {
+		return json.Marshal(k.KeyType)
+	}
+	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
+		return json.Marshal("default")
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", k)
+}
+
+type KeyVisitor interface {
+	VisitKeyType(KeyType) error
+	VisitDefaultStringLiteral(string) error
+}
+
+func (k *Key) Accept(visitor KeyVisitor) error {
+	if k.typ == "KeyType" || k.KeyType != "" {
+		return visitor.VisitKeyType(k.KeyType)
+	}
+	if k.typ == "defaultStringLiteral" || k.defaultStringLiteral != "" {
+		return visitor.VisitDefaultStringLiteral(k.defaultStringLiteral)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", k)
+}
+
+type KeyType string
+
+const (
+	KeyTypeName  KeyType = "name"
+	KeyTypeValue KeyType = "value"
+)
+
+func NewKeyTypeFromString(s string) (KeyType, error) {
+	switch s {
+	case "name":
+		return KeyTypeName, nil
+	case "value":
+		return KeyTypeValue, nil
+	}
+	var t KeyType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (k KeyType) Ptr() *KeyType {
+	return &k
+}
 
 // Undiscriminated unions can act as a map key
 // as long as all of their values are valid keys
@@ -181,4 +274,43 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 		return visitor.VisitStringSet(m.StringSet)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+type TypeWithOptionalUnion struct {
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
+	if t == nil {
+		return nil
+	}
+	return t.MyUnion
+}
+
+func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	return nil
+}
+
+func (t *TypeWithOptionalUnion) String() string {
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

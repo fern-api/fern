@@ -1,6 +1,6 @@
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { php } from "@fern-api/php-codegen";
-import { Arguments, NamedArgument } from "@fern-api/generator-commons";
+import { Arguments, NamedArgument } from "@fern-api/base-generator";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 export declare namespace RawClient {
