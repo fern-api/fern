@@ -6,6 +6,8 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { PREVIEW_DIRECTORY } from "../../constants";
 import { generateWorkspace } from "./generateAPIWorkspace";
+import { checkOutputDirectory } from "./checkOutputDirectory";
+import { isCI } from "../../utils/isCI";
 
 export const GenerationMode = {
     PullRequest: "pull-request"
@@ -22,7 +24,8 @@ export async function generateAPIWorkspaces({
     keepDocker,
     useLocalDocker,
     preview,
-    mode
+    mode,
+    force
 }: {
     project: Project;
     cliContext: CliContext;
@@ -33,6 +36,7 @@ export async function generateAPIWorkspaces({
     keepDocker: boolean;
     preview: boolean;
     mode: GenerationMode | undefined;
+    force: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -50,6 +54,19 @@ export async function generateAPIWorkspaces({
             });
         }
         token = currentToken;
+    }
+
+    for (const workspace of project.apiWorkspaces) {
+        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+            const { shouldProceed } = await checkOutputDirectory(
+                generator.absolutePathToLocalOutput,
+                cliContext,
+                force
+            );
+            if (!shouldProceed) {
+                cliContext.failAndThrow("Generation cancelled");
+            }
+        }
     }
 
     await cliContext.instrumentPostHogEvent({

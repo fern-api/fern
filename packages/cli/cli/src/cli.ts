@@ -381,6 +381,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description: "Prevent auto-deletion of the Docker containers."
+                })
+                .option("force", {
+                    boolean: true,
+                    default: false,
+                    description: "Ignore prompts to confirm generation, defaults to false"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -402,7 +407,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
                     preview: argv.preview,
-                    mode: argv.mode
+                    mode: argv.mode,
+                    force: argv.force
                 });
             }
             if (argv.docs != null) {
@@ -439,7 +445,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
                 preview: argv.preview,
-                mode: argv.mode
+                mode: argv.mode,
+                force: argv.force
             });
         }
     );
