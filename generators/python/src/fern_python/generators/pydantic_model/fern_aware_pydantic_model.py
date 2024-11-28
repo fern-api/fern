@@ -288,9 +288,9 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            if (
-                self._pydantic_model._v1_root_type is None
-                and self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
+            if self._pydantic_model._v1_root_type is None and self._custom_config.version in (
+                PydanticVersionCompatibility.V1,
+                PydanticVersionCompatibility.V1_ON_V2,
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
@@ -312,7 +312,10 @@ class FernAwarePydanticModel:
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
         v1_root_type = self._pydantic_model.get_root_type_unsafe_v1_only()
-        if v1_root_type is not None and self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
+        if v1_root_type is not None and self._custom_config.version in (
+            PydanticVersionCompatibility.V1,
+            PydanticVersionCompatibility.V1_ON_V2,
+        ):
             return PydanticV1CustomRootTypeValidatorsGenerator(
                 model=self._pydantic_model,
                 root_type=v1_root_type,

@@ -86,5 +86,5 @@ class Pydantic:
         return "parse_obj"
 
     @property
-    def extra(self) -> 'Pydantic.Extra':
+    def extra(self) -> "Pydantic.Extra":
         return Pydantic.Extra(self.version_compatibility)

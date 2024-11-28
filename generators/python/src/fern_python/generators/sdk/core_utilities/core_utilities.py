@@ -106,10 +106,19 @@ class CoreUtilities:
         )
 
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
-        utilities_path = "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py" if is_v1_on_v2 and self._use_pydantic_field_aliases \
-            else "with_pydantic_v1_on_v2/pydantic_utilities.py" if is_v1_on_v2 \
-            else "with_pydantic_aliases/pydantic_utilities.py" if self._use_pydantic_field_aliases \
-            else "pydantic_utilities.py"
+        utilities_path = (
+            "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"
+            if is_v1_on_v2 and self._use_pydantic_field_aliases
+            else (
+                "with_pydantic_v1_on_v2/pydantic_utilities.py"
+                if is_v1_on_v2
+                else (
+                    "with_pydantic_aliases/pydantic_utilities.py"
+                    if self._use_pydantic_field_aliases
+                    else "pydantic_utilities.py"
+                )
+            )
+        )
 
         self._copy_file_to_project(
             project=project,

@@ -1,8 +1,8 @@
 # nopycln: file
 import datetime as dt
+import os
 import typing
 from collections import defaultdict
-import os
 
 import typing_extensions
 

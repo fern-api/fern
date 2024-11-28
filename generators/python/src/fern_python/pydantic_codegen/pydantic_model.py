@@ -286,21 +286,23 @@ class PydanticModel:
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
             name=PydanticModel._PARTIAL_CLASS_NAME,
-            extends=[
-                dataclasses.replace(
-                    base_model,
-                    qualified_name_excluding_import=base_model.qualified_name_excluding_import
-                    + (PydanticModel._PARTIAL_CLASS_NAME,),
-                )
-                for base_model in self._base_models
-            ]
-            if len(self._base_models) > 0
-            else [
-                AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
-                    qualified_name_excluding_import=("TypedDict",),
-                )
-            ],
+            extends=(
+                [
+                    dataclasses.replace(
+                        base_model,
+                        qualified_name_excluding_import=base_model.qualified_name_excluding_import
+                        + (PydanticModel._PARTIAL_CLASS_NAME,),
+                    )
+                    for base_model in self._base_models
+                ]
+                if len(self._base_models) > 0
+                else [
+                    AST.ClassReference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                        qualified_name_excluding_import=("TypedDict",),
+                    )
+                ]
+            ),
         )
 
         for field in self.get_public_fields():
@@ -334,7 +336,9 @@ class PydanticModel:
             writer.write("model_config: ")
             writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic(self._version).ConfigDict())))
             writer.write(" = ")
-            writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic(self._version).ConfigDict(), kwargs=config_kwargs)))
+            writer.write_node(
+                AST.Expression(AST.ClassInstantiation(Pydantic(self._version).ConfigDict(), kwargs=config_kwargs))
+            )
             writer.write("  # type: ignore # Pydantic v2")
 
         if len(config_kwargs) > 0:
@@ -380,7 +384,10 @@ class PydanticModel:
                 self._version == PydanticVersionCompatibility.Both
                 and (v1_config_class is not None or v2_model_config is not None)
             )
-            or (self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2) and v1_config_class is not None)
+            or (
+                self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
+                and v1_config_class is not None
+            )
             or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
         ):
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))

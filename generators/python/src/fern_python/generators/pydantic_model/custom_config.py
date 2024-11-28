@@ -52,7 +52,10 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
         version_compat = self.version
         use_wrapped_aliases = self.wrapped_aliases
 
-        if use_wrapped_aliases and version_compat not in [PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2]:
+        if use_wrapped_aliases and version_compat not in [
+            PydanticVersionCompatibility.V1,
+            PydanticVersionCompatibility.V1_ON_V2,
+        ]:
             raise ValueError(
                 "Wrapped aliases are only supported in Pydantic V1 or V1_ON_V2, please update your `version` field appropriately to continue using wrapped aliases."
             )

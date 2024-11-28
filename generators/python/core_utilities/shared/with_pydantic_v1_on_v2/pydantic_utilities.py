@@ -12,15 +12,24 @@ from .serialization import convert_and_respect_annotation_metadata
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
-from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
-from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
+from pydantic.datetime_parse import (
+    parse_date as parse_date,  # type: ignore # Pydantic v1
+)
+from pydantic.datetime_parse import (
+    parse_datetime as parse_datetime,  # type: ignore # Pydantic v1
+)
 from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
-from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # Pydantic v1
+from pydantic.json import (
+    ENCODERS_BY_TYPE as encoders_by_type,  # type: ignore # Pydantic v1
+)
 from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
 from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
-from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
+from pydantic.typing import (
+    is_literal_type as is_literal_type,  # type: ignore # Pydantic v1
+)
 from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
-    # isort: on
+
+# isort: on
 
 T = typing.TypeVar("T")
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
@@ -139,9 +148,9 @@ UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ig
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
