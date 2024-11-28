@@ -1,9 +1,14 @@
 import { isBrowser } from "./isBrowser";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getPathModule() {
+export interface PathModule {
+    sep: string;
+    isAbsolute: (value: string) => boolean;
+}
+
+export function getPathModule(): PathModule {
     if (isBrowser()) {
         return {
+            sep: "/",
             isAbsolute: (value: string): boolean => {
                 return value.startsWith("/");
             }
