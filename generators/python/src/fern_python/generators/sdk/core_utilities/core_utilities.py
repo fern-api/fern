@@ -174,6 +174,9 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_V1_DEPENDENCY)
         elif self._version == PydanticVersionCompatibility.V2:
             project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V1_ON_V2:
+            # We're using v2 but with v1 compatibility layer
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 

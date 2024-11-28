@@ -277,6 +277,8 @@ class FernAwarePydanticModel:
     def set_root_type_unsafe_v1_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
     ) -> None:
+        if self._custom_config.version not in [PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2]:
+            raise RuntimeError("Overriding root types is only available in Pydantic v1 or v1_on_v2 mode")
         self._pydantic_model.set_root_type_unsafe_v1_only(root_type=root_type, annotation=annotation)
 
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
@@ -288,7 +290,7 @@ class FernAwarePydanticModel:
         if self._custom_config.include_validators:
             if (
                 self._pydantic_model._v1_root_type is None
-                and self._custom_config.version == PydanticVersionCompatibility.V1
+                and self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
@@ -310,7 +312,7 @@ class FernAwarePydanticModel:
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
         v1_root_type = self._pydantic_model.get_root_type_unsafe_v1_only()
-        if v1_root_type is not None and self._custom_config.version == PydanticVersionCompatibility.V1:
+        if v1_root_type is not None and self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
             return PydanticV1CustomRootTypeValidatorsGenerator(
                 model=self._pydantic_model,
                 root_type=v1_root_type,

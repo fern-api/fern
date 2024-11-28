@@ -253,8 +253,8 @@ class PydanticModel:
     def set_root_type_unsafe_v1_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
     ) -> None:
-        if self._version != PydanticVersionCompatibility.V1:
-            raise RuntimeError("Overriding root types is only available in Pydantic v1")
+        if self._version not in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
+            raise RuntimeError("Overriding root types is only available in Pydantic v1 or v1_on_v2")
 
         if self._v1_root_type is not None:
             raise RuntimeError("__root__ was already added")
@@ -366,6 +366,9 @@ class PydanticModel:
                     with writer.indent():
                         non_none_config: AST.AstNode = v1_config_class if v1_config_class is not None else v2_model_config  # type: ignore  # this is not None, by pyright says otherwise
                         writer.write_node(non_none_config)
+            elif self._version == PydanticVersionCompatibility.V1_ON_V2:
+                if v1_config_class is not None:
+                    writer.write_node(v1_config_class)
             elif self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None:
                 writer.write_node(v1_config_class)
             elif self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None:
@@ -376,7 +379,7 @@ class PydanticModel:
                 self._version == PydanticVersionCompatibility.Both
                 and (v1_config_class is not None or v2_model_config is not None)
             )
-            or (self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None)
+            or (self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2) and v1_config_class is not None)
             or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
         ):
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
