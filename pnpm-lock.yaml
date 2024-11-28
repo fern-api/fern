@@ -3785,6 +3785,9 @@ importers:
       '@fern-api/cli-migrations':
         specifier: workspace:*
         version: link:../cli-migrations
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -4532,6 +4535,9 @@ importers:
 
   packages/cli/docs-resolver:
     dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -4724,6 +4730,9 @@ importers:
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli-source-resolver
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
@@ -5017,6 +5026,9 @@ importers:
 
   packages/cli/generation/ir-migrations:
     dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli-source-resolver
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader
@@ -5274,6 +5286,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../workspace-commons
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../../cli-source-resolver
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
@@ -5368,6 +5383,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../../../auth
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../../cli-source-resolver
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
@@ -5937,6 +5955,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration

@@ -66,7 +66,7 @@ export async function generateIntermediateRepresentation({
     context,
     fdrApiDefinitionId,
     includeOptionalRequestPropertyExamples,
-    sourceResolver = new NopSourceResolver()
+    sourceResolver
 }: {
     workspace: FernWorkspace;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
@@ -78,9 +78,9 @@ export async function generateIntermediateRepresentation({
     packageName: string | undefined;
     version: string | undefined;
     context: TaskContext;
+    sourceResolver: SourceResolver;
     fdrApiDefinitionId?: string;
     includeOptionalRequestPropertyExamples?: boolean;
-    sourceResolver?: SourceResolver;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
