@@ -207,9 +207,14 @@ types:
     properties:
       auth: optional<auth.ApiAuthSchema>
       specs: APIConfigurationV2SpecsSchema
+      examples: optional<APIConfigurationExamplesSchema>
     extends:
       - file.WithHeadersSchema
       - environments.WithEnvironmentsSchema
+
+  APIConfigurationExamplesSchema:
+    properties:
+      omit-undefined-optionals: optional<boolean>
   
   APIConfigurationV2SpecsSchema:
     discriminated: false

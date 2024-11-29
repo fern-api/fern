@@ -9,4 +9,5 @@ export interface ApiConfigurationV2Schema
         FernDefinition.fernDefinition.WithEnvironmentsSchema {
     auth?: FernDefinition.fernDefinition.ApiAuthSchema;
     specs: FernDefinition.ApiConfigurationV2SpecsSchema;
+    examples?: FernDefinition.ApiConfigurationExamplesSchema;
 }
